@@ -739,8 +739,12 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .bslots{
  position:absolute;inset:0;background:var(--white);border:1.5px solid var(--border);
  border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,.18);
- padding:1.1rem 1.15rem;z-index:5;display:flex;flex-direction:column;
+ padding:1.1rem 1.15rem;z-index:5;flex-direction:column;
 }
+/* Any `display` rule on an element overrides the browser's default
+   [hidden]{display:none} — so display:flex must only apply once the
+   hidden attribute is actually removed by JS, not unconditionally. */
+.bslots:not([hidden]){display:flex}
 .bslots-head{display:flex;align-items:center;gap:10px;margin-bottom:.9rem;flex-shrink:0}
 .bslots-back{font-family:var(--font);font-size:11px;font-weight:700;color:var(--g500);cursor:pointer;background:none;border:none;padding:0;display:flex;align-items:center;gap:4px}
 .bslots-back:hover{color:var(--black)}
