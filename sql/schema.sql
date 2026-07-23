@@ -34,7 +34,9 @@ CREATE TABLE IF NOT EXISTS blogs (
   excerpt           VARCHAR(400) NOT NULL DEFAULT '',
   content           LONGTEXT,
   featured_image    VARCHAR(255) NOT NULL DEFAULT '',
-  status            ENUM('draft','published') NOT NULL DEFAULT 'draft',
+  featured_image_alt VARCHAR(190) NOT NULL DEFAULT '',
+  status            ENUM('draft','published','scheduled') NOT NULL DEFAULT 'draft',
+  scheduled_at      DATETIME NULL,                        -- used when status='scheduled'
   author_id         INT NULL,
   created_at        DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at        DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

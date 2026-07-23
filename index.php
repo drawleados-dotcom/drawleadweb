@@ -9,6 +9,10 @@
  */
 require_once __DIR__ . '/includes/bootstrap.php';
 
+// No cron on shared hosting — flip any due scheduled posts to published
+// on every request, so they go live the moment their time arrives.
+publish_due_scheduled_posts($pdo);
+
 $uri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 $uri = rawurldecode($uri);
 $uri = rtrim($uri, '/');
@@ -21,7 +25,7 @@ if ($uri === '/blog') {
     $metaTitle = get_setting($pdo, 'blog_meta_title', 'Blog | Drawlead');
     $metaDescription = get_setting($pdo, 'blog_meta_description', '');
     $posts = $pdo->query(
-        "SELECT id, title, slug, excerpt, featured_image, created_at
+        "SELECT id, title, slug, excerpt, featured_image, featured_image_alt, created_at
          FROM blogs WHERE status = 'published' ORDER BY created_at DESC"
     )->fetchAll();
 

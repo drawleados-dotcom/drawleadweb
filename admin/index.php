@@ -4,6 +4,8 @@ require_login();
 
 $u = current_user();
 
+publish_due_scheduled_posts($pdo);
+
 $pageCount = (int) $pdo->query('SELECT COUNT(*) FROM pages')->fetchColumn();
 $publishedCount = (int) $pdo->query("SELECT COUNT(*) FROM blogs WHERE status='published'")->fetchColumn();
 $draftCount = (int) $pdo->query("SELECT COUNT(*) FROM blogs WHERE status='draft'")->fetchColumn();

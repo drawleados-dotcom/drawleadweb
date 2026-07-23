@@ -6,7 +6,8 @@ $u = current_user();
 $id = (int) ($_GET['id'] ?? 0);
 $post = [
     'id' => 0, 'title' => '', 'slug' => '', 'meta_title' => '', 'meta_description' => '',
-    'excerpt' => '', 'content' => '', 'featured_image' => '', 'status' => 'draft',
+    'excerpt' => '', 'content' => '', 'featured_image' => '', 'featured_image_alt' => '',
+    'status' => 'draft', 'scheduled_at' => null,
 ];
 
 if ($id) {
@@ -33,22 +34,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $metaDescription = trim($_POST['meta_description'] ?? '');
     $excerpt = trim($_POST['excerpt'] ?? '');
     $content = sanitize_blog_html($_POST['content'] ?? '');
-    $status = ($_POST['status'] ?? 'draft') === 'published' ? 'published' : 'draft';
+    $featuredImageAlt = trim($_POST['featured_image_alt'] ?? '');
 
-    if ($title === '') {
-        $error = 'Title is required.';
-    } elseif ($slug === '') {
-        $error = 'URL slug is required.';
-    } else {
-        $dup = $pdo->prepare('SELECT 1 FROM blogs WHERE slug = ? AND id <> ?');
-        $dup->execute([$slug, $id]);
-        if ($dup->fetchColumn()) {
-            $error = 'That URL is already used by another post.';
+    $statusInput = $_POST['status'] ?? 'draft';
+    $status = in_array($statusInput, ['draft', 'published', 'scheduled'], true) ? $statusInput : 'draft';
+
+    $scheduledAt = null;
+    if ($status === 'scheduled') {
+        $scheduledRaw = trim($_POST['scheduled_at'] ?? '');
+        $ts = $scheduledRaw !== '' ? strtotime($scheduledRaw) : false;
+        if ($ts === false) {
+            $error = 'Pick a valid publish date and time for a scheduled post.';
+        } else {
+            $scheduledAt = date('Y-m-d H:i:s', $ts);
         }
-        $dupPage = $pdo->prepare('SELECT 1 FROM pages WHERE slug = ?');
-        $dupPage->execute(['/blog/' . $slug]);
-        if (!$error && $dupPage->fetchColumn()) {
-            $error = 'That URL collides with an existing page.';
+    }
+
+    if (!$error) {
+        if ($title === '') {
+            $error = 'Title is required.';
+        } elseif ($slug === '') {
+            $error = 'URL slug is required.';
+        } else {
+            $dup = $pdo->prepare('SELECT 1 FROM blogs WHERE slug = ? AND id <> ?');
+            $dup->execute([$slug, $id]);
+            if ($dup->fetchColumn()) {
+                $error = 'That URL is already used by another post.';
+            }
+            $dupPage = $pdo->prepare('SELECT 1 FROM pages WHERE slug = ?');
+            $dupPage->execute(['/blog/' . $slug]);
+            if (!$error && $dupPage->fetchColumn()) {
+                $error = 'That URL collides with an existing page.';
+            }
         }
     }
 
@@ -68,7 +85,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!is_dir(UPLOAD_DIR)) {
                 mkdir(UPLOAD_DIR, 0755, true);
             }
-            $filename = bin2hex(random_bytes(16)) . '.' . $allowed[$mime];
+            // Optional SEO-friendly filename — falls back to the post slug.
+            // The real detected extension is always used, regardless of
+            // what (if anything) the admin typed, and a short random
+            // suffix guarantees uniqueness without ever overwriting an
+            // unrelated file.
+            $ext = $allowed[$mime];
+            $customName = trim($_POST['image_filename'] ?? '');
+            $base = $customName !== '' ? $customName : $slug;
+            $base = strtolower(preg_replace('/[^a-z0-9-]+/i', '-', $base));
+            $base = trim($base, '-') ?: 'image';
+            $filename = $base . '-' . bin2hex(random_bytes(3)) . '.' . $ext;
+
             if (!move_uploaded_file($tmp, UPLOAD_DIR . $filename)) {
                 $error = 'Could not save the uploaded image. Please try again.';
             } else {
@@ -80,26 +108,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$error) {
         if ($id) {
             $pdo->prepare(
-                'UPDATE blogs SET title=?, slug=?, meta_title=?, meta_description=?, excerpt=?, content=?, featured_image=?, status=? WHERE id=?'
-            )->execute([$title, $slug, $metaTitle, $metaDescription, $excerpt, $content, $featuredImage, $status, $id]);
+                'UPDATE blogs SET title=?, slug=?, meta_title=?, meta_description=?, excerpt=?, content=?,
+                 featured_image=?, featured_image_alt=?, status=?, scheduled_at=? WHERE id=?'
+            )->execute([
+                $title, $slug, $metaTitle, $metaDescription, $excerpt, $content,
+                $featuredImage, $featuredImageAlt, $status, $scheduledAt, $id,
+            ]);
         } else {
             $stmt = $pdo->prepare(
-                'INSERT INTO blogs (title, slug, meta_title, meta_description, excerpt, content, featured_image, status, author_id)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+                'INSERT INTO blogs (title, slug, meta_title, meta_description, excerpt, content,
+                 featured_image, featured_image_alt, status, scheduled_at, author_id)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
             );
-            $stmt->execute([$title, $slug, $metaTitle, $metaDescription, $excerpt, $content, $featuredImage, $status, $u['id']]);
+            $stmt->execute([
+                $title, $slug, $metaTitle, $metaDescription, $excerpt, $content,
+                $featuredImage, $featuredImageAlt, $status, $scheduledAt, $u['id'],
+            ]);
             $id = (int) $pdo->lastInsertId();
         }
 
-        $success = $status === 'published' ? 'Published — this post is now live.' : 'Draft saved.';
+        if ($status === 'scheduled') {
+            $success = 'Scheduled — this post will go live automatically at ' . date('M j, Y g:i A', strtotime($scheduledAt)) . '.';
+        } elseif ($status === 'published') {
+            $success = 'Published — this post is now live.';
+        } else {
+            $success = 'Draft saved.';
+        }
+
         $post = [
             'id' => $id, 'title' => $title, 'slug' => $slug,
             'meta_title' => $metaTitle, 'meta_description' => $metaDescription,
             'excerpt' => $excerpt, 'content' => $content,
-            'featured_image' => $featuredImage, 'status' => $status,
+            'featured_image' => $featuredImage, 'featured_image_alt' => $featuredImageAlt,
+            'status' => $status, 'scheduled_at' => $scheduledAt,
         ];
     }
 }
+
+$scheduledAtLocal = !empty($post['scheduled_at']) ? date('Y-m-d\TH:i', strtotime($post['scheduled_at'])) : '';
 
 $pageTitle = $id ? 'Edit Post' : 'New Post';
 $pageSub = $post['title'] ?: 'Untitled';
@@ -153,11 +199,22 @@ include __DIR__ . '/includes/header.php';
 
   <div class="card">
     <div class="card-title">Featured Image</div>
+    <div class="card-desc">Used as the thumbnail on the blog listing page and the header image on the post itself.</div>
     <div class="field">
+      <label>Image File</label>
       <input type="file" name="featured_image" accept="image/jpeg,image/png,image/webp,image/gif" data-image-input>
       <div class="upload-preview">
         <img data-image-preview src="<?= h($post['featured_image'] ? UPLOAD_URL . $post['featured_image'] : '') ?>" style="<?= $post['featured_image'] ? '' : 'display:none' ?>">
       </div>
+    </div>
+    <div class="field">
+      <label for="image_filename">Image Filename (optional)</label>
+      <input type="text" id="image_filename" name="image_filename" placeholder="Auto-generated from the URL slug if left blank">
+      <div class="field-hint">Only applies when uploading a new image above. Good for SEO — e.g. "drawlead-website-launch".</div>
+    </div>
+    <div class="field">
+      <label for="featured_image_alt">Image Alt Text</label>
+      <input type="text" id="featured_image_alt" name="featured_image_alt" maxlength="190" value="<?= h($post['featured_image_alt']) ?>" placeholder="Describe the image — helps accessibility and image search">
     </div>
   </div>
 
@@ -179,7 +236,13 @@ include __DIR__ . '/includes/header.php';
       <select id="status" name="status">
         <option value="draft" <?= $post['status'] === 'draft' ? 'selected' : '' ?>>Draft</option>
         <option value="published" <?= $post['status'] === 'published' ? 'selected' : '' ?>>Published</option>
+        <option value="scheduled" <?= $post['status'] === 'scheduled' ? 'selected' : '' ?>>Scheduled</option>
       </select>
+    </div>
+    <div class="field">
+      <label for="scheduled_at">Publish Date &amp; Time</label>
+      <input type="datetime-local" id="scheduled_at" name="scheduled_at" value="<?= h($scheduledAtLocal) ?>">
+      <div class="field-hint">Only used when Status is Scheduled — the post goes live automatically at this date and time.</div>
     </div>
     <button type="submit" class="btn btn-primary">Save Post</button>
     <a href="blogs.php" class="btn btn-ghost">Back to Blogs</a>

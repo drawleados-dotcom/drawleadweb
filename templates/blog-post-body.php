@@ -14,7 +14,7 @@ include __DIR__ . '/partials/nav.php';
  </div>
  <?php if (!empty($post['featured_image'])): ?>
  <div class="post-featured rv">
-   <img src="<?= h(UPLOAD_URL . $post['featured_image']) ?>" alt="<?= h($post['title']) ?>">
+   <img src="<?= h(UPLOAD_URL . $post['featured_image']) ?>" alt="<?= h($post['featured_image_alt'] ?: $post['title']) ?>">
  </div>
  <?php endif; ?>
 </section>

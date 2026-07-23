@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../includes/bootstrap.php';
 require_blogs_access($pdo);
 
+publish_due_scheduled_posts($pdo);
+
 $posts = $pdo->query(
     'SELECT b.*, u.name AS author_name FROM blogs b
      LEFT JOIN users u ON u.id = b.author_id
@@ -43,7 +45,12 @@ include __DIR__ . '/includes/header.php';
           <a class="row-link" href="blog-edit.php?id=<?= (int) $p['id'] ?>"><?= h($p['title']) ?></a>
           <div class="t-sub">/blog/<?= h($p['slug']) ?></div>
         </td>
-        <td><span class="badge badge-<?= h($p['status']) ?>"><?= h($p['status']) ?></span></td>
+        <td>
+          <span class="badge badge-<?= h($p['status']) ?>"><?= h($p['status']) ?></span>
+          <?php if ($p['status'] === 'scheduled' && $p['scheduled_at']): ?>
+            <div class="t-sub"><?= h(date('M j, Y g:i A', strtotime($p['scheduled_at']))) ?></div>
+          <?php endif; ?>
+        </td>
         <td><?= h($p['author_name'] ?? '—') ?></td>
         <td><?= h(date('M j, Y', strtotime($p['updated_at']))) ?></td>
         <td>

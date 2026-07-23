@@ -109,6 +109,7 @@ tr:last-child td{border-bottom:none}
 .badge-editor{background:var(--g200);color:var(--g600)}
 .badge-published{background:#e9f9f0;color:#0f7a4c}
 .badge-draft{background:#fdf3e3;color:#a8631a}
+.badge-scheduled{background:#eaf1fe;color:#1d5fd6}
 
 .toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.3rem;gap:1rem;flex-wrap:wrap}
 .checkbox-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem}

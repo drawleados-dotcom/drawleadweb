@@ -20,7 +20,7 @@ include __DIR__ . '/partials/nav.php';
   <?php else: foreach ($posts as $post): ?>
     <a class="blog-card rv" href="/blog/<?= h($post['slug']) ?>">
       <?php if (!empty($post['featured_image'])): ?>
-        <div class="blog-card-img" style="background-image:url('<?= h(UPLOAD_URL . $post['featured_image']) ?>')"></div>
+        <div class="blog-card-img"><img src="<?= h(UPLOAD_URL . $post['featured_image']) ?>" alt="<?= h($post['featured_image_alt'] ?: $post['title']) ?>" loading="lazy"></div>
       <?php else: ?>
         <div class="blog-card-img placeholder"></div>
       <?php endif; ?>

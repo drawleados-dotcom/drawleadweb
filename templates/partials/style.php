@@ -638,7 +638,8 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .blog-card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:all .2s}
 .blog-card:hover{box-shadow:0 12px 40px rgba(0,0,0,.09);border-color:var(--g300);transform:translateY(-2px)}
-.blog-card-img{height:190px;background:var(--bg2) center/cover no-repeat;border-bottom:1.5px solid var(--border);position:relative}
+.blog-card-img{height:190px;background:var(--bg2);border-bottom:1.5px solid var(--border);position:relative;overflow:hidden}
+.blog-card-img img{width:100%;height:100%;object-fit:cover;display:block}
 .blog-card-img.placeholder{display:flex;align-items:center;justify-content:center}
 .blog-card-img.placeholder::after{content:'Drawlead';font-size:15px;font-weight:800;letter-spacing:-.01em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .blog-card-body{padding:1.5rem 1.6rem;display:flex;flex-direction:column;gap:.6rem;flex:1}

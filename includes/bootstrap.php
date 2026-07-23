@@ -163,6 +163,18 @@ function csrf_verify(): void
     }
 }
 
+/**
+ * Flip any scheduled posts whose time has arrived to 'published'. There's
+ * no cron on shared hosting, so this runs opportunistically — called near
+ * the top of the public front controller and the admin Blogs pages, so a
+ * scheduled post goes live the moment anyone next hits the site or admin
+ * after its scheduled time.
+ */
+function publish_due_scheduled_posts(PDO $pdo): void
+{
+    $pdo->exec("UPDATE blogs SET status = 'published' WHERE status = 'scheduled' AND scheduled_at <= NOW()");
+}
+
 /** Turn "My New Page" into "my-new-page". */
 function slugify(string $s): string
 {
