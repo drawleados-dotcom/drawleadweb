@@ -342,26 +342,22 @@
  <p class="sec-sub rv">Google Sheets, Zoho CRM, WhatsApp, Notion, billing software, phone calls — your business data is scattered everywhere. Drawlead brings it all into one Smart Board.</p>
 
  <div class="unify-visual rv">
-  <svg class="unify-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
-   <line x1="50" y1="50" x2="90" y2="50" class="unify-line" style="animation-delay:.1s"></line>
-   <line x1="50" y1="50" x2="78.3" y2="78.3" class="unify-line" style="animation-delay:.3s"></line>
-   <line x1="50" y1="50" x2="50" y2="90" class="unify-line" style="animation-delay:.5s"></line>
-   <line x1="50" y1="50" x2="21.7" y2="78.3" class="unify-line" style="animation-delay:.7s"></line>
-   <line x1="50" y1="50" x2="10" y2="50" class="unify-line" style="animation-delay:.9s"></line>
-   <line x1="50" y1="50" x2="21.7" y2="21.7" class="unify-line" style="animation-delay:1.1s"></line>
-   <line x1="50" y1="50" x2="50" y2="10" class="unify-line" style="animation-delay:1.3s"></line>
-   <line x1="50" y1="50" x2="78.3" y2="21.7" class="unify-line" style="animation-delay:1.5s"></line>
+  <div class="unify-glow"></div>
+
+  <svg class="unify-ring-svg" viewBox="0 0 100 100">
+   <circle cx="50" cy="50" r="41" class="unify-ring"></circle>
   </svg>
 
-  <div class="unify-chip" style="left:90%;top:50%;animation-delay:.1s">📊<span>Sheets</span></div>
-  <div class="unify-chip" style="left:78.3%;top:78.3%;animation-delay:.3s">💬<span>WhatsApp</span></div>
-  <div class="unify-chip" style="left:50%;top:90%;animation-delay:.5s">🧾<span>Bill Book</span></div>
-  <div class="unify-chip" style="left:21.7%;top:78.3%;animation-delay:.7s">📞<span>Calls</span></div>
-  <div class="unify-chip" style="left:10%;top:50%;animation-delay:.9s">👥<span>Zoho CRM</span></div>
-  <div class="unify-chip" style="left:21.7%;top:21.7%;animation-delay:1.1s">📝<span>Notion</span></div>
-  <div class="unify-chip" style="left:50%;top:10%;animation-delay:1.3s">📄<span>Docs</span></div>
-  <div class="unify-chip" style="left:78.3%;top:21.7%;animation-delay:1.5s">📧<span>Email</span></div>
+  <div class="unify-card" style="left:91%;top:50%;animation-delay:.1s"><div class="unify-card-icon">📊</div><div class="unify-card-label">Sheets</div></div>
+  <div class="unify-card" style="left:79%;top:79%;animation-delay:.3s"><div class="unify-card-icon">💬</div><div class="unify-card-label">WhatsApp</div></div>
+  <div class="unify-card" style="left:50%;top:91%;animation-delay:.5s"><div class="unify-card-icon">🧾</div><div class="unify-card-label">Bill Book</div></div>
+  <div class="unify-card" style="left:21%;top:79%;animation-delay:.7s"><div class="unify-card-icon">📞</div><div class="unify-card-label">Calls</div></div>
+  <div class="unify-card" style="left:9%;top:50%;animation-delay:.9s"><div class="unify-card-icon">👥</div><div class="unify-card-label">Zoho CRM</div></div>
+  <div class="unify-card" style="left:21%;top:21%;animation-delay:1.1s"><div class="unify-card-icon">📝</div><div class="unify-card-label">Notion</div></div>
+  <div class="unify-card" style="left:50%;top:9%;animation-delay:1.3s"><div class="unify-card-icon">📄</div><div class="unify-card-label">Docs</div></div>
+  <div class="unify-card" style="left:79%;top:21%;animation-delay:1.5s"><div class="unify-card-icon">📧</div><div class="unify-card-label">Email</div></div>
 
+  <div class="unify-board-glow"></div>
   <div class="unify-board">
    <div class="unify-board-bar">
     <span class="unify-board-dot" style="background:#e5534b"></span>
