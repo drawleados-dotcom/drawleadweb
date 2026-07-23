@@ -22,5 +22,8 @@ document.querySelectorAll('.rv, .ind-card').forEach(el=>obs.observe(el));
  cards.forEach(card => io.observe(card));
 })();
 </script>
+
+<?php include __DIR__ . '/partials/booking-modal.php'; ?>
+<script src="/assets/booking.js"></script>
 </body>
 </html>

@@ -175,6 +175,69 @@ function publish_due_scheduled_posts(PDO $pdo): void
     $pdo->exec("UPDATE blogs SET status = 'published' WHERE status = 'scheduled' AND scheduled_at <= NOW()");
 }
 
+// ── Booking system ──
+
+function get_booking_availability(PDO $pdo): array
+{
+    $row = $pdo->query('SELECT * FROM booking_availability WHERE id = 1')->fetch();
+    return $row ?: [
+        'days_of_week' => '1,2,3,4,5', 'start_time' => '10:00:00', 'end_time' => '18:00:00',
+        'slot_interval_minutes' => 30, 'range_start' => date('Y-m-d'), 'range_end' => date('Y-m-d', strtotime('+60 days')),
+    ];
+}
+
+function get_booking_notification_emails(PDO $pdo): array
+{
+    return $pdo->query('SELECT id, email FROM booking_notification_emails ORDER BY id')->fetchAll();
+}
+
+/** @return array<int,array> Fields ordered for display, with 'options' already JSON-decoded. */
+function get_booking_form_fields(PDO $pdo): array
+{
+    $rows = $pdo->query('SELECT * FROM booking_form_fields ORDER BY sort_order, id')->fetchAll();
+    foreach ($rows as &$r) {
+        $r['options'] = $r['options'] ? json_decode($r['options'], true) : [];
+    }
+    return $rows;
+}
+
+/** Server-side re-validation that a specific date+time is a real, bookable slot. */
+function is_booking_slot_valid(PDO $pdo, string $date, string $time): bool
+{
+    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) || !preg_match('/^\d{2}:\d{2}$/', $time)) {
+        return false;
+    }
+
+    $a = get_booking_availability($pdo);
+    $daysRaw = trim((string) $a['days_of_week']);
+    $allowedDays = $daysRaw === '' ? [] : array_map('intval', explode(',', $daysRaw));
+    $dayOfWeek = (int) date('w', strtotime($date));
+
+    if ($date < (string) $a['range_start'] || $date > (string) $a['range_end']) {
+        return false;
+    }
+    if (!in_array($dayOfWeek, $allowedDays, true)) {
+        return false;
+    }
+
+    $startTs = strtotime($date . ' ' . $a['start_time']);
+    $endTs = strtotime($date . ' ' . $a['end_time']);
+    $slotTs = strtotime($date . ' ' . $time . ':00');
+    $interval = max(5, (int) $a['slot_interval_minutes']);
+
+    if ($slotTs === false || $slotTs < $startTs || $slotTs + $interval * 60 > $endTs) {
+        return false;
+    }
+    if (($slotTs - $startTs) % ($interval * 60) !== 0) {
+        return false;
+    }
+    if ($slotTs < time() + 60 * 60) {
+        return false;
+    }
+
+    return true;
+}
+
 /** Turn "My New Page" into "my-new-page". */
 function slugify(string $s): string
 {

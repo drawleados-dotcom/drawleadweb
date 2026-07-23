@@ -7,7 +7,7 @@
  <h1 class="sec-h rv" style="font-size:clamp(38px,6vw,68px);max-width:920px">Turning MSME dreams into <span class="g">digital growth systems</span></h1>
  <p class="sec-sub rv" style="max-width:640px">Drawlead is a Chennai-based digital transformation company helping MSMEs and SMEs grow through websites, performance marketing, SEO, and intelligent business systems — creating lasting online impressions that connect brands with the audiences that matter most.</p>
  <div class="sec-cta rv">
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black">Book a Free Consultation →</a>
+ <button type="button" data-book class="btn btn-black">Book a Free Consultation →</button>
  <a href="/#cases" class="btn btn-outline2">See Our Work</a>
  </div>
 </section>
@@ -141,12 +141,12 @@
  <div class="fn-card fn-cta-card rv d4">
  <div style="font-size:24px;font-weight:800;color:#fff;line-height:1.15;letter-spacing:-.02em">Meta Ads,<br>done right</div>
  <div style="font-size:12px;color:rgba(255,255,255,.44);line-height:1.65;font-weight:400">High-performing Instagram &amp; Facebook campaigns tuned for reach, engagement, and conversions.</div>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" style="background:#fff;color:var(--black);padding:11px 22px;border-radius:6px;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:opacity .2s" onmouseover="this.style.opacity='.84'" onmouseout="this.style.opacity='1'">Talk to Us →</a>
+ <button type="button" data-book style="background:#fff;color:var(--black);padding:11px 22px;border-radius:6px;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:opacity .2s" onmouseover="this.style.opacity='.84'" onmouseout="this.style.opacity='1'">Talk to Us →</button>
  </div>
  </div>
 
  <div class="sec-cta rv">
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black">Book Free Consultation →</a>
+ <button type="button" data-book class="btn btn-black">Book Free Consultation →</button>
  <a href="/#solutions" class="btn btn-outline2">Explore Solutions</a>
  </div>
 </section>
@@ -205,7 +205,7 @@
  <h2 class="cta-h rv">Let's build your<br><span class="gr">growth</span> <span class="gr2">engine</span><br>together</h2>
  <p class="cta-p rv">Book a free consultation with Vinothkumar and the Drawlead team — no commitment needed.</p>
  <div class="cta-btns rv">
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="cta-btn-w">Schedule Free Consultation →</a>
+ <button type="button" data-book class="cta-btn-w">Schedule Free Consultation →</button>
  <a href="/" class="cta-btn-g">Back to Home</a>
  </div>
  <div class="cta-note rv">செயலை மாற்றும் · Intelligent Operating System · Secure · Scalable · Future-Ready</div>

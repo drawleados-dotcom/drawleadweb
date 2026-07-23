@@ -17,5 +17,5 @@ $activePage = $activePage ?? '';
  <li><a href="/blog"<?= $activePage === 'blog' ? ' style="color:var(--black)"' : '' ?>>Blog</a></li>
  <li><a href="/about-us"<?= $activePage === 'about-us' ? ' style="color:var(--black)"' : '' ?>>About Us</a></li>
  </ul>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="nav-btn">Book a Demo →</a>
+ <button type="button" data-book class="nav-btn">Free Consultation Call →</button>
 </nav>

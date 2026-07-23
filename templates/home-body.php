@@ -15,7 +15,7 @@
 
  <!-- CTA BUTTONS — Zoho/Freshworks style: primary + ghost -->
  <div class="hero-btns">
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black">Start Free Consultation →</a>
+ <button type="button" data-book class="btn btn-black">Start Free Consultation →</button>
  <a href="#functions" class="btn btn-ghost">
  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor"/></svg>
  Watch 2-min Demo
@@ -252,7 +252,7 @@
  <div class="fn-name">Management</div>
  <div class="fn-desc">Centralized dashboards and operational visibility for faster, smarter business decisions.</div>
  <div class="fn-tags"><span class="fn-tag">KPI Tracking</span><span class="fn-tag">Analytics</span><span class="fn-tag">Approvals</span></div>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="fn-arrow" style="color:var(--blue)">Explore module →</a>
+ <button type="button" data-book class="fn-arrow" style="color:var(--blue)">Explore module →</button>
  </div>
  <!-- 02 Sales -->
  <div class="fn-card rv d2">
@@ -263,7 +263,7 @@
  <div class="fn-name">Sales</div>
  <div class="fn-desc">Manage leads, pipelines, customers, and revenue operations from one unified platform.</div>
  <div class="fn-tags"><span class="fn-tag">CRM</span><span class="fn-tag">Pipeline</span><span class="fn-tag">Invoicing</span></div>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="fn-arrow" style="color:#32b46f">Explore module →</a>
+ <button type="button" data-book class="fn-arrow" style="color:#32b46f">Explore module →</button>
  </div>
  <!-- 03 Marketing -->
  <div class="fn-card rv d3">
@@ -274,7 +274,7 @@
  <div class="fn-name">Marketing</div>
  <div class="fn-desc">Track campaigns, automate WhatsApp &amp; email, and improve customer engagement at scale.</div>
  <div class="fn-tags"><span class="fn-tag">Campaigns</span><span class="fn-tag">WhatsApp</span><span class="fn-tag">Nurturing</span></div>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="fn-arrow" style="color:var(--violet)">Explore module →</a>
+ <button type="button" data-book class="fn-arrow" style="color:var(--violet)">Explore module →</button>
  </div>
  <!-- 04 Operations -->
  <div class="fn-card rv d4">
@@ -285,7 +285,7 @@
  <div class="fn-name">Operations</div>
  <div class="fn-desc">Streamline activities, inventory, and vendor management with intelligent process automation.</div>
  <div class="fn-tags"><span class="fn-tag">Workflows</span><span class="fn-tag">Inventory</span><span class="fn-tag">Vendors</span></div>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="fn-arrow" style="color:#14855a">Explore module →</a>
+ <button type="button" data-book class="fn-arrow" style="color:#14855a">Explore module →</button>
  </div>
  <!-- 05 Finance -->
  <div class="fn-card rv d1">
@@ -296,7 +296,7 @@
  <div class="fn-name">Finance</div>
  <div class="fn-desc">Centralize billing, expenses, financial reporting, and accounting integrations seamlessly.</div>
  <div class="fn-tags"><span class="fn-tag">Billing</span><span class="fn-tag">Expenses</span><span class="fn-tag">Reports</span></div>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="fn-arrow" style="color:#32b46f">Explore module →</a>
+ <button type="button" data-book class="fn-arrow" style="color:#32b46f">Explore module →</button>
  </div>
  <!-- 06 HR -->
  <div class="fn-card rv d2">
@@ -307,7 +307,7 @@
  <div class="fn-name">HR</div>
  <div class="fn-desc">Manage employees, attendance, payroll workflows, and leave management efficiently.</div>
  <div class="fn-tags"><span class="fn-tag">Payroll</span><span class="fn-tag">Attendance</span><span class="fn-tag">Leave</span></div>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="fn-arrow" style="color:#14855a">Explore module →</a>
+ <button type="button" data-book class="fn-arrow" style="color:#14855a">Explore module →</button>
  </div>
  <!-- 07 R&D -->
  <div class="fn-card rv d3">
@@ -318,18 +318,18 @@
  <div class="fn-name">R&amp;D</div>
  <div class="fn-desc">Enable innovation with AI-powered automation, predictive analytics, and custom intelligence.</div>
  <div class="fn-tags"><span class="fn-tag">AI Automation</span><span class="fn-tag">Predictive</span><span class="fn-tag">Custom</span></div>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="fn-arrow" style="color:#23a065">Explore module →</a>
+ <button type="button" data-book class="fn-arrow" style="color:#23a065">Explore module →</button>
  </div>
  <!-- 08 CTA Card -->
  <div class="fn-card fn-cta-card rv d4">
  <div style="font-size:26px;font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.02em">Ready to<br>unify all 7?</div>
  <div style="font-size:12px;color:rgba(255,255,255,.44);line-height:1.65;font-weight:400">Get a personalised walkthrough of all modules working in sync.</div>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" style="background:#fff;color:var(--black);padding:11px 22px;border-radius:6px;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:opacity .2s" onmouseover="this.style.opacity='.84'" onmouseout="this.style.opacity='1'">Book Free Demo →</a>
+ <button type="button" data-book style="background:#fff;color:var(--black);padding:11px 22px;border-radius:6px;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:opacity .2s" onmouseover="this.style.opacity='.84'" onmouseout="this.style.opacity='1'">Book Free Demo →</button>
  </div>
  </div>
 
  <div class="sec-cta rv">
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black">Schedule a Consultation →</a>
+ <button type="button" data-book class="btn btn-black">Schedule a Consultation →</button>
  <a href="#dashboards" class="btn btn-outline2">View Live Dashboards</a>
  </div>
 </section>
@@ -384,7 +384,7 @@
    <div><div class="sol-metric-v">3&times;</div><div class="sol-metric-l">Faster launch</div></div>
    <div><div class="sol-metric-v">0</div><div class="sol-metric-l">Manual entry</div></div>
   </div>
-  <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="sol-arrow">Explore ecommerce →</a>
+  <button type="button" data-book class="sol-arrow">Explore ecommerce →</button>
  </div>
 
  <!-- Marketing Solutions -->
@@ -430,7 +430,7 @@
    </div>
   </div>
 
-  <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="sol-arrow">Explore marketing →</a>
+  <button type="button" data-book class="sol-arrow">Explore marketing →</button>
  </div>
 
  </div>
@@ -558,7 +558,7 @@
 
   </div>
   <div class="sec-cta rv">
-    <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black" style="background:#fff;color:#0a1310">Discuss Technical Requirements →</a>
+    <button type="button" data-book class="btn btn-black" style="background:#fff;color:#0a1310">Discuss Technical Requirements →</button>
     <a href="#functions" class="btn btn-outline2" style="color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.2)">View All Modules</a>
   </div>
 </section>
@@ -609,7 +609,7 @@
       <li>Faster reporting workflows and billing automation</li>
       <li>Improved multi-site project management controls</li>
     </ul>
-    <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-outline2 btn-sm" style="margin-top:1.1rem;align-self:flex-start">Read Case Study →</a>
+    <button type="button" data-book class="btn btn-outline2 btn-sm" style="margin-top:1.1rem;align-self:flex-start">Read Case Study →</button>
   </div>
  </div>
  <div class="case-card rv d2">
@@ -653,7 +653,7 @@
       <li>Improved scheduling efficiency and capacity</li>
       <li>Centralized billing and cross-branch reporting</li>
     </ul>
-    <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-outline2 btn-sm" style="margin-top:1.1rem;align-self:flex-start">Read Case Study →</a>
+    <button type="button" data-book class="btn btn-outline2 btn-sm" style="margin-top:1.1rem;align-self:flex-start">Read Case Study →</button>
   </div>
  </div>
  <div class="case-card rv d3">
@@ -694,12 +694,12 @@
       <li>Better client and pipeline management</li>
       <li>Measurable increase in team productivity</li>
     </ul>
-    <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-outline2 btn-sm" style="margin-top:1.1rem;align-self:flex-start">Read Case Study →</a>
+    <button type="button" data-book class="btn btn-outline2 btn-sm" style="margin-top:1.1rem;align-self:flex-start">Read Case Study →</button>
   </div>
  </div>
  </div>
  <div class="sec-cta rv">
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black">Start Your Success Story →</a>
+ <button type="button" data-book class="btn btn-black">Start Your Success Story →</button>
  </div>
 </section>
 
@@ -737,7 +737,7 @@
  <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Automated contractor & billing workflows</div>
  <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Unified inventory &amp; vendor management</div>
  </div>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="ind-cta">Explore Construction OS →</a>
+ <button type="button" data-book class="ind-cta">Explore Construction OS →</button>
  </div>
  </div>
 
@@ -765,7 +765,7 @@
  <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Automated billing &amp; WhatsApp reminders</div>
  <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Multi-branch centralized reporting</div>
  </div>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="ind-cta">Explore Healthcare OS →</a>
+ <button type="button" data-book class="ind-cta">Explore Healthcare OS →</button>
  </div>
  </div>
 
@@ -796,7 +796,7 @@
  <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Predictive inventory restocking alerts</div>
  <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Digital QC workflows &amp; reporting</div>
  </div>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="ind-cta">Explore Manufacturing OS →</a>
+ <button type="button" data-book class="ind-cta">Explore Manufacturing OS →</button>
  </div>
  </div>
 
@@ -826,7 +826,7 @@
  <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Unified CRM + project + billing view</div>
  <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Team tasks, timelines &amp; reports</div>
  </div>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="ind-cta">Explore Agency OS →</a>
+ <button type="button" data-book class="ind-cta">Explore Agency OS →</button>
  </div>
  </div>
 
@@ -854,7 +854,7 @@
  <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Customer CRM + loyalty automation</div>
  <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>End-to-end order management</div>
  </div>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="ind-cta">Explore Retail OS →</a>
+ <button type="button" data-book class="ind-cta">Explore Retail OS →</button>
  </div>
  </div>
 
@@ -884,14 +884,14 @@
  <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Digital POD &amp; auto-invoicing</div>
  <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Compliance document automation</div>
  </div>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="ind-cta">Explore Logistics OS →</a>
+ <button type="button" data-book class="ind-cta">Explore Logistics OS →</button>
  </div>
  </div>
 
  </div><!-- /ind-grid -->
 
  <div class="sec-cta rv" style="margin-top:3rem">
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black">Find Your Industry Solution →</a>
+ <button type="button" data-book class="btn btn-black">Find Your Industry Solution →</button>
  <a href="#cases" class="btn btn-outline2">See Case Studies</a>
  </div>
 </section>
@@ -952,7 +952,7 @@
  </div>
  </div>
  <div class="sec-cta rv">
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black" style="background:#fff;color:#0a1310">Partner With Us →</a>
+ <button type="button" data-book class="btn btn-black" style="background:#fff;color:#0a1310">Partner With Us →</button>
  <a href="#cases" class="btn btn-outline2" style="color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.2)">See Case Studies</a>
  </div>
 </section>
@@ -1144,8 +1144,8 @@
 
  </div><!-- /dash-grid -->
  <div class="sec-cta rv" style="margin-top:3rem">
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black">Book a Live Demo →</a>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-outline2">Schedule Consultation</a>
+ <button type="button" data-book class="btn btn-black">Book a Live Demo →</button>
+ <button type="button" data-book class="btn btn-outline2">Schedule Consultation</button>
  </div>
 </section>
 
@@ -1156,8 +1156,8 @@
  <h2 class="cta-h rv">Build your<br><span class="fade">business</span> <span class="gr">ERP</span><br><span class="gr2">OS</span> with <span class="gr3">AI</span></h2>
  <p class="cta-p rv">Digitize, automate, and scale with Drawlead. Start with a free consultation — no commitment needed.</p>
  <div class="cta-btns rv">
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="cta-btn-w">Schedule Free Consultation →</a>
- <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="cta-btn-g">Book a Product Demo</a>
+ <button type="button" data-book class="cta-btn-w">Schedule Free Consultation →</button>
+ <button type="button" data-book class="cta-btn-g">Book a Product Demo</button>
  </div>
  <div class="cta-note rv">செயலை மாற்றும் · Intelligent Operating System · Secure · Scalable · Future-Ready</div>
 </section>
