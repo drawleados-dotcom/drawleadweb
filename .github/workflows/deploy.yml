@@ -1,4 +1,4 @@
-name: Deploy to Hostinger (staging: admin.drawlead.com)
+name: Deploy to Hostinger — admin.drawlead.com (staging)
 
 # Runs on every push to main: uploads the changed files to the Hostinger
 # subdomain via FTP/SFTP. It never deletes or overwrites includes/config.php
