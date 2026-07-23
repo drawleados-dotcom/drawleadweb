@@ -11,7 +11,59 @@ $activePage = $activePage ?? '';
  <ul class="nav-links">
  <li><a href="/"<?= $activePage === 'home' ? ' style="color:var(--black)"' : '' ?>>Home</a></li>
  <li><a href="/#functions">Platform</a></li>
- <li><a href="/#solutions">Solutions</a></li>
+ <li class="has-mega">
+   <a href="/#solutions">Solutions</a>
+   <div class="mega-panel">
+    <div class="mega-inner">
+
+     <div class="mega-col">
+      <div class="mega-col-icon" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+       <svg width="19" height="19" viewBox="0 0 40 40" fill="none"><rect x="5" y="5" width="13" height="13" rx="2.5" fill="white"/><rect x="22" y="5" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.6)"/><rect x="5" y="22" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.6)"/><rect x="22" y="22" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.85)"/><path d="M18 11.5 L22 11.5 M11.5 18 L11.5 22 M28.5 18 L28.5 22 M18 28.5 L22 28.5" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="mega-col-title">Custom ERP Solution</div>
+      <ul class="mega-list">
+       <li>Custom modules for your exact operating process</li>
+       <li>Role-based access, approvals &amp; audit trails</li>
+       <li>Migration from spreadsheets &amp; legacy systems</li>
+      </ul>
+      <a href="/custom-operational-solutions.html" class="mega-know">Know More →</a>
+     </div>
+
+     <div class="mega-col">
+      <div class="mega-col-icon" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+       <svg width="19" height="19" viewBox="0 0 40 40" fill="none"><path d="M4 10 L10 10 L14 27 L32 27" stroke="rgba(255,255,255,.55)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.5 14 L35 14 L32 24 L13.8 24 Z" fill="white"/><circle cx="16" cy="33" r="3" fill="rgba(255,255,255,.85)"/><circle cx="30" cy="33" r="3" fill="rgba(255,255,255,.85)"/></svg>
+      </div>
+      <div class="mega-col-title">Ecommerce Solutions</div>
+      <ul class="mega-list">
+       <li>Shopify, WooCommerce &amp; custom storefront builds</li>
+       <li>Live inventory sync across every sales channel</li>
+       <li>Automated order, invoice &amp; GST workflows</li>
+      </ul>
+      <a href="/#solutions" class="mega-know">Know More →</a>
+     </div>
+
+     <div class="mega-col">
+      <div class="mega-col-icon" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+       <svg width="19" height="19" viewBox="0 0 40 40" fill="none"><path d="M4 6 L36 6 L24 21 L24 34 L16 30 L16 21 Z" fill="white"/><path d="M16 21 L24 21 L24 27 L16 27 Z" fill="rgba(255,255,255,.55)"/><path d="M4 6 L36 6 L31 12 L9 12 Z" fill="rgba(255,255,255,.6)"/></svg>
+      </div>
+      <div class="mega-col-title">Marketing Solutions</div>
+      <ul class="mega-list">
+       <li>Technical SEO, Core Web Vitals &amp; site architecture</li>
+       <li>Google, Meta &amp; LinkedIn performance campaigns</li>
+       <li>Instant WhatsApp &amp; email follow-up on every lead</li>
+      </ul>
+      <a href="/#solutions" class="mega-know">Know More →</a>
+     </div>
+
+     <div class="mega-cta">
+      <div class="mega-cta-title">Not sure which fits?</div>
+      <p class="mega-cta-text">Get a free consultation and we'll map the right solution to your business.</p>
+      <button type="button" data-book class="mega-cta-btn">Book a Free Consultation →</button>
+     </div>
+
+    </div>
+   </div>
+  </li>
  <li><a href="/#cases">Case Studies</a></li>
  <li><a href="/#industries">Industries</a></li>
  <li><a href="/blog"<?= $activePage === 'blog' ? ' style="color:var(--black)"' : '' ?>>Blog</a></li>

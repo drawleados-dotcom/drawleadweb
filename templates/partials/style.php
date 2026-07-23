@@ -954,3 +954,34 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  .unify-card{animation-duration:.01s,.01s;animation-iteration-count:1,1}
  .unify-ring{animation:none}
 }
+
+/* ══════════════════ NAV MEGA MENU ══════════════════ */
+.mega-panel{
+ position:absolute;top:100%;left:0;right:0;
+ display:flex;justify-content:center;
+ opacity:0;visibility:hidden;transform:translateY(-6px);
+ transition:opacity .18s ease,transform .18s ease,visibility .18s;
+ pointer-events:none;
+}
+.has-mega:hover .mega-panel,.has-mega:focus-within .mega-panel{
+ opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;
+}
+.mega-inner{
+ width:min(980px,94vw);margin-top:14px;
+ background:var(--white);border:1.5px solid var(--border);border-radius:14px;
+ box-shadow:0 30px 70px rgba(0,0,0,.16);padding:1.75rem;
+ display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;
+}
+.mega-col{display:flex;flex-direction:column}
+.mega-col-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:.85rem;box-shadow:0 6px 16px rgba(0,0,0,.15)}
+.mega-col-title{font-size:13.5px;font-weight:800;letter-spacing:-.01em;margin-bottom:.75rem;color:var(--black)}
+.mega-list{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.1rem;flex:1}
+.mega-list li{font-size:11.5px;color:var(--g500);line-height:1.5;padding-left:14px;position:relative}
+.mega-list li::before{content:'';position:absolute;left:0;top:.5em;width:5px;height:5px;border-radius:50%;background:#32b46f}
+.mega-know{font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;font-family:var(--font);padding:0;transition:gap .15s}
+.mega-know:hover{gap:8px}
+.mega-cta{background:var(--black);border-radius:12px;padding:1.4rem 1.25rem;display:flex;flex-direction:column;justify-content:center;gap:.6rem}
+.mega-cta-title{font-size:14px;font-weight:800;color:#fff;line-height:1.25}
+.mega-cta-text{font-size:11px;color:rgba(255,255,255,.5);line-height:1.55}
+.mega-cta-btn{margin-top:.4rem;background:#fff;color:var(--black);border:none;border-radius:6px;padding:10px 14px;font-family:var(--font);font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;text-align:center;transition:opacity .2s}
+.mega-cta-btn:hover{opacity:.85}
