@@ -71,13 +71,11 @@ In your new GitHub repo → **Settings** → **Secrets and variables** →
 | `FTP_USERNAME` | the FTP username from Step 4 |
 | `FTP_PASSWORD` | the FTP password from Step 4 |
 
-**Variables** (same screen, "Variables" tab — optional, only if your
-setup differs from the defaults baked into `.github/workflows/deploy.yml`):
-| Name | Value | When needed |
-|---|---|---|
-| `DEPLOY_SERVER_DIR` | the exact folder path from Step 1 | Almost always — the default `/public_html/` is very unlikely to be your actual subdomain folder. **Set this one.** |
-| `DEPLOY_PROTOCOL` | `sftp` | Only if your Hostinger plan gives you SSH access (hPanel → Advanced → SSH Access) and you'd rather use it than plain FTPS. Otherwise leave unset — FTPS works on every plan. |
-| `DEPLOY_PORT` | `22` | Only if you set `DEPLOY_PROTOCOL` to `sftp`. |
+**Variables** (same screen, "Variables" tab) — not needed for this setup,
+the workflow already defaults to the right folder (`/drawlead_webapp/`,
+relative to the FTP account's own root at `/public_html/`). Only add
+`DEPLOY_SERVER_DIR` if that folder ever changes, or `DEPLOY_PROTOCOL` =
+`sftp` + `DEPLOY_PORT` = `22` if you later switch to SSH-based deploys.
 
 ## Step 6 — Push and watch the first deploy
 

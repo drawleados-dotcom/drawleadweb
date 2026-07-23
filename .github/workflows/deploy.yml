@@ -30,9 +30,10 @@ jobs:
           # see DEPLOYMENT.md. FTPS works on every Hostinger plan.
           protocol: ${{ vars.DEPLOY_PROTOCOL || 'ftps' }}
           port: ${{ vars.DEPLOY_PORT || 21 }}
-          # Must match the exact server folder Hostinger created for the
-          # admin.drawlead.com subdomain — see DEPLOYMENT.md step 2.
-          server-dir: ${{ vars.DEPLOY_SERVER_DIR || '/public_html/' }}
+          # admin.drawlead.com's document root, relative to the FTP
+          # account's own root (which is already /public_html/). Override
+          # with the DEPLOY_SERVER_DIR repo variable if this ever changes.
+          server-dir: ${{ vars.DEPLOY_SERVER_DIR || '/drawlead_webapp/' }}
           dangerous-clean-slate: false
           exclude: |
             **/.git*
