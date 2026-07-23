@@ -172,7 +172,14 @@ function csrf_verify(): void
  */
 function publish_due_scheduled_posts(PDO $pdo): void
 {
-    $pdo->exec("UPDATE blogs SET status = 'published' WHERE status = 'scheduled' AND scheduled_at <= NOW()");
+    // Best-effort housekeeping, called on every page load — must never be
+    // allowed to take the site down (e.g. if a migration adding the
+    // scheduled_at column hasn't been run yet on this database).
+    try {
+        $pdo->exec("UPDATE blogs SET status = 'published' WHERE status = 'scheduled' AND scheduled_at <= NOW()");
+    } catch (PDOException $e) {
+        error_log('publish_due_scheduled_posts skipped: ' . $e->getMessage());
+    }
 }
 
 // ── Booking system ──
