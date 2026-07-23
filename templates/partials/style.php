@@ -967,10 +967,10 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;
 }
 .mega-inner{
- width:min(980px,94vw);margin-top:14px;
+ width:min(1320px,96vw);margin-top:14px;
  background:var(--white);border:1.5px solid var(--border);border-radius:14px;
- box-shadow:0 30px 70px rgba(0,0,0,.16);padding:1.75rem;
- display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;
+ box-shadow:0 30px 70px rgba(0,0,0,.16);padding:2rem 2.25rem;
+ display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;
 }
 .mega-col{display:flex;flex-direction:column}
 .mega-col-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:.85rem;box-shadow:0 6px 16px rgba(0,0,0,.15)}

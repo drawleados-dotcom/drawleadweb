@@ -64,7 +64,59 @@ $activePage = $activePage ?? '';
     </div>
    </div>
   </li>
- <li><a href="/#cases">Case Studies</a></li>
+ <li class="has-mega">
+   <a href="/#cases">Case Studies</a>
+   <div class="mega-panel">
+    <div class="mega-inner">
+
+     <div class="mega-col">
+      <div class="mega-col-icon" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+       <svg width="19" height="19" viewBox="0 0 40 40" fill="none"><rect x="6" y="18" width="8" height="16" fill="white"/><rect x="16" y="10" width="8" height="24" fill="rgba(255,255,255,.75)"/><rect x="26" y="4" width="8" height="30" fill="rgba(255,255,255,.55)"/></svg>
+      </div>
+      <div class="mega-col-title">Construction &amp; Real Estate</div>
+      <ul class="mega-list">
+       <li>Better operational visibility across all project sites</li>
+       <li>Faster reporting workflows and billing automation</li>
+       <li>Improved multi-site project management controls</li>
+      </ul>
+      <a href="/#cases" class="mega-know">Know More →</a>
+     </div>
+
+     <div class="mega-col">
+      <div class="mega-col-icon" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+       <svg width="19" height="19" viewBox="0 0 40 40" fill="none"><path d="M20 4 L34 10 L34 22 Q34 32 20 37 Q6 32 6 22 L6 10 Z" fill="rgba(255,255,255,.85)"/><path d="M20 12 L20 26 M13 19 L27 19" stroke="#14855a" stroke-width="3.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="mega-col-title">Healthcare &amp; Wellness</div>
+      <ul class="mega-list">
+       <li>Streamlined clinic workflows across branches</li>
+       <li>Improved scheduling efficiency and capacity</li>
+       <li>Centralized billing and cross-branch reporting</li>
+      </ul>
+      <a href="/#cases" class="mega-know">Know More →</a>
+     </div>
+
+     <div class="mega-col">
+      <div class="mega-col-icon" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+       <svg width="19" height="19" viewBox="0 0 40 40" fill="none"><path d="M20 4 L24 16 L37 20 L24 24 L20 37 L16 24 L3 20 L16 16 Z" fill="white"/></svg>
+      </div>
+      <div class="mega-col-title">Marketing Agencies</div>
+      <ul class="mega-list">
+       <li>Improved team collaboration and project delivery</li>
+       <li>Better client and pipeline management</li>
+       <li>Measurable increase in team productivity</li>
+      </ul>
+      <a href="/#cases" class="mega-know">Know More →</a>
+     </div>
+
+     <div class="mega-cta">
+      <div class="mega-cta-title">Want results like these?</div>
+      <p class="mega-cta-text">See how Drawlead can do the same for your business — starting with a free call.</p>
+      <button type="button" data-book class="mega-cta-btn">Book a Free Consultation →</button>
+     </div>
+
+    </div>
+   </div>
+  </li>
  <li><a href="/#industries">Industries</a></li>
  <li><a href="/blog"<?= $activePage === 'blog' ? ' style="color:var(--black)"' : '' ?>>Blog</a></li>
  <li><a href="/about-us"<?= $activePage === 'about-us' ? ' style="color:var(--black)"' : '' ?>>About Us</a></li>
