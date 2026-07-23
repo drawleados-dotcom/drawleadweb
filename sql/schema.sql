@@ -106,6 +106,24 @@ CREATE TABLE IF NOT EXISTS bookings (
   UNIQUE KEY uniq_slot (booking_date, booking_time)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- ── WhatsApp-style lead-capture chat widget ──
+
+CREATE TABLE IF NOT EXISTS whatsapp_flow_steps (
+  id           INT AUTO_INCREMENT PRIMARY KEY,
+  step_order   INT NOT NULL DEFAULT 0,
+  message      TEXT NOT NULL,
+  step_type    ENUM('choice','text') NOT NULL DEFAULT 'choice',
+  options      TEXT NULL,
+  created_at   DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS whatsapp_leads (
+  id          INT AUTO_INCREMENT PRIMARY KEY,
+  answers     LONGTEXT NOT NULL,
+  phone       VARCHAR(40) NOT NULL,
+  created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- ── Seed data ──
 
 INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
@@ -131,6 +149,11 @@ INSERT IGNORE INTO booking_form_fields (field_key, label, field_type, field_role
 ('email', 'Email Address', 'email', 'email', 'you@company.com', 1, 2),
 ('phone', 'Phone Number', 'phone', 'none', '+91 98765 43210', 1, 3),
 ('company', 'Company Name', 'text', 'none', 'Your business name', 0, 4);
+
+INSERT INTO whatsapp_flow_steps (step_order, message, step_type, options)
+SELECT 1, 'Hi! Welcome to Drawlead — your digital solutions partner. What problem do you need solved?', 'choice',
+       '["Custom ERP Solution / Software","Ecommerce Solutions","Marketing Solutions"]'
+WHERE NOT EXISTS (SELECT 1 FROM whatsapp_flow_steps);
 
 -- No default user is created here on purpose — the first time you open
 -- /admin/login.php with an empty `users` table, it redirects to

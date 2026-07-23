@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../includes/bootstrap.php';
 require_admin();
 
-$tab = ($_GET['tab'] ?? 'availability') === 'form' ? 'form' : 'availability';
+$tab = in_array($_GET['tab'] ?? '', ['availability', 'form'], true) ? $_GET['tab'] : 'bookings';
 
 $error = '';
 $success = '';
@@ -124,6 +124,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'reord
     $success = 'Field order saved.';
 }
 
+// ── Cancel a booking (frees the slot back up) ──
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'cancel_booking') {
+    csrf_verify();
+    $tab = 'bookings';
+    $bookingId = (int) ($_POST['booking_id'] ?? 0);
+    $pdo->prepare("UPDATE bookings SET status = 'cancelled' WHERE id = ?")->execute([$bookingId]);
+    $success = 'Booking cancelled — that time slot is available again.';
+}
+
 $availability = get_booking_availability($pdo);
 $notificationEmails = get_booking_notification_emails($pdo);
 $fields = get_booking_form_fields($pdo);
@@ -141,6 +150,15 @@ if ($tab === 'form' && !empty($_GET['edit'])) {
 
 $dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+$bookings = [];
+$fieldLabelByKey = [];
+if ($tab === 'bookings') {
+    $bookings = $pdo->query('SELECT * FROM bookings ORDER BY booking_date DESC, booking_time DESC')->fetchAll();
+    foreach ($fields as $f) {
+        $fieldLabelByKey[$f['field_key']] = $f['label'];
+    }
+}
+
 $pageTitle = 'Calendar & Booking';
 $pageSub = 'Configure consultation availability and the booking form.';
 $activeNav = 'calendar';
@@ -151,11 +169,58 @@ include __DIR__ . '/includes/header.php';
 <?php if ($success): ?><div class="alert alert-success"><?= h($success) ?></div><?php endif; ?>
 
 <div class="tabs">
+  <a href="calendar.php?tab=bookings" class="tab-link <?= $tab === 'bookings' ? 'active' : '' ?>">Bookings</a>
   <a href="calendar.php?tab=availability" class="tab-link <?= $tab === 'availability' ? 'active' : '' ?>">Availability</a>
   <a href="calendar.php?tab=form" class="tab-link <?= $tab === 'form' ? 'active' : '' ?>">Booking Form</a>
 </div>
 
-<?php if ($tab === 'availability'): ?>
+<?php if ($tab === 'bookings'): ?>
+
+<div class="card">
+  <div class="card-title">All Bookings</div>
+  <div class="card-desc"><?= count($bookings) ?> total. Newest first.</div>
+  <?php if (empty($bookings)): ?>
+    <div class="empty-state">
+      <p>No consultations booked yet.</p>
+    </div>
+  <?php else: ?>
+  <table>
+    <thead><tr><th>Date &amp; Time</th><th>Name</th><th>Email</th><th>Details</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      <?php foreach ($bookings as $b):
+        $data = json_decode($b['form_data'], true) ?: [];
+      ?>
+      <tr>
+        <td class="t-name"><?= h(date('M j, Y', strtotime($b['booking_date']))) ?><div class="t-sub"><?= h(date('g:i A', strtotime($b['booking_time']))) ?></div></td>
+        <td><?= h($b['name'] ?: '—') ?></td>
+        <td><?= h($b['email'] ?: '—') ?></td>
+        <td>
+          <?php foreach ($data as $key => $val):
+            if ($val === '' || $val === [] || in_array($key, ['name', 'email'], true)) continue;
+            $val = is_array($val) ? implode(', ', $val) : $val;
+          ?>
+            <div class="t-sub"><strong><?= h($fieldLabelByKey[$key] ?? $key) ?>:</strong> <?= h($val) ?></div>
+          <?php endforeach; ?>
+        </td>
+        <td><span class="badge <?= $b['status'] === 'confirmed' ? 'badge-published' : 'badge-draft' ?>"><?= h($b['status']) ?></span></td>
+        <td>
+          <?php if ($b['status'] === 'confirmed'): ?>
+          <form method="post" onsubmit="return confirm('Cancel this booking? The time slot will open back up.');">
+            <?= csrf_field() ?>
+            <input type="hidden" name="action" value="cancel_booking">
+            <input type="hidden" name="booking_id" value="<?= (int) $b['id'] ?>">
+            <button type="submit" class="row-link" style="background:none;border:none;color:#e11d48;cursor:pointer;font:inherit;padding:0">Cancel</button>
+          </form>
+          <?php endif; ?>
+        </td>
+      </tr>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
+  <?php endif; ?>
+</div>
+
+<?php elseif ($tab === 'availability'): ?>
 
 <form method="post">
   <?= csrf_field() ?>

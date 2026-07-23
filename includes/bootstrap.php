@@ -207,7 +207,7 @@ function pending_migrations_exist(PDO $pdo): bool
     if (!migration_column_exists($pdo, 'blogs', 'scheduled_at')) {
         return true;
     }
-    foreach (['booking_availability', 'booking_form_fields', 'bookings', 'booking_notification_emails'] as $t) {
+    foreach (['booking_availability', 'booking_form_fields', 'bookings', 'booking_notification_emails', 'whatsapp_flow_steps', 'whatsapp_leads'] as $t) {
         if (!migration_table_exists($pdo, $t)) {
             return true;
         }

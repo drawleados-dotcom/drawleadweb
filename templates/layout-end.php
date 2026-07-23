@@ -25,5 +25,8 @@ document.querySelectorAll('.rv, .ind-card').forEach(el=>obs.observe(el));
 
 <?php include __DIR__ . '/partials/booking-modal.php'; ?>
 <script src="/assets/booking.js"></script>
+
+<?php include __DIR__ . '/partials/whatsapp-widget.php'; ?>
+<script src="/assets/whatsapp.js"></script>
 </body>
 </html>

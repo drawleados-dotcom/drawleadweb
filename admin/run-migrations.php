@@ -69,6 +69,32 @@ function migration_003_statements(): array
     ];
 }
 
+function migration_004_statements(): array
+{
+    return [
+        "CREATE TABLE IF NOT EXISTS whatsapp_flow_steps (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            step_order INT NOT NULL DEFAULT 0,
+            message TEXT NOT NULL,
+            step_type ENUM('choice','text') NOT NULL DEFAULT 'choice',
+            options TEXT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+
+        "INSERT INTO whatsapp_flow_steps (step_order, message, step_type, options)
+         SELECT 1, 'Hi! Welcome to Drawlead — your digital solutions partner. What problem do you need solved?', 'choice',
+                '[\"Custom ERP Solution / Software\",\"Ecommerce Solutions\",\"Marketing Solutions\"]'
+         WHERE NOT EXISTS (SELECT 1 FROM whatsapp_flow_steps)",
+
+        "CREATE TABLE IF NOT EXISTS whatsapp_leads (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            answers LONGTEXT NOT NULL,
+            phone VARCHAR(40) NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -81,6 +107,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '003' || $which === 'all') {
         $toRun['003'] = migration_003_statements();
+    }
+    if ($which === '004' || $which === 'all') {
+        $toRun['004'] = migration_004_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -107,6 +136,8 @@ $migration003Done = migration_table_exists($pdo, 'booking_availability')
     && migration_table_exists($pdo, 'booking_form_fields')
     && migration_table_exists($pdo, 'bookings')
     && migration_table_exists($pdo, 'booking_notification_emails');
+$migration004Done = migration_table_exists($pdo, 'whatsapp_flow_steps')
+    && migration_table_exists($pdo, 'whatsapp_leads');
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -143,7 +174,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done): ?>
+<div class="card">
+  <div class="card-title">004 — WhatsApp lead-capture chat widget</div>
+  <div class="card-desc">Creates whatsapp_flow_steps and whatsapp_leads tables, and seeds the first question.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration004Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration004Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration004Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="004">
+    <button type="submit" class="btn btn-primary">Run Migration 004</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

@@ -46,6 +46,10 @@ $activeNav = $activeNav ?? '';
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
         Calendar
       </a>
+      <a class="side-link<?= $activeNav === 'whatsapp' ? ' active' : '' ?>" href="whatsapp.php">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.05-5.4A8.5 8.5 0 1 1 21 11.5z"/></svg>
+        WhatsApp
+      </a>
       <?php endif; ?>
       <a class="side-link<?= $activeNav === 'analytics' ? ' active' : '' ?>" href="analytics.php">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>

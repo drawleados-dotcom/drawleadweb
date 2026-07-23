@@ -780,3 +780,76 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
   .booking-right{padding:1.5rem 1.25rem;overflow-y:auto}
   .bslots-grid{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ══════════════════ WHATSAPP WIDGET ══════════════════ */
+.wa-fab{
+ position:fixed;right:22px;bottom:22px;z-index:900;
+ width:58px;height:58px;border-radius:50%;background:#25D366;border:none;cursor:pointer;
+ display:flex;align-items:center;justify-content:center;
+ box-shadow:0 8px 24px rgba(37,211,102,.45);transition:transform .2s;
+}
+.wa-fab:hover{transform:scale(1.07)}
+.wa-fab.wa-hide{display:none}
+
+.wa-panel{
+ position:fixed;right:22px;bottom:92px;z-index:900;
+ width:360px;max-width:calc(100vw - 32px);height:min(560px,calc(100vh - 130px));
+ background:#E5DDD5;border-radius:14px;overflow:hidden;
+ box-shadow:0 24px 60px rgba(0,0,0,.3);
+ display:flex;flex-direction:column;
+ opacity:0;transform:translateY(16px) scale(.97);pointer-events:none;
+ transform-origin:bottom right;transition:opacity .18s ease,transform .18s ease;
+}
+.wa-panel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+
+.wa-header{background:#075E54;color:#fff;padding:12px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.wa-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(115deg,#32b46f,#14855a);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex-shrink:0}
+.wa-header-info{flex:1;min-width:0}
+.wa-header-name{font-size:14.5px;font-weight:700}
+.wa-header-status{font-size:11px;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:5px;margin-top:1px}
+.wa-dot{width:6px;height:6px;border-radius:50%;background:#4ADE80;flex-shrink:0}
+.wa-close{background:none;border:none;color:#fff;font-size:22px;line-height:1;cursor:pointer;padding:4px;opacity:.85}
+.wa-close:hover{opacity:1}
+
+.wa-body{
+ flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:8px;
+ background-color:#E5DDD5;
+ background-image:radial-gradient(rgba(0,0,0,.035) 1px,transparent 1px);
+ background-size:16px 16px;
+}
+.wa-date-chip{align-self:center;background:rgba(255,255,255,.65);color:#5b6b73;font-size:10.5px;font-weight:700;padding:4px 11px;border-radius:8px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+
+.wa-msg{max-width:82%;padding:7px 9px 8px;font-size:13.5px;line-height:1.45;color:#111b21;box-shadow:0 1px 1px rgba(0,0,0,.1);position:relative}
+.wa-msg-bot{align-self:flex-start;background:#fff;border-radius:2px 8px 8px 8px}
+.wa-msg-user{align-self:flex-end;background:#DCF8C6;border-radius:8px 2px 8px 8px}
+.wa-msg-time{display:block;font-size:9.5px;color:#8a959a;text-align:right;margin-top:3px}
+
+.wa-typing{align-self:flex-start;background:#fff;border-radius:2px 8px 8px 8px;padding:10px 12px;box-shadow:0 1px 1px rgba(0,0,0,.1);display:flex;gap:4px}
+.wa-typing span{width:6px;height:6px;border-radius:50%;background:#9fa6a9;animation:wa-bounce 1.2s infinite}
+.wa-typing span:nth-child(2){animation-delay:.15s}
+.wa-typing span:nth-child(3){animation-delay:.3s}
+@keyframes wa-bounce{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+
+.wa-choices{align-self:flex-start;display:flex;flex-direction:column;gap:6px;max-width:82%;margin-top:-2px}
+.wa-choice-btn{
+ font-family:var(--font);font-size:12.5px;font-weight:600;color:#075E54;
+ background:#fff;border:1.5px solid #cfe8e1;border-radius:8px;padding:9px 12px;
+ cursor:pointer;text-align:left;transition:all .15s;
+}
+.wa-choice-btn:hover:not(:disabled){background:#e9f9f0;border-color:#25D366}
+.wa-choice-btn:disabled{opacity:.5;cursor:default}
+
+.wa-input-bar{flex-shrink:0;background:#F0F0F0;padding:9px 10px;display:flex;align-items:center;gap:8px;position:relative}
+.wa-input{
+ flex:1;font-family:var(--font);font-size:13.5px;padding:10px 14px;border:none;border-radius:20px;
+ background:#fff;color:#111b21;
+}
+.wa-input:disabled{color:#9aa1a4}
+.wa-input:focus{outline:none}
+.wa-send{width:36px;height:36px;border-radius:50%;background:#25D366;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .15s}
+.wa-send:disabled{opacity:.45;cursor:not-allowed}
+
+@media(max-width:480px){
+ .wa-panel{right:16px;bottom:84px;width:calc(100vw - 32px);height:min(70vh,560px)}
+ .wa-fab{right:16px;bottom:16px}
+}
