@@ -334,6 +334,66 @@
  </div>
 </section>
 
+<!-- ═══════════════════ APP CHAOS → SMART BOARD ═══════════════════ -->
+<section id="unify">
+ <div class="grid-bg" style="opacity:.4"></div>
+ <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">The Problem</span><div class="eyebrow-line"></div></div>
+ <h2 class="sec-h rv">Stop running your business from <span class="g">a dozen different tabs</span></h2>
+ <p class="sec-sub rv">Google Sheets, Zoho CRM, WhatsApp, Notion, billing software, phone calls — your business data is scattered everywhere. Drawlead brings it all into one Smart Board.</p>
+
+ <div class="unify-visual rv">
+  <svg class="unify-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+   <line x1="50" y1="50" x2="90" y2="50" class="unify-line" style="animation-delay:.1s"></line>
+   <line x1="50" y1="50" x2="78.3" y2="78.3" class="unify-line" style="animation-delay:.3s"></line>
+   <line x1="50" y1="50" x2="50" y2="90" class="unify-line" style="animation-delay:.5s"></line>
+   <line x1="50" y1="50" x2="21.7" y2="78.3" class="unify-line" style="animation-delay:.7s"></line>
+   <line x1="50" y1="50" x2="10" y2="50" class="unify-line" style="animation-delay:.9s"></line>
+   <line x1="50" y1="50" x2="21.7" y2="21.7" class="unify-line" style="animation-delay:1.1s"></line>
+   <line x1="50" y1="50" x2="50" y2="10" class="unify-line" style="animation-delay:1.3s"></line>
+   <line x1="50" y1="50" x2="78.3" y2="21.7" class="unify-line" style="animation-delay:1.5s"></line>
+  </svg>
+
+  <div class="unify-chip" style="left:90%;top:50%;animation-delay:.1s">📊<span>Sheets</span></div>
+  <div class="unify-chip" style="left:78.3%;top:78.3%;animation-delay:.3s">💬<span>WhatsApp</span></div>
+  <div class="unify-chip" style="left:50%;top:90%;animation-delay:.5s">🧾<span>Bill Book</span></div>
+  <div class="unify-chip" style="left:21.7%;top:78.3%;animation-delay:.7s">📞<span>Calls</span></div>
+  <div class="unify-chip" style="left:10%;top:50%;animation-delay:.9s">👥<span>Zoho CRM</span></div>
+  <div class="unify-chip" style="left:21.7%;top:21.7%;animation-delay:1.1s">📝<span>Notion</span></div>
+  <div class="unify-chip" style="left:50%;top:10%;animation-delay:1.3s">📄<span>Docs</span></div>
+  <div class="unify-chip" style="left:78.3%;top:21.7%;animation-delay:1.5s">📧<span>Email</span></div>
+
+  <div class="unify-board">
+   <div class="unify-board-bar">
+    <span class="unify-board-dot" style="background:#e5534b"></span>
+    <span class="unify-board-dot" style="background:#f5a623"></span>
+    <span class="unify-board-dot" style="background:#32b46f"></span>
+    <span class="unify-board-title">Drawlead Smart Board</span>
+   </div>
+   <div class="unify-board-body">
+    <div class="d-krow">
+     <div class="d-k"><div class="d-kv" style="color:#32b46f">₹18.4L</div><div class="d-kl">Revenue</div></div>
+     <div class="d-k"><div class="d-kv">842</div><div class="d-kl">Orders</div></div>
+     <div class="d-k"><div class="d-kv" style="color:#14855a">96%</div><div class="d-kl">On-Time</div></div>
+    </div>
+    <div class="d-bars">
+     <div class="d-bar" style="height:45%;background:rgba(50,180,111,.35)"></div>
+     <div class="d-bar" style="height:65%;background:rgba(50,180,111,.5)"></div>
+     <div class="d-bar" style="height:40%;background:rgba(50,180,111,.35)"></div>
+     <div class="d-bar" style="height:85%;background:rgba(50,180,111,.7)"></div>
+     <div class="d-bar" style="height:60%;background:rgba(50,180,111,.5)"></div>
+     <div class="d-bar" style="height:95%;background:var(--grad)"></div>
+    </div>
+   </div>
+  </div>
+ </div>
+
+ <div class="unify-stat rv">8+ tools. <span class="g2">1</span> unified Smart Board.</div>
+
+ <div class="sec-cta rv">
+  <button type="button" data-book class="btn btn-black">See How It Works →</button>
+ </div>
+</section>
+
 <!-- ═══════════════════ SOLUTIONS ═══════════════════ -->
 <section id="solutions">
  <div class="grid-bg" style="opacity:.45"></div>

@@ -853,3 +853,49 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  .wa-panel{right:16px;bottom:84px;width:calc(100vw - 32px);height:min(70vh,560px)}
  .wa-fab{right:16px;bottom:16px}
 }
+
+/* ══════════════════ APP CHAOS → SMART BOARD ══════════════════ */
+#unify{background:var(--bg)}
+.unify-visual{position:relative;width:100%;max-width:600px;aspect-ratio:1;margin:0 auto 2.5rem}
+.unify-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.unify-line{stroke:#32b46f;stroke-width:.5;stroke-dasharray:3 2;opacity:0;animation:unify-line-in .6s ease forwards,unify-flow 3s linear infinite}
+@keyframes unify-line-in{to{opacity:.5}}
+@keyframes unify-flow{to{stroke-dashoffset:-20}}
+
+.unify-chip{
+ position:absolute;transform:translate(-50%,-50%);
+ display:flex;flex-direction:column;align-items:center;gap:3px;
+ background:var(--white);border:1.5px solid var(--border);border-radius:12px;
+ padding:10px 12px;box-shadow:0 6px 18px rgba(0,0,0,.08);
+ font-size:20px;opacity:0;z-index:1;
+ animation:unify-chip-in .5s ease forwards,unify-float 4s ease-in-out infinite;
+}
+.unify-chip span{font-size:9px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
+@keyframes unify-chip-in{to{opacity:1}}
+@keyframes unify-float{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-6px)}}
+
+.unify-board{
+ position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+ width:280px;background:var(--white);border:1.5px solid var(--border);border-radius:14px;
+ box-shadow:0 24px 60px rgba(0,0,0,.16);overflow:hidden;z-index:2;
+}
+.unify-board-bar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.unify-board-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.unify-board-title{margin-left:4px;font-size:9.5px;font-weight:700;color:var(--g500);letter-spacing:.03em;white-space:nowrap}
+.unify-board-body{padding:14px}
+
+.unify-stat{text-align:center;font-size:15px;font-weight:700;color:var(--g600)}
+.unify-stat .g2{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:22px;font-weight:800}
+
+@media(max-width:680px){
+ .unify-visual{max-width:340px}
+ .unify-chip{padding:6px 7px;font-size:14px;border-radius:8px;gap:2px}
+ .unify-chip span{font-size:6.5px}
+ .unify-board{width:210px}
+ .unify-board-body{padding:9px}
+ .unify-board-title{font-size:8px}
+ .unify-stat{font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){
+ .unify-chip,.unify-line{animation-duration:.01s,.01s;animation-iteration-count:1,1}
+}
