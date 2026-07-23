@@ -963,7 +963,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  transition:opacity .18s ease,transform .18s ease,visibility .18s;
  pointer-events:none;
 }
-.has-mega:hover .mega-panel,.has-mega:focus-within .mega-panel{
+.has-mega:hover .mega-panel,.has-mega:focus-within .mega-panel,.has-mega.mega-open .mega-panel{
  opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;
 }
 .mega-inner{

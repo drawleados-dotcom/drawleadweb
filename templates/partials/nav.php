@@ -123,3 +123,29 @@ $activePage = $activePage ?? '';
  </ul>
  <button type="button" data-book class="nav-btn">Free Consultation Call →</button>
 </nav>
+<script>
+(function(){
+ // Pure-CSS :hover closes the mega menu the instant the mouse leaves the
+ // trigger <li>, so a fast/diagonal move toward the panel below can drop
+ // out of :hover before reaching the buttons. This adds a short grace
+ // period (hover-intent) via a JS-driven class, on top of the existing
+ // CSS :hover/:focus-within, so the panel stays open long enough to reach.
+ document.querySelectorAll('.has-mega').forEach(function(li){
+  var closeTimer = null;
+  function open(){
+   clearTimeout(closeTimer);
+   li.classList.add('mega-open');
+  }
+  function scheduleClose(){
+   clearTimeout(closeTimer);
+   closeTimer = setTimeout(function(){ li.classList.remove('mega-open'); }, 350);
+  }
+  li.addEventListener('mouseenter', open);
+  li.addEventListener('mouseleave', scheduleClose);
+  li.addEventListener('focusin', open);
+  li.addEventListener('focusout', function(e){
+   if (!li.contains(e.relatedTarget)) scheduleClose();
+  });
+ });
+})();
+</script>
