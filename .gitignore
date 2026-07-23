@@ -1,0 +1,16 @@
+# Real secrets — never commit. Copy includes/config.sample.php instead.
+includes/config.php
+
+# User-uploaded content — not source code, and can get large.
+uploads/*
+!uploads/.htaccess
+
+# macOS
+.DS_Store
+
+# Editor/IDE
+.vscode/
+.idea/
+
+# Old scratch/local test artifacts
+*.log

@@ -1,0 +1,2147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drawlead | Intelligent Business Operating System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+ --bg:#f0f0ee;
+ --bg2:#e8e8e6;
+ --white:#ffffff;
+ --black:#111112;
+ --g200:#d8d8d4;
+ --g300:#c0c0bc;
+ --g400:#949490;
+ --g500:#70706c;
+ --g600:#4a4a48;
+ --border:#dcdcda;
+ --blue:#32b46f;
+ --violet:#14855a;
+ --grad:linear-gradient(110deg,#32b46f 0%,#14855a 100%);
+ --teal:#32b46f;
+ --rose:#e11d48;
+ --amber:#23a065;
+ --green:#32b46f;
+ --orange:#14855a;
+ --font:'Montserrat',sans-serif;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--black);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── GRID TEXTURE ── */
+.grid-bg{
+ position:absolute;inset:0;pointer-events:none;
+ background-image:linear-gradient(rgba(0,0,0,0.055) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.055) 1px,transparent 1px);
+ background-size:68px 68px;
+}
+
+/* ── NAV ── */
+nav{
+ position:fixed;top:0;left:0;right:0;z-index:200;
+ display:flex;align-items:center;justify-content:space-between;
+ padding:1rem 3.5rem;
+ background:rgba(240,240,238,0.9);
+ backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+ border-bottom:1px solid var(--border);
+}
+.logo{display:flex;align-items:center;line-height:1;text-decoration:none;flex-shrink:0}
+.logo img{height:44px;width:auto;display:block}
+.logo:hover{opacity:.82;transition:opacity .2s}
+.nav-links{display:flex;gap:1.6rem;list-style:none;align-items:center}
+@media(max-width:1240px){.nav-links{gap:1.1rem}.nav-links a{font-size:11.5px}}
+.nav-links a{font-size:12.5px;color:var(--g500);text-decoration:none;font-weight:600;letter-spacing:.01em;transition:color .15s}
+.nav-links a:hover{color:var(--black)}
+.nav-btn{border-radius:6px;
+ background:var(--black);color:#fff;border:none;
+ padding:9px 22px;
+ font-family:var(--font);font-size:11.5px;font-weight:700;
+ letter-spacing:.07em;text-transform:uppercase;cursor:pointer;
+ text-decoration:none;transition:opacity .2s;
+}
+.nav-btn:hover{opacity:.82}
+
+/* ── BUTTONS ── */
+.btn{
+ display:inline-flex;align-items:center;gap:8px;
+ font-family:var(--font);font-weight:700;font-size:12px;
+ letter-spacing:.07em;text-transform:uppercase;
+ text-decoration:none;cursor:pointer;border:none;
+ transition:all .2s;border-radius:8px;
+}
+.btn-black{background:var(--black);color:#fff;padding:15px 30px;border-radius:6px}
+.btn-black:hover{opacity:.84;transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.btn-ghost{background:var(--white);color:var(--black);padding:14px 29px;border:1.5px solid var(--border);border-radius:6px}
+.btn-ghost:hover{border-color:var(--g400);transform:translateY(-1px)}
+.btn-sm{font-size:10.5px;padding:10px 18px}
+.btn-outline2{background:transparent;color:var(--black);padding:14px 29px;border:1.5px solid var(--border);border-radius:6px}
+.btn-outline2:hover{border-color:var(--black);transform:translateY(-1px)}
+
+/* ── SECTION BASE ── */
+section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relative}
+.eyebrow{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1.1rem}
+.eyebrow-line{width:32px;height:1.5px;background:var(--blue)}
+.eyebrow-text{font-size:10.5px;text-transform:uppercase;letter-spacing:.15em;color:var(--blue);font-weight:700}
+.sec-h{
+ font-size:clamp(38px,5.5vw,62px);font-weight:800;
+ letter-spacing:-.025em;line-height:1.04;
+ text-align:center;margin-bottom:.85rem;
+}
+.sec-h .g{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-h .fade{color:var(--g300)}
+.sec-sub{
+ font-size:15px;color:var(--g500);text-align:center;
+ max-width:490px;margin:0 auto 3.5rem;line-height:1.65;font-weight:400;
+}
+.sec-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:3rem}
+
+/* ── HERO ── */
+#hero{
+ min-height:100vh;display:flex;flex-direction:column;
+ align-items:center;justify-content:center;text-align:center;
+ padding:7rem 3.5rem 4rem;overflow:hidden;border-bottom:1px solid var(--border);
+}
+/* Industry tabs */
+.ind-tabs{
+ display:flex;gap:0;justify-content:center;margin-bottom:0;
+ border:1.5px solid var(--border);background:var(--white);
+ overflow:hidden;width:fit-content;margin-left:auto;margin-right:auto;
+}
+.ind-tab{
+ font-family:var(--font);font-size:12px;font-weight:700;
+ letter-spacing:.05em;text-transform:uppercase;
+ padding:13px 28px;border:none;border-right:1.5px solid var(--border);
+ background:transparent;color:var(--g400);cursor:pointer;
+ transition:all .22s ease;position:relative;
+ display:flex;flex-direction:column;align-items:center;gap:5px;
+ min-width:130px;
+}
+.ind-tab:last-child{border-right:none}
+.ind-tab .tab-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;transition:color .22s}
+.ind-tab .tab-sub{font-size:9px;font-weight:500;color:var(--g300);letter-spacing:.04em;transition:color .22s;white-space:nowrap}
+.ind-tab .tab-bar{
+ position:absolute;bottom:0;left:0;right:0;height:3px;
+ background:transparent;transition:background .22s;
+}
+.ind-tab:hover:not(.active){background:var(--bg);color:var(--black)}
+.ind-tab:hover:not(.active) .tab-label{color:var(--black)}
+.ind-tab.active{background:var(--black);color:#fff}
+.ind-tab.active .tab-label{color:#fff}
+.ind-tab.active .tab-sub{color:rgba(255,255,255,.5)}
+/* screens fade transition */
+.screens-row{transition:opacity .25s ease}
+.screens-row.switching{opacity:0}
+.screens-row{transition:opacity .3s ease;border:none;outline:none;background:transparent}
+
+/* Product frame */
+.hero-product-wrap{width:100%;max-width:1100px;margin-top:10rem;position:relative;animation:fu .7s ease .5s both}
+.hero-product-frame{background:var(--white);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 32px 100px rgba(0,0,0,.13)}
+.hpf-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.hpf-url{display:flex;align-items:center;gap:5px;flex:1;background:var(--white);border:1px solid var(--border);border-radius:4px;padding:4px 10px;font-size:10px;color:var(--g400);font-weight:500;max-width:260px}
+.hpf-body{display:flex;height:340px}
+.hpf-sidebar{width:140px;flex-shrink:0;background:var(--black);padding:16px 12px;display:flex;flex-direction:column;gap:0}
+.hpf-logo-sm{font-size:14px;font-weight:900;letter-spacing:.04em;margin-bottom:20px;background:linear-gradient(115deg,#32b46f,#14855a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hpf-nav-items{display:flex;flex-direction:column;gap:3px}
+.hpf-nav{display:flex;align-items:center;gap:7px;font-size:10px;color:rgba(255,255,255,.45);padding:7px 8px;border-radius:8px;font-weight:600;cursor:pointer;transition:all .15s;letter-spacing:.02em}
+.hpf-nav.active{background:rgba(50,180,111,.25);color:#fff;border-left:2px solid var(--blue)}
+.hpf-nav:hover:not(.active){background:rgba(255,255,255,.06);color:rgba(255,255,255,.7)}
+.hpf-main{flex:1;padding:16px;background:var(--bg);overflow:hidden;display:flex;flex-direction:column;gap:12px}
+.hpf-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.hpf-kpi{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:10px 12px}
+.hpf-kv{font-size:18px;font-weight:800;letter-spacing:-.02em;line-height:1;margin-bottom:3px}
+.hpf-kl{font-size:8.5px;color:var(--g400);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:5px}
+.hpf-ktag{font-size:8px;font-weight:700;padding:2px 7px;display:inline-block}
+.hpf-charts-row{display:flex;gap:10px;flex:1;min-height:0}
+.hpf-chart-box{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:11px;display:flex;flex-direction:column;gap:8px;overflow:hidden}
+.hpf-chart-head{display:flex;justify-content:space-between;align-items:center}
+.hpf-chart-title{font-size:10px;font-weight:800;letter-spacing:-.01em}
+.hpf-chart-sub{font-size:8.5px;color:var(--g400);font-weight:500}
+/* Floating badges */
+.hero-float{position:absolute;background:var(--white);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;box-shadow:0 8px 28px rgba(0,0,0,.08);z-index:4}
+.hero-float-l{bottom:60px;left:-16px}
+.hero-float-r{top:60px;right:-16px}
+.hero-glow-r{position:absolute;top:-80px;right:-80px;width:540px;height:540px;background:radial-gradient(circle,rgba(50,180,111,.12) 0%,transparent 65%);pointer-events:none}
+.hero-glow-l{position:absolute;bottom:-60px;left:-60px;width:420px;height:420px;background:radial-gradient(circle,rgba(50,180,111,.08) 0%,transparent 65%);pointer-events:none}
+.hero-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:2.25rem;animation:fu .7s ease both}
+.hero-eline{width:36px;height:1.5px;background:var(--blue)}
+.hero-etxt{font-size:10.5px;text-transform:uppercase;letter-spacing:.17em;color:#32b46f;font-weight:700}
+/* BIG DISPLAY TYPE */
+.hero-h{
+ font-size:clamp(52px,8vw,110px);
+ font-weight:900;line-height:.92;letter-spacing:-.04em;
+ margin-bottom:1.75rem;animation:fu .7s ease .1s both;
+}
+.hero-h .grad{background:linear-gradient(115deg,#32b46f 0%,#14855a 55%,#0f7a52 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-h .ghost{color:var(--g300);display:block}
+.grad-os{background:linear-gradient(115deg,#32b46f,#3cbd7a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;display:inline-block;padding-right:4px}
+.grad-ai{background:linear-gradient(115deg,#14855a,#14855a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;display:inline-block;padding-right:4px}
+.hero-h .solid{color:var(--black);display:block}
+.hero-p{font-size:16.5px;color:var(--g500);max-width:500px;line-height:1.65;font-weight:400;margin-bottom:2.5rem;animation:fu .7s ease .2s both}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fu .7s ease .3s both;margin-bottom:0}
+
+.hero-stats{
+ display:flex;width:100%;max-width:700px;
+ border-top:1px solid var(--border);padding-top:2.5rem;margin-top:4rem;
+ animation:fu .7s ease .5s both;
+}
+.hstat{flex:1;text-align:center;padding:0 1.5rem;border-right:1px solid var(--border)}
+.hstat:last-child{border-right:none}
+.hstat-n{font-size:56px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.hstat-n.gr{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hstat-l{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--g400);margin-top:8px;font-weight:600}
+
+/* ── HERO SCREENS ── */
+.hero-screens{
+ width:100%;max-width:1060px;margin-top:3.5rem;
+ animation:fu .7s ease .55s both;position:relative;
+}
+.screens-row{display:flex;align-items:center;justify-content:center;gap:0}
+.screen{background:var(--white);border:1.5px solid var(--border);overflow:hidden;box-shadow:0 16px 56px rgba(0,0,0,.09);border-radius:10px;}
+.screen-c{width:420px;z-index:3;box-shadow:0 24px 80px rgba(0,0,0,.13)}
+.screen-s{width:276px}
+.screen-l{transform:perspective(960px) rotateY(15deg) translateX(24px) scale(.87);z-index:2;opacity:.85}
+.screen-r{transform:perspective(960px) rotateY(-15deg) translateX(-24px) scale(.87);z-index:2;opacity:.85}
+/* screen internals */
+.s-bar{display:flex;align-items:center;gap:5px;padding:8px 11px;background:var(--bg);border-bottom:1px solid var(--border)}
+.s-dot{width:9px;height:9px;border-radius:50%}
+.s-title{margin-left:auto;font-size:9px;font-weight:700;letter-spacing:.06em;color:var(--g400);text-transform:uppercase}
+.s-body{padding:13px}
+.s-mod{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:9px}
+.s-krow{display:flex;gap:5px;margin-bottom:11px}
+.s-k{flex:1;background:var(--bg);border-radius:5px;padding:7px 6px;border:1px solid var(--border)}
+.s-kv{font-size:12px;font-weight:800;line-height:1;margin-bottom:2px}
+.s-kl{font-size:7.5px;color:var(--g400);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.s-bars{display:flex;align-items:flex-end;gap:3px;height:44px;margin-bottom:9px}
+.s-bar{flex:1;background:var(--border);border-radius:8px; 2px 0 0}
+.s-divider{height:1px;background:var(--border);margin:9px 0}
+.s-list{display:flex;flex-direction:column;gap:5px}
+.s-li{display:flex;align-items:center;gap:6px;font-size:9.5px;color:var(--g500)}
+.s-d{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.s-badge{margin-left:auto;font-size:7.5px;padding:2px 5px;font-weight:700}
+.s-hbars{display:flex;flex-direction:column;gap:7px}
+.s-hrow{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--g500)}
+.s-hrow span:first-child{width:50px;font-weight:600}
+.s-track{flex:1;height:3.5px;background:var(--border);border-radius:8px;overflow:hidden}
+.s-fill{height:100%;border-radius:8px;}
+
+/* ── MARQUEE ── */
+.mq-wrap{overflow:hidden;border-bottom:1px solid var(--border);background:var(--white);padding:0}
+.mq-track{display:flex;width:max-content;animation:marquee 26s linear infinite}
+.mq-item{display:flex;align-items:center;gap:1rem;padding:.95rem 2.5rem;border-right:1px solid var(--border);white-space:nowrap}
+.mq-icon{width:14px;height:14px;color:var(--blue);flex-shrink:0}
+.mq-item span{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g500)}
+
+/* ── FUNCTIONS ── */
+#functions{background:var(--bg)}
+.fn-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:0}
+.fn-card{background:var(--white);padding:1.85rem;display:flex;flex-direction:column;position:relative;overflow:hidden;cursor:default;transition:background .2sborder-radius:8px;}
+.fn-card:hover{background:#fafafa}
+.fn-card:hover .fn-arrow{opacity:1;transform:translateX(0)}
+.fn-top-bar{height:3px;margin:-1.85rem -1.85rem 1.4rem;border-radius:8px; 0 0}
+.fn-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:.9rem;flex-shrink:0;box-shadow:0 6px 20px rgba(0,0,0,.15)}
+.fn-icon svg{width:26px;height:26px}
+.fn-num{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
+.fn-name{font-size:15px;font-weight:800;letter-spacing:-.01em;margin-bottom:.45rem}
+.fn-desc{font-size:11.5px;color:var(--g500);line-height:1.55;flex:1;font-weight:400;margin-bottom:1.1rem}
+.fn-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:1.1rem}
+.fn-tag{font-size:8.5px;border:1px solid var(--border);border-radius:8px;padding:2.5px 6px;color:var(--g400);background:var(--bg);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.fn-arrow{opacity:0;transform:translateX(-4px);transition:all .2s;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;display:flex;align-items:center;gap:5px;font-family:var(--font);border:none;background:none;cursor:pointer;padding:0}
+
+/* ── SOLUTIONS (2-COL) ── */
+.sol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1.5px solid var(--border);border-radius:12px;overflow:hidden}
+.sol-card{background:var(--white);padding:2.3rem 1.9rem;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:background .2s}
+.sol-card:hover{background:#fafafa}
+.sol-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:1.15rem;flex-shrink:0;background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(50,180,111,.3)}
+.sol-label{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:.45rem}
+.sol-name{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-bottom:.5rem}
+.sol-tag{font-size:13.5px;font-weight:700;color:var(--g600);line-height:1.4;margin-bottom:.8rem}
+.sol-desc{font-size:12.5px;color:var(--g500);line-height:1.65;font-weight:400;margin-bottom:1.5rem}
+.sol-list{list-style:none;display:flex;flex-direction:column;gap:.65rem;margin-bottom:1.6rem;flex:1}
+.sol-list li{display:flex;align-items:flex-start;gap:9px;font-size:12px;color:var(--g600);font-weight:500;line-height:1.5}
+.sol-check{width:16px;height:16px;border-radius:50%;background:rgba(50,180,111,.14);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.sol-metrics{display:flex;gap:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);margin-bottom:1.5rem}
+.sol-metric-v{font-size:23px;font-weight:800;letter-spacing:-.02em;color:var(--blue);line-height:1}
+.sol-metric-l{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--g400);font-weight:600;margin-top:5px}
+.sol-arrow{font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;color:var(--blue);display:inline-flex;align-items:center;gap:6px;transition:gap .2s}
+.sol-card:hover .sol-arrow{gap:11px}
+
+/* ── SOLUTION CARD TABS ── */
+.sol-tabs{display:flex;gap:0;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;background:var(--white);margin-bottom:1.4rem}
+.sol-tab{
+ flex:1;font-family:var(--font);font-size:10px;font-weight:800;
+ letter-spacing:.06em;text-transform:uppercase;
+ padding:11px 10px;border:none;border-right:1.5px solid var(--border);
+ background:transparent;color:var(--g400);cursor:pointer;
+ transition:background .22s,color .22s;line-height:1.35;text-align:center;
+}
+.sol-tab:last-child{border-right:none}
+.sol-tab:hover:not(.active){background:rgba(50,180,111,.07);color:var(--black)}
+.sol-tab.active{background:var(--grad);color:#fff}
+.sol-panel{display:none;flex-direction:column;flex:1}
+.sol-panel.active{display:flex;animation:solFade .3s ease}
+@keyframes solFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:560px){.sol-tab{font-size:9px;padding:10px 6px}}
+@media(max-width:1024px){.sol-grid{grid-template-columns:1fr}}
+@media(max-width:960px){.sol-card{padding:2.1rem 1.6rem}}
+.fn-cta-card{background:var(--black) !important;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1.25rem;padding:2.5rem 2rem}
+.fn-cta-card:hover{background:#1a1a1c !important}
+
+
+/* ── INDUSTRIES VISUAL GRID ── */
+.ind-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ind-card{background:var(--white);border-radius:10px;border:1.5px solid var(--border);overflow:hidden;display:flex;flex-direction:column;transition:all .2s;opacity:0;transform:translateY(50px)}
+.ind-card.in{opacity:1;transform:translateY(0)}
+.ind-card:hover{box-shadow:0 6px 28px rgba(0,0,0,.1);border-color:var(--g300)}
+.ind-card-top{
+  padding:2rem 1.75rem 1.75rem;
+  position:relative;
+  min-height:140px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  background:var(--bg) !important;
+  background-image:
+    linear-gradient(rgba(50,180,111,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(50,180,111,0.07) 1px, transparent 1px) !important;
+  background-size:32px 32px !important;
+  border-bottom:1px solid var(--border);
+}
+.ind-emoji{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:.75rem;box-shadow:0 4px 16px rgba(50,180,111,.3)}
+.ind-card-title{font-size:16px;font-weight:800;color:var(--black);letter-spacing:-.01em;margin-bottom:.3rem}
+.ind-card-tag{font-size:10px;color:var(--g400);font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+.ind-card-body{padding:1.5rem 1.75rem;flex:1;display:flex;flex-direction:column;gap:1rem}
+.ind-problems,.ind-solutions{display:flex;flex-direction:column;gap:6px}
+.ind-prob-label,.ind-sol-label{font-size:9px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:3px}
+.ind-prob-label{color:#14855a}
+.ind-sol-label{color:#32b46f}
+.ind-prob,.ind-sol{display:flex;align-items:flex-start;gap:7px;font-size:11.5px;line-height:1.45;font-weight:400}
+.ind-prob{color:var(--g600)}
+.ind-sol{color:var(--g600)}
+.ind-cta{margin-top:auto;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;color:var(--blue);display:flex;align-items:center;gap:5px;padding-top:.75rem;transition:gap .2s}
+.ind-cta:hover{gap:9px}
+@media(max-width:960px){.ind-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.ind-grid{grid-template-columns:1fr}}
+
+
+.ind-card.d2{transition-delay:.1s}
+.ind-card.d3{transition-delay:.2s}
+.ind-card{transition:opacity .65s ease, transform .65s ease, box-shadow .2s, transform .2s;}
+/* ── TECH ── */
+.tech-icon-new{
+  width:56px;height:56px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:.25rem;flex-shrink:0;
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+}
+#tech{background:var(--white)}
+.tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;background:transparent;border:none;border-radius:0;overflow:visible}
+.tech-card{background:#12201a;padding:2.25rem 2rem;display:flex;flex-direction:column;gap:.85rem;transition:all .2s;border-radius:8px;border:1px solid rgba(255,255,255,.08);}
+.tech-card:hover{background:#1a2e24;border-color:rgba(255,255,255,.18);transform:translateY(-2px)}
+.tech-icon{width:50px;height:50px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.tech-icon svg{width:24px;height:24px}
+.tech-name{font-size:17px;font-weight:800;letter-spacing:-.015em;color:#fff}
+.tech-desc{font-size:12.5px;color:rgba(255,255,255,.45);line-height:1.6;font-weight:400}
+.tech-tags{display:flex;flex-wrap:wrap;gap:4px}
+.t-tag{font-size:8.5px;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:2.5px 6px;color:rgba(255,255,255,.4);background:rgba(255,255,255,.05);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+
+/* ── CASES ── */
+#cases{background:var(--bg)}
+.cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.case-card{background:var(--white);border-radius:10px;border:1.5px solid var(--border);overflow:hidden;display:flex;flex-direction:column;transition:all .2s}
+.case-screen{background:var(--bg2);border-bottom:1.5px solid var(--border);padding:0;overflow:hidden;position:relative;height:180px}
+.cs-bar{display:flex;align-items:center;gap:4px;padding:7px 10px;background:var(--bg);border-bottom:1px solid var(--border)}
+.cs-dot{width:7px;height:7px;border-radius:50%}
+.cs-title{margin-left:auto;font-size:8px;font-weight:700;letter-spacing:.06em;color:var(--g400);text-transform:uppercase}
+.cs-body{padding:10px 12px;display:flex;gap:8px;height:calc(180px - 30px)}
+.cs-sidebar{width:60px;flex-shrink:0;display:flex;flex-direction:column;gap:4px}
+.cs-nav-item{height:8px;background:var(--border);border-radius:2px;width:100%}
+.cs-nav-item.active{background:#32b46f;width:80%}
+.cs-main{flex:1;display:flex;flex-direction:column;gap:6px;overflow:hidden}
+.cs-krow{display:flex;gap:4px}
+.cs-k{flex:1;background:var(--white);border:1px solid var(--border);border-radius:4px;padding:5px;display:flex;flex-direction:column;gap:2px}
+.cs-kv{font-size:9px;font-weight:800;color:#32b46f;line-height:1}
+.cs-kl{font-size:6.5px;color:var(--g400);text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+.cs-chart{display:flex;flex-direction:column;gap:3px;flex:1}
+.cs-lbl{font-size:6.5px;color:var(--g400);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+.cs-bars-row{display:flex;align-items:flex-end;gap:2px;height:36px}
+.cs-bar-i{flex:1;background:rgba(50,180,111,.15);border-radius:1px 1px 0 0}
+.cs-bar-hi{background:#32b46f !important}
+.cs-hbar-r{display:flex;align-items:center;gap:4px;font-size:7px;color:var(--g500)}
+.cs-hbar-r span:first-child{width:38px;font-weight:600;font-size:6.5px}
+.cs-track2{flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.cs-fill2{height:100%;background:#32b46f;border-radius:2px}
+.cs-list-r{display:flex;flex-direction:column;gap:3px}
+.cs-list-item{display:flex;align-items:center;gap:4px;font-size:7.5px;color:var(--g500)}
+.cs-dot2{width:5px;height:5px;border-radius:50%;flex-shrink:0;background:#32b46f}
+.cs-badge-s{margin-left:auto;font-size:6px;padding:1.5px 4px;border-radius:2px;font-weight:700;background:rgba(50,180,111,.1);color:#32b46f}
+.cs-funnel{display:flex;flex-direction:column;gap:2px}
+.cs-fbar2{border-radius:2px;height:14px;display:flex;align-items:center;padding:0 6px;font-size:7px;font-weight:600;color:#32b46f}
+.case-card:hover{box-shadow:0 6px 28px rgba(0,0,0,.1);border-color:var(--g300)}
+.case-top-bar{display:none}
+.case-body{padding:1.85rem;flex:1;display:flex;flex-direction:column;gap:.9rem}
+.case-tag{font-size:9.5px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;padding:3.5px 9px;border-radius:8px;display:inline-flex;align-self:flex-start}
+.case-title{font-size:19px;font-weight:800;letter-spacing:-.01em;line-height:1.2}
+.case-list{list-style:none;flex:1;display:flex;flex-direction:column;gap:0}
+.case-list li{font-size:12.5px;color:var(--g500);padding:7px 0;display:flex;align-items:center;gap:8px;font-weight:400}
+.case-list li:first-child{border-top:none}
+.case-list li::before{content:'→';font-weight:700;font-size:10px;flex-shrink:0}
+
+/* ── INDUSTRIES ── */
+#industries{background:var(--white)}
+
+
+/* ── WHY ── */
+#why{background:var(--bg)}
+.why-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.why-card{background:#12201a;border-radius:10px;border:1.5px solid rgba(255,255,255,.1);padding:1.85rem;display:flex;flex-direction:column;gap:.7rem;transition:all .2s;overflow:hidden;position:relative}
+.why-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.4);border-color:rgba(255,255,255,.25)}
+.why-bar{height:3px;margin:-1.85rem -1.85rem 1rem;border-radius:8px; 0 0}
+.why-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,0,0,.12)}
+.why-icon svg{width:24px;height:24px}
+.why-name{font-size:13.5px;font-weight:800;letter-spacing:-.01em;color:#fff}
+.why-desc{font-size:11.5px;color:rgba(255,255,255,.45);line-height:1.55;font-weight:400}
+
+/* ── DASHBOARDS ── */
+#dashboards{background:var(--white)}
+/* ── DASHBOARD GRID ── */
+.dash-grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:16px;
+}
+.dash-card{
+ background:var(--white);
+ border-radius:10px;
+ border:1.5px solid var(--border);
+ overflow:hidden;
+ transition:opacity .65s ease, transform .65s ease, box-shadow .2s;
+ opacity:0;
+ transform:translateY(64px);
+}
+.dash-card:hover{
+ box-shadow:0 12px 40px rgba(0,0,0,.09);
+ transform:translateY(-2px) !important;
+}
+.dash-card.visible{
+ opacity:1;
+ transform:translateY(0);
+}
+.dash-card.visible.d2{transition-delay:.13s}
+.dash-card.visible.d3{transition-delay:.26s}
+.dash-card.visible.d1{transition-delay:0s}
+
+.dash-top{display:none}
+.dash-head{display:flex;align-items:center;gap:9px;padding:12px 15px;border-bottom:1px solid var(--border);background:var(--bg)}
+.dash-ico{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.dash-ico svg{width:18px;height:18px}
+.dash-mod-name{font-size:12px;font-weight:800;letter-spacing:-.01em}
+.dash-body{padding:15px}
+.d-krow{display:flex;gap:6px;margin-bottom:12px}
+.d-k{flex:1;background:var(--bg);border-radius:8px;padding:8px 7px;border:1px solid var(--border)}
+.d-kv{font-size:13px;font-weight:800;line-height:1;margin-bottom:2px}
+.d-kl{font-size:7.5px;color:var(--g400);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.d-lbl{font-size:8.5px;color:var(--g400);text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:7px}
+.d-bars{display:flex;align-items:flex-end;gap:4px;height:54px;margin-bottom:12px}
+.d-bar{flex:1;background:var(--border);border-radius:8px; 2px 0 0;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;overflow:hidden}
+.d-bar span{font-size:6.5px;color:var(--g400);padding-bottom:2px;font-weight:600}
+.d-hr{height:1px;background:var(--border);margin:10px 0}
+.d-rows{display:flex;flex-direction:column;gap:5px}
+.d-row{display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--g500)}
+.d-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.d-val{margin-left:auto;font-size:10.5px;font-weight:700}
+.d-hbars{display:flex;flex-direction:column;gap:7px}
+.d-hbar{display:flex;align-items:center;gap:6px;font-size:9px;color:var(--g500)}
+.d-hbar span:first-child{width:62px;font-weight:600;font-size:8.5px}
+.d-track{flex:1;height:4px;background:var(--border);border-radius:8px;overflow:hidden}
+.d-fill{height:100%;border-radius:8px;}
+.d-hbar span:last-child{width:20px;text-align:right;font-size:8.5px;font-weight:700}
+.d-status{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:12px}
+.d-sbox{border-radius:6px;padding:8px 5px;text-align:center}
+.d-sv{font-size:14px;font-weight:800;line-height:1}
+.d-sl{font-size:7px;color:var(--g400);text-transform:uppercase;letter-spacing:.04em;font-weight:600;margin-top:2px}
+.d-funnel{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.d-fbar{border-radius:8px;height:20px;display:flex;align-items:center;padding:0 9px;font-size:9.5px;font-weight:600}
+.d-channels{display:flex;flex-direction:column;gap:8px}
+.d-ch{display:flex;align-items:center;gap:7px}
+.d-ch-ico{width:20px;height:20px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.d-ch-ico svg{width:11px;height:11px}
+.d-ch-name{font-size:9px;color:var(--g500);width:55px;font-weight:600}
+.d-ch-pct{font-size:9px;font-weight:800;width:26px}
+.d-ch-track{flex:1;height:3.5px;background:var(--border);border-radius:8px;overflow:hidden}
+.d-ch-fill{height:100%;border-radius:8px;}
+
+/* ── CTA ── */
+#cta{
+ padding:9rem 3.5rem;text-align:center;position:relative;
+ overflow:hidden;background:var(--black);border-bottom:none;
+}
+.cta-grid-bg{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);background-size:68px 68px}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(50,180,111,.22) 0%,rgba(50,180,111,.12) 35%,transparent 65%);pointer-events:none}
+.cta-h{font-size:clamp(50px,8vw,96px);font-weight:900;letter-spacing:-.035em;line-height:.94;color:#fff;margin-bottom:1.25rem;position:relative}
+.cta-h .fade{color:rgba(255,255,255,.2)}
+.cta-h .gr{background:linear-gradient(115deg,#4ecb87,#34a87c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block;padding-right:3px}
+.cta-h .gr2{background:linear-gradient(115deg,#32b46f,#4ecb87);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block;padding-right:3px}
+.cta-h .gr3{background:linear-gradient(115deg,#34a87c,#7fd9a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block}
+.cta-p{font-size:16px;color:rgba(255,255,255,.48);margin-bottom:2.5rem;font-weight:400;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.65;position:relative}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative}
+.cta-btn-w{background:#fff;color:var(--black);padding:15px 32px;border-radius:8px;font-family:var(--font);font-weight:800;font-size:12px;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.cta-btn-w:hover{background:#e8e8e4;transform:translateY(-1px);box-shadow:0 10px 32px rgba(255,255,255,.14)}
+.cta-btn-g{background:transparent;color:rgba(255,255,255,.7);padding:14px 31px;border-radius:8px;font-family:var(--font);font-weight:700;font-size:12px;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;border:1.5px solid rgba(255,255,255,.2);cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.cta-btn-g:hover{border-color:rgba(255,255,255,.55);color:#fff;transform:translateY(-1px)}
+.cta-note{margin-top:2.5rem;font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.22);font-weight:600;position:relative}
+
+/* ── FOOTER ── */
+footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:2rem;background:var(--white);border-top:1.5px solid var(--border)}
+.ft-logo{font-size:19px;font-weight:800;letter-spacing:.04em;margin-bottom:.5rem}
+.ft-sub{font-size:9.5px;text-transform:uppercase;letter-spacing:.11em;color:var(--g400);font-weight:600;line-height:2}
+.ft-links{display:flex;flex-direction:column;gap:9px}
+.ft-links a{font-size:12.5px;color:var(--g500);text-decoration:none;font-weight:500;transition:color .15s}
+.ft-links a:hover{color:var(--black)}
+.ft-contact{font-size:11.5px;color:var(--g400);line-height:2.2;font-weight:500}
+.ft-copy{margin-top:.85rem;font-size:10.5px;color:var(--g300);font-weight:500}
+
+/* ── REVEAL ── */
+.rv{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* ── KEYFRAMES ── */
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── RESPONSIVE ── */
+
+/* ── TABLET ── */
+@media(max-width:960px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .logo img{height:38px}
+  section{padding:5rem 1.5rem}
+  #hero{padding:6rem 1.5rem 3rem}
+  .hero-h{font-size:clamp(48px,9vw,96px)}
+  .fn-grid{grid-template-columns:repeat(2,1fr)}
+  .tech-grid{grid-template-columns:repeat(2,1fr)}
+  .cases-grid,.dash-grid{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:repeat(2,1fr)}
+  .ind-grid{grid-template-columns:repeat(2,1fr)}
+  footer{grid-template-columns:1fr;gap:2.5rem}
+  #cta{padding:5rem 1.5rem}
+  .cta-h{font-size:clamp(40px,8vw,72px)}
+  .hero-product-wrap{margin-top:4rem}
+  .hpf-body{height:auto;flex-direction:column}
+  .hpf-sidebar{width:100%;flex-direction:row;padding:10px;gap:8px;overflow-x:auto}
+  .hpf-main{padding:12px}
+  .hpf-kpi-row{grid-template-columns:repeat(2,1fr)}
+  .hpf-charts-row{flex-direction:column}
+  .ind-tabs{flex-wrap:wrap}
+  .ind-tab{min-width:auto;flex:1 1 45%}
+  .hero-stats{max-width:100%;flex-wrap:wrap;gap:1.5rem}
+  .hstat{flex:1 1 40%;border-right:none;padding:0}
+  .sec-h{font-size:clamp(28px,6vw,48px)}
+}
+
+/* ── MOBILE ── */
+@media(max-width:560px){
+  nav{padding:.9rem 1.25rem}
+  .logo img{height:32px}
+  section{padding:4rem 1.25rem}
+  #hero{padding:5.5rem 1.25rem 3rem}
+  .hero-h{font-size:clamp(40px,11vw,72px);letter-spacing:-.03em;line-height:.92}
+  .hero-p{font-size:15px;max-width:100%}
+  .hero-btns{flex-direction:column;align-items:center;width:100%}
+  .hero-btns .btn{width:100%;justify-content:center}
+  .fn-grid,.why-grid,.ind-grid{grid-template-columns:1fr}
+  .tech-grid{grid-template-columns:1fr}
+  .cases-grid,.dash-grid{grid-template-columns:1fr}
+  .screen-s{display:none}
+  .screen-c{width:100% !important;max-width:100%}
+  .screens-row{flex-direction:column}
+  .hero-product-wrap{margin-top:3rem;overflow:hidden}
+  .hero-product-frame{border-radius:8px}
+  .hpf-body{height:auto;flex-direction:column}
+  .hpf-sidebar{display:none}
+  .hpf-main{padding:12px}
+  .hpf-kpi-row{grid-template-columns:repeat(2,1fr);gap:6px}
+  .hpf-charts-row{flex-direction:column;gap:8px}
+  .hpf-chart-box{padding:10px}
+  .ind-tabs{flex-wrap:wrap;width:100%;max-width:100%}
+  .ind-tab{flex:1 1 48%;min-width:120px;padding:10px 12px}
+  .ind-tab .tab-sub{display:none}
+  #tabProgressWrap{min-width:100% !important;width:100% !important}
+  .hero-stats{flex-wrap:wrap;gap:1.25rem;justify-content:center;max-width:100%}
+  .hstat{flex:1 1 40%;border-right:none;border-bottom:1px solid var(--border);padding-bottom:1rem}
+  .hstat:last-child,.hstat:nth-child(2n){border-bottom:none}
+  .hstat-n{font-size:36px}
+  .sec-h{font-size:clamp(26px,7vw,40px);letter-spacing:-.02em}
+  .sec-sub{font-size:14px}
+  .sec-cta{flex-direction:column;align-items:center}
+  .sec-cta .btn{width:100%;max-width:360px;justify-content:center}
+  footer{grid-template-columns:1fr;padding:2rem 1.25rem;gap:2rem}
+  #cta{padding:4.5rem 1.25rem}
+  .cta-h{font-size:clamp(36px,9vw,60px)}
+  .cta-btns{flex-direction:column;align-items:center}
+  .cta-btn-w,.cta-btn-g{width:100%;max-width:360px;justify-content:center}
+  .why-grid{grid-template-columns:1fr}
+  .ind-chip{font-size:12px;padding:8px 14px}
+  .case-screen{height:160px}
+  .cs-body{height:calc(160px - 28px)}
+  .mq-wrap{display:none}
+  .fn-cta-card{padding:2rem 1.5rem}
+  .hero-float{display:none}
+  .dash-card{margin:0}
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+ <a href="#hero" class="logo" aria-label="Drawlead — home"><img src="data:image/png;base64,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" alt="Drawlead — Digital Transformation Company" width="705" height="138"></a>
+ <ul class="nav-links">
+ <li><a href="#functions">Platform</a></li>
+ <li><a href="#solutions">Solutions</a></li>
+ <li><a href="#cases">Case Studies</a></li>
+ <li><a href="custom-operational-solutions.html">Custom Operational Solutions</a></li>
+ <li><a href="#industries">Industries</a></li>
+ <li><a href="#dashboards">Dashboards</a></li>
+ <li><a href="about-us.html">About Us</a></li>
+ </ul>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="nav-btn">Book a Demo →</a>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section id="hero">
+ <div class="grid-bg"></div>
+ <div class="hero-glow-r"></div>
+ <div class="hero-glow-l"></div>
+ <!-- MAIN HEADLINE — Freshworks/Kissflow style: bold claim, gradient accent -->
+ <h1 class="hero-h">
+ One <span class="grad-os">OS</span> with <span class="grad-ai">AI</span><br>
+ to every function<br>
+ <span class="ghost">of your business</span>
+ </h1>
+
+ <p class="hero-p">Drawlead — the operating system for modern business. Unify ERP, AI automation, analytics, and cloud workflows into one intelligent platform built for India's growing businesses.</p>
+
+ <!-- CTA BUTTONS — Zoho/Freshworks style: primary + ghost -->
+ <div class="hero-btns">
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black">Start Free Consultation →</a>
+ <a href="#functions" class="btn btn-ghost">
+ <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor"/></svg>
+ Watch 2-min Demo
+ </a>
+ </div>
+
+
+
+ <!-- HERO — 4 Industry Dashboards with perspective screens + tab switcher -->
+ <div class="hero-product-wrap rv">
+
+ <!-- Industry tab switcher -->
+ <div class="ind-tabs" id="indTabs">
+ <button class="ind-tab active" data-idx="0" onclick="switchDash(0)">
+ <div class="tab-label">Construction</div>
+ <div class="tab-sub">Projects · Sites · Billing</div>
+ <div class="tab-bar" style="background:#14855a"></div>
+ </button>
+ <button class="ind-tab" data-idx="1" onclick="switchDash(1)">
+ <div class="tab-label">Manufacturing</div>
+ <div class="tab-sub">Production · QC · Dispatch</div>
+ <div class="tab-bar"></div>
+ </button>
+ <button class="ind-tab" data-idx="2" onclick="switchDash(2)">
+ <div class="tab-label">Jewellery</div>
+ <div class="tab-sub">Stock · Orders · Sales</div>
+ <div class="tab-bar"></div>
+ </button>
+ <button class="ind-tab" data-idx="3" onclick="switchDash(3)">
+ <div class="tab-label">Hospital</div>
+ <div class="tab-sub">Patients · Beds · Billing</div>
+ <div class="tab-bar"></div>
+ </button>
+ <button class="ind-tab" data-idx="4" onclick="switchDash(4)">
+ <div class="tab-label">Ecommerce</div>
+ <div class="tab-sub">Orders · Inventory · Shopify</div>
+ <div class="tab-bar"></div>
+ </button>
+ </div>
+
+ <!-- Progress bar (flush under tabs) -->
+ <div id="tabProgressWrap" style="height:2px;background:var(--border);margin-bottom:2rem;position:relative;overflow:hidden;max-width:900px;width:fit-content;min-width:660px;margin-left:auto;margin-right:auto">
+ <div id="tabProgress" style="height:100%;background:var(--black);width:0%;transition:width .06s linear;position:absolute;top:0;left:0"></div>
+ </div>
+
+ <!-- Screen trio -->
+ <div class="screens-row" id="screensRow">
+
+ <!-- ═══ LEFT SCREEN (side panel) ═══ -->
+ <div class="screen screen-s screen-l" id="screenLeft">
+ <div class="s-bar">
+ <div class="s-dot" style="background:#ff5f57"></div>
+ <div class="s-dot" style="background:#ffbd2e"></div>
+ <div class="s-dot" style="background:#28c840"></div>
+ <div class="s-title" id="leftTitle">Site Management</div>
+ </div>
+ <div class="s-body" id="leftBody">
+ <!-- Construction: Site Management -->
+ <div class="s-mod" style="color:#14855a">Active Sites</div>
+ <div class="s-krow">
+ <div class="s-k"><div class="s-kv" style="color:#14855a">12</div><div class="s-kl">Sites</div></div>
+ <div class="s-k"><div class="s-kv" style="color:#32b46f">8</div><div class="s-kl">On Track</div></div>
+ <div class="s-k"><div class="s-kv" style="color:#14855a">4</div><div class="s-kl">Delayed</div></div>
+ </div>
+ <div style="font-size:8px;color:var(--g400);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Budget vs Actual</div>
+ <div class="s-hbars">
+ <div class="s-hrow"><span>Site A</span><div class="s-track"><div class="s-fill" style="width:82%;background:#14855a"></div></div><span>82%</span></div>
+ <div class="s-hrow"><span>Site B</span><div class="s-track"><div class="s-fill" style="width:95%;background:#14855a"></div></div><span>95%</span></div>
+ <div class="s-hrow"><span>Site C</span><div class="s-track"><div class="s-fill" style="width:61%;background:#32b46f"></div></div><span>61%</span></div>
+ <div class="s-hrow"><span>Site D</span><div class="s-track"><div class="s-fill" style="width:44%;background:var(--blue)"></div></div><span>44%</span></div>
+ </div>
+ <div class="s-divider"></div>
+ <div class="s-list">
+ <div class="s-li"><div class="s-d" style="background:#14855a"></div>Site B over budget<span class="s-badge" style="background:rgba(50,180,111,.12);color:#14855a">Alert</span></div>
+ <div class="s-li"><div class="s-d" style="background:#32b46f"></div>Site A milestone done<span class="s-badge" style="background:rgba(50,180,111,.12);color:#32b46f">Done</span></div>
+ </div>
+ </div>
+ </div>
+
+ <!-- ═══ CENTER SCREEN (main) ═══ -->
+ <div class="screen screen-c" id="screenCenter">
+ <div class="s-bar">
+ <div class="s-dot" style="background:#ff5f57"></div>
+ <div class="s-dot" style="background:#ffbd2e"></div>
+ <div class="s-dot" style="background:#28c840"></div>
+ <div class="s-title" id="centerTitle">Drawlead — Construction OS</div>
+ </div>
+ <div class="s-body" id="centerBody">
+
+ <!-- ── CONSTRUCTION CENTER ── -->
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+ <div class="s-mod" style="color:var(--black);margin:0;font-size:11px">Construction OS — Project Overview</div>
+ <div style="display:flex;gap:5px">
+ <span style="font-size:7.5px;padding:2px 7px;background:#14855a;color:#fff;font-weight:700">Live</span>
+ <div style="font-size:9px;color:var(--g400);font-weight:600">May 2025</div>
+ </div>
+ </div>
+ <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:13px">
+ <div class="s-k"><div class="s-kv" style="color:#14855a;font-size:13px">₹8.4Cr</div><div class="s-kl">Total Projects</div></div>
+ <div class="s-k"><div class="s-kv" style="color:#32b46f;font-size:11px">↑ 18%</div><div class="s-kl">On-time Rate</div></div>
+ <div class="s-k"><div class="s-kv">247</div><div class="s-kl">Workers</div></div>
+ <div class="s-k"><div class="s-kv" style="color:var(--blue)">38</div><div class="s-kl">Vendors</div></div>
+ </div>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:11px">
+ <div>
+ <div style="font-size:8px;color:var(--g400);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px">Project Progress</div>
+ <div style="display:flex;align-items:flex-end;gap:4px;height:54px">
+ <div style="flex:1;background:rgba(234,88,12,.2);height:55%"></div>
+ <div style="flex:1;background:rgba(234,88,12,.35);height:70%"></div>
+ <div style="flex:1;background:rgba(234,88,12,.5);height:48%"></div>
+ <div style="flex:1;background:rgba(234,88,12,.65);height:80%"></div>
+ <div style="flex:1;background:#14855a;height:95%"></div>
+ <div style="flex:1;background:rgba(234,88,12,.3);height:40%"></div>
+ </div>
+ </div>
+ <div>
+ <div style="font-size:8px;color:var(--g400);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px">Material Stock</div>
+ <div style="display:flex;flex-direction:column;gap:6px">
+ <div style="display:flex;align-items:center;gap:6px;font-size:9px;color:var(--g500)"><span style="width:42px;font-weight:600">Cement</span><div style="flex:1;height:4px;background:var(--border);overflow:hidden"><div style="width:72%;height:100%;background:#14855a"></div></div><span>72%</span></div>
+ <div style="display:flex;align-items:center;gap:6px;font-size:9px;color:var(--g500)"><span style="width:42px;font-weight:600">Steel</span><div style="flex:1;height:4px;background:var(--border);overflow:hidden"><div style="width:45%;height:100%;background:#14855a"></div></div><span style="color:#14855a;font-weight:700">45%</span></div>
+ <div style="display:flex;align-items:center;gap:6px;font-size:9px;color:var(--g500)"><span style="width:42px;font-weight:600">Bricks</span><div style="flex:1;height:4px;background:var(--border);overflow:hidden"><div style="width:88%;height:100%;background:#32b46f"></div></div><span>88%</span></div>
+ </div>
+ </div>
+ </div>
+ <div class="s-divider"></div>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:8px">
+ <div style="display:flex;flex-direction:column;gap:5px">
+ <div style="font-size:8px;color:var(--g400);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Recent Activity</div>
+ <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:var(--g500)"><span style="width:5px;height:5px;background:#32b46f;display:inline-block;flex-shrink:0"></span>Contractor payment approved</div>
+ <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:var(--g500)"><span style="width:5px;height:5px;background:#14855a;display:inline-block;flex-shrink:0"></span>Steel reorder auto-triggered</div>
+ <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:var(--g500)"><span style="width:5px;height:5px;background:#14855a;display:inline-block;flex-shrink:0"></span>Site B inspection scheduled</div>
+ </div>
+ <div style="display:flex;justify-content:flex-end;align-items:center">
+ <div style="background:rgba(50,180,111,.08);padding:8px 12px;border-left:2px solid #32b46f">
+ <div style="font-size:8px;color:#14855a;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px"> AI Alert</div>
+ <div style="font-size:9px;color:var(--g500);line-height:1.4">Site B at 95% budget. Predict overrun in 12 days.</div>
+ </div>
+ </div>
+ </div>
+
+ </div>
+ </div>
+
+ <!-- ═══ RIGHT SCREEN (side panel) ═══ -->
+ <div class="screen screen-s screen-r" id="screenRight">
+ <div class="s-bar">
+ <div class="s-dot" style="background:#ff5f57"></div>
+ <div class="s-dot" style="background:#ffbd2e"></div>
+ <div class="s-dot" style="background:#28c840"></div>
+ <div class="s-title" id="rightTitle">Billing & Vendors</div>
+ </div>
+ <div class="s-body" id="rightBody">
+ <div class="s-mod" style="color:#14855a">Billing Status</div>
+ <div class="s-krow">
+ <div class="s-k"><div class="s-kv" style="color:#14855a">₹2.1Cr</div><div class="s-kl">Billed</div></div>
+ <div class="s-k"><div class="s-kv" style="color:#32b46f">₹1.8Cr</div><div class="s-kl">Received</div></div>
+ <div class="s-k"><div class="s-kv" style="color:#14855a">₹30L</div><div class="s-kl">Due</div></div>
+ </div>
+ <div style="font-size:8px;color:var(--g400);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Top Vendors</div>
+ <div class="s-list">
+ <div class="s-li"><div class="s-d" style="background:#14855a"></div>Rajan Steel Works<span class="s-badge" style="background:rgba(50,180,111,.12);color:#32b46f">Paid</span></div>
+ <div class="s-li"><div class="s-d" style="background:#23a065"></div>Kumar Cement Co<span class="s-badge" style="background:rgba(50,180,111,.12);color:#23a065">Partial</span></div>
+ <div class="s-li"><div class="s-d" style="background:#14855a"></div>ARC Electricals<span class="s-badge" style="background:rgba(50,180,111,.12);color:#14855a">Due</span></div>
+ </div>
+ <div class="s-divider"></div>
+ <div style="font-size:8px;color:var(--g400);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Contractor Payroll</div>
+ <div class="s-hbars">
+ <div class="s-hrow"><span>Mason</span><div class="s-track"><div class="s-fill" style="width:100%;background:#32b46f"></div></div><span style="color:#32b46f"></span></div>
+ <div class="s-hrow"><span>Plumber</span><div class="s-track"><div class="s-fill" style="width:100%;background:#32b46f"></div></div><span style="color:#32b46f"></span></div>
+ <div class="s-hrow"><span>Electrician</span><div class="s-track"><div class="s-fill" style="width:60%;background:#23a065"></div></div><span style="color:#23a065">Pend</span></div>
+ </div>
+ </div>
+ </div>
+
+ </div><!-- /screens-row -->
+
+ <!-- Floating badges -->
+ <div class="hero-float hero-float-l" id="floatL">
+ <div style="font-size:16px;font-weight:800;color:#14855a">12 Sites</div>
+ <div style="font-size:9px;color:var(--g500);font-weight:600;text-transform:uppercase;letter-spacing:.06em">Live project tracking</div>
+ </div>
+ <div class="hero-float hero-float-r" id="floatR">
+ <div style="font-size:16px;font-weight:800;color:#32b46f">↑ 18%</div>
+ <div style="font-size:9px;color:var(--g500);font-weight:600;text-transform:uppercase;letter-spacing:.06em">On-time delivery rate</div>
+ </div>
+
+ </div><!-- /hero-product-wrap -->
+
+ <div class="hero-stats">
+ <div class="hstat"><div class="hstat-n gr">7</div><div class="hstat-l">Core functions</div></div>
+ <div class="hstat"><div class="hstat-n">10+</div><div class="hstat-l">Industries</div></div>
+ <div class="hstat"><div class="hstat-n" style="color:var(--blue)">AI</div><div class="hstat-l">Powered</div></div>
+ <div class="hstat"><div class="hstat-n">∞</div><div class="hstat-l">Scalable</div></div>
+ </div>
+</section>
+
+<!-- ═══════════════════ MARQUEE ═══════════════════ -->
+<div class="mq-wrap">
+ <div class="mq-track" id="mqt">
+ <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0H3"/></svg><span>ERP Systems</span></div>
+ <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg><span>AI Automation</span></div>
+ <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>CRM Platforms</span></div>
+ <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg><span>Analytics</span></div>
+ <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z"/></svg><span>Cloud Infra</span></div>
+ <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg><span>Workflow Intelligence</span></div>
+ <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg><span>Predictive Analytics</span></div>
+ <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/></svg><span>Process Automation</span></div>
+ <!-- duplicate for seamless loop -->
+ <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0H3"/></svg><span>ERP Systems</span></div>
+ <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg><span>AI Automation</span></div>
+ <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>CRM Platforms</span></div>
+ <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg><span>Analytics</span></div>
+ <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z"/></svg><span>Cloud Infra</span></div>
+ <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg><span>Workflow Intelligence</span></div>
+ <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg><span>Predictive Analytics</span></div>
+ <div class="mq-item" style="border-right:none"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63"/></svg><span>Process Automation</span></div>
+ </div>
+</div>
+
+<!-- ═══════════════════ 7 FUNCTIONS ═══════════════════ -->
+<section id="functions">
+ <div class="grid-bg" style="opacity:.45"></div>
+ <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Core Platform</span><div class="eyebrow-line"></div></div>
+ <h2 class="sec-h rv">The <span class="g">7 Functions</span> of Business <span class="fade">— Unified</span></h2>
+ <p class="sec-sub rv">Every core business function, streamlined and intelligently connected through one operating system.</p>
+
+ <div class="fn-grid">
+ <!-- 01 Management -->
+ <div class="fn-card rv d1">
+ <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+ <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="4" y="25" width="7" height="11" rx="1.5" fill="rgba(255,255,255,.5)"/><rect x="14" y="17" width="7" height="19" rx="1.5" fill="rgba(255,255,255,.75)"/><rect x="24" y="9" width="7" height="27" rx="1.5" fill="white"/><polyline points="6,21 17,13 27,5" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round"/><polygon points="27,2 33,8 21,8" fill="rgba(255,255,255,.7)"/></svg>
+ </div>
+ <div class="fn-num" style="color:var(--blue)">01 — Management</div>
+ <div class="fn-name">Management</div>
+ <div class="fn-desc">Centralized dashboards and operational visibility for faster, smarter business decisions.</div>
+ <div class="fn-tags"><span class="fn-tag">KPI Tracking</span><span class="fn-tag">Analytics</span><span class="fn-tag">Approvals</span></div>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="fn-arrow" style="color:var(--blue)">Explore module →</a>
+ </div>
+ <!-- 02 Sales -->
+ <div class="fn-card rv d2">
+ <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+ <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><polyline points="4,30 14,18 22,23 36,8" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><polyline points="4,35 14,23 22,28 36,13" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="13" r="4" fill="white"/></svg>
+ </div>
+ <div class="fn-num" style="color:#32b46f">02 — Sales</div>
+ <div class="fn-name">Sales</div>
+ <div class="fn-desc">Manage leads, pipelines, customers, and revenue operations from one unified platform.</div>
+ <div class="fn-tags"><span class="fn-tag">CRM</span><span class="fn-tag">Pipeline</span><span class="fn-tag">Invoicing</span></div>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="fn-arrow" style="color:#32b46f">Explore module →</a>
+ </div>
+ <!-- 03 Marketing -->
+ <div class="fn-card rv d3">
+ <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+ <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M5 14 L5 26 L11 26 L11 14 Z" fill="rgba(255,255,255,.6)"/><path d="M11 14 L30 6 L30 34 L11 26 Z" fill="white"/><path d="M11 18 L11 22 L8 28 L5 28 L5 22" fill="rgba(255,255,255,.4)"/><path d="M32 15 Q38 20 32 25" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2.5" stroke-linecap="round"/></svg>
+ </div>
+ <div class="fn-num" style="color:var(--violet)">03 — Marketing</div>
+ <div class="fn-name">Marketing</div>
+ <div class="fn-desc">Track campaigns, automate WhatsApp &amp; email, and improve customer engagement at scale.</div>
+ <div class="fn-tags"><span class="fn-tag">Campaigns</span><span class="fn-tag">WhatsApp</span><span class="fn-tag">Nurturing</span></div>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="fn-arrow" style="color:var(--violet)">Explore module →</a>
+ </div>
+ <!-- 04 Operations -->
+ <div class="fn-card rv d4">
+ <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+ <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="7" fill="white"/><circle cx="20" cy="20" r="3.5" fill="rgba(124,45,18,.85)"/><rect x="18" y="3" width="4" height="7" rx="2" fill="rgba(255,255,255,.85)"/><rect x="18" y="30" width="4" height="7" rx="2" fill="rgba(255,255,255,.85)"/><rect x="3" y="18" width="7" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="30" y="18" width="7" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="7.5" y="7.5" width="4" height="7" rx="2" transform="rotate(45 9.5 11)" fill="rgba(255,255,255,.55)"/><rect x="28.5" y="7.5" width="4" height="7" rx="2" transform="rotate(-45 30.5 11)" fill="rgba(255,255,255,.55)"/></svg>
+ </div>
+ <div class="fn-num" style="color:#14855a">04 — Operations</div>
+ <div class="fn-name">Operations</div>
+ <div class="fn-desc">Streamline activities, inventory, and vendor management with intelligent process automation.</div>
+ <div class="fn-tags"><span class="fn-tag">Workflows</span><span class="fn-tag">Inventory</span><span class="fn-tag">Vendors</span></div>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="fn-arrow" style="color:#14855a">Explore module →</a>
+ </div>
+ <!-- 05 Finance -->
+ <div class="fn-card rv d1">
+ <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+ <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="11" rx="13" ry="5" fill="white"/><path d="M7 11 Q7 18 20 18 Q33 18 33 11" fill="rgba(255,255,255,.75)"/><path d="M7 18 Q7 25 20 25 Q33 25 33 18" fill="rgba(255,255,255,.5)"/><path d="M7 25 Q7 32 20 32 Q33 32 33 25" fill="rgba(255,255,255,.3)"/></svg>
+ </div>
+ <div class="fn-num" style="color:#32b46f">05 — Finance</div>
+ <div class="fn-name">Finance</div>
+ <div class="fn-desc">Centralize billing, expenses, financial reporting, and accounting integrations seamlessly.</div>
+ <div class="fn-tags"><span class="fn-tag">Billing</span><span class="fn-tag">Expenses</span><span class="fn-tag">Reports</span></div>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="fn-arrow" style="color:#32b46f">Explore module →</a>
+ </div>
+ <!-- 06 HR -->
+ <div class="fn-card rv d2">
+ <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+ <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="14" cy="12" r="7" fill="white"/><circle cx="28" cy="14" r="5" fill="rgba(255,255,255,.6)"/><path d="M2 34 C2 25 8 22 14 22 C20 22 26 25 26 34 Z" fill="rgba(255,255,255,.8)"/><path d="M26 28 C26 24 29 22 32 22 C35 22 38 24 38 28 L38 34 L26 34 Z" fill="rgba(255,255,255,.4)"/></svg>
+ </div>
+ <div class="fn-num" style="color:#14855a">06 — Human Resources</div>
+ <div class="fn-name">HR</div>
+ <div class="fn-desc">Manage employees, attendance, payroll workflows, and leave management efficiently.</div>
+ <div class="fn-tags"><span class="fn-tag">Payroll</span><span class="fn-tag">Attendance</span><span class="fn-tag">Leave</span></div>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="fn-arrow" style="color:#14855a">Explore module →</a>
+ </div>
+ <!-- 07 R&D -->
+ <div class="fn-card rv d3">
+ <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+ <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="4.5" fill="white"/><ellipse cx="20" cy="20" rx="17" ry="7" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2.5"/><ellipse cx="20" cy="20" rx="17" ry="7" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2" transform="rotate(60 20 20)"/><ellipse cx="20" cy="20" rx="17" ry="7" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2" transform="rotate(120 20 20)"/></svg>
+ </div>
+ <div class="fn-num" style="color:#23a065">07 — R&amp;D</div>
+ <div class="fn-name">R&amp;D</div>
+ <div class="fn-desc">Enable innovation with AI-powered automation, predictive analytics, and custom intelligence.</div>
+ <div class="fn-tags"><span class="fn-tag">AI Automation</span><span class="fn-tag">Predictive</span><span class="fn-tag">Custom</span></div>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="fn-arrow" style="color:#23a065">Explore module →</a>
+ </div>
+ <!-- 08 CTA Card -->
+ <div class="fn-card fn-cta-card rv d4">
+ <div style="font-size:26px;font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.02em">Ready to<br>unify all 7?</div>
+ <div style="font-size:12px;color:rgba(255,255,255,.44);line-height:1.65;font-weight:400">Get a personalised walkthrough of all modules working in sync.</div>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" style="background:#fff;color:var(--black);padding:11px 22px;border-radius:6px;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:opacity .2s" onmouseover="this.style.opacity='.84'" onmouseout="this.style.opacity='1'">Book Free Demo →</a>
+ </div>
+ </div>
+
+ <div class="sec-cta rv">
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black">Schedule a Consultation →</a>
+ <a href="#dashboards" class="btn btn-outline2">View Live Dashboards</a>
+ </div>
+</section>
+
+<!-- ═══════════════════ SOLUTIONS ═══════════════════ -->
+<section id="solutions">
+ <div class="grid-bg" style="opacity:.45"></div>
+ <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Solutions</span><div class="eyebrow-line"></div></div>
+ <h2 class="sec-h rv">Built for <span class="g">Growth</span> <span class="fade">— Three Ways</span></h2>
+ <p class="sec-sub rv">Beyond the core platform, three focused solution tracks that plug straight into your operating system.</p>
+
+ <div class="sol-grid">
+
+ <!-- Custom Operational Solutions (ERP) -->
+ <div class="sol-card rv d1">
+  <div class="sol-icon">
+   <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><rect x="5" y="5" width="13" height="13" rx="2.5" fill="white"/><rect x="22" y="5" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.6)"/><rect x="5" y="22" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.6)"/><rect x="22" y="22" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.85)"/><path d="M18 11.5 L22 11.5 M11.5 18 L11.5 22 M28.5 18 L28.5 22 M18 28.5 L22 28.5" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round"/></svg>
+  </div>
+  <div class="sol-label">Solution 01 · ERP</div>
+  <div class="sol-name">Custom Operational Solutions</div>
+  <div class="sol-tag">An ERP shaped around how you actually work.</div>
+  <p class="sol-desc">Off-the-shelf ERP forces your team to bend to the software. We build the opposite — modules mapped to your real workflows, your approval chains, your terminology, deployed as a system you own outright.</p>
+  <ul class="sol-list">
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Custom modules for your exact operating process</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Role-based access, approvals &amp; audit trails</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Migration from spreadsheets &amp; legacy systems</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Integrations with Tally, banking &amp; GST filing</li>
+  </ul>
+  <div class="sol-metrics">
+   <div><div class="sol-metric-v">100%</div><div class="sol-metric-l">Ownership</div></div>
+   <div><div class="sol-metric-v">1</div><div class="sol-metric-l">Source of truth</div></div>
+  </div>
+  <a href="custom-operational-solutions.html" class="sol-arrow">Explore ERP →</a>
+ </div>
+
+ <!-- Ecommerce Solutions -->
+ <div class="sol-card rv d2">
+  <div class="sol-icon">
+   <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><path d="M4 10 L10 10 L14 27 L32 27" stroke="rgba(255,255,255,.55)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.5 14 L35 14 L32 24 L13.8 24 Z" fill="white"/><circle cx="16" cy="33" r="3" fill="rgba(255,255,255,.85)"/><circle cx="30" cy="33" r="3" fill="rgba(255,255,255,.85)"/></svg>
+  </div>
+  <div class="sol-label">Solution 02</div>
+  <div class="sol-name">Ecommerce Solutions</div>
+  <div class="sol-tag">From storefront to fulfilment — one connected stack.</div>
+  <p class="sol-desc">Launch and scale an online store that talks directly to your inventory, billing, and delivery operations. No spreadsheets in between, no orders lost in the gap between platforms.</p>
+  <ul class="sol-list">
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Shopify, WooCommerce &amp; custom storefront builds</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Live inventory sync across every sales channel</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Automated order, invoice &amp; GST workflows</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Payments, logistics &amp; returns handled end to end</li>
+  </ul>
+  <div class="sol-metrics">
+   <div><div class="sol-metric-v">3&times;</div><div class="sol-metric-l">Faster launch</div></div>
+   <div><div class="sol-metric-v">0</div><div class="sol-metric-l">Manual entry</div></div>
+  </div>
+  <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="sol-arrow">Explore ecommerce →</a>
+ </div>
+
+ <!-- Marketing Solutions -->
+ <div class="sol-card rv d3">
+  <div class="sol-icon">
+   <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><path d="M4 6 L36 6 L24 21 L24 34 L16 30 L16 21 Z" fill="white"/><path d="M16 21 L24 21 L24 27 L16 27 Z" fill="rgba(255,255,255,.55)"/><path d="M4 6 L36 6 L31 12 L9 12 Z" fill="rgba(255,255,255,.6)"/></svg>
+  </div>
+  <div class="sol-label">Solution 03</div>
+  <div class="sol-name">Marketing Solutions</div>
+  <div class="sol-tag">Fix the leak between lead and conversion.</div>
+  <p class="sol-desc">Most businesses don't have a traffic problem — they have a follow-up problem. Two engines run the funnel: organic search that compounds over time, and paid campaigns that buy demand on demand.</p>
+
+  <div class="sol-tabs">
+   <button class="sol-tab active" data-mkt="0" onclick="switchMkt(0)">Search Engine Optimization</button>
+   <button class="sol-tab" data-mkt="1" onclick="switchMkt(1)">Performance Marketing</button>
+  </div>
+
+  <!-- SEO panel -->
+  <div class="sol-panel active" data-mktpanel="0">
+   <ul class="sol-list">
+    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Technical audits, Core Web Vitals &amp; site architecture</li>
+    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Keyword strategy built around buying intent</li>
+    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Content engine &amp; on-page optimisation at scale</li>
+    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Local SEO, Google Business Profile &amp; schema markup</li>
+   </ul>
+   <div class="sol-metrics">
+    <div><div class="sol-metric-v">4&times;</div><div class="sol-metric-l">Organic traffic</div></div>
+    <div><div class="sol-metric-v">Page 1</div><div class="sol-metric-l">Target keywords</div></div>
+   </div>
+  </div>
+
+  <!-- Performance Marketing panel -->
+  <div class="sol-panel" data-mktpanel="1">
+   <ul class="sol-list">
+    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Google, Meta &amp; LinkedIn campaigns managed end to end</li>
+    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Landing pages &amp; creative built for conversion testing</li>
+    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Instant WhatsApp &amp; email follow-up on every lead</li>
+    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Ad spend mapped to closed revenue, not just clicks</li>
+   </ul>
+   <div class="sol-metrics">
+    <div><div class="sol-metric-v">&lt;5 min</div><div class="sol-metric-l">Response time</div></div>
+    <div><div class="sol-metric-v">100%</div><div class="sol-metric-l">Spend attributed</div></div>
+   </div>
+  </div>
+
+  <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="sol-arrow">Explore marketing →</a>
+ </div>
+
+ </div>
+</section>
+
+<!-- ═══════════════════ TECH STACK ═══════════════════ -->
+<section id="tech" style="background:#0a1310;color:#fff">
+  <div class="eyebrow rv"><div class="eyebrow-line" style="background:#34a87c"></div><span class="eyebrow-text" style="color:#34a87c">Technology Stack</span><div class="eyebrow-line" style="background:#34a87c"></div></div>
+  <h2 class="sec-h rv" style="color:#fff"><span style="background:linear-gradient(115deg,#4ecb87,#34a87c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Built on Modern</span> <span style="color:rgba(255,255,255,.22)">Infrastructure</span></h2>
+  <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">Enterprise-grade technologies combining to create scalable, intelligent digital ecosystems.</p>
+  <div class="tech-grid">
+
+    <!-- ERP -->
+    <div class="tech-card rv d1">
+      <div class="tech-icon-new" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+        <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
+          <rect x="4" y="4" width="14" height="14" rx="2" fill="rgba(255,255,255,0.9)"/>
+          <rect x="22" y="4" width="14" height="14" rx="2" fill="rgba(255,255,255,0.5)"/>
+          <rect x="4" y="22" width="14" height="14" rx="2" fill="rgba(255,255,255,0.5)"/>
+          <rect x="22" y="22" width="14" height="14" rx="2" fill="rgba(255,255,255,0.7)"/>
+          <line x1="18" y1="11" x2="22" y2="11" stroke="rgba(255,255,255,0.8)" stroke-width="2"/>
+          <line x1="11" y1="18" x2="11" y2="22" stroke="rgba(255,255,255,0.8)" stroke-width="2"/>
+          <line x1="29" y1="18" x2="29" y2="22" stroke="rgba(255,255,255,0.8)" stroke-width="2"/>
+          <line x1="18" y1="29" x2="22" y2="29" stroke="rgba(255,255,255,0.8)" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="tech-name">ERP Systems</div>
+      <div class="tech-desc">Unified business backbone — all departments connected in a single source of truth with real-time data sync across every module.</div>
+      <div class="tech-tags"><span class="t-tag">Multi-module</span><span class="t-tag">Real-time sync</span><span class="t-tag">Role-based access</span></div>
+    </div>
+
+    <!-- AI -->
+    <div class="tech-card rv d2">
+      <div class="tech-icon-new" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+        <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
+          <circle cx="20" cy="20" r="7" fill="rgba(255,255,255,0.95)"/>
+          <circle cx="20" cy="6" r="3" fill="rgba(255,255,255,0.6)"/>
+          <circle cx="20" cy="34" r="3" fill="rgba(255,255,255,0.6)"/>
+          <circle cx="6" cy="20" r="3" fill="rgba(255,255,255,0.6)"/>
+          <circle cx="34" cy="20" r="3" fill="rgba(255,255,255,0.6)"/>
+          <line x1="20" y1="9" x2="20" y2="13" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+          <line x1="20" y1="27" x2="20" y2="31" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+          <line x1="9" y1="20" x2="13" y2="20" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+          <line x1="27" y1="20" x2="31" y2="20" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+          <circle cx="11" cy="11" r="2.5" fill="rgba(255,255,255,0.4)"/>
+          <circle cx="29" cy="11" r="2.5" fill="rgba(255,255,255,0.4)"/>
+          <circle cx="11" cy="29" r="2.5" fill="rgba(255,255,255,0.4)"/>
+          <circle cx="29" cy="29" r="2.5" fill="rgba(255,255,255,0.4)"/>
+        </svg>
+      </div>
+      <div class="tech-name">AI Automation</div>
+      <div class="tech-desc">Intelligent workflows that learn and adapt — eliminating repetitive tasks and surfacing actionable insights before you ask.</div>
+      <div class="tech-tags"><span class="t-tag">Predictive AI</span><span class="t-tag">Auto-workflows</span><span class="t-tag">Smart alerts</span></div>
+    </div>
+
+    <!-- CRM -->
+    <div class="tech-card rv d3">
+      <div class="tech-icon-new" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+        <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
+          <circle cx="14" cy="13" r="6" fill="rgba(255,255,255,0.9)"/>
+          <circle cx="28" cy="10" r="4" fill="rgba(255,255,255,0.55)"/>
+          <path d="M4 30c0-5.523 4.477-10 10-10s10 4.477 10 10" fill="rgba(255,255,255,0.7)"/>
+          <path d="M28 24c3.314 0 6 2.686 6 6H22c0-3.314 2.686-6 6-6z" fill="rgba(255,255,255,0.4)"/>
+          <rect x="30" y="20" width="8" height="2" rx="1" fill="rgba(255,255,255,0.5)"/>
+          <rect x="32" y="24" width="6" height="2" rx="1" fill="rgba(255,255,255,0.5)"/>
+        </svg>
+      </div>
+      <div class="tech-name">CRM Platform</div>
+      <div class="tech-desc">360° customer management — first touch to retention with pipeline tracking, follow-up automation, and revenue forecasting.</div>
+      <div class="tech-tags"><span class="t-tag">Lead scoring</span><span class="t-tag">Pipeline</span><span class="t-tag">Auto follow-up</span></div>
+    </div>
+
+    <!-- Analytics -->
+    <div class="tech-card rv d1">
+      <div class="tech-icon-new" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+        <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
+          <rect x="4" y="28" width="6" height="8" rx="1" fill="rgba(255,255,255,0.5)"/>
+          <rect x="13" y="20" width="6" height="16" rx="1" fill="rgba(255,255,255,0.7)"/>
+          <rect x="22" y="12" width="6" height="24" rx="1" fill="rgba(255,255,255,0.9)"/>
+          <rect x="31" y="16" width="6" height="20" rx="1" fill="rgba(255,255,255,0.6)"/>
+          <polyline points="7,24 16,16 25,8 34,12" fill="none" stroke="rgba(255,255,255,0.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="34" cy="12" r="2.5" fill="white"/>
+        </svg>
+      </div>
+      <div class="tech-name">Analytics Engine</div>
+      <div class="tech-desc">Real-time dashboards and drill-down reporting across every function — turning raw data into strategic advantage.</div>
+      <div class="tech-tags"><span class="t-tag">Live dashboards</span><span class="t-tag">Custom reports</span><span class="t-tag">KPI tracking</span></div>
+    </div>
+
+    <!-- Cloud -->
+    <div class="tech-card rv d2">
+      <div class="tech-icon-new" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+        <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
+          <path d="M10 28a8 8 0 010-16 8.001 8.001 0 0115.32-3A7 7 0 1132 28z" fill="rgba(255,255,255,0.85)"/>
+          <rect x="16" y="22" width="2" height="10" rx="1" fill="rgba(20,78,74,0.9)"/>
+          <rect x="22" y="22" width="2" height="10" rx="1" fill="rgba(20,78,74,0.9)"/>
+          <path d="M13 25l4-5 4 3 4-6" stroke="rgba(20,78,74,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="tech-name">Cloud Infrastructure</div>
+      <div class="tech-desc">Enterprise-grade cloud with 99.9% uptime SLA, end-to-end encryption, and auto-scaling built for any load.</div>
+      <div class="tech-tags"><span class="t-tag">99.9% uptime</span><span class="t-tag">Auto-scale</span><span class="t-tag">E2E encrypted</span></div>
+    </div>
+
+    <!-- Workflow -->
+    <div class="tech-card rv d3">
+      <div class="tech-icon-new" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+        <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
+          <rect x="3" y="7" width="10" height="8" rx="2" fill="rgba(255,255,255,0.9)"/>
+          <rect x="16" y="3" width="10" height="8" rx="2" fill="rgba(255,255,255,0.6)"/>
+          <rect x="16" y="15" width="10" height="8" rx="2" fill="rgba(255,255,255,0.75)"/>
+          <rect x="29" y="9" width="8" height="8" rx="2" fill="rgba(255,255,255,0.5)"/>
+          <rect x="3" y="25" width="10" height="8" rx="2" fill="rgba(255,255,255,0.55)"/>
+          <line x1="13" y1="11" x2="16" y2="7" stroke="rgba(255,255,255,0.8)" stroke-width="1.5"/>
+          <line x1="13" y1="11" x2="16" y2="19" stroke="rgba(255,255,255,0.8)" stroke-width="1.5"/>
+          <line x1="26" y1="7" x2="29" y2="13" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+          <line x1="26" y1="19" x2="29" y2="13" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+          <line x1="13" y1="29" x2="36" y2="29" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="2 2"/>
+        </svg>
+      </div>
+      <div class="tech-name">Workflow Intelligence</div>
+      <div class="tech-desc">Visual no-code workflow builder with triggers, conditions, and multi-step actions — automate complex processes instantly.</div>
+      <div class="tech-tags"><span class="t-tag">No-code builder</span><span class="t-tag">Triggers</span><span class="t-tag">Multi-step</span></div>
+    </div>
+
+  </div>
+  <div class="sec-cta rv">
+    <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black" style="background:#fff;color:#0a1310">Discuss Technical Requirements →</a>
+    <a href="#functions" class="btn btn-outline2" style="color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.2)">View All Modules</a>
+  </div>
+</section>
+
+<!-- ═══════════════════ CASE STUDIES ═══════════════════ -->
+<section id="cases">
+ <div class="grid-bg" style="opacity:.45"></div>
+ <div class="eyebrow rv"><div class="eyebrow-line" style="background:#32b46f"></div><span class="eyebrow-text" style="color:#32b46f">Case Studies</span><div class="eyebrow-line" style="background:#32b46f"></div></div>
+ <h2 class="sec-h rv"><span style="color:#32b46f">Real Results</span> for <span class="fade">Real Businesses</span></h2>
+ <p class="sec-sub rv">How Drawlead transforms operations across industries with measurable outcomes.</p>
+ <div class="cases-grid">
+ <div class="case-card rv d1">
+  <div class="case-screen">
+    <div class="cs-bar"><div class="cs-dot" style="background:#ff5f57"></div><div class="cs-dot" style="background:#ffbd2e"></div><div class="cs-dot" style="background:#28c840"></div><div class="cs-title">Construction ERP — Drawlead</div></div>
+    <div class="cs-body">
+      <div class="cs-sidebar">
+        <div style="font-size:7px;font-weight:800;color:#32b46f;margin-bottom:4px">Drawlead</div>
+        <div class="cs-nav-item active"></div>
+        <div class="cs-nav-item"></div>
+        <div class="cs-nav-item"></div>
+        <div class="cs-nav-item"></div>
+        <div class="cs-nav-item"></div>
+      </div>
+      <div class="cs-main">
+        <div class="cs-krow">
+          <div class="cs-k"><div class="cs-kv">12</div><div class="cs-kl">Sites</div></div>
+          <div class="cs-k"><div class="cs-kv" style="color:#14855a">₹8.4Cr</div><div class="cs-kl">Projects</div></div>
+          <div class="cs-k"><div class="cs-kv">247</div><div class="cs-kl">Workers</div></div>
+        </div>
+        <div class="cs-lbl">Budget vs Actual</div>
+        <div class="cs-chart">
+          <div class="cs-hbar-r"><span>Site A</span><div class="cs-track2"><div class="cs-fill2" style="width:82%"></div></div><span>82%</span></div>
+          <div class="cs-hbar-r"><span>Site B</span><div class="cs-track2"><div class="cs-fill2" style="width:95%;background:#14855a"></div></div><span style="color:#14855a">95%⚠</span></div>
+          <div class="cs-hbar-r"><span>Site C</span><div class="cs-track2"><div class="cs-fill2" style="width:61%"></div></div><span>61%</span></div>
+        </div>
+        <div class="cs-list-r">
+          <div class="cs-list-item"><div class="cs-dot2"></div>Contractor payment approved<span class="cs-badge-s">Done</span></div>
+          <div class="cs-list-item"><div class="cs-dot2" style="background:#14855a"></div>Steel reorder triggered<span class="cs-badge-s" style="background:rgba(20,133,90,.1);color:#14855a">Auto</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="case-body">
+    <span class="case-tag" style="background:rgba(50,180,111,.08);color:#32b46f;border:1px solid rgba(50,180,111,.2)">Construction &amp; Real Estate</span>
+    <div class="case-title">Construction ERP Solution</div>
+    <ul class="case-list">
+      <li>Better operational visibility across all project sites</li>
+      <li>Faster reporting workflows and billing automation</li>
+      <li>Improved multi-site project management controls</li>
+    </ul>
+    <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-outline2 btn-sm" style="margin-top:1.1rem;align-self:flex-start">Read Case Study →</a>
+  </div>
+ </div>
+ <div class="case-card rv d2">
+  <div class="case-screen">
+    <div class="cs-bar"><div class="cs-dot" style="background:#ff5f57"></div><div class="cs-dot" style="background:#ffbd2e"></div><div class="cs-dot" style="background:#28c840"></div><div class="cs-title">Clinic OS — Drawlead</div></div>
+    <div class="cs-body">
+      <div class="cs-sidebar">
+        <div style="font-size:7px;font-weight:800;color:#32b46f;margin-bottom:4px">Drawlead</div>
+        <div class="cs-nav-item active"></div>
+        <div class="cs-nav-item"></div>
+        <div class="cs-nav-item"></div>
+        <div class="cs-nav-item"></div>
+      </div>
+      <div class="cs-main">
+        <div class="cs-krow">
+          <div class="cs-k"><div class="cs-kv">6</div><div class="cs-kl">Branches</div></div>
+          <div class="cs-k"><div class="cs-kv" style="color:#14855a">284</div><div class="cs-kl">Patients</div></div>
+          <div class="cs-k"><div class="cs-kv">₹42L</div><div class="cs-kl">Revenue</div></div>
+        </div>
+        <div class="cs-lbl">Today's Appointments</div>
+        <div class="cs-bars-row">
+          <div class="cs-bar-i" style="height:55%"></div>
+          <div class="cs-bar-i" style="height:72%"></div>
+          <div class="cs-bar-i" style="height:60%"></div>
+          <div class="cs-bar-i" style="height:88%"></div>
+          <div class="cs-bar-i cs-bar-hi" style="height:95%"></div>
+          <div class="cs-bar-i" style="height:70%"></div>
+        </div>
+        <div class="cs-list-r">
+          <div class="cs-list-item"><div class="cs-dot2"></div>Chennai Branch — 48 appts<span class="cs-badge-s">Full</span></div>
+          <div class="cs-list-item"><div class="cs-dot2" style="background:#14855a"></div>Billing processed — ₹12L<span class="cs-badge-s" style="background:rgba(20,133,90,.1);color:#14855a">Done</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="case-body">
+    <span class="case-tag" style="background:rgba(50,180,111,.08);color:#32b46f;border:1px solid rgba(50,180,111,.2)">Healthcare &amp; Wellness</span>
+    <div class="case-title">Multi-Brand Physiotherapy Management</div>
+    <ul class="case-list">
+      <li>Streamlined clinic workflows across branches</li>
+      <li>Improved scheduling efficiency and capacity</li>
+      <li>Centralized billing and cross-branch reporting</li>
+    </ul>
+    <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-outline2 btn-sm" style="margin-top:1.1rem;align-self:flex-start">Read Case Study →</a>
+  </div>
+ </div>
+ <div class="case-card rv d3">
+  <div class="case-screen">
+    <div class="cs-bar"><div class="cs-dot" style="background:#ff5f57"></div><div class="cs-dot" style="background:#ffbd2e"></div><div class="cs-dot" style="background:#28c840"></div><div class="cs-title">Agency OS — Drawlead</div></div>
+    <div class="cs-body">
+      <div class="cs-sidebar">
+        <div style="font-size:7px;font-weight:800;color:#32b46f;margin-bottom:4px">Drawlead</div>
+        <div class="cs-nav-item active"></div>
+        <div class="cs-nav-item"></div>
+        <div class="cs-nav-item"></div>
+        <div class="cs-nav-item"></div>
+      </div>
+      <div class="cs-main">
+        <div class="cs-krow">
+          <div class="cs-k"><div class="cs-kv">24</div><div class="cs-kl">Clients</div></div>
+          <div class="cs-k"><div class="cs-kv" style="color:#14855a">↑ 38%</div><div class="cs-kl">Output</div></div>
+          <div class="cs-k"><div class="cs-kv">₹1.8Cr</div><div class="cs-kl">Billed</div></div>
+        </div>
+        <div class="cs-lbl">Project Delivery Rate</div>
+        <div class="cs-funnel">
+          <div class="cs-fbar2" style="width:100%;background:rgba(50,180,111,.1)">Active · 24 projects</div>
+          <div class="cs-fbar2" style="width:75%;background:rgba(50,180,111,.18)">In Review · 18</div>
+          <div class="cs-fbar2" style="width:58%;background:#32b46f;color:#fff">Delivered · 14</div>
+        </div>
+        <div class="cs-list-r">
+          <div class="cs-list-item"><div class="cs-dot2"></div>Team productivity up 38%<span class="cs-badge-s">AI</span></div>
+          <div class="cs-list-item"><div class="cs-dot2" style="background:#14855a"></div>Client NPS score 94<span class="cs-badge-s" style="background:rgba(20,133,90,.1);color:#14855a">↑</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="case-body">
+    <span class="case-tag" style="background:rgba(50,180,111,.08);color:#14855a;border:1px solid rgba(20,133,90,.2)">Marketing Agencies</span>
+    <div class="case-title">Agency OS</div>
+    <ul class="case-list">
+      <li>Improved team collaboration and project delivery</li>
+      <li>Better client and pipeline management</li>
+      <li>Measurable increase in team productivity</li>
+    </ul>
+    <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-outline2 btn-sm" style="margin-top:1.1rem;align-self:flex-start">Read Case Study →</a>
+  </div>
+ </div>
+ </div>
+ <div class="sec-cta rv">
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black">Start Your Success Story →</a>
+ </div>
+</section>
+
+<!-- ═══════════════════ INDUSTRIES ═══════════════════ -->
+<section id="industries" style="background:var(--white)">
+ <div class="eyebrow rv"><div class="eyebrow-line" style="background:#14855a"></div><span class="eyebrow-text" style="color:#14855a">Industries</span><div class="eyebrow-line" style="background:#14855a"></div></div>
+ <h2 class="sec-h rv">Built for <span style="color:#14855a">Your Industry</span></h2>
+ <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements — out of the box.</p>
+
+ <div class="ind-grid">
+
+ <!-- Construction -->
+ <div class="ind-card rv d1">
+ <div class="ind-card-top">
+ <div class="ind-emoji" style="background:linear-gradient(135deg,#32b46f,#14855a)"><svg width="28" height="28" fill="none" viewBox="0 0 40 40">
+       <rect x="4" y="28" width="32" height="8" rx="2" fill="rgba(255,255,255,.9)"/>
+       <rect x="8" y="16" width="10" height="12" rx="1" fill="rgba(255,255,255,.7)"/>
+       <rect x="22" y="20" width="10" height="8" rx="1" fill="rgba(255,255,255,.5)"/>
+       <polygon points="2,28 20,8 38,28" fill="rgba(255,255,255,.3)"/>
+       <polygon points="8,28 20,14 32,28" fill="rgba(255,255,255,.2)"/>
+     </svg></div>
+ <div class="ind-card-title">Construction &amp; Real Estate</div>
+ <div class="ind-card-tag">Projects · Sites · Billing</div>
+ </div>
+ <div class="ind-card-body">
+ <div class="ind-problems">
+ <div class="ind-prob-label">Common Problems</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Project overruns with no visibility</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Manual contractor billing errors</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Siloed site & inventory data</div>
+ </div>
+ <div class="ind-solutions">
+ <div class="ind-sol-label">Drawlead Solution</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Real-time multi-site project dashboard</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Automated contractor & billing workflows</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Unified inventory &amp; vendor management</div>
+ </div>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="ind-cta">Explore Construction OS →</a>
+ </div>
+ </div>
+
+ <!-- Healthcare -->
+ <div class="ind-card rv d2">
+ <div class="ind-card-top">
+ <div class="ind-emoji" style="background:linear-gradient(135deg,#32b46f,#14855a)"><svg width="28" height="28" fill="none" viewBox="0 0 40 40">
+       <rect x="4" y="4" width="32" height="32" rx="6" fill="rgba(255,255,255,.15)"/>
+       <rect x="16" y="8" width="8" height="24" rx="2" fill="rgba(255,255,255,.9)"/>
+       <rect x="8" y="16" width="24" height="8" rx="2" fill="rgba(255,255,255,.9)"/>
+     </svg></div>
+ <div class="ind-card-title">Healthcare &amp; Wellness</div>
+ <div class="ind-card-tag">Clinics · Appointments · Billing</div>
+ </div>
+ <div class="ind-card-body">
+ <div class="ind-problems">
+ <div class="ind-prob-label">Common Problems</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Scheduling conflicts across branches</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Manual patient billing & follow-ups</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>No centralized therapist management</div>
+ </div>
+ <div class="ind-solutions">
+ <div class="ind-sol-label">Drawlead Solution</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Smart appointment scheduling system</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Automated billing &amp; WhatsApp reminders</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Multi-branch centralized reporting</div>
+ </div>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="ind-cta">Explore Healthcare OS →</a>
+ </div>
+ </div>
+
+ <!-- Manufacturing -->
+ <div class="ind-card rv d3">
+ <div class="ind-card-top">
+ <div class="ind-emoji" style="background:linear-gradient(135deg,#32b46f,#14855a)"><svg width="28" height="28" fill="none" viewBox="0 0 40 40">
+       <rect x="3" y="28" width="34" height="8" rx="2" fill="rgba(255,255,255,.8)"/>
+       <rect x="6" y="18" width="8" height="10" rx="1" fill="rgba(255,255,255,.6)"/>
+       <rect x="18" y="14" width="8" height="14" rx="1" fill="rgba(255,255,255,.7)"/>
+       <rect x="30" y="10" width="4" height="18" rx="1" fill="rgba(255,255,255,.5)"/>
+       <circle cx="10" cy="22" r="2" fill="rgba(255,255,255,.3)"/>
+       <rect x="14" y="6" width="3" height="8" rx="1.5" fill="rgba(255,255,255,.4)"/>
+     </svg></div>
+ <div class="ind-card-title">Manufacturing</div>
+ <div class="ind-card-tag">Production · Inventory · Quality</div>
+ </div>
+ <div class="ind-card-body">
+ <div class="ind-problems">
+ <div class="ind-prob-label">Common Problems</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Production delays with no alerts</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Raw material stockout surprises</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Manual quality control records</div>
+ </div>
+ <div class="ind-solutions">
+ <div class="ind-sol-label">Drawlead Solution</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>AI-powered production monitoring</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Predictive inventory restocking alerts</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Digital QC workflows &amp; reporting</div>
+ </div>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="ind-cta">Explore Manufacturing OS →</a>
+ </div>
+ </div>
+
+ <!-- Agencies -->
+ <div class="ind-card rv d1">
+ <div class="ind-card-top">
+ <div class="ind-emoji" style="background:linear-gradient(135deg,#32b46f,#14855a)"><svg width="28" height="28" fill="none" viewBox="0 0 40 40">
+       <circle cx="20" cy="12" r="8" fill="rgba(255,255,255,.9)"/>
+       <circle cx="10" cy="28" r="6" fill="rgba(255,255,255,.65)"/>
+       <circle cx="30" cy="28" r="6" fill="rgba(255,255,255,.65)"/>
+       <line x1="14" y1="18" x2="12" y2="23" stroke="rgba(255,255,255,.6)" stroke-width="2"/>
+       <line x1="26" y1="18" x2="28" y2="23" stroke="rgba(255,255,255,.6)" stroke-width="2"/>
+     </svg></div>
+ <div class="ind-card-title">Marketing Agencies</div>
+ <div class="ind-card-tag">Projects · Clients · Delivery</div>
+ </div>
+ <div class="ind-card-body">
+ <div class="ind-problems">
+ <div class="ind-prob-label">Common Problems</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Client projects slipping deadlines</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>No single view of leads &amp; revenue</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Team scattered across tools</div>
+ </div>
+ <div class="ind-solutions">
+ <div class="ind-sol-label">Drawlead Solution</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Agency OS — all-in-one client hub</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Unified CRM + project + billing view</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Team tasks, timelines &amp; reports</div>
+ </div>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="ind-cta">Explore Agency OS →</a>
+ </div>
+ </div>
+
+ <!-- Retail -->
+ <div class="ind-card rv d2">
+ <div class="ind-card-top">
+ <div class="ind-emoji" style="background:linear-gradient(135deg,#32b46f,#14855a)"><svg width="28" height="28" fill="none" viewBox="0 0 40 40">
+       <path d="M6 10 L10 4 L30 4 L34 10 Z" fill="rgba(255,255,255,.9)"/>
+       <path d="M6 10 L6 34 Q6 36 8 36 L32 36 Q34 36 34 34 L34 10 Z" fill="rgba(255,255,255,.7)"/>
+       <path d="M15 10 Q15 18 20 18 Q25 18 25 10" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"/>
+     </svg></div>
+ <div class="ind-card-title">Retail &amp; E-Commerce</div>
+ <div class="ind-card-tag">Orders · Inventory · CRM</div>
+ </div>
+ <div class="ind-card-body">
+ <div class="ind-problems">
+ <div class="ind-prob-label">Common Problems</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Inventory mismatches across stores</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>No customer retention system</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Order tracking is fully manual</div>
+ </div>
+ <div class="ind-solutions">
+ <div class="ind-sol-label">Drawlead Solution</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Live inventory sync across all channels</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Customer CRM + loyalty automation</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>End-to-end order management</div>
+ </div>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="ind-cta">Explore Retail OS →</a>
+ </div>
+ </div>
+
+ <!-- Logistics -->
+ <div class="ind-card rv d3">
+ <div class="ind-card-top">
+ <div class="ind-emoji" style="background:linear-gradient(135deg,#32b46f,#14855a)"><svg width="28" height="28" fill="none" viewBox="0 0 40 40">
+       <rect x="2" y="16" width="22" height="14" rx="2" fill="rgba(255,255,255,.85)"/>
+       <path d="M24 20 L34 20 L38 28 L38 30 L24 30 Z" fill="rgba(255,255,255,.65)"/>
+       <circle cx="10" cy="32" r="4" fill="rgba(255,255,255,.5)" stroke="rgba(255,255,255,.9)" stroke-width="2"/>
+       <circle cx="30" cy="32" r="4" fill="rgba(255,255,255,.5)" stroke="rgba(255,255,255,.9)" stroke-width="2"/>
+       <rect x="6" y="10" width="10" height="6" rx="1" fill="rgba(255,255,255,.4)"/>
+     </svg></div>
+ <div class="ind-card-title">Logistics &amp; Transport</div>
+ <div class="ind-card-tag">Fleet · Delivery · Compliance</div>
+ </div>
+ <div class="ind-card-body">
+ <div class="ind-problems">
+ <div class="ind-prob-label">Common Problems</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>No real-time fleet visibility</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Manual delivery proof &amp; billing</div>
+ <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Compliance docs always missing</div>
+ </div>
+ <div class="ind-solutions">
+ <div class="ind-sol-label">Drawlead Solution</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Live fleet &amp; delivery tracking dashboard</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Digital POD &amp; auto-invoicing</div>
+ <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Compliance document automation</div>
+ </div>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="ind-cta">Explore Logistics OS →</a>
+ </div>
+ </div>
+
+ </div><!-- /ind-grid -->
+
+ <div class="sec-cta rv" style="margin-top:3rem">
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black">Find Your Industry Solution →</a>
+ <a href="#cases" class="btn btn-outline2">See Case Studies</a>
+ </div>
+</section>
+
+<!-- ═══════════════════ WHY Drawlead ═══════════════════ -->
+<section id="why" style="background:#0a1310;color:#fff">
+ <div class="grid-bg" style="opacity:.45"></div>
+ <div class="eyebrow rv"><div class="eyebrow-line" style="background:#14855a"></div><span class="eyebrow-text" style="color:#14855a">Why Drawlead</span><div class="eyebrow-line" style="background:#14855a"></div></div>
+ <h2 class="sec-h rv" style="color:#fff"><span style="color:#14855a">What Sets</span> <span style="color:rgba(255,255,255,.22)">Us Apart</span></h2>
+ <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">We're not just software — we're a long-term partner in your digital transformation and growth.</p>
+ <div class="why-grid">
+ <div class="why-card rv d1">
+ <div class="why-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 18px rgba(0,0,0,.2)"><svg width="24" height="24" fill="none" viewBox="0 0 40 40">
+       <rect x="3" y="14" width="12" height="12" rx="3" fill="rgba(255,255,255,.9)"/>
+       <rect x="25" y="14" width="12" height="12" rx="3" fill="rgba(255,255,255,.9)"/>
+       <rect x="14" y="18" width="12" height="4" rx="2" fill="rgba(255,255,255,.7)"/>
+       <circle cx="8" cy="8" r="4" fill="rgba(255,255,255,.4)"/>
+       <circle cx="32" cy="32" r="4" fill="rgba(255,255,255,.4)"/>
+     </svg></div>
+ <div class="why-name">Unified Ecosystem</div>
+ <div class="why-desc">All 7 core functions in one platform. No more tool-switching or disconnected data silos.</div>
+ </div>
+ <div class="why-card rv d2">
+ <div class="why-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 18px rgba(0,0,0,.2)"><svg width="24" height="24" fill="none" viewBox="0 0 40 40">
+       <polygon points="22,4 10,22 20,22 18,36 30,18 20,18" fill="rgba(255,255,255,.95)"/>
+       <circle cx="32" cy="8" r="3" fill="rgba(255,255,255,.4)"/>
+       <circle cx="8" cy="32" r="3" fill="rgba(255,255,255,.4)"/>
+     </svg></div>
+ <div class="why-name">AI-Driven Efficiency</div>
+ <div class="why-desc">Automate repetitive tasks and surface intelligent insights without any technical expertise.</div>
+ </div>
+ <div class="why-card rv d3">
+ <div class="why-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 18px rgba(0,0,0,.2)"><svg width="24" height="24" fill="none" viewBox="0 0 40 40">
+       <polygon points="20,4 28,12 24,12 24,18 16,18 16,12 12,12" fill="rgba(255,255,255,.9)"/>
+       <polygon points="20,36 28,28 24,28 24,22 16,22 16,28 12,28" fill="rgba(255,255,255,.9)"/>
+       <polygon points="4,20 12,12 12,16 18,16 18,24 12,24 12,28" fill="rgba(255,255,255,.6)"/>
+       <polygon points="36,20 28,12 28,16 22,16 22,24 28,24 28,28" fill="rgba(255,255,255,.6)"/>
+     </svg></div>
+ <div class="why-name">Scalable Architecture</div>
+ <div class="why-desc">Built for startups, SMEs, and enterprises — scales exactly as your business grows.</div>
+ </div>
+ <div class="why-card rv d4">
+ <div class="why-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 18px rgba(0,0,0,.2)"><svg width="24" height="24" fill="none" viewBox="0 0 40 40">
+       <path d="M20 4 L34 10 L34 22 Q34 32 20 37 Q6 32 6 22 L6 10 Z" fill="rgba(255,255,255,.85)"/>
+       <polyline points="13,20 18,25 28,15" fill="none" stroke="#14855a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+     </svg></div>
+ <div class="why-name">Secure &amp; Reliable</div>
+ <div class="why-desc">Enterprise-grade security, 99.9% uptime SLA, and end-to-end encryption on all data.</div>
+ </div>
+ <div class="why-card rv d1">
+ <div class="why-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 18px rgba(0,0,0,.2)"><svg width="24" height="24" fill="none" viewBox="0 0 40 40">
+       <path d="M4 20 Q10 14 16 18 L20 22 L24 18 Q30 14 36 20" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="3" stroke-linecap="round"/>
+       <path d="M4 24 Q10 18 16 22 L20 26 L24 22 Q30 18 36 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="3" stroke-linecap="round"/>
+       <circle cx="20" cy="24" r="3" fill="white"/>
+     </svg></div>
+ <div class="why-name">Long-Term Partnership</div>
+ <div class="why-desc">Continuous support, updates, and future-proofing — we grow and evolve with your needs.</div>
+ </div>
+ </div>
+ <div class="sec-cta rv">
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black" style="background:#fff;color:#0a1310">Partner With Us →</a>
+ <a href="#cases" class="btn btn-outline2" style="color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.2)">See Case Studies</a>
+ </div>
+</section>
+
+<!-- ═══════════════════ DASHBOARDS ═══════════════════ -->
+<section id="dashboards" style="background:var(--bg2)">
+ <div class="grid-bg" style="opacity:.35"></div>
+ <div class="eyebrow rv"><div class="eyebrow-line" style="background:#23a065"></div><span class="eyebrow-text" style="color:#23a065">Platform Dashboards</span><div class="eyebrow-line" style="background:#23a065"></div></div>
+ <h2 class="sec-h rv">Every Module. <span class="fade">One Screen.</span></h2>
+ <p class="sec-sub rv">Live ERP dashboards for every function — see exactly what Drawlead looks like in action.</p>
+ <div class="dash-grid">
+
+  <!-- ── SALES ── -->
+  <div class="dash-card d1">
+    <div class="dash-head">
+      <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
+        <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><rect x="3" y="22" width="6" height="10" rx="1" fill="rgba(255,255,255,.5)"/><rect x="12" y="14" width="6" height="18" rx="1" fill="rgba(255,255,255,.75)"/><rect x="21" y="6" width="6" height="26" rx="1" fill="white"/><polyline points="6,18 15,10 24,3" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="3" r="3" fill="white"/></svg>
+      </div>
+      <div class="dash-mod-name">Sales Pipeline</div>
+    </div>
+    <div class="dash-body">
+      <div class="d-krow">
+        <div class="d-k"><div class="d-kv" style="color:#32b46f">₹2.4Cr</div><div class="d-kl">Revenue</div></div>
+        <div class="d-k"><div class="d-kv" style="color:#32b46f">↑ 28%</div><div class="d-kl">Growth</div></div>
+        <div class="d-k"><div class="d-kv">247</div><div class="d-kl">Leads</div></div>
+      </div>
+      <div class="d-lbl">Monthly Revenue</div>
+      <div class="d-bars">
+        <div class="d-bar" style="height:40%"><span>J</span></div>
+        <div class="d-bar" style="height:55%"><span>F</span></div>
+        <div class="d-bar" style="height:48%"><span>M</span></div>
+        <div class="d-bar" style="height:72%"><span>A</span></div>
+        <div class="d-bar" style="height:64%"><span>M</span></div>
+        <div class="d-bar" style="height:90%;background:#32b46f"><span style="color:#fff">J</span></div>
+      </div>
+      <div class="d-hr"></div>
+      <div class="d-rows">
+        <div class="d-row"><div class="d-dot" style="background:#32b46f"></div>Infra Corp — Won<span class="d-val" style="color:#32b46f">₹12L</span></div>
+        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>MedPlus — Proposal<span class="d-val" style="color:#14855a">₹8L</span></div>
+        <div class="d-row"><div class="d-dot" style="background:#23a065"></div>LogiTrack — Demo<span class="d-val" style="color:#23a065">₹6L</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FINANCE ── -->
+  <div class="dash-card d2">
+    <div class="dash-head">
+      <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
+        <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><ellipse cx="18" cy="10" rx="12" ry="4.5" fill="white"/><path d="M6 10 Q6 17 18 17 Q30 17 30 10" fill="rgba(255,255,255,.7)"/><path d="M6 17 Q6 24 18 24 Q30 24 30 17" fill="rgba(255,255,255,.45)"/><path d="M6 24 Q6 31 18 31 Q30 31 30 24" fill="rgba(255,255,255,.25)"/></svg>
+      </div>
+      <div class="dash-mod-name">Finance &amp; Billing</div>
+    </div>
+    <div class="dash-body">
+      <div class="d-krow">
+        <div class="d-k"><div class="d-kv" style="color:#32b46f">₹86L</div><div class="d-kl">Invoiced</div></div>
+        <div class="d-k"><div class="d-kv" style="color:#32b46f">₹72L</div><div class="d-kl">Collected</div></div>
+        <div class="d-k"><div class="d-kv" style="color:#14855a">₹14L</div><div class="d-kl">Pending</div></div>
+      </div>
+      <div class="d-lbl">Collection Funnel</div>
+      <div class="d-funnel">
+        <div class="d-fbar" style="width:100%;background:rgba(50,180,111,.12);color:#32b46f">Leads · 847</div>
+        <div class="d-fbar" style="width:72%;background:rgba(50,180,111,.2);color:#32b46f">Qualified · 612</div>
+        <div class="d-fbar" style="width:48%;background:rgba(50,180,111,.32);color:#32b46f">Proposals · 406</div>
+        <div class="d-fbar" style="width:28%;background:#32b46f;color:#fff">Closed · 237</div>
+      </div>
+      <div class="d-rows">
+        <div class="d-row"><div class="d-dot" style="background:#32b46f"></div>GST filed on time<span class="d-val" style="color:#32b46f">✓</span></div>
+        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>3 invoices overdue<span class="d-val" style="color:#14855a">!</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OPERATIONS ── -->
+  <div class="dash-card d3">
+    <div class="dash-head">
+      <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
+        <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="6.5" fill="white"/><circle cx="18" cy="18" r="3" fill="rgba(50,180,111,.7)"/><rect x="16" y="2" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="16" y="28" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="2" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="28" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/></svg>
+      </div>
+      <div class="dash-mod-name">Operations</div>
+    </div>
+    <div class="dash-body">
+      <div class="d-krow">
+        <div class="d-k"><div class="d-kv">1,248</div><div class="d-kl">Tasks</div></div>
+        <div class="d-k"><div class="d-kv" style="color:#32b46f">94%</div><div class="d-kl">On Time</div></div>
+        <div class="d-k"><div class="d-kv">38</div><div class="d-kl">Vendors</div></div>
+      </div>
+      <div class="d-lbl">Task Status</div>
+      <div class="d-status">
+        <div class="d-sbox" style="background:rgba(50,180,111,.08);border:1px solid rgba(50,180,111,.2)"><div class="d-sv" style="color:#32b46f">842</div><div class="d-sl">Done</div></div>
+        <div class="d-sbox" style="background:rgba(35,160,101,.08);border:1px solid rgba(35,160,101,.2)"><div class="d-sv" style="color:#23a065">284</div><div class="d-sl">Active</div></div>
+        <div class="d-sbox" style="background:rgba(20,133,90,.08);border:1px solid rgba(20,133,90,.2)"><div class="d-sv" style="color:#14855a">104</div><div class="d-sl">Review</div></div>
+        <div class="d-sbox" style="background:rgba(50,180,111,.06);border:1px solid rgba(50,180,111,.15)"><div class="d-sv" style="color:#32b46f">18</div><div class="d-sl">Late</div></div>
+      </div>
+      <div class="d-rows">
+        <div class="d-row"><div class="d-dot" style="background:#32b46f"></div>Warehouse restock done<span class="d-val" style="color:#32b46f">✓</span></div>
+        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>Vendor delay — Site B<span class="d-val" style="color:#14855a">Alert</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HR ── -->
+  <div class="dash-card d1">
+    <div class="dash-head">
+      <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
+        <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><circle cx="13" cy="11" r="6" fill="white"/><circle cx="25" cy="13" r="4.5" fill="rgba(255,255,255,.6)"/><path d="M1 32 C1 23 7 20 13 20 C19 20 25 23 25 32 Z" fill="rgba(255,255,255,.8)"/><path d="M25 26 C25 23 28 21 31 21 C34 21 36 23 36 26 L36 32 L25 32 Z" fill="rgba(255,255,255,.4)"/></svg>
+      </div>
+      <div class="dash-mod-name">HR &amp; Payroll</div>
+    </div>
+    <div class="dash-body">
+      <div class="d-krow">
+        <div class="d-k"><div class="d-kv">248</div><div class="d-kl">Staff</div></div>
+        <div class="d-k"><div class="d-kv" style="color:#32b46f">97.4%</div><div class="d-kl">Present</div></div>
+        <div class="d-k"><div class="d-kv" style="color:#14855a">₹34L</div><div class="d-kl">Payroll</div></div>
+      </div>
+      <div class="d-lbl">Dept. Headcount</div>
+      <div class="d-hbars">
+        <div class="d-hbar"><span>Engineering</span><div class="d-track"><div class="d-fill" style="width:80%;background:#32b46f"></div></div><span>80</span></div>
+        <div class="d-hbar"><span>Sales</span><div class="d-track"><div class="d-fill" style="width:60%;background:#23a065"></div></div><span>60</span></div>
+        <div class="d-hbar"><span>Operations</span><div class="d-track"><div class="d-fill" style="width:52%;background:#14855a"></div></div><span>52</span></div>
+        <div class="d-hbar"><span>Finance</span><div class="d-track"><div class="d-fill" style="width:36%;background:#32b46f"></div></div><span>36</span></div>
+        <div class="d-hbar"><span>HR</span><div class="d-track"><div class="d-fill" style="width:20%;background:#14855a"></div></div><span>20</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MARKETING ── -->
+  <div class="dash-card d2">
+    <div class="dash-head">
+      <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
+        <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><path d="M4 13 L4 23 L10 23 L10 13 Z" fill="rgba(255,255,255,.6)"/><path d="M10 13 L28 5 L28 31 L10 23 Z" fill="white"/><path d="M30 14 Q36 18 30 22" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="dash-mod-name">Marketing</div>
+    </div>
+    <div class="dash-body">
+      <div class="d-krow">
+        <div class="d-k"><div class="d-kv">14</div><div class="d-kl">Campaigns</div></div>
+        <div class="d-k"><div class="d-kv" style="color:#32b46f">↑ 44%</div><div class="d-kl">Engage.</div></div>
+        <div class="d-k"><div class="d-kv">8.2K</div><div class="d-kl">Reach</div></div>
+      </div>
+      <div class="d-lbl">Channel Performance</div>
+      <div class="d-channels">
+        <div class="d-ch">
+          <div class="d-ch-ico" style="background:rgba(50,180,111,.1)"><svg fill="none" stroke="#32b46f" stroke-width="2" viewBox="0 0 24 24"><path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg></div>
+          <div class="d-ch-name">Email</div><div class="d-ch-pct">42%</div>
+          <div class="d-ch-track"><div class="d-ch-fill" style="width:42%;background:#32b46f"></div></div>
+        </div>
+        <div class="d-ch">
+          <div class="d-ch-ico" style="background:rgba(35,160,101,.1)"><svg fill="none" stroke="#23a065" stroke-width="2" viewBox="0 0 24 24"><path d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501"/></svg></div>
+          <div class="d-ch-name">WhatsApp</div><div class="d-ch-pct">31%</div>
+          <div class="d-ch-track"><div class="d-ch-fill" style="width:31%;background:#23a065"></div></div>
+        </div>
+        <div class="d-ch">
+          <div class="d-ch-ico" style="background:rgba(20,133,90,.1)"><svg fill="none" stroke="#14855a" stroke-width="2" viewBox="0 0 24 24"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3"/></svg></div>
+          <div class="d-ch-name">Social</div><div class="d-ch-pct">27%</div>
+          <div class="d-ch-track"><div class="d-ch-fill" style="width:27%;background:#14855a"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MANAGEMENT ── -->
+  <div class="dash-card d3">
+    <div class="dash-head">
+      <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
+        <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><rect x="3" y="3" width="13" height="13" rx="2" fill="white" opacity=".9"/><rect x="20" y="3" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="3" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="20" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.75)"/><line x1="16" y1="9.5" x2="20" y2="9.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="9.5" y1="16" x2="9.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="26.5" y1="16" x2="26.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="16" y1="26.5" x2="20" y2="26.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/></svg>
+      </div>
+      <div class="dash-mod-name">Management Overview</div>
+    </div>
+    <div class="dash-body">
+      <div class="d-krow">
+        <div class="d-k"><div class="d-kv" style="color:#32b46f">92</div><div class="d-kl">KPI Score</div></div>
+        <div class="d-k"><div class="d-kv" style="color:#32b46f">↑ 18%</div><div class="d-kl">Efficiency</div></div>
+        <div class="d-k"><div class="d-kv">7/7</div><div class="d-kl">Modules</div></div>
+      </div>
+      <div class="d-lbl">Business Health Radar</div>
+      <svg viewBox="0 0 140 106" width="100%" height="96" style="margin-bottom:10px">
+        <polygon points="70,10 116,36 116,76 70,102 24,76 24,36" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+        <polygon points="70,26 100,44 100,70 70,86 40,70 40,44" fill="none" stroke="var(--border)" stroke-width="1"/>
+        <polygon points="70,42 84,52 84,64 70,72 56,64 56,52" fill="none" stroke="var(--border)" stroke-width="1"/>
+        <polygon points="70,14 112,38 110,74 70,98 30,74 28,38" fill="rgba(50,180,111,.1)" stroke="#32b46f" stroke-width="1.8"/>
+        <text x="70" y="60" text-anchor="middle" fill="#32b46f" font-size="12" font-family="Montserrat,sans-serif" font-weight="800">92</text>
+      </svg>
+      <div class="d-rows">
+        <div class="d-row"><div class="d-dot" style="background:#32b46f"></div>Sales 94%<span class="d-val" style="color:#32b46f">↑</span></div>
+        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>Finance 95%<span class="d-val" style="color:#14855a">↑</span></div>
+      </div>
+    </div>
+  </div>
+
+ </div><!-- /dash-grid -->
+ <div class="sec-cta rv" style="margin-top:3rem">
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-black">Book a Live Demo →</a>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="btn btn-outline2">Schedule Consultation</a>
+ </div>
+</section>
+
+<!-- ═══════════════════ CTA ═══════════════════ -->
+<section id="cta">
+ <div class="cta-grid-bg"></div>
+ <div class="cta-glow"></div>
+ <h2 class="cta-h rv">Build your<br><span class="fade">business</span> <span class="gr">ERP</span><br><span class="gr2">OS</span> with <span class="gr3">AI</span></h2>
+ <p class="cta-p rv">Digitize, automate, and scale with Drawlead. Start with a free consultation — no commitment needed.</p>
+ <div class="cta-btns rv">
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="cta-btn-w">Schedule Free Consultation →</a>
+ <a href="https://calendly.com/ulagai/ecommerce-growth-launch-strategy-call-shopify" target="_blank" class="cta-btn-g">Book a Product Demo</a>
+ </div>
+ <div class="cta-note rv">செயலை மாற்றும் · Intelligent Operating System · Secure · Scalable · Future-Ready</div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+ <div>
+ <div class="ft-logo" style="background:linear-gradient(115deg,#32b46f,#14855a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Drawlead</div>
+ <div class="ft-sub">Secure · Intelligent<br>Scalable · Future-Ready</div>
+ </div>
+ <div class="ft-links">
+ <a href="#functions">Platform</a>
+ <a href="#tech">Technology</a>
+ <a href="#cases">Case Studies</a>
+ <a href="#industries">Industries</a>
+ <a href="#why">Why Drawlead</a>
+ <a href="#dashboards">Dashboards</a>
+ <a href="about-us.html">About Us</a>
+ </div>
+ <div>
+ <div class="ft-contact">
+ official@drawlead.co.in<br>
+ www.drawlead.co.in<br>
+ Chennai, Tamil Nadu, IN
+ </div>
+ <div class="ft-copy">© 2025 Drawlead. All rights reserved.</div>
+ </div>
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver(e=>{
+ e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}})
+},{threshold:0.07});
+document.querySelectorAll('.rv, .ind-card, .dash-card').forEach(el=>obs.observe(el));
+
+// ── Marketing Solutions tab switcher (SEO / Performance Marketing) ──
+function switchMkt(i){
+ document.querySelectorAll('.sol-tab[data-mkt]').forEach(t=>{
+  t.classList.toggle('active', t.dataset.mkt == i);
+ });
+ document.querySelectorAll('.sol-panel[data-mktpanel]').forEach(p=>{
+  p.classList.toggle('active', p.dataset.mktpanel == i);
+ });
+}
+
+// ── Industry Dashboard Switcher ──
+const industries = [
+ {
+ name:'Construction',
+ accentColor:'#14855a',
+ centerTitle:'Drawlead — Construction OS',
+ leftTitle:'Site Management',
+ rightTitle:'Billing & Vendors',
+ leftMod:'Active Sites',
+ leftMod_c:'#14855a',
+ leftKpis:[{v:'12',l:'Sites',c:'#14855a'},{v:'8',l:'On Track',c:'#32b46f'},{v:'4',l:'Delayed',c:'#14855a'}],
+ leftBarsLabel:'Budget vs Actual',
+ leftBars:[{l:'Site A',w:82,c:'#14855a'},{l:'Site B',w:95,c:'#14855a'},{l:'Site C',w:61,c:'#32b46f'},{l:'Site D',w:44,c:'var(--blue)'}],
+ leftAlerts:[{c:'#14855a',t:'Site B over budget',badge:'Alert',bc:'rgba(50,180,111,.12)',btc:'#14855a'},{c:'#32b46f',t:'Site A milestone done',badge:'Done',bc:'rgba(50,180,111,.12)',btc:'#32b46f'}],
+ center_emoji:'', center_label:'Construction OS — Project Overview',
+ center_tag:'Live', center_tag_c:'#14855a',
+ center_kpis:[{v:'₹8.4Cr',l:'Total Projects',c:'#14855a'},{v:'↑ 18%',l:'On-time Rate',c:'#32b46f'},{v:'247',l:'Workers'},{v:'38',l:'Vendors',c:'var(--blue)'}],
+ center_chart_label:'Project Progress',
+ center_chart_bars:['55%','70%','48%','80%','95%','40%'],
+ center_chart_c:'#14855a',
+ center_right_label:'Material Stock',
+ center_right_bars:[{l:'Cement',w:72,c:'#14855a'},{l:'Steel',w:45,c:'#14855a',warn:true},{l:'Bricks',w:88,c:'#32b46f'}],
+ center_activity:[{c:'#32b46f',t:'Contractor payment approved'},{c:'#14855a',t:'Steel reorder auto-triggered'},{c:'#14855a',t:'Site B inspection scheduled'}],
+ ai_label:' AI Alert', ai_c:'#14855a', ai_bg:'rgba(50,180,111,.08)', ai_border:'#14855a',
+ ai_text:'Site B at 95% budget. Predict overrun in 12 days.',
+ rightMod:'Billing Status', rightMod_c:'#14855a',
+ rightKpis:[{v:'₹2.1Cr',l:'Billed',c:'#14855a'},{v:'₹1.8Cr',l:'Received',c:'#32b46f'},{v:'₹30L',l:'Due',c:'#14855a'}],
+ rightListLabel:'Top Vendors',
+ rightList:[{c:'#14855a',t:'Rajan Steel Works',badge:'Paid',bc:'rgba(50,180,111,.12)',btc:'#32b46f'},{c:'#23a065',t:'Kumar Cement Co',badge:'Partial',bc:'rgba(50,180,111,.12)',btc:'#23a065'},{c:'#14855a',t:'ARC Electricals',badge:'Due',bc:'rgba(50,180,111,.12)',btc:'#14855a'}],
+ rightBarsLabel:'Contractor Payroll',
+ rightBars:[{l:'Mason',w:100,c:'#32b46f',val:'',vc:'#32b46f'},{l:'Plumber',w:100,c:'#32b46f',val:'',vc:'#32b46f'},{l:'Electrician',w:60,c:'#23a065',val:'Pend',vc:'#23a065'}],
+ floatL:{v:'12 Sites',vc:'#14855a',l:'Live project tracking'},
+ floatR:{v:'↑ 18%',vc:'#32b46f',l:'On-time delivery rate'},
+ },
+ {
+ name:'Manufacturing',
+ accentColor:'#14855a',
+ centerTitle:'Drawlead — Manufacturing OS',
+ leftTitle:'Production Line',
+ rightTitle:'Quality & Output',
+ leftMod:'Production Status', leftMod_c:'#14855a',
+ leftKpis:[{v:'6',l:'Lines',c:'#14855a'},{v:'94%',l:'OEE',c:'#32b46f'},{v:'18',l:'Downtime h',c:'#14855a'}],
+ leftBarsLabel:'Line Efficiency',
+ leftBars:[{l:'Line 1',w:94,c:'#14855a'},{l:'Line 2',w:88,c:'var(--blue)'},{l:'Line 3',w:72,c:'#23a065'},{l:'Line 4',w:56,c:'#14855a'}],
+ leftAlerts:[{c:'#14855a',t:'Line 4 maintenance due',badge:'Alert',bc:'rgba(50,180,111,.12)',btc:'#14855a'},{c:'#32b46f',t:'Line 1 target achieved',badge:'Done',bc:'rgba(50,180,111,.12)',btc:'#32b46f'}],
+ center_emoji:'', center_label:'Manufacturing OS — Production Overview',
+ center_tag:'Live', center_tag_c:'#14855a',
+ center_kpis:[{v:'4,280',l:'Units Today',c:'#14855a'},{v:'↑ 12%',l:'Output',c:'#32b46f'},{v:'99.1%',l:'Quality Rate',c:'var(--blue)'},{v:'6',l:'Active Lines'}],
+ center_chart_label:'Daily Production Units',
+ center_chart_bars:['62%','78%','55%','90%','85%','95%'],
+ center_chart_c:'#14855a',
+ center_right_label:'Raw Material Stock',
+ center_right_bars:[{l:'Steel',w:80,c:'#14855a'},{l:'Plastic',w:35,c:'#14855a',warn:true},{l:'Chemicals',w:90,c:'#32b46f'}],
+ center_activity:[{c:'#32b46f',t:'Line 1 hit 1000 units target'},{c:'#14855a',t:'Plastic stock below threshold'},{c:'#14855a',t:'Shift B handover completed'}],
+ ai_label:' AI Predict', ai_c:'#14855a', ai_bg:'rgba(50,180,111,.08)', ai_border:'#14855a',
+ ai_text:'Line 4 bearing wear detected. Schedule maintenance in 48h to avoid stoppage.',
+ rightMod:'QC & Dispatch', rightMod_c:'#14855a',
+ rightKpis:[{v:'4,216',l:'Passed QC',c:'#32b46f'},{v:'64',l:'Rejected',c:'#14855a'},{v:'3,980',l:'Dispatched',c:'#14855a'}],
+ rightListLabel:"Today's Dispatch",
+ rightList:[{c:'#14855a',t:'North Zone — 1,200 units',badge:'Sent',bc:'rgba(50,180,111,.12)',btc:'#32b46f'},{c:'#23a065',t:'South Zone — 800 units',badge:'Loading',bc:'rgba(50,180,111,.12)',btc:'#23a065'},{c:'var(--blue)',t:'Export — 600 units',badge:'QC Hold',bc:'rgba(50,180,111,.12)',btc:'var(--blue)'}],
+ rightBarsLabel:'Quality Pass Rate by Line',
+ rightBars:[{l:'Line 1',w:99,c:'#32b46f',val:'99%',vc:'#32b46f'},{l:'Line 2',w:97,c:'#32b46f',val:'97%',vc:'#32b46f'},{l:'Line 3',w:91,c:'#14855a',val:'91%',vc:'#14855a'}],
+ floatL:{v:'4,280',vc:'#14855a',l:'Units produced today'},
+ floatR:{v:'99.1%',vc:'#32b46f',l:'Quality pass rate'},
+ },
+ {
+ name:'Jewellery',
+ accentColor:'#23a065',
+ centerTitle:'Drawlead — Jewellery OS',
+ leftTitle:'Stock & Purity',
+ rightTitle:'Orders & Billing',
+ leftMod:'Metal Inventory', leftMod_c:'#23a065',
+ leftKpis:[{v:'48 kg',l:'Gold Stock',c:'#23a065'},{v:'124 kg',l:'Silver',c:'var(--g400)'},{v:'99.9%',l:'Purity Avg',c:'#32b46f'}],
+ leftBarsLabel:'Stock by Category',
+ leftBars:[{l:'22K Gold',w:72,c:'#23a065'},{l:'18K Gold',w:55,c:'#23a065'},{l:'Silver',w:88,c:'var(--g400)'},{l:'Platinum',w:30,c:'var(--blue)'}],
+ leftAlerts:[{c:'#32b46f',t:'Purity audit passed',badge:'OK',bc:'rgba(50,180,111,.12)',btc:'#32b46f'},{c:'#23a065',t:'Gold reorder triggered',badge:'Ordered',bc:'rgba(50,180,111,.12)',btc:'#23a065'}],
+ center_emoji:'', center_label:'Jewellery OS — Sales & Stock Overview',
+ center_tag:'Live', center_tag_c:'#23a065',
+ center_kpis:[{v:'₹3.2Cr',l:'Monthly Sales',c:'#23a065'},{v:'↑ 22%',l:'YoY Growth',c:'#32b46f'},{v:'1,840',l:'SKUs Active',c:'var(--blue)'},{v:'96%',l:'Order Fulfill'}],
+ center_chart_label:'Weekly Sales (₹ Lakhs)',
+ center_chart_bars:['55%','62%','48%','80%','70%','95%'],
+ center_chart_c:'#23a065',
+ center_right_label:'Top Selling Categories',
+ center_right_bars:[{l:'Necklace',w:85,c:'#23a065'},{l:'Bangles',w:70,c:'#23a065'},{l:'Rings',w:60,c:'var(--g400)'}],
+ center_activity:[{c:'#32b46f',t:'Festival collection launched'},{c:'#23a065',t:'Gold rate auto-updated'},{c:'var(--blue)',t:'Online order sync active'}],
+ ai_label:' AI Insight', ai_c:'#23a065', ai_bg:'rgba(50,180,111,.08)', ai_border:'#23a065',
+ ai_text:'Navaratri season — predict 40% spike in necklace demand next 14 days.',
+ rightMod:'Orders & Finance', rightMod_c:'#23a065',
+ rightKpis:[{v:'184',l:'Orders',c:'#23a065'},{v:'₹2.9Cr',l:'Collected',c:'#32b46f'},{v:'₹28L',l:'Advance',c:'var(--blue)'}],
+ rightListLabel:'Recent Orders',
+ rightList:[{c:'#23a065',t:'Priya Jewels — 22K set',badge:'Ready',bc:'rgba(50,180,111,.12)',btc:'#32b46f'},{c:'#23a065',t:'Kumar Traders — Bulk',badge:'Making',bc:'rgba(50,180,111,.12)',btc:'#23a065'},{c:'var(--blue)',t:'Online — 28 orders',badge:'Packed',bc:'rgba(50,180,111,.12)',btc:'var(--blue)'}],
+ rightBarsLabel:'Payment Collection',
+ rightBars:[{l:'Cash',w:42,c:'#23a065',val:'42%',vc:'#23a065'},{l:'UPI',w:38,c:'#32b46f',val:'38%',vc:'#32b46f'},{l:'Credit',w:20,c:'var(--blue)',val:'20%',vc:'var(--blue)'}],
+ floatL:{v:'₹3.2Cr',vc:'#23a065',l:'Monthly jewellery sales'},
+ floatR:{v:'96%',vc:'#32b46f',l:'Order fulfillment rate'},
+ },
+ {
+ name:'Hospital',
+ accentColor:'#32b46f',
+ centerTitle:'Drawlead — Hospital OS',
+ leftTitle:'Ward & Beds',
+ rightTitle:'Billing & Insurance',
+ leftMod:'Bed Occupancy', leftMod_c:'#32b46f',
+ leftKpis:[{v:'284',l:'Beds',c:'#32b46f'},{v:'91%',l:'Occupied',c:'#14855a'},{v:'24',l:'Available',c:'#32b46f'}],
+ leftBarsLabel:'Dept. Occupancy',
+ leftBars:[{l:'General',w:95,c:'#14855a'},{l:'ICU',w:88,c:'#32b46f'},{l:'Maternity',w:72,c:'#14855a'},{l:'Surgical',w:65,c:'var(--blue)'}],
+ leftAlerts:[{c:'#14855a',t:'ICU near capacity',badge:'Alert',bc:'rgba(50,180,111,.12)',btc:'#14855a'},{c:'#32b46f',t:'OPD queue cleared',badge:'Clear',bc:'rgba(50,180,111,.12)',btc:'#32b46f'}],
+ center_emoji:'', center_label:'Hospital OS — Patient & Operations Overview',
+ center_tag:'Live', center_tag_c:'#32b46f',
+ center_kpis:[{v:'1,248',l:'Patients Today',c:'#32b46f'},{v:'284',l:'Inpatients',c:'var(--blue)'},{v:'46',l:'Surgeries',c:'#14855a'},{v:'98.4%',l:'Satisfaction',c:'#32b46f'}],
+ center_chart_label:'Daily OPD Footfall',
+ center_chart_bars:['60%','72%','55%','88%','80%','95%'],
+ center_chart_c:'#32b46f',
+ center_right_label:'Dept. Patient Load',
+ center_right_bars:[{l:'Cardio',w:90,c:'#14855a'},{l:'Ortho',w:75,c:'#32b46f'},{l:'Paeds',w:60,c:'#14855a'}],
+ center_activity:[{c:'#32b46f',t:'46 surgeries completed today'},{c:'#14855a',t:'ICU: 2 critical admissions'},{c:'#32b46f',t:'Lab reports auto-dispatched'}],
+ ai_label:' AI Monitor', ai_c:'#32b46f', ai_bg:'rgba(50,180,111,.08)', ai_border:'#32b46f',
+ ai_text:'Dengue cases ↑ 18% this week. Suggest allocating 20 extra general ward beds.',
+ rightMod:'Billing & Revenue', rightMod_c:'#32b46f',
+ rightKpis:[{v:'₹42L',l:"Today's Revenue",c:'#32b46f'},{v:'₹28L',l:'Insurance',c:'var(--blue)'},{v:'₹14L',l:'Self-pay',c:'#32b46f'}],
+ rightListLabel:'Insurance Claims',
+ rightList:[{c:'#32b46f',t:'Star Health — 48 claims',badge:'Approved',bc:'rgba(50,180,111,.12)',btc:'#32b46f'},{c:'#23a065',t:'HDFC Ergo — 22 claims',badge:'Pending',bc:'rgba(50,180,111,.12)',btc:'#23a065'},{c:'#14855a',t:'National Ins. — 8 claims',badge:'Query',bc:'rgba(50,180,111,.12)',btc:'#14855a'}],
+ rightBarsLabel:'Dept. Revenue Share',
+ rightBars:[{l:'Surgical',w:40,c:'#32b46f',val:'40%',vc:'#32b46f'},{l:'IPD',w:35,c:'var(--blue)',val:'35%',vc:'var(--blue)'},{l:'Lab/Rad',w:25,c:'#14855a',val:'25%',vc:'#14855a'}],
+ floatL:{v:'1,248',vc:'#32b46f',l:'Patients served today'},
+ floatR:{v:'98.4%',vc:'#32b46f',l:'Patient satisfaction score'}
+ },
+ {
+ name:'Ecommerce',
+ accentColor:'#23a065',
+ centerTitle:'Drawlead — Ecommerce OS',
+ leftTitle:'Inventory Board',
+ rightTitle:'Shopify Store Board',
+ leftMod:'Stock Overview', leftMod_c:'#23a065',
+ leftKpis:[{v:'1,240',l:'SKUs',c:'#23a065'},{v:'1,086',l:'In Stock',c:'#32b46f'},{v:'54',l:'Low Stock',c:'#14855a'}],
+ leftBarsLabel:'Stock by Category',
+ leftBars:[{l:'Apparel',w:78,c:'#23a065'},{l:'Footwear',w:62,c:'#32b46f'},{l:'Accessories',w:38,c:'#14855a'},{l:'Electronics',w:88,c:'var(--blue)'}],
+ leftAlerts:[{c:'#14855a',t:'12 SKUs out of stock',badge:'Alert',bc:'rgba(50,180,111,.12)',btc:'#14855a'},{c:'#32b46f',t:'Restock PO auto-raised',badge:'Ordered',bc:'rgba(50,180,111,.12)',btc:'#32b46f'}],
+ center_emoji:'', center_label:'Ecommerce OS — Orders & Revenue Overview',
+ center_tag:'Live', center_tag_c:'#23a065',
+ center_kpis:[{v:'842',l:'Orders Today',c:'#23a065'},{v:'₹18.4L',l:'GMV',c:'#32b46f'},{v:'3.8%',l:'Conversion',c:'var(--blue)'},{v:'₹2,140',l:'Avg Order'}],
+ center_chart_label:'Daily Orders',
+ center_chart_bars:['58%','66%','50%','82%','74%','95%'],
+ center_chart_c:'#23a065',
+ center_right_label:'Top Products',
+ center_right_bars:[{l:'Hoodies',w:88,c:'#23a065'},{l:'Sneakers',w:71,c:'#32b46f'},{l:'Watches',w:54,c:'#14855a'}],
+ center_activity:[{c:'#32b46f',t:'842 orders synced from Shopify'},{c:'#14855a',t:'18 returns auto-processed'},{c:'#23a065',t:'Courier labels bulk-generated'}],
+ ai_label:' AI Insight', ai_c:'#23a065', ai_bg:'rgba(50,180,111,.08)', ai_border:'#23a065',
+ ai_text:'Cart abandonment at 68% on mobile checkout. Recovering 240 carts could add ₹5.1L this month.',
+ rightMod:'Shopify Store', rightMod_c:'#23a065',
+ rightKpis:[{v:'₹18.4L',l:'Store Revenue',c:'#23a065'},{v:'24.8K',l:'Sessions',c:'var(--blue)'},{v:'3.8%',l:'Conv. Rate',c:'#32b46f'}],
+ rightListLabel:'Live Orders',
+ rightList:[{c:'#32b46f',t:'#1042 — Chennai',badge:'Shipped',bc:'rgba(50,180,111,.12)',btc:'#32b46f'},{c:'#23a065',t:'#1041 — Bengaluru',badge:'Packed',bc:'rgba(50,180,111,.12)',btc:'#23a065'},{c:'#14855a',t:'#1040 — Mumbai',badge:'Payment',bc:'rgba(50,180,111,.12)',btc:'#14855a'}],
+ rightBarsLabel:'Traffic by Channel',
+ rightBars:[{l:'Organic',w:42,c:'#32b46f',val:'42%',vc:'#32b46f'},{l:'Paid Ads',w:33,c:'#23a065',val:'33%',vc:'#23a065'},{l:'Direct',w:25,c:'var(--blue)',val:'25%',vc:'var(--blue)'}],
+ floatL:{v:'842',vc:'#23a065',l:'Orders processed today'},
+ floatR:{v:'3.8%',vc:'#32b46f',l:'Store conversion rate'},
+ }
+];
+
+let currentIdx = 0;
+
+function buildLeftBody(d) {
+ return `
+ <div class="s-mod" style="color:${d.leftMod_c}">${d.leftMod}</div>
+ <div class="s-krow">
+ ${d.leftKpis.map(k=>`<div class="s-k"><div class="s-kv" style="color:${k.c||'var(--black)'}">${k.v}</div><div class="s-kl">${k.l}</div></div>`).join('')}
+ </div>
+ <div style="font-size:8px;color:var(--g400);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">${d.leftBarsLabel}</div>
+ <div class="s-hbars">
+ ${d.leftBars.map(b=>`<div class="s-hrow"><span>${b.l}</span><div class="s-track"><div class="s-fill" style="width:${b.w}%;background:${b.c}"></div></div><span>${b.w}%</span></div>`).join('')}
+ </div>
+ <div class="s-divider"></div>
+ <div class="s-list">
+ ${d.leftAlerts.map(a=>`<div class="s-li"><div class="s-d" style="background:${a.c}"></div>${a.t}<span class="s-badge" style="background:${a.bc};color:${a.btc}">${a.badge}</span></div>`).join('')}
+ </div>`;
+}
+
+function buildCenterBody(d) {
+ return `
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+ <div class="s-mod" style="color:var(--black);margin:0;font-size:11px">${d.center_emoji} ${d.center_label}</div>
+ <div style="display:flex;gap:5px">
+ <span style="font-size:7.5px;padding:2px 7px;background:${d.center_tag_c};color:#fff;font-weight:700">${d.center_tag}</span>
+ <div style="font-size:9px;color:var(--g400);font-weight:600">May 2025</div>
+ </div>
+ </div>
+ <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:13px">
+ ${d.center_kpis.map(k=>`<div class="s-k"><div class="s-kv" style="color:${k.c||'var(--black)'};font-size:${k.v.length>4?'11':'13'}px">${k.v}</div><div class="s-kl">${k.l}</div></div>`).join('')}
+ </div>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:11px">
+ <div>
+ <div style="font-size:8px;color:var(--g400);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px">${d.center_chart_label}</div>
+ <div style="display:flex;align-items:flex-end;gap:4px;height:54px">
+ ${d.center_chart_bars.map((h,i)=>`<div style="flex:1;background:${i===d.center_chart_bars.length-1?d.center_chart_c:`rgba(${hexToRgb(d.center_chart_c)},${0.15+i*0.1})`};height:${h}"></div>`).join('')}
+ </div>
+ </div>
+ <div>
+ <div style="font-size:8px;color:var(--g400);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px">${d.center_right_label}</div>
+ <div style="display:flex;flex-direction:column;gap:6px">
+ ${d.center_right_bars.map(b=>`<div style="display:flex;align-items:center;gap:6px;font-size:9px;color:var(--g500)"><span style="width:50px;font-weight:600">${b.l}</span><div style="flex:1;height:4px;background:var(--border);overflow:hidden"><div style="width:${b.w}%;height:100%;background:${b.c}"></div></div><span style="color:${b.warn?'#14855a':'inherit'};font-weight:${b.warn?'700':'400'}">${b.w}%${b.warn?'':''}</span></div>`).join('')}
+ </div>
+ </div>
+ </div>
+ <div class="s-divider"></div>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:8px">
+ <div style="display:flex;flex-direction:column;gap:5px">
+ <div style="font-size:8px;color:var(--g400);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Recent Activity</div>
+ ${d.center_activity.map(a=>`<div style="display:flex;align-items:center;gap:5px;font-size:9px;color:var(--g500)"><span style="width:5px;height:5px;background:${a.c};display:inline-block;flex-shrink:0"></span>${a.t}</div>`).join('')}
+ </div>
+ <div style="display:flex;justify-content:flex-end;align-items:center">
+ <div style="background:${d.ai_bg};padding:8px 12px;border-left:2px solid ${d.ai_border}">
+ <div style="font-size:8px;color:${d.ai_c};font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">${d.ai_label}</div>
+ <div style="font-size:9px;color:var(--g500);line-height:1.4">${d.ai_text}</div>
+ </div>
+ </div>
+ </div>`;
+}
+
+function buildRightBody(d) {
+ return `
+ <div class="s-mod" style="color:${d.rightMod_c}">${d.rightMod}</div>
+ <div class="s-krow">
+ ${d.rightKpis.map(k=>`<div class="s-k"><div class="s-kv" style="color:${k.c||'var(--black)'}">${k.v}</div><div class="s-kl">${k.l}</div></div>`).join('')}
+ </div>
+ <div style="font-size:8px;color:var(--g400);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">${d.rightListLabel}</div>
+ <div class="s-list">
+ ${d.rightList.map(a=>`<div class="s-li"><div class="s-d" style="background:${a.c}"></div>${a.t}<span class="s-badge" style="background:${a.bc};color:${a.btc}">${a.badge}</span></div>`).join('')}
+ </div>
+ <div class="s-divider"></div>
+ <div style="font-size:8px;color:var(--g400);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">${d.rightBarsLabel}</div>
+ <div class="s-hbars">
+ ${d.rightBars.map(b=>`<div class="s-hrow"><span>${b.l}</span><div class="s-track"><div class="s-fill" style="width:${b.w}%;background:${b.c}"></div></div><span style="color:${b.vc};font-weight:700">${b.val}</span></div>`).join('')}
+ </div>`;
+}
+
+function hexToRgb(c) {
+ // For CSS var colors, return a safe fallback
+ if(c.startsWith('var(')) return '100,100,100';
+ const m = c.match(/^#([0-9a-f]{6})$/i);
+ if(!m) return '100,100,100';
+ const n = parseInt(m[1],16);
+ return [(n>>16)&255,(n>>8)&255,n&255].join(',');
+}
+
+function switchDash(idx) {
+ if(idx === currentIdx) return;
+ progressPct = 0; // reset progress on manual click
+ const row = document.getElementById('screensRow');
+ row.classList.add('switching');
+ setTimeout(()=>{
+ currentIdx = idx;
+ const d = industries[idx];
+
+ // Update tab states
+ const tabColors = ['#14855a','#14855a','#23a065','#32b46f','#23a065'];
+ document.querySelectorAll('.ind-tab').forEach((t,i)=>{
+ const isActive = i===idx;
+ t.classList.toggle('active', isActive);
+ const bar = t.querySelector('.tab-bar');
+ if(bar) bar.style.background = isActive ? tabColors[i] : 'transparent';
+ });
+
+ // Update titles
+ document.getElementById('leftTitle').textContent = d.leftTitle;
+ document.getElementById('centerTitle').textContent = d.centerTitle;
+ document.getElementById('rightTitle').textContent = d.rightTitle;
+
+ // Update bodies
+ document.getElementById('leftBody').innerHTML = buildLeftBody(d);
+ document.getElementById('centerBody').innerHTML = buildCenterBody(d);
+ document.getElementById('rightBody').innerHTML = buildRightBody(d);
+
+ // Update floating badges
+ const fl = document.getElementById('floatL');
+ const fr = document.getElementById('floatR');
+ if(fl) fl.innerHTML = `<div style="font-size:16px;font-weight:800;color:${d.floatL.vc}">${d.floatL.v}</div><div style="font-size:9px;color:var(--g500);font-weight:600;text-transform:uppercase;letter-spacing:.06em">${d.floatL.l}</div>`;
+ if(fr) fr.innerHTML = `<div style="font-size:16px;font-weight:800;color:${d.floatR.vc}">${d.floatR.v}</div><div style="font-size:9px;color:var(--g500);font-weight:600;text-transform:uppercase;letter-spacing:.06em">${d.floatR.l}</div>`;
+
+ row.classList.remove('switching');
+ }, 250);
+}
+
+// Init tab bars on load
+(function(){
+ const tabColors = ['#14855a','#14855a','#23a065','#32b46f','#23a065'];
+ document.querySelectorAll('.ind-tab').forEach((t,i)=>{
+ const bar = t.querySelector('.tab-bar');
+ if(bar) bar.style.background = i===0 ? tabColors[0] : 'transparent';
+ });
+})();
+
+// Progress bar for auto-cycle
+const progressEl = document.getElementById('tabProgress');
+let progressPct = 0;
+const CYCLE_MS = 5000;
+const TICK = 60;
+
+function tickProgress(){
+ progressPct += (TICK/CYCLE_MS)*100;
+ if(progressPct>=100){
+ progressPct=0;
+ switchDash((currentIdx+1) % industries.length);
+ }
+ if(progressEl) progressEl.style.width = progressPct + '%';
+}
+
+setInterval(tickProgress, TICK);
+
+// Dashboard cards — slide up one by one as user scrolls into each row
+(function(){
+ const grid = document.querySelector('.dash-grid');
+ if(!grid) return;
+ const cards = Array.from(grid.querySelectorAll('.dash-card'));
+
+ const io = new IntersectionObserver((entries) => {
+ entries.forEach(entry => {
+ if(entry.isIntersecting){
+ entry.target.classList.add('visible');
+ }
+ });
+ }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+ cards.forEach(card => io.observe(card));
+})();
+</script>
+</body>
+</html>

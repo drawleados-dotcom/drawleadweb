@@ -1,0 +1,17 @@
+# Uploaded files must never be executable as PHP, no matter what
+# extension a malicious upload manages to sneak past validation with.
+Options -Indexes -ExecCGI
+RemoveHandler .php .phtml .php3 .php4 .php5 .pht .phar
+php_flag engine off
+
+<IfModule mod_authz_core.c>
+    <FilesMatch "\.(?i:php|phtml|php\d|pht|phar|cgi|pl)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+    <FilesMatch "\.(?i:php|phtml|php\d|pht|phar|cgi|pl)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</IfModule>

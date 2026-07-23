@@ -1,0 +1,16 @@
+DirectoryIndex index.php index.html
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Real files and directories (admin/, uploads/, templates/, css, images...)
+  # are served as-is and never routed through the front controller.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Everything else (/, /about-us, /blog, /blog/some-post, ...) goes
+  # through index.php, which looks the path up in the database.
+  RewriteRule ^ index.php [L]
+</IfModule>
