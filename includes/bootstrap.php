@@ -182,6 +182,39 @@ function publish_due_scheduled_posts(PDO $pdo): void
     }
 }
 
+// ── Schema introspection (used by admin/run-migrations.php) ──
+
+function migration_column_exists(PDO $pdo, string $table, string $column): bool
+{
+    $stmt = $pdo->prepare(
+        'SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? AND COLUMN_NAME = ?'
+    );
+    $stmt->execute([$table, $column]);
+    return (int) $stmt->fetchColumn() > 0;
+}
+
+function migration_table_exists(PDO $pdo, string $table): bool
+{
+    $stmt = $pdo->prepare(
+        'SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?'
+    );
+    $stmt->execute([$table]);
+    return (int) $stmt->fetchColumn() > 0;
+}
+
+function pending_migrations_exist(PDO $pdo): bool
+{
+    if (!migration_column_exists($pdo, 'blogs', 'scheduled_at')) {
+        return true;
+    }
+    foreach (['booking_availability', 'booking_form_fields', 'bookings', 'booking_notification_emails'] as $t) {
+        if (!migration_table_exists($pdo, $t)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 // ── Booking system ──
 
 function get_booking_availability(PDO $pdo): array

@@ -17,12 +17,20 @@ $recentBlogs = $pdo->query(
 
 $gaConnected = get_setting($pdo, 'ga_measurement_id', '') !== '';
 $gscConnected = get_setting($pdo, 'gsc_verification_tag', '') !== '';
+$hasPendingMigrations = $u['role'] === 'admin' && pending_migrations_exist($pdo);
 
 $pageTitle = 'Dashboard';
 $pageSub = 'Welcome back, ' . $u['name'] . '.';
 $activeNav = 'dashboard';
 include __DIR__ . '/includes/header.php';
 ?>
+
+<?php if ($hasPendingMigrations): ?>
+<div class="alert alert-error">
+  A database update is pending — some features (blog scheduling, the booking system) won't work until it's applied.
+  <a href="run-migrations.php" class="row-link" style="margin-left:6px">Run it now →</a>
+</div>
+<?php endif; ?>
 
 <div class="stat-grid">
   <div class="stat-card">
