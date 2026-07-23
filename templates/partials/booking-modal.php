@@ -48,7 +48,10 @@
         </div>
 
         <div class="bslots" id="bslots" hidden>
-          <div class="bslots-title" id="bslots-title"></div>
+          <div class="bslots-head">
+            <button type="button" class="bslots-back" id="bslots-back">← Back</button>
+            <div class="bslots-title" id="bslots-title"></div>
+          </div>
           <div class="bslots-grid" id="bslots-grid"></div>
           <div class="bslots-empty" id="bslots-empty" hidden>No times available this day — please pick another date.</div>
         </div>

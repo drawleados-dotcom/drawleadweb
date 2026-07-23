@@ -719,7 +719,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .booking-back{font-size:11.5px;font-weight:700;color:var(--g500);margin-bottom:1rem;cursor:pointer}
 .booking-back:hover{color:var(--black)}
 
-.bcal{border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.1rem;margin-bottom:1.25rem}
+.bcal{border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.1rem;margin-bottom:1.25rem;position:relative}
 .bcal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem}
 .bcal-month{font-size:13px;font-weight:800}
 .bcal-nav{width:28px;height:28px;border-radius:8px;border:1.5px solid var(--border);background:var(--white);cursor:pointer;font-size:13px;color:var(--g600)}
@@ -734,8 +734,18 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .bcal-day.disabled{color:var(--g300);cursor:not-allowed;background:transparent}
 .bcal-day.empty{background:transparent;cursor:default}
 
-.bslots-title{font-size:11.5px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.7rem}
-.bslots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+/* Time slots render as a "sub popup" layered on top of the calendar,
+   same footprint, rather than pushing the panel taller. */
+.bslots{
+ position:absolute;inset:0;background:var(--white);border:1.5px solid var(--border);
+ border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,.18);
+ padding:1.1rem 1.15rem;z-index:5;display:flex;flex-direction:column;
+}
+.bslots-head{display:flex;align-items:center;gap:10px;margin-bottom:.9rem;flex-shrink:0}
+.bslots-back{font-family:var(--font);font-size:11px;font-weight:700;color:var(--g500);cursor:pointer;background:none;border:none;padding:0;display:flex;align-items:center;gap:4px}
+.bslots-back:hover{color:var(--black)}
+.bslots-title{font-size:12.5px;font-weight:800;color:var(--black);margin-bottom:0}
+.bslots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;overflow-y:auto;padding-right:2px}
 .bslot{padding:10px 8px;border:1.5px solid var(--border);border-radius:8px;background:var(--white);font-family:var(--font);font-size:12.5px;font-weight:700;color:var(--g600);cursor:pointer;transition:all .15s}
 .bslot:hover{border-color:var(--blue);color:var(--blue)}
 .bslots-empty{font-size:12.5px;color:var(--g400);padding:1rem 0;text-align:center}
@@ -761,8 +771,12 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .booking-success-sub{color:var(--g400) !important;font-size:12px !important;margin-bottom:1.5rem !important}
 
 @media(max-width:800px){
-  .booking-dialog{grid-template-columns:1fr;max-height:95vh}
-  .booking-left{display:none}
-  .booking-right{padding:1.75rem 1.25rem}
+  .booking-dialog{grid-template-columns:1fr;grid-template-rows:30% 70%;max-height:92vh}
+  .booking-left{display:flex;flex-direction:column;justify-content:center;padding:1rem 3rem 1rem 1.25rem;overflow:hidden}
+  .booking-left::before{background-size:22px 22px}
+  .booking-eyebrow{margin-bottom:.35rem;font-size:9px}
+  .booking-left h2{font-size:16px;line-height:1.25;margin-bottom:0}
+  .booking-left p,.bv,.booking-points{display:none}
+  .booking-right{padding:1.5rem 1.25rem;overflow-y:auto}
   .bslots-grid{grid-template-columns:repeat(2,1fr)}
 }

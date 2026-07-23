@@ -179,6 +179,13 @@
     showStep('datetime');
   });
 
+  document.getElementById('bslots-back').addEventListener('click', function () {
+    slotsWrap.hidden = true;
+    state.selectedDate = null;
+    state.selectedTime = null;
+    renderCalendar();
+  });
+
   // ── Dynamic form rendering ──
   function renderForm(fields) {
     fieldsWrap.innerHTML = '';
