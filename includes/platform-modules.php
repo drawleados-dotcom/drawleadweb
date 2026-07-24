@@ -23,7 +23,7 @@ function platform_modules(): array
             'tagline' => 'One dashboard for how the business is actually doing',
             'description' => 'Centralized dashboards and operational visibility for faster, smarter business decisions — pulled live from every other module, not a weekly export.',
             'color' => '#32b46f',
-            'icon' => '<svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="4" y="25" width="7" height="11" rx="1.5" fill="rgba(255,255,255,.5)"/><rect x="14" y="17" width="7" height="19" rx="1.5" fill="rgba(255,255,255,.75)"/><rect x="24" y="9" width="7" height="27" rx="1.5" fill="white"/><polyline points="6,21 17,13 27,5" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round"/><polygon points="27,2 33,8 21,8" fill="rgba(255,255,255,.7)"/></svg>',
+            'icon' => '<svg width="19" height="19" viewBox="0 0 40 40" fill="none"><rect x="4" y="25" width="7" height="11" rx="1.5" fill="rgba(255,255,255,.5)"/><rect x="14" y="17" width="7" height="19" rx="1.5" fill="rgba(255,255,255,.75)"/><rect x="24" y="9" width="7" height="27" rx="1.5" fill="white"/><polyline points="6,21 17,13 27,5" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round"/><polygon points="27,2 33,8 21,8" fill="rgba(255,255,255,.7)"/></svg>',
             'features' => ['KPI Tracking', 'Real-time Analytics', 'Approval Workflows', 'Custom Dashboards', 'Role-based Visibility', 'Audit Trails'],
             'pain_points' => [
                 'Decisions made on gut feel because the real numbers live in five different spreadsheets',
@@ -50,7 +50,7 @@ function platform_modules(): array
             'tagline' => 'Every lead, pipeline, and invoice in one place',
             'description' => 'Manage leads, pipelines, customers, and revenue operations from one unified platform — instead of a CRM that never quite matches what finance is seeing.',
             'color' => '#32b46f',
-            'icon' => '<svg width="26" height="26" viewBox="0 0 40 40" fill="none"><polyline points="4,30 14,18 22,23 36,8" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><polyline points="4,35 14,23 22,28 36,13" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="13" r="4" fill="white"/></svg>',
+            'icon' => '<svg width="19" height="19" viewBox="0 0 40 40" fill="none"><polyline points="4,30 14,18 22,23 36,8" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><polyline points="4,35 14,23 22,28 36,13" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="13" r="4" fill="white"/></svg>',
             'features' => ['CRM', 'Pipeline Management', 'Invoicing', 'Lead Scoring', 'Follow-up Automation', 'Customer History'],
             'pain_points' => [
                 'Leads going cold because follow-up depends on someone remembering to call back',
@@ -77,7 +77,7 @@ function platform_modules(): array
             'tagline' => 'Campaigns, WhatsApp, and email — one nurturing engine',
             'description' => 'Track campaigns, automate WhatsApp & email, and improve customer engagement at scale, with every lead tagged back to the campaign that produced it.',
             'color' => '#14855a',
-            'icon' => '<svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M5 14 L5 26 L11 26 L11 14 Z" fill="rgba(255,255,255,.6)"/><path d="M11 14 L30 6 L30 34 L11 26 Z" fill="white"/><path d="M11 18 L11 22 L8 28 L5 28 L5 22" fill="rgba(255,255,255,.4)"/><path d="M32 15 Q38 20 32 25" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2.5" stroke-linecap="round"/></svg>',
+            'icon' => '<svg width="19" height="19" viewBox="0 0 40 40" fill="none"><path d="M5 14 L5 26 L11 26 L11 14 Z" fill="rgba(255,255,255,.6)"/><path d="M11 14 L30 6 L30 34 L11 26 Z" fill="white"/><path d="M11 18 L11 22 L8 28 L5 28 L5 22" fill="rgba(255,255,255,.4)"/><path d="M32 15 Q38 20 32 25" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2.5" stroke-linecap="round"/></svg>',
             'features' => ['Campaign Tracking', 'WhatsApp Automation', 'Email Nurturing', 'Lead Attribution', 'Engagement Analytics', 'Response Time Tracking'],
             'pain_points' => [
                 "Leads reply on WhatsApp and sit unanswered for hours because there's no shared inbox",
@@ -104,7 +104,7 @@ function platform_modules(): array
             'tagline' => 'Workflows, inventory, and vendors that run themselves',
             'description' => 'Streamline activities, inventory, and vendor management with intelligent process automation — so the same job runs the same way every time, for everyone.',
             'color' => '#14855a',
-            'icon' => '<svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="7" fill="white"/><circle cx="20" cy="20" r="3.5" fill="rgba(124,45,18,.85)"/><rect x="18" y="3" width="4" height="7" rx="2" fill="rgba(255,255,255,.85)"/><rect x="18" y="30" width="4" height="7" rx="2" fill="rgba(255,255,255,.85)"/><rect x="3" y="18" width="7" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="30" y="18" width="7" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="7.5" y="7.5" width="4" height="7" rx="2" transform="rotate(45 9.5 11)" fill="rgba(255,255,255,.55)"/><rect x="28.5" y="7.5" width="4" height="7" rx="2" transform="rotate(-45 30.5 11)" fill="rgba(255,255,255,.55)"/></svg>',
+            'icon' => '<svg width="19" height="19" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="7" fill="white"/><circle cx="20" cy="20" r="3.5" fill="rgba(124,45,18,.85)"/><rect x="18" y="3" width="4" height="7" rx="2" fill="rgba(255,255,255,.85)"/><rect x="18" y="30" width="4" height="7" rx="2" fill="rgba(255,255,255,.85)"/><rect x="3" y="18" width="7" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="30" y="18" width="7" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="7.5" y="7.5" width="4" height="7" rx="2" transform="rotate(45 9.5 11)" fill="rgba(255,255,255,.55)"/><rect x="28.5" y="7.5" width="4" height="7" rx="2" transform="rotate(-45 30.5 11)" fill="rgba(255,255,255,.55)"/></svg>',
             'features' => ['Workflow Automation', 'Inventory Tracking', 'Vendor Management', 'Purchase Orders', 'Stock Alerts', 'Process Templates'],
             'pain_points' => [
                 'Stock counts that are only accurate the day someone last did a manual count',
@@ -131,7 +131,7 @@ function platform_modules(): array
             'tagline' => 'Billing, expenses, and reporting that reconcile themselves',
             'description' => 'Centralize billing, expenses, financial reporting, and accounting integrations seamlessly — with one number everyone in the business agrees on.',
             'color' => '#32b46f',
-            'icon' => '<svg width="26" height="26" viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="11" rx="13" ry="5" fill="white"/><path d="M7 11 Q7 18 20 18 Q33 18 33 11" fill="rgba(255,255,255,.75)"/><path d="M7 18 Q7 25 20 25 Q33 25 33 18" fill="rgba(255,255,255,.5)"/><path d="M7 25 Q7 32 20 32 Q33 32 33 25" fill="rgba(255,255,255,.3)"/></svg>',
+            'icon' => '<svg width="19" height="19" viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="11" rx="13" ry="5" fill="white"/><path d="M7 11 Q7 18 20 18 Q33 18 33 11" fill="rgba(255,255,255,.75)"/><path d="M7 18 Q7 25 20 25 Q33 25 33 18" fill="rgba(255,255,255,.5)"/><path d="M7 25 Q7 32 20 32 Q33 32 33 25" fill="rgba(255,255,255,.3)"/></svg>',
             'features' => ['Billing', 'Expense Tracking', 'Financial Reporting', 'Accounting Integrations', 'GST Workflows', 'Payment Reminders'],
             'pain_points' => [
                 'Month-end close that takes a week because numbers live in three different tools',
@@ -158,7 +158,7 @@ function platform_modules(): array
             'tagline' => 'Payroll, attendance, and leave without the spreadsheet',
             'description' => 'Manage employees, attendance, payroll workflows, and leave management efficiently — with one record per employee instead of five.',
             'color' => '#14855a',
-            'icon' => '<svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="14" cy="12" r="7" fill="white"/><circle cx="28" cy="14" r="5" fill="rgba(255,255,255,.6)"/><path d="M2 34 C2 25 8 22 14 22 C20 22 26 25 26 34 Z" fill="rgba(255,255,255,.8)"/><path d="M26 28 C26 24 29 22 32 22 C35 22 38 24 38 28 L38 34 L26 34 Z" fill="rgba(255,255,255,.4)"/></svg>',
+            'icon' => '<svg width="19" height="19" viewBox="0 0 40 40" fill="none"><circle cx="14" cy="12" r="7" fill="white"/><circle cx="28" cy="14" r="5" fill="rgba(255,255,255,.6)"/><path d="M2 34 C2 25 8 22 14 22 C20 22 26 25 26 34 Z" fill="rgba(255,255,255,.8)"/><path d="M26 28 C26 24 29 22 32 22 C35 22 38 24 38 28 L38 34 L26 34 Z" fill="rgba(255,255,255,.4)"/></svg>',
             'features' => ['Payroll Processing', 'Attendance Tracking', 'Leave Management', 'Employee Records', 'Onboarding Workflows', 'Compliance Documentation'],
             'pain_points' => [
                 'Attendance tracked on a register that someone has to manually total every month',
@@ -185,7 +185,7 @@ function platform_modules(): array
             'tagline' => 'Stock levels you can trust, updated in real time',
             'description' => 'Track stock across every warehouse and channel, get alerted before you run out, and stop guessing what you actually have on hand.',
             'color' => '#23a065',
-            'icon' => '<svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="5" y="18" width="13" height="14" rx="1.5" fill="rgba(255,255,255,.6)"/><rect x="21" y="18" width="14" height="14" rx="1.5" fill="white"/><rect x="12" y="6" width="16" height="13" rx="1.5" fill="rgba(255,255,255,.85)"/><path d="M12 12 L28 12" stroke="rgba(20,133,90,.55)" stroke-width="1.6"/><path d="M5 24 L18 24" stroke="rgba(20,133,90,.4)" stroke-width="1.6"/><path d="M21 24 L35 24" stroke="rgba(20,133,90,.4)" stroke-width="1.6"/></svg>',
+            'icon' => '<svg width="19" height="19" viewBox="0 0 40 40" fill="none"><rect x="5" y="18" width="13" height="14" rx="1.5" fill="rgba(255,255,255,.6)"/><rect x="21" y="18" width="14" height="14" rx="1.5" fill="white"/><rect x="12" y="6" width="16" height="13" rx="1.5" fill="rgba(255,255,255,.85)"/><path d="M12 12 L28 12" stroke="rgba(20,133,90,.55)" stroke-width="1.6"/><path d="M5 24 L18 24" stroke="rgba(20,133,90,.4)" stroke-width="1.6"/><path d="M21 24 L35 24" stroke="rgba(20,133,90,.4)" stroke-width="1.6"/></svg>',
             'features' => ['Real-time Stock Levels', 'Multi-warehouse Tracking', 'Reorder Point Alerts', 'Barcode & SKU Management', 'Batch/Lot Tracking', 'Stock Transfer Workflows'],
             'pain_points' => [
                 "Selling what's already out of stock because the count online doesn't match the shelf",

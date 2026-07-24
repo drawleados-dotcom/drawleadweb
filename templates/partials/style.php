@@ -1140,10 +1140,3 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .mega-cta-text{font-size:11px;color:rgba(255,255,255,.5);line-height:1.55}
 .mega-cta-btn{margin-top:.4rem;background:#fff;color:var(--black);border:none;border-radius:6px;padding:10px 14px;font-family:var(--font);font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;text-align:center;transition:opacity .2s}
 .mega-cta-btn:hover{opacity:.85}
-
-/* 3-column variant — used by the Platform mega menu (7 module cards
-   wrapping into 3 rows, CTA spans the last two cells), instead of the
-   4-column-in-one-row layout above. */
-.mega-inner-grid3{grid-template-columns:repeat(3,1fr);width:min(1080px,96vw)}
-.mega-cta-span2{grid-column:span 2}
-.mega-inner-grid3 .mega-col-icon svg{width:19px;height:19px}

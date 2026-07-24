@@ -13,7 +13,7 @@ $activePage = $activePage ?? '';
  <li class="has-mega">
    <a href="/#functions">Platform</a>
    <div class="mega-panel">
-    <div class="mega-inner mega-inner-grid3">
+    <div class="mega-inner">
 
      <?php foreach (platform_modules_ordered() as $entry): $m = $entry['module']; ?>
      <div class="mega-col">
@@ -28,7 +28,7 @@ $activePage = $activePage ?? '';
      </div>
      <?php endforeach; ?>
 
-     <div class="mega-cta mega-cta-span2">
+     <div class="mega-cta">
       <div class="mega-cta-title">See it all together</div>
       <p class="mega-cta-text">Get a personalised walkthrough of all 7 modules working in sync.</p>
       <button type="button" data-book class="mega-cta-btn">Book a Free Consultation →</button>
