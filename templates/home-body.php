@@ -766,7 +766,7 @@
  <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements — out of the box.</p>
 
  <div class="ind-grid">
-  <?php foreach (industries_ordered() as $entry): $ind = $entry['industry']; ?>
+  <?php foreach (array_slice(industries_ordered(), 0, 6) as $entry): $ind = $entry['industry']; ?>
   <div class="ind-card rv d<?= (((int) $ind['number'] - 1) % 3) + 1 ?>">
    <div class="ind-card-top">
     <div class="ind-emoji" style="background:linear-gradient(135deg,#32b46f,#14855a)"><?= $ind['icon'] ?></div>

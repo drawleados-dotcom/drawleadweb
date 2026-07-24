@@ -282,7 +282,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 
 
 /* ── INDUSTRIES VISUAL GRID ── */
-.ind-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.ind-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .ind-card{background:var(--white);border-radius:10px;border:1.5px solid var(--border);overflow:hidden;display:flex;flex-direction:column;transition:all .2s;opacity:0;transform:translateY(50px)}
 .ind-card.in{opacity:1;transform:translateY(0)}
 .ind-card:hover{box-shadow:0 6px 28px rgba(0,0,0,.1);border-color:var(--g300)}
@@ -1140,3 +1140,11 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .mega-cta-text{font-size:11px;color:rgba(255,255,255,.5);line-height:1.55}
 .mega-cta-btn{margin-top:.4rem;background:#fff;color:var(--black);border:none;border-radius:6px;padding:10px 14px;font-family:var(--font);font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;text-align:center;transition:opacity .2s}
 .mega-cta-btn:hover{opacity:.85}
+
+/* 5-column variant — used by the Industries mega menu (20 entries,
+   title + one line + Know More, wrapping into 4 rows). */
+.mega-inner-ind{width:min(1400px,96vw);grid-template-columns:repeat(5,1fr);gap:1.5rem 1.25rem}
+.mega-ind-col{display:flex;flex-direction:column;padding:.9rem 1rem;border-radius:10px;transition:background .15s}
+.mega-ind-col:hover{background:var(--bg)}
+.mega-ind-title{font-size:12.5px;font-weight:800;letter-spacing:-.01em;color:var(--black);margin-bottom:.3rem;line-height:1.3}
+.mega-ind-desc{font-size:10px;color:var(--g400);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.6rem}

@@ -143,7 +143,22 @@ $activePage = $activePage ?? '';
     </div>
    </div>
   </li>
- <li><a href="/#industries">Industries</a></li>
+ <li class="has-mega">
+   <a href="/#industries">Industries</a>
+   <div class="mega-panel">
+    <div class="mega-inner mega-inner-ind">
+
+     <?php foreach (industries_ordered() as $entry): $ind = $entry['industry']; ?>
+     <div class="mega-ind-col">
+      <div class="mega-ind-title"><?= h($ind['name']) ?></div>
+      <div class="mega-ind-desc"><?= h($ind['tag']) ?></div>
+      <a href="/industry-<?= h($entry['key']) ?>" class="mega-know">Know More →</a>
+     </div>
+     <?php endforeach; ?>
+
+    </div>
+   </div>
+  </li>
  <li><a href="/blog"<?= $activePage === 'blog' ? ' style="color:var(--black)"' : '' ?>>Blog</a></li>
  <li><a href="/about-us"<?= $activePage === 'about-us' ? ' style="color:var(--black)"' : '' ?>>About Us</a></li>
  </ul>
