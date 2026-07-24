@@ -246,6 +246,11 @@ function pending_migrations_exist(PDO $pdo): bool
     if (!migration_column_exists($pdo, 'site_popup', 'trigger_delay')) {
         return true;
     }
+    $stmt = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug IN (?, ?, ?)');
+    $stmt->execute(['/custom-erp-solution', '/ecommerce-solutions', '/marketing-solutions']);
+    if ((int) $stmt->fetchColumn() < 3) {
+        return true;
+    }
     return false;
 }
 
@@ -253,6 +258,27 @@ function pending_migrations_exist(PDO $pdo): bool
 function get_case_study_services(PDO $pdo): array
 {
     return $pdo->query('SELECT id, name FROM case_study_services ORDER BY sort_order, name')->fetchAll();
+}
+
+/**
+ * Published case studies tagged with a given Department/Service, for the
+ * service landing pages (custom-erp-solution, ecommerce-solutions,
+ * marketing-solutions). services is a plain comma-separated text column,
+ * not a foreign key, so the match happens in PHP after fetching — same
+ * approach already used for the /case-studies filter tabs.
+ */
+function get_case_studies_by_service(PDO $pdo, string $serviceName, int $limit = 3): array
+{
+    $rows = $pdo->query(
+        "SELECT * FROM case_studies WHERE status = 'published' ORDER BY created_at DESC"
+    )->fetchAll();
+
+    $matches = array_values(array_filter($rows, function ($cs) use ($serviceName) {
+        $names = array_map('trim', explode(',', $cs['services']));
+        return in_array($serviceName, $names, true);
+    }));
+
+    return array_slice($matches, 0, max(1, $limit));
 }
 
 /** Recent published blog posts for the sticky sidebar shown on blog post and case study pages. */

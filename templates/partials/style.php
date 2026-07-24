@@ -771,6 +771,39 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
   .cs-shots-row{grid-template-columns:1fr}
 }
 
+/* ══════════════════ SERVICE LANDING PAGES ══════════════════ */
+#svc-hero{padding-top:9.5rem;padding-bottom:1rem;text-align:center}
+#svc-hero .sec-h,#svc-hero .sec-sub{margin-left:auto;margin-right:auto}
+.svc-hero-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:1.8rem}
+
+.svc-benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;max-width:1180px;margin:0 auto}
+.svc-benefit{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:1.6rem 1.5rem;display:flex;flex-direction:column;gap:.9rem;transition:border-color .15s}
+.svc-benefit:hover{border-color:var(--g300)}
+.svc-benefit-check{width:34px;height:34px;border-radius:10px;background:rgba(50,180,111,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.svc-benefit-text{font-size:13px;color:var(--g600);font-weight:600;line-height:1.55}
+
+.svc-tracks{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:920px;margin:0 auto}
+.svc-track{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:2rem 1.9rem}
+.svc-track-title{font-size:15px;font-weight:800;letter-spacing:-.01em;margin-bottom:1.2rem;display:flex;align-items:center;gap:10px;color:var(--black)}
+.svc-track .sol-list{margin-bottom:0}
+
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:1180px;margin:0 auto}
+.testi-card{background:var(--bg2);border-left:3px solid var(--blue);border-radius:0 12px 12px 0;padding:1.6rem 1.75rem}
+.testi-text{font-size:14px;font-style:italic;font-weight:600;color:var(--black);line-height:1.6;margin-bottom:.75rem}
+.testi-author{font-size:11.5px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.04em}
+
+#service-cta{text-align:center;padding:4.5rem 0;max-width:640px;margin:0 auto}
+#service-cta .sec-sub{margin-bottom:1.6rem}
+
+@media(max-width:960px){
+  .svc-benefits{grid-template-columns:repeat(2,1fr)}
+  .svc-tracks{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  #svc-hero{padding-top:7.5rem}
+  .svc-benefits{grid-template-columns:1fr}
+}
+
 /* ══════════════════ BOOKING POPUP ══════════════════ */
 /* Every button[data-book] utility class (.btn, .nav-btn, .cta-btn-w/g,
    .fn-arrow, .sol-arrow, .ind-cta) already declares its own background,

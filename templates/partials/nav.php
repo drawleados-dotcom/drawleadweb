@@ -26,7 +26,7 @@ $activePage = $activePage ?? '';
        <li>Role-based access, approvals &amp; audit trails</li>
        <li>Migration from spreadsheets &amp; legacy systems</li>
       </ul>
-      <a href="/custom-operational-solutions.html" class="mega-know">Know More →</a>
+      <a href="/custom-erp-solution" class="mega-know">Know More →</a>
      </div>
 
      <div class="mega-col">
@@ -39,7 +39,7 @@ $activePage = $activePage ?? '';
        <li>Live inventory sync across every sales channel</li>
        <li>Automated order, invoice &amp; GST workflows</li>
       </ul>
-      <a href="/#solutions" class="mega-know">Know More →</a>
+      <a href="/ecommerce-solutions" class="mega-know">Know More →</a>
      </div>
 
      <div class="mega-col">
@@ -52,7 +52,7 @@ $activePage = $activePage ?? '';
        <li>Google, Meta &amp; LinkedIn performance campaigns</li>
        <li>Instant WhatsApp &amp; email follow-up on every lead</li>
       </ul>
-      <a href="/#solutions" class="mega-know">Know More →</a>
+      <a href="/marketing-solutions" class="mega-know">Know More →</a>
      </div>
 
      <div class="mega-cta">

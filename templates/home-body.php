@@ -418,7 +418,7 @@
    <div><div class="sol-metric-v">100%</div><div class="sol-metric-l">Ownership</div></div>
    <div><div class="sol-metric-v">1</div><div class="sol-metric-l">Source of truth</div></div>
   </div>
-  <a href="custom-operational-solutions.html" class="sol-arrow">Explore ERP →</a>
+  <a href="/custom-erp-solution" class="sol-arrow">Explore ERP →</a>
  </div>
 
  <!-- Ecommerce Solutions -->
@@ -440,7 +440,7 @@
    <div><div class="sol-metric-v">3&times;</div><div class="sol-metric-l">Faster launch</div></div>
    <div><div class="sol-metric-v">0</div><div class="sol-metric-l">Manual entry</div></div>
   </div>
-  <button type="button" data-book class="sol-arrow">Explore ecommerce →</button>
+  <a href="/ecommerce-solutions" class="sol-arrow">Explore ecommerce →</a>
  </div>
 
  <!-- Marketing Solutions -->
@@ -486,7 +486,7 @@
    </div>
   </div>
 
-  <button type="button" data-book class="sol-arrow">Explore marketing →</button>
+  <a href="/marketing-solutions" class="sol-arrow">Explore marketing →</a>
  </div>
 
  </div>

@@ -198,6 +198,29 @@ function migration_009_statements(): array
     ];
 }
 
+function migration_010_statements(): array
+{
+    return [
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Custom ERP Solution', '/custom-erp-solution',
+           'Custom ERP Solution | Drawlead',
+           'A custom ERP shaped around how your business actually works — modules mapped to your real workflows, role-based access, and migration off spreadsheets and legacy systems.',
+           'custom-erp-solution')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Ecommerce Solutions', '/ecommerce-solutions',
+           'Ecommerce Solutions | Drawlead',
+           'Shopify, WooCommerce, and custom storefront builds with live inventory sync and automated order, invoice, and GST workflows — one connected stack from storefront to fulfilment.',
+           'ecommerce-solutions')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Marketing Solutions', '/marketing-solutions',
+           'Marketing Solutions | Drawlead',
+           'Technical SEO and performance marketing that fix the leak between lead and conversion — Google, Meta, and LinkedIn campaigns with instant WhatsApp and email follow-up on every lead.',
+           'marketing-solutions')",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -228,6 +251,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '009' || $which === 'all') {
         $toRun['009'] = migration_009_statements();
+    }
+    if ($which === '010' || $which === 'all') {
+        $toRun['010'] = migration_010_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -263,6 +289,9 @@ $migration006Done = migration_column_exists($pdo, 'pages', 'focus_keyword')
 $migration007Done = migration_table_exists($pdo, 'case_study_services');
 $migration008Done = migration_table_exists($pdo, 'site_popup');
 $migration009Done = migration_column_exists($pdo, 'site_popup', 'trigger_delay');
+$stmt010 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug IN (?, ?, ?)');
+$stmt010->execute(['/custom-erp-solution', '/ecommerce-solutions', '/marketing-solutions']);
+$migration010Done = (int) $stmt010->fetchColumn() === 3;
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -377,7 +406,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done): ?>
+<div class="card">
+  <div class="card-title">010 — Service landing pages</div>
+  <div class="card-desc">Adds Custom ERP Solution, Ecommerce Solutions, and Marketing Solutions as real pages (/custom-erp-solution, /ecommerce-solutions, /marketing-solutions), editable from Admin → Pages like Home and About Us.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration010Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration010Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration010Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="010">
+    <button type="submit" class="btn btn-primary">Run Migration 010</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>
