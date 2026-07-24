@@ -1141,13 +1141,9 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .mega-cta-btn{margin-top:.4rem;background:#fff;color:var(--black);border:none;border-radius:6px;padding:10px 14px;font-family:var(--font);font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;text-align:center;transition:opacity .2s}
 .mega-cta-btn:hover{opacity:.85}
 
-/* Compact list variant — used by the Platform mega menu (7 rows in one
-   column + a CTA card), instead of the 4-column card layout above. */
-.mega-inner-list{grid-template-columns:1fr 300px}
-.mega-list-col{display:flex;flex-direction:column;gap:2px}
-.mega-row{display:flex;align-items:center;gap:14px;padding:9px 12px;border-radius:10px;text-decoration:none;transition:background .15s}
-.mega-row:hover{background:var(--bg)}
-.mega-row-icon{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(0,0,0,.14)}
-.mega-row-icon svg{width:18px;height:18px}
-.mega-row-title{font-size:13px;font-weight:800;letter-spacing:-.01em;color:var(--black)}
-.mega-row-desc{font-size:11px;color:var(--g500);line-height:1.4;margin-top:2px}
+/* 3-column variant — used by the Platform mega menu (7 module cards
+   wrapping into 3 rows, CTA spans the last two cells), instead of the
+   4-column-in-one-row layout above. */
+.mega-inner-grid3{grid-template-columns:repeat(3,1fr);width:min(1080px,96vw)}
+.mega-cta-span2{grid-column:span 2}
+.mega-inner-grid3 .mega-col-icon svg{width:19px;height:19px}

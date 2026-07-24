@@ -268,6 +268,24 @@ function migration_011_statements(): array
     ];
 }
 
+function migration_012_statements(): array
+{
+    return [
+        "UPDATE pages SET
+            name = 'Platform — Inventory Management',
+            slug = '/platform-inventory',
+            meta_title = 'Inventory Management Platform | Drawlead',
+            meta_description = 'Track stock across every warehouse and channel, get alerted before you run out, and stop guessing what you actually have on hand.'
+         WHERE slug = '/platform-rd'",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Platform — Inventory Management', '/platform-inventory',
+           'Inventory Management Platform | Drawlead',
+           'Track stock across every warehouse and channel, get alerted before you run out, and stop guessing what you actually have on hand.',
+           'platform-module')",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -304,6 +322,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '011' || $which === 'all') {
         $toRun['011'] = migration_011_statements();
+    }
+    if ($which === '012' || $which === 'all') {
+        $toRun['012'] = migration_012_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -342,9 +363,16 @@ $migration009Done = migration_column_exists($pdo, 'site_popup', 'trigger_delay')
 $stmt010 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug IN (?, ?, ?)');
 $stmt010->execute(['/custom-erp-solution', '/ecommerce-solutions', '/marketing-solutions']);
 $migration010Done = (int) $stmt010->fetchColumn() === 3;
-$stmt011 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug IN (?, ?, ?, ?, ?, ?, ?)');
-$stmt011->execute(['/platform-management', '/platform-sales', '/platform-marketing', '/platform-operations', '/platform-finance', '/platform-hr', '/platform-rd']);
-$migration011Done = (int) $stmt011->fetchColumn() === 7;
+// The 7th page started as /platform-rd (migration 011) and gets renamed
+// to /platform-inventory by migration 012 — either slug counts as "the
+// 7th page exists" so this check stays accurate before and after 012 runs.
+$stmt011a = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug IN (?, ?, ?, ?, ?, ?)');
+$stmt011a->execute(['/platform-management', '/platform-sales', '/platform-marketing', '/platform-operations', '/platform-finance', '/platform-hr']);
+$stmt011b = $pdo->query("SELECT COUNT(*) FROM pages WHERE slug IN ('/platform-rd', '/platform-inventory')");
+$migration011Done = (int) $stmt011a->fetchColumn() === 6 && (int) $stmt011b->fetchColumn() >= 1;
+$stmt012 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
+$stmt012->execute(['/platform-inventory']);
+$migration012Done = (int) $stmt012->fetchColumn() >= 1;
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -485,7 +513,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done): ?>
+<div class="card">
+  <div class="card-title">012 — Rename R&amp;D module to Inventory Management</div>
+  <div class="card-desc">Renames the /platform-rd page to /platform-inventory (in place if it already exists, or creates it fresh otherwise).</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration012Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration012Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration012Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="012">
+    <button type="submit" class="btn btn-primary">Run Migration 012</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

@@ -309,15 +309,15 @@
  <div class="fn-tags"><span class="fn-tag">Payroll</span><span class="fn-tag">Attendance</span><span class="fn-tag">Leave</span></div>
  <button type="button" data-book class="fn-arrow" style="color:#14855a">Explore module →</button>
  </div>
- <!-- 07 R&D -->
+ <!-- 07 Inventory Management -->
  <div class="fn-card rv d3">
  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
- <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="4.5" fill="white"/><ellipse cx="20" cy="20" rx="17" ry="7" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2.5"/><ellipse cx="20" cy="20" rx="17" ry="7" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2" transform="rotate(60 20 20)"/><ellipse cx="20" cy="20" rx="17" ry="7" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2" transform="rotate(120 20 20)"/></svg>
+ <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="5" y="18" width="13" height="14" rx="1.5" fill="rgba(255,255,255,.6)"/><rect x="21" y="18" width="14" height="14" rx="1.5" fill="white"/><rect x="12" y="6" width="16" height="13" rx="1.5" fill="rgba(255,255,255,.85)"/><path d="M12 12 L28 12" stroke="rgba(20,133,90,.55)" stroke-width="1.6"/><path d="M5 24 L18 24" stroke="rgba(20,133,90,.4)" stroke-width="1.6"/><path d="M21 24 L35 24" stroke="rgba(20,133,90,.4)" stroke-width="1.6"/></svg>
  </div>
- <div class="fn-num" style="color:#23a065">07 — R&amp;D</div>
- <div class="fn-name">R&amp;D</div>
- <div class="fn-desc">Enable innovation with AI-powered automation, predictive analytics, and custom intelligence.</div>
- <div class="fn-tags"><span class="fn-tag">AI Automation</span><span class="fn-tag">Predictive</span><span class="fn-tag">Custom</span></div>
+ <div class="fn-num" style="color:#23a065">07 — Inventory</div>
+ <div class="fn-name">Inventory Management</div>
+ <div class="fn-desc">Track stock across every warehouse and channel, with alerts before you run out.</div>
+ <div class="fn-tags"><span class="fn-tag">Stock Levels</span><span class="fn-tag">Reorder Alerts</span><span class="fn-tag">Multi-warehouse</span></div>
  <button type="button" data-book class="fn-arrow" style="color:#23a065">Explore module →</button>
  </div>
  <!-- 08 CTA Card -->

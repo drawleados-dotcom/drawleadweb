@@ -253,9 +253,16 @@ function pending_migrations_exist(PDO $pdo): bool
     if ((int) $stmt->fetchColumn() < 3) {
         return true;
     }
-    $stmt2 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug IN (?, ?, ?, ?, ?, ?, ?)');
-    $stmt2->execute(['/platform-management', '/platform-sales', '/platform-marketing', '/platform-operations', '/platform-finance', '/platform-hr', '/platform-rd']);
-    if ((int) $stmt2->fetchColumn() < 7) {
+    $stmt2 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug IN (?, ?, ?, ?, ?, ?)');
+    $stmt2->execute(['/platform-management', '/platform-sales', '/platform-marketing', '/platform-operations', '/platform-finance', '/platform-hr']);
+    if ((int) $stmt2->fetchColumn() < 6) {
+        return true;
+    }
+    // The 7th page started as /platform-rd (migration 011), renamed to
+    // /platform-inventory by migration 012 — only the latter counts as
+    // fully up to date.
+    $stmt3 = $pdo->query("SELECT COUNT(*) FROM pages WHERE slug = '/platform-inventory'");
+    if ((int) $stmt3->fetchColumn() < 1) {
         return true;
     }
     return false;

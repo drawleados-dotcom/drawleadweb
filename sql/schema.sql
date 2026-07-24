@@ -255,9 +255,9 @@ INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VA
   'HR Platform | Drawlead',
   'Manage employees, attendance, payroll workflows, and leave management efficiently.',
   'platform-module'),
-('Platform — R&D', '/platform-rd',
-  'R&D Platform | Drawlead',
-  'Enable innovation with AI-powered automation, predictive analytics, and custom intelligence.',
+('Platform — Inventory Management', '/platform-inventory',
+  'Inventory Management Platform | Drawlead',
+  'Track stock across every warehouse and channel, get alerted before you run out, and stop guessing what you actually have on hand.',
   'platform-module');
 
 INSERT IGNORE INTO settings (`key`, `value`) VALUES

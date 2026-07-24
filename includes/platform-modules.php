@@ -1,10 +1,11 @@
 <?php
 /**
  * Static content for the 7 Platform module pages (Management, Sales,
- * Marketing, Operations, Finance, HR, R&D) and the Platform mega menu.
- * Hand-maintained, like Home/About Us — not admin-editable content.
- * Icons and core descriptions mirror the homepage's "7 Functions" section
- * (templates/home-body.php #functions) so the two stay consistent.
+ * Marketing, Operations, Finance, HR, Inventory Management) and the
+ * Platform mega menu. Hand-maintained, like Home/About Us — not
+ * admin-editable content. Icons and core descriptions for the first 6
+ * mirror the homepage's "7 Functions" section (templates/home-body.php
+ * #functions) so the two stay consistent.
  */
 
 /** @return array<string,array> keyed by URL slug segment, e.g. 'sales' → /platform-sales */
@@ -113,7 +114,7 @@ function platform_modules(): array
             'connects' => [
                 ['module' => 'Sales', 'text' => 'Stock availability is visible before a rep promises a delivery date.'],
                 ['module' => 'Finance', 'text' => 'Purchase orders and vendor bills flow straight into expense tracking.'],
-                ['module' => 'R&D', 'text' => 'Bottlenecks flagged here feed directly into what gets automated next.'],
+                ['module' => 'Inventory Management', 'text' => 'Every purchase order updates stock the moment it arrives.'],
             ],
             'board1_stats' => [['v' => '842', 'l' => 'Orders'], ['v' => '6', 'l' => 'Stock Alerts'], ['v' => '96%', 'l' => 'On-Time']],
             'board1_bars' => [60, 45, 80, 55, 70, 90],
@@ -178,31 +179,31 @@ function platform_modules(): array
                 ['label' => 'Compliance Document', 'status' => 'Renewed', 'tone' => 'good'],
             ],
         ],
-        'rd' => [
+        'inventory' => [
             'number' => '07',
-            'name' => 'R&D',
-            'tagline' => 'AI automation built around your actual bottlenecks',
-            'description' => 'Enable innovation with AI-powered automation, predictive analytics, and custom intelligence — aimed at the specific workflows costing you the most time.',
+            'name' => 'Inventory Management',
+            'tagline' => 'Stock levels you can trust, updated in real time',
+            'description' => 'Track stock across every warehouse and channel, get alerted before you run out, and stop guessing what you actually have on hand.',
             'color' => '#23a065',
-            'icon' => '<svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="4.5" fill="white"/><ellipse cx="20" cy="20" rx="17" ry="7" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2.5"/><ellipse cx="20" cy="20" rx="17" ry="7" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2" transform="rotate(60 20 20)"/><ellipse cx="20" cy="20" rx="17" ry="7" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2" transform="rotate(120 20 20)"/></svg>',
-            'features' => ['AI Automation', 'Predictive Analytics', 'Custom Intelligence', 'Process Mining', 'Anomaly Detection', 'Continuous Improvement'],
+            'icon' => '<svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="5" y="18" width="13" height="14" rx="1.5" fill="rgba(255,255,255,.6)"/><rect x="21" y="18" width="14" height="14" rx="1.5" fill="white"/><rect x="12" y="6" width="16" height="13" rx="1.5" fill="rgba(255,255,255,.85)"/><path d="M12 12 L28 12" stroke="rgba(20,133,90,.55)" stroke-width="1.6"/><path d="M5 24 L18 24" stroke="rgba(20,133,90,.4)" stroke-width="1.6"/><path d="M21 24 L35 24" stroke="rgba(20,133,90,.4)" stroke-width="1.6"/></svg>',
+            'features' => ['Real-time Stock Levels', 'Multi-warehouse Tracking', 'Reorder Point Alerts', 'Barcode & SKU Management', 'Batch/Lot Tracking', 'Stock Transfer Workflows'],
             'pain_points' => [
-                'Repetitive manual work nobody has time to actually automate',
-                "Problems only noticed after they've already cost money",
-                'Every "custom requirement" treated as a one-off instead of a reusable module',
+                "Selling what's already out of stock because the count online doesn't match the shelf",
+                "Reordering too late, or too early, because nobody's watching reorder points",
+                'Stock spread across two warehouses with no single view of total quantity',
             ],
             'connects' => [
-                ['module' => 'Operations', 'text' => 'Automation targets the exact workflow bottlenecks operations already flagged.'],
-                ['module' => 'Management', 'text' => 'Predictive signals show up as early warnings on the dashboard, not a separate report.'],
-                ['module' => 'Sales', 'text' => 'Lead scoring and forecasting models plug straight into the sales pipeline.'],
+                ['module' => 'Sales', 'text' => "Real stock counts stop reps from promising deliveries you can't make."],
+                ['module' => 'Operations', 'text' => 'Purchase orders and vendor lead times feed straight into reorder alerts.'],
+                ['module' => 'Finance', 'text' => 'Stock value updates the books without a manual recount.'],
             ],
-            'board1_stats' => [['v' => '14', 'l' => 'Automations Live'], ['v' => '220', 'l' => 'Hours Saved / mo'], ['v' => '99.8%', 'l' => 'Uptime']],
-            'board1_bars' => [40, 60, 50, 80, 65, 92],
+            'board1_stats' => [['v' => '6,240', 'l' => 'Units in Stock'], ['v' => '14', 'l' => 'Reorder Alerts'], ['v' => '3', 'l' => 'Warehouses']],
+            'board1_bars' => [55, 70, 40, 85, 60, 75],
             'board2_rows' => [
-                ['label' => 'Lead Scoring Model v2', 'status' => 'Live', 'tone' => 'good'],
-                ['label' => 'Anomaly Alert', 'status' => 'Resolved', 'tone' => 'good'],
-                ['label' => 'Automation Pilot', 'status' => 'Testing', 'tone' => 'pending'],
-                ['label' => 'Process Mining Report', 'status' => 'Ready', 'tone' => 'good'],
+                ['label' => 'SKU-1042', 'status' => 'Reorder Threshold Hit', 'tone' => 'warn'],
+                ['label' => 'Warehouse B Transfer', 'status' => 'In Transit', 'tone' => 'pending'],
+                ['label' => 'Batch #2291', 'status' => 'Received', 'tone' => 'good'],
+                ['label' => 'Stock Audit — Warehouse A', 'status' => 'Scheduled', 'tone' => 'pending'],
             ],
         ],
     ];

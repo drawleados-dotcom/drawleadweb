@@ -13,21 +13,22 @@ $activePage = $activePage ?? '';
  <li class="has-mega">
    <a href="/#functions">Platform</a>
    <div class="mega-panel">
-    <div class="mega-inner mega-inner-list">
+    <div class="mega-inner mega-inner-grid3">
 
-     <div class="mega-list-col">
-      <?php foreach (platform_modules_ordered() as $entry): $m = $entry['module']; ?>
-      <a class="mega-row" href="/platform-<?= h($entry['key']) ?>">
-       <div class="mega-row-icon" style="background:linear-gradient(135deg,<?= h($m['color']) ?>,#0a1310)"><?= $m['icon'] ?></div>
-       <div class="mega-row-body">
-        <div class="mega-row-title"><?= h($m['name']) ?></div>
-        <div class="mega-row-desc"><?= h($m['description']) ?></div>
-       </div>
-      </a>
-      <?php endforeach; ?>
+     <?php foreach (platform_modules_ordered() as $entry): $m = $entry['module']; ?>
+     <div class="mega-col">
+      <div class="mega-col-icon" style="background:linear-gradient(135deg,<?= h($m['color']) ?>,#0a1310)"><?= $m['icon'] ?></div>
+      <div class="mega-col-title"><?= h($m['name']) ?></div>
+      <ul class="mega-list">
+       <?php foreach (array_slice($m['features'], 0, 3) as $feature): ?>
+       <li><?= h($feature) ?></li>
+       <?php endforeach; ?>
+      </ul>
+      <a href="/platform-<?= h($entry['key']) ?>" class="mega-know">Know More →</a>
      </div>
+     <?php endforeach; ?>
 
-     <div class="mega-cta">
+     <div class="mega-cta mega-cta-span2">
       <div class="mega-cta-title">See it all together</div>
       <p class="mega-cta-text">Get a personalised walkthrough of all 7 modules working in sync.</p>
       <button type="button" data-book class="mega-cta-btn">Book a Free Consultation →</button>
