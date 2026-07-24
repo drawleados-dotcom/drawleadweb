@@ -282,7 +282,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 
 
 /* ── INDUSTRIES VISUAL GRID ── */
-.ind-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ind-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .ind-card{background:var(--white);border-radius:10px;border:1.5px solid var(--border);overflow:hidden;display:flex;flex-direction:column;transition:all .2s;opacity:0;transform:translateY(50px)}
 .ind-card.in{opacity:1;transform:translateY(0)}
 .ind-card:hover{box-shadow:0 6px 28px rgba(0,0,0,.1);border-color:var(--g300)}

@@ -766,184 +766,30 @@
  <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements — out of the box.</p>
 
  <div class="ind-grid">
-
- <!-- Construction -->
- <div class="ind-card rv d1">
- <div class="ind-card-top">
- <div class="ind-emoji" style="background:linear-gradient(135deg,#32b46f,#14855a)"><svg width="28" height="28" fill="none" viewBox="0 0 40 40">
-       <rect x="4" y="28" width="32" height="8" rx="2" fill="rgba(255,255,255,.9)"/>
-       <rect x="8" y="16" width="10" height="12" rx="1" fill="rgba(255,255,255,.7)"/>
-       <rect x="22" y="20" width="10" height="8" rx="1" fill="rgba(255,255,255,.5)"/>
-       <polygon points="2,28 20,8 38,28" fill="rgba(255,255,255,.3)"/>
-       <polygon points="8,28 20,14 32,28" fill="rgba(255,255,255,.2)"/>
-     </svg></div>
- <div class="ind-card-title">Construction &amp; Real Estate</div>
- <div class="ind-card-tag">Projects · Sites · Billing</div>
- </div>
- <div class="ind-card-body">
- <div class="ind-problems">
- <div class="ind-prob-label">Common Problems</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Project overruns with no visibility</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Manual contractor billing errors</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Siloed site & inventory data</div>
- </div>
- <div class="ind-solutions">
- <div class="ind-sol-label">Drawlead Solution</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Real-time multi-site project dashboard</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Automated contractor & billing workflows</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Unified inventory &amp; vendor management</div>
- </div>
- <button type="button" data-book class="ind-cta">Explore Construction OS →</button>
- </div>
- </div>
-
- <!-- Healthcare -->
- <div class="ind-card rv d2">
- <div class="ind-card-top">
- <div class="ind-emoji" style="background:linear-gradient(135deg,#32b46f,#14855a)"><svg width="28" height="28" fill="none" viewBox="0 0 40 40">
-       <rect x="4" y="4" width="32" height="32" rx="6" fill="rgba(255,255,255,.15)"/>
-       <rect x="16" y="8" width="8" height="24" rx="2" fill="rgba(255,255,255,.9)"/>
-       <rect x="8" y="16" width="24" height="8" rx="2" fill="rgba(255,255,255,.9)"/>
-     </svg></div>
- <div class="ind-card-title">Healthcare &amp; Wellness</div>
- <div class="ind-card-tag">Clinics · Appointments · Billing</div>
- </div>
- <div class="ind-card-body">
- <div class="ind-problems">
- <div class="ind-prob-label">Common Problems</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Scheduling conflicts across branches</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Manual patient billing & follow-ups</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>No centralized therapist management</div>
- </div>
- <div class="ind-solutions">
- <div class="ind-sol-label">Drawlead Solution</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Smart appointment scheduling system</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Automated billing &amp; WhatsApp reminders</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Multi-branch centralized reporting</div>
- </div>
- <button type="button" data-book class="ind-cta">Explore Healthcare OS →</button>
- </div>
- </div>
-
- <!-- Manufacturing -->
- <div class="ind-card rv d3">
- <div class="ind-card-top">
- <div class="ind-emoji" style="background:linear-gradient(135deg,#32b46f,#14855a)"><svg width="28" height="28" fill="none" viewBox="0 0 40 40">
-       <rect x="3" y="28" width="34" height="8" rx="2" fill="rgba(255,255,255,.8)"/>
-       <rect x="6" y="18" width="8" height="10" rx="1" fill="rgba(255,255,255,.6)"/>
-       <rect x="18" y="14" width="8" height="14" rx="1" fill="rgba(255,255,255,.7)"/>
-       <rect x="30" y="10" width="4" height="18" rx="1" fill="rgba(255,255,255,.5)"/>
-       <circle cx="10" cy="22" r="2" fill="rgba(255,255,255,.3)"/>
-       <rect x="14" y="6" width="3" height="8" rx="1.5" fill="rgba(255,255,255,.4)"/>
-     </svg></div>
- <div class="ind-card-title">Manufacturing</div>
- <div class="ind-card-tag">Production · Inventory · Quality</div>
- </div>
- <div class="ind-card-body">
- <div class="ind-problems">
- <div class="ind-prob-label">Common Problems</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Production delays with no alerts</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Raw material stockout surprises</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Manual quality control records</div>
- </div>
- <div class="ind-solutions">
- <div class="ind-sol-label">Drawlead Solution</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>AI-powered production monitoring</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Predictive inventory restocking alerts</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Digital QC workflows &amp; reporting</div>
- </div>
- <button type="button" data-book class="ind-cta">Explore Manufacturing OS →</button>
- </div>
- </div>
-
- <!-- Agencies -->
- <div class="ind-card rv d1">
- <div class="ind-card-top">
- <div class="ind-emoji" style="background:linear-gradient(135deg,#32b46f,#14855a)"><svg width="28" height="28" fill="none" viewBox="0 0 40 40">
-       <circle cx="20" cy="12" r="8" fill="rgba(255,255,255,.9)"/>
-       <circle cx="10" cy="28" r="6" fill="rgba(255,255,255,.65)"/>
-       <circle cx="30" cy="28" r="6" fill="rgba(255,255,255,.65)"/>
-       <line x1="14" y1="18" x2="12" y2="23" stroke="rgba(255,255,255,.6)" stroke-width="2"/>
-       <line x1="26" y1="18" x2="28" y2="23" stroke="rgba(255,255,255,.6)" stroke-width="2"/>
-     </svg></div>
- <div class="ind-card-title">Marketing Agencies</div>
- <div class="ind-card-tag">Projects · Clients · Delivery</div>
- </div>
- <div class="ind-card-body">
- <div class="ind-problems">
- <div class="ind-prob-label">Common Problems</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Client projects slipping deadlines</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>No single view of leads &amp; revenue</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Team scattered across tools</div>
- </div>
- <div class="ind-solutions">
- <div class="ind-sol-label">Drawlead Solution</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Agency OS — all-in-one client hub</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Unified CRM + project + billing view</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Team tasks, timelines &amp; reports</div>
- </div>
- <button type="button" data-book class="ind-cta">Explore Agency OS →</button>
- </div>
- </div>
-
- <!-- Retail -->
- <div class="ind-card rv d2">
- <div class="ind-card-top">
- <div class="ind-emoji" style="background:linear-gradient(135deg,#32b46f,#14855a)"><svg width="28" height="28" fill="none" viewBox="0 0 40 40">
-       <path d="M6 10 L10 4 L30 4 L34 10 Z" fill="rgba(255,255,255,.9)"/>
-       <path d="M6 10 L6 34 Q6 36 8 36 L32 36 Q34 36 34 34 L34 10 Z" fill="rgba(255,255,255,.7)"/>
-       <path d="M15 10 Q15 18 20 18 Q25 18 25 10" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"/>
-     </svg></div>
- <div class="ind-card-title">Retail &amp; E-Commerce</div>
- <div class="ind-card-tag">Orders · Inventory · CRM</div>
- </div>
- <div class="ind-card-body">
- <div class="ind-problems">
- <div class="ind-prob-label">Common Problems</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Inventory mismatches across stores</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>No customer retention system</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Order tracking is fully manual</div>
- </div>
- <div class="ind-solutions">
- <div class="ind-sol-label">Drawlead Solution</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Live inventory sync across all channels</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Customer CRM + loyalty automation</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>End-to-end order management</div>
- </div>
- <button type="button" data-book class="ind-cta">Explore Retail OS →</button>
- </div>
- </div>
-
- <!-- Logistics -->
- <div class="ind-card rv d3">
- <div class="ind-card-top">
- <div class="ind-emoji" style="background:linear-gradient(135deg,#32b46f,#14855a)"><svg width="28" height="28" fill="none" viewBox="0 0 40 40">
-       <rect x="2" y="16" width="22" height="14" rx="2" fill="rgba(255,255,255,.85)"/>
-       <path d="M24 20 L34 20 L38 28 L38 30 L24 30 Z" fill="rgba(255,255,255,.65)"/>
-       <circle cx="10" cy="32" r="4" fill="rgba(255,255,255,.5)" stroke="rgba(255,255,255,.9)" stroke-width="2"/>
-       <circle cx="30" cy="32" r="4" fill="rgba(255,255,255,.5)" stroke="rgba(255,255,255,.9)" stroke-width="2"/>
-       <rect x="6" y="10" width="10" height="6" rx="1" fill="rgba(255,255,255,.4)"/>
-     </svg></div>
- <div class="ind-card-title">Logistics &amp; Transport</div>
- <div class="ind-card-tag">Fleet · Delivery · Compliance</div>
- </div>
- <div class="ind-card-body">
- <div class="ind-problems">
- <div class="ind-prob-label">Common Problems</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>No real-time fleet visibility</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Manual delivery proof &amp; billing</div>
- <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>Compliance docs always missing</div>
- </div>
- <div class="ind-solutions">
- <div class="ind-sol-label">Drawlead Solution</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Live fleet &amp; delivery tracking dashboard</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Digital POD &amp; auto-invoicing</div>
- <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Compliance document automation</div>
- </div>
- <button type="button" data-book class="ind-cta">Explore Logistics OS →</button>
- </div>
- </div>
-
+  <?php foreach (industries_ordered() as $entry): $ind = $entry['industry']; ?>
+  <div class="ind-card rv d<?= (((int) $ind['number'] - 1) % 3) + 1 ?>">
+   <div class="ind-card-top">
+    <div class="ind-emoji" style="background:linear-gradient(135deg,#32b46f,#14855a)"><?= $ind['icon'] ?></div>
+    <div class="ind-card-title"><?= h($ind['name']) ?></div>
+    <div class="ind-card-tag"><?= h($ind['tag']) ?></div>
+   </div>
+   <div class="ind-card-body">
+    <div class="ind-problems">
+     <div class="ind-prob-label">Common Problems</div>
+     <?php foreach ($ind['problems'] as $problem): ?>
+     <div class="ind-prob"><svg width="12" height="12" fill="none" stroke="#14855a" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg><?= h($problem) ?></div>
+     <?php endforeach; ?>
+    </div>
+    <div class="ind-solutions">
+     <div class="ind-sol-label">Drawlead Solution</div>
+     <?php foreach ($ind['solutions'] as $solution): ?>
+     <div class="ind-sol"><svg width="12" height="12" fill="none" stroke="#32b46f" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><?= h($solution) ?></div>
+     <?php endforeach; ?>
+    </div>
+    <a href="/industry-<?= h($entry['key']) ?>" class="ind-cta">Explore <?= h($ind['name']) ?> OS →</a>
+   </div>
+  </div>
+  <?php endforeach; ?>
  </div><!-- /ind-grid -->
 
  <div class="sec-cta rv" style="margin-top:3rem">

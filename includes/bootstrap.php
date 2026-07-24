@@ -25,6 +25,7 @@ define('UPLOAD_DIR', __DIR__ . '/../uploads/');
 define('UPLOAD_URL', '/uploads/');
 
 require_once __DIR__ . '/platform-modules.php';
+require_once __DIR__ . '/industries.php';
 
 try {
     $pdo = new PDO(
@@ -263,6 +264,10 @@ function pending_migrations_exist(PDO $pdo): bool
     // fully up to date.
     $stmt3 = $pdo->query("SELECT COUNT(*) FROM pages WHERE slug = '/platform-inventory'");
     if ((int) $stmt3->fetchColumn() < 1) {
+        return true;
+    }
+    $stmt4 = $pdo->query("SELECT COUNT(*) FROM pages WHERE slug LIKE '/industry-%'");
+    if ((int) $stmt4->fetchColumn() < 20) {
         return true;
     }
     return false;

@@ -286,6 +286,132 @@ function migration_012_statements(): array
     ];
 }
 
+function migration_013_statements(): array
+{
+    return [
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Construction & Real Estate', '/industry-construction',
+           'Construction & Real Estate ERP Solution | Drawlead',
+           'Run multi-site construction and real estate operations from a single system — instead of a different spreadsheet for every project.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Healthcare & Wellness', '/industry-healthcare',
+           'Healthcare & Wellness ERP Solution | Drawlead',
+           'Run clinics and wellness centers where scheduling, billing, and patient follow-ups never depend on a phone call.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Manufacturing', '/industry-manufacturing',
+           'Manufacturing ERP Solution | Drawlead',
+           'Track production runs, raw material stock, and quality checks from a single dashboard instead of a factory floor full of paper logs.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Marketing Agencies', '/industry-agencies',
+           'Marketing Agencies ERP Solution | Drawlead',
+           'Run an agency where client projects, leads, and delivery timelines all live in one place instead of six different tools.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Retail & E-Commerce', '/industry-retail',
+           'Retail & E-Commerce ERP Solution | Drawlead',
+           'Sell across stores and online channels with stock, orders, and customers synced in real time — not reconciled at the end of the day.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Logistics & Transport', '/industry-logistics',
+           'Logistics & Transport ERP Solution | Drawlead',
+           'Track fleet, deliveries, and compliance documents from one dashboard instead of a driver group chat and a filing cabinet.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Jewellery & Gems', '/industry-jewellery',
+           'Jewellery & Gems ERP Solution | Drawlead',
+           'Run a jewellery business where stock, purity, and billing are never a guessing game — synced across every counter and branch.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Education & Training', '/industry-education',
+           'Education & Training ERP Solution | Drawlead',
+           'From admissions to fee collection to attendance, manage every part of running a school or training institute in one system.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Hospitality & Restaurants', '/industry-hospitality',
+           'Hospitality & Restaurants ERP Solution | Drawlead',
+           'Manage orders, table turnover, and kitchen inventory from one dashboard instead of a POS, a notebook, and a supplier call sheet.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Automotive & Auto Services', '/industry-automotive',
+           'Automotive & Auto Services ERP Solution | Drawlead',
+           'Run a dealership or service center where job cards, spare parts, and billing all live in one place — not three.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Textile & Apparel', '/industry-textile',
+           'Textile & Apparel ERP Solution | Drawlead',
+           'Track raw material, production stages, and finished goods stock across every unit and showroom without a separate spreadsheet for each.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Pharmaceuticals & Distribution', '/industry-pharma',
+           'Pharmaceuticals & Distribution ERP Solution | Drawlead',
+           'Manage batch tracking, expiry alerts, and regulatory compliance across your entire distribution network from one system.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Professional Services', '/industry-professional',
+           'Professional Services ERP Solution | Drawlead',
+           'Run a law firm, accounting practice, or consultancy where client work, billing, and deadlines are never scattered across inboxes.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Food & Beverage Manufacturing', '/industry-food-beverage',
+           'Food & Beverage Manufacturing ERP Solution | Drawlead',
+           'Track raw ingredients, batch production, and quality checks across every shift, with full traceability from ingredient to finished product.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — IT & Software Services', '/industry-it-software',
+           'IT & Software Services ERP Solution | Drawlead',
+           'Run a software or IT services company where project timelines, resource allocation, and client billing all live in one connected system.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Financial Services & NBFCs', '/industry-financial',
+           'Financial Services & NBFCs ERP Solution | Drawlead',
+           'Manage loan accounts, repayment tracking, and regulatory compliance from one system built for how NBFCs and financial services actually operate.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Agriculture & Agri-Business', '/industry-agriculture',
+           'Agriculture & Agri-Business ERP Solution | Drawlead',
+           'Track procurement, storage, and distribution of agricultural produce across every warehouse and season without losing visibility between harvests.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Event Management', '/industry-events',
+           'Event Management ERP Solution | Drawlead',
+           'Run an event management business where bookings, vendor coordination, and budgets are tracked in one place, not across a dozen chat threads.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Beauty & Salon Chains', '/industry-beauty',
+           'Beauty & Salon Chains ERP Solution | Drawlead',
+           'Manage appointments, staff schedules, and product inventory across every branch of your salon or spa chain from one dashboard.',
+           'industry')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Industry — Wholesale & Distribution', '/industry-wholesale',
+           'Wholesale & Distribution ERP Solution | Drawlead',
+           'Manage dealer orders, stock allocation, and distribution logistics from one system instead of juggling order books and phone calls.',
+           'industry')",
+
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -325,6 +451,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '012' || $which === 'all') {
         $toRun['012'] = migration_012_statements();
+    }
+    if ($which === '013' || $which === 'all') {
+        $toRun['013'] = migration_013_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -373,6 +502,8 @@ $migration011Done = (int) $stmt011a->fetchColumn() === 6 && (int) $stmt011b->fet
 $stmt012 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
 $stmt012->execute(['/platform-inventory']);
 $migration012Done = (int) $stmt012->fetchColumn() >= 1;
+$stmt013 = $pdo->query("SELECT COUNT(*) FROM pages WHERE slug LIKE '/industry-%'");
+$migration013Done = (int) $stmt013->fetchColumn() >= 20;
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -526,7 +657,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done): ?>
+<div class="card">
+  <div class="card-title">013 — Industry pages</div>
+  <div class="card-desc">Adds all 20 Industry pages shown in the homepage's Industries section, editable from Admin → Pages like Home and About Us.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration013Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration013Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration013Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="013">
+    <button type="submit" class="btn btn-primary">Run Migration 013</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>
