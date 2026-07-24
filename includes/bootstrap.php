@@ -249,6 +249,17 @@ function get_case_study_services(PDO $pdo): array
     return $pdo->query('SELECT id, name FROM case_study_services ORDER BY sort_order, name')->fetchAll();
 }
 
+/** Recent published blog posts for the sticky sidebar shown on blog post and case study pages. */
+function get_recent_blog_posts(PDO $pdo, int $excludeId = 0, int $limit = 4): array
+{
+    $limit = max(1, $limit);
+    $stmt = $pdo->prepare(
+        "SELECT id, title, slug, excerpt FROM blogs WHERE status = 'published' AND id <> ? ORDER BY created_at DESC LIMIT $limit"
+    );
+    $stmt->execute([$excludeId]);
+    return $stmt->fetchAll();
+}
+
 // ── Booking system ──
 
 function get_booking_availability(PDO $pdo): array

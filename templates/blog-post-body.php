@@ -1,5 +1,8 @@
 <?php
-/** @var array $post  set by index.php before including this template */
+/**
+ * @var array $post         set by index.php before including this template
+ * @var array $recentPosts  set by index.php before including this template
+ */
 $activePage = 'blog';
 include __DIR__ . '/partials/nav.php';
 ?>
@@ -20,10 +23,15 @@ include __DIR__ . '/partials/nav.php';
 </section>
 
 <section id="post-body">
- <div class="post-content rv">
-   <?= $post['content'] /* sanitized HTML from the admin editor, see sanitize_blog_html() */ ?>
+ <div class="post-layout">
+  <div class="post-main">
+   <div class="post-content rv">
+     <?= $post['content'] /* sanitized HTML from the admin editor, see sanitize_blog_html() */ ?>
+   </div>
+   <div class="post-back rv"><a href="/blog">← Back to Blog</a></div>
+  </div>
+  <?php include __DIR__ . '/partials/sidebar.php'; ?>
  </div>
- <div class="post-back rv"><a href="/blog">← Back to Blog</a></div>
 </section>
 
 <?php include __DIR__ . '/partials/footer.php'; ?>

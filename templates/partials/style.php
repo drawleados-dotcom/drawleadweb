@@ -696,8 +696,26 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .post-back a{font-size:12.5px;font-weight:700;color:var(--g500);text-decoration:none}
 .post-back a:hover{color:var(--blue)}
 
+/* Sticky sidebar (blog post + case study pages) */
+.post-layout{display:grid;grid-template-columns:1fr 340px;gap:3rem;align-items:start;max-width:1180px;margin:0 auto}
+.post-main{min-width:0}
+.post-sidebar{position:sticky;top:104px}
+.sidebar-card{background:var(--black);border-radius:16px;padding:2rem 1.75rem}
+.sidebar-card-title{font-size:21px;font-weight:800;letter-spacing:-.01em;color:#fff;margin-bottom:1.5rem}
+.sidebar-post{display:block;text-decoration:none;padding-bottom:1.25rem;margin-bottom:1.25rem;border-bottom:1px solid rgba(255,255,255,.12)}
+.sidebar-post:last-of-type{border-bottom:none;margin-bottom:1.5rem}
+.sidebar-post-title{font-size:14.5px;font-weight:700;line-height:1.4;color:#fff;margin-bottom:.4rem;transition:color .15s}
+.sidebar-post:hover .sidebar-post-title{color:var(--blue)}
+.sidebar-post-excerpt{font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sidebar-cta{background:#fff;border-radius:12px;padding:1.5rem 1.4rem}
+.sidebar-cta-title{font-size:17px;font-weight:800;color:var(--black);margin-bottom:.5rem}
+.sidebar-cta-text{font-size:12.5px;color:var(--g500);line-height:1.6;margin-bottom:1.1rem}
+.sidebar-cta-btn{width:100%;justify-content:center;padding:13px 18px;font-size:11.5px}
+
 @media(max-width:960px){
   .blog-grid{grid-template-columns:repeat(2,1fr)}
+  .post-layout{grid-template-columns:1fr}
+  .post-sidebar{position:static;top:auto;max-width:480px;margin:0 auto}
 }
 @media(max-width:560px){
   .blog-grid{grid-template-columns:1fr}

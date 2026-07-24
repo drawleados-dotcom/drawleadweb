@@ -2,6 +2,7 @@
 /**
  * @var array $caseStudy       set by index.php before including this template
  * @var array $moreCaseStudies set by index.php before including this template
+ * @var array $recentPosts     set by index.php before including this template
  */
 $activePage = 'case-studies';
 include __DIR__ . '/partials/nav.php';
@@ -24,6 +25,10 @@ $teamList = array_filter(array_map('trim', explode("\n", (string) $caseStudy['te
  <p class="sec-sub rv" style="max-width:680px;margin-left:auto;margin-right:auto"><?= h($caseStudy['description']) ?></p>
  <?php endif; ?>
 </section>
+
+<section id="post-body">
+ <div class="post-layout">
+  <div class="post-main">
 
 <?php if (!empty($caseStudy['desktop_image']) || !empty($caseStudy['mobile_image']) || !empty($caseStudy['result_image'])): ?>
 <section id="cs-shots">
@@ -97,6 +102,11 @@ $teamList = array_filter(array_map('trim', explode("\n", (string) $caseStudy['te
  <?php endif; ?>
 
  <div class="post-back rv"><a href="/case-studies">← Back to Case Studies</a></div>
+</section>
+
+  </div>
+  <?php include __DIR__ . '/partials/sidebar.php'; ?>
+ </div>
 </section>
 
 <section id="cs-cta">

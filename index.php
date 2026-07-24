@@ -108,6 +108,8 @@ if (strpos($uri, '/blog/') === 0) {
         exit;
     }
 
+    $recentPosts = get_recent_blog_posts($pdo, (int) $post['id']);
+
     $canonicalPath = '/blog/' . $post['slug'];
     $seo = build_seo_from_row(
         $post, $canonicalPath, $post['title'], $post['excerpt'], 'article',
@@ -180,6 +182,8 @@ if (strpos($uri, '/case-studies/') === 0) {
     );
     $moreStmt->execute([$caseStudy['id']]);
     $moreCaseStudies = $moreStmt->fetchAll();
+
+    $recentPosts = get_recent_blog_posts($pdo);
 
     $canonicalPath = '/case-studies/' . $caseStudy['slug'];
     $seo = build_seo_from_row(
