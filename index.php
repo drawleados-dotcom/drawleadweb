@@ -130,6 +130,21 @@ if ($uri === '/case-studies') {
          FROM case_studies WHERE status = 'published' ORDER BY created_at DESC"
     )->fetchAll();
 
+    // Only offer a filter tab for services that at least one published
+    // case study actually uses — no point linking to an empty result.
+    $usedServiceNames = [];
+    foreach ($studies as $s) {
+        foreach (array_map('trim', explode(',', $s['services'])) as $sv) {
+            if ($sv !== '') {
+                $usedServiceNames[$sv] = true;
+            }
+        }
+    }
+    $caseStudyServices = array_values(array_filter(
+        get_case_study_services($pdo),
+        fn ($s) => isset($usedServiceNames[$s['name']])
+    ));
+
     $seo = [
         'title' => 'Case Studies | Drawlead',
         'description' => 'Real results from real clients — see how Drawlead has helped businesses across construction, healthcare, and marketing streamline operations and grow.',

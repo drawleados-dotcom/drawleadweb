@@ -163,6 +163,16 @@ CREATE TABLE IF NOT EXISTS case_studies (
   FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Admin-manageable Departments/Services list for case studies — the
+-- checkbox list on the Case Study edit screen is driven by this table,
+-- not a fixed set, so the admin can add new ones over time.
+CREATE TABLE IF NOT EXISTS case_study_services (
+  id          INT AUTO_INCREMENT PRIMARY KEY,
+  name        VARCHAR(190) NOT NULL UNIQUE,
+  sort_order  INT NOT NULL DEFAULT 0,
+  created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- ── WhatsApp-style lead-capture chat widget ──
 
 CREATE TABLE IF NOT EXISTS whatsapp_flow_steps (
@@ -206,6 +216,11 @@ INSERT IGNORE INTO booking_form_fields (field_key, label, field_type, field_role
 ('email', 'Email Address', 'email', 'email', 'you@company.com', 1, 2),
 ('phone', 'Phone Number', 'phone', 'none', '+91 98765 43210', 1, 3),
 ('company', 'Company Name', 'text', 'none', 'Your business name', 0, 4);
+
+INSERT IGNORE INTO case_study_services (name, sort_order) VALUES
+('Custom ERP Solution', 1),
+('Ecommerce Solutions', 2),
+('Marketing Solutions', 3);
 
 INSERT INTO whatsapp_flow_steps (step_order, message, step_type, options)
 SELECT 1, 'Hi! Welcome to Drawlead — your digital solutions partner. What problem do you need solved?', 'choice',

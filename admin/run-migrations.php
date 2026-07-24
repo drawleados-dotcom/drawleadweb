@@ -149,6 +149,23 @@ function migration_006_statements(): array
     ];
 }
 
+function migration_007_statements(): array
+{
+    return [
+        "CREATE TABLE IF NOT EXISTS case_study_services (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(190) NOT NULL UNIQUE,
+            sort_order INT NOT NULL DEFAULT 0,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+
+        "INSERT IGNORE INTO case_study_services (name, sort_order) VALUES
+         ('Custom ERP Solution', 1),
+         ('Ecommerce Solutions', 2),
+         ('Marketing Solutions', 3)",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -170,6 +187,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '006' || $which === 'all') {
         $toRun['006'] = migration_006_statements();
+    }
+    if ($which === '007' || $which === 'all') {
+        $toRun['007'] = migration_007_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -202,6 +222,7 @@ $migration005Done = migration_table_exists($pdo, 'case_studies');
 $migration006Done = migration_column_exists($pdo, 'pages', 'focus_keyword')
     && migration_column_exists($pdo, 'blogs', 'focus_keyword')
     && migration_column_exists($pdo, 'case_studies', 'focus_keyword');
+$migration007Done = migration_table_exists($pdo, 'case_study_services');
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -277,7 +298,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done): ?>
+<div class="card">
+  <div class="card-title">007 — Manageable Case Study services list</div>
+  <div class="card-desc">Creates case_study_services (seeded with the existing 3) so the Departments/Services checklist can grow from the Case Study edit screen instead of being a fixed list.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration007Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration007Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration007Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="007">
+    <button type="submit" class="btn btn-primary">Run Migration 007</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

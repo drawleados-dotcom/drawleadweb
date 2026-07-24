@@ -24,11 +24,6 @@ ini_set('log_errors', '1');
 define('UPLOAD_DIR', __DIR__ . '/../uploads/');
 define('UPLOAD_URL', '/uploads/');
 
-// The fixed set of service/department tags a case study can be filed
-// under — mirrors the three services used elsewhere on the site (nav
-// mega menu, homepage "Three Ways" section).
-define('CASE_STUDY_SERVICES', ['Custom ERP Solution', 'Ecommerce Solutions', 'Marketing Solutions']);
-
 try {
     $pdo = new PDO(
         'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
@@ -242,7 +237,16 @@ function pending_migrations_exist(PDO $pdo): bool
     if (!migration_column_exists($pdo, 'pages', 'focus_keyword')) {
         return true;
     }
+    if (!migration_table_exists($pdo, 'case_study_services')) {
+        return true;
+    }
     return false;
+}
+
+/** Admin-manageable Departments/Services tags for case studies, ordered for display. */
+function get_case_study_services(PDO $pdo): array
+{
+    return $pdo->query('SELECT id, name FROM case_study_services ORDER BY sort_order, name')->fetchAll();
 }
 
 // ── Booking system ──

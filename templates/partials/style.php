@@ -712,6 +712,15 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .cs-client{font-size:11.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.05em}
 .cs-card-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--blue)}
 
+.cs-filter-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:2.5rem}
+.cs-filter-tab{
+ font-family:var(--font);font-size:12.5px;font-weight:700;letter-spacing:.01em;
+ background:var(--white);color:var(--g500);border:1.5px solid var(--border);border-radius:999px;
+ padding:9px 20px;cursor:pointer;transition:all .15s;
+}
+.cs-filter-tab:hover{border-color:var(--g300);color:var(--black)}
+.cs-filter-tab.active{background:var(--black);color:#fff;border-color:var(--black)}
+
 #cs-shots{max-width:920px;margin:0 auto;padding:0 0 1rem}
 .cs-shot-desktop{border-radius:14px;overflow:hidden;border:1.5px solid var(--border);margin-bottom:16px}
 .cs-shot-desktop img{width:100%;display:block}

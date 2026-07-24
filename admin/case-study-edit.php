@@ -56,6 +56,9 @@ if ($id) {
     $cs = $found;
 }
 
+$serviceRows = get_case_study_services($pdo);
+$allServiceNames = array_column($serviceRows, 'name');
+
 $error = '';
 $success = '';
 
@@ -89,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $selectedServices = array_intersect(
         array_map('trim', $_POST['services'] ?? []),
-        CASE_STUDY_SERVICES
+        $allServiceNames
     );
     $services = implode(', ', $selectedServices);
 
@@ -212,15 +215,23 @@ include __DIR__ . '/includes/header.php';
 
   <div class="card">
     <div class="card-title">Departments / Services</div>
-    <div class="card-desc">Which of your services does this case study belong to?</div>
-    <div class="checkbox-grid">
-      <?php foreach (CASE_STUDY_SERVICES as $service): ?>
-      <label class="checkbox-row">
-        <input type="checkbox" name="services[]" value="<?= h($service) ?>" <?= in_array($service, $selectedServiceList, true) ? 'checked' : '' ?>>
-        <?= h($service) ?>
-      </label>
+    <div class="card-desc">Which of your services does this case study belong to? Add new ones as needed — they'll also appear as filter tabs on the public Case Studies page.</div>
+    <div class="checkbox-grid" id="service-checkbox-grid">
+      <?php foreach ($serviceRows as $service): ?>
+      <div class="service-row" data-service-id="<?= (int) $service['id'] ?>">
+        <label>
+          <input type="checkbox" name="services[]" value="<?= h($service['name']) ?>" <?= in_array($service['name'], $selectedServiceList, true) ? 'checked' : '' ?>>
+          <?= h($service['name']) ?>
+        </label>
+        <button type="button" class="service-remove" title="Remove this service">&times;</button>
+      </div>
       <?php endforeach; ?>
     </div>
+    <div style="display:flex;gap:8px;margin-top:.9rem">
+      <input type="text" id="new-service-name" maxlength="190" placeholder="Add a new service, e.g. Healthcare Solutions" style="flex:1;font-family:var(--font);font-size:14px;padding:11px 13px;border:1.5px solid var(--border);border-radius:8px">
+      <button type="button" class="btn btn-ghost btn-sm" id="add-service-btn">+ Add Service</button>
+    </div>
+    <div class="field-hint" id="service-add-error" style="display:none;color:#e11d48"></div>
   </div>
 
   <div class="card">
@@ -334,5 +345,73 @@ include __DIR__ . '/includes/header.php';
     <a href="case-studies.php" class="btn btn-ghost">Back to Case Studies</a>
   </div>
 </form>
+
+<script>
+(function () {
+  var grid = document.getElementById('service-checkbox-grid');
+  if (!grid) return;
+  var csrfInput = document.querySelector('input[name="csrf_token"]');
+  var addBtn = document.getElementById('add-service-btn');
+  var addInput = document.getElementById('new-service-name');
+  var addError = document.getElementById('service-add-error');
+
+  function escapeHtml(s) {
+    var div = document.createElement('div');
+    div.textContent = s;
+    return div.innerHTML;
+  }
+
+  function showError(msg) {
+    addError.textContent = msg;
+    addError.style.display = 'block';
+  }
+
+  function makeRow(service, checked) {
+    var row = document.createElement('div');
+    row.className = 'service-row';
+    row.dataset.serviceId = service.id;
+    row.innerHTML =
+      '<label><input type="checkbox" name="services[]" value="' + escapeHtml(service.name) + '"' + (checked ? ' checked' : '') + '> ' + escapeHtml(service.name) + '</label>' +
+      '<button type="button" class="service-remove" title="Remove this service">&times;</button>';
+    return row;
+  }
+
+  grid.addEventListener('click', function (e) {
+    var btn = e.target.closest('.service-remove');
+    if (!btn) return;
+    var row = btn.closest('.service-row');
+    if (!window.confirm('Remove this service? Case studies already tagged with it keep the label until edited.')) return;
+    fetch('case-study-service-delete.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ id: row.dataset.serviceId, csrf_token: csrfInput.value }),
+    }).then(function (r) { return r.json(); }).then(function (data) {
+      if (data.success) row.remove();
+    });
+  });
+
+  if (addBtn) {
+    addBtn.addEventListener('click', function () {
+      var name = addInput.value.trim();
+      addError.style.display = 'none';
+      if (!name) { showError('Enter a service name.'); return; }
+      fetch('case-study-service-add.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ name: name, csrf_token: csrfInput.value }),
+      }).then(function (r) { return r.json(); }).then(function (data) {
+        if (!data.success) { showError(data.error || 'Could not add that service.'); return; }
+        if (!grid.querySelector('[data-service-id="' + data.service.id + '"]')) {
+          grid.appendChild(makeRow(data.service, true));
+        }
+        addInput.value = '';
+      }).catch(function () { showError('Something went wrong. Please try again.'); });
+    });
+    addInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); addBtn.click(); }
+    });
+  }
+})();
+</script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
