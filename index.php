@@ -60,6 +60,52 @@ if (strpos($uri, '/blog/') === 0) {
     exit;
 }
 
+// ── Case study routes ──
+if ($uri === '/case-studies') {
+    $studies = $pdo->query(
+        "SELECT id, title, slug, client_name, description, services, desktop_image
+         FROM case_studies WHERE status = 'published' ORDER BY created_at DESC"
+    )->fetchAll();
+
+    $metaTitle = 'Case Studies | Drawlead';
+    $metaDescription = 'Real results from real clients — see how Drawlead has helped businesses across construction, healthcare, and marketing streamline operations and grow.';
+
+    include __DIR__ . '/templates/layout-start.php';
+    include __DIR__ . '/templates/case-study-list-body.php';
+    include __DIR__ . '/templates/layout-end.php';
+    exit;
+}
+
+if (strpos($uri, '/case-studies/') === 0) {
+    $slug = substr($uri, strlen('/case-studies/'));
+    $stmt = $pdo->prepare("SELECT * FROM case_studies WHERE slug = ? AND status = 'published'");
+    $stmt->execute([$slug]);
+    $caseStudy = $stmt->fetch();
+
+    if (!$caseStudy) {
+        http_response_code(404);
+        include __DIR__ . '/templates/layout-start.php';
+        include __DIR__ . '/templates/404.php';
+        include __DIR__ . '/templates/layout-end.php';
+        exit;
+    }
+
+    $moreStmt = $pdo->prepare(
+        "SELECT id, title, slug, client_name, description, services, desktop_image
+         FROM case_studies WHERE status = 'published' AND id <> ? ORDER BY created_at DESC LIMIT 3"
+    );
+    $moreStmt->execute([$caseStudy['id']]);
+    $moreCaseStudies = $moreStmt->fetchAll();
+
+    $metaTitle = $caseStudy['meta_title'] ?: $caseStudy['title'];
+    $metaDescription = $caseStudy['meta_description'] ?: $caseStudy['description'];
+
+    include __DIR__ . '/templates/layout-start.php';
+    include __DIR__ . '/templates/case-study-body.php';
+    include __DIR__ . '/templates/layout-end.php';
+    exit;
+}
+
 // ── Generic database-driven pages (Home, About Us, ...) ──
 $stmt = $pdo->prepare('SELECT * FROM pages WHERE slug = ?');
 $stmt->execute([$uri]);

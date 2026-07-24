@@ -58,12 +58,16 @@
     });
   }
 
-  // Featured image live preview.
-  var fileInput = document.querySelector('[data-image-input]');
-  if (fileInput) {
+  // Image live preview — supports one or several image inputs on the same
+  // page (e.g. a blog's single featured image, or a case study's desktop/
+  // mobile/result images), each paired with the preview <img> inside its
+  // own .field wrapper.
+  document.querySelectorAll('[data-image-input]').forEach(function (fileInput) {
+    var container = fileInput.closest('.field') || document;
+    var preview = container.querySelector('[data-image-preview]');
+    if (!preview) return;
     fileInput.addEventListener('change', function () {
-      var preview = document.querySelector('[data-image-preview]');
-      if (!preview || !fileInput.files || !fileInput.files[0]) return;
+      if (!fileInput.files || !fileInput.files[0]) return;
       var reader = new FileReader();
       reader.onload = function (ev) {
         preview.src = ev.target.result;
@@ -71,5 +75,5 @@
       };
       reader.readAsDataURL(fileInput.files[0]);
     });
-  }
+  });
 })();

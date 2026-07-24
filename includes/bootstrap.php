@@ -24,6 +24,11 @@ ini_set('log_errors', '1');
 define('UPLOAD_DIR', __DIR__ . '/../uploads/');
 define('UPLOAD_URL', '/uploads/');
 
+// The fixed set of service/department tags a case study can be filed
+// under — mirrors the three services used elsewhere on the site (nav
+// mega menu, homepage "Three Ways" section).
+define('CASE_STUDY_SERVICES', ['Custom ERP Solution', 'Ecommerce Solutions', 'Marketing Solutions']);
+
 try {
     $pdo = new PDO(
         'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
@@ -139,6 +144,28 @@ function require_blogs_access(PDO $pdo): void
     }
 }
 
+function user_has_case_studies_access(PDO $pdo, int $userId, string $role): bool
+{
+    if ($role === 'admin') {
+        return true;
+    }
+    $stmt = $pdo->prepare(
+        "SELECT 1 FROM user_access WHERE user_id = ? AND item_type = 'case_studies'"
+    );
+    $stmt->execute([$userId]);
+    return (bool) $stmt->fetchColumn();
+}
+
+function require_case_studies_access(PDO $pdo): void
+{
+    require_login();
+    $u = current_user();
+    if (!user_has_case_studies_access($pdo, $u['id'], $u['role'])) {
+        http_response_code(403);
+        die('You do not have access to the Case Studies module. Ask an admin for access.');
+    }
+}
+
 // ── CSRF ──
 
 function csrf_token(): string
@@ -207,7 +234,7 @@ function pending_migrations_exist(PDO $pdo): bool
     if (!migration_column_exists($pdo, 'blogs', 'scheduled_at')) {
         return true;
     }
-    foreach (['booking_availability', 'booking_form_fields', 'bookings', 'booking_notification_emails', 'whatsapp_flow_steps', 'whatsapp_leads'] as $t) {
+    foreach (['booking_availability', 'booking_form_fields', 'bookings', 'booking_notification_emails', 'whatsapp_flow_steps', 'whatsapp_leads', 'case_studies'] as $t) {
         if (!migration_table_exists($pdo, $t)) {
             return true;
         }

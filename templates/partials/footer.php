@@ -6,7 +6,7 @@
  <div class="ft-links">
  <a href="/#functions">Platform</a>
  <a href="/#tech">Technology</a>
- <a href="/#cases">Case Studies</a>
+ <a href="/case-studies">Case Studies</a>
  <a href="/#industries">Industries</a>
  <a href="/blog">Blog</a>
  <a href="/about-us">About Us</a>

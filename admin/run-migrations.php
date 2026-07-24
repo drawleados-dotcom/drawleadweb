@@ -95,6 +95,42 @@ function migration_004_statements(): array
     ];
 }
 
+function migration_005_statements(): array
+{
+    return [
+        "CREATE TABLE IF NOT EXISTS case_studies (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(190) NOT NULL,
+            slug VARCHAR(190) NOT NULL UNIQUE,
+            meta_title VARCHAR(190) NOT NULL DEFAULT '',
+            meta_description VARCHAR(320) NOT NULL DEFAULT '',
+            client_name VARCHAR(190) NOT NULL DEFAULT '',
+            description VARCHAR(400) NOT NULL DEFAULT '',
+            problem TEXT,
+            solution TEXT,
+            process TEXT,
+            result TEXT,
+            outcome TEXT,
+            testimonial TEXT,
+            testimonial_author VARCHAR(190) NOT NULL DEFAULT '',
+            services VARCHAR(255) NOT NULL DEFAULT '',
+            website_link VARCHAR(255) NOT NULL DEFAULT '',
+            erp_link VARCHAR(255) NOT NULL DEFAULT '',
+            desktop_image VARCHAR(255) NOT NULL DEFAULT '',
+            mobile_image VARCHAR(255) NOT NULL DEFAULT '',
+            result_image VARCHAR(255) NOT NULL DEFAULT '',
+            team TEXT,
+            status ENUM('draft','published') NOT NULL DEFAULT 'draft',
+            author_id INT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE SET NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+
+        "ALTER TABLE user_access MODIFY COLUMN item_type ENUM('page','blogs','case_studies') NOT NULL",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -110,6 +146,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '004' || $which === 'all') {
         $toRun['004'] = migration_004_statements();
+    }
+    if ($which === '005' || $which === 'all') {
+        $toRun['005'] = migration_005_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -138,6 +177,7 @@ $migration003Done = migration_table_exists($pdo, 'booking_availability')
     && migration_table_exists($pdo, 'booking_notification_emails');
 $migration004Done = migration_table_exists($pdo, 'whatsapp_flow_steps')
     && migration_table_exists($pdo, 'whatsapp_leads');
+$migration005Done = migration_table_exists($pdo, 'case_studies');
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -187,7 +227,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done): ?>
+<div class="card">
+  <div class="card-title">005 — Case Studies module</div>
+  <div class="card-desc">Creates the case_studies table and extends user_access to support per-user Case Studies module permissions.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration005Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration005Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration005Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="005">
+    <button type="submit" class="btn btn-primary">Run Migration 005</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

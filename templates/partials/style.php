@@ -706,6 +706,44 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
   .post-content{font-size:14.5px}
 }
 
+/* ══════════════════ CASE STUDIES ══════════════════ */
+.cs-meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin:1.1rem 0 .6rem}
+.cs-tag{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;background:var(--bg2);color:var(--g600);border:1.5px solid var(--border);border-radius:999px;padding:6px 14px}
+.cs-client{font-size:11.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.05em}
+.cs-card-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--blue)}
+
+#cs-shots{max-width:920px;margin:0 auto;padding:0 0 1rem}
+.cs-shot-desktop{border-radius:14px;overflow:hidden;border:1.5px solid var(--border);margin-bottom:16px}
+.cs-shot-desktop img{width:100%;display:block}
+.cs-shots-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cs-shot-row-item{border-radius:14px;overflow:hidden;border:1.5px solid var(--border);background:var(--bg2)}
+.cs-shot-row-item img{width:100%;display:block}
+
+#cs-body{padding-top:2rem}
+.cs-block{max-width:720px;margin:0 auto 2.25rem}
+.cs-block-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:.6rem}
+.cs-block-text{font-size:15.5px;line-height:1.85;color:var(--g600)}
+
+.cs-testimonial{max-width:720px;margin:0 auto 2.25rem;background:var(--bg2);border-left:3px solid var(--blue);border-radius:0 12px 12px 0;padding:1.75rem 2rem}
+.cs-testimonial-text{font-size:17px;font-style:italic;font-weight:600;color:var(--black);line-height:1.6;margin-bottom:.75rem}
+.cs-testimonial-author{font-size:12px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.04em}
+
+.cs-team{max-width:720px;margin:0 auto 2.25rem}
+.cs-team-list{list-style:none;display:flex;flex-wrap:wrap;gap:10px;margin-top:.6rem}
+.cs-team-list li{font-size:12.5px;font-weight:700;background:var(--bg2);border:1.5px solid var(--border);border-radius:8px;padding:8px 14px;color:var(--g600)}
+
+.cs-links{max-width:720px;margin:0 auto 2.25rem;display:flex;flex-wrap:wrap;gap:12px}
+
+#cs-cta{text-align:center;padding:4.5rem 0;max-width:640px;margin:0 auto}
+#cs-cta .sec-sub{margin-bottom:1.6rem}
+
+#cs-more{padding:3rem 0 4rem}
+#cs-more .sec-h{margin-bottom:2rem}
+
+@media(max-width:560px){
+  .cs-shots-row{grid-template-columns:1fr}
+}
+
 /* ══════════════════ BOOKING POPUP ══════════════════ */
 /* Every button[data-book] utility class (.btn, .nav-btn, .cta-btn-w/g,
    .fn-arrow, .sol-arrow, .ind-cta) already declares its own background,

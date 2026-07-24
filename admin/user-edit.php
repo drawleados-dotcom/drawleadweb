@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $role = ($_POST['role'] ?? 'editor') === 'admin' ? 'admin' : 'editor';
     $pageIds = array_map('intval', $_POST['pages'] ?? []);
     $blogsAccess = isset($_POST['blogs_access']);
+    $caseStudiesAccess = isset($_POST['case_studies_access']);
 
     // Don't allow demoting the very last admin — that would lock everyone out of Users.
     if ($editUser['role'] === 'admin' && $role === 'editor') {
@@ -40,6 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($blogsAccess) {
             $insert->execute([$id, 'blogs', 0]);
         }
+        if ($caseStudiesAccess) {
+            $insert->execute([$id, 'case_studies', 0]);
+        }
 
         $success = 'Access updated.';
         $editUser['role'] = $role;
@@ -52,6 +56,7 @@ $accessStmt->execute([$id]);
 $access = $accessStmt->fetchAll();
 $grantedPages = array_column(array_filter($access, fn ($a) => $a['item_type'] === 'page'), 'item_id');
 $hasBlogs = (bool) array_filter($access, fn ($a) => $a['item_type'] === 'blogs');
+$hasCaseStudies = (bool) array_filter($access, fn ($a) => $a['item_type'] === 'case_studies');
 
 $pageTitle = 'Manage Access';
 $pageSub = $editUser['name'] . ' — ' . $editUser['email'];
@@ -95,6 +100,15 @@ include __DIR__ . '/includes/header.php';
     <label class="checkbox-row" style="max-width:280px">
       <input type="checkbox" name="blogs_access" <?= $hasBlogs ? 'checked' : '' ?>>
       Access to Blogs module
+    </label>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Case Studies Access</div>
+    <div class="card-desc">Can this user write, edit, and delete case studies?</div>
+    <label class="checkbox-row" style="max-width:280px">
+      <input type="checkbox" name="case_studies_access" <?= $hasCaseStudies ? 'checked' : '' ?>>
+      Access to Case Studies module
     </label>
   </div>
 

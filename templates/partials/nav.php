@@ -65,7 +65,7 @@ $activePage = $activePage ?? '';
    </div>
   </li>
  <li class="has-mega">
-   <a href="/#cases">Case Studies</a>
+   <a href="/case-studies">Case Studies</a>
    <div class="mega-panel">
     <div class="mega-inner">
 
@@ -79,7 +79,7 @@ $activePage = $activePage ?? '';
        <li>Faster reporting workflows and billing automation</li>
        <li>Improved multi-site project management controls</li>
       </ul>
-      <a href="/#cases" class="mega-know">Know More →</a>
+      <a href="/case-studies" class="mega-know">Know More →</a>
      </div>
 
      <div class="mega-col">
@@ -92,7 +92,7 @@ $activePage = $activePage ?? '';
        <li>Improved scheduling efficiency and capacity</li>
        <li>Centralized billing and cross-branch reporting</li>
       </ul>
-      <a href="/#cases" class="mega-know">Know More →</a>
+      <a href="/case-studies" class="mega-know">Know More →</a>
      </div>
 
      <div class="mega-col">
@@ -105,7 +105,7 @@ $activePage = $activePage ?? '';
        <li>Better client and pipeline management</li>
        <li>Measurable increase in team productivity</li>
       </ul>
-      <a href="/#cases" class="mega-know">Know More →</a>
+      <a href="/case-studies" class="mega-know">Know More →</a>
      </div>
 
      <div class="mega-cta">

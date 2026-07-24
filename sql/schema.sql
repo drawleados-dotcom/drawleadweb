@@ -45,11 +45,12 @@ CREATE TABLE IF NOT EXISTS blogs (
 
 -- Per-user access grants. role='admin' users always have full access
 -- regardless of rows here; this table only matters for role='editor'.
---   item_type='page'  + item_id=<pages.id>  → can edit that specific page
---   item_type='blogs' + item_id=0           → can manage the Blogs module
+--   item_type='page'         + item_id=<pages.id>  → can edit that specific page
+--   item_type='blogs'        + item_id=0           → can manage the Blogs module
+--   item_type='case_studies' + item_id=0           → can manage the Case Studies module
 CREATE TABLE IF NOT EXISTS user_access (
   user_id     INT NOT NULL,
-  item_type   ENUM('page','blogs') NOT NULL,
+  item_type   ENUM('page','blogs','case_studies') NOT NULL,
   item_id     INT NOT NULL DEFAULT 0,
   PRIMARY KEY (user_id, item_type, item_id),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -104,6 +105,37 @@ CREATE TABLE IF NOT EXISTS bookings (
   status        ENUM('confirmed','cancelled') NOT NULL DEFAULT 'confirmed',
   created_at    DATETIME DEFAULT CURRENT_TIMESTAMP,
   UNIQUE KEY uniq_slot (booking_date, booking_time)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ── Case Studies ──
+
+CREATE TABLE IF NOT EXISTS case_studies (
+  id                  INT AUTO_INCREMENT PRIMARY KEY,
+  title               VARCHAR(190) NOT NULL,
+  slug                VARCHAR(190) NOT NULL UNIQUE,        -- served at /case-studies/{slug}
+  meta_title          VARCHAR(190) NOT NULL DEFAULT '',
+  meta_description    VARCHAR(320) NOT NULL DEFAULT '',
+  client_name         VARCHAR(190) NOT NULL DEFAULT '',
+  description         VARCHAR(400) NOT NULL DEFAULT '',
+  problem             TEXT,
+  solution            TEXT,
+  process             TEXT,
+  result              TEXT,
+  outcome             TEXT,
+  testimonial         TEXT,
+  testimonial_author  VARCHAR(190) NOT NULL DEFAULT '',
+  services            VARCHAR(255) NOT NULL DEFAULT '',    -- comma-separated: Custom ERP Solution, Ecommerce Solutions, Marketing Solutions
+  website_link        VARCHAR(255) NOT NULL DEFAULT '',
+  erp_link            VARCHAR(255) NOT NULL DEFAULT '',
+  desktop_image       VARCHAR(255) NOT NULL DEFAULT '',
+  mobile_image        VARCHAR(255) NOT NULL DEFAULT '',
+  result_image        VARCHAR(255) NOT NULL DEFAULT '',
+  team                TEXT,                                 -- one member per line, e.g. "Vinothkumar Babu — Project Lead"
+  status              ENUM('draft','published') NOT NULL DEFAULT 'draft',
+  author_id           INT NULL,
+  created_at          DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at          DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ── WhatsApp-style lead-capture chat widget ──
