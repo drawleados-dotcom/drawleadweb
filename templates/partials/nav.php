@@ -150,6 +150,7 @@ $activePage = $activePage ?? '';
 
      <?php foreach (industries_ordered() as $entry): $ind = $entry['industry']; ?>
      <div class="mega-ind-col">
+      <div class="mega-col-icon" style="background:linear-gradient(135deg,<?= h($ind['color']) ?>,#0a1310)"><?= $ind['icon'] ?></div>
       <div class="mega-ind-title"><?= h($ind['name']) ?></div>
       <div class="mega-ind-desc"><?= h($ind['tag']) ?></div>
       <a href="/industry-<?= h($entry['key']) ?>" class="mega-know">Know More →</a>

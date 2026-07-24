@@ -1146,5 +1146,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .mega-inner-ind{width:min(1400px,96vw);grid-template-columns:repeat(5,1fr);gap:1.5rem 1.25rem}
 .mega-ind-col{display:flex;flex-direction:column;padding:.9rem 1rem;border-radius:10px;transition:background .15s}
 .mega-ind-col:hover{background:var(--bg)}
+.mega-ind-col .mega-col-icon{width:34px;height:34px;margin-bottom:.7rem}
+.mega-ind-col .mega-col-icon svg{width:17px;height:17px}
 .mega-ind-title{font-size:12.5px;font-weight:800;letter-spacing:-.01em;color:var(--black);margin-bottom:.3rem;line-height:1.3}
 .mega-ind-desc{font-size:10px;color:var(--g400);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.6rem}
