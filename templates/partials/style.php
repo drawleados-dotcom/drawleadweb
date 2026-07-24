@@ -804,6 +804,35 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
   .svc-benefits{grid-template-columns:1fr}
 }
 
+/* ══════════════════ PLATFORM MODULE PAGES ══════════════════ */
+.pboard-section{background:var(--bg2)}
+.pboard{max-width:640px;margin:0 auto;background:var(--white);border:1.5px solid var(--border);border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.08);overflow:hidden}
+.pboard-bar{display:flex;align-items:center;gap:6px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg)}
+.pboard-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.pboard-title{font-size:11px;font-weight:800;color:var(--g500);margin-left:6px}
+.pboard-body{padding:1.5rem 1.6rem}
+
+.pboard-list{max-width:640px;margin:0 auto;background:var(--white);border:1.5px solid var(--border);border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.08);overflow:hidden}
+.pboard-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border)}
+.pboard-row:last-child{border-bottom:none}
+.pboard-row-label{font-size:13px;font-weight:700;color:var(--black)}
+.pboard-status{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:5px 10px;border-radius:999px;flex-shrink:0}
+.pboard-status-good{background:#e9f9f0;color:#0f7a4c}
+.pboard-status-pending{background:#eaf1fe;color:#1d5fd6}
+.pboard-status-warn{background:#fdf3e3;color:#a8631a}
+
+.pain-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.pain-item{display:flex;align-items:flex-start;gap:14px;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:1.1rem 1.3rem}
+.pain-icon{width:26px;height:26px;border-radius:50%;background:#fdecef;color:#b3123a;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pain-text{font-size:13.5px;color:var(--g600);font-weight:500;line-height:1.6;padding-top:2px}
+
+.svc-connect-grid{grid-template-columns:repeat(3,1fr);max-width:1180px}
+.connect-text{font-size:12.5px;color:var(--g500);line-height:1.6;margin-bottom:1rem}
+
+@media(max-width:960px){
+  .svc-connect-grid{grid-template-columns:1fr}
+}
+
 /* ══════════════════ BOOKING POPUP ══════════════════ */
 /* Every button[data-book] utility class (.btn, .nav-btn, .cta-btn-w/g,
    .fn-arrow, .sol-arrow, .ind-cta) already declares its own background,
@@ -1111,3 +1140,14 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .mega-cta-text{font-size:11px;color:rgba(255,255,255,.5);line-height:1.55}
 .mega-cta-btn{margin-top:.4rem;background:#fff;color:var(--black);border:none;border-radius:6px;padding:10px 14px;font-family:var(--font);font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;text-align:center;transition:opacity .2s}
 .mega-cta-btn:hover{opacity:.85}
+
+/* Compact list variant — used by the Platform mega menu (7 rows in one
+   column + a CTA card), instead of the 4-column card layout above. */
+.mega-inner-list{grid-template-columns:1fr 300px}
+.mega-list-col{display:flex;flex-direction:column;gap:2px}
+.mega-row{display:flex;align-items:center;gap:14px;padding:9px 12px;border-radius:10px;text-decoration:none;transition:background .15s}
+.mega-row:hover{background:var(--bg)}
+.mega-row-icon{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(0,0,0,.14)}
+.mega-row-icon svg{width:18px;height:18px}
+.mega-row-title{font-size:13px;font-weight:800;letter-spacing:-.01em;color:var(--black)}
+.mega-row-desc{font-size:11px;color:var(--g500);line-height:1.4;margin-top:2px}

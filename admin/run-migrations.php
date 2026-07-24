@@ -221,6 +221,53 @@ function migration_010_statements(): array
     ];
 }
 
+function migration_011_statements(): array
+{
+    return [
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Platform — Management', '/platform-management',
+           'Management Platform | Drawlead',
+           'Centralized dashboards and operational visibility for faster, smarter business decisions — one view of how your business is actually performing.',
+           'platform-module')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Platform — Sales', '/platform-sales',
+           'Sales Platform | Drawlead',
+           'Manage leads, pipelines, customers, and revenue operations from one unified platform — CRM, pipeline, and invoicing in one place.',
+           'platform-module')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Platform — Marketing', '/platform-marketing',
+           'Marketing Platform | Drawlead',
+           'Track campaigns, automate WhatsApp & email, and improve customer engagement at scale, with every lead attributed back to its source.',
+           'platform-module')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Platform — Operations', '/platform-operations',
+           'Operations Platform | Drawlead',
+           'Streamline activities, inventory, and vendor management with intelligent process automation.',
+           'platform-module')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Platform — Finance', '/platform-finance',
+           'Finance Platform | Drawlead',
+           'Centralize billing, expenses, financial reporting, and accounting integrations seamlessly.',
+           'platform-module')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Platform — HR', '/platform-hr',
+           'HR Platform | Drawlead',
+           'Manage employees, attendance, payroll workflows, and leave management efficiently.',
+           'platform-module')",
+
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Platform — R&D', '/platform-rd',
+           'R&D Platform | Drawlead',
+           'Enable innovation with AI-powered automation, predictive analytics, and custom intelligence.',
+           'platform-module')",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -254,6 +301,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '010' || $which === 'all') {
         $toRun['010'] = migration_010_statements();
+    }
+    if ($which === '011' || $which === 'all') {
+        $toRun['011'] = migration_011_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -292,6 +342,9 @@ $migration009Done = migration_column_exists($pdo, 'site_popup', 'trigger_delay')
 $stmt010 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug IN (?, ?, ?)');
 $stmt010->execute(['/custom-erp-solution', '/ecommerce-solutions', '/marketing-solutions']);
 $migration010Done = (int) $stmt010->fetchColumn() === 3;
+$stmt011 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug IN (?, ?, ?, ?, ?, ?, ?)');
+$stmt011->execute(['/platform-management', '/platform-sales', '/platform-marketing', '/platform-operations', '/platform-finance', '/platform-hr', '/platform-rd']);
+$migration011Done = (int) $stmt011->fetchColumn() === 7;
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -419,7 +472,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done): ?>
+<div class="card">
+  <div class="card-title">011 — Platform module pages</div>
+  <div class="card-desc">Adds the 7 Platform module pages (Management, Sales, Marketing, Operations, Finance, HR, R&amp;D) shown in the new Platform mega menu.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration011Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration011Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration011Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="011">
+    <button type="submit" class="btn btn-primary">Run Migration 011</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

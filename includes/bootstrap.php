@@ -24,6 +24,8 @@ ini_set('log_errors', '1');
 define('UPLOAD_DIR', __DIR__ . '/../uploads/');
 define('UPLOAD_URL', '/uploads/');
 
+require_once __DIR__ . '/platform-modules.php';
+
 try {
     $pdo = new PDO(
         'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
@@ -249,6 +251,11 @@ function pending_migrations_exist(PDO $pdo): bool
     $stmt = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug IN (?, ?, ?)');
     $stmt->execute(['/custom-erp-solution', '/ecommerce-solutions', '/marketing-solutions']);
     if ((int) $stmt->fetchColumn() < 3) {
+        return true;
+    }
+    $stmt2 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug IN (?, ?, ?, ?, ?, ?, ?)');
+    $stmt2->execute(['/platform-management', '/platform-sales', '/platform-marketing', '/platform-operations', '/platform-finance', '/platform-hr', '/platform-rd']);
+    if ((int) $stmt2->fetchColumn() < 7) {
         return true;
     }
     return false;
