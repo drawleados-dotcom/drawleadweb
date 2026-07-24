@@ -8,6 +8,8 @@ $post = [
     'id' => 0, 'title' => '', 'slug' => '', 'meta_title' => '', 'meta_description' => '',
     'excerpt' => '', 'content' => '', 'featured_image' => '', 'featured_image_alt' => '',
     'status' => 'draft', 'scheduled_at' => null,
+    'focus_keyword' => '', 'canonical_url' => '', 'robots_index' => 'index', 'robots_follow' => 'follow',
+    'og_title' => '', 'og_description' => '', 'og_image' => '',
 ];
 
 if ($id) {
@@ -35,6 +37,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $excerpt = trim($_POST['excerpt'] ?? '');
     $content = sanitize_blog_html($_POST['content'] ?? '');
     $featuredImageAlt = trim($_POST['featured_image_alt'] ?? '');
+    $focusKeyword = trim($_POST['focus_keyword'] ?? '');
+    $canonicalUrl = trim($_POST['canonical_url'] ?? '');
+    $robotsIndex = ($_POST['robots_index'] ?? 'index') === 'noindex' ? 'noindex' : 'index';
+    $robotsFollow = ($_POST['robots_follow'] ?? 'follow') === 'nofollow' ? 'nofollow' : 'follow';
+    $ogTitle = trim($_POST['og_title'] ?? '');
+    $ogDescription = trim($_POST['og_description'] ?? '');
+    $ogImage = trim($_POST['og_image'] ?? '');
 
     $statusInput = $_POST['status'] ?? 'draft';
     $status = in_array($statusInput, ['draft', 'published', 'scheduled'], true) ? $statusInput : 'draft';
@@ -109,20 +118,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($id) {
             $pdo->prepare(
                 'UPDATE blogs SET title=?, slug=?, meta_title=?, meta_description=?, excerpt=?, content=?,
-                 featured_image=?, featured_image_alt=?, status=?, scheduled_at=? WHERE id=?'
+                 featured_image=?, featured_image_alt=?, status=?, scheduled_at=?,
+                 focus_keyword=?, canonical_url=?, robots_index=?, robots_follow=?,
+                 og_title=?, og_description=?, og_image=? WHERE id=?'
             )->execute([
                 $title, $slug, $metaTitle, $metaDescription, $excerpt, $content,
-                $featuredImage, $featuredImageAlt, $status, $scheduledAt, $id,
+                $featuredImage, $featuredImageAlt, $status, $scheduledAt,
+                $focusKeyword, $canonicalUrl, $robotsIndex, $robotsFollow,
+                $ogTitle, $ogDescription, $ogImage, $id,
             ]);
         } else {
             $stmt = $pdo->prepare(
                 'INSERT INTO blogs (title, slug, meta_title, meta_description, excerpt, content,
-                 featured_image, featured_image_alt, status, scheduled_at, author_id)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+                 featured_image, featured_image_alt, status, scheduled_at, author_id,
+                 focus_keyword, canonical_url, robots_index, robots_follow,
+                 og_title, og_description, og_image)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
             );
             $stmt->execute([
                 $title, $slug, $metaTitle, $metaDescription, $excerpt, $content,
                 $featuredImage, $featuredImageAlt, $status, $scheduledAt, $u['id'],
+                $focusKeyword, $canonicalUrl, $robotsIndex, $robotsFollow,
+                $ogTitle, $ogDescription, $ogImage,
             ]);
             $id = (int) $pdo->lastInsertId();
         }
@@ -141,6 +158,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'excerpt' => $excerpt, 'content' => $content,
             'featured_image' => $featuredImage, 'featured_image_alt' => $featuredImageAlt,
             'status' => $status, 'scheduled_at' => $scheduledAt,
+            'focus_keyword' => $focusKeyword, 'canonical_url' => $canonicalUrl,
+            'robots_index' => $robotsIndex, 'robots_follow' => $robotsFollow,
+            'og_title' => $ogTitle, 'og_description' => $ogDescription, 'og_image' => $ogImage,
         ];
     }
 }
@@ -192,7 +212,7 @@ include __DIR__ . '/includes/header.php';
           <button type="button" data-cmd="removeFormat">Clear</button>
         </div>
         <div class="rte-body" contenteditable="true"></div>
-        <textarea name="content" style="display:none"><?= h($post['content']) ?></textarea>
+        <textarea name="content" style="display:none" data-seo-content><?= h($post['content']) ?></textarea>
       </div>
     </div>
   </div>
@@ -218,17 +238,21 @@ include __DIR__ . '/includes/header.php';
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-title">SEO</div>
-    <div class="field">
-      <label for="meta_title">Meta Title</label>
-      <input type="text" id="meta_title" name="meta_title" maxlength="190" value="<?= h($post['meta_title']) ?>" placeholder="Defaults to the post title if left blank">
-    </div>
-    <div class="field">
-      <label for="meta_description">Meta Description</label>
-      <textarea id="meta_description" name="meta_description" rows="2" maxlength="320" placeholder="Defaults to the excerpt if left blank"><?= h($post['meta_description']) ?></textarea>
-    </div>
-  </div>
+  <?php
+  $seoRow = [
+      'focus_keyword' => $post['focus_keyword'] ?? '',
+      'meta_title' => $post['meta_title'] ?? '',
+      'meta_description' => $post['meta_description'] ?? '',
+      'canonical_url' => $post['canonical_url'] ?? '',
+      'robots_index' => $post['robots_index'] ?? 'index',
+      'robots_follow' => $post['robots_follow'] ?? 'follow',
+      'og_title' => $post['og_title'] ?? '',
+      'og_description' => $post['og_description'] ?? '',
+      'og_image' => ($post['og_image'] ?? '') !== '' ? $post['og_image'] : ($post['featured_image'] ? UPLOAD_URL . $post['featured_image'] : ''),
+  ];
+  $seoPathPrefix = '/blog/';
+  include __DIR__ . '/includes/seo-panel.php';
+  ?>
 
   <div class="card">
     <div class="field">

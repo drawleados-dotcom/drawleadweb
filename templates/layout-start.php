@@ -3,10 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><?= h($metaTitle) ?></title>
-<?php if (!empty($metaDescription)): ?>
-<meta name="description" content="<?= h($metaDescription) ?>">
-<?php endif; ?>
+<?php
+// Every route in index.php sets $seo before including this file. This
+// fallback only protects against a route that forgets to — it should
+// never be the only thing that runs in practice.
+$seo = $seo ?? [
+    'title' => $metaTitle ?? 'Drawlead', 'description' => $metaDescription ?? '',
+    'canonical' => '', 'robots_index' => 'index', 'robots_follow' => 'follow',
+    'og_title' => '', 'og_description' => '', 'og_image' => '', 'og_type' => 'website', 'schema' => null,
+];
+echo seo_head_tags($seo);
+?>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">

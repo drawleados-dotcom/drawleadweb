@@ -131,6 +131,24 @@ function migration_005_statements(): array
     ];
 }
 
+function migration_006_statements(): array
+{
+    $seoColumns = "
+            ADD COLUMN focus_keyword VARCHAR(190) NOT NULL DEFAULT '',
+            ADD COLUMN canonical_url VARCHAR(255) NOT NULL DEFAULT '',
+            ADD COLUMN robots_index ENUM('index','noindex') NOT NULL DEFAULT 'index',
+            ADD COLUMN robots_follow ENUM('follow','nofollow') NOT NULL DEFAULT 'follow',
+            ADD COLUMN og_title VARCHAR(190) NOT NULL DEFAULT '',
+            ADD COLUMN og_description VARCHAR(320) NOT NULL DEFAULT '',
+            ADD COLUMN og_image VARCHAR(255) NOT NULL DEFAULT ''";
+
+    return [
+        "ALTER TABLE pages $seoColumns",
+        "ALTER TABLE blogs $seoColumns",
+        "ALTER TABLE case_studies $seoColumns",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -149,6 +167,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '005' || $which === 'all') {
         $toRun['005'] = migration_005_statements();
+    }
+    if ($which === '006' || $which === 'all') {
+        $toRun['006'] = migration_006_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -178,6 +199,9 @@ $migration003Done = migration_table_exists($pdo, 'booking_availability')
 $migration004Done = migration_table_exists($pdo, 'whatsapp_flow_steps')
     && migration_table_exists($pdo, 'whatsapp_leads');
 $migration005Done = migration_table_exists($pdo, 'case_studies');
+$migration006Done = migration_column_exists($pdo, 'pages', 'focus_keyword')
+    && migration_column_exists($pdo, 'blogs', 'focus_keyword')
+    && migration_column_exists($pdo, 'case_studies', 'focus_keyword');
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -240,7 +264,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done): ?>
+<div class="card">
+  <div class="card-title">006 — SEO fields for Pages, Blogs &amp; Case Studies</div>
+  <div class="card-desc">Adds focus keyword, canonical URL, robots meta, and Open Graph/Twitter fields to pages, blogs, and case_studies — powers the new SEO panel in each edit form.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration006Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration006Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration006Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="006">
+    <button type="submit" class="btn btn-primary">Run Migration 006</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

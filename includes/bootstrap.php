@@ -239,6 +239,9 @@ function pending_migrations_exist(PDO $pdo): bool
             return true;
         }
     }
+    if (!migration_column_exists($pdo, 'pages', 'focus_keyword')) {
+        return true;
+    }
     return false;
 }
 
@@ -330,4 +333,118 @@ function sanitize_blog_html(string $html): string
     $html = preg_replace('/(href|src)\s*=\s*"javascript:[^"]*"/i', '$1="#"', $html);
     $html = preg_replace("/(href|src)\s*=\s*'javascript:[^']*'/i", "$1='#'", $html);
     return $html;
+}
+
+// ── SEO (Rank-Math-style on-page SEO panel) ──
+
+/** Scheme + host of the current request, e.g. "https://drawlead.com" — used to build absolute canonical/OG URLs. */
+function site_base_url(): string
+{
+    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+    $host = $_SERVER['HTTP_HOST'] ?? 'drawlead.com';
+    return $scheme . $host;
+}
+
+/**
+ * Emits the full SEO <head> block for one page: title, meta description,
+ * robots, canonical link, Open Graph + Twitter Card tags, and an optional
+ * JSON-LD schema script. Called once from templates/layout-start.php.
+ *
+ * Expected $seo keys: title, description, canonical, robots_index
+ * ('index'|'noindex'), robots_follow ('follow'|'nofollow'), og_title,
+ * og_description, og_image, og_type ('website'|'article'), schema
+ * (array|null, ready for json_encode).
+ */
+function seo_head_tags(array $seo): string
+{
+    $title = $seo['title'] ?? '';
+    $description = $seo['description'] ?? '';
+    $canonical = $seo['canonical'] ?? '';
+    $robotsIndex = ($seo['robots_index'] ?? 'index') === 'noindex' ? 'noindex' : 'index';
+    $robotsFollow = ($seo['robots_follow'] ?? 'follow') === 'nofollow' ? 'nofollow' : 'follow';
+    $ogType = $seo['og_type'] ?? 'website';
+    $ogTitle = ($seo['og_title'] ?? '') !== '' ? $seo['og_title'] : $title;
+    $ogDescription = ($seo['og_description'] ?? '') !== '' ? $seo['og_description'] : $description;
+    $ogImage = $seo['og_image'] ?? '';
+
+    $out = '<title>' . h($title) . "</title>\n";
+    if ($description !== '') {
+        $out .= '<meta name="description" content="' . h($description) . "\">\n";
+    }
+    $out .= '<meta name="robots" content="' . h($robotsIndex . ',' . $robotsFollow) . "\">\n";
+    if ($canonical !== '') {
+        $out .= '<link rel="canonical" href="' . h($canonical) . "\">\n";
+    }
+
+    $out .= '<meta property="og:type" content="' . h($ogType) . "\">\n";
+    $out .= '<meta property="og:title" content="' . h($ogTitle) . "\">\n";
+    if ($ogDescription !== '') {
+        $out .= '<meta property="og:description" content="' . h($ogDescription) . "\">\n";
+    }
+    if ($canonical !== '') {
+        $out .= '<meta property="og:url" content="' . h($canonical) . "\">\n";
+    }
+    if ($ogImage !== '') {
+        $out .= '<meta property="og:image" content="' . h($ogImage) . "\">\n";
+    }
+    $out .= '<meta name="twitter:card" content="' . ($ogImage !== '' ? 'summary_large_image' : 'summary') . "\">\n";
+    $out .= '<meta name="twitter:title" content="' . h($ogTitle) . "\">\n";
+    if ($ogDescription !== '') {
+        $out .= '<meta name="twitter:description" content="' . h($ogDescription) . "\">\n";
+    }
+    if ($ogImage !== '') {
+        $out .= '<meta name="twitter:image" content="' . h($ogImage) . "\">\n";
+    }
+
+    if (!empty($seo['schema'])) {
+        $out .= '<script type="application/ld+json">'
+              . json_encode($seo['schema'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+              . "</script>\n";
+    }
+
+    return $out;
+}
+
+/**
+ * Builds the $seo array (see seo_head_tags()) from a pages/blogs/case_studies
+ * row that carries the shared SEO columns (meta_title, meta_description,
+ * canonical_url, robots_index, robots_follow, og_title, og_description,
+ * og_image). $fallbackTitle/$fallbackDescription cover a blank meta_title/
+ * meta_description. $canonicalPath is this content's own URL path, used
+ * when canonical_url is left blank.
+ */
+function build_seo_from_row(array $row, string $canonicalPath, string $fallbackTitle, string $fallbackDescription, string $ogType, ?array $schema = null): array
+{
+    return [
+        'title' => $row['meta_title'] ?: $fallbackTitle,
+        'description' => $row['meta_description'] ?: $fallbackDescription,
+        'canonical' => $row['canonical_url'] ?: (site_base_url() . $canonicalPath),
+        'robots_index' => $row['robots_index'] ?? 'index',
+        'robots_follow' => $row['robots_follow'] ?? 'follow',
+        'og_title' => $row['og_title'] ?? '',
+        'og_description' => $row['og_description'] ?? '',
+        'og_image' => $row['og_image'] ?? '',
+        'og_type' => $ogType,
+        'schema' => $schema,
+    ];
+}
+
+/** Article schema.org JSON-LD for a blog post or case study. */
+function article_schema(string $headline, string $description, string $canonicalPath, string $imageFile, string $authorName, string $createdAt, string $updatedAt): array
+{
+    $schema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'Article',
+        'headline' => $headline,
+        'description' => $description,
+        'author' => ['@type' => 'Person', 'name' => $authorName ?: 'Drawlead'],
+        'publisher' => ['@type' => 'Organization', 'name' => 'Drawlead'],
+        'datePublished' => date('c', strtotime($createdAt)),
+        'dateModified' => date('c', strtotime($updatedAt)),
+        'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => site_base_url() . $canonicalPath],
+    ];
+    if ($imageFile !== '') {
+        $schema['image'] = [site_base_url() . UPLOAD_URL . $imageFile];
+    }
+    return $schema;
 }

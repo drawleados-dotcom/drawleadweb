@@ -41,6 +41,8 @@ $cs = [
     'result' => '', 'outcome' => '', 'testimonial' => '', 'testimonial_author' => '', 'services' => '',
     'website_link' => '', 'erp_link' => '', 'desktop_image' => '', 'mobile_image' => '', 'result_image' => '',
     'team' => '', 'status' => 'draft',
+    'focus_keyword' => '', 'canonical_url' => '', 'robots_index' => 'index', 'robots_follow' => 'follow',
+    'og_title' => '', 'og_description' => '', 'og_image' => '',
 ];
 
 if ($id) {
@@ -77,6 +79,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $team = trim($_POST['team'] ?? '');
     $websiteLink = trim($_POST['website_link'] ?? '');
     $erpLink = trim($_POST['erp_link'] ?? '');
+    $focusKeyword = trim($_POST['focus_keyword'] ?? '');
+    $canonicalUrl = trim($_POST['canonical_url'] ?? '');
+    $robotsIndex = ($_POST['robots_index'] ?? 'index') === 'noindex' ? 'noindex' : 'index';
+    $robotsFollow = ($_POST['robots_follow'] ?? 'follow') === 'nofollow' ? 'nofollow' : 'follow';
+    $ogTitle = trim($_POST['og_title'] ?? '');
+    $ogDescription = trim($_POST['og_description'] ?? '');
+    $ogImage = trim($_POST['og_image'] ?? '');
 
     $selectedServices = array_intersect(
         array_map('trim', $_POST['services'] ?? []),
@@ -120,23 +129,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $pdo->prepare(
                 'UPDATE case_studies SET title=?, slug=?, meta_title=?, meta_description=?, client_name=?, description=?,
                  problem=?, solution=?, process=?, result=?, outcome=?, testimonial=?, testimonial_author=?, services=?,
-                 website_link=?, erp_link=?, desktop_image=?, mobile_image=?, result_image=?, team=?, status=? WHERE id=?'
+                 website_link=?, erp_link=?, desktop_image=?, mobile_image=?, result_image=?, team=?, status=?,
+                 focus_keyword=?, canonical_url=?, robots_index=?, robots_follow=?,
+                 og_title=?, og_description=?, og_image=? WHERE id=?'
             )->execute([
                 $title, $slug, $metaTitle, $metaDescription, $clientName, $description,
                 $problem, $solution, $process, $result, $outcome, $testimonial, $testimonialAuthor, $services,
-                $websiteLink, $erpLink, $desktopImage, $mobileImage, $resultImage, $team, $status, $id,
+                $websiteLink, $erpLink, $desktopImage, $mobileImage, $resultImage, $team, $status,
+                $focusKeyword, $canonicalUrl, $robotsIndex, $robotsFollow,
+                $ogTitle, $ogDescription, $ogImage, $id,
             ]);
         } else {
             $stmt = $pdo->prepare(
                 'INSERT INTO case_studies (title, slug, meta_title, meta_description, client_name, description,
                  problem, solution, process, result, outcome, testimonial, testimonial_author, services,
-                 website_link, erp_link, desktop_image, mobile_image, result_image, team, status, author_id)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+                 website_link, erp_link, desktop_image, mobile_image, result_image, team, status, author_id,
+                 focus_keyword, canonical_url, robots_index, robots_follow,
+                 og_title, og_description, og_image)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
             );
             $stmt->execute([
                 $title, $slug, $metaTitle, $metaDescription, $clientName, $description,
                 $problem, $solution, $process, $result, $outcome, $testimonial, $testimonialAuthor, $services,
                 $websiteLink, $erpLink, $desktopImage, $mobileImage, $resultImage, $team, $status, $u['id'],
+                $focusKeyword, $canonicalUrl, $robotsIndex, $robotsFollow,
+                $ogTitle, $ogDescription, $ogImage,
             ]);
             $id = (int) $pdo->lastInsertId();
         }
@@ -150,6 +167,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'testimonial_author' => $testimonialAuthor, 'services' => $services, 'website_link' => $websiteLink,
             'erp_link' => $erpLink, 'desktop_image' => $desktopImage, 'mobile_image' => $mobileImage,
             'result_image' => $resultImage, 'team' => $team, 'status' => $status,
+            'focus_keyword' => $focusKeyword, 'canonical_url' => $canonicalUrl,
+            'robots_index' => $robotsIndex, 'robots_follow' => $robotsFollow,
+            'og_title' => $ogTitle, 'og_description' => $ogDescription, 'og_image' => $ogImage,
         ];
     }
 }
@@ -207,23 +227,23 @@ include __DIR__ . '/includes/header.php';
     <div class="card-title">The Story</div>
     <div class="field">
       <label for="problem">Problem</label>
-      <textarea id="problem" name="problem" rows="4"><?= h($cs['problem']) ?></textarea>
+      <textarea id="problem" name="problem" rows="4" data-seo-content><?= h($cs['problem']) ?></textarea>
     </div>
     <div class="field">
       <label for="solution">Solution</label>
-      <textarea id="solution" name="solution" rows="4"><?= h($cs['solution']) ?></textarea>
+      <textarea id="solution" name="solution" rows="4" data-seo-content><?= h($cs['solution']) ?></textarea>
     </div>
     <div class="field">
       <label for="process">Process</label>
-      <textarea id="process" name="process" rows="4"><?= h($cs['process']) ?></textarea>
+      <textarea id="process" name="process" rows="4" data-seo-content><?= h($cs['process']) ?></textarea>
     </div>
     <div class="field">
       <label for="result">Result</label>
-      <textarea id="result" name="result" rows="4"><?= h($cs['result']) ?></textarea>
+      <textarea id="result" name="result" rows="4" data-seo-content><?= h($cs['result']) ?></textarea>
     </div>
     <div class="field">
       <label for="outcome">Outcome</label>
-      <textarea id="outcome" name="outcome" rows="4"><?= h($cs['outcome']) ?></textarea>
+      <textarea id="outcome" name="outcome" rows="4" data-seo-content><?= h($cs['outcome']) ?></textarea>
     </div>
   </div>
 
@@ -286,17 +306,21 @@ include __DIR__ . '/includes/header.php';
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-title">SEO</div>
-    <div class="field">
-      <label for="meta_title">Meta Title</label>
-      <input type="text" id="meta_title" name="meta_title" maxlength="190" value="<?= h($cs['meta_title']) ?>" placeholder="Defaults to the title if left blank">
-    </div>
-    <div class="field">
-      <label for="meta_description">Meta Description</label>
-      <textarea id="meta_description" name="meta_description" rows="2" maxlength="320" placeholder="Defaults to the description if left blank"><?= h($cs['meta_description']) ?></textarea>
-    </div>
-  </div>
+  <?php
+  $seoRow = [
+      'focus_keyword' => $cs['focus_keyword'] ?? '',
+      'meta_title' => $cs['meta_title'] ?? '',
+      'meta_description' => $cs['meta_description'] ?? '',
+      'canonical_url' => $cs['canonical_url'] ?? '',
+      'robots_index' => $cs['robots_index'] ?? 'index',
+      'robots_follow' => $cs['robots_follow'] ?? 'follow',
+      'og_title' => $cs['og_title'] ?? '',
+      'og_description' => $cs['og_description'] ?? '',
+      'og_image' => ($cs['og_image'] ?? '') !== '' ? $cs['og_image'] : ($cs['desktop_image'] ? UPLOAD_URL . $cs['desktop_image'] : ''),
+  ];
+  $seoPathPrefix = '/case-studies/';
+  include __DIR__ . '/includes/seo-panel.php';
+  ?>
 
   <div class="card">
     <div class="field">

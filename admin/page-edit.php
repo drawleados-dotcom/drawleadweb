@@ -28,6 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rawSlug = trim($_POST['slug'] ?? '');
     $metaTitle = trim($_POST['meta_title'] ?? '');
     $metaDescription = trim($_POST['meta_description'] ?? '');
+    $focusKeyword = trim($_POST['focus_keyword'] ?? '');
+    $canonicalUrl = trim($_POST['canonical_url'] ?? '');
+    $robotsIndex = ($_POST['robots_index'] ?? 'index') === 'noindex' ? 'noindex' : 'index';
+    $robotsFollow = ($_POST['robots_follow'] ?? 'follow') === 'nofollow' ? 'nofollow' : 'follow';
+    $ogTitle = trim($_POST['og_title'] ?? '');
+    $ogDescription = trim($_POST['og_description'] ?? '');
+    $ogImage = trim($_POST['og_image'] ?? '');
 
     // Normalize the URL: always starts with "/", lowercase, safe characters only.
     if ($rawSlug === '' || $rawSlug === '/') {
@@ -58,16 +65,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$error) {
         $pdo->prepare(
-            'UPDATE pages SET name = ?, slug = ?, meta_title = ?, meta_description = ? WHERE id = ?'
-        )->execute([$name, $slug, $metaTitle, $metaDescription, $id]);
+            'UPDATE pages SET name = ?, slug = ?, meta_title = ?, meta_description = ?,
+             focus_keyword = ?, canonical_url = ?, robots_index = ?, robots_follow = ?,
+             og_title = ?, og_description = ?, og_image = ? WHERE id = ?'
+        )->execute([
+            $name, $slug, $metaTitle, $metaDescription,
+            $focusKeyword, $canonicalUrl, $robotsIndex, $robotsFollow,
+            $ogTitle, $ogDescription, $ogImage, $id,
+        ]);
 
         $success = 'Saved — the live site now reflects these changes.';
         $page['name'] = $name;
         $page['slug'] = $slug;
         $page['meta_title'] = $metaTitle;
         $page['meta_description'] = $metaDescription;
+        $page['focus_keyword'] = $focusKeyword;
+        $page['canonical_url'] = $canonicalUrl;
+        $page['robots_index'] = $robotsIndex;
+        $page['robots_follow'] = $robotsFollow;
+        $page['og_title'] = $ogTitle;
+        $page['og_description'] = $ogDescription;
+        $page['og_image'] = $ogImage;
     }
 }
+
+$seoRow = [
+    'focus_keyword' => $page['focus_keyword'] ?? '',
+    'meta_title' => $page['meta_title'] ?? '',
+    'meta_description' => $page['meta_description'] ?? '',
+    'canonical_url' => $page['canonical_url'] ?? '',
+    'robots_index' => $page['robots_index'] ?? 'index',
+    'robots_follow' => $page['robots_follow'] ?? 'follow',
+    'og_title' => $page['og_title'] ?? '',
+    'og_description' => $page['og_description'] ?? '',
+    'og_image' => $page['og_image'] ?? '',
+];
+$seoPathPrefix = '';
 
 $pageTitle = 'Edit Page';
 $pageSub = $page['name'];
@@ -75,16 +108,17 @@ $activeNav = 'pages';
 include __DIR__ . '/includes/header.php';
 ?>
 
-<div class="card">
-  <?php if ($error): ?><div class="alert alert-error"><?= h($error) ?></div><?php endif; ?>
-  <?php if ($success): ?><div class="alert alert-success"><?= h($success) ?></div><?php endif; ?>
+<?php if ($error): ?><div class="alert alert-error"><?= h($error) ?></div><?php endif; ?>
+<?php if ($success): ?><div class="alert alert-success"><?= h($success) ?></div><?php endif; ?>
 
-  <?php if ($page['slug'] === '/'): ?>
-    <div class="access-note" style="margin-top:0;margin-bottom:1.4rem">This is your homepage. If you change its URL away from <code>/</code>, your domain root will no longer show this page unless the new URL is set to <code>/</code>.</div>
-  <?php endif; ?>
+<form method="post" novalidate>
+  <?= csrf_field() ?>
 
-  <form method="post" novalidate>
-    <?= csrf_field() ?>
+  <div class="card">
+    <div class="card-title">Basics</div>
+    <?php if ($page['slug'] === '/'): ?>
+      <div class="access-note" style="margin-top:0;margin-bottom:1.4rem">This is your homepage. If you change its URL away from <code>/</code>, your domain root will no longer show this page unless the new URL is set to <code>/</code>.</div>
+    <?php endif; ?>
     <div class="field">
       <label for="name">Page Name</label>
       <input type="text" id="name" name="name" required value="<?= h($page['name']) ?>" data-slug-source>
@@ -95,19 +129,14 @@ include __DIR__ . '/includes/header.php';
       <input type="text" id="slug" name="slug" required value="<?= h($page['slug']) ?>" data-slug-target>
       <div class="field-hint">e.g. <code>/about-us</code>. Visitors reach this page at yoursite.com<?= h($page['slug']) ?></div>
     </div>
-    <div class="field">
-      <label for="meta_title">Meta Title</label>
-      <input type="text" id="meta_title" name="meta_title" required maxlength="190" value="<?= h($page['meta_title']) ?>">
-      <div class="field-hint">Shown as the browser tab title and the Google search result headline.</div>
-    </div>
-    <div class="field">
-      <label for="meta_description">Meta Description</label>
-      <textarea id="meta_description" name="meta_description" rows="3" maxlength="320"><?= h($page['meta_description']) ?></textarea>
-      <div class="field-hint">Shown under the title in Google search results. Aim for 150–160 characters.</div>
-    </div>
+  </div>
+
+  <?php include __DIR__ . '/includes/seo-panel.php'; ?>
+
+  <div class="card">
     <button type="submit" class="btn btn-primary">Save Changes</button>
     <a href="pages.php" class="btn btn-ghost">Cancel</a>
-  </form>
-</div>
+  </div>
+</form>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>

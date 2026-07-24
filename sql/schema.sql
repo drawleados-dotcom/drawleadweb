@@ -15,12 +15,23 @@ CREATE TABLE IF NOT EXISTS users (
   created_at    DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- The seven columns below (focus_keyword through og_image) power the
+-- Rank-Math-style SEO panel: on-page analysis, robots meta, canonical
+-- URL, and Open Graph / Twitter Card social previews. They're repeated
+-- identically on pages, blogs, and case_studies.
 CREATE TABLE IF NOT EXISTS pages (
   id                INT AUTO_INCREMENT PRIMARY KEY,
   name              VARCHAR(190) NOT NULL,
   slug              VARCHAR(190) NOT NULL UNIQUE,      -- e.g. "/" or "/about-us"
   meta_title        VARCHAR(190) NOT NULL DEFAULT '',
   meta_description  VARCHAR(320) NOT NULL DEFAULT '',
+  focus_keyword     VARCHAR(190) NOT NULL DEFAULT '',
+  canonical_url     VARCHAR(255) NOT NULL DEFAULT '',
+  robots_index      ENUM('index','noindex') NOT NULL DEFAULT 'index',
+  robots_follow     ENUM('follow','nofollow') NOT NULL DEFAULT 'follow',
+  og_title          VARCHAR(190) NOT NULL DEFAULT '',
+  og_description    VARCHAR(320) NOT NULL DEFAULT '',
+  og_image          VARCHAR(255) NOT NULL DEFAULT '',
   template          VARCHAR(60)  NOT NULL,              -- matches templates/{template}-body.php
   updated_at        DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -31,6 +42,13 @@ CREATE TABLE IF NOT EXISTS blogs (
   slug              VARCHAR(190) NOT NULL UNIQUE,       -- served at /blog/{slug}
   meta_title        VARCHAR(190) NOT NULL DEFAULT '',
   meta_description  VARCHAR(320) NOT NULL DEFAULT '',
+  focus_keyword     VARCHAR(190) NOT NULL DEFAULT '',
+  canonical_url     VARCHAR(255) NOT NULL DEFAULT '',
+  robots_index      ENUM('index','noindex') NOT NULL DEFAULT 'index',
+  robots_follow     ENUM('follow','nofollow') NOT NULL DEFAULT 'follow',
+  og_title          VARCHAR(190) NOT NULL DEFAULT '',
+  og_description    VARCHAR(320) NOT NULL DEFAULT '',
+  og_image          VARCHAR(255) NOT NULL DEFAULT '',
   excerpt           VARCHAR(400) NOT NULL DEFAULT '',
   content           LONGTEXT,
   featured_image    VARCHAR(255) NOT NULL DEFAULT '',
@@ -115,6 +133,13 @@ CREATE TABLE IF NOT EXISTS case_studies (
   slug                VARCHAR(190) NOT NULL UNIQUE,        -- served at /case-studies/{slug}
   meta_title          VARCHAR(190) NOT NULL DEFAULT '',
   meta_description    VARCHAR(320) NOT NULL DEFAULT '',
+  focus_keyword       VARCHAR(190) NOT NULL DEFAULT '',
+  canonical_url       VARCHAR(255) NOT NULL DEFAULT '',
+  robots_index        ENUM('index','noindex') NOT NULL DEFAULT 'index',
+  robots_follow       ENUM('follow','nofollow') NOT NULL DEFAULT 'follow',
+  og_title            VARCHAR(190) NOT NULL DEFAULT '',
+  og_description      VARCHAR(320) NOT NULL DEFAULT '',
+  og_image            VARCHAR(255) NOT NULL DEFAULT '',
   client_name         VARCHAR(190) NOT NULL DEFAULT '',
   description         VARCHAR(400) NOT NULL DEFAULT '',
   problem             TEXT,

@@ -11,6 +11,11 @@
 
     function sync() {
       hidden.value = body.innerHTML;
+      // Setting .value programmatically doesn't fire a native "input"
+      // event, but other scripts (e.g. the SEO analyzer's word-count
+      // check) listen for one on this hidden textarea — dispatch it
+      // manually so they stay in sync with what the user is typing.
+      hidden.dispatchEvent(new Event('input', { bubbles: true }));
     }
     body.addEventListener('input', sync);
     body.addEventListener('blur', sync);
