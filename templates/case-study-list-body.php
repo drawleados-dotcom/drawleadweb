@@ -60,21 +60,34 @@ include __DIR__ . '/partials/nav.php';
   var emptyState = document.getElementById('cs-filter-empty');
   if (!tabs.length) return;
 
-  tabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      tabs.forEach(function (t) { t.classList.remove('active'); });
-      tab.classList.add('active');
-      var filter = tab.getAttribute('data-filter');
-      var visibleCount = 0;
-      cards.forEach(function (card) {
-        var services = (card.getAttribute('data-services') || '').split(',').map(function (s) { return s.trim(); });
-        var match = filter === 'all' || services.indexOf(filter) !== -1;
-        card.style.display = match ? '' : 'none';
-        if (match) visibleCount++;
-      });
-      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+  function activate(tab) {
+    tabs.forEach(function (t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    var filter = tab.getAttribute('data-filter');
+    var visibleCount = 0;
+    cards.forEach(function (card) {
+      var services = (card.getAttribute('data-services') || '').split(',').map(function (s) { return s.trim(); });
+      var match = filter === 'all' || services.indexOf(filter) !== -1;
+      card.style.display = match ? '' : 'none';
+      if (match) visibleCount++;
     });
+    emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () { activate(tab); });
   });
+
+  // Deep-link support — e.g. the Case Studies mega menu's "View All"
+  // links to /case-studies?service=Custom+ERP+Solution.
+  var requestedService = new URLSearchParams(window.location.search).get('service');
+  if (requestedService) {
+    var match = Array.prototype.find.call(tabs, function (t) { return t.getAttribute('data-filter') === requestedService; });
+    if (match) {
+      activate(match);
+      document.getElementById('blog-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 })();
 </script>
 <?php endif; ?>

@@ -1133,6 +1133,9 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .mega-list{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.1rem;flex:1}
 .mega-list li{font-size:11.5px;color:var(--g500);line-height:1.5;padding-left:14px;position:relative}
 .mega-list li::before{content:'';position:absolute;left:0;top:.5em;width:5px;height:5px;border-radius:50%;background:#32b46f}
+.mega-cs-list a{color:var(--g500);text-decoration:none;transition:color .15s}
+.mega-cs-list a:hover{color:var(--blue)}
+.mega-cs-empty{font-size:11.5px;color:var(--g400);font-style:italic;margin-bottom:1.1rem;flex:1}
 .mega-know{font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;font-family:var(--font);padding:0;transition:gap .15s}
 .mega-know:hover{gap:8px}
 .mega-cta{background:var(--black);border-radius:12px;padding:1.4rem 1.25rem;display:flex;flex-direction:column;justify-content:center;gap:.6rem}
