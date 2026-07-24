@@ -879,6 +879,34 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
   .bslots-grid{grid-template-columns:repeat(2,1fr)}
 }
 
+/* ══════════════════ SITE POPUP ══════════════════ */
+.site-popup{position:fixed;inset:0;z-index:950;display:none;align-items:center;justify-content:center;padding:2rem 1.5rem}
+.site-popup.open{display:flex}
+.site-popup-overlay{position:absolute;inset:0;background:rgba(10,19,16,.6);backdrop-filter:blur(3px)}
+.site-popup-dialog{
+ position:relative;width:100%;max-width:880px;max-height:88vh;overflow-y:auto;
+ background:var(--white);border-radius:18px;box-shadow:0 40px 100px rgba(0,0,0,.35);
+ display:grid;grid-template-columns:1fr 1fr;
+}
+.site-popup-close{position:absolute;top:14px;right:16px;z-index:2;width:34px;height:34px;border-radius:50%;background:var(--bg);color:var(--g500);border:none;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.site-popup-close:hover{background:var(--g200);color:var(--black)}
+.site-popup-image{background:var(--bg2)}
+.site-popup-image img{width:100%;height:100%;object-fit:cover;display:block;min-height:280px}
+.site-popup-body{padding:2.75rem 2.5rem;display:flex;flex-direction:column;justify-content:center}
+.site-popup-body h2{font-size:26px;font-weight:800;letter-spacing:-.015em;line-height:1.2;margin-bottom:.9rem;color:var(--black)}
+.site-popup-desc{font-size:13.5px;color:var(--g500);line-height:1.65;margin-bottom:1.4rem}
+.site-popup-points{list-style:none;display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.75rem}
+.site-popup-points li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;font-weight:600;color:var(--g600);line-height:1.4}
+.site-popup-tick{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--grad);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.site-popup-cta{align-self:flex-start}
+
+@media(max-width:800px){
+  .site-popup-dialog{grid-template-columns:1fr;grid-template-rows:auto auto}
+  .site-popup-image img{min-height:180px}
+  .site-popup-body{padding:1.75rem 1.5rem}
+  .site-popup-body h2{font-size:21px}
+}
+
 /* ══════════════════ WHATSAPP WIDGET ══════════════════ */
 .wa-fab{
  position:fixed;right:22px;bottom:22px;z-index:900;

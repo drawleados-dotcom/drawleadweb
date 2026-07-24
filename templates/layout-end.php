@@ -28,5 +28,8 @@ document.querySelectorAll('.rv, .ind-card').forEach(el=>obs.observe(el));
 
 <?php include __DIR__ . '/partials/whatsapp-widget.php'; ?>
 <script src="/assets/whatsapp.js"></script>
+
+<?php include __DIR__ . '/partials/site-popup.php'; ?>
+<script src="/assets/site-popup.js"></script>
 </body>
 </html>

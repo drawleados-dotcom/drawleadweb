@@ -166,6 +166,27 @@ function migration_007_statements(): array
     ];
 }
 
+function migration_008_statements(): array
+{
+    return [
+        "CREATE TABLE IF NOT EXISTS site_popup (
+            id INT PRIMARY KEY DEFAULT 1,
+            enabled TINYINT(1) NOT NULL DEFAULT 0,
+            image VARCHAR(255) NOT NULL DEFAULT '',
+            image_alt VARCHAR(190) NOT NULL DEFAULT '',
+            title VARCHAR(190) NOT NULL DEFAULT '',
+            description VARCHAR(400) NOT NULL DEFAULT '',
+            points TEXT,
+            cta_text VARCHAR(100) NOT NULL DEFAULT 'Book a Free Consultation',
+            cta_use_booking TINYINT(1) NOT NULL DEFAULT 1,
+            cta_link VARCHAR(255) NOT NULL DEFAULT '',
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+
+        "INSERT IGNORE INTO site_popup (id) VALUES (1)",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -190,6 +211,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '007' || $which === 'all') {
         $toRun['007'] = migration_007_statements();
+    }
+    if ($which === '008' || $which === 'all') {
+        $toRun['008'] = migration_008_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -223,6 +247,7 @@ $migration006Done = migration_column_exists($pdo, 'pages', 'focus_keyword')
     && migration_column_exists($pdo, 'blogs', 'focus_keyword')
     && migration_column_exists($pdo, 'case_studies', 'focus_keyword');
 $migration007Done = migration_table_exists($pdo, 'case_study_services');
+$migration008Done = migration_table_exists($pdo, 'site_popup');
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -311,7 +336,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done): ?>
+<div class="card">
+  <div class="card-title">008 — Site-wide consultation popup</div>
+  <div class="card-desc">Creates site_popup (disabled by default) — the admin-managed popup shown when a visitor opens the site.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration008Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration008Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration008Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="008">
+    <button type="submit" class="btn btn-primary">Run Migration 008</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>
