@@ -187,6 +187,17 @@ function migration_008_statements(): array
     ];
 }
 
+function migration_009_statements(): array
+{
+    return [
+        "ALTER TABLE site_popup
+            ADD COLUMN trigger_delay TINYINT(1) NOT NULL DEFAULT 1,
+            ADD COLUMN trigger_new_page TINYINT(1) NOT NULL DEFAULT 0,
+            ADD COLUMN trigger_refresh TINYINT(1) NOT NULL DEFAULT 0,
+            ADD COLUMN trigger_scroll_section TINYINT(1) NOT NULL DEFAULT 0",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -214,6 +225,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '008' || $which === 'all') {
         $toRun['008'] = migration_008_statements();
+    }
+    if ($which === '009' || $which === 'all') {
+        $toRun['009'] = migration_009_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -248,6 +262,7 @@ $migration006Done = migration_column_exists($pdo, 'pages', 'focus_keyword')
     && migration_column_exists($pdo, 'case_studies', 'focus_keyword');
 $migration007Done = migration_table_exists($pdo, 'case_study_services');
 $migration008Done = migration_table_exists($pdo, 'site_popup');
+$migration009Done = migration_column_exists($pdo, 'site_popup', 'trigger_delay');
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -349,7 +364,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done): ?>
+<div class="card">
+  <div class="card-title">009 — Popup trigger controls</div>
+  <div class="card-desc">Adds the "when should it appear" checkboxes (3-second delay, every new page, every refresh, 4th section scroll) to the popup settings.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration009Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration009Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration009Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="009">
+    <button type="submit" class="btn btn-primary">Run Migration 009</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

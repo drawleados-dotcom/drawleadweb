@@ -185,6 +185,10 @@ CREATE TABLE IF NOT EXISTS site_popup (
   cta_text         VARCHAR(100) NOT NULL DEFAULT 'Book a Free Consultation',
   cta_use_booking  TINYINT(1) NOT NULL DEFAULT 1,            -- 1 = opens the existing booking popup, 0 = uses cta_link
   cta_link         VARCHAR(255) NOT NULL DEFAULT '',
+  trigger_delay          TINYINT(1) NOT NULL DEFAULT 1,      -- show after a few seconds
+  trigger_new_page       TINYINT(1) NOT NULL DEFAULT 0,      -- show again on every new page navigated to
+  trigger_refresh        TINYINT(1) NOT NULL DEFAULT 0,      -- show again on every page refresh
+  trigger_scroll_section TINYINT(1) NOT NULL DEFAULT 0,      -- show when the 4th section scrolls into view
   updated_at       DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

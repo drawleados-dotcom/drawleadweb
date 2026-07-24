@@ -8,7 +8,11 @@ $popup = get_site_popup($pdo);
 $popupPoints = array_slice(array_filter(array_map('trim', explode("\n", (string) $popup['points']))), 0, 4);
 ?>
 <?php if (!empty($popup['enabled']) && $popup['title'] !== ''): ?>
-<div id="site-popup" class="site-popup" aria-hidden="true">
+<div id="site-popup" class="site-popup" aria-hidden="true"
+     data-trigger-delay="<?= $popup['trigger_delay'] ? '1' : '0' ?>"
+     data-trigger-new-page="<?= $popup['trigger_new_page'] ? '1' : '0' ?>"
+     data-trigger-refresh="<?= $popup['trigger_refresh'] ? '1' : '0' ?>"
+     data-trigger-scroll-section="<?= $popup['trigger_scroll_section'] ? '1' : '0' ?>">
   <div class="site-popup-overlay" data-popup-close></div>
   <div class="site-popup-dialog" role="dialog" aria-modal="true" aria-labelledby="site-popup-title">
     <button type="button" class="site-popup-close" data-popup-close aria-label="Close">&times;</button>

@@ -18,6 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ctaText = trim($_POST['cta_text'] ?? '') ?: 'Book a Free Consultation';
     $ctaUseBooking = isset($_POST['cta_use_booking']) ? 1 : 0;
     $ctaLink = trim($_POST['cta_link'] ?? '');
+    $triggerDelay = isset($_POST['trigger_delay']) ? 1 : 0;
+    $triggerNewPage = isset($_POST['trigger_new_page']) ? 1 : 0;
+    $triggerRefresh = isset($_POST['trigger_refresh']) ? 1 : 0;
+    $triggerScrollSection = isset($_POST['trigger_scroll_section']) ? 1 : 0;
 
     if ($enabled && $title === '') {
         $error = 'Add a title before enabling the popup.';
@@ -51,10 +55,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$error) {
         $pdo->prepare(
             'UPDATE site_popup SET enabled=?, image=?, image_alt=?, title=?, description=?, points=?,
-             cta_text=?, cta_use_booking=?, cta_link=? WHERE id=1'
+             cta_text=?, cta_use_booking=?, cta_link=?,
+             trigger_delay=?, trigger_new_page=?, trigger_refresh=?, trigger_scroll_section=? WHERE id=1'
         )->execute([
             $enabled, $image, $imageAlt, $title, $description, $points,
             $ctaText, $ctaUseBooking, $ctaLink,
+            $triggerDelay, $triggerNewPage, $triggerRefresh, $triggerScrollSection,
         ]);
 
         $success = 'Saved.';
@@ -62,6 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'enabled' => $enabled, 'image' => $image, 'image_alt' => $imageAlt, 'title' => $title,
             'description' => $description, 'points' => $points, 'cta_text' => $ctaText,
             'cta_use_booking' => $ctaUseBooking, 'cta_link' => $ctaLink,
+            'trigger_delay' => $triggerDelay, 'trigger_new_page' => $triggerNewPage,
+            'trigger_refresh' => $triggerRefresh, 'trigger_scroll_section' => $triggerScrollSection,
         ];
     }
 }
@@ -115,6 +123,32 @@ include __DIR__ . '/includes/header.php';
     <div class="field">
       <label for="points">Points (one per line — first 4 shown with a checkmark)</label>
       <textarea id="points" name="points" rows="4" placeholder="Custom ERP built around your process&#10;Live inventory &amp; order sync&#10;SEO and performance marketing that compounds&#10;Dedicated support, not a ticket queue"><?= h($popup['points']) ?></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">When Should It Appear?</div>
+    <div class="card-desc">Check the trigger(s) that should show the popup. A trigger left unchecked never fires — leave at least one checked or the popup will never appear even when enabled.</div>
+    <div class="checkbox-grid">
+      <label class="checkbox-row">
+        <input type="checkbox" name="trigger_delay" <?= $popup['trigger_delay'] ? 'checked' : '' ?>>
+        First 3 Seconds
+      </label>
+      <label class="checkbox-row">
+        <input type="checkbox" name="trigger_scroll_section" <?= $popup['trigger_scroll_section'] ? 'checked' : '' ?>>
+        4th Section of the Page
+      </label>
+      <label class="checkbox-row">
+        <input type="checkbox" name="trigger_new_page" <?= $popup['trigger_new_page'] ? 'checked' : '' ?>>
+        Every New Page
+      </label>
+      <label class="checkbox-row">
+        <input type="checkbox" name="trigger_refresh" <?= $popup['trigger_refresh'] ? 'checked' : '' ?>>
+        Every Refresh
+      </label>
+    </div>
+    <div class="field-hint" style="margin-top:.9rem">
+      "First 3 Seconds" and "4th Section" control <b>when</b> on the page it appears. "Every New Page" and "Every Refresh" control <b>how often</b> — leave both off to show it just once per visitor session (the default).
     </div>
   </div>
 

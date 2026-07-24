@@ -243,6 +243,9 @@ function pending_migrations_exist(PDO $pdo): bool
     if (!migration_table_exists($pdo, 'site_popup')) {
         return true;
     }
+    if (!migration_column_exists($pdo, 'site_popup', 'trigger_delay')) {
+        return true;
+    }
     return false;
 }
 
@@ -266,11 +269,13 @@ function get_recent_blog_posts(PDO $pdo, int $excludeId = 0, int $limit = 4): ar
 /** Settings for the site-wide "on open" consultation popup, admin-managed via admin/popup.php. */
 function get_site_popup(PDO $pdo): array
 {
-    $row = $pdo->query('SELECT * FROM site_popup WHERE id = 1')->fetch();
-    return $row ?: [
+    $defaults = [
         'enabled' => 0, 'image' => '', 'image_alt' => '', 'title' => '', 'description' => '',
         'points' => '', 'cta_text' => 'Book a Free Consultation', 'cta_use_booking' => 1, 'cta_link' => '',
+        'trigger_delay' => 1, 'trigger_new_page' => 0, 'trigger_refresh' => 0, 'trigger_scroll_section' => 0,
     ];
+    $row = $pdo->query('SELECT * FROM site_popup WHERE id = 1')->fetch();
+    return $row ? array_merge($defaults, $row) : $defaults;
 }
 
 // ── Booking system ──
