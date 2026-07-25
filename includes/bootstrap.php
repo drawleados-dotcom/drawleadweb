@@ -280,6 +280,12 @@ function pending_migrations_exist(PDO $pdo): bool
     if (!migration_column_exists($pdo, 'pages', 'status') || !migration_column_exists($pdo, 'pages', 'show_in_menu')) {
         return true;
     }
+    $stmt6 = $pdo->query(
+        "SELECT DATA_TYPE FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'site_popup' AND COLUMN_NAME = 'image'"
+    );
+    if (strtolower((string) $stmt6->fetchColumn()) !== 'text') {
+        return true;
+    }
     return false;
 }
 
@@ -331,6 +337,20 @@ function get_site_popup(PDO $pdo): array
     ];
     $row = $pdo->query('SELECT * FROM site_popup WHERE id = 1')->fetch();
     return $row ? array_merge($defaults, $row) : $defaults;
+}
+
+/**
+ * Resolves a stored "image" value to a src URL. Admin-uploaded images are
+ * a bare filename under /uploads/, but a few defaults (like the popup's
+ * built-in graphic) ship as an inline data: URI instead — no filesystem
+ * upload needed for those, same trick the nav logo already uses.
+ */
+function popup_image_src(string $image): string
+{
+    if (str_starts_with($image, 'data:') || str_starts_with($image, 'http://') || str_starts_with($image, 'https://') || str_starts_with($image, '/')) {
+        return $image;
+    }
+    return UPLOAD_URL . $image;
 }
 
 /** Settings for the admin-manageable sidebar CTA block (Text/Image/CTA), shown below Recent Posts. */

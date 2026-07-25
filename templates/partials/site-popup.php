@@ -19,7 +19,7 @@ $popupPoints = array_slice(array_filter(array_map('trim', explode("\n", (string)
 
     <?php if (!empty($popup['image'])): ?>
     <div class="site-popup-image">
-      <img src="<?= h(UPLOAD_URL . $popup['image']) ?>" alt="<?= h($popup['image_alt'] ?: $popup['title']) ?>">
+      <img src="<?= h(popup_image_src($popup['image'])) ?>" alt="<?= h($popup['image_alt'] ?: $popup['title']) ?>">
     </div>
     <?php endif; ?>
 

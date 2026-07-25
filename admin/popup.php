@@ -101,7 +101,7 @@ include __DIR__ . '/includes/header.php';
       <label>Image File</label>
       <input type="file" name="image" accept="image/jpeg,image/png,image/webp,image/gif" data-image-input>
       <div class="upload-preview">
-        <img data-image-preview src="<?= h($popup['image'] ? UPLOAD_URL . $popup['image'] : '') ?>" style="<?= $popup['image'] ? '' : 'display:none' ?>">
+        <img data-image-preview src="<?= h($popup['image'] ? popup_image_src($popup['image']) : '') ?>" style="<?= $popup['image'] ? '' : 'display:none' ?>">
       </div>
     </div>
     <div class="field">

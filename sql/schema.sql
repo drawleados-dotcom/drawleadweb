@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS case_study_services (
 CREATE TABLE IF NOT EXISTS site_popup (
   id               INT PRIMARY KEY DEFAULT 1,
   enabled          TINYINT(1) NOT NULL DEFAULT 0,
-  image            VARCHAR(255) NOT NULL DEFAULT '',
+  image            TEXT,                                    -- either an /uploads/ filename, or a data: URI for a built-in default graphic
   image_alt        VARCHAR(190) NOT NULL DEFAULT '',
   title            VARCHAR(190) NOT NULL DEFAULT '',
   description      VARCHAR(400) NOT NULL DEFAULT '',
@@ -387,7 +387,18 @@ INSERT IGNORE INTO case_study_services (name, sort_order) VALUES
 
 -- Disabled by default (enabled=0) so it doesn't start popping up on the
 -- live site before the admin has actually configured any content.
-INSERT IGNORE INTO site_popup (id) VALUES (1);
+-- The default popup image is a built-in data: URI graphic (no /uploads/
+-- file needed) — same value seeded by migration 017 for existing installs.
+INSERT IGNORE INTO site_popup (id, image, image_alt, title, description, points) VALUES
+(1,
+ 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDQwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQ0MCA1NjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzMyYjQ2ZiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwZjVjM2YiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPHBhdGggZD0iTTQwIDBIMFY0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDcpIiBzdHJva2Utd2lkdGg9IjEiLz4KICAgIDwvcGF0dGVybj4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjQ0MCIgaGVpZ2h0PSI1NjAiIGZpbGw9InVybCgjZykiLz4KICA8cmVjdCB3aWR0aD0iNDQwIiBoZWlnaHQ9IjU2MCIgZmlsbD0idXJsKCNncmlkKSIvPgogIDxjaXJjbGUgY3g9IjM5MCIgY3k9IjUwIiByPSIxNzAiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNykiLz4KICA8Y2lyY2xlIGN4PSIyMCIgY3k9IjU0MCIgcj0iMTMwIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDYpIi8+CgogIDxyZWN0IHg9IjQ4IiB5PSI2OCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiByeD0iMTYiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xNSkiLz4KICA8cmVjdCB4PSI2MiIgeT0iODYiIHdpZHRoPSIzMiIgaGVpZ2h0PSIyOCIgcng9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIyLjUiLz4KICA8bGluZSB4MT0iNjIiIHkxPSI5NiIgeDI9Ijk0IiB5Mj0iOTYiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIyLjUiLz4KICA8bGluZSB4MT0iNzAiIHkxPSI4MCIgeDI9IjcwIiB5Mj0iOTAiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxsaW5lIHgxPSI4NiIgeTE9IjgwIiB4Mj0iODYiIHkyPSI5MCIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGNpcmNsZSBjeD0iNzgiIGN5PSIxMDUiIHI9IjMiIGZpbGw9IiNmZmZmZmYiLz4KCiAgPHRleHQgeD0iNDgiIHk9IjMzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNzYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPjMwIE1pbjwvdGV4dD4KICA8dGV4dCB4PSI0OCIgeT0iMzYyIiBmb250LWZhbWlseT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9IjcwMCIgbGV0dGVyLXNwYWNpbmc9IjIiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC44KSI+RlJFRSBTVFJBVEVHWSBDQUxMPC90ZXh0PgoKICA8bGluZSB4MT0iNDgiIHkxPSIzOTQiIHgyPSIyMTAiIHkyPSIzOTQiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIiBzdHJva2Utd2lkdGg9IjIiLz4KCiAgPHRleHQgeD0iNDgiIHk9IjQyOCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC45KSI+Tm8gb2JsaWdhdGlvbjwvdGV4dD4KICA8dGV4dCB4PSI0OCIgeT0iNDU0IiBmb250LWZhbWlseT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9IjYwMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjkpIj5SZXNwb25zZSB3aXRoaW4gMjQgaG91cnM8L3RleHQ+CiAgPHRleHQgeD0iNDgiIHk9IjQ4MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC45KSI+QnVpbHQgYnkgRHJhd2xlYWQgc3BlY2lhbGlzdHM8L3RleHQ+Cjwvc3ZnPgo=',
+ 'Free 30-minute consultation with a Drawlead specialist',
+ 'Build Your Business OS',
+ 'Book a free 30-minute call with a Drawlead specialist. We map your current workflows and show you exactly what a unified ERP, ecommerce, and marketing system looks like for your business, with no obligation.',
+ 'Custom ERP built around your workflows
+Ecommerce and marketing systems that connect
+AI automation for repetitive work
+Free, no-obligation consultation');
 
 INSERT IGNORE INTO site_sidebar (id, title, text) VALUES
 (1, 'Book a Consultation', 'Ready to take your business to the next level?');

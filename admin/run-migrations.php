@@ -455,6 +455,44 @@ function migration_016_statements(): array
     ];
 }
 
+/**
+ * Unlike the other migration_XXX_statements() functions, this one needs
+ * $pdo: the content UPDATE below must only ever apply once. "Run All
+ * Pending Migrations" always re-executes every migration's statements on
+ * every click (that's how it stays safe for CREATE TABLE/ADD COLUMN/INSERT
+ * IGNORE elsewhere), so a plain unconditional UPDATE here would silently
+ * overwrite anything an admin later edits in Admin → Popup. Gating it on
+ * the structural column-type change means it can't re-fire after the
+ * first successful run, regardless of what the content looks like by then.
+ */
+function migration_017_statements(PDO $pdo): array
+{
+    $popupImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDQwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQ0MCA1NjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzMyYjQ2ZiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwZjVjM2YiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPHBhdGggZD0iTTQwIDBIMFY0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDcpIiBzdHJva2Utd2lkdGg9IjEiLz4KICAgIDwvcGF0dGVybj4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjQ0MCIgaGVpZ2h0PSI1NjAiIGZpbGw9InVybCgjZykiLz4KICA8cmVjdCB3aWR0aD0iNDQwIiBoZWlnaHQ9IjU2MCIgZmlsbD0idXJsKCNncmlkKSIvPgogIDxjaXJjbGUgY3g9IjM5MCIgY3k9IjUwIiByPSIxNzAiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNykiLz4KICA8Y2lyY2xlIGN4PSIyMCIgY3k9IjU0MCIgcj0iMTMwIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDYpIi8+CgogIDxyZWN0IHg9IjQ4IiB5PSI2OCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiByeD0iMTYiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xNSkiLz4KICA8cmVjdCB4PSI2MiIgeT0iODYiIHdpZHRoPSIzMiIgaGVpZ2h0PSIyOCIgcng9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIyLjUiLz4KICA8bGluZSB4MT0iNjIiIHkxPSI5NiIgeDI9Ijk0IiB5Mj0iOTYiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIyLjUiLz4KICA8bGluZSB4MT0iNzAiIHkxPSI4MCIgeDI9IjcwIiB5Mj0iOTAiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxsaW5lIHgxPSI4NiIgeTE9IjgwIiB4Mj0iODYiIHkyPSI5MCIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGNpcmNsZSBjeD0iNzgiIGN5PSIxMDUiIHI9IjMiIGZpbGw9IiNmZmZmZmYiLz4KCiAgPHRleHQgeD0iNDgiIHk9IjMzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNzYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPjMwIE1pbjwvdGV4dD4KICA8dGV4dCB4PSI0OCIgeT0iMzYyIiBmb250LWZhbWlseT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9IjcwMCIgbGV0dGVyLXNwYWNpbmc9IjIiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC44KSI+RlJFRSBTVFJBVEVHWSBDQUxMPC90ZXh0PgoKICA8bGluZSB4MT0iNDgiIHkxPSIzOTQiIHgyPSIyMTAiIHkyPSIzOTQiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIiBzdHJva2Utd2lkdGg9IjIiLz4KCiAgPHRleHQgeD0iNDgiIHk9IjQyOCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC45KSI+Tm8gb2JsaWdhdGlvbjwvdGV4dD4KICA8dGV4dCB4PSI0OCIgeT0iNDU0IiBmb250LWZhbWlseT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9IjYwMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjkpIj5SZXNwb25zZSB3aXRoaW4gMjQgaG91cnM8L3RleHQ+CiAgPHRleHQgeD0iNDgiIHk9IjQ4MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC45KSI+QnVpbHQgYnkgRHJhd2xlYWQgc3BlY2lhbGlzdHM8L3RleHQ+Cjwvc3ZnPgo=';
+    $popupImageAlt = 'Free 30-minute consultation with a Drawlead specialist';
+    $popupTitle = 'Build Your Business OS';
+    $popupDescription = 'Book a free 30-minute call with a Drawlead specialist. We map your current workflows and show you exactly what a unified ERP, ecommerce, and marketing system looks like for your business, with no obligation.';
+    $popupPoints = "Custom ERP built around your workflows\nEcommerce and marketing systems that connect\nAI automation for repetitive work\nFree, no-obligation consultation";
+
+    $statements = ["ALTER TABLE site_popup MODIFY COLUMN image TEXT"];
+
+    $stmt = $pdo->query(
+        "SELECT DATA_TYPE FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'site_popup' AND COLUMN_NAME = 'image'"
+    );
+    $alreadyWidened = strtolower((string) $stmt->fetchColumn()) === 'text';
+
+    if (!$alreadyWidened) {
+        $statements[] = "UPDATE site_popup SET
+            image = '$popupImage',
+            image_alt = '$popupImageAlt',
+            title = '$popupTitle',
+            description = '$popupDescription',
+            points = '$popupPoints'
+         WHERE id = 1";
+    }
+
+    return $statements;
+}
+
 $log = [];
 $error = '';
 
@@ -506,6 +544,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '016' || $which === 'all') {
         $toRun['016'] = migration_016_statements();
+    }
+    if ($which === '017' || $which === 'all') {
+        $toRun['017'] = migration_017_statements($pdo);
     }
 
     foreach ($toRun as $name => $statements) {
@@ -562,6 +603,10 @@ $stmt015->execute(['/home-2']);
 $migration015Done = (int) $stmt015->fetchColumn() >= 1;
 $migration016Done = migration_column_exists($pdo, 'pages', 'status')
     && migration_column_exists($pdo, 'pages', 'show_in_menu');
+$stmt017 = $pdo->query(
+    "SELECT DATA_TYPE FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'site_popup' AND COLUMN_NAME = 'image'"
+);
+$migration017Done = strtolower((string) $stmt017->fetchColumn()) === 'text';
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -767,7 +812,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done): ?>
+<div class="card">
+  <div class="card-title">017 — Consultation popup: real content &amp; image</div>
+  <div class="card-desc">Widens site_popup.image to support a built-in graphic (no upload needed), and replaces the popup's title, description, points, and image with real Drawlead content. The content replacement only ever applies once — safe to re-run later (including via "Run All Pending Migrations" for a future migration) without overwriting anything you edit in Admin → Popup afterward.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration017Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration017Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration017Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="017">
+    <button type="submit" class="btn btn-primary">Run Migration 017</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>
