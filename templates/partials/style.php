@@ -1073,7 +1073,8 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 @media(max-width:680px){
  .unify-visual{max-width:360px}
  .unify-card{width:66px;padding:9px 6px 8px;border-radius:13px;gap:5px}
- .unify-card-icon{width:30px;height:30px;border-radius:9px;font-size:14px}
+ .unify-card-icon{width:30px;height:30px;border-radius:9px}
+ .unify-card-icon svg{width:15px;height:15px}
  .unify-card-label{font-size:7.5px}
  .unify-board,.unify-board-glow{width:184px}
  .unify-board{border-radius:20px}
