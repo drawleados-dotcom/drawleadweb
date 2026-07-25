@@ -1,10 +1,11 @@
 <?php
 /**
- * Shared "proof + CTA" block for the three service landing pages
- * (custom-erp-solution, ecommerce-solutions, marketing-solutions):
- * real case studies tagged with this service, testimonials pulled from
- * whichever of those have one, then a final CTA banner. Both the case
- * studies and testimonials sections render nothing if there's no real
+ * Shared "case studies + CTA" block — sections 7 and 8 of the 8-section
+ * service landing page structure (custom-erp-solution, ecommerce-solutions,
+ * marketing-solutions; matches the 8-section platform module pages built
+ * from includes/platform-modules.php). Real case studies tagged with this
+ * service, each showing its testimonial inline if it has one, then a final
+ * CTA banner. Renders no case-study section at all if there's no real
  * content yet — no placeholder cards.
  *
  * Expected from the including template:
@@ -12,7 +13,6 @@
  *   $serviceCtaHeading   string
  *   $serviceCtaSub       string
  */
-$serviceTestimonials = array_values(array_filter($serviceCaseStudies, fn ($cs) => !empty($cs['testimonial'])));
 ?>
 
 <?php if (!empty($serviceCaseStudies)): ?>
@@ -31,25 +31,14 @@ $serviceTestimonials = array_values(array_filter($serviceCaseStudies, fn ($cs) =
      <div class="blog-card-body">
        <div class="blog-card-title"><?= h($cs['title']) ?></div>
        <?php if (!empty($cs['client_name'])): ?><div class="blog-card-date"><?= h($cs['client_name']) ?></div><?php endif; ?>
+       <?php if (!empty($cs['testimonial'])): ?>
+       <div class="blog-card-excerpt">&ldquo;<?= h($cs['testimonial']) ?>&rdquo;<?php if (!empty($cs['testimonial_author'])): ?> — <?= h($cs['testimonial_author']) ?><?php endif; ?></div>
+       <?php else: ?>
        <div class="blog-card-excerpt"><?= h($cs['description']) ?></div>
+       <?php endif; ?>
        <span class="blog-card-arrow">Read Case Study →</span>
      </div>
    </a>
-   <?php endforeach; ?>
- </div>
-</section>
-<?php endif; ?>
-
-<?php if (!empty($serviceTestimonials)): ?>
-<section id="service-testimonials">
- <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Testimonials</span><div class="eyebrow-line"></div></div>
- <h2 class="sec-h rv">What <span class="g">clients say</span></h2>
- <div class="testi-grid">
-   <?php foreach ($serviceTestimonials as $t): ?>
-   <div class="testi-card rv">
-     <div class="testi-text">&ldquo;<?= nl2br(h($t['testimonial'])) ?>&rdquo;</div>
-     <?php if (!empty($t['testimonial_author'])): ?><div class="testi-author">— <?= h($t['testimonial_author']) ?></div><?php endif; ?>
-   </div>
    <?php endforeach; ?>
  </div>
 </section>

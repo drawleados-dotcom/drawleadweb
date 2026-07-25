@@ -743,11 +743,6 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .svc-track-title{font-size:15px;font-weight:800;letter-spacing:-.01em;margin-bottom:1.2rem;display:flex;align-items:center;gap:10px;color:var(--black)}
 .svc-track .sol-list{margin-bottom:0}
 
-.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:1180px;margin:0 auto}
-.testi-card{background:var(--bg2);border-left:3px solid var(--blue);border-radius:0 12px 12px 0;padding:1.6rem 1.75rem}
-.testi-text{font-size:14px;font-style:italic;font-weight:600;color:var(--black);line-height:1.6;margin-bottom:.75rem}
-.testi-author{font-size:11.5px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.04em}
-
 #service-cta{text-align:center;padding:4.5rem 0;max-width:640px;margin:0 auto}
 #service-cta .sec-sub{margin-bottom:1.6rem}
 
