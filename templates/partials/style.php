@@ -466,27 +466,6 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .cta-btn-g:hover{border-color:rgba(255,255,255,.55);color:#fff;transform:translateY(-1px)}
 .cta-note{margin-top:2.5rem;font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.22);font-weight:600;position:relative}
 
-/* Low-opacity board texture behind the CTA text */
-.cta-apps{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-.cta-board{
- position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(2.4);
- width:170px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);
- border-radius:16px;padding:12px;opacity:.55;
-}
-.cta-board-bar{display:flex;gap:5px;margin-bottom:10px}
-.cta-board-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.18)}
-.cta-board-krow{display:flex;gap:6px;margin-bottom:10px}
-.cta-board-k{flex:1;height:16px;border-radius:5px;background:rgba(255,255,255,.06)}
-.cta-board-bars{display:flex;align-items:flex-end;gap:5px;height:44px}
-.cta-board-bar-i{flex:1;background:rgba(50,180,111,.35);border-radius:4px 4px 0 0}
-
-@media(max-width:960px){
- .cta-board{transform:translate(-50%,-50%) scale(1.6);opacity:.35}
-}
-@media(max-width:560px){
- .cta-apps{display:none}
-}
-
 /* ── FOOTER ── */
 footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:2rem;background:var(--white);border-top:1.5px solid var(--border)}
 .ft-logo{font-size:19px;font-weight:800;letter-spacing:.04em;margin-bottom:.5rem}

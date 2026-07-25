@@ -1032,25 +1032,6 @@
  <div class="cta-grid-bg"></div>
  <div class="cta-glow"></div>
 
- <div class="cta-apps" aria-hidden="true">
-  <div class="cta-board">
-   <div class="cta-board-bar">
-    <span class="cta-board-dot"></span><span class="cta-board-dot"></span><span class="cta-board-dot"></span>
-   </div>
-   <div class="cta-board-krow">
-    <div class="cta-board-k"></div><div class="cta-board-k"></div><div class="cta-board-k"></div>
-   </div>
-   <div class="cta-board-bars">
-    <div class="cta-board-bar-i" style="height:40%"></div>
-    <div class="cta-board-bar-i" style="height:65%"></div>
-    <div class="cta-board-bar-i" style="height:35%"></div>
-    <div class="cta-board-bar-i" style="height:85%"></div>
-    <div class="cta-board-bar-i" style="height:55%"></div>
-    <div class="cta-board-bar-i" style="height:95%"></div>
-   </div>
-  </div>
- </div>
-
  <h2 class="cta-h rv">Build your<br><span class="fade">business</span> <span class="gr">ERP</span><br><span class="gr2">OS</span> with <span class="gr3">AI</span></h2>
  <p class="cta-p rv">Digitize, automate, and scale with Drawlead. Start with a free consultation — no commitment needed.</p>
  <div class="cta-btns rv">
