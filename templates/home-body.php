@@ -390,6 +390,63 @@
  </div>
 </section>
 
+<!-- ═══════════════════ METHODOLOGY ═══════════════════ -->
+<section id="method">
+ <div class="grid-bg" style="opacity:.45"></div>
+ <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">How We Work</span><div class="eyebrow-line"></div></div>
+ <h2 class="sec-h rv">We don't build first. <span class="g">We understand first.</span></h2>
+ <p class="sec-sub rv">Before a single line of code or campaign goes live, we audit how your business actually runs — so every system we build is measurable, automated, and built to scale.</p>
+
+ <div class="fn-grid">
+ <!-- 01 Audit -->
+ <div class="fn-card rv d1">
+  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+   <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="6" y="4" width="20" height="26" rx="2" fill="rgba(255,255,255,.55)"/><path d="M11 12 L21 12 M11 17 L18 17" stroke="rgba(20,133,90,.7)" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="26" r="8" fill="none" stroke="white" stroke-width="2.5"/><path d="M30 32 L36 38" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+  </div>
+  <div class="fn-num" style="color:var(--blue)">01 — Audit</div>
+  <div class="fn-name">Audit</div>
+  <div class="fn-desc">We map your current workflows, tools, and customer journey to find exactly what's slowing growth down.</div>
+  <div class="fn-tags"><span class="fn-tag">Workflows</span><span class="fn-tag">Bottlenecks</span></div>
+ </div>
+ <!-- 02 Measure -->
+ <div class="fn-card rv d2">
+  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+   <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M6 26 A14 14 0 0 1 34 26" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="3" stroke-linecap="round"/><path d="M6 26 A14 14 0 0 1 24 13" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/><line x1="20" y1="26" x2="27" y2="17" stroke="white" stroke-width="2.5" stroke-linecap="round"/><circle cx="20" cy="26" r="2.5" fill="white"/></svg>
+  </div>
+  <div class="fn-num" style="color:#32b46f">02 — Measure</div>
+  <div class="fn-name">Measure</div>
+  <div class="fn-desc">We set up KPIs, dashboards, and tracking so every decision from here on is backed by real data.</div>
+  <div class="fn-tags"><span class="fn-tag">KPIs</span><span class="fn-tag">Dashboards</span></div>
+ </div>
+ <!-- 03 Automate -->
+ <div class="fn-card rv d3">
+  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+   <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M22 3 L9 21 L18 21 L16 37 L33 16 L23 16 Z" fill="white"/><path d="M22 3 L9 21 L18 21 L17 27" fill="none" stroke="rgba(20,133,90,.5)" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  </div>
+  <div class="fn-num" style="color:var(--violet)">03 — Automate</div>
+  <div class="fn-name">Automate</div>
+  <div class="fn-desc">We remove repetitive manual work — approvals, follow-ups, notifications — before we build anything new.</div>
+  <div class="fn-tags"><span class="fn-tag">Approvals</span><span class="fn-tag">Follow-ups</span></div>
+ </div>
+ <!-- 04 Scale -->
+ <div class="fn-card rv d4">
+  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+   <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="14" y="14" width="12" height="12" rx="2" fill="rgba(255,255,255,.5)"/><path d="M24 4 L36 4 L36 16" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 4 L24 16" stroke="white" stroke-width="2.5" stroke-linecap="round"/><path d="M16 36 L4 36 L4 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 36 L16 24" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+  </div>
+  <div class="fn-num" style="color:#14855a">04 — Scale</div>
+  <div class="fn-name">Scale</div>
+  <div class="fn-desc">Only then do we build the ERP, CRM, website, or automation platform — designed to grow with you.</div>
+  <div class="fn-tags"><span class="fn-tag">Custom ERP</span><span class="fn-tag">Automation</span></div>
+ </div>
+ </div>
+
+ <div class="unify-stat rv">Understand <span class="g2">→</span> Measure <span class="g2">→</span> Automate <span class="g2">→</span> Scale.</div>
+
+ <div class="sec-cta rv">
+  <button type="button" data-book class="btn btn-black">Start With an Audit →</button>
+ </div>
+</section>
+
 <!-- ═══════════════════ SOLUTIONS ═══════════════════ -->
 <section id="solutions">
  <div class="grid-bg" style="opacity:.45"></div>
