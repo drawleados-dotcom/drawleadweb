@@ -31,6 +31,9 @@ if ($uri === '/sitemap.xml') {
         if (($p['robots_index'] ?? 'index') === 'noindex' || $p['slug'] === '/') {
             continue;
         }
+        if (($p['status'] ?? 'published') === 'draft') {
+            continue;
+        }
         $entries[] = ['loc' => site_base_url() . $p['slug'], 'lastmod' => $p['updated_at'] ?? null];
     }
 
@@ -204,6 +207,10 @@ if (strpos($uri, '/case-studies/') === 0) {
 $stmt = $pdo->prepare('SELECT * FROM pages WHERE slug = ?');
 $stmt->execute([$uri]);
 $page = $stmt->fetch();
+
+if ($page && ($page['status'] ?? 'published') === 'draft') {
+    $page = false;
+}
 
 if (!$page) {
     http_response_code(404);

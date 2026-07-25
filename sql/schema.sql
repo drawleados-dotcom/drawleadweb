@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS pages (
   id                INT AUTO_INCREMENT PRIMARY KEY,
   name              VARCHAR(190) NOT NULL,
   slug              VARCHAR(190) NOT NULL UNIQUE,      -- e.g. "/" or "/about-us"
+  status            ENUM('draft','published') NOT NULL DEFAULT 'published',
+  show_in_menu      TINYINT(1) NOT NULL DEFAULT 0,      -- plain nav links only (Home, Home 2.0, About Us)
   meta_title        VARCHAR(190) NOT NULL DEFAULT '',
   meta_description  VARCHAR(320) NOT NULL DEFAULT '',
   focus_keyword     VARCHAR(190) NOT NULL DEFAULT '',
@@ -359,6 +361,8 @@ INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VA
 ('Home 2.0', '/home-2', 'Drawlead | Intelligent Business Operating System',
   'Drawlead helps MSMEs and SMEs grow with websites, SEO, performance marketing and a unified business operating system.',
   'home2');
+
+UPDATE pages SET show_in_menu = 1 WHERE slug IN ('/', '/home-2', '/about-us');
 
 INSERT IGNORE INTO settings (`key`, `value`) VALUES
 ('ga_measurement_id', ''),

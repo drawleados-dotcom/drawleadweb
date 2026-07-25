@@ -444,6 +444,17 @@ function migration_015_statements(): array
     ];
 }
 
+function migration_016_statements(): array
+{
+    return [
+        "ALTER TABLE pages
+         ADD COLUMN status ENUM('draft','published') NOT NULL DEFAULT 'published' AFTER slug,
+         ADD COLUMN show_in_menu TINYINT(1) NOT NULL DEFAULT 0 AFTER status",
+
+        "UPDATE pages SET show_in_menu = 1 WHERE slug IN ('/', '/home-2', '/about-us')",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -492,6 +503,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '015' || $which === 'all') {
         $toRun['015'] = migration_015_statements();
+    }
+    if ($which === '016' || $which === 'all') {
+        $toRun['016'] = migration_016_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -546,6 +560,8 @@ $migration014Done = migration_table_exists($pdo, 'site_sidebar');
 $stmt015 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
 $stmt015->execute(['/home-2']);
 $migration015Done = (int) $stmt015->fetchColumn() >= 1;
+$migration016Done = migration_column_exists($pdo, 'pages', 'status')
+    && migration_column_exists($pdo, 'pages', 'show_in_menu');
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -738,7 +754,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done): ?>
+<div class="card">
+  <div class="card-title">016 — Draft status &amp; menu visibility for Pages</div>
+  <div class="card-desc">Adds a Draft/Published status and a "Show in Menu" toggle to every page in Admin → Pages. Draft pages 404 for visitors and drop out of the sitemap; unchecking "Show in Menu" removes Home, Home 2.0, or About Us from the main nav.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration016Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration016Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration016Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="016">
+    <button type="submit" class="btn btn-primary">Run Migration 016</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

@@ -26,6 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_verify();
     $name = trim($_POST['name'] ?? '');
     $rawSlug = trim($_POST['slug'] ?? '');
+    $status = ($_POST['status'] ?? 'published') === 'draft' ? 'draft' : 'published';
+    $showInMenu = isset($_POST['show_in_menu']) ? 1 : 0;
     $metaTitle = trim($_POST['meta_title'] ?? '');
     $metaDescription = trim($_POST['meta_description'] ?? '');
     $focusKeyword = trim($_POST['focus_keyword'] ?? '');
@@ -65,11 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$error) {
         $pdo->prepare(
-            'UPDATE pages SET name = ?, slug = ?, meta_title = ?, meta_description = ?,
+            'UPDATE pages SET name = ?, slug = ?, status = ?, show_in_menu = ?, meta_title = ?, meta_description = ?,
              focus_keyword = ?, canonical_url = ?, robots_index = ?, robots_follow = ?,
              og_title = ?, og_description = ?, og_image = ? WHERE id = ?'
         )->execute([
-            $name, $slug, $metaTitle, $metaDescription,
+            $name, $slug, $status, $showInMenu, $metaTitle, $metaDescription,
             $focusKeyword, $canonicalUrl, $robotsIndex, $robotsFollow,
             $ogTitle, $ogDescription, $ogImage, $id,
         ]);
@@ -77,6 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $success = 'Saved — the live site now reflects these changes.';
         $page['name'] = $name;
         $page['slug'] = $slug;
+        $page['status'] = $status;
+        $page['show_in_menu'] = $showInMenu;
         $page['meta_title'] = $metaTitle;
         $page['meta_description'] = $metaDescription;
         $page['focus_keyword'] = $focusKeyword;
@@ -129,6 +133,19 @@ include __DIR__ . '/includes/header.php';
       <input type="text" id="slug" name="slug" required value="<?= h($page['slug']) ?>" data-slug-target>
       <div class="field-hint">e.g. <code>/about-us</code>. Visitors reach this page at yoursite.com<?= h($page['slug']) ?></div>
     </div>
+    <div class="field">
+      <label for="status">Status</label>
+      <select id="status" name="status">
+        <option value="published" <?= ($page['status'] ?? 'published') === 'published' ? 'selected' : '' ?>>Published</option>
+        <option value="draft" <?= ($page['status'] ?? 'published') === 'draft' ? 'selected' : '' ?>>Draft</option>
+      </select>
+      <div class="field-hint">Draft pages are unpublished — visitors get a 404, and they drop out of the sitemap.</div>
+    </div>
+    <label class="checkbox-row" style="max-width:340px">
+      <input type="checkbox" name="show_in_menu" <?= !empty($page['show_in_menu']) ? 'checked' : '' ?>>
+      Show in main nav
+    </label>
+    <div class="field-hint">Only applies to Home, Home 2.0, and About Us — Platform, Industry, and Solution pages always use their own mega menus regardless of this setting.</div>
   </div>
 
   <?php include __DIR__ . '/includes/seo-panel.php'; ?>

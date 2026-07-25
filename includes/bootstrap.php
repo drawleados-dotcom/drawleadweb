@@ -277,6 +277,9 @@ function pending_migrations_exist(PDO $pdo): bool
     if ((int) $stmt5->fetchColumn() < 1) {
         return true;
     }
+    if (!migration_column_exists($pdo, 'pages', 'status') || !migration_column_exists($pdo, 'pages', 'show_in_menu')) {
+        return true;
+    }
     return false;
 }
 
