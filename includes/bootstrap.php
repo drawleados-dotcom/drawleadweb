@@ -273,6 +273,10 @@ function pending_migrations_exist(PDO $pdo): bool
     if (!migration_table_exists($pdo, 'site_sidebar')) {
         return true;
     }
+    $stmt5 = $pdo->query("SELECT COUNT(*) FROM pages WHERE slug = '/home-2'");
+    if ((int) $stmt5->fetchColumn() < 1) {
+        return true;
+    }
     return false;
 }
 

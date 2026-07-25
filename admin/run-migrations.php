@@ -433,6 +433,17 @@ function migration_014_statements(): array
     ];
 }
 
+function migration_015_statements(): array
+{
+    return [
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Home 2.0', '/home-2',
+           'Drawlead | Intelligent Business Operating System',
+           'Drawlead helps MSMEs and SMEs grow with websites, SEO, performance marketing and a unified business operating system.',
+           'home2')",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -478,6 +489,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '014' || $which === 'all') {
         $toRun['014'] = migration_014_statements();
+    }
+    if ($which === '015' || $which === 'all') {
+        $toRun['015'] = migration_015_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -529,6 +543,9 @@ $migration012Done = (int) $stmt012->fetchColumn() >= 1;
 $stmt013 = $pdo->query("SELECT COUNT(*) FROM pages WHERE slug LIKE '/industry-%'");
 $migration013Done = (int) $stmt013->fetchColumn() >= 20;
 $migration014Done = migration_table_exists($pdo, 'site_sidebar');
+$stmt015 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
+$stmt015->execute(['/home-2']);
+$migration015Done = (int) $stmt015->fetchColumn() >= 1;
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -708,7 +725,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done): ?>
+<div class="card">
+  <div class="card-title">015 — Home 2.0 page</div>
+  <div class="card-desc">Adds a second homepage variant at /home-2 (same content, different card-based SaaS-style UI), editable from Admin → Pages and linked from the main nav.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration015Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration015Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration015Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="015">
+    <button type="submit" class="btn btn-primary">Run Migration 015</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

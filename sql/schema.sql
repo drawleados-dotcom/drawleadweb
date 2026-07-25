@@ -355,6 +355,11 @@ INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VA
   'Manage dealer orders, stock allocation, and distribution logistics from one system instead of juggling order books and phone calls.',
   'industry');
 
+INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+('Home 2.0', '/home-2', 'Drawlead | Intelligent Business Operating System',
+  'Drawlead helps MSMEs and SMEs grow with websites, SEO, performance marketing and a unified business operating system.',
+  'home2');
+
 INSERT IGNORE INTO settings (`key`, `value`) VALUES
 ('ga_measurement_id', ''),
 ('gsc_verification_tag', ''),
