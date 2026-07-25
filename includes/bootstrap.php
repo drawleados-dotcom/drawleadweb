@@ -270,6 +270,9 @@ function pending_migrations_exist(PDO $pdo): bool
     if ((int) $stmt4->fetchColumn() < 20) {
         return true;
     }
+    if (!migration_table_exists($pdo, 'site_sidebar')) {
+        return true;
+    }
     return false;
 }
 
@@ -320,6 +323,18 @@ function get_site_popup(PDO $pdo): array
         'trigger_delay' => 1, 'trigger_new_page' => 0, 'trigger_refresh' => 0, 'trigger_scroll_section' => 0,
     ];
     $row = $pdo->query('SELECT * FROM site_popup WHERE id = 1')->fetch();
+    return $row ? array_merge($defaults, $row) : $defaults;
+}
+
+/** Settings for the admin-manageable sidebar CTA block (Text/Image/CTA), shown below Recent Posts. */
+function get_site_sidebar(PDO $pdo): array
+{
+    $defaults = [
+        'enabled' => 1, 'image' => '', 'image_alt' => '', 'title' => 'Book a Consultation',
+        'text' => 'Ready to take your business to the next level?',
+        'cta_text' => 'Book a Free Consultation', 'cta_use_booking' => 1, 'cta_link' => '',
+    ];
+    $row = $pdo->query('SELECT * FROM site_sidebar WHERE id = 1')->fetch();
     return $row ? array_merge($defaults, $row) : $defaults;
 }
 

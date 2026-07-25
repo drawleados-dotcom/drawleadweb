@@ -259,22 +259,6 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .sol-arrow{font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;color:var(--blue);display:inline-flex;align-items:center;gap:6px;transition:gap .2s;font-family:var(--font);border:none;background:none;cursor:pointer;padding:0}
 .sol-card:hover .sol-arrow{gap:11px}
 
-/* ── SOLUTION CARD TABS ── */
-.sol-tabs{display:flex;gap:0;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;background:var(--white);margin-bottom:1.4rem}
-.sol-tab{
- flex:1;font-family:var(--font);font-size:10px;font-weight:800;
- letter-spacing:.06em;text-transform:uppercase;
- padding:11px 10px;border:none;border-right:1.5px solid var(--border);
- background:transparent;color:var(--g400);cursor:pointer;
- transition:background .22s,color .22s;line-height:1.35;text-align:center;
-}
-.sol-tab:last-child{border-right:none}
-.sol-tab:hover:not(.active){background:rgba(50,180,111,.07);color:var(--black)}
-.sol-tab.active{background:var(--grad);color:#fff}
-.sol-panel{display:none;flex-direction:column;flex:1}
-.sol-panel.active{display:flex;animation:solFade .3s ease}
-@keyframes solFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:560px){.sol-tab{font-size:9px;padding:10px 6px}}
 @media(max-width:1024px){.sol-grid{grid-template-columns:1fr}}
 @media(max-width:960px){.sol-card{padding:2.1rem 1.6rem}}
 .fn-cta-card{background:var(--black) !important;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1.25rem;padding:2.5rem 2rem}
@@ -482,15 +466,8 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .cta-btn-g:hover{border-color:rgba(255,255,255,.55);color:#fff;transform:translateY(-1px)}
 .cta-note{margin-top:2.5rem;font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.22);font-weight:600;position:relative}
 
-/* Low-opacity apps + board texture behind the CTA text */
+/* Low-opacity board texture behind the CTA text */
 .cta-apps{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-.cta-chip{
- position:absolute;transform:translate(-50%,-50%);
- width:46px;height:46px;border-radius:13px;
- background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
- display:flex;align-items:center;justify-content:center;
- font-size:20px;opacity:.4;filter:grayscale(.4) brightness(1.3);
-}
 .cta-board{
  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(2.4);
  width:170px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);
@@ -504,7 +481,6 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .cta-board-bar-i{flex:1;background:rgba(50,180,111,.35);border-radius:4px 4px 0 0}
 
 @media(max-width:960px){
- .cta-chip{width:36px;height:36px;font-size:16px;opacity:.3}
  .cta-board{transform:translate(-50%,-50%) scale(1.6);opacity:.35}
 }
 @media(max-width:560px){
@@ -691,7 +667,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .post-content li{margin-bottom:.5rem}
 .post-content a{color:var(--blue);font-weight:600}
 .post-content blockquote{border-left:3px solid var(--blue);padding:.2rem 0 .2rem 1.3rem;font-style:italic;color:var(--black);font-weight:600;margin:1.5rem 0}
-.post-content img{max-width:100%;border-radius:10px;margin:1.5rem 0}
+.post-content img{max-width:100%;border-radius:10px;margin:1.5rem auto;display:block}
 .post-back{max-width:720px;margin:2.5rem auto 0}
 .post-back a{font-size:12.5px;font-weight:700;color:var(--g500);text-decoration:none}
 .post-back a:hover{color:var(--blue)}
@@ -708,6 +684,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .sidebar-post:hover .sidebar-post-title{color:var(--blue)}
 .sidebar-post-excerpt{font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .sidebar-cta{background:#fff;border-radius:12px;padding:1.5rem 1.4rem}
+.sidebar-cta-img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:1rem;display:block}
 .sidebar-cta-title{font-size:17px;font-weight:800;color:var(--black);margin-bottom:.5rem}
 .sidebar-cta-text{font-size:12.5px;color:var(--g500);line-height:1.6;margin-bottom:1.1rem}
 .sidebar-cta-btn{width:100%;justify-content:center;padding:13px 18px;font-size:11.5px}

@@ -58,6 +58,10 @@ $activeNav = $activeNav ?? '';
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/><path d="M8 13.5l2 2 4-4.5"/></svg>
         Popup
       </a>
+      <a class="side-link<?= $activeNav === 'sidebar' ? ' active' : '' ?>" href="sidebar.php">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M15 3v18"/></svg>
+        Sidebar
+      </a>
       <?php endif; ?>
       <a class="side-link<?= $activeNav === 'analytics' ? ' active' : '' ?>" href="analytics.php">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>

@@ -339,7 +339,7 @@
  <div class="grid-bg" style="opacity:.4"></div>
  <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">The Problem</span><div class="eyebrow-line"></div></div>
  <h2 class="sec-h rv">Stop running your business from <span class="g">a dozen different tabs</span></h2>
- <p class="sec-sub rv">Google Sheets, Zoho CRM, WhatsApp, Notion, billing software, phone calls — your business data is scattered everywhere. Drawlead brings it all into one Smart Board.</p>
+ <p class="sec-sub rv">Google Sheets, CRM, WhatsApp, Notion, billing software, phone calls — your business data is scattered everywhere. Drawlead brings it all into one Smart Board.</p>
 
  <div class="unify-visual rv">
   <div class="unify-glow"></div>
@@ -352,7 +352,7 @@
   <div class="unify-card" style="left:79%;top:79%;animation-delay:.3s"><div class="unify-card-icon">💬</div><div class="unify-card-label">WhatsApp</div></div>
   <div class="unify-card" style="left:50%;top:91%;animation-delay:.5s"><div class="unify-card-icon">🧾</div><div class="unify-card-label">Bill Book</div></div>
   <div class="unify-card" style="left:21%;top:79%;animation-delay:.7s"><div class="unify-card-icon">📞</div><div class="unify-card-label">Calls</div></div>
-  <div class="unify-card" style="left:9%;top:50%;animation-delay:.9s"><div class="unify-card-icon">👥</div><div class="unify-card-label">Zoho CRM</div></div>
+  <div class="unify-card" style="left:9%;top:50%;animation-delay:.9s"><div class="unify-card-icon">👥</div><div class="unify-card-label">CRM</div></div>
   <div class="unify-card" style="left:21%;top:21%;animation-delay:1.1s"><div class="unify-card-icon">📝</div><div class="unify-card-label">Notion</div></div>
   <div class="unify-card" style="left:50%;top:9%;animation-delay:1.3s"><div class="unify-card-icon">📄</div><div class="unify-card-label">Docs</div></div>
   <div class="unify-card" style="left:79%;top:21%;animation-delay:1.5s"><div class="unify-card-icon">📧</div><div class="unify-card-label">Email</div></div>
@@ -452,40 +452,16 @@
   <div class="sol-name">Marketing Solutions</div>
   <div class="sol-tag">Fix the leak between lead and conversion.</div>
   <p class="sol-desc">Most businesses don't have a traffic problem — they have a follow-up problem. Two engines run the funnel: organic search that compounds over time, and paid campaigns that buy demand on demand.</p>
-
-  <div class="sol-tabs">
-   <button class="sol-tab active" data-mkt="0" onclick="switchMkt(0)">Search Engine Optimization</button>
-   <button class="sol-tab" data-mkt="1" onclick="switchMkt(1)">Performance Marketing</button>
+  <ul class="sol-list">
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Technical SEO, Core Web Vitals &amp; site architecture</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Content engine &amp; on-page optimisation at scale</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Google, Meta &amp; LinkedIn performance campaigns</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Instant WhatsApp &amp; email follow-up on every lead</li>
+  </ul>
+  <div class="sol-metrics">
+   <div><div class="sol-metric-v">4&times;</div><div class="sol-metric-l">Organic traffic</div></div>
+   <div><div class="sol-metric-v">&lt;5 min</div><div class="sol-metric-l">Response time</div></div>
   </div>
-
-  <!-- SEO panel -->
-  <div class="sol-panel active" data-mktpanel="0">
-   <ul class="sol-list">
-    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Technical audits, Core Web Vitals &amp; site architecture</li>
-    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Keyword strategy built around buying intent</li>
-    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Content engine &amp; on-page optimisation at scale</li>
-    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Local SEO, Google Business Profile &amp; schema markup</li>
-   </ul>
-   <div class="sol-metrics">
-    <div><div class="sol-metric-v">4&times;</div><div class="sol-metric-l">Organic traffic</div></div>
-    <div><div class="sol-metric-v">Page 1</div><div class="sol-metric-l">Target keywords</div></div>
-   </div>
-  </div>
-
-  <!-- Performance Marketing panel -->
-  <div class="sol-panel" data-mktpanel="1">
-   <ul class="sol-list">
-    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Google, Meta &amp; LinkedIn campaigns managed end to end</li>
-    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Landing pages &amp; creative built for conversion testing</li>
-    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Instant WhatsApp &amp; email follow-up on every lead</li>
-    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Ad spend mapped to closed revenue, not just clicks</li>
-   </ul>
-   <div class="sol-metrics">
-    <div><div class="sol-metric-v">&lt;5 min</div><div class="sol-metric-l">Response time</div></div>
-    <div><div class="sol-metric-v">100%</div><div class="sol-metric-l">Spend attributed</div></div>
-   </div>
-  </div>
-
   <a href="/marketing-solutions" class="sol-arrow">Explore marketing →</a>
  </div>
 
@@ -1057,15 +1033,6 @@
  <div class="cta-glow"></div>
 
  <div class="cta-apps" aria-hidden="true">
-  <span class="cta-chip" style="top:16%;left:9%">📊</span>
-  <span class="cta-chip" style="top:24%;left:89%">💬</span>
-  <span class="cta-chip" style="top:78%;left:7%">📝</span>
-  <span class="cta-chip" style="top:82%;left:91%">📞</span>
-  <span class="cta-chip" style="top:9%;left:46%">👥</span>
-  <span class="cta-chip" style="top:92%;left:52%">📄</span>
-  <span class="cta-chip" style="top:52%;left:4%">🧾</span>
-  <span class="cta-chip" style="top:50%;left:95%">📧</span>
-
   <div class="cta-board">
    <div class="cta-board-bar">
     <span class="cta-board-dot"></span><span class="cta-board-dot"></span><span class="cta-board-dot"></span>
@@ -1096,16 +1063,6 @@
 <?php include __DIR__ . '/partials/footer.php'; ?>
 
 <script>
-// ── Marketing Solutions tab switcher (SEO / Performance Marketing) ──
-function switchMkt(i){
- document.querySelectorAll('.sol-tab[data-mkt]').forEach(t=>{
-  t.classList.toggle('active', t.dataset.mkt == i);
- });
- document.querySelectorAll('.sol-panel[data-mktpanel]').forEach(p=>{
-  p.classList.toggle('active', p.dataset.mktpanel == i);
- });
-}
-
 // ── Industry Dashboard Switcher ──
 const industries = [
  {

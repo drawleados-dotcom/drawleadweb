@@ -412,6 +412,27 @@ function migration_013_statements(): array
     ];
 }
 
+function migration_014_statements(): array
+{
+    return [
+        "CREATE TABLE IF NOT EXISTS site_sidebar (
+            id INT PRIMARY KEY DEFAULT 1,
+            enabled TINYINT(1) NOT NULL DEFAULT 1,
+            image VARCHAR(255) NOT NULL DEFAULT '',
+            image_alt VARCHAR(190) NOT NULL DEFAULT '',
+            title VARCHAR(190) NOT NULL DEFAULT 'Book a Consultation',
+            text TEXT,
+            cta_text VARCHAR(100) NOT NULL DEFAULT 'Book a Free Consultation',
+            cta_use_booking TINYINT(1) NOT NULL DEFAULT 1,
+            cta_link VARCHAR(255) NOT NULL DEFAULT '',
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+
+        "INSERT IGNORE INTO site_sidebar (id, title, text) VALUES
+         (1, 'Book a Consultation', 'Ready to take your business to the next level?')",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -454,6 +475,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '013' || $which === 'all') {
         $toRun['013'] = migration_013_statements();
+    }
+    if ($which === '014' || $which === 'all') {
+        $toRun['014'] = migration_014_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -504,6 +528,7 @@ $stmt012->execute(['/platform-inventory']);
 $migration012Done = (int) $stmt012->fetchColumn() >= 1;
 $stmt013 = $pdo->query("SELECT COUNT(*) FROM pages WHERE slug LIKE '/industry-%'");
 $migration013Done = (int) $stmt013->fetchColumn() >= 20;
+$migration014Done = migration_table_exists($pdo, 'site_sidebar');
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -670,7 +695,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done): ?>
+<div class="card">
+  <div class="card-title">014 — Admin-manageable sidebar (Text/Image/CTA)</div>
+  <div class="card-desc">Creates site_sidebar, so the CTA block in the blog/case study sidebar (below Recent Posts) is editable from Admin → Sidebar instead of hardcoded.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration014Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration014Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration014Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="014">
+    <button type="submit" class="btn btn-primary">Run Migration 014</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

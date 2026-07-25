@@ -1,9 +1,10 @@
 <?php
 /**
  * Sticky right-hand sidebar shown on blog post and case study detail
- * pages: recent blog posts + a "Book a Consultation" CTA.
+ * pages: recent blog posts + an admin-managed CTA block (Admin → Sidebar).
  * @var array $recentPosts  set by index.php before including the calling template
  */
+$sidebarCta = get_site_sidebar($pdo);
 ?>
 <aside class="post-sidebar">
   <div class="sidebar-card rv">
@@ -17,10 +18,21 @@
     <?php endforeach; ?>
     <?php endif; ?>
 
+    <?php if (!empty($sidebarCta['enabled'])): ?>
     <div class="sidebar-cta">
-      <div class="sidebar-cta-title">Book a Consultation</div>
-      <p class="sidebar-cta-text">Ready to take your business to the next level?</p>
-      <button type="button" data-book class="btn btn-black sidebar-cta-btn">Book a Free Consultation →</button>
+      <?php if (!empty($sidebarCta['image'])): ?>
+      <img class="sidebar-cta-img" src="<?= h(UPLOAD_URL . $sidebarCta['image']) ?>" alt="<?= h($sidebarCta['image_alt'] ?: $sidebarCta['title']) ?>">
+      <?php endif; ?>
+      <?php if (!empty($sidebarCta['title'])): ?><div class="sidebar-cta-title"><?= h($sidebarCta['title']) ?></div><?php endif; ?>
+      <?php if (!empty($sidebarCta['text'])): ?><p class="sidebar-cta-text"><?= h($sidebarCta['text']) ?></p><?php endif; ?>
+      <?php if (!empty($sidebarCta['cta_text'])): ?>
+        <?php if (!empty($sidebarCta['cta_use_booking'])): ?>
+        <button type="button" data-book class="btn btn-black sidebar-cta-btn"><?= h($sidebarCta['cta_text']) ?></button>
+        <?php else: ?>
+        <a href="<?= h($sidebarCta['cta_link'] ?: '#') ?>" class="btn btn-black sidebar-cta-btn"><?= h($sidebarCta['cta_text']) ?></a>
+        <?php endif; ?>
+      <?php endif; ?>
     </div>
+    <?php endif; ?>
   </div>
 </aside>
