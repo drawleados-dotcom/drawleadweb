@@ -1,8 +1,8 @@
 <?php
 /**
  * Shared site nav, included by every public template.
- * Set $activePage (one of: home, about-us, blog) before including this
- * to highlight the current link.
+ * Set $activePage (one of: home, home2, blog, analyze, about-us) before
+ * including this to highlight the current link.
  */
 $activePage = $activePage ?? '';
 
@@ -176,6 +176,7 @@ try {
    </div>
   </li>
  <li><a href="/blog"<?= $activePage === 'blog' ? ' style="color:var(--black)"' : '' ?>>Blog</a></li>
+ <li><a href="/analyze"<?= $activePage === 'analyze' ? ' style="color:var(--black)"' : '' ?>>Analyze</a></li>
  <?php if (!empty($navFlags['/about-us'])): ?>
  <li><a href="/about-us"<?= $activePage === 'about-us' ? ' style="color:var(--black)"' : '' ?>>About Us</a></li>
  <?php endif; ?>

@@ -26,6 +26,7 @@ define('UPLOAD_URL', '/uploads/');
 
 require_once __DIR__ . '/platform-modules.php';
 require_once __DIR__ . '/industries.php';
+require_once __DIR__ . '/analyze.php';
 
 try {
     $pdo = new PDO(
@@ -284,6 +285,9 @@ function pending_migrations_exist(PDO $pdo): bool
         "SELECT DATA_TYPE FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'site_popup' AND COLUMN_NAME = 'image'"
     );
     if (strtolower((string) $stmt6->fetchColumn()) !== 'text') {
+        return true;
+    }
+    if (!migration_table_exists($pdo, 'analyze_reports')) {
         return true;
     }
     return false;

@@ -493,6 +493,27 @@ function migration_017_statements(PDO $pdo): array
     return $statements;
 }
 
+function migration_018_statements(): array
+{
+    return [
+        "CREATE TABLE IF NOT EXISTS analyze_reports (
+            id                    INT AUTO_INCREMENT PRIMARY KEY,
+            token                 VARCHAR(32) NOT NULL UNIQUE,
+            target_url            VARCHAR(500) NOT NULL,
+            page_title            VARCHAR(300) NOT NULL DEFAULT '',
+            page_description      VARCHAR(500) NOT NULL DEFAULT '',
+            cro_score             TINYINT UNSIGNED NOT NULL DEFAULT 0,
+            sub_scores            TEXT,                                 -- JSON: {label: score}
+            target_audience       VARCHAR(190) NOT NULL DEFAULT '',
+            audience_match_score  TINYINT UNSIGNED NOT NULL DEFAULT 0,
+            changes_json          TEXT,                                 -- JSON: [{title, reasoning, category}]
+            new_page_json         TEXT,                                 -- JSON: extracted content used for the Tab 1 CRO rebuild
+            created_at            DATETIME DEFAULT CURRENT_TIMESTAMP,
+            INDEX (created_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -547,6 +568,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '017' || $which === 'all') {
         $toRun['017'] = migration_017_statements($pdo);
+    }
+    if ($which === '018' || $which === 'all') {
+        $toRun['018'] = migration_018_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -607,6 +631,7 @@ $stmt017 = $pdo->query(
     "SELECT DATA_TYPE FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'site_popup' AND COLUMN_NAME = 'image'"
 );
 $migration017Done = strtolower((string) $stmt017->fetchColumn()) === 'text';
+$migration018Done = migration_table_exists($pdo, 'analyze_reports');
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -825,7 +850,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done): ?>
+<div class="card">
+  <div class="card-title">018 — Drawlead Analyze</div>
+  <div class="card-desc">Creates analyze_reports, so the new /analyze tool (URL in, CRO scorecard + rebuilt page out) can save shareable results.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration018Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration018Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration018Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="018">
+    <button type="submit" class="btn btn-primary">Run Migration 018</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

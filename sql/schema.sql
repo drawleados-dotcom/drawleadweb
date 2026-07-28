@@ -209,6 +209,26 @@ CREATE TABLE IF NOT EXISTS site_sidebar (
   updated_at       DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- ── Drawlead Analyze — enter a URL, get a rule-based CRO scorecard plus
+-- a rebuilt version of the page's own copy in Drawlead's CRO layout,
+-- saved at a shareable /analyze/{token}. ──
+
+CREATE TABLE IF NOT EXISTS analyze_reports (
+  id                    INT AUTO_INCREMENT PRIMARY KEY,
+  token                 VARCHAR(32) NOT NULL UNIQUE,
+  target_url            VARCHAR(500) NOT NULL,
+  page_title            VARCHAR(300) NOT NULL DEFAULT '',
+  page_description      VARCHAR(500) NOT NULL DEFAULT '',
+  cro_score             TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  sub_scores            TEXT,                                 -- JSON: {label: score}
+  target_audience       VARCHAR(190) NOT NULL DEFAULT '',
+  audience_match_score  TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  changes_json          TEXT,                                 -- JSON: [{title, reasoning, category}]
+  new_page_json         TEXT,                                 -- JSON: extracted content used for the Tab 1 CRO rebuild
+  created_at            DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- ── WhatsApp-style lead-capture chat widget ──
 
 CREATE TABLE IF NOT EXISTS whatsapp_flow_steps (

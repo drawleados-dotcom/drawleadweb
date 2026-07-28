@@ -61,14 +61,8 @@ $h2Cases = $pdo->query(
 @media(max-width:960px){.h2-bento{grid-template-columns:repeat(2,1fr)}.h2-bento-hero{grid-column:span 2;grid-row:span 2}}
 @media(max-width:560px){.h2-bento{grid-template-columns:1fr;grid-auto-rows:auto}.h2-bento-card{min-height:130px}.h2-bento-hero{grid-column:span 1;grid-row:span 1}}
 
-/* ── How it works (step timeline) ── */
-.h2-steps{position:relative;display:flex;justify-content:space-between;gap:1.5rem;max-width:1080px;margin:0 auto}
-.h2-steps::before{content:'';position:absolute;top:26px;left:6%;right:6%;height:2px;background:var(--border);z-index:0}
-.h2-step{position:relative;z-index:1;flex:1;text-align:center;display:flex;flex-direction:column;align-items:center}
-.h2-step-n{width:52px;height:52px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;margin-bottom:1.1rem;box-shadow:0 8px 18px rgba(20,133,90,.25)}
-.h2-step-name{font-size:15px;font-weight:800;margin-bottom:.4rem}
-.h2-step-desc{font-size:12px;color:var(--g500);line-height:1.55;max-width:190px}
-@media(max-width:800px){.h2-steps{flex-direction:column;gap:2.2rem}.h2-steps::before{display:none}}
+/* How it works (step timeline) — shared .h2-steps component now lives in
+   templates/partials/style.php since Analyze reuses it too. */
 
 /* ── Solutions (3-card) ── */
 .h2-sol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;max-width:1320px;margin:0 auto}
