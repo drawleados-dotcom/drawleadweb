@@ -382,7 +382,13 @@ INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VA
   'Drawlead helps MSMEs and SMEs grow with websites, SEO, performance marketing and a unified business operating system.',
   'home2');
 
-UPDATE pages SET show_in_menu = 1 WHERE slug IN ('/', '/home-2', '/about-us');
+INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+('Analyze', '/analyze',
+  'Drawlead Analyze — Free CRO Website Analysis',
+  'Enter your website URL and get a free, rule-based conversion-rate-optimization scorecard plus a rebuilt version of your page in a modern, high-converting layout.',
+  'analyze');
+
+UPDATE pages SET show_in_menu = 1 WHERE slug IN ('/', '/home-2', '/about-us', '/analyze');
 
 INSERT IGNORE INTO settings (`key`, `value`) VALUES
 ('ga_measurement_id', ''),

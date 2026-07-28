@@ -514,6 +514,19 @@ function migration_018_statements(): array
     ];
 }
 
+function migration_019_statements(): array
+{
+    return [
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Analyze', '/analyze',
+           'Drawlead Analyze — Free CRO Website Analysis',
+           'Enter your website URL and get a free, rule-based conversion-rate-optimization scorecard plus a rebuilt version of your page in a modern, high-converting layout.',
+           'analyze')",
+
+        "UPDATE pages SET show_in_menu = 1 WHERE slug = '/analyze'",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -571,6 +584,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '018' || $which === 'all') {
         $toRun['018'] = migration_018_statements();
+    }
+    if ($which === '019' || $which === 'all') {
+        $toRun['019'] = migration_019_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -632,6 +648,9 @@ $stmt017 = $pdo->query(
 );
 $migration017Done = strtolower((string) $stmt017->fetchColumn()) === 'text';
 $migration018Done = migration_table_exists($pdo, 'analyze_reports');
+$stmt019 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
+$stmt019->execute(['/analyze']);
+$migration019Done = (int) $stmt019->fetchColumn() >= 1;
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -863,7 +882,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done): ?>
+<div class="card">
+  <div class="card-title">019 — Analyze page in Admin → Pages</div>
+  <div class="card-desc">Adds Analyze as a real page row (/analyze), so it shows up in Admin → Pages with its own Draft/Published toggle, meta title/description, and Show in Menu checkbox — same as Home, Home 2.0, and About Us.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration019Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration019Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration019Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="019">
+    <button type="submit" class="btn btn-primary">Run Migration 019</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

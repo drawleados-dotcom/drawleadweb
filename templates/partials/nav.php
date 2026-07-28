@@ -8,17 +8,22 @@ $activePage = $activePage ?? '';
 
 // "Show in Menu" is admin-managed per page (Admin → Pages) for the plain
 // nav links below — Platform/Case Studies/Industries stay mega-menu-driven
-// regardless of this flag. Defaults to "show" if migration 016 hasn't been
-// run yet, since nav.php loads on every public page.
-$navFlags = ['/' => true, '/home-2' => true, '/about-us' => true];
+// regardless of this flag. Every slug below defaults to "show": before its
+// migration has run the row doesn't exist yet (nav.php loads on every
+// public page, so it must never break), and that's indistinguishable from
+// "not found" unless we default it — the loop below only ever overwrites a
+// default when a row actually comes back, so a real draft/hidden row still
+// wins once it exists.
+$navFlags = ['/' => true, '/home-2' => true, '/about-us' => true, '/analyze' => true];
 try {
-    $navRows = $pdo->query("SELECT slug, show_in_menu FROM pages WHERE slug IN ('/', '/home-2', '/about-us') AND status = 'published'")->fetchAll();
-    $navFlags = [];
+    $navRows = $pdo->query(
+        "SELECT slug, show_in_menu, status FROM pages WHERE slug IN ('/', '/home-2', '/about-us', '/analyze')"
+    )->fetchAll();
     foreach ($navRows as $navRow) {
-        $navFlags[$navRow['slug']] = (bool) $navRow['show_in_menu'];
+        $navFlags[$navRow['slug']] = (($navRow['status'] ?? 'published') === 'published') && !empty($navRow['show_in_menu']);
     }
 } catch (PDOException $e) {
-    $navFlags = ['/' => true, '/home-2' => true, '/about-us' => true];
+    // Columns don't exist yet (migration 016 not run) — keep the defaults above.
 }
 ?>
 <nav>
@@ -176,7 +181,9 @@ try {
    </div>
   </li>
  <li><a href="/blog"<?= $activePage === 'blog' ? ' style="color:var(--black)"' : '' ?>>Blog</a></li>
+ <?php if (!empty($navFlags['/analyze'])): ?>
  <li><a href="/analyze"<?= $activePage === 'analyze' ? ' style="color:var(--black)"' : '' ?>>Analyze</a></li>
+ <?php endif; ?>
  <?php if (!empty($navFlags['/about-us'])): ?>
  <li><a href="/about-us"<?= $activePage === 'about-us' ? ' style="color:var(--black)"' : '' ?>>About Us</a></li>
  <?php endif; ?>

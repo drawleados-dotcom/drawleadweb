@@ -123,6 +123,9 @@ include __DIR__ . '/includes/header.php';
     <?php if ($page['slug'] === '/'): ?>
       <div class="access-note" style="margin-top:0;margin-bottom:1.4rem">This is your homepage. If you change its URL away from <code>/</code>, your domain root will no longer show this page unless the new URL is set to <code>/</code>.</div>
     <?php endif; ?>
+    <?php if ($page['slug'] === '/analyze'): ?>
+      <div class="access-note" style="margin-top:0;margin-bottom:1.4rem">This page powers the Drawlead Analyze tool. Its functionality lives in code at the fixed URL <code>/analyze</code> — if you change the URL here, the tool will stop working there (this row will just control an unused page). Status and meta title/description are safe to edit.</div>
+    <?php endif; ?>
     <div class="field">
       <label for="name">Page Name</label>
       <input type="text" id="name" name="name" required value="<?= h($page['name']) ?>" data-slug-source>
@@ -145,7 +148,7 @@ include __DIR__ . '/includes/header.php';
       <input type="checkbox" name="show_in_menu" <?= !empty($page['show_in_menu']) ? 'checked' : '' ?>>
       Show in main nav
     </label>
-    <div class="field-hint">Only applies to Home, Home 2.0, and About Us — Platform, Industry, and Solution pages always use their own mega menus regardless of this setting.</div>
+    <div class="field-hint">Only applies to Home, Home 2.0, About Us, and Analyze — Platform, Industry, and Solution pages always use their own mega menus regardless of this setting.</div>
   </div>
 
   <?php include __DIR__ . '/includes/seo-panel.php'; ?>

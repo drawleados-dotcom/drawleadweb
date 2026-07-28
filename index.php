@@ -205,6 +205,22 @@ if (strpos($uri, '/case-studies/') === 0) {
 
 // ── Drawlead Analyze ──
 if ($uri === '/analyze') {
+    // Admin-controlled via Admin → Pages (migration 019 adds the row). Falls
+    // back to "published" if that row doesn't exist yet, so the tool keeps
+    // working in the gap between deploying this code and running the migration.
+    $analyzePageStmt = $pdo->prepare('SELECT * FROM pages WHERE slug = ?');
+    $analyzePageStmt->execute(['/analyze']);
+    $analyzePage = $analyzePageStmt->fetch();
+
+    if ($analyzePage && ($analyzePage['status'] ?? 'published') === 'draft') {
+        http_response_code(404);
+        $seo = $notFoundSeo;
+        include __DIR__ . '/templates/layout-start.php';
+        include __DIR__ . '/templates/404.php';
+        include __DIR__ . '/templates/layout-end.php';
+        exit;
+    }
+
     $analyzeError = '';
     $analyzeUrlValue = '';
 
@@ -227,13 +243,16 @@ if ($uri === '/analyze') {
         }
     }
 
-    $seo = [
-        'title' => 'Drawlead Analyze — Free CRO Website Analysis',
-        'description' => 'Enter your website URL and get a free, rule-based conversion-rate-optimization scorecard plus a rebuilt version of your page in a modern, high-converting layout.',
-        'canonical' => site_base_url() . '/analyze',
-        'robots_index' => 'index', 'robots_follow' => 'follow',
-        'og_title' => '', 'og_description' => '', 'og_image' => '', 'og_type' => 'website', 'schema' => null,
-    ];
+    $fallbackTitle = 'Drawlead Analyze — Free CRO Website Analysis';
+    $fallbackDescription = 'Enter your website URL and get a free, rule-based conversion-rate-optimization scorecard plus a rebuilt version of your page in a modern, high-converting layout.';
+    $seo = $analyzePage
+        ? build_seo_from_row($analyzePage, '/analyze', $fallbackTitle, $fallbackDescription, 'website')
+        : [
+            'title' => $fallbackTitle, 'description' => $fallbackDescription,
+            'canonical' => site_base_url() . '/analyze',
+            'robots_index' => 'index', 'robots_follow' => 'follow',
+            'og_title' => '', 'og_description' => '', 'og_image' => '', 'og_type' => 'website', 'schema' => null,
+        ];
 
     include __DIR__ . '/templates/layout-start.php';
     include __DIR__ . '/templates/analyze-form-body.php';
