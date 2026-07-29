@@ -203,6 +203,22 @@ if (strpos($uri, '/case-studies/') === 0) {
     exit;
 }
 
+// ── Standalone booking page (calendar only, no nav/footer) ──
+if ($uri === '/book') {
+    $seo = [
+        'title' => 'Book a Free Consultation | Drawlead',
+        'description' => 'Pick a date and time for a free 30-minute consultation call with Drawlead.',
+        'canonical' => site_base_url() . '/book',
+        'robots_index' => 'index', 'robots_follow' => 'follow',
+        'og_title' => '', 'og_description' => '', 'og_image' => '', 'og_type' => 'website', 'schema' => null,
+    ];
+
+    include __DIR__ . '/templates/layout-start.php';
+    include __DIR__ . '/templates/book-body.php';
+    include __DIR__ . '/templates/layout-end.php';
+    exit;
+}
+
 // ── Drawlead Analyze ──
 if ($uri === '/analyze') {
     // Admin-controlled via Admin → Pages (migration 019 adds the row). Falls

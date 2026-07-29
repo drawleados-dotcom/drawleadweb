@@ -2,12 +2,15 @@
 /**
  * Site-wide "on open" consultation popup — content and on/off switch
  * managed entirely from admin/popup.php. Renders nothing if disabled or
- * left without a title, so an unconfigured install shows nothing.
+ * left without a title, so an unconfigured install shows nothing. Also
+ * skipped on $bookingPageMinimal pages (e.g. /book) — a popup asking
+ * visitors to book a call would be redundant on a page that already is
+ * the booking calendar.
  */
 $popup = get_site_popup($pdo);
 $popupPoints = array_slice(array_filter(array_map('trim', explode("\n", (string) $popup['points']))), 0, 4);
 ?>
-<?php if (!empty($popup['enabled']) && $popup['title'] !== ''): ?>
+<?php if (empty($bookingPageMinimal) && !empty($popup['enabled']) && $popup['title'] !== ''): ?>
 <div id="site-popup" class="site-popup" aria-hidden="true"
      data-trigger-delay="<?= $popup['trigger_delay'] ? '1' : '0' ?>"
      data-trigger-new-page="<?= $popup['trigger_new_page'] ? '1' : '0' ?>"

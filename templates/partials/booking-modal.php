@@ -1,8 +1,29 @@
-<div id="booking-modal" class="booking-modal" aria-hidden="true" data-csrf="<?= h(csrf_token()) ?>">
+<?php
+/**
+ * Booking calendar/form/success flow. Included on every page by
+ * layout-end.php, opened as an overlay via any [data-book] trigger.
+ *
+ * A page can instead render this inline as the page itself — no
+ * overlay, no marketing panel, no close button — by setting
+ * $bookingPageMinimal = true before this include (see
+ * templates/book-body.php / the /book route). booking.js's openModal()
+ * is still what populates the calendar, so those pages auto-click a
+ * hidden [data-book] trigger on load instead of duplicating that logic.
+ */
+$bookingStandalone = !empty($bookingPageMinimal);
+?>
+<div id="booking-modal" class="booking-modal<?= $bookingStandalone ? ' booking-modal-standalone' : '' ?>" aria-hidden="true" data-csrf="<?= h(csrf_token()) ?>">
+  <?php if (!$bookingStandalone): ?>
   <div class="booking-overlay" data-book-close></div>
+  <?php endif; ?>
   <div class="booking-dialog" role="dialog" aria-modal="true" aria-labelledby="booking-title">
+    <?php if (!$bookingStandalone): ?>
     <button type="button" class="booking-close" data-book-close aria-label="Close">&times;</button>
+    <?php endif; ?>
 
+    <?php if ($bookingStandalone): ?>
+    <h2 id="booking-title" class="sr-only">Book a Free Consultation</h2>
+    <?php else: ?>
     <div class="booking-left">
       <div class="booking-left-inner">
         <div class="booking-eyebrow">Free Consultation Call</div>
@@ -32,6 +53,7 @@
         </ul>
       </div>
     </div>
+    <?php endif; ?>
 
     <div class="booking-right">
       <div class="booking-step" data-step="datetime">

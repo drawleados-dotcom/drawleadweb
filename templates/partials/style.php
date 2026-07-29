@@ -968,6 +968,20 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
   .bslots-grid{grid-template-columns:repeat(2,1fr)}
 }
 
+/* Standalone booking page (/book) — same modal markup and JS, shown as
+   the page itself instead of an overlay: no backdrop, no marketing
+   panel, no close button. Source order after .booking-modal/.open lets
+   it show immediately without waiting on the JS-added .open class. */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.booking-modal-standalone{display:flex;position:static;min-height:100vh;background:var(--bg);padding:3rem 1.5rem}
+.booking-modal-standalone .booking-dialog{grid-template-columns:1fr;grid-template-rows:auto;max-width:600px;max-height:none;margin:0 auto;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.08)}
+.booking-modal-standalone .booking-right{padding:2.75rem 2.5rem}
+@media(max-width:560px){
+  .booking-modal-standalone{padding:0}
+  .booking-modal-standalone .booking-dialog{border-radius:0;min-height:100vh;box-shadow:none}
+  .booking-modal-standalone .booking-right{padding:2rem 1.25rem}
+}
+
 /* ══════════════════ SITE POPUP ══════════════════ */
 .site-popup{position:fixed;inset:0;z-index:950;display:none;align-items:center;justify-content:center;padding:2rem 1.5rem}
 .site-popup.open{display:flex}
