@@ -976,10 +976,17 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .booking-modal-standalone{display:flex;position:static;min-height:100vh;background:var(--bg);padding:3rem 1.5rem}
 .booking-modal-standalone .booking-dialog{grid-template-columns:1fr;grid-template-rows:auto;max-width:600px;max-height:none;margin:0 auto;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.08)}
 .booking-modal-standalone .booking-right{padding:2.75rem 2.5rem}
+.booking-modal-standalone .booking-dialog-with-image{grid-template-columns:42% 58%;max-width:900px}
+.booking-standalone-image{background:var(--bg2)}
+.booking-standalone-image img{width:100%;height:100%;object-fit:cover;display:block;min-height:340px}
 @media(max-width:560px){
   .booking-modal-standalone{padding:0}
   .booking-modal-standalone .booking-dialog{border-radius:0;min-height:100vh;box-shadow:none}
   .booking-modal-standalone .booking-right{padding:2rem 1.25rem}
+}
+@media(max-width:700px){
+  .booking-modal-standalone .booking-dialog-with-image{grid-template-columns:1fr;grid-template-rows:auto auto}
+  .booking-standalone-image img{min-height:180px}
 }
 
 /* ══════════════════ SITE POPUP ══════════════════ */

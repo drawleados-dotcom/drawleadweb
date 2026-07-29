@@ -9,20 +9,37 @@
  * templates/book-body.php / the /book route). booking.js's openModal()
  * is still what populates the calendar, so those pages auto-click a
  * hidden [data-book] trigger on load instead of duplicating that logic.
+ * On standalone pages, the image already configured for the site-wide
+ * consultation popup (Admin → Popup) is reused as a side panel — same
+ * image, no separate upload needed. Renders without it if none is set.
  */
 $bookingStandalone = !empty($bookingPageMinimal);
+$bookingStandaloneImage = '';
+$bookingStandaloneImageAlt = '';
+if ($bookingStandalone) {
+    $popupForImage = get_site_popup($pdo);
+    if (!empty($popupForImage['image'])) {
+        $bookingStandaloneImage = popup_image_src($popupForImage['image']);
+        $bookingStandaloneImageAlt = $popupForImage['image_alt'] ?: 'Book a free consultation with Drawlead';
+    }
+}
 ?>
 <div id="booking-modal" class="booking-modal<?= $bookingStandalone ? ' booking-modal-standalone' : '' ?>" aria-hidden="true" data-csrf="<?= h(csrf_token()) ?>">
   <?php if (!$bookingStandalone): ?>
   <div class="booking-overlay" data-book-close></div>
   <?php endif; ?>
-  <div class="booking-dialog" role="dialog" aria-modal="true" aria-labelledby="booking-title">
+  <div class="booking-dialog<?= $bookingStandaloneImage !== '' ? ' booking-dialog-with-image' : '' ?>" role="dialog" aria-modal="true" aria-labelledby="booking-title">
     <?php if (!$bookingStandalone): ?>
     <button type="button" class="booking-close" data-book-close aria-label="Close">&times;</button>
     <?php endif; ?>
 
     <?php if ($bookingStandalone): ?>
     <h2 id="booking-title" class="sr-only">Book a Free Consultation</h2>
+    <?php if ($bookingStandaloneImage !== ''): ?>
+    <div class="booking-standalone-image">
+      <img src="<?= h($bookingStandaloneImage) ?>" alt="<?= h($bookingStandaloneImageAlt) ?>">
+    </div>
+    <?php endif; ?>
     <?php else: ?>
     <div class="booking-left">
       <div class="booking-left-inner">
