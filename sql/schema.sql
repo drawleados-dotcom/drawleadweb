@@ -388,6 +388,12 @@ INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VA
   'Enter your website URL and get a free, rule-based conversion-rate-optimization scorecard plus a rebuilt version of your page in a modern, high-converting layout.',
   'analyze');
 
+INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+('Ulagai', '/ulagai',
+  'Ulagai — High-Performance Ecommerce Stores | Drawlead',
+  'We engineer high-performance ecommerce stores designed to convert traffic into consistent online orders, for scaling D2C brands serious about growth.',
+  'ulagai');
+
 UPDATE pages SET show_in_menu = 1 WHERE slug IN ('/', '/home-2', '/about-us', '/analyze');
 
 INSERT IGNORE INTO settings (`key`, `value`) VALUES

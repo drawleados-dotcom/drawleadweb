@@ -294,6 +294,10 @@ function pending_migrations_exist(PDO $pdo): bool
     if ((int) $stmt7->fetchColumn() < 1) {
         return true;
     }
+    $stmt8 = $pdo->query("SELECT COUNT(*) FROM pages WHERE slug = '/ulagai'");
+    if ((int) $stmt8->fetchColumn() < 1) {
+        return true;
+    }
     return false;
 }
 

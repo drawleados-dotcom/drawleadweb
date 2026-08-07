@@ -527,6 +527,17 @@ function migration_019_statements(): array
     ];
 }
 
+function migration_020_statements(): array
+{
+    return [
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Ulagai', '/ulagai',
+           'Ulagai — High-Performance Ecommerce Stores | Drawlead',
+           'We engineer high-performance ecommerce stores designed to convert traffic into consistent online orders, for scaling D2C brands serious about growth.',
+           'ulagai')",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -587,6 +598,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '019' || $which === 'all') {
         $toRun['019'] = migration_019_statements();
+    }
+    if ($which === '020' || $which === 'all') {
+        $toRun['020'] = migration_020_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -651,6 +665,9 @@ $migration018Done = migration_table_exists($pdo, 'analyze_reports');
 $stmt019 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
 $stmt019->execute(['/analyze']);
 $migration019Done = (int) $stmt019->fetchColumn() >= 1;
+$stmt020 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
+$stmt020->execute(['/ulagai']);
+$migration020Done = (int) $stmt020->fetchColumn() >= 1;
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -895,7 +912,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done): ?>
+<div class="card">
+  <div class="card-title">020 — Ulagai page</div>
+  <div class="card-desc">Adds Ulagai as a real page (/ulagai) — a dark/violet ecommerce-agency-style landing hero, editable Draft/Published like any other page in Admin → Pages.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration020Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration020Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration020Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="020">
+    <button type="submit" class="btn btn-primary">Run Migration 020</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>
