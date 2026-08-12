@@ -62,6 +62,10 @@ $activeNav = $activeNav ?? '';
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M15 3v18"/></svg>
         Sidebar
       </a>
+      <a class="side-link<?= $activeNav === 'deployments' ? ' active' : '' ?>" href="deployments.php">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6"/></svg>
+        Production Environment
+      </a>
       <?php endif; ?>
       <a class="side-link<?= $activeNav === 'analytics' ? ' active' : '' ?>" href="analytics.php">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
