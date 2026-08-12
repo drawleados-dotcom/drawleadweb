@@ -690,7 +690,7 @@ $migration021Done = (int) $stmt021->fetchColumn() >= 1;
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
-$activeNav = '';
+$activeNav = 'migrations';
 include __DIR__ . '/includes/header.php';
 ?>
 

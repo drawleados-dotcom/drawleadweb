@@ -7,6 +7,7 @@
  */
 $u = current_user();
 $activeNav = $activeNav ?? '';
+$hasPendingMigrationsNav = $u && $u['role'] === 'admin' && pending_migrations_exist($pdo);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,6 +66,11 @@ $activeNav = $activeNav ?? '';
       <a class="side-link<?= $activeNav === 'deployments' ? ' active' : '' ?>" href="deployments.php">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6"/></svg>
         Production Environment
+      </a>
+      <a class="side-link<?= $activeNav === 'migrations' ? ' active' : '' ?>" href="run-migrations.php">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+        Migrations
+        <?php if ($hasPendingMigrationsNav): ?><span class="badge badge-draft" style="margin-left:auto">Pending</span><?php endif; ?>
       </a>
       <?php endif; ?>
       <a class="side-link<?= $activeNav === 'analytics' ? ' active' : '' ?>" href="analytics.php">
