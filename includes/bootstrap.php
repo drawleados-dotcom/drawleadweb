@@ -298,6 +298,10 @@ function pending_migrations_exist(PDO $pdo): bool
     if ((int) $stmt8->fetchColumn() < 1) {
         return true;
     }
+    $stmt9 = $pdo->query("SELECT COUNT(*) FROM pages WHERE slug = '/crm-solution'");
+    if ((int) $stmt9->fetchColumn() < 1) {
+        return true;
+    }
     return false;
 }
 

@@ -538,6 +538,19 @@ function migration_020_statements(): array
     ];
 }
 
+function migration_021_statements(): array
+{
+    return [
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('CRM', '/crm-solution',
+           'CRM Solution | Drawlead',
+           'A CRM built around how you actually sell — capture every lead, track every deal, and automate follow-ups, connected to the same ERP, ecommerce, and marketing systems you already run on.',
+           'crm-solution')",
+
+        "INSERT IGNORE INTO case_study_services (name, sort_order) VALUES ('CRM', 4)",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -601,6 +614,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '020' || $which === 'all') {
         $toRun['020'] = migration_020_statements();
+    }
+    if ($which === '021' || $which === 'all') {
+        $toRun['021'] = migration_021_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -668,6 +684,9 @@ $migration019Done = (int) $stmt019->fetchColumn() >= 1;
 $stmt020 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
 $stmt020->execute(['/ulagai']);
 $migration020Done = (int) $stmt020->fetchColumn() >= 1;
+$stmt021 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
+$stmt021->execute(['/crm-solution']);
+$migration021Done = (int) $stmt021->fetchColumn() >= 1;
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -925,7 +944,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done): ?>
+<div class="card">
+  <div class="card-title">021 — CRM Solution page</div>
+  <div class="card-desc">Adds CRM as a real page (/crm-solution) and "CRM" as a Departments/Service tag, so case studies can be tagged with it and show up on the new page's Case Studies section.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration021Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration021Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration021Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="021">
+    <button type="submit" class="btn btn-primary">Run Migration 021</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

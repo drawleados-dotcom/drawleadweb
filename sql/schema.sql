@@ -394,6 +394,12 @@ INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VA
   'We engineer high-performance ecommerce stores designed to convert traffic into consistent online orders, for scaling D2C brands serious about growth.',
   'ulagai');
 
+INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+('CRM', '/crm-solution',
+  'CRM Solution | Drawlead',
+  'A CRM built around how you actually sell — capture every lead, track every deal, and automate follow-ups, connected to the same ERP, ecommerce, and marketing systems you already run on.',
+  'crm-solution');
+
 UPDATE pages SET show_in_menu = 1 WHERE slug IN ('/', '/home-2', '/about-us', '/analyze');
 
 INSERT IGNORE INTO settings (`key`, `value`) VALUES
@@ -415,7 +421,8 @@ INSERT IGNORE INTO booking_form_fields (field_key, label, field_type, field_role
 INSERT IGNORE INTO case_study_services (name, sort_order) VALUES
 ('Custom ERP Solution', 1),
 ('Ecommerce Solutions', 2),
-('Marketing Solutions', 3);
+('Marketing Solutions', 3),
+('CRM', 4);
 
 -- Disabled by default (enabled=0) so it doesn't start popping up on the
 -- live site before the admin has actually configured any content.
