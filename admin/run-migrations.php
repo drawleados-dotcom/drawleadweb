@@ -564,6 +564,19 @@ function migration_022_statements(): array
     ];
 }
 
+function migration_023_statements(): array
+{
+    return [
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Final Home', '/final-home',
+           'Drawlead | Intelligent Business Operating System',
+           'Drawlead helps MSMEs and SMEs grow with websites, SEO, performance marketing and a unified business operating system.',
+           'final_home')",
+
+        "UPDATE pages SET show_in_menu = 1 WHERE slug = '/final-home'",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -633,6 +646,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '022' || $which === 'all') {
         $toRun['022'] = migration_022_statements();
+    }
+    if ($which === '023' || $which === 'all') {
+        $toRun['023'] = migration_023_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -706,6 +722,9 @@ $migration021Done = (int) $stmt021->fetchColumn() >= 1;
 $stmt022 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
 $stmt022->execute(['/home-5']);
 $migration022Done = (int) $stmt022->fetchColumn() >= 1;
+$stmt023 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
+$stmt023->execute(['/final-home']);
+$migration023Done = (int) $stmt023->fetchColumn() >= 1;
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -989,7 +1008,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done): ?>
+<div class="card">
+  <div class="card-title">023 — Final Home page</div>
+  <div class="card-desc">Adds Final Home as a real page (/final-home), rendered by templates/final_home-body.php and shown in the main nav next to Home 5. Editable Draft/Published, meta title/description, and Show in Menu from Admin → Pages like Home, Home 2.0, and About Us.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration023Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration023Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration023Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="023">
+    <button type="submit" class="btn btn-primary">Run Migration 023</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>
