@@ -265,17 +265,20 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .mq-icon{width:14px;height:14px;color:var(--blue);flex-shrink:0}
 .mq-item span{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g500)}
 
-/* HOW WE WORK — dark split layout */
+/* HOW WE WORK — dark split layout.
+   The section artwork is composed entirely from CSS gradients (a green
+   "energy" bloom + angled light streaks over a deep teal-black), so no
+   image file is needed. */
 #method{
  color:#fff;position:relative;
  background-color:#03080c;
  background-image:
-  linear-gradient(100deg,rgba(3,8,12,.96) 0%,rgba(3,8,12,.9) 30%,rgba(3,8,12,.62) 50%,rgba(3,8,12,.2) 72%,rgba(3,8,12,0) 88%),
-  url('/assets/img/energy-bolt.webp');
- background-size:cover,auto calc(115vh - 117px);
- background-position:center,right 5vw bottom;
- background-repeat:no-repeat,no-repeat;
- background-attachment:fixed,fixed;
+  radial-gradient(40% 62% at 83% 50%, rgba(51,180,112,.38) 0%, rgba(51,180,112,.12) 42%, transparent 74%),
+  linear-gradient(202deg, transparent 0%, transparent 44%, rgba(140,245,195,.16) 46%, transparent 49%, transparent 60%, rgba(140,245,195,.10) 62%, transparent 65%),
+  linear-gradient(115deg, #03080c 0%, #041710 52%, #062218 78%, #03100b 100%);
+ background-repeat:no-repeat;
+ background-position:center;
+ background-attachment:fixed;
 }
 #method .mth-left{position:relative;z-index:3;width:58%;max-width:760px}
 #method .eyebrow{justify-content:flex-start}
@@ -347,14 +350,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 @media(max-width:900px){
  #method .mth-left{width:100%;max-width:none}
  #method .fn-grid{max-width:none}
- #method{
-  background-attachment:scroll,scroll;
-  background-size:cover,auto 78vh;
-  background-position:center,right 0 bottom;
-  background-image:
-   linear-gradient(100deg,rgba(3,8,12,.97) 0%,rgba(3,8,12,.93) 42%,rgba(3,8,12,.78) 70%,rgba(3,8,12,.55) 100%),
-   url('/assets/img/energy-bolt.webp');
- }
+ #method{background-attachment:scroll}
 }
 @media(max-width:560px){
  #method .fn-grid{gap:20px;padding-bottom:6vh}
@@ -363,14 +359,6 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  #method .fn-card:nth-child(2){top:110px}
  #method .fn-card:nth-child(3){top:128px}
  #method .fn-card:nth-child(4){top:146px}
- #method{
-  background-attachment:scroll,scroll;
-  background-size:cover,auto 54vh;
-  background-position:center,right -4vw bottom;
-  background-image:
-   linear-gradient(100deg,rgba(3,8,12,.97) 0%,rgba(3,8,12,.95) 50%,rgba(3,8,12,.85) 100%),
-   url('/assets/img/energy-bolt.webp');
- }
  #method .sec-cta{justify-content:center}
  #method .sec-cta .btn{width:100%;max-width:360px;justify-content:center}
 }
@@ -654,15 +642,20 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
   box-shadow:0 8px 24px rgba(0,0,0,.3);
 }
 #tech{background:var(--white);position:relative;padding-top:0;padding-bottom:0}
+/* Section backdrop is CSS-only: a green bloom and a faint technical grid
+   over deep green-black — no image file needed. */
 #tech::before{
  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+ background-color:#0a1310;
  background-image:
-  linear-gradient(100deg,rgba(10,19,16,.97) 0%,rgba(10,19,16,.92) 34%,rgba(10,19,16,.6) 54%,rgba(10,19,16,.1) 78%,rgba(10,19,16,0) 92%),
-  url('/assets/img/tech-puzzle.webp');
- background-size:cover,cover;
- background-position:center,center right;
- background-repeat:no-repeat,no-repeat;
- background-attachment:fixed,fixed;
+  radial-gradient(46% 72% at 78% 42%, rgba(51,180,112,.18) 0%, transparent 70%),
+  linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px),
+  linear-gradient(115deg, #0a1310 0%, #0d1c16 58%, #081712 100%);
+ background-size:auto,44px 44px,44px 44px,auto;
+ background-position:center;
+ background-repeat:no-repeat,repeat,repeat,no-repeat;
+ background-attachment:fixed;
 }
 .tech-track{position:relative;z-index:1}
 .tech-pin{
@@ -845,9 +838,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  transform-origin:top center;
  will-change:transform;
 }
-.why-magnet-img{width:100%;height:100%;display:block;object-fit:contain}
-.why-magnet-svg{display:none;width:100%;height:100%}
-.why-magnet.is-fallback .why-magnet-svg{display:block}
+.why-magnet-svg{display:block;width:100%;height:100%}
 .why-lead{
  font-family:var(--font-body);font-size:clamp(16px,1.7vw,21px);font-weight:400;line-height:1.6;
  color:rgba(255,255,255,.82);text-align:center;max-width:640px;margin:0 auto 4.5rem;
@@ -993,12 +984,15 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  .phys-pill{position:static;transform:none !important;opacity:1 !important;transition:none}
 }
 
-/* CTA INTRO — continuous letter train */
+/* CTA INTRO — continuous letter train.
+   .ci-anim turns the section into a tall scroll runway and pins .ci-pin
+   with position:sticky while a plain scroll handler drives the glyphs. */
 #cta-intro{
  position:relative;background:#FFFFFF;
- padding:7rem 3.5rem;
  overflow-x:hidden;overflow-x:clip;
 }
+#cta-intro:not(.ci-anim){padding:7rem 3.5rem}
+.ci-pin{max-width:1400px;margin:0 auto}
 .ci-static-head{max-width:1400px;margin:0 auto}
 .ci-line{
  font-family:var(--font-display);
@@ -1007,7 +1001,11 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  color:var(--black);margin:0;
 }
 .ci-g{color:#33B470}
-#cta-intro.ci-anim{height:100vh;padding:0}
+#cta-intro.ci-anim{height:320vh;padding:0}
+#cta-intro.ci-anim .ci-pin{
+ position:sticky;top:0;height:100vh;max-width:none;margin:0;
+ display:flex;align-items:center;overflow:hidden;
+}
 #cta-intro.ci-anim .ci-static-head{display:none}
 .ci-train{display:none}
 #cta-intro.ci-anim .ci-train{display:block;position:absolute;inset:0;overflow:hidden}
@@ -1031,12 +1029,12 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  will-change:transform,opacity;
 }
 @media(max-width:1024px){
- #cta-intro{padding:5.5rem 2rem}
+ #cta-intro:not(.ci-anim){padding:5.5rem 2rem}
  .ci-line{font-size:clamp(34px,7.5vw,72px)}
  .ci-track{font-size:clamp(34px,6.5vw,72px)}
 }
 @media(max-width:560px){
- #cta-intro{padding:4.5rem 1.5rem}
+ #cta-intro:not(.ci-anim){padding:4.5rem 1.5rem}
  .ci-line{font-size:clamp(28px,8vw,44px);letter-spacing:-.03em}
 }
 

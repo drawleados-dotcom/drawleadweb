@@ -1,12 +1,11 @@
 <?php
 /**
  * Final Home — the redesigned homepage, served at /final-home as a real
- * DB-managed page (Admin -> Pages). Self-contained: its full stylesheet is
- * a separate file (/assets/final-home.css) linked below, so it only affects
- * this page — the live "/" homepage is untouched. The vendor libraries
- * (Matter.js, GSAP/ScrollTrigger) and the section artwork under
- * /assets/img/ are optional: every animation and background degrades
- * gracefully when a file is missing.
+ * DB-managed page (Admin -> Pages). Fully self-contained: no external
+ * libraries or image files. Its stylesheet is /assets/final-home.css
+ * (linked below), all animations are the vanilla scripts at the bottom of
+ * this file, and every section backdrop is CSS gradients — so it renders
+ * completely on its own and the live "/" homepage is untouched.
  */
 $activePage = 'final_home';
 include __DIR__ . '/partials/nav.php';
@@ -627,14 +626,16 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <div class="why-pendulum" id="whyPendulum" aria-hidden="true">
    <span class="why-string"></span>
    <span class="why-magnet">
-    <img class="why-magnet-img" src="/assets/img/drawlead-magnet-01.svg" alt=""
-         onerror="this.remove();this.parentNode.classList.add('is-fallback');">
     <svg class="why-magnet-svg" viewBox="0 0 100 100" fill="none">
-     <path d="M35 22 A28 28 0 1 1 30 76" stroke="#33B470" stroke-width="15" stroke-linecap="round"/>
-     <line x1="34" y1="28" x2="19" y2="55" stroke="#33B470" stroke-width="7" stroke-linecap="round"/>
-     <circle cx="16" cy="62" r="3.4" fill="#33B470"/>
-     <circle cx="14" cy="70" r="2.9" fill="#33B470"/>
-     <circle cx="13" cy="77" r="2.4" fill="#33B470"/>
+     <defs>
+      <linearGradient id="fhMagGrad" x1="0" y1="0" x2="1" y2="1">
+       <stop offset="0%" stop-color="#4ecb87"/>
+       <stop offset="100%" stop-color="#14855a"/>
+      </linearGradient>
+     </defs>
+     <path d="M26 18 V46 A24 24 0 0 0 74 46 V18" stroke="url(#fhMagGrad)" stroke-width="15" stroke-linecap="round" fill="none"/>
+     <rect x="18.5" y="14" width="15" height="12" rx="2" fill="#e9f9f0"/>
+     <rect x="66.5" y="14" width="15" height="12" rx="2" fill="#1e6b47"/>
     </svg>
    </span>
   </div>
@@ -872,6 +873,7 @@ $ciTrainText  = 'Ready to Transform Your Business ERP with AI?';
 $ciTrainGreen = ['ERP', 'AI?'];
 ?>
 <section id="cta-intro">
+ <div class="ci-pin">
 
  <div class="ci-static-head">
   <?php foreach ($ciHeadLines as $line): ?>
@@ -912,6 +914,7 @@ $ciTrainGreen = ['ERP', 'AI?'];
   </div>
  </div>
 
+ </div><!-- /ci-pin -->
 </section>
 <!-- CTA -->
 <section id="cta" class="cta-framed">
@@ -933,10 +936,6 @@ $ciTrainGreen = ['ERP', 'AI?'];
 <!-- FINAL-HOME BODY END -->
 
 <?php include __DIR__ . '/partials/footer.php'; ?>
-
-<script src="/assets/matter.min.js"></script>
-<script src="/assets/gsap.min.js"></script>
-<script src="/assets/ScrollTrigger.min.js"></script>
 
 <!-- FINAL-HOME SCRIPT START -->
 <script>
@@ -1261,113 +1260,109 @@ if(!reduceMotion){
 })();
 </script>
 <script>
-// Physics tag stage (scroll-triggered, runs once)
+// Physics tag stage — self-contained 2D simulation (no external library).
+// Each pill is a soft capsule: gravity + floor/wall bounce + pill-to-pill
+// separation + cursor repulsion. Starts once the section scrolls into view.
 (function(){
  const stage = document.getElementById('physStage');
- if(!stage || typeof Matter === 'undefined') return;
+ if(!stage) return;
  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
- const pills = Array.from(stage.querySelectorAll('.phys-pill'));
- if(!pills.length) return;
-
- const { Engine, Runner, Composite, Bodies, Body, Events, Vector } = Matter;
-
- const engine = Engine.create();
- engine.gravity.y = 0.9;
+ const els = Array.from(stage.querySelectorAll('.phys-pill'));
+ if(!els.length) return;
 
  let W = stage.clientWidth, H = stage.clientHeight;
- const WALL = 200;
- let bodies = [], walls = [];
+ const GRAV = 0.42, REST = 0.5, FRICT = 0.86, AIR = 0.992;
+ const CURSOR_R = 140;
+ const mouse = { x:-9999, y:-9999, active:false };
 
- function makeWalls(){
-  Composite.remove(engine.world, walls);
-  walls = [
-   Bodies.rectangle(W/2, H + WALL/2, W + WALL*2, WALL, { isStatic:true }),
-   Bodies.rectangle(W/2, -WALL/2,    W + WALL*2, WALL, { isStatic:true }),
-   Bodies.rectangle(-WALL/2, H/2, WALL, H + WALL*2,    { isStatic:true }),
-   Bodies.rectangle(W + WALL/2, H/2, WALL, H + WALL*2, { isStatic:true })
-  ];
-  Composite.add(engine.world, walls);
- }
-
- pills.forEach(function(el, i){
+ const P = els.map(function(el, i){
   const r = el.getBoundingClientRect();
-  const w = r.width || 120, h = r.height || 44;
-  const cols = pills.length;
-  const x = (W / (cols + 1)) * (i + 1) + (Math.random() - 0.5) * 26;
-  const y = 42 + Math.random() * 110;
-  const body = Bodies.rectangle(x, y, w, h, {
-   chamfer: { radius: h/2 },
-   restitution: 0.52,
-   friction: 0.32,
-   frictionAir: 0.014,
-   density: 0.0016
-  });
-  Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.22);
-  Body.setVelocity(body, { x:(Math.random() - 0.5) * 2.5, y:0 });
-  body.__el = el; body.__w = w; body.__h = h;
-  bodies.push(body);
+  const w = r.width || 128, h = r.height || 44;
+  return {
+   el:el, w:w, h:h, rad:h/2,
+   x:(W / (els.length + 1)) * (i + 1) + (Math.random()-0.5)*24,
+   y:38 + Math.random()*90,
+   vx:(Math.random()-0.5)*3, vy:0,
+   a:(Math.random()-0.5)*0.5, va:(Math.random()-0.5)*0.06
+  };
  });
 
- makeWalls();
-
- const mouse = { x:-9999, y:-9999, active:false };
- const R = 130;
  stage.addEventListener('mousemove', function(e){
   const r = stage.getBoundingClientRect();
   mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; mouse.active = true;
  });
  stage.addEventListener('mouseleave', function(){ mouse.active = false; });
 
- Events.on(engine, 'beforeUpdate', function(){
-  for(let i = 0; i < bodies.length; i++){
-   const b = bodies[i];
+ function step(){
+  for(let i = 0; i < P.length; i++){
+   const p = P[i];
+   p.vy += GRAV;
 
    if(mouse.active){
-    const d = Vector.sub(b.position, mouse);
-    const dist = Math.hypot(d.x, d.y);
-    if(dist < R && dist > 0.1){
-     const strength = (1 - dist / R) * 0.055 * b.mass;
-     Body.applyForce(b, b.position, { x:(d.x/dist) * strength, y:(d.y/dist) * strength });
+    const dx = p.x - mouse.x, dy = p.y - mouse.y;
+    const d = Math.hypot(dx, dy);
+    if(d < CURSOR_R && d > 0.1){
+     const f = (1 - d / CURSOR_R) * 2.4;
+     p.vx += (dx / d) * f; p.vy += (dy / d) * f;
     }
    }
+   if(Math.random() < 0.02){ p.vx += (Math.random()-0.5)*0.6; }
 
-   if(Math.random() < 0.03){
-    Body.applyForce(b, b.position, {
-     x:(Math.random() - 0.5) * 0.0016 * b.mass,
-     y:(Math.random() - 0.5) * 0.0011 * b.mass
-    });
+   p.vx *= AIR; p.vy *= AIR;
+   p.x += p.vx; p.y += p.vy;
+   p.a += p.va; p.va *= 0.985;
+
+   // walls
+   const halfW = p.w/2, halfH = p.h/2;
+   if(p.x < halfW){ p.x = halfW; p.vx = -p.vx * REST; p.va += p.vy * 0.002; }
+   if(p.x > W - halfW){ p.x = W - halfW; p.vx = -p.vx * REST; p.va -= p.vy * 0.002; }
+   if(p.y > H - halfH){ p.y = H - halfH; p.vy = -p.vy * REST; p.vx *= FRICT; p.va += p.vx * 0.004; p.va *= 0.6; }
+   if(p.y < halfH){ p.y = halfH; p.vy = -p.vy * REST; }
+  }
+
+  // pill-to-pill separation (approximate capsules as circles)
+  for(let i = 0; i < P.length; i++){
+   for(let j = i + 1; j < P.length; j++){
+    const a = P[i], b = P[j];
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const d = Math.hypot(dx, dy) || 0.01;
+    const minD = (a.w + b.w) * 0.32;
+    if(d < minD){
+     const push = (minD - d) / 2;
+     const ux = dx / d, uy = dy / d;
+     a.x -= ux * push; a.y -= uy * push;
+     b.x += ux * push; b.y += uy * push;
+     const rvx = b.vx - a.vx, rvy = b.vy - a.vy;
+     const rel = rvx * ux + rvy * uy;
+     if(rel < 0){
+      const imp = -rel * (1 + REST) * 0.5;
+      a.vx -= ux * imp; a.vy -= uy * imp;
+      b.vx += ux * imp; b.vy += uy * imp;
+     }
+    }
    }
   }
- });
 
- function paint(){
-  for(let i = 0; i < bodies.length; i++){
-   const b = bodies[i];
-   b.__el.style.transform =
-    'translate(' + (b.position.x - b.__w/2) + 'px,' + (b.position.y - b.__h/2) + 'px)' +
-    ' rotate(' + b.angle + 'rad)';
+  for(let i = 0; i < P.length; i++){
+   const p = P[i];
+   p.el.style.transform = 'translate(' + (p.x - p.w/2).toFixed(1) + 'px,' + (p.y - p.h/2).toFixed(1) + 'px) rotate(' + p.a.toFixed(3) + 'rad)';
   }
  }
- function loop(){ paint(); requestAnimationFrame(loop); }
 
- paint();
+ let running = false, raf = 0;
+ function loop(){ step(); raf = requestAnimationFrame(loop); }
+ function start(){ if(running) return; running = true; stage.classList.add('is-running'); loop(); }
 
- let started = false;
- function start(){
-  if(started) return;
-  started = true;
-  Composite.add(engine.world, bodies);
-  Runner.run(Runner.create(), engine);
-  stage.classList.add('is-running');
-  requestAnimationFrame(loop);
+ // seat the pills at spawn coords before the reveal so they don't flash top-left
+ for(let i = 0; i < P.length; i++){
+  const p = P[i];
+  p.el.style.transform = 'translate(' + (p.x - p.w/2) + 'px,' + (p.y - p.h/2) + 'px) rotate(' + p.a + 'rad)';
  }
 
  if('IntersectionObserver' in window){
   const io = new IntersectionObserver(function(entries){
-   entries.forEach(function(en){
-    if(en.isIntersecting){ start(); io.disconnect(); }
-   });
+   entries.forEach(function(en){ if(en.isIntersecting){ start(); io.disconnect(); } });
   }, { threshold: 0.35 });
   io.observe(stage);
  } else {
@@ -1379,13 +1374,10 @@ if(!reduceMotion){
   clearTimeout(rt);
   rt = setTimeout(function(){
    W = stage.clientWidth; H = stage.clientHeight;
-   makeWalls();
-   bodies.forEach(function(b){
-    if(b.position.x < 0 || b.position.x > W || b.position.y > H){
-     Body.setPosition(b, { x: W/2, y: 60 });
-     Body.setVelocity(b, { x:0, y:0 });
-    }
-   });
+   for(let i = 0; i < P.length; i++){
+    const p = P[i];
+    if(p.x < 0 || p.x > W || p.y > H){ p.x = W/2; p.y = 60; p.vx = 0; p.vy = 0; }
+   }
   }, 180);
  });
 })();
@@ -1491,137 +1483,88 @@ if(!reduceMotion){
 })();
 </script>
 <script>
-// CTA intro — continuous letter train (GSAP ScrollTrigger)
+// CTA intro — continuous letter train, driven by a sticky-pinned scroll
+// runway (no external animation library). The glyphs fly in from the
+// right and land on the CTA card's baseline as you scroll through the
+// section; .ci-static-head is the no-JS fallback.
 (function(){
  const section = document.getElementById('cta-intro');
  if(!section) return;
  const track = section.querySelector('.ci-track');
  if(!track) return;
-
  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
- if(typeof window.gsap === 'undefined' || typeof window.ScrollTrigger === 'undefined') return;
 
  const ctaCard = document.querySelector('#cta .cta-card');
  if(!ctaCard) return;
 
- const LAUNCH_Y = -260, LAUNCH_ROT = 35, LAUNCH_SCALE = 0.6, ARC_POW = 1.8;
+ const glyphs   = track.querySelectorAll('.ci-stage .ci-ch');
+ const measures = track.querySelectorAll('.ci-measure span');
+ const n = glyphs.length;
+ if(!n || measures.length !== n) return;
+
+ const LAUNCH_Y = -240, LAUNCH_ROT = 32, LAUNCH_SCALE = 0.6, ARC_POW = 1.8;
+ const offsets = new Float64Array(n);
+ let totalWidth = 0, landX = 0, launchX = 0, jumpDistance = 0, travel = 0, runway = 1;
+
+ function measure(){
+  const vw = window.innerWidth;
+  for(let i = 0; i < n; i++){
+   offsets[i] = measures[i].offsetLeft;
+   totalWidth = measures[i].offsetLeft + measures[i].offsetWidth;
+  }
+  landX   = ctaCard.getBoundingClientRect().right - 140;
+  launchX = vw + 60;
+  jumpDistance = Math.max(40, (totalWidth / n) * 1.30);
+  travel  = totalWidth + vw * 0.8;
+  runway  = Math.max(1, section.offsetHeight - window.innerHeight);
+ }
+
+ function render(p){
+  const trainX = landX - p * travel;
+  for(let i = 0; i < n; i++){
+   const slotX = trainX + offsets[i];
+   const dToLand = slotX - landX;
+   let x, y, rot, sc, op;
+   if(dToLand > 0){
+    let jp = 1 - dToLand / jumpDistance;
+    if(jp <= 0){
+     x = launchX; y = LAUNCH_Y; rot = LAUNCH_ROT; sc = LAUNCH_SCALE; op = 0;
+    } else {
+     if(jp > 1) jp = 1;
+     const e = Math.pow(jp, ARC_POW);
+     x   = launchX + (landX - launchX) * e;
+     y   = LAUNCH_Y + (0 - LAUNCH_Y) * e;
+     rot = LAUNCH_ROT * (1 - e);
+     sc  = LAUNCH_SCALE + (1 - LAUNCH_SCALE) * e;
+     op  = jp * 2; if(op > 1) op = 1;
+    }
+   } else {
+    x = slotX; y = 0; rot = 0; sc = 1; op = 1;
+   }
+   const el = glyphs[i];
+   el.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) rotate(' + rot.toFixed(1) + 'deg) scale(' + sc.toFixed(3) + ')';
+   el.style.opacity = op.toFixed(2);
+  }
+ }
+
+ let ticking = false;
+ function onScroll(){
+  if(ticking) return;
+  ticking = true;
+  requestAnimationFrame(function(){
+   ticking = false;
+   let p = -section.getBoundingClientRect().top / runway;
+   p = p < 0 ? 0 : (p > 1 ? 1 : p);
+   render(p);
+  });
+ }
 
  function init(){
-  try {
-   gsap.registerPlugin(ScrollTrigger);
-
-   const glyphs   = track.querySelectorAll('.ci-stage .ci-ch');
-   const measures = track.querySelectorAll('.ci-measure span');
-   const n = glyphs.length;
-   if(!n || measures.length !== n) throw new Error('glyph/measure mismatch');
-
-   const offsets = new Float64Array(n);
-   const pX = new Float64Array(n), pY = new Float64Array(n);
-   const pR = new Float64Array(n), pS = new Float64Array(n), pO = new Float64Array(n);
-   const wasOut = new Uint8Array(n);
-
-   section.classList.add('ci-anim');
-
-   let totalWidth = 0, landX = 0, launchX = 0, launchY = 0,
-       jumpDistance = 0, travel = 0, scrollLen = 0,
-       xMin = 0, xMax = 0, progEps = 1;
-
-   function measure(){
-    const vw = window.innerWidth;
-    let widest = 0;
-    for(let i = 0; i < n; i++){
-     const m = measures[i];
-     offsets[i] = m.offsetLeft;
-     const w = m.offsetWidth;
-     if(w > widest) widest = w;
-     totalWidth = m.offsetLeft + w;
-    }
-    landX   = ctaCard.getBoundingClientRect().right - 140;
-    launchX = vw + 60;
-    launchY = LAUNCH_Y;
-    jumpDistance = Math.max(40, (totalWidth / n) * 1.30);
-    travel    = totalWidth + vw * 0.8;
-    scrollLen = totalWidth + vw + 800;
-    xMin = -(widest + 24);
-    xMax = vw + 24;
-    progEps = travel > 0 ? 0.25 / travel : 0;
-    pX.fill(NaN); pY.fill(NaN); pR.fill(NaN); pS.fill(NaN); pO.fill(NaN);
-    wasOut.fill(0);
-   }
-
-   function render(p){
-    const currentTrainX = landX - p * travel;
-
-    for(let i = 0; i < n; i++){
-     const letterSlotX    = currentTrainX + offsets[i];
-     const distanceToLand = letterSlotX - landX;
-
-     let x, y, rot, sc, op;
-     if(distanceToLand > 0){
-      let jp = 1 - distanceToLand / jumpDistance;
-      if(jp <= 0){
-       x = launchX; y = launchY; rot = LAUNCH_ROT; sc = LAUNCH_SCALE; op = 0;
-      } else {
-       if(jp > 1) jp = 1;
-       const e = Math.pow(jp, ARC_POW);
-       x   = launchX + (landX - launchX) * e;
-       y   = launchY + (0 - launchY) * e;
-       rot = LAUNCH_ROT * (1 - e);
-       sc  = LAUNCH_SCALE + (1 - LAUNCH_SCALE) * e;
-       op  = jp * 2; if(op > 1) op = 1;
-      }
-     } else {
-      x = letterSlotX; y = 0; rot = 0; sc = 1; op = 1;
-     }
-
-     if(x < xMin || x > xMax){
-      if(wasOut[i]) continue;
-      wasOut[i] = 1;
-     } else if(wasOut[i]){
-      wasOut[i] = 0;
-     }
-
-     x   = Math.round(x   * 4)    / 4;
-     y   = Math.round(y   * 4)    / 4;
-     rot = Math.round(rot * 10)   / 10;
-     sc  = Math.round(sc  * 1000) / 1000;
-     op  = Math.round(op  * 100)  / 100;
-
-     if(x !== pX[i] || y !== pY[i] || rot !== pR[i] || sc !== pS[i] || op !== pO[i]){
-      const el = glyphs[i];
-      el.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0) rotate(' + rot +
-                           'deg) scale(' + sc + ')';
-      if(op !== pO[i]) el.style.opacity = op;
-      pX[i] = x; pY[i] = y; pR[i] = rot; pS[i] = sc; pO[i] = op;
-     }
-    }
-   }
-
-   measure();
-   render(0);
-   let lastP = -1;
-
-   ScrollTrigger.create({
-    trigger: section,
-    start: 'top top',
-    end: function(){ return '+=' + scrollLen; },
-    pin: true,
-    anticipatePin: 1,
-    scrub: 1.2,
-    invalidateOnRefresh: true,
-    onRefresh: function(self){ measure(); lastP = -1; render(self.progress); lastP = self.progress; },
-    onUpdate: function(self){
-     const p = self.progress;
-     if(p === lastP || (p > lastP ? p - lastP : lastP - p) < progEps) return;
-     lastP = p;
-     render(p);
-    }
-   });
-
-  } catch(err){
-   section.classList.remove('ci-anim');
-   if(window.console && console.warn) console.warn('cta-intro animation disabled:', err);
-  }
+  section.classList.add('ci-anim');
+  measure();
+  render(0);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function(){ measure(); onScroll(); });
  }
 
  if(document.fonts && document.fonts.ready){
