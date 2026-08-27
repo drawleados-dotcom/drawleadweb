@@ -148,7 +148,7 @@ include __DIR__ . '/includes/header.php';
       <input type="checkbox" name="show_in_menu" <?= !empty($page['show_in_menu']) ? 'checked' : '' ?>>
       Show in main nav
     </label>
-    <div class="field-hint">Only applies to Home, Home 2.0, About Us, and Analyze — Platform, Industry, and Solution pages always use their own mega menus regardless of this setting.</div>
+    <div class="field-hint">Only applies to Home, Home 2.0, Home 5, About Us, and Analyze — Platform, Industry, and Solution pages always use their own mega menus regardless of this setting.</div>
   </div>
 
   <?php include __DIR__ . '/includes/seo-panel.php'; ?>

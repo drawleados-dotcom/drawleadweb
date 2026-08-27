@@ -1,8 +1,8 @@
 <?php
 /**
  * Shared site nav, included by every public template.
- * Set $activePage (one of: home, home2, blog, analyze, about-us) before
- * including this to highlight the current link.
+ * Set $activePage (one of: home, home2, home5, blog, analyze, about-us)
+ * before including this to highlight the current link.
  */
 $activePage = $activePage ?? '';
 
@@ -14,10 +14,13 @@ $activePage = $activePage ?? '';
 // "not found" unless we default it — the loop below only ever overwrites a
 // default when a row actually comes back, so a real draft/hidden row still
 // wins once it exists.
-$navFlags = ['/' => true, '/home-2' => true, '/about-us' => true, '/analyze' => true];
+// '/home-5' defaults to false (not true like the others): its nav link
+// should only appear once its page row actually exists with "Show in Menu"
+// checked, so there's no dead link in the gap before migration 022 runs.
+$navFlags = ['/' => true, '/home-2' => true, '/about-us' => true, '/analyze' => true, '/home-5' => false];
 try {
     $navRows = $pdo->query(
-        "SELECT slug, show_in_menu, status FROM pages WHERE slug IN ('/', '/home-2', '/about-us', '/analyze')"
+        "SELECT slug, show_in_menu, status FROM pages WHERE slug IN ('/', '/home-2', '/about-us', '/analyze', '/home-5')"
     )->fetchAll();
     foreach ($navRows as $navRow) {
         $navFlags[$navRow['slug']] = (($navRow['status'] ?? 'published') === 'published') && !empty($navRow['show_in_menu']);
@@ -186,6 +189,9 @@ try {
  <?php endif; ?>
  <?php if (!empty($navFlags['/about-us'])): ?>
  <li><a href="/about-us"<?= $activePage === 'about-us' ? ' style="color:var(--black)"' : '' ?>>About Us</a></li>
+ <?php endif; ?>
+ <?php if (!empty($navFlags['/home-5'])): ?>
+ <li><a href="/home-5"<?= $activePage === 'home5' ? ' style="color:var(--black)"' : '' ?>>Home 5</a></li>
  <?php endif; ?>
  </ul>
  <button type="button" data-book class="nav-btn">Free Consultation Call →</button>
