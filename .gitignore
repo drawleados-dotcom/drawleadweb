@@ -14,3 +14,6 @@ uploads/*
 
 # Old scratch/local test artifacts
 *.log
+
+# Local design reference bundle (source of the /home-7 page — not deployed)
+/home (1)/
