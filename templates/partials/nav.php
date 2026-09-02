@@ -197,7 +197,7 @@ try {
  <li><a href="/final-home"<?= $activePage === 'final_home' ? ' style="color:var(--black)"' : '' ?>>Final Home</a></li>
  <?php endif; ?>
  <?php if (!empty($navFlags['/home-7'])): ?>
- <li><a href="/home-7"<?= $activePage === 'home7' ? ' style="color:var(--black)"' : '' ?>>Home 7</a></li>
+ <li><a href="/home-7"<?= $activePage === 'home7' ? ' style="color:var(--black)"' : '' ?>>Home Seven</a></li>
  <?php endif; ?>
  </ul>
  <button type="button" data-book class="nav-btn">Free Consultation Call →</button>
