@@ -184,7 +184,6 @@ try {
     </div>
    </div>
   </li>
- <li><a href="/blog"<?= $activePage === 'blog' ? ' style="color:var(--black)"' : '' ?>>Blog</a></li>
  <?php if (!empty($navFlags['/analyze'])): ?>
  <li><a href="/analyze"<?= $activePage === 'analyze' ? ' style="color:var(--black)"' : '' ?>>Analyze</a></li>
  <?php endif; ?>
