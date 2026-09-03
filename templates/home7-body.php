@@ -226,12 +226,11 @@ include __DIR__ . '/partials/nav.php';
     </div>
 
    </div>
+   <div class="sec-cta rv">
+    <button type="button" data-book class="btn btn-black">Schedule a Consultation →</button>
+    <a href="#dashboards" class="btn btn-outline2">View Live Dashboards</a>
+   </div>
   </div>
- </div>
-
- <div class="sec-cta rv">
- <button type="button" data-book class="btn btn-black">Schedule a Consultation →</button>
- <a href="#dashboards" class="btn btn-outline2">View Live Dashboards</a>
  </div>
 </section>
 

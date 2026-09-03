@@ -541,7 +541,11 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 
 #functions{background:var(--bg)}
 .cf-scroll-outer{position:relative;width:100%}
-.cf-scroll-sticky{position:sticky;top:84px;width:100%;display:flex;align-items:center;overflow:hidden}
+.cf-scroll-sticky{position:sticky;top:84px;width:100%;display:flex;flex-direction:column;overflow:hidden}
+/* The CTA is pinned inside the sticky box alongside the row, so it can no longer
+   scroll into view while the horizontal run is still in progress - which is what
+   left a growing gap of unconsumed scroll distance between the cards and the buttons. */
+.cf-scroll-sticky .sec-cta{margin-top:2.25rem;flex:none}
 .cf-row{
  display:flex;gap:20px;width:max-content;flex:none;
  overflow-x:hidden;
