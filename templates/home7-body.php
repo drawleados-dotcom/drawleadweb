@@ -10,7 +10,7 @@ $activePage = 'home7';
 include __DIR__ . '/partials/nav.php';
 ?>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/home7.css">
+<link rel="stylesheet" href="<?= asset_url('/assets/home7.css') ?>">
 
 <section id="hero">
 
@@ -994,15 +994,15 @@ $ciTrainGreen = ['ERP', 'AI?'];
 
 <!-- Matter.js is vendored locally (assets/), matching the site's no-external-scripts
      convention. Loaded here rather than in the shared layout so only this page pays for it. -->
-<script src="/assets/matter.min.js"></script>
+<script src="<?= asset_url('/assets/matter.min.js') ?>"></script>
 
 <!-- GSAP + ScrollTrigger, vendored locally to match the same convention. Loaded once,
      here, and nowhere else; only this page pays for them.
      No smooth-scroll library: the page uses the browser's native scrolling. Lenis was
      tried here and removed — it takes over document scroll and adds another ticker
      layer on top of GSAP's, which cost more than it bought on this page. -->
-<script src="/assets/gsap.min.js"></script>
-<script src="/assets/ScrollTrigger.min.js"></script>
+<script src="<?= asset_url('/assets/gsap.min.js') ?>"></script>
+<script src="<?= asset_url('/assets/ScrollTrigger.min.js') ?>"></script>
 
 <script>
 // ── Industry Dashboard Switcher — one window, data-driven, auto-rotates ──

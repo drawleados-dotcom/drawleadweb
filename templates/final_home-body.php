@@ -10,7 +10,7 @@
 $activePage = 'final_home';
 include __DIR__ . '/partials/nav.php';
 ?>
-<link rel="stylesheet" href="/assets/final-home.css">
+<link rel="stylesheet" href="<?= asset_url('/assets/final-home.css') ?>">
 
 <!-- FINAL-HOME BODY START -->
 

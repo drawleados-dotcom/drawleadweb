@@ -62,6 +62,26 @@ function h(?string $s): string
     return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8');
 }
 
+/**
+ * Cache-busting URL for a file in /assets.
+ *
+ * Hostinger serves everything under /assets with `Cache-Control: public,
+ * max-age=604800`, so a redeployed stylesheet can keep being served from an
+ * edge cache for up to a week — long enough for visitors to get new markup
+ * styled by an old stylesheet. Appending the file's mtime gives each build a
+ * URL no cache has seen, so updates apply the moment they deploy.
+ *
+ * Falls back to the bare path if the file is missing, so a typo degrades to
+ * the current behaviour rather than emitting a broken "?v=".
+ */
+function asset_url(string $path): string
+{
+    $file = __DIR__ . '/../' . ltrim($path, '/');
+    $mtime = is_file($file) ? filemtime($file) : false;
+
+    return $mtime === false ? $path : $path . '?v=' . $mtime;
+}
+
 /** Read a value from the settings table (GA id, GSC tag, etc). */
 function get_setting(PDO $pdo, string $key, string $default = ''): string
 {
