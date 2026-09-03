@@ -1,9 +1,9 @@
 <?php
 /**
- * Home 7 — exact copy of the standalone redesigned homepage bundle
+ * Home 7: exact copy of the standalone redesigned homepage bundle
  * (home (1)/home/), served at /home-7 as a DB-managed page (Admin -> Pages).
  * Its stylesheet is /assets/home7.css and its animation libraries live in
- * /assets/ (matter.min.js, gsap.min.js, ScrollTrigger.min.js) — all copied
+ * /assets/ (matter.min.js, gsap.min.js, ScrollTrigger.min.js), all copied
  * from that bundle. The live "/" homepage is untouched.
  */
 $activePage = 'home7';
@@ -15,7 +15,7 @@ include __DIR__ . '/partials/nav.php';
 <section id="hero">
 
  <!-- Ambient background layer: technical grid, star dust and green shooting-star
-      runners. Purely decorative and inert — aria-hidden, pointer-events:none, and
+      runners. Purely decorative and inert, aria-hidden, pointer-events:none, and
       pinned behind .hero-grid (which already sits at z-index:2), so no existing hero
       element is touched or obstructed. Animation is CSS-only (transform + opacity). -->
  <div class="hero-stars" aria-hidden="true">
@@ -30,20 +30,20 @@ include __DIR__ . '/partials/nav.php';
  </div>
 
  <div class="hero-grid">
-  <!-- LEFT — communication & conversion -->
+  <!-- LEFT, communication & conversion -->
   <div class="hero-left">
    <div class="hero-eyebrow">
     <span class="hero-eicon"></span>
     <span class="hero-etxt">One OS. All Operations. Infinite Possibilities.</span>
    </div>
 
-   <!-- MAIN HEADLINE — content fixed, browser wraps naturally -->
+   <!-- MAIN HEADLINE, content fixed, browser wraps naturally -->
    <h1 class="hero-h">One <span class="grad-os">OS</span> with <span class="grad-ai">AI</span> to every function of your <span class="grad-os">business</span></h1>
 
-   <p class="hero-p">Drawlead — the operating system for modern business. Unify ERP, AI automation, analytics, and cloud workflows into one intelligent platform built for India's growing businesses.</p>
+   <p class="hero-p">Drawlead is the operating system for modern business. Unify ERP, AI automation, analytics, and cloud workflows into one intelligent platform built for India's growing businesses.</p>
 
    <div class="hero-btns">
-    <button type="button" data-book class="btn btn-primary">Start Free Consultation →</button>
+    <button type="button" data-book class="btn btn-primary">Start Free Consultation</button>
     <a href="#functions" class="btn btn-ghost">
      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor"/></svg>
      Watch 2-Min Demo
@@ -69,7 +69,7 @@ include __DIR__ . '/partials/nav.php';
     </div>
    </div>
   </div>
-  <!-- RIGHT — live industry dashboard, auto-rotating -->
+  <!-- RIGHT, live industry dashboard, auto-rotating -->
   <div class="hero-right">
    <div class="ind-tabs" id="indTabs">
     <button class="ind-tab active" data-idx="0" onclick="switchDash(0)">Ecommerce</button>
@@ -89,7 +89,7 @@ include __DIR__ . '/partials/nav.php';
     </div>
     <div class="dw-body" id="dwBody">
      <div class="dw-head">
-      <div class="dw-title">ECOMMERCE OS — ORDERS &amp; REVENUE OVERVIEW</div>
+      <div class="dw-title">ECOMMERCE OS: ORDERS &amp; REVENUE OVERVIEW</div>
       <div class="dw-meta">
        <span class="dw-live" style="background:rgba(35,160,101,.12);color:#23a065">Live</span>
        <span class="dw-month">May 2025</span>
@@ -122,7 +122,7 @@ include __DIR__ . '/partials/nav.php';
  </div>
 </section>
 
-<!-- ═══════════════════ MARQUEE ═══════════════════ -->
+<!-- MARQUEE -->
 <div class="mq-wrap">
  <div class="mq-track" id="mqt">
  <div class="mq-item"><svg class="mq-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0H3"/></svg><span>ERP Systems</span></div>
@@ -145,10 +145,10 @@ include __DIR__ . '/partials/nav.php';
  </div>
 </div>
 
-<!-- ═══════════════════ 7 FUNCTIONS ═══════════════════ -->
+<!-- 7 FUNCTIONS -->
 <section id="functions">
  <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Core Platform</span><div class="eyebrow-line"></div></div>
- <h2 class="sec-h rv">The <span class="g">7 Functions</span> of Business <span class="fade">— Unified</span></h2>
+ <h2 class="sec-h rv">The <span class="g">7 Functions</span> of Business<span class="fade">: Unified</span></h2>
  <p class="sec-sub rv">Every core business function, streamlined and intelligently connected through one operating system.</p>
 
  <div class="cf-scroll-outer" id="cfScrollOuter">
@@ -158,87 +158,87 @@ include __DIR__ . '/partials/nav.php';
     <!-- 01 Management -->
     <div class="cf-card">
      <div class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></div>
-     <div class="cf-num">01 — Management</div>
+     <div class="cf-num">01 Management</div>
      <div class="cf-name">Management</div>
      <div class="cf-desc">Centralized dashboards and operational visibility for faster, smarter business decisions.</div>
      <div class="cf-tags"><span class="cf-tag">KPI Tracking</span><span class="cf-tag">Analytics</span><span class="cf-tag">Approvals</span></div>
-     <button type="button" data-book class="cf-arrow">Explore module →</button>
+     <button type="button" data-book class="cf-arrow">Explore module</button>
     </div>
 
     <!-- 02 Sales -->
     <div class="cf-card">
      <div class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,17 9,11 13,15 21,7"/><polyline points="14,7 21,7 21,14"/></svg></div>
-     <div class="cf-num">02 — Sales</div>
+     <div class="cf-num">02 Sales</div>
      <div class="cf-name">Sales</div>
      <div class="cf-desc">Manage leads, pipelines, customers, and revenue operations from one unified platform.</div>
      <div class="cf-tags"><span class="cf-tag">CRM</span><span class="cf-tag">Pipeline</span><span class="cf-tag">Invoicing</span></div>
-     <button type="button" data-book class="cf-arrow">Explore module →</button>
+     <button type="button" data-book class="cf-arrow">Explore module</button>
     </div>
 
     <!-- 03 Marketing -->
     <div class="cf-card">
      <div class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4a1 1 0 001 1h2l6 4V5L6 9H4a1 1 0 00-1 1z"/><path d="M17 9a4 4 0 010 6"/><path d="M20 7a8 8 0 010 10"/></svg></div>
-     <div class="cf-num">03 — Marketing</div>
+     <div class="cf-num">03 Marketing</div>
      <div class="cf-name">Marketing</div>
      <div class="cf-desc">Track campaigns, automate WhatsApp &amp; email, and improve customer engagement at scale.</div>
      <div class="cf-tags"><span class="cf-tag">Campaigns</span><span class="cf-tag">WhatsApp</span><span class="cf-tag">Nurturing</span></div>
-     <button type="button" data-book class="cf-arrow">Explore module →</button>
+     <button type="button" data-book class="cf-arrow">Explore module</button>
     </div>
 
     <!-- 04 Operations -->
     <div class="cf-card">
      <div class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></div>
-     <div class="cf-num">04 — Operations</div>
+     <div class="cf-num">04 Operations</div>
      <div class="cf-name">Operations</div>
      <div class="cf-desc">Streamline activities, inventory, and vendor management with intelligent process automation.</div>
      <div class="cf-tags"><span class="cf-tag">Workflows</span><span class="cf-tag">Inventory</span><span class="cf-tag">Vendors</span></div>
-     <button type="button" data-book class="cf-arrow">Explore module →</button>
+     <button type="button" data-book class="cf-arrow">Explore module</button>
     </div>
 
     <!-- 05 Finance -->
     <div class="cf-card">
      <div class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="16" cy="14.5" r="1.3" fill="currentColor" stroke="none"/></svg></div>
-     <div class="cf-num">05 — Finance</div>
+     <div class="cf-num">05 Finance</div>
      <div class="cf-name">Finance</div>
      <div class="cf-desc">Centralize billing, expenses, financial reporting, and accounting integrations seamlessly.</div>
      <div class="cf-tags"><span class="cf-tag">Billing</span><span class="cf-tag">Expenses</span><span class="cf-tag">Reports</span></div>
-     <button type="button" data-book class="cf-arrow">Explore module →</button>
+     <button type="button" data-book class="cf-arrow">Explore module</button>
     </div>
 
     <!-- 06 HR -->
     <div class="cf-card">
      <div class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><circle cx="17" cy="9" r="2.6"/><path d="M15.4 20c.3-2.6 2-4.6 4.6-4.9"/></svg></div>
-     <div class="cf-num">06 — Human Resources</div>
+     <div class="cf-num">06 Human Resources</div>
      <div class="cf-name">HR</div>
      <div class="cf-desc">Manage employees, attendance, payroll workflows, and leave management efficiently.</div>
      <div class="cf-tags"><span class="cf-tag">Payroll</span><span class="cf-tag">Attendance</span><span class="cf-tag">Leave</span></div>
-     <button type="button" data-book class="cf-arrow">Explore module →</button>
+     <button type="button" data-book class="cf-arrow">Explore module</button>
     </div>
 
     <!-- 07 Inventory Management -->
     <div class="cf-card">
      <div class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg></div>
-     <div class="cf-num">07 — Inventory</div>
+     <div class="cf-num">07 Inventory</div>
      <div class="cf-name">Inventory Management</div>
      <div class="cf-desc">Track stock across every warehouse and channel, with alerts before you run out.</div>
      <div class="cf-tags"><span class="cf-tag">Stock Levels</span><span class="cf-tag">Reorder Alerts</span><span class="cf-tag">Multi-warehouse</span></div>
-     <button type="button" data-book class="cf-arrow">Explore module →</button>
+     <button type="button" data-book class="cf-arrow">Explore module</button>
     </div>
 
    </div>
    <div class="sec-cta rv">
-    <button type="button" data-book class="btn btn-black">Schedule a Consultation →</button>
+    <button type="button" data-book class="btn btn-black">Schedule a Consultation</button>
     <a href="#dashboards" class="btn btn-outline2">View Live Dashboards</a>
    </div>
   </div>
  </div>
 </section>
 
-<!-- ═══════════════════ APP CHAOS → SMART BOARD ═══════════════════ -->
+<!-- APP CHAOS → SMART BOARD -->
 <section id="unify">
  <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">The Problem</span><div class="eyebrow-line"></div></div>
  <h2 class="sec-h rv">Stop running your business from <span class="g">a dozen different tabs</span></h2>
- <p class="sec-sub rv">Google Sheets, CRM, WhatsApp, Notion, billing software, phone calls — your business data is scattered everywhere. Drawlead brings it all into one Smart Board.</p>
+ <p class="sec-sub rv">Google Sheets, CRM, WhatsApp, Notion, billing software, phone calls. Your business data is scattered everywhere. Drawlead brings it all into one Smart Board.</p>
 
  <!-- physics stage: pills are DOM elements so they keep full CSS styling; Matter.js
       drives the simulation and each frame we sync position + rotation onto them -->
@@ -254,17 +254,17 @@ include __DIR__ . '/partials/nav.php';
  </div>
 
  <div class="sec-cta rv">
-  <button type="button" data-book class="btn btn-black">Explore the Platform →</button>
+  <button type="button" data-book class="btn btn-black">Explore the Platform</button>
  </div>
 </section>
 
-<!-- ═══════════════════ METHODOLOGY ═══════════════════ -->
+<!-- METHODOLOGY -->
 <section id="method">
 
  <div class="mth-left">
  <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">How We Work</span><div class="eyebrow-line"></div></div>
  <h2 class="sec-h rv">We don't build first. <span class="g">We understand first.</span></h2>
- <p class="sec-sub rv">Before a single line of code or campaign goes live, we audit how your business actually runs — so every system we build is measurable, automated, and built to scale.</p>
+ <p class="sec-sub rv">Before a single line of code or campaign goes live, we audit how your business actually runs, so every system we build is measurable, automated, and built to scale.</p>
 
  <div class="fn-grid">
  <!-- 01 Audit -->
@@ -291,7 +291,7 @@ include __DIR__ . '/partials/nav.php';
    <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M22 3 L9 21 L18 21 L16 37 L33 16 L23 16 Z" fill="white"/><path d="M22 3 L9 21 L18 21 L17 27" fill="none" stroke="rgba(20,133,90,.5)" stroke-width="1.6" stroke-linejoin="round"/></svg>
   </div>
   <div class="fn-name">Automate</div>
-  <div class="fn-desc">We remove repetitive manual work — approvals, follow-ups, notifications — before we build anything new.</div>
+  <div class="fn-desc">We remove repetitive manual work (approvals, follow-ups, notifications) before we build anything new.</div>
   <div class="fn-tags"><span class="fn-tag">Approvals</span><span class="fn-tag">Follow-ups</span></div>
  </div>
  <!-- 04 Scale -->
@@ -300,7 +300,7 @@ include __DIR__ . '/partials/nav.php';
    <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="14" y="14" width="12" height="12" rx="2" fill="rgba(255,255,255,.5)"/><path d="M24 4 L36 4 L36 16" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 4 L24 16" stroke="white" stroke-width="2.5" stroke-linecap="round"/><path d="M16 36 L4 36 L4 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 36 L16 24" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
   </div>
   <div class="fn-name">Scale</div>
-  <div class="fn-desc">Only then do we build the ERP, CRM, website, or automation platform — designed to grow with you.</div>
+  <div class="fn-desc">Only then do we build the ERP, CRM, website, or automation platform, designed to grow with you.</div>
   <div class="fn-tags"><span class="fn-tag">Custom ERP</span><span class="fn-tag">Automation</span></div>
  </div>
  </div>
@@ -308,15 +308,15 @@ include __DIR__ . '/partials/nav.php';
  <div class="unify-stat rv">Understand <span class="g2">→</span> Measure <span class="g2">→</span> Automate <span class="g2">→</span> Scale.</div>
 
  <div class="sec-cta rv">
-  <button type="button" data-book class="btn btn-black">Start With an Audit →</button>
+  <button type="button" data-book class="btn btn-black">Start With an Audit</button>
  </div>
  </div><!-- /mth-left -->
 </section>
 
-<!-- ═══════════════════ SOLUTIONS ═══════════════════ -->
+<!-- SOLUTIONS -->
 <section id="solutions">
  <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Solutions</span><div class="eyebrow-line"></div></div>
- <h2 class="sec-h rv">Built for <span class="g">Growth</span> <span class="fade">— Three Ways</span></h2>
+ <h2 class="sec-h rv">Built for <span class="g">Growth</span><span class="fade">: Three Ways</span></h2>
  <p class="sec-sub rv">Beyond the core platform, three focused solution tracks that plug straight into your operating system.</p>
 
  <div class="sol-grid">
@@ -331,7 +331,7 @@ include __DIR__ . '/partials/nav.php';
   </div>
   <div class="sol-name">Custom Operational Solutions</div>
   <div class="sol-tag">An ERP shaped around how you actually work.</div>
-  <p class="sol-desc">Off-the-shelf ERP forces your team to bend to the software. We build the opposite — modules mapped to your real workflows, your approval chains, your terminology, deployed as a system you own outright.</p>
+  <p class="sol-desc">Off-the-shelf ERP forces your team to bend to the software. We build the opposite: modules mapped to your real workflows, your approval chains, your terminology, deployed as a system you own outright.</p>
   <ul class="sol-list">
    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Custom modules for your exact operating process</li>
    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Role-based access, approvals &amp; audit trails</li>
@@ -342,7 +342,7 @@ include __DIR__ . '/partials/nav.php';
    <div><div class="sol-metric-v">100%</div><div class="sol-metric-l">Ownership</div></div>
    <div><div class="sol-metric-v">1</div><div class="sol-metric-l">Source of truth</div></div>
   </div>
-  <a href="/custom-erp-solution" class="sol-arrow">Explore ERP →</a>
+  <a href="/custom-erp-solution" class="sol-arrow">Explore ERP</a>
  </div>
 
  <!-- Ecommerce Solutions -->
@@ -354,7 +354,7 @@ include __DIR__ . '/partials/nav.php';
    <div class="sol-label">Solution 02</div>
   </div>
   <div class="sol-name">Ecommerce Solutions</div>
-  <div class="sol-tag">From storefront to fulfilment — one connected stack.</div>
+  <div class="sol-tag">From storefront to fulfilment, one connected stack.</div>
   <p class="sol-desc">Launch and scale an online store that talks directly to your inventory, billing, and delivery operations. No spreadsheets in between, no orders lost in the gap between platforms.</p>
   <ul class="sol-list">
    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Shopify, WooCommerce &amp; custom storefront builds</li>
@@ -366,7 +366,7 @@ include __DIR__ . '/partials/nav.php';
    <div><div class="sol-metric-v">3&times;</div><div class="sol-metric-l">Faster launch</div></div>
    <div><div class="sol-metric-v">0</div><div class="sol-metric-l">Manual entry</div></div>
   </div>
-  <a href="/ecommerce-solutions" class="sol-arrow">Explore ecommerce →</a>
+  <a href="/ecommerce-solutions" class="sol-arrow">Explore ecommerce</a>
  </div>
 
  <!-- Marketing Solutions -->
@@ -379,7 +379,7 @@ include __DIR__ . '/partials/nav.php';
   </div>
   <div class="sol-name">Marketing Solutions</div>
   <div class="sol-tag">Fix the leak between lead and conversion.</div>
-  <p class="sol-desc">Most businesses don't have a traffic problem — they have a follow-up problem. Two engines run the funnel: organic search that compounds over time, and paid campaigns that buy demand on demand.</p>
+  <p class="sol-desc">Most businesses don't have a traffic problem. They have a follow-up problem. Two engines run the funnel: organic search that compounds over time, and paid campaigns that buy demand on demand.</p>
   <ul class="sol-list">
    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Technical SEO, Core Web Vitals &amp; site architecture</li>
    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Content engine &amp; on-page optimisation at scale</li>
@@ -390,13 +390,13 @@ include __DIR__ . '/partials/nav.php';
    <div><div class="sol-metric-v">4&times;</div><div class="sol-metric-l">Organic traffic</div></div>
    <div><div class="sol-metric-v">&lt;5 min</div><div class="sol-metric-l">Response time</div></div>
   </div>
-  <a href="/marketing-solutions" class="sol-arrow">Explore marketing →</a>
+  <a href="/marketing-solutions" class="sol-arrow">Explore marketing</a>
  </div>
 
  </div>
 </section>
 
-<!-- ═══════════════════ TECH STACK ═══════════════════ -->
+<!-- TECH STACK -->
 <section id="tech" style="background:#0a1310;color:#fff">
  <!-- .tech-track is the tall scroll runway; .tech-pin is what actually sticks. Its
       height is set from the card count in JS so the pin releases once the last card
@@ -423,7 +423,7 @@ include __DIR__ . '/partials/nav.php';
         </svg>
       </div>
       <div class="tech-name">ERP Systems</div>
-      <div class="tech-desc">Unified business backbone — all departments connected in a single source of truth with real-time data sync across every module.</div>
+      <div class="tech-desc">Unified business backbone: all departments connected in a single source of truth with real-time data sync across every module.</div>
       <div class="tech-tags"><span class="t-tag">Multi-module</span><span class="t-tag">Real-time sync</span><span class="t-tag">Role-based access</span></div>
     </div>
 
@@ -447,7 +447,7 @@ include __DIR__ . '/partials/nav.php';
         </svg>
       </div>
       <div class="tech-name">AI Automation</div>
-      <div class="tech-desc">Intelligent workflows that learn and adapt — eliminating repetitive tasks and surfacing actionable insights before you ask.</div>
+      <div class="tech-desc">Intelligent workflows that learn and adapt, eliminating repetitive tasks and surfacing actionable insights before you ask.</div>
       <div class="tech-tags"><span class="t-tag">Predictive AI</span><span class="t-tag">Auto-workflows</span><span class="t-tag">Smart alerts</span></div>
     </div>
 
@@ -464,7 +464,7 @@ include __DIR__ . '/partials/nav.php';
         </svg>
       </div>
       <div class="tech-name">CRM Platform</div>
-      <div class="tech-desc">360° customer management — first touch to retention with pipeline tracking, follow-up automation, and revenue forecasting.</div>
+      <div class="tech-desc">360° customer management, from first touch to retention, with pipeline tracking, follow-up automation, and revenue forecasting.</div>
       <div class="tech-tags"><span class="t-tag">Lead scoring</span><span class="t-tag">Pipeline</span><span class="t-tag">Auto follow-up</span></div>
     </div>
 
@@ -481,7 +481,7 @@ include __DIR__ . '/partials/nav.php';
         </svg>
       </div>
       <div class="tech-name">Analytics Engine</div>
-      <div class="tech-desc">Real-time dashboards and drill-down reporting across every function — turning raw data into strategic advantage.</div>
+      <div class="tech-desc">Real-time dashboards and drill-down reporting across every function, turning raw data into strategic advantage.</div>
       <div class="tech-tags"><span class="t-tag">Live dashboards</span><span class="t-tag">Custom reports</span><span class="t-tag">KPI tracking</span></div>
     </div>
 
@@ -517,20 +517,20 @@ include __DIR__ . '/partials/nav.php';
         </svg>
       </div>
       <div class="tech-name">Workflow Intelligence</div>
-      <div class="tech-desc">Visual no-code workflow builder with triggers, conditions, and multi-step actions — automate complex processes instantly.</div>
+      <div class="tech-desc">Visual no-code workflow builder with triggers, conditions, and multi-step actions. Automate complex processes instantly.</div>
       <div class="tech-tags"><span class="t-tag">No-code builder</span><span class="t-tag">Triggers</span><span class="t-tag">Multi-step</span></div>
     </div>
 
   </div>
   <div class="sec-cta rv">
-    <button type="button" data-book class="btn btn-black" style="background:#fff;color:#0a1310">Discuss Technical Requirements →</button>
+    <button type="button" data-book class="btn btn-black" style="background:#fff;color:#0a1310">Discuss Technical Requirements</button>
     <a href="#functions" class="btn btn-outline2" style="color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.2)">View All Modules</a>
   </div>
   </div><!-- /tech-pin -->
  </div><!-- /tech-track -->
 </section>
 
-<!-- ═══════════════════ CASE STUDIES ═══════════════════ -->
+<!-- CASE STUDIES -->
 <section id="cases">
  <div class="eyebrow rv"><div class="eyebrow-line" style="background:#32b46f"></div><span class="eyebrow-text" style="color:#32b46f">Case Studies</span><div class="eyebrow-line" style="background:#32b46f"></div></div>
  <h2 class="sec-h rv"><span style="color:#32b46f">Real Results</span> for <span class="fade">Real Businesses</span></h2>
@@ -548,7 +548,7 @@ include __DIR__ . '/partials/nav.php';
       <li>Faster reporting workflows and billing automation</li>
       <li>Improved multi-site project management controls</li>
     </ul>
-    <button type="button" data-book class="btn btn-outline2 btn-sm" style="margin-top:1.1rem;align-self:flex-start">Read Case Study →</button>
+    <button type="button" data-book class="btn btn-outline2 btn-sm" style="margin-top:1.1rem;align-self:flex-start">Read Case Study</button>
   </div>
  </div>
  <div class="case-card" style="--acc:#2FB5AE;--acc2:#A8E6E2;--atm:rgba(47,181,174,.18)">
@@ -561,7 +561,7 @@ include __DIR__ . '/partials/nav.php';
       <li>Improved scheduling efficiency and capacity</li>
       <li>Centralized billing and cross-branch reporting</li>
     </ul>
-    <button type="button" data-book class="btn btn-outline2 btn-sm" style="margin-top:1.1rem;align-self:flex-start">Read Case Study →</button>
+    <button type="button" data-book class="btn btn-outline2 btn-sm" style="margin-top:1.1rem;align-self:flex-start">Read Case Study</button>
   </div>
  </div>
  <div class="case-card" style="--acc:#8B5CF6;--acc2:#CDBEFB;--atm:rgba(139,92,246,.16)">
@@ -574,23 +574,23 @@ include __DIR__ . '/partials/nav.php';
       <li>Better client and pipeline management</li>
       <li>Measurable increase in team productivity</li>
     </ul>
-    <button type="button" data-book class="btn btn-outline2 btn-sm" style="margin-top:1.1rem;align-self:flex-start">Read Case Study →</button>
+    <button type="button" data-book class="btn btn-outline2 btn-sm" style="margin-top:1.1rem;align-self:flex-start">Read Case Study</button>
   </div>
  </div>
    </div><!-- /cases-track -->
   </div>
  </div><!-- /cases-scroll -->
  <div class="sec-cta rv">
- <button type="button" data-book class="btn btn-black">Start Your Success Story →</button>
+ <button type="button" data-book class="btn btn-black">Start Your Success Story</button>
  </div>
 </section>
 
-<!-- ═══════════════════ INDUSTRIES ═══════════════════ -->
+<!-- INDUSTRIES -->
 <?php
-// Section 8 — industry sticky stack.
+// Section 8: industry sticky stack.
 // Order is pinned explicitly (the shared data source lists Manufacturing before
 // Marketing Agencies; the design calls for the reverse) and each industry carries its
-// own gradient pair + deep base colour. Copy itself is untouched — it still comes
+// own gradient pair + deep base colour. Copy itself is untouched, it still comes
 // straight from industries_ordered().
 $indStackOrder = ['construction','healthcare','agencies','manufacturing','retail','logistics'];
 $indTheme = [
@@ -607,7 +607,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
 <section id="industries">
  <div class="eyebrow rv"><div class="eyebrow-line" style="background:#14855a"></div><span class="eyebrow-text" style="color:#14855a">Industries</span><div class="eyebrow-line" style="background:#14855a"></div></div>
  <h2 class="sec-h rv">Built for <span style="color:#14855a">Your Industry</span></h2>
- <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements — out of the box.</p>
+ <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements, out of the box.</p>
 
  <div class="ind-scroll" id="indScroll">
   <div class="ind-viewport" id="indViewport">
@@ -647,17 +647,17 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
  </div><!-- /ind-scroll -->
 
  <div class="sec-cta rv" style="margin-top:3rem">
- <button type="button" data-book class="btn btn-black">Find Your Industry Solution →</button>
+ <button type="button" data-book class="btn btn-black">Find Your Industry Solution</button>
  <a href="#cases" class="btn btn-outline2">See Case Studies</a>
  </div>
 </section>
 
-<!-- ═══════════════════ WHY Drawlead ═══════════════════ -->
+<!-- WHY Drawlead -->
 <section id="why">
  <h2 class="why-h rv">Why Drawlead</h2>
 
  <!-- Question mark is fixed; the magnet hangs from its lower curve on a thin string.
-      The string + magnet live inside .why-pendulum, which rotates about its TOP edge —
+      The string + magnet live inside .why-pendulum, which rotates about its TOP edge,
       so the string always stays visually attached to the anchor point as it swings. -->
  <div class="why-hero rv">
   <div class="why-qmark" aria-hidden="true">?</div>
@@ -679,7 +679,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   </div>
  </div>
 
- <p class="why-lead rv">We're not just software — we're a long-term partner in your digital transformation and growth.</p>
+ <p class="why-lead rv">We're not just software. We're a long-term partner in your digital transformation and growth.</p>
 
  <div class="why-feats">
   <div class="why-feat rv d1">
@@ -695,7 +695,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <div class="why-feat rv d3">
    <div class="why-fico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/><path d="M12 2l3 3M12 2L9 5M12 22l3-3M12 22l-3-3M2 12l3-3M2 12l3 3M22 12l-3-3M22 12l-3 3"/></svg></div>
    <div class="why-fname">Scalable Architecture</div>
-   <div class="why-fdesc">Built for startups, SMEs, and enterprises — scales exactly as your business grows.</div>
+   <div class="why-fdesc">Built for startups, SMEs, and enterprises. Scales exactly as your business grows.</div>
   </div>
   <div class="why-feat rv d4">
    <div class="why-fico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3.5v6c0 5-3.4 8.6-8 10.5-4.6-1.9-8-5.5-8-10.5v-6L12 2z"/><polyline points="8.5,12 11,14.5 15.5,9.5"/></svg></div>
@@ -705,24 +705,24 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <div class="why-feat rv d1">
    <div class="why-fico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11q4-4 7 0l3 3 3-3q3-4 7 0"/><path d="M2 15q4-4 7 0l3 3 3-3q3-4 7 0"/></svg></div>
    <div class="why-fname">Long-Term Partnership</div>
-   <div class="why-fdesc">Continuous support, updates, and future-proofing — we grow and evolve with your needs.</div>
+   <div class="why-fdesc">Continuous support, updates, and future-proofing. We grow and evolve with your needs.</div>
   </div>
  </div>
 
  <div class="sec-cta rv">
- <button type="button" data-book class="btn btn-black" style="background:#fff;color:#0a1310">Partner With Us →</button>
+ <button type="button" data-book class="btn btn-black" style="background:#fff;color:#0a1310">Partner With Us</button>
  <a href="#cases" class="btn btn-outline2" style="color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.2)">See Case Studies</a>
  </div>
 </section>
 
-<!-- ═══════════════════ DASHBOARDS ═══════════════════ -->
+<!-- DASHBOARDS -->
 <section id="dashboards" style="background:var(--bg2)">
  <div class="eyebrow rv"><div class="eyebrow-line" style="background:#23a065"></div><span class="eyebrow-text" style="color:#23a065">Platform Dashboards</span><div class="eyebrow-line" style="background:#23a065"></div></div>
  <h2 class="sec-h rv">Every Module. <span class="fade">One Screen.</span></h2>
- <p class="sec-sub rv">Live ERP dashboards for every function — see exactly what Drawlead looks like in action.</p>
+ <p class="sec-sub rv">Live ERP dashboards for every function. See exactly what Drawlead looks like in action.</p>
  <div class="dash-grid">
 
-  <!-- ── SALES ── -->
+  <!-- SALES -->
   <div class="dash-card d1">
     <div class="dash-head">
       <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
@@ -747,14 +747,14 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
       </div>
       <div class="d-hr"></div>
       <div class="d-rows">
-        <div class="d-row"><div class="d-dot" style="background:#32b46f"></div>Infra Corp — Won<span class="d-val" style="color:#32b46f">₹12L</span></div>
-        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>MedPlus — Proposal<span class="d-val" style="color:#14855a">₹8L</span></div>
-        <div class="d-row"><div class="d-dot" style="background:#23a065"></div>LogiTrack — Demo<span class="d-val" style="color:#23a065">₹6L</span></div>
+        <div class="d-row"><div class="d-dot" style="background:#32b46f"></div>Infra Corp: Won<span class="d-val" style="color:#32b46f">₹12L</span></div>
+        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>MedPlus: Proposal<span class="d-val" style="color:#14855a">₹8L</span></div>
+        <div class="d-row"><div class="d-dot" style="background:#23a065"></div>LogiTrack: Demo<span class="d-val" style="color:#23a065">₹6L</span></div>
       </div>
     </div>
   </div>
 
-  <!-- ── FINANCE ── -->
+  <!-- FINANCE -->
   <div class="dash-card d2">
     <div class="dash-head">
       <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
@@ -782,7 +782,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
     </div>
   </div>
 
-  <!-- ── OPERATIONS ── -->
+  <!-- OPERATIONS -->
   <div class="dash-card d3">
     <div class="dash-head">
       <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
@@ -805,12 +805,12 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
       </div>
       <div class="d-rows">
         <div class="d-row"><div class="d-dot" style="background:#32b46f"></div>Warehouse restock done<span class="d-val" style="color:#32b46f">✓</span></div>
-        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>Vendor delay — Site B<span class="d-val" style="color:#14855a">Alert</span></div>
+        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>Vendor delay: Site B<span class="d-val" style="color:#14855a">Alert</span></div>
       </div>
     </div>
   </div>
 
-  <!-- ── HR ── -->
+  <!-- HR -->
   <div class="dash-card d1">
     <div class="dash-head">
       <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
@@ -835,7 +835,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
     </div>
   </div>
 
-  <!-- ── MARKETING ── -->
+  <!-- MARKETING -->
   <div class="dash-card d2">
     <div class="dash-head">
       <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
@@ -870,7 +870,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
     </div>
   </div>
 
-  <!-- ── MANAGEMENT ── -->
+  <!-- MANAGEMENT -->
   <div class="dash-card d3">
     <div class="dash-head">
       <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
@@ -901,21 +901,21 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
 
  </div><!-- /dash-grid -->
  <div class="sec-cta rv" style="margin-top:3rem">
- <button type="button" data-book class="btn btn-black">Book a Live Demo →</button>
+ <button type="button" data-book class="btn btn-black">Book a Live Demo</button>
  <button type="button" data-book class="btn btn-outline2">Schedule Consultation</button>
  </div>
 </section>
 
 
 <?php
-// ═══════ CTA INTRO — continuous letter train ═══════
+// CTA INTRO: continuous letter train
 // Two copies live here, and only one is ever shown:
 //
 //  .ci-static-head  the plain 3-line heading. This is the DEFAULT: it is what renders
 //                   with no JS, a JS error, missing GSAP, or reduced motion. Nothing
 //                   hides it unless the animation has successfully started.
 //  .ci-train        the animated copy. For the animation the heading is treated as ONE
-//                   continuous character sequence on ONE baseline — the line breaks
+//                   continuous character sequence on ONE baseline, the line breaks
 //                   belong to the static layout, not to the train. Inside it,
 //                   .ci-measure supplies real kerning offsets and .ci-stage holds the
 //                   glyphs the JS actually flies.
@@ -972,7 +972,7 @@ $ciTrainGreen = ['ERP', 'AI?'];
  </div>
 
 </section>
-<!-- ═══════════════════ CTA ═══════════════════ -->
+<!-- CTA -->
 <section id="cta" class="cta-framed">
  <!-- dark rounded container, inset from the page so white space frames it on all sides -->
  <div class="cta-card">
@@ -981,9 +981,9 @@ $ciTrainGreen = ['ERP', 'AI?'];
 
   <div class="cta-eyebrow rv"><span class="cta-eyebrow-dot"></span>Start Your ERP Journey</div>
   <h2 class="cta-h rv">Build your<br><span class="fade">business</span> <span class="gr">ERP</span><br><span class="gr2">OS</span> with <span class="gr3">AI</span></h2>
-  <p class="cta-p rv">Digitize, automate, and scale with Drawlead. Start with a free consultation — no commitment needed.</p>
+  <p class="cta-p rv">Digitize, automate, and scale with Drawlead. Start with a free consultation, no commitment needed.</p>
   <div class="cta-btns rv">
-  <button type="button" data-book class="cta-btn-w">Schedule Free Consultation →</button>
+  <button type="button" data-book class="cta-btn-w">Schedule Free Consultation</button>
   <button type="button" data-book class="cta-btn-g">Book a Product Demo</button>
   </div>
   <div class="cta-note rv">செயலை மாற்றும் · Intelligent Operating System · Secure · Scalable · Future-Ready</div>
@@ -999,17 +999,17 @@ $ciTrainGreen = ['ERP', 'AI?'];
 <!-- GSAP + ScrollTrigger, vendored locally to match the same convention. Loaded once,
      here, and nowhere else; only this page pays for them.
      No smooth-scroll library: the page uses the browser's native scrolling. Lenis was
-     tried here and removed — it takes over document scroll and adds another ticker
+     tried here and removed, it takes over document scroll and adds another ticker
      layer on top of GSAP's, which cost more than it bought on this page. -->
 <script src="<?= asset_url('/assets/gsap.min.js') ?>"></script>
 <script src="<?= asset_url('/assets/ScrollTrigger.min.js') ?>"></script>
 
 <script>
-// ── Industry Dashboard Switcher — one window, data-driven, auto-rotates ──
+// Industry Dashboard Switcher: one window, data-driven, auto-rotates
 const industries = [
  {
  name:'Ecommerce', accentColor:'#23a065',
- title:'ECOMMERCE OS — ORDERS &amp; REVENUE OVERVIEW',
+ title:'ECOMMERCE OS: ORDERS &amp; REVENUE OVERVIEW',
  kpis:[{v:'842',l:'Orders Today'},{v:'₹18.4L',l:'GMV'},{v:'3.8%',l:'Conversion'},{v:'₹2,140',l:'Avg Order'}],
  chartLabel:'Daily Orders', chartBars:[58,66,50,82,74,95],
  aiLabel:'AI INSIGHT',
@@ -1017,7 +1017,7 @@ const industries = [
  },
  {
  name:'Hospital', accentColor:'#32b46f',
- title:'HOSPITAL OS — PATIENT &amp; OPERATIONS OVERVIEW',
+ title:'HOSPITAL OS: PATIENT &amp; OPERATIONS OVERVIEW',
  kpis:[{v:'1,248',l:'Patients Today'},{v:'284',l:'Inpatients'},{v:'46',l:'Surgeries'},{v:'98.4%',l:'Satisfaction'}],
  chartLabel:'Daily OPD Footfall', chartBars:[60,72,55,88,80,95],
  aiLabel:'AI MONITOR',
@@ -1025,15 +1025,15 @@ const industries = [
  },
  {
  name:'Jewellery', accentColor:'#23a065',
- title:'JEWELLERY OS — SALES &amp; STOCK OVERVIEW',
+ title:'JEWELLERY OS: SALES &amp; STOCK OVERVIEW',
  kpis:[{v:'₹3.2Cr',l:'Monthly Sales'},{v:'↑ 22%',l:'YoY Growth'},{v:'1,840',l:'SKUs Active'},{v:'96%',l:'Order Fulfill'}],
  chartLabel:'Weekly Sales (₹ Lakhs)', chartBars:[55,62,48,80,70,95],
  aiLabel:'AI INSIGHT',
- aiText:'Navaratri season — predict 40% spike in necklace demand next 14 days.',
+ aiText:'Navaratri season: predict 40% spike in necklace demand next 14 days.',
  },
  {
  name:'Manufacturing', accentColor:'#14855a',
- title:'MANUFACTURING OS — PRODUCTION OVERVIEW',
+ title:'MANUFACTURING OS: PRODUCTION OVERVIEW',
  kpis:[{v:'4,280',l:'Units Today'},{v:'↑ 12%',l:'Output'},{v:'99.1%',l:'Quality Rate'},{v:'6',l:'Active Lines'}],
  chartLabel:'Daily Production Units', chartBars:[62,78,55,90,85,95],
  aiLabel:'AI PREDICT',
@@ -1041,7 +1041,7 @@ const industries = [
  },
  {
  name:'Construction', accentColor:'#14855a',
- title:'CONSTRUCTION OS — PROJECT OVERVIEW',
+ title:'CONSTRUCTION OS: PROJECT OVERVIEW',
  kpis:[{v:'₹8.4Cr',l:'Total Projects'},{v:'↑ 18%',l:'On-Time Rate'},{v:'247',l:'Workers'},{v:'38',l:'Vendors'}],
  chartLabel:'Project Progress', chartBars:[55,70,48,80,95,40],
  aiLabel:'AI ALERT',
@@ -1101,7 +1101,7 @@ function switchDash(idx) {
  }, 300);
 }
 
-// Auto-cycle the dashboard — Ecommerce → Hospital → Jewellery → Manufacturing → Construction → repeat.
+// Auto-cycle the dashboard, Ecommerce → Hospital → Jewellery → Manufacturing → Construction → repeat.
 // The tab progress indicator was removed, and with it the 60ms tick that only existed to
 // paint it. Rotation is unchanged: still one industry every CYCLE_MS, driven directly.
 const CYCLE_MS = 5500;
@@ -1110,13 +1110,13 @@ if(!reduceMotion){
  setInterval(() => switchDash((currentIdx + 1) % industries.length), CYCLE_MS);
 }
 
-// ── Core Functions — sticky horizontal scroll ──
+// Core Functions: sticky horizontal scroll
 // The row is pinned via CSS position:sticky. As the user scrolls down through
 // the wrapper, this maps that scroll distance 1:1 to translateX so the row
 // reveals left→right, then releases back to normal vertical scroll once done.
 // The sticky box is sized to its own natural content height (no 100vh, no
 // extra padding) so the scroll distance consumed matches only the actual
-// horizontal overflow — not an arbitrarily inflated viewport-sized box.
+// horizontal overflow, not an arbitrarily inflated viewport-sized box.
 (function(){
  const outer = document.getElementById('cfScrollOuter');
  const sticky = document.getElementById('cfScrollSticky');
@@ -1147,7 +1147,7 @@ if(!reduceMotion){
  window.addEventListener('scroll', onScroll, { passive: true });
 })();
 
-// ── Sticky card stacks — scroll-linked "overlap → fade → next becomes active" ──
+// Sticky card stacks: scroll-linked "overlap → fade → next becomes active"
 // Opacity/scale/blur are mapped continuously to scroll position rather than toggled by
 // a CSS transition, so the dimming tracks the scroll exactly with no sudden jump.
 // A card starts dimming only once the NEXT card begins to cover it, and bottoms out at
@@ -1185,7 +1185,7 @@ if(!reduceMotion){
     const card = cards[i];
     const next = cards[i + 1];
 
-    // the final card is always the foreground one — never dim it
+    // the final card is always the foreground one, never dim it
     if(!next){ card.style.opacity = ''; card.style.transform = ''; card.style.filter = ''; continue; }
 
     const g        = geo[i] || { top:0, h:0 };
@@ -1225,7 +1225,7 @@ if(!reduceMotion){
 
  initStickyStack('#solutions .sol-card', { dimTo: 0.30, shrink: 0.04 });
 
- // ── Tech — pinned section, cards stack horizontally toward the right ──
+ // Tech: pinned section, cards stack horizontally toward the right
  // Vertical scroll through the tall .tech-track drives a single progress value; each
  // card derives its own offset from it. Upcoming cards wait off to the left, the active
  // card sits flush, and superseded cards slide RIGHT and tuck behind the active one.
@@ -1269,7 +1269,7 @@ if(!reduceMotion){
      x = d * ENTER_X;
      opacity = 1 + d;                    // fades out the further left it waits
      scale = 1;
-    } else {                             // superseded — slide right, tuck behind
+    } else {                             // superseded, slide right, tuck behind
      const dd = d > MAX_STACK ? MAX_STACK : d;
      x = dd * STACK_X;
      opacity = 1 - d * 0.42;
@@ -1302,7 +1302,7 @@ if(!reduceMotion){
 
 })();
 
-// ── Section 8 — industries centred 3-up card stack ──
+// Section 8: industries centred 3-up card stack
 // The tall .ind-scroll runway supplies scroll distance; .ind-viewport pins inside it.
 // Scroll progress maps to a fractional "active index", and every card is placed by its
 // signed distance d from that index:  d<0 -> left, d==0 -> centre, d>0 -> right.
@@ -1357,12 +1357,12 @@ if(!reduceMotion){
  window.addEventListener('resize', onScroll);
 })();
 
-// ── Section 3 — physics tag stage (scroll-triggered, runs once) ──
+// Section 3: physics tag stage (scroll-triggered, runs once)
 // Matter.js runs a real rigid-body sim (gravity, restitution, friction, rotation,
 // pill-to-pill collisions). The pills stay as DOM nodes so they keep their CSS
 // gradients/blur/shadows; each frame we just write transform onto them.
 // The sim is built up-front but held frozen until the section scrolls into view, so
-// all 8 tags fall together the moment the user arrives — and only ever once.
+// all 8 tags fall together the moment the user arrives, and only ever once.
 (function(){
  const stage = document.getElementById('physStage');
  if(!stage || typeof Matter === 'undefined') return;
@@ -1394,7 +1394,7 @@ if(!reduceMotion){
  // One body per pill, sized from its rendered box.
  // Spawn points sit INSIDE the stage near the top: the ceiling body occupies y -200..0,
  // so spawning at negative y (as before) dropped pills inside a static wall, which
- // ejected or trapped most of them — that's why only a couple ever reached the floor.
+ // ejected or trapped most of them, that's why only a couple ever reached the floor.
  pills.forEach(function(el, i){
   const r = el.getBoundingClientRect();
   const w = r.width || 120, h = r.height || 44;
@@ -1416,7 +1416,7 @@ if(!reduceMotion){
 
  makeWalls();
 
- // ── cursor repulsion ──
+ // cursor repulsion
  const mouse = { x:-9999, y:-9999, active:false };
  const R = 130;                                   // influence radius
  stage.addEventListener('mousemove', function(e){
@@ -1463,7 +1463,7 @@ if(!reduceMotion){
  // doesn't flash them at the stage's top-left corner for a frame.
  paint();
 
- // ── trigger: fire once, when the section actually scrolls into view ──
+ // trigger: fire once, when the section actually scrolls into view
  let started = false;
  function start(){
   if(started) return;
@@ -1503,11 +1503,11 @@ if(!reduceMotion){
 })();
 
 
-// ── Section 9 — hanging magnet: real-time cursor-driven pendulum physics ──
+// Section 9: hanging magnet: real-time cursor-driven pendulum physics
 // A rigid pendulum pivoting at the string's top anchor. Every frame we integrate:
 //   gravity restoring torque + cursor repulsion torque - damping
 // Crucially the cursor force is evaluated in the ANIMATION LOOP from the last known
-// pointer position — not inside the mousemove handler — so a stationary cursor keeps
+// pointer position (not inside the mousemove handler) so a stationary cursor keeps
 // pushing the magnet and it settles into a deflected equilibrium, rather than the force
 // vanishing the moment the mouse stops moving.
 (function(){
@@ -1518,22 +1518,22 @@ if(!reduceMotion){
  if(!pend || !hero || !magnet || !string) return;
  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
- // touch devices have no hover cursor — leave the magnet at a gentle idle sway
+ // touch devices have no hover cursor, leave the magnet at a gentle idle sway
  const coarse = window.matchMedia('(pointer: coarse)').matches;
 
- // ── state ──
+ // state
  let theta = 0.08;   // arm angle, radians (0 = hanging straight down)
  let omega = 0;      // angular velocity
  let tilt  = 0;      // magnet's own rotation, lags the arm for a bit of extra weight
  let stretch = 1;    // string stretch under load
 
- // ── tuning ──
+ // tuning
  const G      = 30;    // gravity restoring strength
  const DAMP   = 0.991; // energy bleed per step -> gradual settle, never abrupt
  const MAXA   = 0.66;  // clamp so it stays premium, not flailing
  const RADIUS = 240;   // cursor influence radius (px)
  // Expressed in the SAME units as G (angular acceleration), so the two are directly
- // comparable. Dividing this by the arm length — as a torque would be — made it ~13x
+ // comparable. Dividing this by the arm length (as a torque would be) made it ~13x
  // weaker than gravity and the magnet barely moved.
  const PUSH   = 28;    // repulsion strength
 
@@ -1573,7 +1573,7 @@ if(!reduceMotion){
 
   if(running){
    // pivot in viewport coords. Derived from the hero box + the pendulum's CSS top, NOT
-   // from pend.getBoundingClientRect() — that element rotates, so its box would shift.
+   // from pend.getBoundingClientRect(), that element rotates, so its box would shift.
    const hr = hero.getBoundingClientRect();
    const pivotX = hr.left + hr.width / 2;
    const pivotY = hr.top + pend.offsetTop;
@@ -1590,7 +1590,7 @@ if(!reduceMotion){
     const dist = Math.hypot(dx, dy) || 0.001;
 
     if(dist < RADIUS){
-     // quadratic falloff — gentle at the edge, firm up close
+     // quadratic falloff, gentle at the edge, firm up close
      const falloff = (1 - dist / RADIUS);
      const speedBoost = 1 + Math.min(Math.abs(mvx) * 1.6, 2.2);
      const F = PUSH * falloff * falloff * speedBoost;
@@ -1625,9 +1625,9 @@ if(!reduceMotion){
 })();
 
 
-// ── CTA intro — continuous letter train ──
+// CTA intro: continuous letter train
 // The uploaded prototype's mechanic, unchanged, over the whole heading as ONE character
-// sequence on ONE baseline. Letters do NOT fly to their own final 3-line coordinates —
+// sequence on ONE baseline. Letters do NOT fly to their own final 3-line coordinates;
 // they land on the moving baseline and then travel with it.
 //
 //   currentTrainX  = landX - progress * (totalWidth + innerWidth * 0.8)
@@ -1641,7 +1641,7 @@ if(!reduceMotion){
 //   distanceToLand <= 0 -> STAGE 2: landed. It sits at letterSlotX, which keeps moving
 //                          left, so it travels as part of the train and is never frozen.
 //
-// ── PERFORMANCE ──────────────────────────────────────────────────────────────
+// PERFORMANCE
 // The maths above is untouched; only the cost of applying it has been cut.
 //  1. onUpdate bails immediately when scroll progress hasn't moved enough to shift the
 //     train by a visible amount, so a stalled/settling scrub costs nothing.
@@ -1651,7 +1651,7 @@ if(!reduceMotion){
 //  3. Values are quantised (0.25px / 0.1deg / 0.001 / 0.01) and compared numerically
 //     against typed arrays. The transform string is only built when something moved.
 //  4. Every measurement is cached in measure(); render() performs ZERO layout reads.
-//  5. ScrollTrigger's own tick is the only loop — no extra requestAnimationFrame.
+//  5. ScrollTrigger's own tick is the only loop, no extra requestAnimationFrame.
 (function(){
  const section = document.getElementById('cta-intro');
  if(!section) return;
@@ -1711,7 +1711,7 @@ if(!reduceMotion){
     // on screen. launchX sits beyond xMax, so parked glyphs cost nothing.
     xMin = -(widest + 24);
     xMax = vw + 24;
-    // progress delta that moves the train less than a quarter pixel — below this the
+    // progress delta that moves the train less than a quarter pixel, below this the
     // whole frame is skipped
     progEps = travel > 0 ? 0.25 / travel : 0;
     pX.fill(NaN); pY.fill(NaN); pR.fill(NaN); pS.fill(NaN); pO.fill(NaN);
@@ -1727,7 +1727,7 @@ if(!reduceMotion){
 
      let x, y, rot, sc, op;
      if(distanceToLand > 0){
-      // STAGE 1 — waiting at / flying from the shared launch point
+      // STAGE 1: waiting at / flying from the shared launch point
       let jp = 1 - distanceToLand / jumpDistance;
       if(jp <= 0){
        x = launchX; y = launchY; rot = LAUNCH_ROT; sc = LAUNCH_SCALE; op = 0;
@@ -1741,7 +1741,7 @@ if(!reduceMotion){
        op  = jp * 2; if(op > 1) op = 1;
       }
      } else {
-      // STAGE 2 — landed on the moving baseline, travelling with the train
+      // STAGE 2: landed on the moving baseline, travelling with the train
       x = letterSlotX; y = 0; rot = 0; sc = 1; op = 1;
      }
 
@@ -1787,7 +1787,7 @@ if(!reduceMotion){
     onRefresh: function(self){ measure(); lastP = -1; render(self.progress); lastP = self.progress; },
     onUpdate: function(self){
      const p = self.progress;
-     // the train hasn't moved a visible amount — skip the entire frame
+     // the train hasn't moved a visible amount, skip the entire frame
      if(p === lastP || (p > lastP ? p - lastP : lastP - p) < progEps) return;
      lastP = p;
      render(p);
@@ -1808,11 +1808,11 @@ if(!reduceMotion){
  }
 })();
 
-// ── Case studies — carousel track driven entirely by vertical scroll ──
+// Case studies: carousel track driven entirely by vertical scroll
 // PERF NOTES (this section was janky before):
 //  * All layout reads (offsetWidth/offsetHeight) are cached and only refreshed on
 //    resize. Reading them inside the frame loop forced a synchronous reflow on EVERY
-//    frame while we were also writing styles — classic layout thrashing.
+//    frame while we were also writing styles, classic layout thrashing.
 //  * Each frame now does ONE cheap read (rect.top) and then only writes.
 //  * Writes are dirty-checked, so untouched cards don't get pointless style updates.
 //  * An IntersectionObserver stops the loop entirely when the section is off-screen.
@@ -1827,7 +1827,7 @@ if(!reduceMotion){
 
  const last = cards.length - 1;
 
- // ── cached layout (refreshed only on resize) ──
+ // cached layout (refreshed only on resize)
  let span = 1, step = 1;
  function measure(){
   span = Math.max(1, scroller.offsetHeight - pin.offsetHeight);
