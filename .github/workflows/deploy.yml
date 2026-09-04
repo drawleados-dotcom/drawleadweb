@@ -6,6 +6,15 @@ name: Deploy to Hostinger — admin.drawlead.com (staging)
 # checkout this action syncs from) and never touches uploads/ content for
 # the same reason — only files tracked in this repo are synced.
 
+# Runs queue rather than race. Two runs uploading over FTP at once can exhaust
+# Hostinger's concurrent-connection limit, a plausible cause of the silent no-op
+# deploys seen on 08cab9b, 9aa1023 and 7d3bfa4, where the run reports success but
+# nothing reaches the server. cancel-in-progress stays false so a queued deploy is
+# never dropped.
+concurrency:
+  group: hostinger-deploy
+  cancel-in-progress: false
+
 on:
   push:
     branches: [main]
@@ -15,6 +24,7 @@ jobs:
   deploy:
     name: FTP/SFTP deploy
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,6 +45,8 @@ jobs:
           # with the DEPLOY_SERVER_DIR repo variable if this ever changes.
           server-dir: ${{ vars.DEPLOY_SERVER_DIR || '/drawlead_webapp/' }}
           dangerous-clean-slate: false
+          # verbose output, so a failed transfer names the file and error it died on
+          log-level: verbose
           exclude: |
             **/.git*
             **/.git*/**
