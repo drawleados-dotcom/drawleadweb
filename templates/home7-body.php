@@ -237,13 +237,24 @@ include __DIR__ . '/partials/nav.php';
       drives the simulation and each frame we sync position + rotation onto them -->
  <div class="phys-stage rv" id="physStage">
   <div class="phys-pill" data-variant="green">Notion</div>
+  <div class="phys-pill" data-variant="light">Microsoft Word</div>
   <div class="phys-pill" data-variant="dark">CRM</div>
+  <div class="phys-pill" data-variant="green">Vyapar</div>
   <div class="phys-pill" data-variant="light">Calls</div>
-  <div class="phys-pill" data-variant="dark">Bill Book</div>
+  <div class="phys-pill" data-variant="dark">Google Calendar</div>
   <div class="phys-pill" data-variant="green">Google Docs</div>
+  <div class="phys-pill" data-variant="light">PowerPoint</div>
+  <div class="phys-pill" data-variant="dark">Bill Book</div>
+  <div class="phys-pill" data-variant="green">Razorpay</div>
   <div class="phys-pill" data-variant="light">WhatsApp</div>
+  <div class="phys-pill" data-variant="dark">Microsoft Outlook</div>
+  <div class="phys-pill" data-variant="green">Excel</div>
+  <div class="phys-pill" data-variant="light">Tally</div>
   <div class="phys-pill" data-variant="dark">Gmail</div>
   <div class="phys-pill" data-variant="green">Google Sheets</div>
+  <div class="phys-pill" data-variant="light">Trello</div>
+  <div class="phys-pill" data-variant="dark">Todoist</div>
+  <div class="phys-pill" data-variant="light">Calendly</div>
  </div>
 
  <div class="sec-cta rv">
@@ -1355,7 +1366,7 @@ if(!reduceMotion){
 // pill-to-pill collisions). The pills stay as DOM nodes so they keep their CSS
 // gradients/blur/shadows; each frame we just write transform onto them.
 // The sim is built up-front but held frozen until the section scrolls into view, so
-// all 8 tags fall together the moment the user arrives, and only ever once.
+// every tag falls together the moment the user arrives, and only ever once.
 (function(){
  const stage = document.getElementById('physStage');
  if(!stage || typeof Matter === 'undefined') return;
@@ -1384,6 +1395,12 @@ if(!reduceMotion){
   Composite.add(engine.world, walls);
  }
 
+ // Spawn in loose rows rather than one long line. With 19 pills a single row would
+ // space them ~54px apart while the widest is ~175px, so they would spawn inside one
+ // another and Matter would fire them apart on the first step.
+ const widest = pills.reduce(function(m, el){ return Math.max(m, el.getBoundingClientRect().width || 120); }, 0);
+ const perRow = Math.max(1, Math.min(pills.length, Math.floor(W / (widest + 24))));
+
  // One body per pill, sized from its rendered box.
  // Spawn points sit INSIDE the stage near the top: the ceiling body occupies y -200..0,
  // so spawning at negative y (as before) dropped pills inside a static wall, which
@@ -1391,9 +1408,9 @@ if(!reduceMotion){
  pills.forEach(function(el, i){
   const r = el.getBoundingClientRect();
   const w = r.width || 120, h = r.height || 44;
-  const cols = pills.length;
-  const x = (W / (cols + 1)) * (i + 1) + (Math.random() - 0.5) * 26;
-  const y = 42 + Math.random() * 110;             // safely below the ceiling wall
+  const col = i % perRow, row = Math.floor(i / perRow);
+  const x = (W / (perRow + 1)) * (col + 1) + (Math.random() - 0.5) * 26;
+  const y = 40 + row * 64 + Math.random() * 22;   // safely below the ceiling wall
   const body = Bodies.rectangle(x, y, w, h, {
    chamfer: { radius: h/2 },                      // capsule shape matches the pill visually
    restitution: 0.52,                             // bounce
@@ -1463,7 +1480,7 @@ if(!reduceMotion){
   started = true;
   Composite.add(engine.world, bodies);            // bodies only enter the world now
   Runner.run(Runner.create(), engine);
-  stage.classList.add('is-running');              // CSS fades all 8 pills in together
+  stage.classList.add('is-running');              // CSS fades every pill in together
   requestAnimationFrame(loop);
  }
 

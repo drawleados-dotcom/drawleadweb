@@ -2093,7 +2093,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
  z-index:2;
  /* hidden until the section scrolls into view; JS adds .is-running to the stage and all
-    8 fade in together at the instant the drop begins */
+    fade in together at the instant the drop begins */
  opacity:0;transition:opacity .28s ease;
 }
 .phys-stage.is-running .phys-pill{opacity:1}
