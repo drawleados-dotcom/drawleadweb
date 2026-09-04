@@ -147,6 +147,7 @@ include __DIR__ . '/partials/nav.php';
 
 <!-- 7 FUNCTIONS -->
 <section id="functions">
+ <div class="eyebrow rv"><span class="eyebrow-text">Core Platform</span></div>
  <h2 class="sec-h rv">The <span class="g">7 Functions</span> of Business <span class="fade">Unified</span></h2>
  <p class="sec-sub rv">Every core business function streamlined and intelligently connected through one operating system.</p>
 
@@ -228,6 +229,7 @@ include __DIR__ . '/partials/nav.php';
 
 <!-- APP CHAOS → SMART BOARD -->
 <section id="unify">
+ <div class="eyebrow rv"><span class="eyebrow-text">The Problem</span></div>
  <h2 class="sec-h rv">Stop running your business from <span class="g">a dozen different tabs</span></h2>
  <p class="sec-sub rv">Google Sheets, CRM, WhatsApp, Notion, billing software, phone calls. Your business data is scattered everywhere. Drawlead brings it all into one Smart Board.</p>
 
@@ -267,6 +269,7 @@ include __DIR__ . '/partials/nav.php';
 <section id="method">
 
  <div class="mth-left">
+ <div class="eyebrow rv"><span class="eyebrow-text">How We Work</span></div>
  <h2 class="sec-h rv">We don't build first. <span class="g">We understand first.</span></h2>
  <p class="sec-sub rv">Before a single line of code or campaign goes live, we audit how your business actually runs, so every system we build is measurable, automated, and built to scale.</p>
 
@@ -319,6 +322,7 @@ include __DIR__ . '/partials/nav.php';
 
 <!-- SOLUTIONS -->
 <section id="solutions">
+ <div class="eyebrow rv"><span class="eyebrow-text">Solutions</span></div>
  <h2 class="sec-h rv">Built for <span class="g">Growth</span> <span class="fade">in Three Ways</span></h2>
  <p class="sec-sub rv">Beyond the core platform, three focused solution tracks that plug straight into your operating system.</p>
 
@@ -406,6 +410,7 @@ include __DIR__ . '/partials/nav.php';
       has stacked. -->
  <div class="tech-track" id="techTrack">
   <div class="tech-pin" id="techPin">
+  <div class="eyebrow rv"><span class="eyebrow-text" style="color:#34a87c">Technology Stack</span></div>
   <h2 class="sec-h rv" style="color:#fff"><span style="background:#34a87c;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Built on Modern Infrastructure</span><br><span style="color:rgba(255,255,255,.22)">Unlocking Digital Potential</span></h2>
   <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">Enterprise-grade technologies combining to create scalable, intelligent digital ecosystems.</p>
   <div class="tech-grid">
@@ -534,6 +539,7 @@ include __DIR__ . '/partials/nav.php';
 
 <!-- CASE STUDIES -->
 <section id="cases">
+ <div class="eyebrow rv"><span class="eyebrow-text" style="color:#32b46f">Case Studies</span></div>
  <h2 class="sec-h rv"><span style="color:#32b46f">Real Results</span> for <span class="fade">Real Businesses</span></h2>
  <p class="sec-sub rv">How Drawlead transforms operations across industries with measurable outcomes.</p>
  <div class="cases-scroll" id="casesScroll">
@@ -606,6 +612,7 @@ $indByKey = [];
 foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['industry']; }
 ?>
 <section id="industries">
+ <div class="eyebrow rv"><span class="eyebrow-text" style="color:#14855a">Industries</span></div>
  <h2 class="sec-h rv">Built for <span style="color:#14855a">Your Industry</span></h2>
  <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements, out of the box.</p>
 
@@ -717,6 +724,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
 
 <!-- DASHBOARDS -->
 <section id="dashboards" style="background:var(--bg2)">
+ <div class="eyebrow rv"><span class="eyebrow-text" style="color:#23a065">Platform Dashboards</span></div>
  <h2 class="sec-h rv">Every Module. <span class="fade">One Screen.</span></h2>
  <p class="sec-sub rv">Live ERP dashboards for every function. See exactly what Drawlead looks like in action.</p>
  <div class="dash-grid">
