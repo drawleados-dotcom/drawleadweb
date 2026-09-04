@@ -233,27 +233,31 @@ include __DIR__ . '/partials/nav.php';
  <h2 class="sec-h rv">Stop running your business from <span class="g">a dozen different tabs</span></h2>
  <p class="sec-sub rv">Google Sheets, CRM, WhatsApp, Notion, billing software, phone calls. Your business data is scattered everywhere. Drawlead brings it all into one Smart Board.</p>
 
- <!-- physics stage: pills are DOM elements so they keep full CSS styling; Matter.js
-      drives the simulation and each frame we sync position + rotation onto them -->
+ <!-- Brand treatment: each pill carries a data-brand key that drives its colour in
+      home7.css, plus a small inline mark. Where a vendor's real logo is a simple
+      geometric form (Trello board, Todoist checks, WhatsApp bubble, the Office
+      letter tiles, the Google document marks) the icon follows it in the official
+      palette. Where there is no simple public mark to follow (Vyapar, Tally, Bill
+      Book, CRM, Calls) it uses a plain neutral glyph rather than an invented logo. -->
  <div class="phys-stage rv" id="physStage">
-  <div class="phys-pill" data-variant="green">Notion</div>
-  <div class="phys-pill" data-variant="light">Microsoft Word</div>
-  <div class="phys-pill" data-variant="dark">CRM</div>
-  <div class="phys-pill" data-variant="green">Vyapar</div>
-  <div class="phys-pill" data-variant="light">Calls</div>
-  <div class="phys-pill" data-variant="dark">Google Calendar</div>
-  <div class="phys-pill" data-variant="green">Google Docs</div>
-  <div class="phys-pill" data-variant="light">PowerPoint</div>
-  <div class="phys-pill" data-variant="dark">Bill Book</div>
-  <div class="phys-pill" data-variant="light">WhatsApp</div>
-  <div class="phys-pill" data-variant="dark">Microsoft Outlook</div>
-  <div class="phys-pill" data-variant="green">Excel</div>
-  <div class="phys-pill" data-variant="light">Tally</div>
-  <div class="phys-pill" data-variant="dark">Gmail</div>
-  <div class="phys-pill" data-variant="green">Google Sheets</div>
-  <div class="phys-pill" data-variant="light">Trello</div>
-  <div class="phys-pill" data-variant="dark">Todoist</div>
-  <div class="phys-pill" data-variant="light">Calendly</div>
+  <div class="phys-pill" data-brand="notion"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="#fff"/><path d="M8 17V8l6.2 8.2V8" stroke="#111" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Notion</span></div>
+  <div class="phys-pill" data-brand="word"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="2.5" width="16" height="19" rx="2" fill="#fff"/><path d="M7.6 8.2l1.6 7 1.6-4.6 1.6 4.6 1.6-7" stroke="#185ABD" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Microsoft Word</span></div>
+  <div class="phys-pill" data-brand="crm"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="11" r="2.1"/><path d="M5.9 16.4c.5-1.5 1.7-2.2 3.1-2.2s2.6.7 3.1 2.2M15 10h4M15 13.4h4"/></svg><span>CRM</span></div>
+  <div class="phys-pill" data-brand="vyapar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z" fill="#fff"/><text x="12" y="14.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#E0342B" font-family="system-ui,sans-serif">&#8377;</text></svg><span>Vyapar</span></div>
+  <div class="phys-pill" data-brand="calls"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 3.5h3l1.5 3.8-2 1.4a12 12 0 006.6 6.6l1.4-2 3.8 1.5v3a2 2 0 01-2.2 2A17.5 17.5 0 014.2 5.7a2 2 0 012-2.2z"/></svg><span>Calls</span></div>
+  <div class="phys-pill" data-brand="gcal"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2.5" fill="#fff"/><path d="M5.5 4H9v3H3V6.5A2.5 2.5 0 015.5 4z" fill="#4285F4"/><path d="M9 4h6v3H9z" fill="#EA4335"/><path d="M15 4h3.5A2.5 2.5 0 0121 6.5V7h-6z" fill="#FBBC04"/><path d="M3 17h6v4H5.5A2.5 2.5 0 013 18.5z" fill="#34A853"/><text x="14" y="17.6" text-anchor="middle" font-size="8.5" font-weight="700" fill="#1f1f1f" font-family="system-ui,sans-serif">31</text></svg><span>Google Calendar</span></div>
+  <div class="phys-pill" data-brand="gdocs"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2.5h7.5L19 8v13.5H6z" fill="#fff"/><path d="M13.5 2.5L19 8h-5.5z" fill="#A8C7FA"/><path d="M8.6 12h6.8M8.6 15h6.8M8.6 18h4.4" stroke="#1A73E8" stroke-width="1.5" stroke-linecap="round"/></svg><span>Google Docs</span></div>
+  <div class="phys-pill" data-brand="ppt"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="2.5" width="16" height="19" rx="2" fill="#fff"/><path d="M9 17.2V8h3.1a2.7 2.7 0 010 5.4H9" stroke="#C43E1C" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>PowerPoint</span></div>
+  <div class="phys-pill" data-brand="billbook"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.5A2 2 0 017 2.5h12v19H7a2 2 0 01-2-2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg><span>Bill Book</span></div>
+  <div class="phys-pill" data-brand="whatsapp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2a9.6 9.6 0 00-8.3 14.4L2.4 21.8l5.4-1.3A9.6 9.6 0 1012 2.2z" fill="#04331a"/><path d="M9 7.6c-.3 0-.6.1-.8.4-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.7 2.8 4.3 3.8 2.1.8 2.6.7 3 .6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-2.2-1.1c-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a7 7 0 01-2-1.3 7.7 7.7 0 01-1.4-1.8c-.1-.2 0-.4.1-.5l.7-1v-.5l-.7-1.6c-.2-.4-.4-.4-.5-.4z" fill="#25D366"/></svg><span>WhatsApp</span></div>
+  <div class="phys-pill" data-brand="outlook"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9.5" y="5" width="11.5" height="14" rx="1.6" fill="#fff"/><path d="M9.5 7.6l5.8 3.9 5.7-3.9" stroke="#0F6CBD" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="3.5" width="10" height="17" rx="2" fill="#0F6CBD"/><ellipse cx="7" cy="12" rx="2.3" ry="3" fill="none" stroke="#fff" stroke-width="1.7"/></svg><span>Microsoft Outlook</span></div>
+  <div class="phys-pill" data-brand="excel"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="2.5" width="16" height="19" rx="2" fill="#fff"/><path d="M9 8l6 9M15 8l-6 9" stroke="#107C41" stroke-width="1.9" stroke-linecap="round"/></svg><span>Excel</span></div>
+  <div class="phys-pill" data-brand="tally"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10.5M9.3 20V5M14.7 20v-6.5M20 20V8.5"/></svg><span>Tally</span></div>
+  <div class="phys-pill" data-brand="gmail"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18.6V8.1l9 6.2 9-6.2v10.5a1 1 0 01-1 1h-2.6v-7.1L12 16.7l-5.4-4.2v7.1H4a1 1 0 01-1-1z" fill="#EA4335"/><path d="M3 8.1c0-1.7 1.9-2.6 3.2-1.6L12 10.7l5.8-4.2c1.3-1 3.2-.1 3.2 1.6L12 14.3z" fill="#C5221F"/></svg><span>Gmail</span></div>
+  <div class="phys-pill" data-brand="gsheets"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2.5h7.5L19 8v13.5H6z" fill="#fff"/><path d="M13.5 2.5L19 8h-5.5z" fill="#B7E1CD"/><path d="M8.6 11.6h7.8v7.4H8.6z" fill="none" stroke="#0F9D58" stroke-width="1.4"/><path d="M12.5 11.6V19M8.6 15.3h7.8" stroke="#0F9D58" stroke-width="1.4"/></svg><span>Google Sheets</span></div>
+  <div class="phys-pill" data-brand="trello"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" fill="#fff"/><rect x="6" y="6" width="4.6" height="11" rx="1.2" fill="#0C66E4"/><rect x="13.4" y="6" width="4.6" height="6.6" rx="1.2" fill="#0C66E4"/></svg><span>Trello</span></div>
+  <div class="phys-pill" data-brand="todoist"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4.5" fill="#fff"/><path d="M7.5 9.3l1.9 1.5 4.6-2.7M7.5 13l1.9 1.5 4.6-2.7M7.5 16.7l1.9 1.5 4.6-2.7" stroke="#E44332" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Todoist</span></div>
+  <div class="phys-pill" data-brand="calendly"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M8 3.2v3.4M16 3.2v3.4M3.5 10h17"/><path d="M14.7 13.9a3.1 3.1 0 100 3.2"/></svg><span>Calendly</span></div>
  </div>
 
  <div class="sec-cta rv">

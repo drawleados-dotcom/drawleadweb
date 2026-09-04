@@ -2087,7 +2087,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .phys-pill{
  position:absolute;top:0;left:0;
  display:inline-flex;align-items:center;justify-content:center;
- padding:14px 26px;border-radius:999px;white-space:nowrap;
+ padding:13px 22px;gap:9px;border-radius:999px;white-space:nowrap;
  font-family:var(--font-body);font-size:15px;font-weight:700;letter-spacing:-.01em;
  will-change:transform;user-select:none;-webkit-user-select:none;
  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
@@ -2097,18 +2097,41 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  opacity:0;transition:opacity .28s ease;
 }
 .phys-stage.is-running .phys-pill{opacity:1}
-.phys-pill[data-variant="green"]{
- background:linear-gradient(135deg,#33B470,#1d8b53);color:#fff;
- box-shadow:0 10px 26px rgba(51,180,112,.32),inset 0 1px 0 rgba(255,255,255,.28);
+
+/* Icon sits before the label, 14px against 15px text so it never outweighs it. */
+.phys-pill svg{width:14px;height:14px;flex:none;display:block}
+
+/* Brand colours. Single-colour vendors get their brand as the pill fill; the two
+   multicolour marks (Gmail, Google Calendar) sit on a white pill so the logo keeps
+   its own palette instead of being flattened. Tools with no public brand colour
+   (CRM, Calls, Bill Book) keep the original neutral translucent treatment. */
+.phys-pill[data-brand]{
+ box-shadow:0 10px 26px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.2);
+ color:#fff;
 }
-.phys-pill[data-variant="dark"]{
- background:rgba(255,255,255,.07);color:#fff;border:1px solid rgba(255,255,255,.14);
- box-shadow:0 10px 26px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.08);
-}
-.phys-pill[data-variant="light"]{
- background:linear-gradient(135deg,#f4f6f5,#dfe5e2);color:#080c0e;
- box-shadow:0 10px 26px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.7);
-}
+.phys-pill[data-brand="notion"]  {background:#121212;border:1px solid rgba(255,255,255,.18)}
+.phys-pill[data-brand="word"]    {background:#185ABD}
+.phys-pill[data-brand="vyapar"]  {background:#E0342B}
+.phys-pill[data-brand="gdocs"]   {background:#1A73E8}
+.phys-pill[data-brand="ppt"]     {background:#C43E1C}
+.phys-pill[data-brand="outlook"] {background:#0F6CBD}
+.phys-pill[data-brand="excel"]   {background:#107C41}
+.phys-pill[data-brand="tally"]   {background:#1A4C8B}
+.phys-pill[data-brand="gsheets"] {background:#0F9D58}
+.phys-pill[data-brand="trello"]  {background:#0C66E4}
+.phys-pill[data-brand="todoist"] {background:#E44332}
+.phys-pill[data-brand="calendly"]{background:#006BFF}
+/* WhatsApp's green is too bright to carry white text, so its own dark green is used
+   for the label and the mark, which keeps the pill unmistakably WhatsApp. */
+.phys-pill[data-brand="whatsapp"]{background:#25D366;color:#04331a}
+/* multicolour marks on white */
+.phys-pill[data-brand="gmail"],
+.phys-pill[data-brand="gcal"]{background:#fff;color:#1f1f1f;box-shadow:0 10px 26px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.7)}
+/* neutral, no brand colour to borrow */
+.phys-pill[data-brand="crm"],
+.phys-pill[data-brand="calls"],
+.phys-pill[data-brand="billbook"]{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15)}
+
 
 /* still used by the #method section's "Understand → Measure → Automate → Scale" line */
 .unify-stat{text-align:center;font-size:15px;font-weight:700;color:var(--g600)}
