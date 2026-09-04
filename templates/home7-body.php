@@ -89,7 +89,7 @@ include __DIR__ . '/partials/nav.php';
     </div>
     <div class="dw-body" id="dwBody">
      <div class="dw-head">
-      <div class="dw-title">ECOMMERCE OS: ORDERS &amp; REVENUE OVERVIEW</div>
+      <div class="dw-title">ECOMMERCE ORDERS AND REVENUE OVERVIEW</div>
       <div class="dw-meta">
        <span class="dw-live" style="background:rgba(35,160,101,.12);color:#23a065">Live</span>
        <span class="dw-month">May 2025</span>
@@ -228,7 +228,6 @@ include __DIR__ . '/partials/nav.php';
 
 <!-- APP CHAOS → SMART BOARD -->
 <section id="unify">
- <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">The Problem</span><div class="eyebrow-line"></div></div>
  <h2 class="sec-h rv">Stop running your business from <span class="g">a dozen different tabs</span></h2>
  <p class="sec-sub rv">Google Sheets, CRM, WhatsApp, Notion, billing software, phone calls. Your business data is scattered everywhere. Drawlead brings it all into one Smart Board.</p>
 
@@ -268,7 +267,6 @@ include __DIR__ . '/partials/nav.php';
 <section id="method">
 
  <div class="mth-left">
- <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">How We Work</span><div class="eyebrow-line"></div></div>
  <h2 class="sec-h rv">We don't build first. <span class="g">We understand first.</span></h2>
  <p class="sec-sub rv">Before a single line of code or campaign goes live, we audit how your business actually runs, so every system we build is measurable, automated, and built to scale.</p>
 
@@ -321,8 +319,7 @@ include __DIR__ . '/partials/nav.php';
 
 <!-- SOLUTIONS -->
 <section id="solutions">
- <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Solutions</span><div class="eyebrow-line"></div></div>
- <h2 class="sec-h rv">Built for <span class="g">Growth</span><span class="fade">: Three Ways</span></h2>
+ <h2 class="sec-h rv">Built for <span class="g">Growth</span> <span class="fade">in Three Ways</span></h2>
  <p class="sec-sub rv">Beyond the core platform, three focused solution tracks that plug straight into your operating system.</p>
 
  <div class="sol-grid">
@@ -333,16 +330,16 @@ include __DIR__ . '/partials/nav.php';
    <div class="sol-icon">
    <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><rect x="5" y="5" width="13" height="13" rx="2.5" fill="white"/><rect x="22" y="5" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.6)"/><rect x="5" y="22" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.6)"/><rect x="22" y="22" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.85)"/><path d="M18 11.5 L22 11.5 M11.5 18 L11.5 22 M28.5 18 L28.5 22 M18 28.5 L22 28.5" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round"/></svg>
   </div>
-   <div class="sol-label">Solution 01: ERP</div>
+   <div class="sol-label">ERP</div>
   </div>
   <div class="sol-name">Custom Operational Solutions</div>
   <div class="sol-tag">An ERP shaped around how you actually work.</div>
-  <p class="sol-desc">Off-the-shelf ERP forces your team to bend to the software. We build the opposite: modules mapped to your real workflows, your approval chains, your terminology, deployed as a system you own outright.</p>
+  <p class="sol-desc">Off-the-shelf ERP forces your team to bend to the software. We build the opposite. Modules are mapped to your real workflows, your approval chains, your terminology, deployed as a system you own outright.</p>
   <ul class="sol-list">
    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Custom modules for your exact operating process</li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Role-based access, approvals &amp; audit trails</li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Migration from spreadsheets &amp; legacy systems</li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Integrations with Tally, banking &amp; GST filing</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Role-based access, approvals and audit trails</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Migration from spreadsheets and legacy systems</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Integrations with Tally, banking and GST filing</li>
   </ul>
   <div class="sol-metrics">
    <div><div class="sol-metric-v">100%</div><div class="sol-metric-l">Ownership</div></div>
@@ -357,19 +354,19 @@ include __DIR__ . '/partials/nav.php';
    <div class="sol-icon">
    <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><path d="M4 10 L10 10 L14 27 L32 27" stroke="rgba(255,255,255,.55)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.5 14 L35 14 L32 24 L13.8 24 Z" fill="white"/><circle cx="16" cy="33" r="3" fill="rgba(255,255,255,.85)"/><circle cx="30" cy="33" r="3" fill="rgba(255,255,255,.85)"/></svg>
   </div>
-   <div class="sol-label">Solution 02</div>
+   <div class="sol-label">Ecommerce</div>
   </div>
   <div class="sol-name">Ecommerce Solutions</div>
   <div class="sol-tag">From storefront to fulfilment, one connected stack.</div>
   <p class="sol-desc">Launch and scale an online store that talks directly to your inventory, billing, and delivery operations. No spreadsheets in between, no orders lost in the gap between platforms.</p>
   <ul class="sol-list">
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Shopify, WooCommerce &amp; custom storefront builds</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Shopify, WooCommerce and custom storefront builds</li>
    <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Live inventory sync across every sales channel</li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Automated order, invoice &amp; GST workflows</li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Payments, logistics &amp; returns handled end to end</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Automated order, invoice and GST workflows</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Payments, logistics and returns handled end to end</li>
   </ul>
   <div class="sol-metrics">
-   <div><div class="sol-metric-v">3&times;</div><div class="sol-metric-l">Faster launch</div></div>
+   <div><div class="sol-metric-v">3x</div><div class="sol-metric-l">Faster launch</div></div>
    <div><div class="sol-metric-v">0</div><div class="sol-metric-l">Manual entry</div></div>
   </div>
   <a href="/ecommerce-solutions" class="sol-arrow">Explore ecommerce</a>
@@ -381,19 +378,19 @@ include __DIR__ . '/partials/nav.php';
    <div class="sol-icon">
    <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><path d="M4 6 L36 6 L24 21 L24 34 L16 30 L16 21 Z" fill="white"/><path d="M16 21 L24 21 L24 27 L16 27 Z" fill="rgba(255,255,255,.55)"/><path d="M4 6 L36 6 L31 12 L9 12 Z" fill="rgba(255,255,255,.6)"/></svg>
   </div>
-   <div class="sol-label">Solution 03</div>
+   <div class="sol-label">Marketing</div>
   </div>
   <div class="sol-name">Marketing Solutions</div>
   <div class="sol-tag">Fix the leak between lead and conversion.</div>
-  <p class="sol-desc">Most businesses don't have a traffic problem. They have a follow-up problem. Two engines run the funnel: organic search that compounds over time, and paid campaigns that buy demand on demand.</p>
+  <p class="sol-desc">Most businesses don't have a traffic problem. They have a follow-up problem. Two engines run the funnel. Organic search that compounds over time, and paid campaigns that buy demand on demand.</p>
   <ul class="sol-list">
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Technical SEO, Core Web Vitals &amp; site architecture</li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Content engine &amp; on-page optimisation at scale</li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Google, Meta &amp; LinkedIn performance campaigns</li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Instant WhatsApp &amp; email follow-up on every lead</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Technical SEO, Core Web Vitals and site architecture</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Content engine and on-page optimisation at scale</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Google, Meta and LinkedIn performance campaigns</li>
+   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Instant WhatsApp and email follow-up on every lead</li>
   </ul>
   <div class="sol-metrics">
-   <div><div class="sol-metric-v">4&times;</div><div class="sol-metric-l">Organic traffic</div></div>
+   <div><div class="sol-metric-v">4x</div><div class="sol-metric-l">Organic traffic</div></div>
    <div><div class="sol-metric-v">&lt;5 min</div><div class="sol-metric-l">Response time</div></div>
   </div>
   <a href="/marketing-solutions" class="sol-arrow">Explore marketing</a>
@@ -409,7 +406,6 @@ include __DIR__ . '/partials/nav.php';
       has stacked. -->
  <div class="tech-track" id="techTrack">
   <div class="tech-pin" id="techPin">
-  <div class="eyebrow rv"><div class="eyebrow-line" style="background:#34a87c"></div><span class="eyebrow-text" style="color:#34a87c">Technology Stack</span><div class="eyebrow-line" style="background:#34a87c"></div></div>
   <h2 class="sec-h rv" style="color:#fff"><span style="background:#34a87c;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Built on Modern Infrastructure</span><br><span style="color:rgba(255,255,255,.22)">Unlocking Digital Potential</span></h2>
   <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">Enterprise-grade technologies combining to create scalable, intelligent digital ecosystems.</p>
   <div class="tech-grid">
@@ -429,7 +425,7 @@ include __DIR__ . '/partials/nav.php';
         </svg>
       </div>
       <div class="tech-name">ERP Systems</div>
-      <div class="tech-desc">Unified business backbone: all departments connected in a single source of truth with real-time data sync across every module.</div>
+      <div class="tech-desc">Unified business backbone with all departments connected in a single source of truth with real-time data sync across every module.</div>
       <div class="tech-tags"><span class="t-tag">Multi-module</span><span class="t-tag">Real-time sync</span><span class="t-tag">Role-based access</span></div>
     </div>
 
@@ -538,7 +534,6 @@ include __DIR__ . '/partials/nav.php';
 
 <!-- CASE STUDIES -->
 <section id="cases">
- <div class="eyebrow rv"><div class="eyebrow-line" style="background:#32b46f"></div><span class="eyebrow-text" style="color:#32b46f">Case Studies</span><div class="eyebrow-line" style="background:#32b46f"></div></div>
  <h2 class="sec-h rv"><span style="color:#32b46f">Real Results</span> for <span class="fade">Real Businesses</span></h2>
  <p class="sec-sub rv">How Drawlead transforms operations across industries with measurable outcomes.</p>
  <div class="cases-scroll" id="casesScroll">
@@ -547,7 +542,7 @@ include __DIR__ . '/partials/nav.php';
  <div class="case-card" style="--acc:#38B976;--acc2:#9BE3C0;--atm:rgba(56,185,118,.18)">
   <div class="case-screen"><span class="case-orb" aria-hidden="true"></span></div>
   <div class="case-body">
-    <span class="case-tag">Construction &amp; Real Estate</span>
+    <span class="case-tag">Construction and Real Estate</span>
     <div class="case-title">Construction ERP Solution</div>
     <ul class="case-list">
       <li>Better operational visibility across all project sites</li>
@@ -560,7 +555,7 @@ include __DIR__ . '/partials/nav.php';
  <div class="case-card" style="--acc:#2FB5AE;--acc2:#A8E6E2;--atm:rgba(47,181,174,.18)">
   <div class="case-screen"><span class="case-orb" aria-hidden="true"></span></div>
   <div class="case-body">
-    <span class="case-tag">Healthcare &amp; Wellness</span>
+    <span class="case-tag">Healthcare and Wellness</span>
     <div class="case-title">Multi-Brand Physiotherapy Management</div>
     <ul class="case-list">
       <li>Streamlined clinic workflows across branches</li>
@@ -611,7 +606,6 @@ $indByKey = [];
 foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['industry']; }
 ?>
 <section id="industries">
- <div class="eyebrow rv"><div class="eyebrow-line" style="background:#14855a"></div><span class="eyebrow-text" style="color:#14855a">Industries</span><div class="eyebrow-line" style="background:#14855a"></div></div>
  <h2 class="sec-h rv">Built for <span style="color:#14855a">Your Industry</span></h2>
  <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements, out of the box.</p>
 
@@ -645,7 +639,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
      <?php endforeach; ?>
     </div>
 
-    <a href="/industry-<?= h($key) ?>" class="ind-scard-cta">Explore <?= h($ind['name']) ?> OS <span>&rsaquo;</span></a>
+    <a href="/industry-<?= h($key) ?>" class="ind-scard-cta">Explore <?= h($ind['name']) ?> OS</a>
    </div>
   </article>
   <?php endforeach; ?>
@@ -705,7 +699,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   </div>
   <div class="why-feat rv d4">
    <div class="why-fico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3.5v6c0 5-3.4 8.6-8 10.5-4.6-1.9-8-5.5-8-10.5v-6L12 2z"/><polyline points="8.5,12 11,14.5 15.5,9.5"/></svg></div>
-   <div class="why-fname">Secure &amp; Reliable</div>
+   <div class="why-fname">Secure and Reliable</div>
    <div class="why-fdesc">Enterprise-grade security, 99.9% uptime SLA, and end-to-end encryption on all data.</div>
   </div>
   <div class="why-feat rv d1">
@@ -723,7 +717,6 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
 
 <!-- DASHBOARDS -->
 <section id="dashboards" style="background:var(--bg2)">
- <div class="eyebrow rv"><div class="eyebrow-line" style="background:#23a065"></div><span class="eyebrow-text" style="color:#23a065">Platform Dashboards</span><div class="eyebrow-line" style="background:#23a065"></div></div>
  <h2 class="sec-h rv">Every Module. <span class="fade">One Screen.</span></h2>
  <p class="sec-sub rv">Live ERP dashboards for every function. See exactly what Drawlead looks like in action.</p>
  <div class="dash-grid">
@@ -753,9 +746,9 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
       </div>
       <div class="d-hr"></div>
       <div class="d-rows">
-        <div class="d-row"><div class="d-dot" style="background:#32b46f"></div>Infra Corp: Won<span class="d-val" style="color:#32b46f">₹12L</span></div>
-        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>MedPlus: Proposal<span class="d-val" style="color:#14855a">₹8L</span></div>
-        <div class="d-row"><div class="d-dot" style="background:#23a065"></div>LogiTrack: Demo<span class="d-val" style="color:#23a065">₹6L</span></div>
+        <div class="d-row"><div class="d-dot" style="background:#32b46f"></div>Infra Corp Won<span class="d-val" style="color:#32b46f">₹12L</span></div>
+        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>MedPlus Proposal<span class="d-val" style="color:#14855a">₹8L</span></div>
+        <div class="d-row"><div class="d-dot" style="background:#23a065"></div>LogiTrack Demo<span class="d-val" style="color:#23a065">₹6L</span></div>
       </div>
     </div>
   </div>
@@ -766,7 +759,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
       <div class="dash-ico" style="background:#1c9558;box-shadow:0 4px 12px rgba(50,180,111,.3)">
         <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><ellipse cx="18" cy="10" rx="12" ry="4.5" fill="white"/><path d="M6 10 Q6 17 18 17 Q30 17 30 10" fill="rgba(255,255,255,.7)"/><path d="M6 17 Q6 24 18 24 Q30 24 30 17" fill="rgba(255,255,255,.45)"/><path d="M6 24 Q6 31 18 31 Q30 31 30 24" fill="rgba(255,255,255,.25)"/></svg>
       </div>
-      <div class="dash-mod-name">Finance &amp; Billing</div>
+      <div class="dash-mod-name">Finance and Billing</div>
     </div>
     <div class="dash-body">
       <div class="d-krow">
@@ -811,7 +804,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
       </div>
       <div class="d-rows">
         <div class="d-row"><div class="d-dot" style="background:#32b46f"></div>Warehouse restock done<span class="d-val" style="color:#32b46f">✓</span></div>
-        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>Vendor delay: Site B<span class="d-val" style="color:#14855a">Alert</span></div>
+        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>Vendor delay Site B<span class="d-val" style="color:#14855a">Alert</span></div>
       </div>
     </div>
   </div>
@@ -822,7 +815,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
       <div class="dash-ico" style="background:#1c9558;box-shadow:0 4px 12px rgba(50,180,111,.3)">
         <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><circle cx="13" cy="11" r="6" fill="white"/><circle cx="25" cy="13" r="4.5" fill="rgba(255,255,255,.6)"/><path d="M1 32 C1 23 7 20 13 20 C19 20 25 23 25 32 Z" fill="rgba(255,255,255,.8)"/><path d="M25 26 C25 23 28 21 31 21 C34 21 36 23 36 26 L36 32 L25 32 Z" fill="rgba(255,255,255,.4)"/></svg>
       </div>
-      <div class="dash-mod-name">HR &amp; Payroll</div>
+      <div class="dash-mod-name">HR and Payroll</div>
     </div>
     <div class="dash-body">
       <div class="d-krow">
@@ -985,7 +978,7 @@ $ciTrainGreen = ['ERP', 'AI?'];
   <div class="cta-grid-bg"></div>
   <div class="cta-glow"></div>
 
-  <div class="cta-eyebrow rv"><span class="cta-eyebrow-dot"></span>Start Your ERP Journey</div>
+  <div class="cta-eyebrow rv">Start Your ERP Journey</div>
   <h2 class="cta-h rv">Build your<br><span class="fade">business</span> <span class="gr">ERP</span><br><span class="gr2">OS</span> with <span class="gr3">AI</span></h2>
   <p class="cta-p rv">Digitize, automate, and scale with Drawlead. Start with a free consultation, no commitment needed.</p>
   <div class="cta-btns rv">
@@ -1015,7 +1008,7 @@ $ciTrainGreen = ['ERP', 'AI?'];
 const industries = [
  {
  name:'Ecommerce', accentColor:'#23a065',
- title:'ECOMMERCE OS: ORDERS &amp; REVENUE OVERVIEW',
+ title:'ECOMMERCE ORDERS AND REVENUE OVERVIEW',
  kpis:[{v:'842',l:'Orders Today'},{v:'₹18.4L',l:'GMV'},{v:'3.8%',l:'Conversion'},{v:'₹2,140',l:'Avg Order'}],
  chartLabel:'Daily Orders', chartBars:[58,66,50,82,74,95],
  aiLabel:'AI INSIGHT',
@@ -1023,7 +1016,7 @@ const industries = [
  },
  {
  name:'Hospital', accentColor:'#32b46f',
- title:'HOSPITAL OS: PATIENT &amp; OPERATIONS OVERVIEW',
+ title:'HOSPITAL PATIENT AND OPERATIONS OVERVIEW',
  kpis:[{v:'1,248',l:'Patients Today'},{v:'284',l:'Inpatients'},{v:'46',l:'Surgeries'},{v:'98.4%',l:'Satisfaction'}],
  chartLabel:'Daily OPD Footfall', chartBars:[60,72,55,88,80,95],
  aiLabel:'AI MONITOR',
@@ -1031,15 +1024,15 @@ const industries = [
  },
  {
  name:'Jewellery', accentColor:'#23a065',
- title:'JEWELLERY OS: SALES &amp; STOCK OVERVIEW',
+ title:'JEWELLERY SALES AND STOCK OVERVIEW',
  kpis:[{v:'₹3.2Cr',l:'Monthly Sales'},{v:'↑ 22%',l:'YoY Growth'},{v:'1,840',l:'SKUs Active'},{v:'96%',l:'Order Fulfill'}],
  chartLabel:'Weekly Sales (₹ Lakhs)', chartBars:[55,62,48,80,70,95],
  aiLabel:'AI INSIGHT',
- aiText:'Navaratri season: predict 40% spike in necklace demand next 14 days.',
+ aiText:'Navaratri season predicts a 40% spike in necklace demand over the next 14 days.',
  },
  {
  name:'Manufacturing', accentColor:'#14855a',
- title:'MANUFACTURING OS: PRODUCTION OVERVIEW',
+ title:'MANUFACTURING PRODUCTION OVERVIEW',
  kpis:[{v:'4,280',l:'Units Today'},{v:'↑ 12%',l:'Output'},{v:'99.1%',l:'Quality Rate'},{v:'6',l:'Active Lines'}],
  chartLabel:'Daily Production Units', chartBars:[62,78,55,90,85,95],
  aiLabel:'AI PREDICT',
@@ -1047,7 +1040,7 @@ const industries = [
  },
  {
  name:'Construction', accentColor:'#14855a',
- title:'CONSTRUCTION OS: PROJECT OVERVIEW',
+ title:'CONSTRUCTION PROJECT OVERVIEW',
  kpis:[{v:'₹8.4Cr',l:'Total Projects'},{v:'↑ 18%',l:'On-Time Rate'},{v:'247',l:'Workers'},{v:'38',l:'Vendors'}],
  chartLabel:'Project Progress', chartBars:[55,70,48,80,95,40],
  aiLabel:'AI ALERT',
