@@ -112,13 +112,29 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  min-height:100vh;display:flex;align-items:center;justify-content:center;
  padding:7rem 3.5rem 4rem;overflow:hidden;border-bottom:1px solid var(--border);
  position:relative;color:var(--black);
- /* White hero with an evenly spaced dot grid. One radial-gradient tile repeated on a
-    22px pitch: no image asset, no extra DOM node, and cheap enough to keep on mobile.
-    #D9E0E0 on white is faint enough that the copy above it stays fully legible. */
  background-color:#FFFFFF;
- background-image:radial-gradient(#D9E0E0 1.2px,transparent 1.2px);
- background-size:22px 22px;
- background-position:0 0;
+ /* Soft #32B46F atmosphere, strongest just above centre and gone well before the
+    edges, so the white stays dominant and nothing reads as a coloured block. */
+ background-image:
+  radial-gradient(ellipse 72% 62% at 50% 45%,
+   rgba(50,180,111,.055) 0%,
+   rgba(50,180,111,.025) 45%,
+   transparent 74%);
+}
+
+/* Architectural planning grid: two 1px linear-gradient rules on a 36px pitch, laid in a
+   pseudo-element so it can be masked independently of the glow above. The radial mask
+   keeps the lines legible through the middle and dissolves them smoothly before they
+   reach any edge, which is what separates this from a dashboard grid. Sits at z-index 0
+   behind .hero-grid (z-index 2) and takes no pointer events. */
+#hero::before{
+ content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+ background-image:
+  linear-gradient(to right,rgba(50,180,111,.085) 1px,transparent 1px),
+  linear-gradient(to bottom,rgba(50,180,111,.085) 1px,transparent 1px);
+ background-size:36px 36px;
+ -webkit-mask-image:radial-gradient(ellipse 64% 60% at 50% 47%,#000 18%,rgba(0,0,0,.5) 54%,transparent 84%);
+ mask-image:radial-gradient(ellipse 64% 60% at 50% 47%,#000 18%,rgba(0,0,0,.5) 54%,transparent 84%);
 }
 
 /* ══════════ HERO — star dust + green shooting stars ══════════
