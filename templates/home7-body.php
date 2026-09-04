@@ -276,7 +276,7 @@ include __DIR__ . '/partials/nav.php';
  <div class="fn-grid">
  <!-- 01 Audit -->
  <div class="fn-card">
-  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+  <div class="fn-icon" style="background:#1c9558;box-shadow:0 6px 20px rgba(0,0,0,.2)">
    <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="6" y="4" width="20" height="26" rx="2" fill="rgba(255,255,255,.55)"/><path d="M11 12 L21 12 M11 17 L18 17" stroke="rgba(20,133,90,.7)" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="26" r="8" fill="none" stroke="white" stroke-width="2.5"/><path d="M30 32 L36 38" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
   </div>
   <div class="fn-name">Audit</div>
@@ -285,7 +285,7 @@ include __DIR__ . '/partials/nav.php';
  </div>
  <!-- 02 Measure -->
  <div class="fn-card">
-  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+  <div class="fn-icon" style="background:#1c9558;box-shadow:0 6px 20px rgba(0,0,0,.2)">
    <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M6 26 A14 14 0 0 1 34 26" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="3" stroke-linecap="round"/><path d="M6 26 A14 14 0 0 1 24 13" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/><line x1="20" y1="26" x2="27" y2="17" stroke="white" stroke-width="2.5" stroke-linecap="round"/><circle cx="20" cy="26" r="2.5" fill="white"/></svg>
   </div>
   <div class="fn-name">Measure</div>
@@ -294,7 +294,7 @@ include __DIR__ . '/partials/nav.php';
  </div>
  <!-- 03 Automate -->
  <div class="fn-card">
-  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+  <div class="fn-icon" style="background:#1c9558;box-shadow:0 6px 20px rgba(0,0,0,.2)">
    <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M22 3 L9 21 L18 21 L16 37 L33 16 L23 16 Z" fill="white"/><path d="M22 3 L9 21 L18 21 L17 27" fill="none" stroke="rgba(20,133,90,.5)" stroke-width="1.6" stroke-linejoin="round"/></svg>
   </div>
   <div class="fn-name">Automate</div>
@@ -303,7 +303,7 @@ include __DIR__ . '/partials/nav.php';
  </div>
  <!-- 04 Scale -->
  <div class="fn-card">
-  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+  <div class="fn-icon" style="background:#1c9558;box-shadow:0 6px 20px rgba(0,0,0,.2)">
    <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="14" y="14" width="12" height="12" rx="2" fill="rgba(255,255,255,.5)"/><path d="M24 4 L36 4 L36 16" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 4 L24 16" stroke="white" stroke-width="2.5" stroke-linecap="round"/><path d="M16 36 L4 36 L4 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 36 L16 24" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
   </div>
   <div class="fn-name">Scale</div>
@@ -334,7 +334,7 @@ include __DIR__ . '/partials/nav.php';
    <div class="sol-icon">
    <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><rect x="5" y="5" width="13" height="13" rx="2.5" fill="white"/><rect x="22" y="5" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.6)"/><rect x="5" y="22" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.6)"/><rect x="22" y="22" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.85)"/><path d="M18 11.5 L22 11.5 M11.5 18 L11.5 22 M28.5 18 L28.5 22 M18 28.5 L22 28.5" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round"/></svg>
   </div>
-   <div class="sol-label">Solution 01 · ERP</div>
+   <div class="sol-label">Solution 01: ERP</div>
   </div>
   <div class="sol-name">Custom Operational Solutions</div>
   <div class="sol-tag">An ERP shaped around how you actually work.</div>
@@ -411,13 +411,13 @@ include __DIR__ . '/partials/nav.php';
  <div class="tech-track" id="techTrack">
   <div class="tech-pin" id="techPin">
   <div class="eyebrow rv"><div class="eyebrow-line" style="background:#34a87c"></div><span class="eyebrow-text" style="color:#34a87c">Technology Stack</span><div class="eyebrow-line" style="background:#34a87c"></div></div>
-  <h2 class="sec-h rv" style="color:#fff"><span style="background:linear-gradient(115deg,#4ecb87,#34a87c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Built on Modern Infrastructure</span><br><span style="color:rgba(255,255,255,.22)">Unlocking Digital Potential</span></h2>
+  <h2 class="sec-h rv" style="color:#fff"><span style="background:#34a87c;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Built on Modern Infrastructure</span><br><span style="color:rgba(255,255,255,.22)">Unlocking Digital Potential</span></h2>
   <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">Enterprise-grade technologies combining to create scalable, intelligent digital ecosystems.</p>
   <div class="tech-grid">
 
     <!-- ERP -->
     <div class="tech-card rv d1">
-      <div class="tech-icon-new" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+      <div class="tech-icon-new" style="background:#1c9558">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <rect x="4" y="4" width="14" height="14" rx="2" fill="rgba(255,255,255,0.9)"/>
           <rect x="22" y="4" width="14" height="14" rx="2" fill="rgba(255,255,255,0.5)"/>
@@ -436,7 +436,7 @@ include __DIR__ . '/partials/nav.php';
 
     <!-- AI -->
     <div class="tech-card rv d2">
-      <div class="tech-icon-new" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+      <div class="tech-icon-new" style="background:#1c9558">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <circle cx="20" cy="20" r="7" fill="rgba(255,255,255,0.95)"/>
           <circle cx="20" cy="6" r="3" fill="rgba(255,255,255,0.6)"/>
@@ -460,7 +460,7 @@ include __DIR__ . '/partials/nav.php';
 
     <!-- CRM -->
     <div class="tech-card rv d3">
-      <div class="tech-icon-new" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+      <div class="tech-icon-new" style="background:#1c9558">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <circle cx="14" cy="13" r="6" fill="rgba(255,255,255,0.9)"/>
           <circle cx="28" cy="10" r="4" fill="rgba(255,255,255,0.55)"/>
@@ -477,7 +477,7 @@ include __DIR__ . '/partials/nav.php';
 
     <!-- Analytics -->
     <div class="tech-card rv d1">
-      <div class="tech-icon-new" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+      <div class="tech-icon-new" style="background:#1c9558">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <rect x="4" y="28" width="6" height="8" rx="1" fill="rgba(255,255,255,0.5)"/>
           <rect x="13" y="20" width="6" height="16" rx="1" fill="rgba(255,255,255,0.7)"/>
@@ -494,7 +494,7 @@ include __DIR__ . '/partials/nav.php';
 
     <!-- Cloud -->
     <div class="tech-card rv d2">
-      <div class="tech-icon-new" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+      <div class="tech-icon-new" style="background:#1c9558">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <path d="M10 28a8 8 0 010-16 8.001 8.001 0 0115.32-3A7 7 0 1132 28z" fill="rgba(255,255,255,0.85)"/>
           <rect x="16" y="22" width="2" height="10" rx="1" fill="rgba(20,78,74,0.9)"/>
@@ -509,7 +509,7 @@ include __DIR__ . '/partials/nav.php';
 
     <!-- Workflow -->
     <div class="tech-card rv d3">
-      <div class="tech-icon-new" style="background:linear-gradient(135deg,#32b46f,#14855a)">
+      <div class="tech-icon-new" style="background:#1c9558">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <rect x="3" y="7" width="10" height="8" rx="2" fill="rgba(255,255,255,0.9)"/>
           <rect x="16" y="3" width="10" height="8" rx="2" fill="rgba(255,255,255,0.6)"/>
@@ -732,7 +732,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <!-- SALES -->
   <div class="dash-card d1">
     <div class="dash-head">
-      <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
+      <div class="dash-ico" style="background:#1c9558;box-shadow:0 4px 12px rgba(50,180,111,.3)">
         <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><rect x="3" y="22" width="6" height="10" rx="1" fill="rgba(255,255,255,.5)"/><rect x="12" y="14" width="6" height="18" rx="1" fill="rgba(255,255,255,.75)"/><rect x="21" y="6" width="6" height="26" rx="1" fill="white"/><polyline points="6,18 15,10 24,3" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="3" r="3" fill="white"/></svg>
       </div>
       <div class="dash-mod-name">Sales Pipeline</div>
@@ -764,7 +764,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <!-- FINANCE -->
   <div class="dash-card d2">
     <div class="dash-head">
-      <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
+      <div class="dash-ico" style="background:#1c9558;box-shadow:0 4px 12px rgba(50,180,111,.3)">
         <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><ellipse cx="18" cy="10" rx="12" ry="4.5" fill="white"/><path d="M6 10 Q6 17 18 17 Q30 17 30 10" fill="rgba(255,255,255,.7)"/><path d="M6 17 Q6 24 18 24 Q30 24 30 17" fill="rgba(255,255,255,.45)"/><path d="M6 24 Q6 31 18 31 Q30 31 30 24" fill="rgba(255,255,255,.25)"/></svg>
       </div>
       <div class="dash-mod-name">Finance &amp; Billing</div>
@@ -792,7 +792,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <!-- OPERATIONS -->
   <div class="dash-card d3">
     <div class="dash-head">
-      <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
+      <div class="dash-ico" style="background:#1c9558;box-shadow:0 4px 12px rgba(50,180,111,.3)">
         <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="6.5" fill="white"/><circle cx="18" cy="18" r="3" fill="rgba(50,180,111,.7)"/><rect x="16" y="2" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="16" y="28" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="2" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="28" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/></svg>
       </div>
       <div class="dash-mod-name">Operations</div>
@@ -820,7 +820,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <!-- HR -->
   <div class="dash-card d1">
     <div class="dash-head">
-      <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
+      <div class="dash-ico" style="background:#1c9558;box-shadow:0 4px 12px rgba(50,180,111,.3)">
         <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><circle cx="13" cy="11" r="6" fill="white"/><circle cx="25" cy="13" r="4.5" fill="rgba(255,255,255,.6)"/><path d="M1 32 C1 23 7 20 13 20 C19 20 25 23 25 32 Z" fill="rgba(255,255,255,.8)"/><path d="M25 26 C25 23 28 21 31 21 C34 21 36 23 36 26 L36 32 L25 32 Z" fill="rgba(255,255,255,.4)"/></svg>
       </div>
       <div class="dash-mod-name">HR &amp; Payroll</div>
@@ -845,7 +845,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <!-- MARKETING -->
   <div class="dash-card d2">
     <div class="dash-head">
-      <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
+      <div class="dash-ico" style="background:#1c9558;box-shadow:0 4px 12px rgba(50,180,111,.3)">
         <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><path d="M4 13 L4 23 L10 23 L10 13 Z" fill="rgba(255,255,255,.6)"/><path d="M10 13 L28 5 L28 31 L10 23 Z" fill="white"/><path d="M30 14 Q36 18 30 22" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2.5" stroke-linecap="round"/></svg>
       </div>
       <div class="dash-mod-name">Marketing</div>
@@ -880,7 +880,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <!-- MANAGEMENT -->
   <div class="dash-card d3">
     <div class="dash-head">
-      <div class="dash-ico" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 4px 12px rgba(50,180,111,.3)">
+      <div class="dash-ico" style="background:#1c9558;box-shadow:0 4px 12px rgba(50,180,111,.3)">
         <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><rect x="3" y="3" width="13" height="13" rx="2" fill="white" opacity=".9"/><rect x="20" y="3" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="3" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="20" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.75)"/><line x1="16" y1="9.5" x2="20" y2="9.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="9.5" y1="16" x2="9.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="26.5" y1="16" x2="26.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="16" y1="26.5" x2="20" y2="26.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/></svg>
       </div>
       <div class="dash-mod-name">Management Overview</div>
