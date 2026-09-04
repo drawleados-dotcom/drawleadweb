@@ -291,8 +291,8 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 #hero #tabProgressWrap{background:rgba(255,255,255,.12)}
 
 /* Industry tabs — compact selector above the dashboard window */
-.ind-tabs{display:flex;gap:3px;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:4px;width:100%;margin-bottom:14px}
-.ind-tab{flex:1;font-family:var(--font-body);font-size:11px;font-weight:600;padding:8px 10px;border:none;border-radius:7px;background:transparent;color:var(--g400);cursor:pointer;transition:all .2s ease;white-space:nowrap;text-align:center}
+.ind-tabs{display:flex;flex-wrap:wrap;gap:3px;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:4px;width:100%;margin-bottom:14px}
+.ind-tab{flex:1 1 auto;white-space:nowrap;font-family:var(--font-body);font-size:11px;font-weight:600;padding:8px 10px;border:none;border-radius:7px;background:transparent;color:var(--g400);cursor:pointer;transition:all .2s ease;white-space:nowrap;text-align:center}
 .ind-tab:hover:not(.active){background:var(--bg);color:var(--black)}
 .ind-tab.active{background:var(--black);color:#fff}
 #tabProgressWrap{height:2px;background:var(--border);margin-bottom:1.25rem;border-radius:2px;overflow:hidden}
