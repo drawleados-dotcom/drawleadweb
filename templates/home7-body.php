@@ -147,8 +147,8 @@ include __DIR__ . '/partials/nav.php';
 
 <!-- 7 FUNCTIONS -->
 <section id="functions">
- <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Core Platform</span><div class="eyebrow-line"></div></div>
- <h2 class="sec-h rv">The <span class="g">7 Functions</span> of Business<span class="fade">: Unified</span></h2>
+ <div class="eyebrow rv"><span class="eyebrow-text">Core Platform</span></div>
+ <h2 class="sec-h rv">The <span class="g">7 Functions</span> of Business <span class="fade">Unified</span></h2>
  <p class="sec-sub rv">Every core business function, streamlined and intelligently connected through one operating system.</p>
 
  <div class="cf-scroll-outer" id="cfScrollOuter">
