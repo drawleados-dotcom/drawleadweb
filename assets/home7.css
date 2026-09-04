@@ -2111,15 +2111,15 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 }
 .phys-pill[data-brand="notion"]  {background:#121212;border:1px solid rgba(255,255,255,.18)}
 .phys-pill[data-brand="word"]    {background:#185ABD}
-.phys-pill[data-brand="vyapar"]  {background:#E0342B}
+.phys-pill[data-brand="vyapar"]  {background:#CE2C24}
 .phys-pill[data-brand="gdocs"]   {background:#1A73E8}
 .phys-pill[data-brand="ppt"]     {background:#C43E1C}
 .phys-pill[data-brand="outlook"] {background:#0F6CBD}
 .phys-pill[data-brand="excel"]   {background:#107C41}
 .phys-pill[data-brand="tally"]   {background:#1A4C8B}
-.phys-pill[data-brand="gsheets"] {background:#0F9D58}
+.phys-pill[data-brand="gsheets"] {background:#0B8043}
 .phys-pill[data-brand="trello"]  {background:#0C66E4}
-.phys-pill[data-brand="todoist"] {background:#E44332}
+.phys-pill[data-brand="todoist"] {background:#D1453B}
 .phys-pill[data-brand="calendly"]{background:#006BFF}
 /* WhatsApp's green is too bright to carry white text, so its own dark green is used
    for the label and the mark, which keeps the pill unmistakably WhatsApp. */
