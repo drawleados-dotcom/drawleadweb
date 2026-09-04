@@ -107,22 +107,18 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .sec-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:3rem}
 
 /* ── HERO ── */
-/* Dark hero, two columns: copy on the left, live industry dashboard on the right. */
+/* White hero, two columns: copy on the left, live industry dashboard on the right. */
 #hero{
  min-height:100vh;display:flex;align-items:center;justify-content:center;
- padding:7rem 3.5rem 4rem;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.06);
- position:relative;color:#fff;
- /* Drawlead green (#52BB84) as a soft ambient light source, centred a little above the
-    middle and fading to nothing well before the edges — black stays the dominant colour.
-    Sits in the section background, so it is behind the grid, the stars (z-index:1) and
-    the content (z-index:2). CSS only; no extra layer, no animation. */
- background:
-  radial-gradient(ellipse 90% 75% at 50% 35%,
-   rgba(82,187,132,.14) 0%,
-   rgba(82,187,132,.07) 25%,
-   rgba(82,187,132,.025) 45%,
-   transparent 70%),
-  #04070a;
+ padding:7rem 3.5rem 4rem;overflow:hidden;border-bottom:1px solid var(--border);
+ position:relative;color:var(--black);
+ /* White hero with an evenly spaced dot grid. One radial-gradient tile repeated on a
+    22px pitch: no image asset, no extra DOM node, and cheap enough to keep on mobile.
+    #D9E0E0 on white is faint enough that the copy above it stays fully legible. */
+ background-color:#FFFFFF;
+ background-image:radial-gradient(#D9E0E0 1.2px,transparent 1.2px);
+ background-size:22px 22px;
+ background-position:0 0;
 }
 
 /* ══════════ HERO — star dust + green shooting stars ══════════
@@ -264,31 +260,17 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .hstat-n.gr{color:var(--violet)}
 .hstat-l{font-family:var(--font-body);font-size:13.5px;color:var(--g500);margin-top:2px;font-weight:500}
 
-/* ── hero recoloured for the dark background (scoped to #hero; these same classes are
-      reused elsewhere on light backgrounds, so nothing here may leak out) ── */
-#hero .hero-h{color:#fff}
-#hero .hero-p{color:rgba(255,255,255,.62)}
-#hero .hero-eyebrow{background:rgba(45,190,120,.10);border-color:rgba(45,190,120,.22)}
-#hero .hero-etxt{color:#4ecb87}
-#hero .hstat{border-right-color:rgba(255,255,255,.1)}
-#hero .hstat-ico{background:rgba(45,190,120,.13);color:#4ecb87}
-#hero .hstat-n{color:#fff}
-#hero .hstat-l{color:rgba(255,255,255,.5)}
-#hero .hero-stats{border-top-color:rgba(255,255,255,.1)}
-#hero .hero-btns .btn-ghost{background:rgba(255,255,255,.06);color:#fff;border-color:rgba(255,255,255,.18)}
-#hero .hero-btns .btn-ghost:hover{border-color:rgba(45,190,120,.6);background:rgba(45,190,120,.12)}
-#hero .grid-bg{
- background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
-                  linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
-}
+/* The hero is light, so it uses the base component colours. Only the stacking order and
+   the dark-only decoration need a hero-scoped rule. */
 #hero .hero-grid{z-index:2}
-/* Dashboard chrome recoloured for the dark hero (these tab classes are also used on a
-   light background elsewhere, so this stays scoped to #hero). */
-#hero .ind-tabs{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12)}
-#hero .ind-tab{color:rgba(255,255,255,.5)}
-#hero .ind-tab:hover:not(.active){background:rgba(255,255,255,.07);color:#fff}
-#hero .ind-tab.active{background:#fff;color:#04070a}
-#hero #tabProgressWrap{background:rgba(255,255,255,.12)}
+
+/* Starfield, shooting stars, ambient glows and the technical grid were drawn for the
+   near-black hero and have no place on white. Hidden rather than deleted, so the markup
+   and their animations are left untouched. */
+#hero .hero-stars,
+#hero .grid-bg,
+#hero .hero-glow-r,
+#hero .hero-glow-l{display:none}
 
 /* Industry tabs — compact selector above the dashboard window */
 .ind-tabs{display:flex;flex-wrap:wrap;gap:3px;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:4px;width:100%;margin-bottom:14px}
