@@ -2135,7 +2135,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 
 /* still used by the #method section's "Understand → Measure → Automate → Scale" line */
 .unify-stat{text-align:center;font-size:16px;font-weight:500;color:var(--g600)}
-.unify-stat .g2{color:var(--violet);font-size:22px;font-weight:800}
+.unify-stat .g2{color:var(--violet);font-size:22px;font-weight:700}
 
 @media(max-width:900px){
  .phys-stage{height:440px;border-radius:22px}
