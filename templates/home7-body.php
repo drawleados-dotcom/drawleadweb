@@ -245,7 +245,6 @@ include __DIR__ . '/partials/nav.php';
   <div class="phys-pill" data-variant="green">Google Docs</div>
   <div class="phys-pill" data-variant="light">PowerPoint</div>
   <div class="phys-pill" data-variant="dark">Bill Book</div>
-  <div class="phys-pill" data-variant="green">Razorpay</div>
   <div class="phys-pill" data-variant="light">WhatsApp</div>
   <div class="phys-pill" data-variant="dark">Microsoft Outlook</div>
   <div class="phys-pill" data-variant="green">Excel</div>
