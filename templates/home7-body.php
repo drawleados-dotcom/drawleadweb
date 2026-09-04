@@ -147,9 +147,8 @@ include __DIR__ . '/partials/nav.php';
 
 <!-- 7 FUNCTIONS -->
 <section id="functions">
- <div class="eyebrow rv"><span class="eyebrow-text">Core Platform</span></div>
  <h2 class="sec-h rv">The <span class="g">7 Functions</span> of Business <span class="fade">Unified</span></h2>
- <p class="sec-sub rv">Every core business function, streamlined and intelligently connected through one operating system.</p>
+ <p class="sec-sub rv">Every core business function streamlined and intelligently connected through one operating system.</p>
 
  <div class="cf-scroll-outer" id="cfScrollOuter">
   <div class="cf-scroll-sticky" id="cfScrollSticky">
@@ -159,7 +158,7 @@ include __DIR__ . '/partials/nav.php';
     <div class="cf-card">
      <div class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></div>
      <div class="cf-name">Management</div>
-     <div class="cf-desc">Centralized dashboards and operational visibility for faster, smarter business decisions.</div>
+     <div class="cf-desc">Centralized dashboards and operational visibility for faster and smarter business decisions.</div>
      <div class="cf-tags"><span class="cf-tag">KPI Tracking</span><span class="cf-tag">Analytics</span><span class="cf-tag">Approvals</span></div>
      <button type="button" data-book class="cf-arrow">Explore module</button>
     </div>
@@ -168,7 +167,7 @@ include __DIR__ . '/partials/nav.php';
     <div class="cf-card">
      <div class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,17 9,11 13,15 21,7"/><polyline points="14,7 21,7 21,14"/></svg></div>
      <div class="cf-name">Sales</div>
-     <div class="cf-desc">Manage leads, pipelines, customers, and revenue operations from one unified platform.</div>
+     <div class="cf-desc">Manage the whole sales cycle from first lead through to closed revenue in one unified platform.</div>
      <div class="cf-tags"><span class="cf-tag">CRM</span><span class="cf-tag">Pipeline</span><span class="cf-tag">Invoicing</span></div>
      <button type="button" data-book class="cf-arrow">Explore module</button>
     </div>
@@ -177,7 +176,7 @@ include __DIR__ . '/partials/nav.php';
     <div class="cf-card">
      <div class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4a1 1 0 001 1h2l6 4V5L6 9H4a1 1 0 00-1 1z"/><path d="M17 9a4 4 0 010 6"/><path d="M20 7a8 8 0 010 10"/></svg></div>
      <div class="cf-name">Marketing</div>
-     <div class="cf-desc">Track campaigns, automate WhatsApp &amp; email, and improve customer engagement at scale.</div>
+     <div class="cf-desc">Track campaigns and automate WhatsApp and email to improve customer engagement at scale.</div>
      <div class="cf-tags"><span class="cf-tag">Campaigns</span><span class="cf-tag">WhatsApp</span><span class="cf-tag">Nurturing</span></div>
      <button type="button" data-book class="cf-arrow">Explore module</button>
     </div>
@@ -186,7 +185,7 @@ include __DIR__ . '/partials/nav.php';
     <div class="cf-card">
      <div class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></div>
      <div class="cf-name">Operations</div>
-     <div class="cf-desc">Streamline activities, inventory, and vendor management with intelligent process automation.</div>
+     <div class="cf-desc">Streamline everyday operations and vendor management with intelligent process automation.</div>
      <div class="cf-tags"><span class="cf-tag">Workflows</span><span class="cf-tag">Inventory</span><span class="cf-tag">Vendors</span></div>
      <button type="button" data-book class="cf-arrow">Explore module</button>
     </div>
@@ -195,7 +194,7 @@ include __DIR__ . '/partials/nav.php';
     <div class="cf-card">
      <div class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="16" cy="14.5" r="1.3" fill="currentColor" stroke="none"/></svg></div>
      <div class="cf-name">Finance</div>
-     <div class="cf-desc">Centralize billing, expenses, financial reporting, and accounting integrations seamlessly.</div>
+     <div class="cf-desc">Centralize billing and expenses alongside financial reporting and accounting integrations.</div>
      <div class="cf-tags"><span class="cf-tag">Billing</span><span class="cf-tag">Expenses</span><span class="cf-tag">Reports</span></div>
      <button type="button" data-book class="cf-arrow">Explore module</button>
     </div>
@@ -204,7 +203,7 @@ include __DIR__ . '/partials/nav.php';
     <div class="cf-card">
      <div class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><circle cx="17" cy="9" r="2.6"/><path d="M15.4 20c.3-2.6 2-4.6 4.6-4.9"/></svg></div>
      <div class="cf-name">HR</div>
-     <div class="cf-desc">Manage employees, attendance, payroll workflows, and leave management efficiently.</div>
+     <div class="cf-desc">Manage your people from attendance and payroll through to leave in one place.</div>
      <div class="cf-tags"><span class="cf-tag">Payroll</span><span class="cf-tag">Attendance</span><span class="cf-tag">Leave</span></div>
      <button type="button" data-book class="cf-arrow">Explore module</button>
     </div>
@@ -213,8 +212,8 @@ include __DIR__ . '/partials/nav.php';
     <div class="cf-card">
      <div class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg></div>
      <div class="cf-name">Inventory Management</div>
-     <div class="cf-desc">Track stock across every warehouse and channel, with alerts before you run out.</div>
-     <div class="cf-tags"><span class="cf-tag">Stock Levels</span><span class="cf-tag">Reorder Alerts</span><span class="cf-tag">Multi-warehouse</span></div>
+     <div class="cf-desc">Track stock across every warehouse and channel with alerts before you run out.</div>
+     <div class="cf-tags"><span class="cf-tag">Stock Levels</span><span class="cf-tag">Reorder Alerts</span><span class="cf-tag">Multiple warehouses</span></div>
      <button type="button" data-book class="cf-arrow">Explore module</button>
     </div>
 
