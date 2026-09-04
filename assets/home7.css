@@ -549,14 +549,18 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .cf-row{
  display:flex;gap:20px;width:max-content;flex:none;
  overflow-x:hidden;
- padding:8px 8px 14px;margin:-8px -8px 0;
+ /* Roomy enough for the cards' 20px-blur shadow to fall inside the row, since
+    .cf-scroll-sticky clips with overflow:hidden. Negative margins cancel the
+    extra padding so the section keeps its original spacing. */
+ padding:16px 16px 28px;margin:-16px -16px -14px;
  scrollbar-width:none;-ms-overflow-style:none;
  will-change:transform;
 }
 .cf-row::-webkit-scrollbar{display:none}
 .cf-card{
  flex:0 0 320px;width:320px;min-height:300px;scroll-snap-align:start;
- background:#F5F5F3;border:1px solid #E8E8E8;border-radius:12px;
+ background:#FFFFFF;border:1px solid #F0F0F0;border-radius:12px;
+ box-shadow:0 4px 20px rgba(0,0,0,.06);
  padding:26px;display:flex;flex-direction:column;
 }
 .cf-icon{width:28px;height:28px;color:#111111;flex-shrink:0;margin-bottom:16px}
