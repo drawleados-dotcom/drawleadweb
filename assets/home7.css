@@ -275,9 +275,9 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .hero-btns .btn-ghost{transform:translateY(0)}
 .hero-btns .btn-ghost:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
 
-.hero-stats{display:flex;width:100%;border-top:1px solid var(--border);padding-top:1.75rem;animation:fu .7s ease .4s both}
-.hstat{flex:1;display:flex;align-items:center;gap:12px;padding-right:1rem;border-right:1px solid var(--border)}
-.hstat:last-child{border-right:none;padding-right:0}
+.hero-stats{display:flex;width:100%;padding-top:1.75rem;animation:fu .7s ease .4s both}
+.hstat{flex:1;display:flex;align-items:center;gap:12px;padding-right:1rem}
+.hstat:last-child{padding-right:0}
 .hstat-ico{width:50px;height:50px;border-radius:12px;background:rgba(50,180,111,.1);color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .hstat-n{font-family:var(--font-display);font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1}
 .hstat-n.gr{color:var(--violet)}
@@ -1482,7 +1482,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
   .hero-right{max-width:560px}
   .ind-tabs{margin-left:auto;margin-right:auto}
   .hero-stats{flex-wrap:wrap;gap:1.5rem;max-width:520px;margin:0 auto}
-  .hstat{flex:1 1 40%;border-right:none;justify-content:center}
+  .hstat{flex:1 1 40%;justify-content:center}
   .fn-grid{grid-template-columns:repeat(2,1fr)}
   .tech-grid{grid-template-columns:repeat(2,1fr)}
   .dash-grid{grid-template-columns:1fr}
@@ -1526,8 +1526,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
   .ind-tab{flex:1 1 30%}
   .dw-kpis{grid-template-columns:repeat(2,1fr)}
   .hero-stats{flex-wrap:wrap;gap:1.25rem;justify-content:center;max-width:100%}
-  .hstat{flex:1 1 40%;border-right:none;border-bottom:1px solid var(--border);padding-bottom:1rem;justify-content:center}
-  .hstat:last-child,.hstat:nth-child(2n){border-bottom:none}
+  .hstat{flex:1 1 40%;padding-bottom:1rem;justify-content:center}
   .hstat-n{font-size:24px}
   .sec-h{font-size:clamp(26px,7vw,34px);letter-spacing:-.02em}
   #functions .sec-h,#unify .sec-h,#method .sec-h,#solutions .sec-h,#tech .sec-h,
