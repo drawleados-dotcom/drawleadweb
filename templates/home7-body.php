@@ -1229,7 +1229,7 @@ renderDash(0);
  const skipHijack = reduceMotion || window.matchMedia('(max-width:768px)').matches;
  if(skipHijack) return;
 
- const STICKY_TOP = 84; // must match .cf-scroll-sticky's CSS top offset (clears the fixed nav)
+ const STICKY_TOP = 0;  // must match .cf-scroll-sticky's CSS top offset
  let overflow = 0;
 
  function measure(){
