@@ -34,19 +34,19 @@ include __DIR__ . '/partials/nav.php';
   <div class="hero-left">
    <div class="hero-eyebrow">
     <span class="hero-eicon"></span>
-    <span class="hero-etxt">One OS. All Operations. Infinite Possibilities.</span>
+    <span class="hero-etxt">One Platform. Every Business.</span>
    </div>
 
    <!-- MAIN HEADLINE, content fixed, browser wraps naturally -->
-   <h1 class="hero-h">One <span class="grad-os">OS</span> with <span class="grad-ai">AI</span> to every function of your <span class="grad-os">business</span></h1>
+   <h1 class="hero-h">Powering <span class="grad-os">Smarter Business Operations</span> Across <span class="grad-ai">Industries</span></h1>
 
-   <p class="hero-p">Drawlead is the operating system for modern business. Unify ERP, AI automation, analytics, and cloud workflows into one intelligent platform built for India's growing businesses.</p>
+   <p class="hero-p">Manage sales, operations, inventory, customers and performance from one intelligent platform.</p>
 
    <div class="hero-btns">
-    <button type="button" data-book class="btn btn-primary">Start Free Consultation</button>
+    <button type="button" data-book class="btn btn-primary">Get Started</button>
     <a href="#functions" class="btn btn-ghost">
      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor"/></svg>
-     Watch 2-Min Demo
+     Explore Platform
     </a>
    </div>
 
@@ -1016,43 +1016,44 @@ $ciTrainGreen = ['ERP', 'AI?'];
 const industries = [
  {
  name:'Ecommerce', accentColor:'#23a065',
- title:'ECOMMERCE ORDERS AND REVENUE OVERVIEW',
- kpis:[{v:'842',l:'Orders Today'},{v:'₹18.4L',l:'GMV'},{v:'3.8%',l:'Conversion'},{v:'₹2,140',l:'Avg Order'}],
+ title:'Ecommerce Orders and Revenue Overview',
+ kpis:[{v:'842',l:'Orders Today',d:'+14%'},{v:'₹18.4L',l:'GMV',d:'+11%'},{v:'3.8%',l:'Conversion',d:'+0.6%'},{v:'₹2,140',l:'Avg Order',d:'+8%'}],
  chartLabel:'Daily Orders', chartBars:[58,66,50,82,74,95],
  aiLabel:'AI INSIGHT',
- aiText:'Cart abandonment at 68% on mobile checkout. Recovering 240 carts could add ₹5.1L this month.',
+ aiText:'Cart abandonment is at 68% on mobile checkout. Recovering 240 carts could add ₹5.1L this month.',
  },
  {
  name:'Hospital', accentColor:'#32b46f',
- title:'HOSPITAL PATIENT AND OPERATIONS OVERVIEW',
- kpis:[{v:'1,248',l:'Patients Today'},{v:'284',l:'Inpatients'},{v:'46',l:'Surgeries'},{v:'98.4%',l:'Satisfaction'}],
- chartLabel:'Daily OPD Footfall', chartBars:[60,72,55,88,80,95],
- aiLabel:'AI MONITOR',
- aiText:'Dengue cases ↑ 18% this week. Suggest allocating 12 extra general ward beds.',
+ title:'Hospital Operations and Patient Overview',
+ kpis:[{v:'486',l:'Patients Today',d:'+9%'},{v:'128',l:'Appointments',d:'+12%'},{v:'82%',l:'Bed Occupancy',d:'+4%'},{v:'18 min',l:'Avg Wait Time',d:'-12%'}],
+ chartLabel:'Patient Visits', chartBars:[60,72,55,88,80,95],
+ aiLabel:'AI INSIGHT',
+ aiText:'OPD demand is expected to increase 18% this week. Consider adding two additional evening consultation slots.',
  },
  {
  name:'Jewellery', accentColor:'#23a065',
- title:'JEWELLERY SALES AND STOCK OVERVIEW',
- kpis:[{v:'₹3.2Cr',l:'Monthly Sales'},{v:'↑ 22%',l:'YoY Growth'},{v:'1,840',l:'SKUs Active'},{v:'96%',l:'Order Fulfill'}],
- chartLabel:'Weekly Sales (₹ Lakhs)', chartBars:[55,62,48,80,70,95],
+ title:'Jewellery Sales and Stock Overview',
+ kpis:[{v:'₹3.2Cr',l:'Monthly Sales',d:'+12%'},{v:'22%',l:'YoY Growth',d:'+22%'},{v:'1,840',l:'SKUs Active',d:'+8%'},{v:'96%',l:'Order Fulfill',d:'+4%'}],
+ // Weeks 1 to 6 are 15, 20, 15, 27, 24 and 36 lakhs, scaled against the 36 peak.
+ chartLabel:'Weekly Sales (₹ Lakhs)', chartBars:[42,56,42,75,67,100],
  aiLabel:'AI INSIGHT',
  aiText:'Navaratri season predicts a 40% spike in necklace demand over the next 14 days.',
  },
  {
  name:'Manufacturing', accentColor:'#14855a',
- title:'MANUFACTURING PRODUCTION OVERVIEW',
- kpis:[{v:'4,280',l:'Units Today'},{v:'↑ 12%',l:'Output'},{v:'99.1%',l:'Quality Rate'},{v:'6',l:'Active Lines'}],
- chartLabel:'Daily Production Units', chartBars:[62,78,55,90,85,95],
- aiLabel:'AI PREDICT',
- aiText:'Line 4 bearing wear detected. Schedule maintenance in 48h to avoid stoppage.',
+ title:'Manufacturing Production and Operations Overview',
+ kpis:[{v:'12,480',l:'Production Today',d:'+9%'},{v:'87%',l:'OEE',d:'+5%'},{v:'42',l:'Active Machines',d:'+3%'},{v:'94%',l:'On-Time Output',d:'+6%'}],
+ chartLabel:'Weekly Production', chartBars:[62,78,55,90,85,95],
+ aiLabel:'AI INSIGHT',
+ aiText:'Machine utilization is expected to reach 91% next week. Preventive maintenance on Line 3 could reduce downtime by 8%.',
  },
  {
  name:'Construction', accentColor:'#14855a',
- title:'CONSTRUCTION PROJECT OVERVIEW',
- kpis:[{v:'₹8.4Cr',l:'Total Projects'},{v:'↑ 18%',l:'On-Time Rate'},{v:'247',l:'Workers'},{v:'38',l:'Vendors'}],
- chartLabel:'Project Progress', chartBars:[55,70,48,80,95,40],
- aiLabel:'AI ALERT',
- aiText:'Site B at 95% budget. Predict overrun in 12 days.',
+ title:'Construction Projects and Site Overview',
+ kpis:[{v:'24',l:'Active Projects',d:'+4%'},{v:'68%',l:'Project Progress',d:'+7%'},{v:'486',l:'Site Workforce',d:'+12%'},{v:'91%',l:'On-Time Projects',d:'+5%'}],
+ chartLabel:'Project Progress', chartBars:[48,60,72,80,88,95],
+ aiLabel:'AI INSIGHT',
+ aiText:'Material demand is expected to increase 16% over the next two weeks. Early procurement could prevent delays across 3 active sites.',
  },
 ];
 
@@ -1076,7 +1077,7 @@ function buildDashBody(d) {
  </div>
  </div>
  <div class="dw-kpis">
- ${d.kpis.map(k=>`<div class="dw-kpi"><div class="dw-kv">${k.v}</div><div class="dw-kl">${k.l}</div></div>`).join('')}
+ ${d.kpis.map(k=>`<div class="dw-kpi"><div class="dw-kv">${k.v}</div><div class="dw-kl">${k.l}</div><div class="dw-kd">${k.d}</div></div>`).join('')}
  </div>
  <div class="dw-chart">
  <div class="dw-chart-label">${d.chartLabel}</div>
