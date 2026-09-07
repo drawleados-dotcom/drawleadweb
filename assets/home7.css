@@ -481,7 +481,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
    About Us services grid, which must keep its original light styling. */
 /* The artwork IS the section background. Layer order (topmost first):
    1. left-to-right scrim  — keeps the copy legible over the image
-   2. energy-bolt.webp     — cover, anchored right so the bolt stays on the right
+   2. energy-bolt.svg      — cover, anchored right so the bolt stays on the right
    3. solid base colour    — also the graceful fallback if the file is ever missing  */
 #method{
  /* NOTE: no overflow:hidden here — it would turn this into a clipping context and
@@ -491,14 +491,14 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  background-color:#03080c;
  background-image:
   linear-gradient(100deg,rgba(3,8,12,.96) 0%,rgba(3,8,12,.9) 30%,rgba(3,8,12,.62) 50%,rgba(3,8,12,.2) 72%,rgba(3,8,12,0) 88%),
-  url('/assets/img/energy-bolt.webp');
+  url('/assets/img/energy-bolt.svg');
  /* background-attachment:fixed makes the VIEWPORT the positioning/sizing area instead of
     the section box. Two things follow, both of which we want:
       1. the artwork is sized against the viewport, not this (now very tall) sticky
          section — otherwise `cover` blew it up to the full scroll height;
       2. it stays put while the stage cards scroll over it. */
  /* Bottom-anchored so the bolt stands on its own baked-in floor reflection.
-    Sizing maths: the artwork carries ~13% empty dark space above the bolt, so the tip
+    Sizing maths: the artwork carries ~13% empty space above the bolt, so the tip
     sits at  viewportH - 0.87 x imageH.  Solving that for "tip 102px down" (nav is 77px,
     leaving a ~25px gap) gives imageH = 1.149 x viewportH - 117px.
     A plain vh value can't hold this: it would clear the nav on a tall screen but slide
@@ -611,7 +611,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
   background-position:center,right 0 bottom;
   background-image:
    linear-gradient(100deg,rgba(3,8,12,.97) 0%,rgba(3,8,12,.93) 42%,rgba(3,8,12,.78) 70%,rgba(3,8,12,.55) 100%),
-   url('/assets/img/energy-bolt.webp');
+   url('/assets/img/energy-bolt.svg');
  }
 }
 @media(max-width:560px){
@@ -627,7 +627,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
   background-position:center,right -4vw bottom;
   background-image:
    linear-gradient(100deg,rgba(3,8,12,.97) 0%,rgba(3,8,12,.95) 50%,rgba(3,8,12,.85) 100%),
-   url('/assets/img/energy-bolt.webp');
+   url('/assets/img/energy-bolt.svg');
  }
  #method .sec-cta{justify-content:center}
  #method .sec-cta .btn{width:100%;max-width:360px;justify-content:center}
