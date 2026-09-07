@@ -80,43 +80,7 @@ include __DIR__ . '/partials/nav.php';
    </div>
 
    <div class="dash-window" id="dashWindow">
-    <div class="dw-topbar">
-     <span class="dw-dot" style="background:#ff5f57"></span>
-     <span class="dw-dot" style="background:#ffbd2e"></span>
-     <span class="dw-dot" style="background:#28c840"></span>
-     <span class="dw-brand">DRAWLEAD</span>
-     <svg class="dw-menu" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>
-    </div>
-    <div class="dw-body" id="dwBody">
-     <div class="dw-head">
-      <div class="dw-title">ECOMMERCE ORDERS AND REVENUE OVERVIEW</div>
-      <div class="dw-meta">
-       <span class="dw-live" style="background:rgba(35,160,101,.12);color:#23a065">Live</span>
-       <span class="dw-month">May 2025</span>
-      </div>
-     </div>
-     <div class="dw-kpis">
-      <div class="dw-kpi"><div class="dw-kv">842</div><div class="dw-kl">Orders Today</div></div>
-      <div class="dw-kpi"><div class="dw-kv">₹18.4L</div><div class="dw-kl">GMV</div></div>
-      <div class="dw-kpi"><div class="dw-kv">3.8%</div><div class="dw-kl">Conversion</div></div>
-      <div class="dw-kpi"><div class="dw-kv">₹2,140</div><div class="dw-kl">Avg Order</div></div>
-     </div>
-     <div class="dw-chart">
-      <div class="dw-chart-label">Daily Orders</div>
-      <div class="dw-chart-bars">
-       <div class="dw-bar" style="height:58%;background:rgba(35,160,101,.18)"></div>
-       <div class="dw-bar" style="height:66%;background:rgba(35,160,101,.29)"></div>
-       <div class="dw-bar" style="height:50%;background:rgba(35,160,101,.40)"></div>
-       <div class="dw-bar" style="height:82%;background:rgba(35,160,101,.51)"></div>
-       <div class="dw-bar" style="height:74%;background:rgba(35,160,101,.62)"></div>
-       <div class="dw-bar" style="height:95%;background:#23a065"></div>
-      </div>
-     </div>
-     <div class="dw-ai" style="border-color:#23a065">
-      <div class="dw-ai-label" style="color:#23a065">AI INSIGHT</div>
-      <div class="dw-ai-text">Cart abandonment at 68% on mobile checkout. Recovering 240 carts could add ₹5.1L this month.</div>
-     </div>
-    </div>
+    <div class="ap-shell" id="dwBody"></div>
    </div>
   </div>
  </div>
@@ -1012,111 +976,245 @@ $ciTrainGreen = ['ERP', 'AI?'];
 <script src="<?= asset_url('/assets/ScrollTrigger.min.js') ?>"></script>
 
 <script>
-// Industry Dashboard Switcher: one window, data-driven, auto-rotates
+// Industry dashboard preview. One data object per industry, one renderer, five tabs.
+// Sidebar, header, KPI cards, chart and AI card come from the same template for every
+// industry, so no dashboard markup is duplicated; only the data below differs.
+const NAV_ICONS = [
+ '<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+ '<path d="M20.6 13.4 12 22l-9-9V4a1 1 0 0 1 1-1h9l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/>',
+ '<path d="M8 7V6a4 4 0 0 1 8 0v1"/><rect x="3" y="7" width="18" height="14" rx="2"/>',
+ '<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.2 2.7-5.4 6-5.4s6 2.2 6 5.4"/><circle cx="17.6" cy="9" r="2.2"/><path d="M16.2 20c.2-2.3 1.8-4 4-4.3"/>',
+ '<path d="M3 7.5 12 3l9 4.5"/><path d="M3 7.5v9L12 21l9-4.5v-9"/><path d="M12 12v9"/><path d="M3 7.5 12 12l9-4.5"/>',
+ '<path d="M4 20V10M9.3 20V5M14.7 20v-7M20 20V8"/>',
+ '<path d="M3 10v4a1 1 0 0 0 1 1h2l6 4V5L6 9H4a1 1 0 0 0-1 1z"/><path d="M17 9a4 4 0 0 1 0 6"/>',
+ '<circle cx="12" cy="12" r="3"/><path d="M12 2.6v2.6M12 18.8v2.6M21.4 12h-2.6M5.2 12H2.6M18.6 5.4l-1.8 1.8M7.2 16.8l-1.8 1.8M18.6 18.6l-1.8-1.8M7.2 7.2 5.4 5.4"/>'
+];
+const KPI_ICONS = [
+ '<path d="M9 4h6l1.6 3H7.4z"/><path d="M6.5 7h11a4.5 4.5 0 0 1 1 3.4l-.7 6A3 3 0 0 1 14.8 20H9.2a3 3 0 0 1-3-2.6l-.7-6A4.5 4.5 0 0 1 6.5 7z"/>',
+ '<circle cx="7.5" cy="7.5" r="2.4"/><circle cx="16.5" cy="16.5" r="2.4"/><path d="M19 5 5 19"/>',
+ '<path d="M3 7.5 12 3l9 4.5"/><path d="M3 7.5v9L12 21l9-4.5v-9"/><path d="M12 12v9"/><path d="M3 7.5 12 12l9-4.5"/>',
+ '<circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/><path d="M3 4h2.2l2.4 10.4a1.6 1.6 0 0 0 1.6 1.2h7.7a1.6 1.6 0 0 0 1.6-1.2L21 8H6"/>'
+];
+const TONES = ['blue', 'green', 'peach', 'yellow'];
+
 const industries = [
  {
- name:'Ecommerce', accentColor:'#23a065',
- title:'Ecommerce Orders and Revenue Overview',
- kpis:[{v:'842',l:'Orders Today',d:'+14%'},{v:'₹18.4L',l:'GMV',d:'+11%'},{v:'3.8%',l:'Conversion',d:'+0.6%'},{v:'₹2,140',l:'Avg Order',d:'+8%'}],
- chartLabel:'Daily Orders', chartBars:[58,66,50,82,74,95],
- aiLabel:'AI INSIGHT',
- aiText:'Cart abandonment is at 68% on mobile checkout. Recovering 240 carts could add ₹5.1L this month.',
+  name: 'Ecommerce', suite: 'Ecommerce Business Suite', role: 'Store Manager',
+  search: 'Search products, orders, customers...',
+  nav: ['Dashboard', 'Products', 'Orders', 'Customers', 'Inventory', 'Reports', 'Marketing', 'Settings'],
+  title: 'Ecommerce Orders and Revenue Overview',
+  kpis: [
+   { l: 'Orders Today', v: '842', d: '14%', n: 'vs last month' },
+   { l: 'GMV', v: '&#8377;18.4L', d: '11%', n: 'vs last month' },
+   { l: 'Conversion', v: '3.8%', d: '0.6%', n: 'vs last month' },
+   { l: 'Avg Order', v: '&#8377;2,140', d: '8%', n: 'vs last month' }
+  ],
+  chart: { label: 'Daily Orders', range: 'Last 6 Days', max: 1000, ticks: [1000, 750, 500, 250, 0],
+           vals: [620, 760, 540, 880, 800, 842], labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] },
+  ai: 'Cart abandonment is at 68% on mobile checkout. Recovering 240 carts could add &#8377;5.1L this month.'
  },
  {
- name:'Hospital', accentColor:'#32b46f',
- title:'Hospital Operations and Patient Overview',
- kpis:[{v:'486',l:'Patients Today',d:'+9%'},{v:'128',l:'Appointments',d:'+12%'},{v:'82%',l:'Bed Occupancy',d:'+4%'},{v:'18 min',l:'Avg Wait Time',d:'-12%'}],
- chartLabel:'Patient Visits', chartBars:[60,72,55,88,80,95],
- aiLabel:'AI INSIGHT',
- aiText:'OPD demand is expected to increase 18% this week. Consider adding two additional evening consultation slots.',
+  name: 'Hospital', suite: 'Hospital Business Suite', role: 'Operations Manager',
+  search: 'Search patients, appointments, wards...',
+  nav: ['Dashboard', 'Patients', 'Appointments', 'Doctors', 'Wards', 'Reports', 'Billing', 'Settings'],
+  title: 'Hospital Operations and Patient Overview',
+  kpis: [
+   { l: 'Patients Today', v: '486', d: '9%', n: 'vs last month' },
+   { l: 'Appointments', v: '128', d: '12%', n: 'vs last month' },
+   { l: 'Bed Occupancy', v: '82%', d: '4%', n: 'vs last month' },
+   { l: 'Avg Wait Time', v: '18 min', d: '12%', n: 'vs last month', down: true }
+  ],
+  chart: { label: 'Patient Visits', range: 'Last 6 Days', max: 500, ticks: [500, 375, 250, 125, 0],
+           vals: [380, 430, 360, 470, 440, 486], labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] },
+  ai: 'OPD demand is expected to increase 18% this week. Consider adding two additional evening consultation slots.'
  },
  {
- name:'Jewellery', accentColor:'#23a065',
- title:'Jewellery Sales and Stock Overview',
- kpis:[{v:'₹3.2Cr',l:'Monthly Sales',d:'+12%'},{v:'22%',l:'YoY Growth',d:'+22%'},{v:'1,840',l:'SKUs Active',d:'+8%'},{v:'96%',l:'Order Fulfill',d:'+4%'}],
- // Weeks 1 to 6 are 15, 20, 15, 27, 24 and 36 lakhs, scaled against the 36 peak.
- chartLabel:'Weekly Sales (₹ Lakhs)', chartBars:[42,56,42,75,67,100],
- aiLabel:'AI INSIGHT',
- aiText:'Navaratri season predicts a 40% spike in necklace demand over the next 14 days.',
+  name: 'Jewellery', suite: 'Jewellery Business Suite', role: 'Store Manager',
+  search: 'Search products, orders, customers...',
+  nav: ['Dashboard', 'Products', 'Orders', 'Customers', 'Inventory', 'Reports', 'Marketing', 'Settings'],
+  title: 'Jewellery Sales and Stock Overview',
+  kpis: [
+   { l: 'Monthly Sales', v: '&#8377;3.2Cr', d: '12%', n: 'vs last month' },
+   { l: 'YoY Growth', v: '22%', d: '22%', n: 'vs last year' },
+   { l: 'SKUs Active', v: '1,840', d: '8%', n: 'vs last month' },
+   { l: 'Order Fulfill', v: '96%', d: '4%', n: 'vs last month' }
+  ],
+  chart: { label: 'Weekly Sales (&#8377; Lakhs)', range: 'Last 6 Weeks', max: 40, ticks: [40, 30, 20, 10, 0],
+           vals: [15, 20, 15, 27, 24, 36], labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'] },
+  ai: 'Navaratri season predicts a 40% spike in necklace demand over the next 14 days.'
  },
  {
- name:'Manufacturing', accentColor:'#14855a',
- title:'Manufacturing Production and Operations Overview',
- kpis:[{v:'12,480',l:'Production Today',d:'+9%'},{v:'87%',l:'OEE',d:'+5%'},{v:'42',l:'Active Machines',d:'+3%'},{v:'94%',l:'On-Time Output',d:'+6%'}],
- chartLabel:'Weekly Production', chartBars:[62,78,55,90,85,95],
- aiLabel:'AI INSIGHT',
- aiText:'Machine utilization is expected to reach 91% next week. Preventive maintenance on Line 3 could reduce downtime by 8%.',
+  name: 'Manufacturing', suite: 'Manufacturing Business Suite', role: 'Plant Manager',
+  search: 'Search orders, machines, materials...',
+  nav: ['Dashboard', 'Production', 'Machines', 'Inventory', 'Quality', 'Reports', 'Maintenance', 'Settings'],
+  title: 'Manufacturing Production and Operations Overview',
+  kpis: [
+   { l: 'Production Today', v: '12,480', d: '9%', n: 'vs last month' },
+   { l: 'OEE', v: '87%', d: '5%', n: 'vs last month' },
+   { l: 'Active Machines', v: '42', d: '3%', n: 'vs last month' },
+   { l: 'On-Time Output', v: '94%', d: '6%', n: 'vs last month' }
+  ],
+  chart: { label: 'Weekly Production', range: 'Last 6 Weeks', max: 14000, ticks: [14000, 10500, 7000, 3500, 0],
+           vals: [9800, 10600, 9200, 11800, 11200, 12480], labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'] },
+  ai: 'Machine utilization is expected to reach 91% next week. Preventive maintenance on Line 3 could reduce downtime by 8%.'
  },
  {
- name:'Construction', accentColor:'#14855a',
- title:'Construction Projects and Site Overview',
- kpis:[{v:'24',l:'Active Projects',d:'+4%'},{v:'68%',l:'Project Progress',d:'+7%'},{v:'486',l:'Site Workforce',d:'+12%'},{v:'91%',l:'On-Time Projects',d:'+5%'}],
- chartLabel:'Project Progress', chartBars:[48,60,72,80,88,95],
- aiLabel:'AI INSIGHT',
- aiText:'Material demand is expected to increase 16% over the next two weeks. Early procurement could prevent delays across 3 active sites.',
- },
+  name: 'Construction', suite: 'Construction Business Suite', role: 'Project Manager',
+  search: 'Search projects, sites, vendors...',
+  nav: ['Dashboard', 'Projects', 'Sites', 'Workforce', 'Materials', 'Reports', 'Vendors', 'Settings'],
+  title: 'Construction Projects and Site Overview',
+  kpis: [
+   { l: 'Active Projects', v: '24', d: '4%', n: 'vs last month' },
+   { l: 'Project Progress', v: '68%', d: '7%', n: 'vs last month' },
+   { l: 'Site Workforce', v: '486', d: '12%', n: 'vs last month' },
+   { l: 'On-Time Projects', v: '91%', d: '5%', n: 'vs last month' }
+  ],
+  chart: { label: 'Project Progress', range: 'Last 6 Stages', max: 80, ticks: [80, 60, 40, 20, 0],
+           vals: [20, 34, 46, 58, 62, 68], labels: ['Stage 1', 'Stage 2', 'Stage 3', 'Stage 4', 'Stage 5', 'Stage 6'] },
+  ai: 'Material demand is expected to increase 16% over the next two weeks. Early procurement could prevent delays across 3 active sites.'
+ }
 ];
-
 let currentIdx = 0;
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function hexToRgb(c) {
- const m = c.match(/^#([0-9a-f]{6})$/i);
- if(!m) return '50,180,111';
- const n = parseInt(m[1],16);
- return [(n>>16)&255,(n>>8)&255,n&255].join(',');
+function icon(paths, cls) {
+ return '<svg class="' + cls + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + paths + '</svg>';
+}
+
+// Sidebar: brand, then the industry's own navigation. Item 0 is always the active one.
+function buildSidebar(d) {
+ return '<aside class="ap-side">' +
+  '<div class="ap-brand">' +
+   '<span class="ap-brand-mark">' + icon('<path d="M12 2.6 21 9l-9 12.4L3 9z"/>', 'ap-brand-svg') + '</span>' +
+   '<span><span class="ap-brand-name">DRAWLEAD</span><span class="ap-brand-suite">' + d.suite + '</span></span>' +
+  '</div>' +
+  '<nav class="ap-nav">' +
+   d.nav.map(function (label, i) {
+    return '<span class="ap-nav-item' + (i === 0 ? ' is-active' : '') + '">' +
+      icon(NAV_ICONS[i], 'ap-nav-ico') + '<span>' + label + '</span></span>';
+   }).join('') +
+  '</nav>' +
+  '<div class="ap-side-foot">&copy; 2025 Drawlead</div>' +
+ '</aside>';
+}
+
+function buildHeader(d) {
+ return '<header class="ap-top">' +
+  '<div class="ap-search">' + icon('<circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/>', 'ap-search-ico') +
+   '<span>' + d.search + '</span></div>' +
+  '<div class="ap-top-right">' +
+   '<span class="ap-bell">' + icon('<path d="M18 8a6 6 0 1 0-12 0c0 6-2 7-2 7h16s-2-1-2-7"/><path d="M13.7 20a2 2 0 0 1-3.4 0"/>', 'ap-bell-ico') +
+    '<span class="ap-bell-dot"></span></span>' +
+   '<span class="ap-user">' +
+    '<span class="ap-avatar">AK</span>' +
+    '<span class="ap-user-txt"><span class="ap-user-name">Arun Kumar</span><span class="ap-user-role">' + d.role + '</span></span>' +
+    icon('<path d="m6 9 6 6 6-6"/>', 'ap-chev') +
+   '</span>' +
+  '</div>' +
+ '</header>';
+}
+
+function buildKpis(d) {
+ return '<div class="ap-kpis">' + d.kpis.map(function (k, i) {
+  return '<div class="ap-kpi ap-t-' + TONES[i] + '">' +
+    '<div class="ap-kpi-top">' +
+     '<span class="ap-kpi-ico">' + icon(KPI_ICONS[i], 'ap-kpi-svg') + '</span>' +
+     '<span class="ap-spark">' + [5, 8, 11, 14, 17, 20].map(function (h) {
+       return '<i style="height:' + h + 'px"></i>';
+     }).join('') + '</span>' +
+    '</div>' +
+    '<div class="ap-kpi-label">' + k.l + '</div>' +
+    '<div class="ap-kpi-value">' + k.v + '</div>' +
+    '<div class="ap-kpi-foot">' +
+     '<span class="ap-delta">' + (k.down ? '&#8595;' : '&#8593;') + ' ' + k.d + '</span>' +
+     '<span class="ap-delta-note">' + k.n + '</span>' +
+    '</div>' +
+   '</div>';
+ }).join('') + '</div>';
+}
+
+// Bars are sized against the chart's own axis maximum, so every industry's numbers sit
+// correctly under its own Y scale rather than being normalised to a shared percentage.
+function buildChart(d) {
+ const c = d.chart;
+ return '<section class="ap-card ap-chart-card">' +
+  '<div class="ap-card-head">' +
+   '<h4 class="ap-card-title">' + c.label + '</h4>' +
+   '<span class="ap-select">' + c.range + icon('<path d="m6 9 6 6 6-6"/>', 'ap-chev') + '</span>' +
+  '</div>' +
+  '<div class="ap-plot">' +
+   '<div class="ap-yaxis">' + c.ticks.map(function (t) { return '<span>' + t.toLocaleString() + '</span>'; }).join('') + '</div>' +
+   '<div class="ap-grid">' +
+    c.ticks.map(function () { return '<span class="ap-gridline"></span>'; }).join('') +
+    '<div class="ap-bars">' +
+     c.vals.map(function (v, i) {
+      const pct = Math.round((v / c.max) * 100);
+      return '<div class="ap-bar-col"><span class="ap-bar' + (i === c.vals.length - 1 ? ' is-peak' : '') +
+             '" style="height:' + pct + '%"></span></div>';
+     }).join('') +
+    '</div>' +
+   '</div>' +
+  '</div>' +
+  '<div class="ap-xaxis">' + c.labels.map(function (l) { return '<span>' + l + '</span>'; }).join('') + '</div>' +
+ '</section>';
+}
+
+function buildAi(d) {
+ return '<section class="ap-ai">' +
+  '<span class="ap-ai-ico">' + icon('<path d="M12 3.2 13.7 9l5.8 1.7-5.8 1.7L12 18.2l-1.7-5.8L4.5 10.7 10.3 9z"/>', 'ap-ai-svg') + '</span>' +
+  '<div class="ap-ai-body"><div class="ap-ai-label">AI INSIGHT</div><p class="ap-ai-text">' + d.ai + '</p></div>' +
+  '<span class="ap-ai-cta">View Details ' + icon('<path d="M5 12h13M13 6l6 6-6 6"/>', 'ap-ai-arrow') + '</span>' +
+ '</section>';
 }
 
 function buildDashBody(d) {
- return `
- <div class="dw-head">
- <div class="dw-title">${d.title}</div>
- <div class="dw-meta">
- <span class="dw-live" style="background:rgba(${hexToRgb(d.accentColor)},.12);color:${d.accentColor}">Live</span>
- <span class="dw-month">May 2025</span>
- </div>
- </div>
- <div class="dw-kpis">
- ${d.kpis.map(k=>`<div class="dw-kpi"><div class="dw-kv">${k.v}</div><div class="dw-kl">${k.l}</div><div class="dw-kd">${k.d}</div></div>`).join('')}
- </div>
- <div class="dw-chart">
- <div class="dw-chart-label">${d.chartLabel}</div>
- <div class="dw-chart-bars">
- ${d.chartBars.map((h,i)=>`<div class="dw-bar" style="height:${h}%;background:${i===d.chartBars.length-1?d.accentColor:`rgba(${hexToRgb(d.accentColor)},${0.18+i*0.11})`}"></div>`).join('')}
- </div>
- </div>
- <div class="dw-ai" style="border-color:${d.accentColor}">
- <div class="dw-ai-label" style="color:${d.accentColor}">${d.aiLabel}</div>
- <div class="dw-ai-text">${d.aiText}</div>
- </div>`;
+ return buildSidebar(d) +
+  '<div class="ap-main">' +
+   buildHeader(d) +
+   '<div class="ap-content">' +
+    '<div class="ap-page-head">' +
+     '<div>' +
+      '<div class="ap-greet">GOOD MORNING, ARUN</div>' +
+      '<h3 class="ap-title">' + d.title + '</h3>' +
+      '<p class="ap-sub">Here&rsquo;s what&rsquo;s happening with your business today.</p>' +
+     '</div>' +
+     '<div class="ap-page-meta">' +
+      '<span class="ap-live"><i></i>Live</span>' +
+      '<span class="ap-select">' + icon('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/>', 'ap-cal') +
+       'May 2025' + icon('<path d="m6 9 6 6 6-6"/>', 'ap-chev') + '</span>' +
+     '</div>' +
+    '</div>' +
+    buildKpis(d) +
+    buildChart(d) +
+    buildAi(d) +
+   '</div>' +
+  '</div>';
 }
 
 function renderDash(idx) {
  const d = industries[idx];
  document.getElementById('dwBody').innerHTML = buildDashBody(d);
- document.querySelectorAll('.ind-tab').forEach((t,i)=>t.classList.toggle('active', i===idx));
+ document.querySelectorAll('.ind-tab').forEach(function (t, i) { t.classList.toggle('active', i === idx); });
 }
 
 function switchDash(idx) {
- if(idx === currentIdx) return;
+ if (idx === currentIdx) return;
  currentIdx = idx;
  const win = document.getElementById('dashWindow');
- if(reduceMotion){ renderDash(idx); return; }
+ if (reduceMotion) { renderDash(idx); return; }
  win.classList.add('switching');
- setTimeout(()=>{
- renderDash(idx);
- win.classList.remove('switching');
+ setTimeout(function () {
+  renderDash(idx);
+  win.classList.remove('switching');
  }, 300);
 }
 
-// Auto-cycle the dashboard, Ecommerce → Hospital → Jewellery → Manufacturing → Construction → repeat.
-// The tab progress indicator was removed, and with it the 60ms tick that only existed to
-// paint it. Rotation is unchanged: still one industry every CYCLE_MS, driven directly.
+// Auto-cycle through the five industries, one every CYCLE_MS.
 const CYCLE_MS = 5500;
-
-if(!reduceMotion){
- setInterval(() => switchDash((currentIdx + 1) % industries.length), CYCLE_MS);
+if (!reduceMotion) {
+ setInterval(function () { switchDash((currentIdx + 1) % industries.length); }, CYCLE_MS);
 }
+renderDash(0);
 
 // Core Functions: sticky horizontal scroll
 // The row is pinned via CSS position:sticky. As the user scrolls down through
