@@ -1083,23 +1083,23 @@ function icon(paths, cls) {
 
 // Sidebar: brand, then the industry's own navigation. Item 0 is always the active one.
 function buildSidebar(d) {
- return '<aside class="ap-side">' +
+ return '<div class="ap-side">' +
   '<div class="ap-brand">' +
    '<span class="ap-brand-mark">' + icon('<path d="M12 2.6 21 9l-9 12.4L3 9z"/>', 'ap-brand-svg') + '</span>' +
    '<span><span class="ap-brand-name">DRAWLEAD</span><span class="ap-brand-suite">' + d.suite + '</span></span>' +
   '</div>' +
-  '<nav class="ap-nav">' +
+  '<div class="ap-nav">' +
    d.nav.map(function (label, i) {
     return '<span class="ap-nav-item' + (i === 0 ? ' is-active' : '') + '">' +
       icon(NAV_ICONS[i], 'ap-nav-ico') + '<span>' + label + '</span></span>';
    }).join('') +
-  '</nav>' +
+  '</div>' +
   '<div class="ap-side-foot">&copy; 2025 Drawlead</div>' +
- '</aside>';
+ '</div>';
 }
 
 function buildHeader(d) {
- return '<header class="ap-top">' +
+ return '<div class="ap-top">' +
   '<div class="ap-search">' + icon('<circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/>', 'ap-search-ico') +
    '<span>' + d.search + '</span></div>' +
   '<div class="ap-top-right">' +
@@ -1111,7 +1111,7 @@ function buildHeader(d) {
     icon('<path d="m6 9 6 6 6-6"/>', 'ap-chev') +
    '</span>' +
   '</div>' +
- '</header>';
+ '</div>';
 }
 
 function buildKpis(d) {
@@ -1137,7 +1137,7 @@ function buildKpis(d) {
 // correctly under its own Y scale rather than being normalised to a shared percentage.
 function buildChart(d) {
  const c = d.chart;
- return '<section class="ap-card ap-chart-card">' +
+ return '<div class="ap-card ap-chart-card">' +
   '<div class="ap-card-head">' +
    '<h4 class="ap-card-title">' + c.label + '</h4>' +
    '<span class="ap-select">' + c.range + icon('<path d="m6 9 6 6 6-6"/>', 'ap-chev') + '</span>' +
@@ -1156,15 +1156,15 @@ function buildChart(d) {
    '</div>' +
   '</div>' +
   '<div class="ap-xaxis">' + c.labels.map(function (l) { return '<span>' + l + '</span>'; }).join('') + '</div>' +
- '</section>';
+ '</div>';
 }
 
 function buildAi(d) {
- return '<section class="ap-ai">' +
+ return '<div class="ap-ai">' +
   '<span class="ap-ai-ico">' + icon('<path d="M12 3.2 13.7 9l5.8 1.7-5.8 1.7L12 18.2l-1.7-5.8L4.5 10.7 10.3 9z"/>', 'ap-ai-svg') + '</span>' +
   '<div class="ap-ai-body"><div class="ap-ai-label">AI INSIGHT</div><p class="ap-ai-text">' + d.ai + '</p></div>' +
   '<span class="ap-ai-cta">View Details ' + icon('<path d="M5 12h13M13 6l6 6-6 6"/>', 'ap-ai-arrow') + '</span>' +
- '</section>';
+ '</div>';
 }
 
 function buildDashBody(d) {
