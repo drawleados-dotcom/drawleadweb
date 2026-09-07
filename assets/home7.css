@@ -218,7 +218,11 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 #hero .hero-eyebrow{margin-left:auto;margin-right:auto}
 #hero .hero-p{margin-left:auto;margin-right:auto}
 #hero .hero-btns{justify-content:center}
-#hero .hero-stats{text-align:left}
+/* style.php is inlined site wide and also styles .hstat, giving it a border-right.
+   Dropping the declaration from this file only stopped it competing, so the shared
+   rule kept winning. These are scoped to #hero so they beat it on specificity. */
+#hero .hero-stats{text-align:left;border-top:none}
+#hero .hstat{border-right:none;border-bottom:none}
 .hero-right{display:flex;flex-direction:column;max-width:600px;width:100%;margin-left:auto;margin-right:auto;animation:fu .7s ease .3s both}
 
 
