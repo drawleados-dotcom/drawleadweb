@@ -946,11 +946,12 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .ind-visual{
  width:104px;height:104px;border-radius:24px;margin-bottom:1.3rem;
  display:flex;align-items:center;justify-content:center;flex-shrink:0;
- background:rgba(255,255,255,.62);
- border:1px solid rgba(50,180,111,.22);
- backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+ /* Solid Drawlead green tile carrying the industry's own glyph in white. */
+ background:#1c9558;
+ border:1px solid rgba(28,149,88,.9);
+ box-shadow:0 10px 24px rgba(28,149,88,.22);
 }
-.ind-visual svg{width:54px;height:54px;stroke:#14855a;fill:none}
+.ind-visual svg{width:54px;height:54px;stroke:#fff;fill:none}
 
 .ind-scard-title{font-family:var(--font-display);font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1.15;color:var(--black);margin-bottom:.3rem}
 .ind-scard-tag{font-family:var(--font-body);font-size:16px;font-weight:400;color:var(--g500);margin-bottom:1.5rem}
