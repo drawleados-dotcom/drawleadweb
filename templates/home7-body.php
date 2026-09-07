@@ -38,9 +38,9 @@ include __DIR__ . '/partials/nav.php';
    </div>
 
    <!-- MAIN HEADLINE, content fixed, browser wraps naturally -->
-   <h1 class="hero-h">Powering <span class="grad-os">Smarter Business Operations</span> Across <span class="grad-ai">Industries</span></h1>
+   <h1 class="hero-h">One <span class="grad-os">OS</span> with <span class="grad-ai">AI</span> to every function of your <span class="grad-os">business</span></h1>
 
-   <p class="hero-p">Manage sales, operations, inventory, customers and performance from one intelligent platform.</p>
+   <p class="hero-p">Drawlead is the operating system for modern business. Unify ERP, AI automation, analytics, and cloud workflows into one intelligent platform built for India's growing businesses.</p>
 
    <div class="hero-btns">
     <button type="button" data-book class="btn btn-primary">Get Started</button>
