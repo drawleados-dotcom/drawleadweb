@@ -319,7 +319,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  transition:opacity .3s ease;
 }
 .dash-window.switching{opacity:0}
-.ap-shell{display:grid;grid-template-columns:220px minmax(0,1fr);background:#fff}
+.ap-shell{display:grid;grid-template-columns:220px minmax(0,1fr);background:#fff;text-align:left}
 
 /* sidebar */
 .ap-side{display:flex;flex-direction:column;background:#fbfcfd;border-right:1px solid #eceff2;padding:18px 13px 15px}
@@ -375,12 +375,6 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .ap-t-green .ap-kpi-ico{color:#16a34a}
 .ap-t-peach .ap-kpi-ico{color:#ea580c}
 .ap-t-yellow .ap-kpi-ico{color:#ca8a04}
-.ap-spark{display:flex;align-items:flex-end;gap:2.5px;height:21px}
-.ap-spark i{width:3px;border-radius:1.5px;background:currentColor;opacity:.5}
-.ap-t-blue .ap-spark{color:#2563eb}
-.ap-t-green .ap-spark{color:#16a34a}
-.ap-t-peach .ap-spark{color:#ea580c}
-.ap-t-yellow .ap-spark{color:#ca8a04}
 .ap-kpi-label{font-family:var(--font-body);font-size:12.5px;color:#64748b;margin-bottom:6px}
 .ap-kpi-value{font-family:var(--font-display);font-size:22px;font-weight:700;letter-spacing:-.025em;color:#0f172a;line-height:1.05;margin-bottom:9px}
 .ap-kpi-foot{display:flex;align-items:center;gap:9px;margin-top:auto}

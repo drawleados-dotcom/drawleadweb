@@ -1119,9 +1119,6 @@ function buildKpis(d) {
   return '<div class="ap-kpi ap-t-' + TONES[i] + '">' +
     '<div class="ap-kpi-top">' +
      '<span class="ap-kpi-ico">' + icon(KPI_ICONS[i], 'ap-kpi-svg') + '</span>' +
-     '<span class="ap-spark">' + [5, 8, 11, 14, 17, 20].map(function (h) {
-       return '<i style="height:' + h + 'px"></i>';
-     }).join('') + '</span>' +
     '</div>' +
     '<div class="ap-kpi-label">' + k.l + '</div>' +
     '<div class="ap-kpi-value">' + k.v + '</div>' +
