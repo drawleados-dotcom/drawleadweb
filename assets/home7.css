@@ -902,9 +902,9 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
    next simply swaps in over it; z-index ascends so later cards come forward. The gap
    between cards in normal flow is what supplies the scroll distance per reveal.
    Per-card colour comes from --c1/--c2/--base set inline on each article. */
-#industries{background:#05070a;color:#fff;position:relative}
-#industries .sec-h{color:#fff}
-#industries .sec-sub{color:rgba(255,255,255,.55)}
+#industries{background:var(--white);color:var(--black);position:relative}
+#industries .sec-h{color:var(--black)}
+#industries .sec-sub{color:var(--g500)}
 
 /* .ind-scroll is the tall scroll runway; .ind-viewport pins inside it and holds all six
    cards absolutely centred on top of each other. JS then reads scroll progress and lays
@@ -922,11 +922,9 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  width:min(400px,84vw);
  transform:translate(-50%,-50%);        /* JS overwrites with the full transform */
  border-radius:20px;overflow:hidden;
- border:1px solid rgba(255,255,255,.14);
- background:
-  radial-gradient(125% 78% at 50% -6%,var(--c2) 0%,var(--c1) 34%,var(--base) 78%),
-  var(--base);
- box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 60px -18px var(--c1);
+ border:1px solid var(--border);
+ background:var(--white);
+ box-shadow:0 24px 60px rgba(16,32,48,.12);
  will-change:transform,opacity;
  backface-visibility:hidden;
 }
@@ -943,33 +941,32 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .ind-visual{
  width:104px;height:104px;border-radius:24px;margin-bottom:1.3rem;
  display:flex;align-items:center;justify-content:center;flex-shrink:0;
- background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(0,0,0,.5));
- border:1px solid rgba(255,255,255,.18);
- box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 16px 34px rgba(0,0,0,.45);
+ background:rgba(50,180,111,.10);
+ border:1px solid rgba(50,180,111,.20);
 }
-.ind-visual svg{width:54px;height:54px;stroke:#fff;fill:none;opacity:.95}
+.ind-visual svg{width:54px;height:54px;stroke:#14855a;fill:none}
 
-.ind-scard-title{font-family:var(--font-display);font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1.15;color:#fff;margin-bottom:.3rem}
-.ind-scard-tag{font-family:var(--font-body);font-size:16px;font-weight:400;color:rgba(255,255,255,.6);margin-bottom:1.5rem}
+.ind-scard-title{font-family:var(--font-display);font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1.15;color:var(--black);margin-bottom:.3rem}
+.ind-scard-tag{font-family:var(--font-body);font-size:16px;font-weight:400;color:var(--g500);margin-bottom:1.5rem}
 
 .ind-block{width:100%;text-align:left;margin-bottom:1.25rem}
 .ind-block-label{
  display:flex;align-items:center;gap:10px;
- font-family:var(--font-display);font-size:17px;font-weight:600;color:#fff;margin-bottom:.6rem;
+ font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--black);margin-bottom:.6rem;
 }
 .ind-rule{width:4px;height:18px;border-radius:2px;flex-shrink:0}
-.ind-rule-p{background:#ef4444}
-.ind-rule-s{background:#22c55e}
+.ind-rule-p{background:var(--g300)}
+.ind-rule-s{background:var(--blue)}
 .ind-line{
  display:flex;align-items:flex-start;gap:10px;padding:4.5px 0 4.5px 13px;
  font-family:var(--font-body);font-size:13.5px;font-weight:400;line-height:1.5;
- color:rgba(255,255,255,.72);
+ color:var(--g500);
 }
-.ind-line svg{flex-shrink:0;margin-top:3px;opacity:.75;width:13px;height:13px}
+.ind-line svg{flex-shrink:0;margin-top:3px;opacity:.85;width:13px;height:13px}
 
 .ind-scard-cta{
  display:inline-flex;align-items:center;gap:8px;margin-top:.5rem;
- font-family:var(--font-body);font-size:15px;font-weight:600;color:#fff;text-decoration:none;
+ font-family:var(--font-body);font-size:15px;font-weight:600;color:var(--violet);text-decoration:none;
  transition:gap .2s ease;
 }
 .ind-scard-cta span{font-size:18px;line-height:1}

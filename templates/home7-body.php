@@ -564,14 +564,6 @@ include __DIR__ . '/partials/nav.php';
 // own gradient pair + deep base colour. Copy itself is untouched, it still comes
 // straight from industries_ordered().
 $indStackOrder = ['construction','healthcare','agencies','manufacturing','retail','logistics'];
-$indTheme = [
- 'construction'  => ['#F97316','#FFB020','#1b0f04'],
- 'healthcare'    => ['#2563EB','#22D3EE','#04122a'],
- 'agencies'      => ['#EC4899','#F97316','#1b0a13'],
- 'manufacturing' => ['#2563EB','#F59E0B','#0c1220'],
- 'retail'        => ['#7C3AED','#EC4899','#150a1e'],
- 'logistics'     => ['#0EA5E9','#14B8A6','#04141c'],
-];
 $indByKey = [];
 foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['industry']; }
 ?>
@@ -585,10 +577,9 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <?php $n = 0; foreach ($indStackOrder as $key):
    if (!isset($indByKey[$key])) { continue; }
    $ind = $indByKey[$key];
-   $t   = $indTheme[$key];
    $n++;
   ?>
-  <article class="ind-scard" style="--c1:<?= $t[0] ?>;--c2:<?= $t[1] ?>;--base:<?= $t[2] ?>">
+  <article class="ind-scard">
    <div class="ind-scard-inner">
 
     <div class="ind-visual"><?= $ind['icon'] ?></div>
