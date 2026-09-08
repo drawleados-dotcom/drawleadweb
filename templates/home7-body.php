@@ -523,7 +523,7 @@ include __DIR__ . '/partials/nav.php';
   </div>
  </div>
  <div class="case-card" style="--acc:#2FB5AE;--acc2:#A8E6E2;--atm:rgba(47,181,174,.18)">
-  <div class="case-screen"><span class="case-orb" aria-hidden="true"></span></div>
+  <div class="case-screen"><img class="case-img" src="<?= asset_url('/assets/img/case-physiotherapy.webp') ?>" alt="Physiotherapist assessing a patient's shoulder mobility in a clinic" decoding="async" fetchpriority="low"></div>
   <div class="case-body">
     <span class="case-tag">Healthcare and Wellness</span>
     <div class="case-title">Multi-Brand Physiotherapy Management</div>
@@ -536,7 +536,7 @@ include __DIR__ . '/partials/nav.php';
   </div>
  </div>
  <div class="case-card" style="--acc:#8B5CF6;--acc2:#CDBEFB;--atm:rgba(139,92,246,.16)">
-  <div class="case-screen"><span class="case-orb" aria-hidden="true"></span></div>
+  <div class="case-screen"><img class="case-img" src="<?= asset_url('/assets/img/case-agency-os.webp') ?>" alt="Agency team reviewing campaign dashboards in a meeting room" decoding="async" fetchpriority="low"></div>
   <div class="case-body">
     <span class="case-tag">Marketing Agencies</span>
     <div class="case-title">Agency OS</div>
