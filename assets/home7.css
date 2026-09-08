@@ -479,34 +479,14 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
    Every rule here is scoped under #method on purpose: .fn-grid/.fn-card/.fn-icon/
    .fn-num/.fn-name/.fn-desc/.fn-tag are a SHARED card system also used by the
    About Us services grid, which must keep its original light styling. */
-/* The artwork IS the section background. Layer order (topmost first):
-   1. left-to-right scrim  — keeps the copy legible over the image
-   2. bolt.webp             — cover, anchored right so the bolt stays on the right
-   3. solid base colour    — also the graceful fallback if the file is ever missing  */
+/* Flat dark section. The bolt artwork that filled this background is gone, and the
+   left-to-right scrim went with it: it existed only to hold the copy legible over the
+   image, and over a solid colour it just makes the section unevenly dark. */
 #method{
  /* NOTE: no overflow:hidden here — it would turn this into a clipping context and
-    disable position:sticky on the stage cards. The artwork is a background-image
-    (cover), which cannot overflow, so clipping is no longer needed. */
+    disable position:sticky on the stage cards. */
  color:#fff;position:relative;
  background-color:#03080c;
- background-image:
-  linear-gradient(100deg,rgba(3,8,12,.96) 0%,rgba(3,8,12,.9) 30%,rgba(3,8,12,.62) 50%,rgba(3,8,12,.2) 72%,rgba(3,8,12,0) 88%),
-  url('/assets/img/bolt.webp');
- /* background-attachment:fixed makes the VIEWPORT the positioning/sizing area instead of
-    the section box. Two things follow, both of which we want:
-      1. the artwork is sized against the viewport, not this (now very tall) sticky
-         section — otherwise `cover` blew it up to the full scroll height;
-      2. it stays put while the stage cards scroll over it. */
- /* Bottom-anchored so the bolt stands on its own baked-in floor reflection.
-    Sizing maths: the artwork carries ~13% empty dark space above the bolt, so the tip
-    sits at  viewportH - 0.87 x imageH.  Solving that for "tip 102px down" (nav is 77px,
-    leaving a ~25px gap) gives imageH = 1.149 x viewportH - 117px.
-    A plain vh value can't hold this: it would clear the nav on a tall screen but slide
-    behind it on a short one. The calc keeps the gap constant at any viewport height. */
- background-size:cover,auto calc(115vh - 117px);
- background-position:center,right 5vw bottom;
- background-repeat:no-repeat,no-repeat;
- background-attachment:fixed,fixed;
 }
 #method .mth-left{position:relative;z-index:3;width:58%;max-width:760px}
 
@@ -597,22 +577,10 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 @media(max-width:1100px){
  #method .mth-left{width:64%}
 }
-/* narrower viewports: the copy spans full width, so darken the scrim further so the
-   background artwork never competes with text legibility */
+/* narrower viewports: the copy spans full width */
 @media(max-width:900px){
  #method .mth-left{width:100%;max-width:none}
  #method .fn-grid{max-width:none}
- /* background-attachment:fixed is unreliable/janky on iOS Safari and mobile Chrome,
-    so fall back to a normal scrolling background at smaller widths. Sizing is pinned
-    to vh (not `cover`) so the tall section still can't blow the artwork up. */
- #method{
-  background-attachment:scroll,scroll;
-  background-size:cover,auto 78vh;
-  background-position:center,right 0 bottom;
-  background-image:
-   linear-gradient(100deg,rgba(3,8,12,.97) 0%,rgba(3,8,12,.93) 42%,rgba(3,8,12,.78) 70%,rgba(3,8,12,.55) 100%),
-   url('/assets/img/bolt.webp');
- }
 }
 @media(max-width:560px){
  #method .fn-grid{gap:20px;padding-bottom:6vh}
@@ -621,14 +589,6 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  #method .fn-card:nth-child(2){top:110px}
  #method .fn-card:nth-child(3){top:128px}
  #method .fn-card:nth-child(4){top:146px}
- #method{
-  background-attachment:scroll,scroll;
-  background-size:cover,auto 54vh;
-  background-position:center,right -4vw bottom;
-  background-image:
-   linear-gradient(100deg,rgba(3,8,12,.97) 0%,rgba(3,8,12,.95) 50%,rgba(3,8,12,.85) 100%),
-   url('/assets/img/bolt.webp');
- }
  #method .sec-cta{justify-content:center}
  #method .sec-cta .btn{width:100%;max-width:360px;justify-content:center}
 }
