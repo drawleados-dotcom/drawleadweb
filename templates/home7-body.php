@@ -378,14 +378,25 @@ include __DIR__ . '/partials/nav.php';
 
 <!-- TECH STACK -->
 <section id="tech" style="background:#0a1310;color:#fff">
+ <div class="tech-head">
+ <div class="eyebrow rv"><span class="eyebrow-text" style="color:#34a87c">Technology Stack</span></div>
+ <h2 class="sec-h rv" style="color:#fff"><span style="background:#34a87c;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Built on Modern Infrastructure</span><br><span style="color:rgba(255,255,255,.22)">Unlocking Digital Potential</span></h2>
+ <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">Enterprise-grade technologies combining to create scalable, intelligent digital ecosystems.</p>
+ </div><!-- /tech-head -->
+
+ <!-- Integrations diagram, between the copy and the pinned cards. It could not live
+      inside the pin: that box is one viewport tall and was already full, so the image
+      would have had to shrink to a ~100px strip. Copy and diagram scroll normally
+      instead, and only the cards and CTA are pinned. -->
+ <div class="tech-shot rv">
+  <img src="<?= asset_url('/assets/img/tech-stack.png') ?>" alt="Drawlead at the centre of an integration map connecting AWS, GitHub, Slack, Salesforce, Zapier, Cloudflare, SAP and Microsoft Copilot" decoding="async" fetchpriority="low">
+ </div>
+
  <!-- .tech-track is the tall scroll runway; .tech-pin is what actually sticks. Its
-      height is set from the card count in JS so the pin releases once the last card
-      has stacked. -->
+      height is set in JS from the pin height plus the card count, so lifting the copy
+      and the diagram out of the pin shortens the runway to match automatically. -->
  <div class="tech-track" id="techTrack">
   <div class="tech-pin" id="techPin">
-  <div class="eyebrow rv"><span class="eyebrow-text" style="color:#34a87c">Technology Stack</span></div>
-  <h2 class="sec-h rv" style="color:#fff"><span style="background:#34a87c;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Built on Modern Infrastructure</span><br><span style="color:rgba(255,255,255,.22)">Unlocking Digital Potential</span></h2>
-  <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">Enterprise-grade technologies combining to create scalable, intelligent digital ecosystems.</p>
   <div class="tech-grid">
 
     <!-- ERP -->
@@ -508,13 +519,6 @@ include __DIR__ . '/partials/nav.php';
   </div>
   </div><!-- /tech-pin -->
  </div><!-- /tech-track -->
- <!-- Integrations diagram. It sits after the pinned sequence rather than between
-      the copy and the cards: the pin is one viewport tall and already full, with only
-      31px spare at 1440x900 and none at 1280x800, so an image above the cards would
-      have pushed the CTA off screen. -->
- <div class="tech-shot rv">
-  <img src="<?= asset_url('/assets/img/tech-stack.png') ?>" alt="Drawlead at the centre of an integration map connecting AWS, GitHub, Slack, Salesforce, Zapier, Cloudflare, SAP and Microsoft Copilot" decoding="async" fetchpriority="low">
- </div>
 </section>
 
 <!-- CASE STUDIES -->
