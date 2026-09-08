@@ -510,7 +510,7 @@ include __DIR__ . '/partials/nav.php';
   <div class="cases-pin">
    <div class="cases-track" id="casesTrack">
  <div class="case-card" style="--acc:#38B976;--acc2:#9BE3C0;--atm:rgba(56,185,118,.18)">
-  <div class="case-screen"><span class="case-orb" aria-hidden="true"></span></div>
+  <div class="case-screen"><img class="case-img" src="<?= asset_url('/assets/img/case-construction-erp.webp') ?>" alt="Site engineer reviewing drawings on a multi-storey construction site" decoding="async" fetchpriority="low"></div>
   <div class="case-body">
     <span class="case-tag">Construction and Real Estate</span>
     <div class="case-title">Construction ERP Solution</div>

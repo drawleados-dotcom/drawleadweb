@@ -1147,6 +1147,12 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
   radial-gradient(circle at 32% 24%,rgba(255,255,255,.55) 0%,transparent 46%),
   linear-gradient(150deg,var(--acc2,#9BE3C0) 0%,var(--acc,#38B976) 62%,var(--acc,#38B976) 100%);
 }
+/* Photo fill. Absolute rather than a flex child so it covers the panel edge to edge
+   regardless of the centring on .case-screen. Cards with no photo keep the orb. */
+.case-img{
+ position:absolute;inset:0;width:100%;height:100%;
+ object-fit:cover;object-position:50% 50%;display:block;
+}
 /* soft light bloom inside the panel — reads as depth rather than a flat fill */
 .case-orb{
  display:block;width:78%;aspect-ratio:1;height:auto;border-radius:50%;
@@ -1217,6 +1223,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  .case-card{width:calc(100vw - 56px);min-height:0;flex-direction:column}
  .case-screen{order:1;flex:0 0 168px;width:100%;height:168px}
  .case-orb{width:132px}
+ .case-img{object-position:50% 38%}
  .case-body{order:2;flex:1 1 auto;width:auto;margin:12px;padding:24px}
  .case-title{font-size:18px}
 }
