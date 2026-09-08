@@ -1016,33 +1016,21 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
    show straight through under white card text, so the section owns the colour now.
    #0A1310 is the scrim gradient own opaque end, so the tone is unchanged. */
 #tech{background:#0A1310}
-/* ══════ TECH — pinned horizontal card stack ══════
-   Section is padded by the global `section` rule; the pin lives inside it.
-   NOTE: no overflow:hidden anywhere on this chain — it would disable position:sticky. */
-#tech{position:relative;padding-top:0;padding-bottom:0}
-.tech-track{position:relative;z-index:1}
-.tech-pin{
- position:sticky;top:0;min-height:100vh;
- display:flex;flex-direction:column;justify-content:center;
- padding:6rem 0;
-}
-/* the six cards share one absolutely-positioned slot and are separated by transform */
+/* ══════ TECH — static card grid ══════
+   padding-top is zeroed because .tech-head supplies it; the global section rule still
+   provides the bottom padding, which the pin used to carry. */
+#tech{position:relative;padding-top:0}
+/* Static 3x2 grid. Was a horizontal scroll-jack: all six cards stacked in one
+   absolutely-positioned slot, moved per frame from scroll position, with only the
+   active one legible. Now every card is readable at once and no JS runs. The .tech-track
+   and .tech-pin wrappers are gone from the markup along with it. */
 .tech-grid{
- position:relative;display:block;
- width:min(460px,100%);
- height:var(--tech-card-h,330px);
+ display:grid;grid-template-columns:repeat(2,1fr);gap:18px;
+ width:100%;max-width:920px;height:auto;
  background:transparent;border:none;border-radius:0;overflow:visible;
  margin:0 auto 2.5rem;
 }
-#tech .tech-card{
- position:absolute;top:0;left:0;width:100%;
- margin:0;will-change:transform,opacity;
- transform-origin:center left;
- /* transform/opacity are written per-frame from scroll position by JS, so they are
-    deliberately excluded from this transition (it would lag the scroll) */
- transition:background .2s,border-color .2s;
-}
-#tech .tech-card:hover{transform:none}
+#tech .tech-card{position:relative;width:auto;margin:0;transition:background .2s,border-color .2s,transform .2s}
 /* Centred composition. The card slot is centred with the copy, otherwise a 460px
    left-anchored slot under centred text reads as a mistake. Centring the slot only
    shifts its origin; the cards are placed by transform from it, so the horizontal
@@ -1062,14 +1050,11 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  #tech .tech-shot{padding:.5rem 0 0}
 }
 
-@media(max-width:900px){
- .tech-grid{width:100%}
-}
-@media(prefers-reduced-motion:reduce){
- /* no JS: fall back to the original readable grid */
- .tech-pin{position:static;min-height:0;padding:0}
- .tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;height:auto}
- #tech .tech-card{position:relative;transform:none;opacity:1}
+/* #tech-scoped on purpose. A later @media(max-width:960px) block re-asserts two
+   columns on bare .tech-grid, so an unscoped rule here loses on source order even
+   though it matches. The id raises specificity above it. */
+@media(max-width:760px){
+ #tech .tech-grid{grid-template-columns:1fr}
 }
 .tech-card{background:#12201a;padding:2.25rem 2rem;display:flex;flex-direction:column;gap:.85rem;transition:all .2s;border-radius:12px;border:1px solid rgba(255,255,255,.08);}
 .tech-card:hover{background:#1a2e24;border-color:rgba(255,255,255,.18);transform:translateY(-2px)}

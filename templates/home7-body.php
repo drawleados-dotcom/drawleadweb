@@ -392,11 +392,6 @@ include __DIR__ . '/partials/nav.php';
   <img src="<?= asset_url('/assets/img/tech-stack.png') ?>" alt="Drawlead at the centre of an integration map connecting AWS, GitHub, Slack, Salesforce, Zapier, Cloudflare, SAP and Microsoft Copilot" decoding="async" fetchpriority="low">
  </div>
 
- <!-- .tech-track is the tall scroll runway; .tech-pin is what actually sticks. Its
-      height is set in JS from the pin height plus the card count, so lifting the copy
-      and the diagram out of the pin shortens the runway to match automatically. -->
- <div class="tech-track" id="techTrack">
-  <div class="tech-pin" id="techPin">
   <div class="tech-grid">
 
     <!-- ERP -->
@@ -517,8 +512,6 @@ include __DIR__ . '/partials/nav.php';
     <button type="button" data-book class="btn btn-black" style="background:#fff;color:#0a1310">Discuss Technical Requirements</button>
     <a href="#functions" class="btn btn-outline2" style="color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.2)">View All Modules</a>
   </div>
-  </div><!-- /tech-pin -->
- </div><!-- /tech-track -->
 </section>
 
 <!-- CASE STUDIES -->
@@ -1316,72 +1309,6 @@ renderDash(0);
 
  initStickyStack('#solutions .sol-card', { dimTo: 0.30, shrink: 0.04 });
 
- // Tech: pinned section, cards stack horizontally toward the right
- // Vertical scroll through the tall .tech-track drives a single progress value; each
- // card derives its own offset from it. Upcoming cards wait off to the left, the active
- // card sits flush, and superseded cards slide RIGHT and tuck behind the active one.
- (function(){
-  const track = document.getElementById('techTrack');
-  const pin   = document.getElementById('techPin');
-  const cards = Array.from(document.querySelectorAll('#tech .tech-card'));
-  if(!track || !pin || cards.length < 2) return;
-
-  const STEP_VH   = 0.62;  // vertical scroll (in viewports) per card
-  const ENTER_X   = 120;   // px an upcoming card waits to the left
-  const STACK_X   = 46;    // px each superseded card shifts right
-  const MAX_STACK = 3;     // cap the rightward pile so it can't leave the viewport
-  let ticking = false;
-
-  function measure(){
-   // tallest card defines the shared slot height, so nothing is clipped
-   let h = 0;
-   cards.forEach(c => { h = Math.max(h, c.offsetHeight); });
-   if(h) document.querySelector('#tech .tech-grid').style.setProperty('--tech-card-h', h + 'px');
-   // runway: one viewport to pin + STEP_VH per additional card
-   track.style.height = (pin.offsetHeight + (cards.length - 1) * STEP_VH * window.innerHeight) + 'px';
-  }
-
-  function update(){
-   ticking = false;
-   const runway = track.offsetHeight - pin.offsetHeight;
-   if(runway <= 0) return;
-
-   const scrolled = -track.getBoundingClientRect().top;
-   let p = scrolled / runway;
-   p = p < 0 ? 0 : (p > 1 ? 1 : p);
-
-   const pos = p * (cards.length - 1);   // fractional "active card" index
-
-   cards.forEach(function(card, i){
-    const d = pos - i;                   // <0 upcoming, 0 active, >0 superseded
-    let x, opacity, scale;
-
-    if(d <= 0){                          // waiting to the left
-     x = d * ENTER_X;
-     opacity = 1 + d;                    // fades out the further left it waits
-     scale = 1;
-    } else {                             // superseded, slide right, tuck behind
-     const dd = d > MAX_STACK ? MAX_STACK : d;
-     x = dd * STACK_X;
-     opacity = 1 - d * 0.42;
-     scale = 1 - dd * 0.05;
-    }
-
-    opacity = opacity < 0 ? 0 : (opacity > 1 ? 1 : opacity);
-    card.style.transform = 'translateX(' + x.toFixed(1) + 'px) scale(' + scale.toFixed(3) + ')';
-    card.style.opacity   = opacity.toFixed(3);
-    card.style.zIndex    = String(100 - Math.round(Math.abs(d) * 10));
-    card.style.pointerEvents = (d > -0.5 && d < 0.5) ? 'auto' : 'none';
-   });
-  }
-
-  function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
-
-  measure(); update();
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', function(){ measure(); update(); });
-  window.addEventListener('load', function(){ measure(); update(); });
- })();
 
 })();
 
