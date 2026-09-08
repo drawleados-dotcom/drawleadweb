@@ -1336,7 +1336,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .d-kl{font-size:7.5px;color:var(--g400);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
 .d-lbl{font-size:8.5px;color:var(--g400);text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:7px}
 .d-bars{display:flex;align-items:flex-end;gap:4px;height:54px;margin-bottom:12px}
-.d-bar{flex:1;background:var(--border);border-radius:8px; 2px 0 0;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;overflow:hidden}
+.d-bar{flex:1;background:var(--border);border-radius:7px 7px 0 0;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;overflow:hidden}
 .d-bar span{font-size:6.5px;color:var(--g400);padding-bottom:2px;font-weight:600}
 .d-hr{height:1px;background:var(--border);margin:10px 0}
 .d-rows{display:flex;flex-direction:column;gap:5px}
@@ -1363,6 +1363,48 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .d-ch-pct{font-size:9px;font-weight:800;width:26px}
 .d-ch-track{flex:1;height:3.5px;background:var(--border);border-radius:8px;overflow:hidden}
 .d-ch-fill{height:100%;border-radius:8px;}
+
+/* ── #dashboards: hero-dashboard theme ────────────────────────────────────────
+   Borrows the visual language of the .ap-* application preview in the hero: white
+   surfaces, #eceff2 hairlines, 10-12px radii, small muted labels over dark values,
+   and the same tinted KPI tiles. Brand green is kept as the accent rather than the
+   hero's blue, so the section still reads as Drawlead.
+   Every rule is scoped to #dashboards on purpose: .dash-* and .d-* are a shared card
+   system used by eleven other templates. */
+#dashboards .dash-card{
+ background:#fff;border:1px solid #eceff2;border-radius:12px;
+ box-shadow:0 10px 30px rgba(16,32,48,.06);
+}
+#dashboards .dash-card:hover{box-shadow:0 18px 46px rgba(16,32,48,.10)}
+#dashboards .dash-head{background:#fff;border-bottom:1px solid #eceff2;padding:13px 14px;gap:10px}
+#dashboards .dash-ico{width:30px;height:30px;border-radius:9px;background:#1c9558;box-shadow:none}
+#dashboards .dash-ico svg{width:16px;height:16px}
+#dashboards .dash-mod-name{font-family:var(--font-display);font-size:13px;font-weight:600;letter-spacing:-.01em;color:#0f172a}
+#dashboards .dash-body{padding:14px}
+
+/* KPI tiles take the hero's tints in source order, so no per-tile class is needed */
+#dashboards .d-krow{gap:8px;margin-bottom:13px}
+#dashboards .d-k{border:1px solid #eceff2;border-radius:10px;padding:9px}
+#dashboards .d-k:nth-child(1){background:#eefbf3;border-color:#dcf3e6}
+#dashboards .d-k:nth-child(2){background:#eff5ff;border-color:#dfe9fe}
+#dashboards .d-k:nth-child(3){background:#fef3ec;border-color:#fbe5d7}
+#dashboards .d-kv{font-family:var(--font-display);font-size:16px;font-weight:700;letter-spacing:-.025em;color:#0f172a;line-height:1.05;margin-bottom:3px}
+#dashboards .d-kl{font-family:var(--font-body);font-size:9.5px;color:#64748b;letter-spacing:.05em}
+#dashboards .d-lbl{color:#8a94a4;font-size:9px}
+
+/* neutral bars with the brand green as the peak, mirroring the hero chart */
+#dashboards .d-bars{gap:5px;height:56px;margin-bottom:13px}
+#dashboards .d-bar{background:#e9edf2;border-radius:7px 7px 0 0}
+#dashboards .d-bar span{font-size:7px;color:#98a1af}
+#dashboards .d-hr{background:#eceff2;margin:11px 0}
+#dashboards .d-rows{gap:6px}
+#dashboards .d-row{font-family:var(--font-body);font-size:10.5px;color:#64748b}
+#dashboards .d-track,#dashboards .d-ch-track{background:#eceff2}
+#dashboards .d-sbox{border-radius:8px}
+#dashboards .d-sv{font-family:var(--font-display);font-weight:700}
+#dashboards .d-sl{color:#64748b;font-size:7.5px}
+#dashboards .d-fbar{border-radius:7px;height:21px}
+#dashboards .d-hbar,#dashboards .d-ch-name{color:#64748b}
 
 /* ── CTA ── */
 /* Base #cta stays dark & full-bleed — About Us and /home-2 both use this section and

@@ -677,15 +677,15 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <!-- SALES -->
   <div class="dash-card d1">
     <div class="dash-head">
-      <div class="dash-ico" style="background:#1c9558;box-shadow:0 4px 12px rgba(50,180,111,.3)">
+      <div class="dash-ico">
         <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><rect x="3" y="22" width="6" height="10" rx="1" fill="rgba(255,255,255,.5)"/><rect x="12" y="14" width="6" height="18" rx="1" fill="rgba(255,255,255,.75)"/><rect x="21" y="6" width="6" height="26" rx="1" fill="white"/><polyline points="6,18 15,10 24,3" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="3" r="3" fill="white"/></svg>
       </div>
       <div class="dash-mod-name">Sales Pipeline</div>
     </div>
     <div class="dash-body">
       <div class="d-krow">
-        <div class="d-k"><div class="d-kv" style="color:#32b46f">₹2.4Cr</div><div class="d-kl">Revenue</div></div>
-        <div class="d-k"><div class="d-kv" style="color:#32b46f">↑ 28%</div><div class="d-kl">Growth</div></div>
+        <div class="d-k"><div class="d-kv">₹2.4Cr</div><div class="d-kl">Revenue</div></div>
+        <div class="d-k"><div class="d-kv">↑ 28%</div><div class="d-kl">Growth</div></div>
         <div class="d-k"><div class="d-kv">247</div><div class="d-kl">Leads</div></div>
       </div>
       <div class="d-lbl">Monthly Revenue</div>
@@ -709,16 +709,16 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <!-- FINANCE -->
   <div class="dash-card d2">
     <div class="dash-head">
-      <div class="dash-ico" style="background:#1c9558;box-shadow:0 4px 12px rgba(50,180,111,.3)">
+      <div class="dash-ico">
         <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><ellipse cx="18" cy="10" rx="12" ry="4.5" fill="white"/><path d="M6 10 Q6 17 18 17 Q30 17 30 10" fill="rgba(255,255,255,.7)"/><path d="M6 17 Q6 24 18 24 Q30 24 30 17" fill="rgba(255,255,255,.45)"/><path d="M6 24 Q6 31 18 31 Q30 31 30 24" fill="rgba(255,255,255,.25)"/></svg>
       </div>
       <div class="dash-mod-name">Finance and Billing</div>
     </div>
     <div class="dash-body">
       <div class="d-krow">
-        <div class="d-k"><div class="d-kv" style="color:#32b46f">₹86L</div><div class="d-kl">Invoiced</div></div>
-        <div class="d-k"><div class="d-kv" style="color:#32b46f">₹72L</div><div class="d-kl">Collected</div></div>
-        <div class="d-k"><div class="d-kv" style="color:#14855a">₹14L</div><div class="d-kl">Pending</div></div>
+        <div class="d-k"><div class="d-kv">₹86L</div><div class="d-kl">Invoiced</div></div>
+        <div class="d-k"><div class="d-kv">₹72L</div><div class="d-kl">Collected</div></div>
+        <div class="d-k"><div class="d-kv">₹14L</div><div class="d-kl">Pending</div></div>
       </div>
       <div class="d-lbl">Collection Funnel</div>
       <div class="d-funnel">
@@ -737,7 +737,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <!-- OPERATIONS -->
   <div class="dash-card d3">
     <div class="dash-head">
-      <div class="dash-ico" style="background:#1c9558;box-shadow:0 4px 12px rgba(50,180,111,.3)">
+      <div class="dash-ico">
         <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="6.5" fill="white"/><circle cx="18" cy="18" r="3" fill="rgba(50,180,111,.7)"/><rect x="16" y="2" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="16" y="28" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="2" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="28" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/></svg>
       </div>
       <div class="dash-mod-name">Operations</div>
@@ -745,7 +745,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
     <div class="dash-body">
       <div class="d-krow">
         <div class="d-k"><div class="d-kv">1,248</div><div class="d-kl">Tasks</div></div>
-        <div class="d-k"><div class="d-kv" style="color:#32b46f">94%</div><div class="d-kl">On Time</div></div>
+        <div class="d-k"><div class="d-kv">94%</div><div class="d-kl">On Time</div></div>
         <div class="d-k"><div class="d-kv">38</div><div class="d-kl">Vendors</div></div>
       </div>
       <div class="d-lbl">Task Status</div>
@@ -765,7 +765,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <!-- HR -->
   <div class="dash-card d1">
     <div class="dash-head">
-      <div class="dash-ico" style="background:#1c9558;box-shadow:0 4px 12px rgba(50,180,111,.3)">
+      <div class="dash-ico">
         <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><circle cx="13" cy="11" r="6" fill="white"/><circle cx="25" cy="13" r="4.5" fill="rgba(255,255,255,.6)"/><path d="M1 32 C1 23 7 20 13 20 C19 20 25 23 25 32 Z" fill="rgba(255,255,255,.8)"/><path d="M25 26 C25 23 28 21 31 21 C34 21 36 23 36 26 L36 32 L25 32 Z" fill="rgba(255,255,255,.4)"/></svg>
       </div>
       <div class="dash-mod-name">HR and Payroll</div>
@@ -773,8 +773,8 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
     <div class="dash-body">
       <div class="d-krow">
         <div class="d-k"><div class="d-kv">248</div><div class="d-kl">Staff</div></div>
-        <div class="d-k"><div class="d-kv" style="color:#32b46f">97.4%</div><div class="d-kl">Present</div></div>
-        <div class="d-k"><div class="d-kv" style="color:#14855a">₹34L</div><div class="d-kl">Payroll</div></div>
+        <div class="d-k"><div class="d-kv">97.4%</div><div class="d-kl">Present</div></div>
+        <div class="d-k"><div class="d-kv">₹34L</div><div class="d-kl">Payroll</div></div>
       </div>
       <div class="d-lbl">Dept. Headcount</div>
       <div class="d-hbars">
@@ -790,7 +790,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <!-- MARKETING -->
   <div class="dash-card d2">
     <div class="dash-head">
-      <div class="dash-ico" style="background:#1c9558;box-shadow:0 4px 12px rgba(50,180,111,.3)">
+      <div class="dash-ico">
         <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><path d="M4 13 L4 23 L10 23 L10 13 Z" fill="rgba(255,255,255,.6)"/><path d="M10 13 L28 5 L28 31 L10 23 Z" fill="white"/><path d="M30 14 Q36 18 30 22" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2.5" stroke-linecap="round"/></svg>
       </div>
       <div class="dash-mod-name">Marketing</div>
@@ -798,7 +798,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
     <div class="dash-body">
       <div class="d-krow">
         <div class="d-k"><div class="d-kv">14</div><div class="d-kl">Campaigns</div></div>
-        <div class="d-k"><div class="d-kv" style="color:#32b46f">↑ 44%</div><div class="d-kl">Engage.</div></div>
+        <div class="d-k"><div class="d-kv">↑ 44%</div><div class="d-kl">Engage.</div></div>
         <div class="d-k"><div class="d-kv">8.2K</div><div class="d-kl">Reach</div></div>
       </div>
       <div class="d-lbl">Channel Performance</div>
@@ -825,15 +825,15 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   <!-- MANAGEMENT -->
   <div class="dash-card d3">
     <div class="dash-head">
-      <div class="dash-ico" style="background:#1c9558;box-shadow:0 4px 12px rgba(50,180,111,.3)">
+      <div class="dash-ico">
         <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><rect x="3" y="3" width="13" height="13" rx="2" fill="white" opacity=".9"/><rect x="20" y="3" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="3" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="20" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.75)"/><line x1="16" y1="9.5" x2="20" y2="9.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="9.5" y1="16" x2="9.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="26.5" y1="16" x2="26.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="16" y1="26.5" x2="20" y2="26.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/></svg>
       </div>
       <div class="dash-mod-name">Management Overview</div>
     </div>
     <div class="dash-body">
       <div class="d-krow">
-        <div class="d-k"><div class="d-kv" style="color:#32b46f">92</div><div class="d-kl">KPI Score</div></div>
-        <div class="d-k"><div class="d-kv" style="color:#32b46f">↑ 18%</div><div class="d-kl">Efficiency</div></div>
+        <div class="d-k"><div class="d-kv">92</div><div class="d-kl">KPI Score</div></div>
+        <div class="d-k"><div class="d-kv">↑ 18%</div><div class="d-kl">Efficiency</div></div>
         <div class="d-k"><div class="d-kv">7/7</div><div class="d-kl">Modules</div></div>
       </div>
       <div class="d-lbl">Business Health Radar</div>
