@@ -508,6 +508,13 @@ include __DIR__ . '/partials/nav.php';
   </div>
   </div><!-- /tech-pin -->
  </div><!-- /tech-track -->
+ <!-- Integrations diagram. It sits after the pinned sequence rather than between
+      the copy and the cards: the pin is one viewport tall and already full, with only
+      31px spare at 1440x900 and none at 1280x800, so an image above the cards would
+      have pushed the CTA off screen. -->
+ <div class="tech-shot rv">
+  <img src="<?= asset_url('/assets/img/tech-stack.png') ?>" alt="Drawlead at the centre of an integration map connecting AWS, GitHub, Slack, Salesforce, Zapier, Cloudflare, SAP and Microsoft Copilot" decoding="async" fetchpriority="low">
+ </div>
 </section>
 
 <!-- CASE STUDIES -->
