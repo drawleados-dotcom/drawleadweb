@@ -232,6 +232,7 @@ include __DIR__ . '/partials/nav.php';
 <!-- METHODOLOGY -->
 <section id="method">
 
+ <div class="mth-wrap">
  <div class="mth-left">
  <div class="eyebrow rv"><span class="eyebrow-text">How We Work</span></div>
  <h2 class="sec-h rv">We don't build first. <span class="g">We understand first.</span></h2>
@@ -275,12 +276,22 @@ include __DIR__ . '/partials/nav.php';
  </div>
  </div>
 
- <div class="unify-stat rv">Understand <span class="g2">→</span> Measure <span class="g2">→</span> Automate <span class="g2">→</span> Scale.</div>
-
- <div class="sec-cta rv">
-  <button type="button" data-book class="btn btn-black">Start With an Audit</button>
- </div>
  </div><!-- /mth-left -->
+
+ <!-- Right panel. The four stages were a single arrow-separated line of text; here they
+      are one chip each so the sequence reads as a stack. Rotation and overlap are per
+      chip in CSS, so the markup stays plain text and remains selectable and readable. -->
+ <aside class="mth-panel rv">
+  <h3 class="mth-panel-h">A Process Built Around Your Business.</h3>
+  <div class="mth-stack">
+   <span class="mth-chip mth-chip-1">Understand</span>
+   <span class="mth-chip mth-chip-2">Measure</span>
+   <span class="mth-chip mth-chip-3">Automate</span>
+   <span class="mth-chip mth-chip-4">Scale</span>
+  </div>
+  <button type="button" data-book class="btn mth-cta">Start With an Audit</button>
+ </aside>
+ </div><!-- /mth-wrap -->
 </section>
 
 <!-- SOLUTIONS -->

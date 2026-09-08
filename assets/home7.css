@@ -488,14 +488,12 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  color:#fff;position:relative;
  background-color:#03080c;
 }
-#method .mth-left{position:relative;z-index:3;width:100%;max-width:none}
+#method .mth-left{position:relative;z-index:3;flex:1;min-width:0}
 
 /* left column: same content, left-aligned instead of the global centred treatment */
 #method .eyebrow{justify-content:flex-start}
 #method .sec-h{text-align:left;color:#fff;margin-bottom:1.1rem}
 #method .sec-sub{text-align:left;margin:0 0 2.5rem;color:rgba(255,255,255,.62);max-width:620px}
-#method .unify-stat{text-align:left;color:#fff;margin-top:2rem}
-#method .sec-cta{justify-content:flex-start;margin-top:1.6rem}
 
 /* faint ambient wash. It used to brighten as the sticky deck advanced; with the deck
    gone nothing sets data-stage, so it is simply static now. */
@@ -533,24 +531,72 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 #method .fn-desc{color:rgba(255,255,255,.55);font-size:14.5px;margin-bottom:1.15rem}
 #method .fn-tags{margin-bottom:0}
 #method .fn-tag{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.10);color:rgba(255,255,255,.5)}
+
+/* ── Right panel ──────────────────────────────────────────────────────────────
+   Two columns: the copy and 2×2 grid on the left, a white card on the right.
+   align-items:stretch so the panel matches the left column's height rather than
+   needing a hardcoded one. */
+#method .mth-wrap{position:relative;z-index:3;display:flex;align-items:stretch;gap:3rem}
+#method .mth-panel{
+ flex:0 0 34%;min-width:0;
+ background:#fff;border-radius:24px;
+ padding:2.75rem 2.25rem 2.5rem;
+ display:flex;flex-direction:column;align-items:center;
+ text-align:center;
+}
+#method .mth-panel-h{
+ font-family:var(--font-display);
+ font-size:clamp(19px,1.55vw,24px);font-weight:700;letter-spacing:-.02em;line-height:1.4;
+ color:#0B0B0B;margin:0;width:100%;text-align:left;
+ /* the accent is the underline itself — no separate rule or divider element */
+ text-decoration:underline;
+ text-decoration-color:#32B46F;
+ text-decoration-thickness:2px;
+ text-underline-offset:6px;
+}
+/* The stack sits between heading and button and absorbs the leftover height, so the
+   button stays pinned to the foot however tall the left column makes this panel. */
+#method .mth-stack{
+ flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+ width:100%;padding:2.25rem 0;
+}
+#method .mth-chip{
+ display:inline-block;max-width:100%;
+ background:#4A4A4A;color:#fff;
+ font-family:var(--font-display);font-weight:800;letter-spacing:-.02em;line-height:1.15;
+ border-radius:12px;padding:.42em .8em;
+ box-shadow:0 10px 24px rgba(0,0,0,.22);
+ white-space:nowrap;
+}
+/* Each chip overlaps the one above it, so z-index climbs downward. Sizes and angles are
+   set per chip rather than generated, because the reference weights Measure heaviest. */
+#method .mth-chip-1{font-size:clamp(20px,1.72vw,26px);transform:rotate(-2.4deg);z-index:1}
+#method .mth-chip-2{font-size:clamp(30px,2.6vw,40px);transform:rotate(1.6deg);margin-top:-.20em;z-index:2}
+#method .mth-chip-3{font-size:clamp(25px,2.15vw,32px);transform:rotate(-1.4deg);margin-top:-.20em;z-index:3}
+#method .mth-chip-4{font-size:clamp(22px,1.9vw,28px);transform:rotate(2.2deg);margin-top:-.20em;z-index:4}
+/* #0B8043 rather than the brand #32B46F: white on the brand green is 2.3:1, well under
+   the 4.5:1 this 15px bold label needs. This shade clears it at 5.0:1. */
+#method .mth-cta{
+ background:#0B8043;color:#fff;border:1px solid #0B8043;
+ border-radius:10px;padding:.85rem 1.5rem;
+ font-family:var(--font-body);font-size:15px;font-weight:700;
+ text-transform:none;letter-spacing:-.005em;
+ transition:background .2s ease,border-color .2s ease;
+}
+#method .mth-cta:hover{background:#096B38;border-color:#096B38}
+@media(max-width:900px){
+ #method .mth-wrap{flex-direction:column;gap:2rem}
+ #method .mth-panel{flex:1 1 auto;width:100%;padding:2.25rem 1.75rem}
+ #method .mth-stack{padding:1.75rem 0}
+}
 /* The duplicated "01 — AUDIT" labels were removed from these four cards, so retune the
    vertical rhythm for the icon → title → description → tags stack. The shared .fn-tags
    rule carries margin-bottom:1.1rem to clear an "Explore module" link that doesn't
    exist in this section — zero it out so the cards don't end on a dead gap.
    .fn-desc keeps its inherited flex:1, which pins the tag row to the card foot so all
    four align on the same baseline regardless of description length. */
-#method .unify-stat .g2{-webkit-text-fill-color:initial;background:none;color:var(--blue)}
 
 /* premium dark CTA with green hover glow */
-#method .btn-black{
- background:rgba(255,255,255,.06);color:#fff;
- border:1px solid rgba(255,255,255,.18);
- transition:border-color .25s ease,box-shadow .25s ease,background .25s ease,transform .2s ease;
-}
-#method .btn-black:hover{
- background:rgba(50,180,111,.14);border-color:rgba(50,180,111,.65);
- box-shadow:0 0 30px rgba(50,180,111,.35);opacity:1;transform:translateY(-2px);
-}
 
 /* one column below 900: two cards side by side get too cramped to read */
 @media(max-width:900px){
@@ -559,8 +605,6 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 @media(max-width:560px){
  #method .fn-grid{gap:14px}
  #method .fn-card{padding:1.5rem}
- #method .sec-cta{justify-content:center}
- #method .sec-cta .btn{width:100%;max-width:360px;justify-content:center}
 }
 
 #functions{background:var(--white)}
