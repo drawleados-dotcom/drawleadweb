@@ -233,10 +233,11 @@ include __DIR__ . '/partials/nav.php';
 <section id="method">
 
  <div class="mth-wrap">
- <div class="mth-left">
+ <div class="mth-head">
  <div class="eyebrow rv"><span class="eyebrow-text">How We Work</span></div>
  <h2 class="sec-h rv">We don't build first. <span class="g">We understand first.</span></h2>
  <p class="sec-sub rv">Before a single line of code or campaign goes live, we audit how your business actually runs, so every system we build is measurable, automated, and built to scale.</p>
+ </div><!-- /mth-head -->
 
  <div class="fn-grid">
  <!-- Icons are single-weight 24px line glyphs inheriting currentColor, so the accent is
@@ -275,8 +276,6 @@ include __DIR__ . '/partials/nav.php';
   <div class="fn-tags"><span class="fn-tag">Custom ERP</span><span class="fn-tag">Automation</span></div>
  </div>
  </div>
-
- </div><!-- /mth-left -->
 
  <!-- Right panel. The four stages were a single arrow-separated line of text; here they
       are one chip each so the sequence reads as a stack. Rotation and overlap are per
