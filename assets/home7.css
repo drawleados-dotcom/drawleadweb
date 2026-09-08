@@ -1032,7 +1032,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  width:min(460px,100%);
  height:var(--tech-card-h,330px);
  background:transparent;border:none;border-radius:0;overflow:visible;
- margin:0 0 2.5rem;
+ margin:0 auto 2.5rem;
 }
 #tech .tech-card{
  position:absolute;top:0;left:0;width:100%;
@@ -1043,9 +1043,13 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  transition:background .2s,border-color .2s;
 }
 #tech .tech-card:hover{transform:none}
-#tech .sec-h,#tech .sec-sub{text-align:left;margin-left:0;margin-right:0}
-#tech .eyebrow{justify-content:flex-start}
-#tech .sec-cta{justify-content:flex-start;margin-top:0}
+/* Centred composition. The card slot is centred with the copy, otherwise a 460px
+   left-anchored slot under centred text reads as a mistake. Centring the slot only
+   shifts its origin; the cards are placed by transform from it, so the horizontal
+   travel is unaffected. */
+#tech .sec-h,#tech .sec-sub{text-align:center;margin-left:auto;margin-right:auto}
+#tech .eyebrow{justify-content:center}
+#tech .sec-cta{justify-content:center;margin-top:0}
 
 @media(max-width:900px){
  .tech-grid{width:100%}
