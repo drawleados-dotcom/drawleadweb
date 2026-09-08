@@ -488,7 +488,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  color:#fff;position:relative;
  background-color:#03080c;
 }
-#method .mth-left{position:relative;z-index:3;width:58%;max-width:760px}
+#method .mth-left{position:relative;z-index:3;width:100%;max-width:none}
 
 /* left column: same content, left-aligned instead of the global centred treatment */
 #method .eyebrow{justify-content:flex-start}
@@ -497,70 +497,48 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 #method .unify-stat{text-align:left;color:#fff;margin-top:2rem}
 #method .sec-cta{justify-content:flex-start;margin-top:1.6rem}
 
-/* 2 × 2 dark glass card grid (overrides the shared light 4-col divider grid) */
-/* ambient glow that intensifies as the active stage advances (data-stage set in JS) */
+/* faint ambient wash. It used to brighten as the sticky deck advanced; with the deck
+   gone nothing sets data-stage, so it is simply static now. */
 #method::after{
  content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
  background:radial-gradient(58% 55% at 78% 50%,rgba(50,180,111,.38) 0%,transparent 70%);
- opacity:var(--stage-glow,.18);
- transition:opacity .7s cubic-bezier(.4,0,.2,1);
+ opacity:.16;
 }
-#method[data-stage="0"]{--stage-glow:.18}
-#method[data-stage="1"]{--stage-glow:.34}
-#method[data-stage="2"]{--stage-glow:.54}
-#method[data-stage="3"]{--stage-glow:.78}
 
-/* single-column sticky stage stack (was a 2×2 grid) */
+/* 2x2 grid. Replaces the scroll-driven sticky deck: four equal cards, read at a glance,
+   no per-frame JS. grid-auto-rows:1fr keeps both rows the same height regardless of how
+   much copy each card carries, so the four read as one block. */
 #method .fn-grid{
- display:flex;flex-direction:column;gap:28px;
- grid-template-columns:none;
- background:transparent;border:none;border-radius:0;overflow:visible;
- max-width:600px;padding-bottom:10vh;
+ display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:1fr;
+ gap:18px;max-width:940px;
+ background:transparent;border:none;border-radius:0;overflow:visible;padding-bottom:0;
 }
 #method .fn-card{
- position:sticky;
- background:rgba(255,255,255,.05);
- border:1px solid rgba(255,255,255,.1);
- border-radius:18px;padding:1.9rem;
- backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
- box-shadow:0 18px 40px rgba(0,0,0,.35);
- /* opacity/transform/filter are driven per-frame from scroll position in JS and are
-    deliberately excluded from this transition, which would otherwise lag the scroll */
- transition:border-color .3s ease,box-shadow .3s ease,background .3s ease;
- transform-origin:top center;
- will-change:opacity,transform,filter;
+ position:static;overflow:visible;
+ background:#080E12;
+ border:1px solid rgba(255,255,255,.07);
+ border-radius:16px;padding:1.9rem 1.75rem;
+ box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;
+ transition:background .25s ease,border-color .25s ease;
 }
-/* staggered sticky offsets build the deck; each stage parks 24px below the last so the
-   previous card's top edge stays visible behind it. Offsets clear the ~77px fixed nav. */
-#method .fn-card:nth-child(1){top:104px;z-index:1}
-#method .fn-card:nth-child(2){top:128px;z-index:2}
-#method .fn-card:nth-child(3){top:152px;z-index:3}
-#method .fn-card:nth-child(4){top:176px;z-index:4}
-/* the stage currently in the foreground */
-#method .fn-card.is-active{
- background:rgba(255,255,255,.075);
- border-color:rgba(50,180,111,.5);
- box-shadow:0 22px 50px rgba(0,0,0,.45),0 0 44px rgba(50,180,111,.2);
+#method .fn-card:hover{background:#0B1319;border-color:rgba(50,180,111,.30)}
+/* the accent lives on the glyph itself, so there is no filled tile to carry weight */
+#method .fn-icon{
+ width:auto;height:auto;margin-bottom:1.15rem;
+ justify-content:flex-start;border-radius:0;background:none;box-shadow:none;
+ color:#32B46F;
 }
-/* no transform on hover — it would overwrite the scroll-driven scale set inline by JS */
-#method .fn-card:hover{
- background:rgba(255,255,255,.07);
- border-color:rgba(50,180,111,.5);
- box-shadow:0 22px 50px rgba(0,0,0,.45),0 0 34px rgba(50,180,111,.22);
-}
-#method .fn-name{color:#fff}
-#method .fn-desc{color:rgba(255,255,255,.58)}
-#method .fn-tag{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.62)}
+#method .fn-icon svg{width:24px;height:24px;display:block}
+#method .fn-name{color:#fff;font-size:19px;margin-bottom:.5rem}
+#method .fn-desc{color:rgba(255,255,255,.55);font-size:14.5px;margin-bottom:1.15rem}
+#method .fn-tags{margin-bottom:0}
+#method .fn-tag{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.10);color:rgba(255,255,255,.5)}
 /* The duplicated "01 — AUDIT" labels were removed from these four cards, so retune the
    vertical rhythm for the icon → title → description → tags stack. The shared .fn-tags
    rule carries margin-bottom:1.1rem to clear an "Explore module" link that doesn't
    exist in this section — zero it out so the cards don't end on a dead gap.
    .fn-desc keeps its inherited flex:1, which pins the tag row to the card foot so all
    four align on the same baseline regardless of description length. */
-#method .fn-icon{margin-bottom:1rem}
-#method .fn-name{margin-bottom:.5rem}
-#method .fn-desc{margin-bottom:1rem}
-#method .fn-tags{margin-bottom:0}
 #method .unify-stat .g2{-webkit-text-fill-color:initial;background:none;color:var(--blue)}
 
 /* premium dark CTA with green hover glow */
@@ -574,28 +552,15 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  box-shadow:0 0 30px rgba(50,180,111,.35);opacity:1;transform:translateY(-2px);
 }
 
-@media(max-width:1100px){
- #method .mth-left{width:64%}
-}
-/* narrower viewports: the copy spans full width */
+/* one column below 900: two cards side by side get too cramped to read */
 @media(max-width:900px){
- #method .mth-left{width:100%;max-width:none}
- #method .fn-grid{max-width:none}
+ #method .fn-grid{grid-template-columns:1fr;grid-auto-rows:auto;max-width:none}
 }
 @media(max-width:560px){
- #method .fn-grid{gap:20px;padding-bottom:6vh}
- #method .fn-card{padding:1.5rem;border-radius:16px}
- #method .fn-card:nth-child(1){top:92px}
- #method .fn-card:nth-child(2){top:110px}
- #method .fn-card:nth-child(3){top:128px}
- #method .fn-card:nth-child(4){top:146px}
+ #method .fn-grid{gap:14px}
+ #method .fn-card{padding:1.5rem}
  #method .sec-cta{justify-content:center}
  #method .sec-cta .btn{width:100%;max-width:360px;justify-content:center}
-}
-/* reduced motion: JS never runs, so cards stay fully opaque and simply stack statically */
-@media(prefers-reduced-motion:reduce){
- #method .fn-card{position:static}
- #method::after{transition:none}
 }
 
 #functions{background:var(--white)}

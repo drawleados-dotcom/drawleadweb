@@ -238,37 +238,36 @@ include __DIR__ . '/partials/nav.php';
  <p class="sec-sub rv">Before a single line of code or campaign goes live, we audit how your business actually runs, so every system we build is measurable, automated, and built to scale.</p>
 
  <div class="fn-grid">
- <!-- 01 Audit -->
+ <!-- Icons are single-weight 24px line glyphs inheriting currentColor, so the accent is
+      set once in CSS rather than per-card. No filled tiles: the brief asked for subtle,
+      not decorative. -->
  <div class="fn-card">
-  <div class="fn-icon" style="background:#1c9558;box-shadow:0 6px 20px rgba(0,0,0,.2)">
-   <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="6" y="4" width="20" height="26" rx="2" fill="rgba(255,255,255,.55)"/><path d="M11 12 L21 12 M11 17 L18 17" stroke="rgba(20,133,90,.7)" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="26" r="8" fill="none" stroke="white" stroke-width="2.5"/><path d="M30 32 L36 38" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+  <div class="fn-icon">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 3H6a1.5 1.5 0 0 0-1.5 1.5v15A1.5 1.5 0 0 0 6 21h4"/><path d="M13.5 3 18 7.5V10"/><path d="M8 8.5h4M8 12h2.5"/><circle cx="16.2" cy="16.2" r="3.3"/><path d="m18.7 18.7 2.4 2.4"/></svg>
   </div>
   <div class="fn-name">Audit</div>
   <div class="fn-desc">We map your current workflows, tools, and customer journey to find exactly what's slowing growth down.</div>
   <div class="fn-tags"><span class="fn-tag">Workflows</span><span class="fn-tag">Bottlenecks</span></div>
  </div>
- <!-- 02 Measure -->
  <div class="fn-card">
-  <div class="fn-icon" style="background:#1c9558;box-shadow:0 6px 20px rgba(0,0,0,.2)">
-   <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M6 26 A14 14 0 0 1 34 26" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="3" stroke-linecap="round"/><path d="M6 26 A14 14 0 0 1 24 13" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/><line x1="20" y1="26" x2="27" y2="17" stroke="white" stroke-width="2.5" stroke-linecap="round"/><circle cx="20" cy="26" r="2.5" fill="white"/></svg>
+  <div class="fn-icon">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16"/><path d="M7.5 20v-4.5M12 20V9M16.5 20v-7.5"/><path d="m6 9 4.5-4 3 2.5L19 3"/></svg>
   </div>
   <div class="fn-name">Measure</div>
   <div class="fn-desc">We set up KPIs, dashboards, and tracking so every decision from here on is backed by real data.</div>
   <div class="fn-tags"><span class="fn-tag">KPIs</span><span class="fn-tag">Dashboards</span></div>
  </div>
- <!-- 03 Automate -->
  <div class="fn-card">
-  <div class="fn-icon" style="background:#1c9558;box-shadow:0 6px 20px rgba(0,0,0,.2)">
-   <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M22 3 L9 21 L18 21 L16 37 L33 16 L23 16 Z" fill="white"/><path d="M22 3 L9 21 L18 21 L17 27" fill="none" stroke="rgba(20,133,90,.5)" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  <div class="fn-icon">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3.5" width="7" height="5.5" rx="1.4"/><rect x="14" y="15" width="7" height="5.5" rx="1.4"/><path d="M10 6.25h3.6A2.4 2.4 0 0 1 16 8.65v3.6"/><path d="M14 15H8.4A2.4 2.4 0 0 1 6 12.6V9"/></svg>
   </div>
   <div class="fn-name">Automate</div>
   <div class="fn-desc">We remove repetitive manual work (approvals, follow-ups, notifications) before we build anything new.</div>
   <div class="fn-tags"><span class="fn-tag">Approvals</span><span class="fn-tag">Follow-ups</span></div>
  </div>
- <!-- 04 Scale -->
  <div class="fn-card">
-  <div class="fn-icon" style="background:#1c9558;box-shadow:0 6px 20px rgba(0,0,0,.2)">
-   <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="14" y="14" width="12" height="12" rx="2" fill="rgba(255,255,255,.5)"/><path d="M24 4 L36 4 L36 16" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 4 L24 16" stroke="white" stroke-width="2.5" stroke-linecap="round"/><path d="M16 36 L4 36 L4 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 36 L16 24" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+  <div class="fn-icon">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17.5 9 11l3.5 3.5L21 6"/><path d="M15.5 6H21v5.5"/><path d="M3 21h18"/></svg>
   </div>
   <div class="fn-name">Scale</div>
   <div class="fn-desc">Only then do we build the ERP, CRM, website, or automation platform, designed to grow with you.</div>
@@ -1362,14 +1361,6 @@ renderDash(0);
   window.addEventListener('resize', function(){ measure(); update(); });
   window.addEventListener('load', function(){ measure(); update(); });
  })();
-
- // How We Work: Audit → Measure → Automate → Scale, with the ambient green glow
- // strengthening as the active stage advances (CSS reads [data-stage]).
- const methodSection = document.getElementById('method');
- initStickyStack('#method .fn-card', {
-  dimTo: 0.25, shrink: 0.05,
-  onStage: function(i){ if(methodSection) methodSection.dataset.stage = i; }
- });
 
 })();
 
