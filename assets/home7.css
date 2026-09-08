@@ -548,46 +548,54 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 #method .mth-panel{
  grid-column:2;grid-row:2;min-width:0;
  background:#fff;border-radius:24px;
- padding:2.75rem 2.25rem 2.5rem;
+ padding:2.25rem 2rem 2.5rem;
  display:flex;flex-direction:column;align-items:center;
  text-align:center;
 }
+/* Reference sets this flush left, plain black, no underline and no full stop. */
 #method .mth-panel-h{
  font-family:var(--font-display);
- font-size:clamp(19px,1.55vw,24px);font-weight:700;letter-spacing:-.02em;line-height:1.4;
- color:#0B0B0B;margin:0;width:100%;text-align:left;
- /* the accent is the underline itself — no separate rule or divider element */
- text-decoration:underline;
- text-decoration-color:#32B46F;
- text-decoration-thickness:2px;
- text-underline-offset:6px;
+ font-size:clamp(19px,2.08vw,30px);font-weight:700;letter-spacing:-.022em;line-height:1.26;
+ color:#0F0F0F;margin:0;width:100%;text-align:left;
 }
-/* The stack sits between heading and button and absorbs the leftover height, so the
-   button stays pinned to the foot however tall the left column makes this panel. */
+/* Sits between heading and button and absorbs the leftover height, so the button stays
+   pinned to the foot whatever height the card grid gives this panel. */
 #method .mth-stack{
  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
- width:100%;padding:2.25rem 0;
+ width:100%;padding:1.5rem 0;
+ /* Chip widths are percentages of this box, so it has to be capped. Below 900px the
+    panel spans the full page width, and an uncapped stack stretched the chips into
+    thin bars: same percentages over far more width, fonts already at their floor. */
+ max-width:400px;margin-left:auto;margin-right:auto;
 }
+/* Chips are sized by percentage width rather than by their text, which is what gives the
+   reference its stepped silhouette: Measure widest, Understand and Scale matched and
+   narrowest. Hugging the text instead would make width depend on word length. */
 #method .mth-chip{
- display:inline-block;max-width:100%;
- background:#4A4A4A;color:#fff;
- font-family:var(--font-display);font-weight:800;letter-spacing:-.02em;line-height:1.15;
- border-radius:12px;padding:.42em .8em;
- box-shadow:0 10px 24px rgba(0,0,0,.22);
- white-space:nowrap;
+ display:block;width:100%;box-sizing:border-box;
+ background:linear-gradient(135deg,#5E5E5E 0%,#3B3B3B 100%);
+ color:#fff;
+ font-family:var(--font-display);font-weight:800;letter-spacing:-.02em;line-height:1.2;
+ /* line-height plus padding has to clear the ascender of the display face; too tight
+    and the glyphs render outside their own chip background. */
+ border-radius:12px;padding:.26em .5em;
+ box-shadow:0 12px 26px rgba(0,0,0,.26);
+ white-space:nowrap;text-align:center;
 }
-/* Each chip overlaps the one above it, so z-index climbs downward. Sizes and angles are
-   set per chip rather than generated, because the reference weights Measure heaviest. */
-#method .mth-chip-1{font-size:clamp(20px,1.72vw,26px);transform:rotate(-2.4deg);z-index:1}
-#method .mth-chip-2{font-size:clamp(30px,2.6vw,40px);transform:rotate(1.6deg);margin-top:-.20em;z-index:2}
-#method .mth-chip-3{font-size:clamp(25px,2.15vw,32px);transform:rotate(-1.4deg);margin-top:-.20em;z-index:3}
-#method .mth-chip-4{font-size:clamp(22px,1.9vw,28px);transform:rotate(2.2deg);margin-top:-.20em;z-index:4}
-/* #0B8043 rather than the brand #32B46F: white on the brand green is 2.3:1, well under
-   the 4.5:1 this 15px bold label needs. This shade clears it at 5.0:1. */
+/* Each chip overlaps the one above it, so z-index climbs downward. Negative margins are
+   in em so the overlap scales with the chip rather than drifting at small widths. */
+#method .mth-chip-1{width:56%;font-size:clamp(17px,1.87vw,27px);transform:rotate(-3deg);z-index:1}
+#method .mth-chip-2{width:83%;font-size:clamp(27px,3.05vw,44px);transform:rotate(1.8deg);margin-top:-.20em;z-index:2}
+#method .mth-chip-3{width:75%;font-size:clamp(21px,2.36vw,34px);transform:rotate(-1.8deg);margin-top:-.20em;z-index:3}
+#method .mth-chip-4{width:56%;font-size:clamp(19px,2.15vw,31px);transform:rotate(2.6deg);margin-top:-.20em;z-index:4}
+/* Wide button, as in the reference. #0B8043 rather than the brand #32B46F: white on the
+   brand green is 2.3:1, and on the reference's lighter green 3.0:1, both under the 4.5:1
+   this bold label needs. This shade clears it at 5.0:1. */
 #method .mth-cta{
+ width:72%;max-width:270px;justify-content:center;
  background:#0B8043;color:#fff;border:1px solid #0B8043;
- border-radius:10px;padding:.85rem 1.5rem;
- font-family:var(--font-body);font-size:15px;font-weight:700;
+ border-radius:9px;padding:.85rem 1rem;
+ font-family:var(--font-body);font-size:16px;font-weight:700;
  text-transform:none;letter-spacing:-.005em;
  transition:background .2s ease,border-color .2s ease;
 }
@@ -597,7 +605,15 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  #method .mth-head{grid-column:1;grid-row:1}
  #method .fn-grid{grid-column:1;grid-row:2}
  #method .mth-panel{grid-column:1;grid-row:3;width:100%;margin-top:2rem;padding:2.25rem 1.75rem}
- #method .mth-stack{padding:1.75rem 0}
+ /* Chip width is a percentage of the stack while font-size is a clamp on vw, so the two
+    decouple once the panel goes full width and the fonts hit their floor: same widths,
+    smaller text, chips flatten into bars. Pin both here so the reference proportion
+    holds. Measure stays ~7.2:1, as it is in the reference at 275x66. */
+ #method .mth-stack{padding:1.75rem 0;max-width:340px}
+ #method .mth-chip-1{font-size:24px}
+ #method .mth-chip-2{font-size:39px}
+ #method .mth-chip-3{font-size:31px}
+ #method .mth-chip-4{font-size:29px}
 }
 /* The duplicated "01 — AUDIT" labels were removed from these four cards, so retune the
    vertical rhythm for the icon → title → description → tags stack. The shared .fn-tags

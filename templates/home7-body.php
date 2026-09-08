@@ -281,7 +281,7 @@ include __DIR__ . '/partials/nav.php';
       are one chip each so the sequence reads as a stack. Rotation and overlap are per
       chip in CSS, so the markup stays plain text and remains selectable and readable. -->
  <aside class="mth-panel rv">
-  <h3 class="mth-panel-h">A Process Built Around Your Business.</h3>
+  <h3 class="mth-panel-h">A Process Built Around Your Business</h3>
   <div class="mth-stack">
    <span class="mth-chip mth-chip-1">Understand</span>
    <span class="mth-chip mth-chip-2">Measure</span>
