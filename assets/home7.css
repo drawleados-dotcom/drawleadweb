@@ -2264,8 +2264,33 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  color:#fff;
  box-shadow:0 8px 22px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.13);
 }
-/* Green is the single accent, carried by the mark rather than the surface. */
-.phys-pill svg{color:#32B46F}
+/* The mark colour travels with the pill variant, so the three surfaces below only
+   have to set one property. */
+.phys-pill{--mark:#32B46F}
+.phys-pill svg{color:var(--mark)}
+
+/* Three surfaces across the eighteen pills: solid white, dark glass and Drawlead green.
+   Assigned per tool rather than by nth-child, so a given pill keeps its surface across
+   reloads; where each one lands is the physics stage's business, and that is what makes
+   the spread look random. Five white, four green, nine glass: the majority stays glass
+   so the two accents read as accents rather than three equal groups. */
+.phys-pill[data-brand="word"],
+.phys-pill[data-brand="gcal"],
+.phys-pill[data-brand="whatsapp"],
+.phys-pill[data-brand="gmail"],
+.phys-pill[data-brand="calendly"]{
+ background:#fff;border-color:rgba(17,17,18,.10);color:#111112;
+ box-shadow:0 10px 26px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.8);
+}
+/* Label and mark go near-black on green, not white: white on #32B46F is 2.6:1, which a
+   15px bold label cannot use, while #111112 on it is 7.4:1. */
+.phys-pill[data-brand="crm"],
+.phys-pill[data-brand="ppt"],
+.phys-pill[data-brand="excel"],
+.phys-pill[data-brand="trello"]{
+ background:#32B46F;border-color:rgba(17,17,18,.12);color:#111112;--mark:#111112;
+ box-shadow:0 10px 26px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.28);
+}
 /* Monochrome logos, done in CSS so eighteen hand-drawn SVGs stay untouched in the
    markup. Every hard-coded brand fill and stroke resolves to currentColor; the base
    plate of each mark then drops to a low opacity so the detail drawn on top of it stays
