@@ -559,13 +559,20 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
  transition:background .25s ease,border-color .25s ease;
 }
 #method .fn-card:hover{background:#0B1319;border-color:rgba(50,180,111,.30)}
-/* the accent lives on the glyph itself, so there is no filled tile to carry weight */
+/* White glyph in a small bordered tile. The border is a touch lighter than the card's
+   own so the tile reads as sitting on the card rather than as a second card; the fill is
+   barely there for the same reason. margin-bottom is unchanged, so the gap between the
+   icon and the title is exactly what it was - the card grows only by the tile itself. */
 #method .fn-icon{
- width:auto;height:auto;margin-bottom:1.15rem;
- justify-content:flex-start;border-radius:0;background:none;box-shadow:none;
- color:#32B46F;
+ width:46px;height:46px;flex:none;margin-bottom:1.15rem;
+ display:flex;align-items:center;justify-content:center;
+ border-radius:12px;
+ background:rgba(255,255,255,.035);
+ border:1px solid rgba(255,255,255,.14);
+ box-shadow:none;
+ color:#fff;
 }
-#method .fn-icon svg{width:24px;height:24px;display:block}
+#method .fn-icon svg{width:22px;height:22px;display:block}
 #method .fn-name{color:#fff;font-size:19px;margin-bottom:.5rem}
 #method .fn-desc{color:rgba(255,255,255,.55);font-size:14.5px;margin-bottom:1.15rem}
 #method .fn-tags{margin-bottom:0}
