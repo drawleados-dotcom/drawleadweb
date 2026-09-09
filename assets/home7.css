@@ -104,13 +104,35 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
  letter-spacing:-.02em;line-height:1.15;
  text-align:center;margin-bottom:var(--rh-head);
 }
-.sec-h .g{color:var(--violet)}
-.sec-h .fade{color:var(--g300)}
 .sec-sub{
  font-size:17px;color:var(--g500);text-align:center;
  max-width:560px;margin:0 auto var(--rh-sub);line-height:1.6;font-weight:400;
 }
 .sec-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:var(--rh-cta)}
+
+/* ── Headings: one solid tone, no per-word emphasis ───────────────────────────
+   Every heading on this page reads as a single block: no gradient, no faded second
+   half, no coloured word, and no weight or spacing change between spans. The span
+   rules are listed with their real classes rather than relying on !important, because
+   partials/style.php declares .sec-h .fade and friends at two-class specificity; this
+   file is page-scoped and loads after it, so equal specificity wins here and nowhere
+   else on the site. Listing the bare `span` alongside them keeps it true for any
+   heading added later.
+   Black is the default. The four dark sections keep white: #method (#03080c),
+   #tech (#0A1310), #why (#05070a) and #cta (var(--black)) would render a black
+   heading invisible. */
+.hero-h,.sec-h,.why-h{color:var(--black)}
+.hero-h span,.hero-h .grad,.hero-h .grad-os,.hero-h .grad-ai,.hero-h .ghost,.hero-h .solid,
+.sec-h span,.sec-h .g,.sec-h .fade,
+.why-h span,
+.cta-h span,.cta-h .fade,.cta-h .gr,.cta-h .gr2,.cta-h .gr3{
+ color:inherit;
+ -webkit-text-fill-color:currentColor;
+ background:none;-webkit-background-clip:border-box;background-clip:border-box;
+ font-weight:inherit;font-style:inherit;letter-spacing:inherit;
+ opacity:1;display:inline;padding-right:0;
+}
+#method .sec-h,#tech .sec-h,.why-h,.cta-h{color:#fff}
 
 /* ── HERO ── */
 /* White hero, two columns: copy on the left, live industry dashboard on the right. */
@@ -290,7 +312,7 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 .hstat:last-child{padding-right:0}
 .hstat-ico{width:50px;height:50px;border-radius:12px;background:rgba(50,180,111,.1);color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .hstat-n{font-family:var(--font-display);font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1}
-.hstat-n.gr{color:var(--violet)}
+.hstat-n.gr{color:inherit}  /* the sibling stats are unstyled, so this one matched them in green only */
 .hstat-l{font-family:var(--font-body);font-size:13.5px;color:var(--g500);margin-top:2px;font-weight:500}
 
 /* The hero is light, so it uses the base component colours. Only the stacking order and
@@ -1261,7 +1283,7 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 #why{background:#05070a;color:#fff;overflow:hidden}
 .why-h{
  font-family:var(--font-display);
- font-size:clamp(44px,7vw,92px);font-weight:800;letter-spacing:-.035em;line-height:1;
+ font-size:clamp(44px,7vw,92px);font-weight:700;letter-spacing:-.035em;line-height:1;  /* 700 like every other heading on the page */
  text-align:center;color:#fff;margin-bottom:1.6rem;
 }
 
@@ -1529,10 +1551,11 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 .cta-grid-bg{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);background-size:68px 68px}
 .cta-glow{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);width:760px;height:620px;background:radial-gradient(circle,rgba(51,180,112,.16) 0%,rgba(51,180,112,.07) 38%,transparent 68%);pointer-events:none}
 .cta-h{font-size:clamp(38px,6vw,64px);font-weight:700;letter-spacing:-.03em;line-height:1.08;color:#fff;margin-bottom:1.25rem;position:relative}
-.cta-h .fade{color:rgba(255,255,255,.2)}
-.cta-h .gr{color:#4ecb87;display:inline-block;padding-right:3px}
-.cta-h .gr2{color:#4ecb87;display:inline-block;padding-right:3px}
-.cta-h .gr3{color:#7fd9a8;display:inline-block}
+/* One tone across the whole CTA heading. These four carried a faded white and two
+   greens as flat colours, not gradients, so the earlier conversion never touched them,
+   and they sit after the heading block near the top of this file, so they had to be
+   neutralised here rather than there. */
+.cta-h .fade,.cta-h .gr,.cta-h .gr2,.cta-h .gr3{color:inherit;display:inline;padding-right:0}
 .cta-p{font-size:16px;color:rgba(255,255,255,.48);margin-bottom:2.5rem;font-weight:400;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.65;position:relative}
 .cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative}
 .cta-btn-w{background:#fff;color:var(--black);padding:15px 32px;border-radius:8px;font-family:var(--font);font-weight:600;font-size:14px;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}

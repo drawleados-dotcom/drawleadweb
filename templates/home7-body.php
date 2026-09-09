@@ -380,7 +380,7 @@ include __DIR__ . '/partials/nav.php';
 <section id="tech" style="background:#0a1310;color:#fff">
  <div class="tech-head">
  <div class="eyebrow rv"><span class="eyebrow-text">Technology Stack</span></div>
- <h2 class="sec-h rv" style="color:#fff"><span>Built on Modern Infrastructure</span><br><span style="color:rgba(255,255,255,.22)">Unlocking Digital Potential</span></h2>
+ <h2 class="sec-h rv" style="color:#fff"><span>Built on Modern Infrastructure</span><br><span>Unlocking Digital Potential</span></h2>
  <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">Enterprise-grade technologies combining to create scalable, intelligent digital ecosystems.</p>
  </div><!-- /tech-head -->
 
