@@ -245,7 +245,7 @@ include __DIR__ . '/partials/nav.php';
       not decorative. -->
  <div class="fn-card">
   <div class="fn-icon">
-   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 3H6a1.5 1.5 0 0 0-1.5 1.5v15A1.5 1.5 0 0 0 6 21h4"/><path d="M13.5 3 18 7.5V10"/><path d="M8 8.5h4M8 12h2.5"/><circle cx="16.2" cy="16.2" r="3.3"/><path d="m18.7 18.7 2.4 2.4"/></svg>
+   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.2 4.1A2.1 2.1 0 0 1 6.3 2h7.05L18.4 7.05v3.4a6.6 6.6 0 0 0-2.3-.72V8.5h-3.25a1.5 1.5 0 0 1-1.5-1.5V4.3H6.5v15.4h3.24c.2.83.55 1.6 1.01 2.3H6.3a2.1 2.1 0 0 1-2.1-2.1z"/><path d="M13.65 4.75 16.7 7.8h-3.05z"/><rect x="7.5" y="8.9" width="4.4" height="2" rx="1"/><rect x="7.5" y="12.4" width="3.3" height="2" rx="1"/><circle cx="16.15" cy="15.75" r="4.15"/><path d="M18.95 18.55a1.2 1.2 0 0 1 1.7 0l1.9 1.9a1.2 1.2 0 0 1-1.7 1.7l-1.9-1.9a1.2 1.2 0 0 1 0-1.7"/></svg>
   </div>
   <div class="fn-name">Audit</div>
   <div class="fn-desc">We map your current workflows, tools, and customer journey to find exactly what's slowing growth down.</div>
@@ -253,7 +253,7 @@ include __DIR__ . '/partials/nav.php';
  </div>
  <div class="fn-card">
   <div class="fn-icon">
-   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16"/><path d="M7.5 20v-4.5M12 20V9M16.5 20v-7.5"/><path d="m6 9 4.5-4 3 2.5L19 3"/></svg>
+   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="19.3" width="18" height="2.3" rx="1.15"/><rect x="4.6" y="12.4" width="4" height="5.6" rx="1.3"/><rect x="10" y="6.6" width="4" height="11.4" rx="1.3"/><rect x="15.4" y="9.6" width="4" height="8.4" rx="1.3"/></svg>
   </div>
   <div class="fn-name">Measure</div>
   <div class="fn-desc">We set up KPIs, dashboards, and tracking so every decision from here on is backed by real data.</div>
@@ -261,7 +261,7 @@ include __DIR__ . '/partials/nav.php';
  </div>
  <div class="fn-card">
   <div class="fn-icon">
-   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3.5" width="7" height="5.5" rx="1.4"/><rect x="14" y="15" width="7" height="5.5" rx="1.4"/><path d="M10 6.25h3.6A2.4 2.4 0 0 1 16 8.65v3.6"/><path d="M14 15H8.4A2.4 2.4 0 0 1 6 12.6V9"/></svg>
+   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2.6" y="2.9" width="8.2" height="6.4" rx="2"/><rect x="13.2" y="14.7" width="8.2" height="6.4" rx="2"/><path d="M10.8 5h3.05a3.6 3.6 0 0 1 3.6 3.6v6.1h-2.3V8.6a1.3 1.3 0 0 0-1.3-1.3H10.8z"/><path d="M13.2 18.9h-3.05a3.6 3.6 0 0 1-3.6-3.6V9.2h2.3v6.1c0 .72.58 1.3 1.3 1.3h3.05z"/></svg>
   </div>
   <div class="fn-name">Automate</div>
   <div class="fn-desc">We remove repetitive manual work (approvals, follow-ups, notifications) before we build anything new.</div>
@@ -269,7 +269,7 @@ include __DIR__ . '/partials/nav.php';
  </div>
  <div class="fn-card">
   <div class="fn-icon">
-   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17.5 9 11l3.5 3.5L21 6"/><path d="M15.5 6H21v5.5"/><path d="M3 21h18"/></svg>
+   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="19.4" width="18" height="2.2" rx="1.1"/><path d="M20.9 4.5a1.15 1.15 0 0 0-.8-.33h-5.15a1.15 1.15 0 0 0 0 2.3h2.37l-4.62 4.62-2.83-2.83a1.15 1.15 0 0 0-1.63 0l-5.1 5.1a1.15 1.15 0 0 0 1.63 1.63l4.28-4.29 2.83 2.83a1.15 1.15 0 0 0 1.63 0l5.44-5.43v2.37a1.15 1.15 0 0 0 2.3 0V5.32a1.15 1.15 0 0 0-.35-.82"/></svg>
   </div>
   <div class="fn-name">Scale</div>
   <div class="fn-desc">Only then do we build the ERP, CRM, website, or automation platform, designed to grow with you.</div>

@@ -572,7 +572,7 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
  box-shadow:none;
  color:#fff;
 }
-#method .fn-icon svg{width:22px;height:22px;display:block}
+#method .fn-icon svg{width:26px;height:26px;display:block}  /* up from 22px; the 46px tile is unchanged */
 #method .fn-name{color:#fff;font-size:19px;margin-bottom:.5rem}
 #method .fn-desc{color:rgba(255,255,255,.55);font-size:14.5px;margin-bottom:1.15rem}
 #method .fn-tags{margin-bottom:0}
