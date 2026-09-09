@@ -61,7 +61,7 @@ include __DIR__ . '/partials/nav.php';
     </div>
     <div class="hstat">
      <div class="hstat-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg></div>
-     <div class="hstat-txt"><div class="hstat-n" style="color:var(--blue)">AI</div><div class="hstat-l">Powered</div></div>
+     <div class="hstat-txt"><div class="hstat-n">AI</div><div class="hstat-l">Powered</div></div>
     </div>
     <div class="hstat">
      <div class="hstat-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.739-8-4.585 0-4.585 8 0 8 5.606 0 7.644-8 12.74-8z"/></svg></div>
@@ -379,8 +379,8 @@ include __DIR__ . '/partials/nav.php';
 <!-- TECH STACK -->
 <section id="tech" style="background:#0a1310;color:#fff">
  <div class="tech-head">
- <div class="eyebrow rv"><span class="eyebrow-text" style="color:#34a87c">Technology Stack</span></div>
- <h2 class="sec-h rv" style="color:#fff"><span style="background:#34a87c;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Built on Modern Infrastructure</span><br><span style="color:rgba(255,255,255,.22)">Unlocking Digital Potential</span></h2>
+ <div class="eyebrow rv"><span class="eyebrow-text">Technology Stack</span></div>
+ <h2 class="sec-h rv" style="color:#fff"><span>Built on Modern Infrastructure</span><br><span style="color:rgba(255,255,255,.22)">Unlocking Digital Potential</span></h2>
  <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">Enterprise-grade technologies combining to create scalable, intelligent digital ecosystems.</p>
  </div><!-- /tech-head -->
 
@@ -516,8 +516,8 @@ include __DIR__ . '/partials/nav.php';
 
 <!-- CASE STUDIES -->
 <section id="cases">
- <div class="eyebrow rv"><span class="eyebrow-text" style="color:#32b46f">Case Studies</span></div>
- <h2 class="sec-h rv"><span style="color:#32b46f">Real Results</span> for <span class="fade">Real Businesses</span></h2>
+ <div class="eyebrow rv"><span class="eyebrow-text">Case Studies</span></div>
+ <h2 class="sec-h rv"><span>Real Results</span> for <span class="fade">Real Businesses</span></h2>
  <p class="sec-sub rv">How Drawlead transforms operations across industries with measurable outcomes.</p>
  <div class="cases-scroll" id="casesScroll">
   <div class="cases-pin">
@@ -581,8 +581,8 @@ $indByKey = [];
 foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['industry']; }
 ?>
 <section id="industries">
- <div class="eyebrow rv"><span class="eyebrow-text" style="color:#14855a">Industries</span></div>
- <h2 class="sec-h rv">Built for <span style="color:#14855a">Your Industry</span></h2>
+ <div class="eyebrow rv"><span class="eyebrow-text">Industries</span></div>
+ <h2 class="sec-h rv">Built for <span>Your Industry</span></h2>
  <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements, out of the box.</p>
 
  <div class="ind-scroll" id="indScroll">
@@ -669,7 +669,7 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
 
 <!-- DASHBOARDS -->
 <section id="dashboards" style="background:var(--bg2)">
- <div class="eyebrow rv"><span class="eyebrow-text" style="color:#23a065">Platform Dashboards</span></div>
+ <div class="eyebrow rv"><span class="eyebrow-text">Platform Dashboards</span></div>
  <h2 class="sec-h rv">Every Module. <span class="fade">One Screen.</span></h2>
  <p class="sec-sub rv">Live ERP dashboards for every function. See exactly what Drawlead looks like in action.</p>
  <div class="dash-grid">

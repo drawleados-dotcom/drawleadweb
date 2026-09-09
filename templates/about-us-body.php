@@ -72,7 +72,7 @@
  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
  <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="4" y="7" width="32" height="26" rx="3" fill="white" fill-opacity=".12" stroke="white" stroke-width="2"/><line x1="4" y1="15" x2="36" y2="15" stroke="white" stroke-width="2"/><circle cx="9" cy="11" r="1.6" fill="white"/><circle cx="14.5" cy="11" r="1.6" fill="white" fill-opacity=".6"/><path d="M10 25 L16 20 L22 26 L30 17" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".9"/></svg>
  </div>
- <div class="fn-num" style="color:var(--blue)">01 — Web</div>
+ <div class="fn-num">01 — Web</div>
  <div class="fn-name">Website Development</div>
  <div class="fn-desc">Custom websites, WordPress builds, Shopify stores, ecommerce platforms, and high-converting landing pages.</div>
  <div class="fn-tags"><span class="fn-tag">Custom Builds</span><span class="fn-tag">WordPress</span><span class="fn-tag">Shopify</span></div>
@@ -92,7 +92,7 @@
  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
  <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="17" cy="17" r="11" fill="none" stroke="white" stroke-width="3"/><line x1="25" y1="25" x2="35" y2="35" stroke="white" stroke-width="3.5" stroke-linecap="round"/><polyline points="10,19 14,14 18,17 24,10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/></svg>
  </div>
- <div class="fn-num" style="color:var(--violet)">03 — SEO</div>
+ <div class="fn-num">03 — SEO</div>
  <div class="fn-name">Search Engine Optimization</div>
  <div class="fn-desc">On-page, off-page, local, and technical SEO backed by keyword research and authoritative link building.</div>
  <div class="fn-tags"><span class="fn-tag">On-Page</span><span class="fn-tag">Technical</span><span class="fn-tag">Local SEO</span></div>
@@ -132,7 +132,7 @@
  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
  <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="15" fill="none" stroke="white" stroke-width="2.5" opacity=".5"/><circle cx="20" cy="20" r="9" fill="none" stroke="white" stroke-width="2.5" opacity=".8"/><circle cx="20" cy="20" r="3.5" fill="white"/></svg>
  </div>
- <div class="fn-num" style="color:var(--blue)">07 — Ads</div>
+ <div class="fn-num">07 — Ads</div>
  <div class="fn-name">Google Ads</div>
  <div class="fn-desc">Performance-driven search and display campaigns engineered for measurable return on ad spend.</div>
  <div class="fn-tags"><span class="fn-tag">Search Ads</span><span class="fn-tag">Display</span><span class="fn-tag">ROAS</span></div>
@@ -171,8 +171,8 @@
 <!-- ═══════════════════ HOW WE WORK ═══════════════════ -->
 <section id="values" style="background:#0a1310;color:#fff">
  <div class="grid-bg" style="opacity:.45"></div>
- <div class="eyebrow rv"><div class="eyebrow-line" style="background:#4ecb87"></div><span class="eyebrow-text" style="color:#4ecb87">How We Work</span><div class="eyebrow-line" style="background:#4ecb87"></div></div>
- <h2 class="sec-h rv" style="color:#fff">The principles behind <span style="color:#4ecb87">every engagement</span></h2>
+ <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">How We Work</span><div class="eyebrow-line"></div></div>
+ <h2 class="sec-h rv" style="color:#fff">The principles behind <span>every engagement</span></h2>
  <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">Four commitments that shape how Drawlead partners with every business we work with.</p>
  <div class="why-grid-4">
  <div class="why-card rv d1">

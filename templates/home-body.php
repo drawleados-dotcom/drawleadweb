@@ -117,7 +117,7 @@
  <div class="s-k"><div class="s-kv" style="color:#14855a;font-size:13px">₹8.4Cr</div><div class="s-kl">Total Projects</div></div>
  <div class="s-k"><div class="s-kv" style="color:#32b46f;font-size:11px">↑ 18%</div><div class="s-kl">On-time Rate</div></div>
  <div class="s-k"><div class="s-kv">247</div><div class="s-kl">Workers</div></div>
- <div class="s-k"><div class="s-kv" style="color:var(--blue)">38</div><div class="s-kl">Vendors</div></div>
+ <div class="s-k"><div class="s-kv">38</div><div class="s-kl">Vendors</div></div>
  </div>
  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:11px">
  <div>
@@ -207,7 +207,7 @@
  <div class="hero-stats">
  <div class="hstat"><div class="hstat-n gr">7</div><div class="hstat-l">Core functions</div></div>
  <div class="hstat"><div class="hstat-n">10+</div><div class="hstat-l">Industries</div></div>
- <div class="hstat"><div class="hstat-n" style="color:var(--blue)">AI</div><div class="hstat-l">Powered</div></div>
+ <div class="hstat"><div class="hstat-n">AI</div><div class="hstat-l">Powered</div></div>
  <div class="hstat"><div class="hstat-n">∞</div><div class="hstat-l">Scalable</div></div>
  </div>
 </section>
@@ -248,11 +248,11 @@
  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
  <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="4" y="25" width="7" height="11" rx="1.5" fill="rgba(255,255,255,.5)"/><rect x="14" y="17" width="7" height="19" rx="1.5" fill="rgba(255,255,255,.75)"/><rect x="24" y="9" width="7" height="27" rx="1.5" fill="white"/><polyline points="6,21 17,13 27,5" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round"/><polygon points="27,2 33,8 21,8" fill="rgba(255,255,255,.7)"/></svg>
  </div>
- <div class="fn-num" style="color:var(--blue)">01 — Management</div>
+ <div class="fn-num">01 — Management</div>
  <div class="fn-name">Management</div>
  <div class="fn-desc">Centralized dashboards and operational visibility for faster, smarter business decisions.</div>
  <div class="fn-tags"><span class="fn-tag">KPI Tracking</span><span class="fn-tag">Analytics</span><span class="fn-tag">Approvals</span></div>
- <button type="button" data-book class="fn-arrow" style="color:var(--blue)">Explore module →</button>
+ <button type="button" data-book class="fn-arrow">Explore module →</button>
  </div>
  <!-- 02 Sales -->
  <div class="fn-card rv d2">
@@ -270,11 +270,11 @@
  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
  <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M5 14 L5 26 L11 26 L11 14 Z" fill="rgba(255,255,255,.6)"/><path d="M11 14 L30 6 L30 34 L11 26 Z" fill="white"/><path d="M11 18 L11 22 L8 28 L5 28 L5 22" fill="rgba(255,255,255,.4)"/><path d="M32 15 Q38 20 32 25" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2.5" stroke-linecap="round"/></svg>
  </div>
- <div class="fn-num" style="color:var(--violet)">03 — Marketing</div>
+ <div class="fn-num">03 — Marketing</div>
  <div class="fn-name">Marketing</div>
  <div class="fn-desc">Track campaigns, automate WhatsApp &amp; email, and improve customer engagement at scale.</div>
  <div class="fn-tags"><span class="fn-tag">Campaigns</span><span class="fn-tag">WhatsApp</span><span class="fn-tag">Nurturing</span></div>
- <button type="button" data-book class="fn-arrow" style="color:var(--violet)">Explore module →</button>
+ <button type="button" data-book class="fn-arrow">Explore module →</button>
  </div>
  <!-- 04 Operations -->
  <div class="fn-card rv d4">
@@ -403,7 +403,7 @@
   <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
    <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="6" y="4" width="20" height="26" rx="2" fill="rgba(255,255,255,.55)"/><path d="M11 12 L21 12 M11 17 L18 17" stroke="rgba(20,133,90,.7)" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="26" r="8" fill="none" stroke="white" stroke-width="2.5"/><path d="M30 32 L36 38" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
   </div>
-  <div class="fn-num" style="color:var(--blue)">01 — Audit</div>
+  <div class="fn-num">01 — Audit</div>
   <div class="fn-name">Audit</div>
   <div class="fn-desc">We map your current workflows, tools, and customer journey to find exactly what's slowing growth down.</div>
   <div class="fn-tags"><span class="fn-tag">Workflows</span><span class="fn-tag">Bottlenecks</span></div>
@@ -423,7 +423,7 @@
   <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
    <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M22 3 L9 21 L18 21 L16 37 L33 16 L23 16 Z" fill="white"/><path d="M22 3 L9 21 L18 21 L17 27" fill="none" stroke="rgba(20,133,90,.5)" stroke-width="1.6" stroke-linejoin="round"/></svg>
   </div>
-  <div class="fn-num" style="color:var(--violet)">03 — Automate</div>
+  <div class="fn-num">03 — Automate</div>
   <div class="fn-name">Automate</div>
   <div class="fn-desc">We remove repetitive manual work — approvals, follow-ups, notifications — before we build anything new.</div>
   <div class="fn-tags"><span class="fn-tag">Approvals</span><span class="fn-tag">Follow-ups</span></div>
@@ -527,8 +527,8 @@
 
 <!-- ═══════════════════ TECH STACK ═══════════════════ -->
 <section id="tech" style="background:#0a1310;color:#fff">
-  <div class="eyebrow rv"><div class="eyebrow-line" style="background:#34a87c"></div><span class="eyebrow-text" style="color:#34a87c">Technology Stack</span><div class="eyebrow-line" style="background:#34a87c"></div></div>
-  <h2 class="sec-h rv" style="color:#fff"><span style="background:linear-gradient(115deg,#4ecb87,#34a87c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Built on Modern</span> <span style="color:rgba(255,255,255,.22)">Infrastructure</span></h2>
+  <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Technology Stack</span><div class="eyebrow-line"></div></div>
+  <h2 class="sec-h rv" style="color:#fff"><span>Built on Modern</span> <span style="color:rgba(255,255,255,.22)">Infrastructure</span></h2>
   <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">Enterprise-grade technologies combining to create scalable, intelligent digital ecosystems.</p>
   <div class="tech-grid">
 
@@ -655,8 +655,8 @@
 <!-- ═══════════════════ CASE STUDIES ═══════════════════ -->
 <section id="cases">
  <div class="grid-bg" style="opacity:.45"></div>
- <div class="eyebrow rv"><div class="eyebrow-line" style="background:#32b46f"></div><span class="eyebrow-text" style="color:#32b46f">Case Studies</span><div class="eyebrow-line" style="background:#32b46f"></div></div>
- <h2 class="sec-h rv"><span style="color:#32b46f">Real Results</span> for <span class="fade">Real Businesses</span></h2>
+ <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Case Studies</span><div class="eyebrow-line"></div></div>
+ <h2 class="sec-h rv"><span>Real Results</span> for <span class="fade">Real Businesses</span></h2>
  <p class="sec-sub rv">How Drawlead transforms operations across industries with measurable outcomes.</p>
  <div class="cases-grid">
  <div class="case-card rv d1">
@@ -794,8 +794,8 @@
 
 <!-- ═══════════════════ INDUSTRIES ═══════════════════ -->
 <section id="industries" style="background:var(--white)">
- <div class="eyebrow rv"><div class="eyebrow-line" style="background:#14855a"></div><span class="eyebrow-text" style="color:#14855a">Industries</span><div class="eyebrow-line" style="background:#14855a"></div></div>
- <h2 class="sec-h rv">Built for <span style="color:#14855a">Your Industry</span></h2>
+ <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Industries</span><div class="eyebrow-line"></div></div>
+ <h2 class="sec-h rv">Built for <span>Your Industry</span></h2>
  <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements — out of the box.</p>
 
  <div class="ind-grid">
@@ -834,8 +834,8 @@
 <!-- ═══════════════════ WHY Drawlead ═══════════════════ -->
 <section id="why" style="background:#0a1310;color:#fff">
  <div class="grid-bg" style="opacity:.45"></div>
- <div class="eyebrow rv"><div class="eyebrow-line" style="background:#14855a"></div><span class="eyebrow-text" style="color:#14855a">Why Drawlead</span><div class="eyebrow-line" style="background:#14855a"></div></div>
- <h2 class="sec-h rv" style="color:#fff"><span style="color:#14855a">What Sets</span> <span style="color:rgba(255,255,255,.22)">Us Apart</span></h2>
+ <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Why Drawlead</span><div class="eyebrow-line"></div></div>
+ <h2 class="sec-h rv" style="color:#fff"><span>What Sets</span> <span style="color:rgba(255,255,255,.22)">Us Apart</span></h2>
  <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">We're not just software — we're a long-term partner in your digital transformation and growth.</p>
  <div class="why-grid">
  <div class="why-card rv d1">
@@ -895,7 +895,7 @@
 <!-- ═══════════════════ DASHBOARDS ═══════════════════ -->
 <section id="dashboards" style="background:var(--bg2)">
  <div class="grid-bg" style="opacity:.35"></div>
- <div class="eyebrow rv"><div class="eyebrow-line" style="background:#23a065"></div><span class="eyebrow-text" style="color:#23a065">Platform Dashboards</span><div class="eyebrow-line" style="background:#23a065"></div></div>
+ <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Platform Dashboards</span><div class="eyebrow-line"></div></div>
  <h2 class="sec-h rv">Every Module. <span class="fade">One Screen.</span></h2>
  <p class="sec-sub rv">Live ERP dashboards for every function — see exactly what Drawlead looks like in action.</p>
  <div class="dash-grid">

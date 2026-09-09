@@ -19,6 +19,14 @@ html{scroll-behavior:smooth}
  --amber:#23a065;
  --green:#32b46f;
  --orange:#14855a;
+ /* Vertical rhythm. One scale for the whole site, redefined at the two breakpoints,
+    so every section steps together instead of each carrying its own numbers. */
+ --sp-section:7rem;
+ --sp-gutter:3.5rem;
+ --rh-eyebrow:1.25rem;   /* eyebrow  -> heading  */
+ --rh-head:1rem;         /* heading  -> subline  */
+ --rh-sub:3.5rem;        /* subline  -> content  */
+ --rh-cta:3rem;          /* content  -> CTA      */
  --font:'Montserrat',sans-serif;
 }
 body{font-family:var(--font);background:var(--bg);color:var(--black);overflow-x:hidden;-webkit-font-smoothing:antialiased}
@@ -72,22 +80,39 @@ nav{
 .btn-outline2:hover{border-color:var(--black);transform:translateY(-1px)}
 
 /* ── SECTION BASE ── */
-section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relative}
-.eyebrow{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1.1rem}
-.eyebrow-line{width:32px;height:1.5px;background:var(--blue)}
-.eyebrow-text{font-size:10.5px;text-transform:uppercase;letter-spacing:.15em;color:var(--blue);font-weight:700}
+section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(--border);position:relative}
+.eyebrow{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:var(--rh-eyebrow)}
+/* Filled chip. The two flanking rules are hidden rather than stripped out of eighteen
+   templates: they are decorative, and a filled label has no use for them. */
+.eyebrow-line{display:none}
+.eyebrow-text{
+ display:inline-block;
+ font-size:10.5px;text-transform:uppercase;letter-spacing:.14em;font-weight:700;
+ line-height:1.35;padding:6px 13px;border-radius:999px;
+ color:inherit;
+ background:rgba(17,17,18,.07);
+}
+/* The fill follows the section rather than being enumerated per dark block: currentColor
+   is whatever text colour the section sets, so the chip comes out dark-on-light and
+   light-on-dark by itself. Every dark section declares color:#fff except #cta. */
+@supports (background:color-mix(in srgb,red 10%,transparent)){
+ .eyebrow-text{background:color-mix(in srgb,currentColor 11%,transparent)}
+}
+#cta .eyebrow{color:#fff}
 .sec-h{
  font-size:clamp(38px,5.5vw,62px);font-weight:800;
  letter-spacing:-.025em;line-height:1.04;
- text-align:center;margin-bottom:.85rem;
+ text-align:center;margin-bottom:var(--rh-head);
 }
-.sec-h .g{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+/* Headings are monochrome. background-clip painted a gradient into the glyphs, so
+   the fill colour has to be reset as well or the text stays transparent. */
+.sec-h .g{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit}
 .sec-h .fade{color:var(--g300)}
 .sec-sub{
  font-size:15px;color:var(--g500);text-align:center;
- max-width:490px;margin:0 auto 3.5rem;line-height:1.65;font-weight:400;
+ max-width:490px;margin:0 auto var(--rh-sub);line-height:1.65;font-weight:400;
 }
-.sec-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:3rem}
+.sec-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:var(--rh-cta)}
 
 /* ── HERO ── */
 #hero{
@@ -165,10 +190,10 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  font-weight:900;line-height:.92;letter-spacing:-.04em;
  margin-bottom:1.75rem;animation:fu .7s ease .1s both;
 }
-.hero-h .grad{background:linear-gradient(115deg,#32b46f 0%,#14855a 55%,#0f7a52 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-h .grad{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit}
 .hero-h .ghost{color:var(--g300);display:block}
-.grad-os{background:linear-gradient(115deg,#32b46f,#3cbd7a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;display:inline-block;padding-right:4px}
-.grad-ai{background:linear-gradient(115deg,#14855a,#14855a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;display:inline-block;padding-right:4px}
+.grad-os{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit;font-style:normal;display:inline-block;padding-right:4px}
+.grad-ai{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit;font-style:normal;display:inline-block;padding-right:4px}
 .hero-h .solid{color:var(--black);display:block}
 .hero-p{font-size:16.5px;color:var(--g500);max-width:500px;line-height:1.65;font-weight:400;margin-bottom:2.5rem;animation:fu .7s ease .2s both}
 .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fu .7s ease .3s both;margin-bottom:0}
@@ -181,7 +206,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .hstat{flex:1;text-align:center;padding:0 1.5rem;border-right:1px solid var(--border)}
 .hstat:last-child{border-right:none}
 .hstat-n{font-size:56px;font-weight:800;letter-spacing:-.03em;line-height:1}
-.hstat-n.gr{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hstat-n.gr{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit}
 .hstat-l{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--g400);margin-top:8px;font-weight:600}
 
 /* ── HERO SCREENS ── */
@@ -455,9 +480,9 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(50,180,111,.22) 0%,rgba(50,180,111,.12) 35%,transparent 65%);pointer-events:none}
 .cta-h{font-size:clamp(50px,8vw,96px);font-weight:900;letter-spacing:-.035em;line-height:.94;color:#fff;margin-bottom:1.25rem;position:relative}
 .cta-h .fade{color:rgba(255,255,255,.2)}
-.cta-h .gr{background:linear-gradient(115deg,#4ecb87,#34a87c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block;padding-right:3px}
-.cta-h .gr2{background:linear-gradient(115deg,#32b46f,#4ecb87);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block;padding-right:3px}
-.cta-h .gr3{background:linear-gradient(115deg,#34a87c,#7fd9a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block}
+.cta-h .gr{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit;display:inline-block;padding-right:3px}
+.cta-h .gr2{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit;display:inline-block;padding-right:3px}
+.cta-h .gr3{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit;display:inline-block}
 .cta-p{font-size:16px;color:rgba(255,255,255,.48);margin-bottom:2.5rem;font-weight:400;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.65;position:relative}
 .cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative}
 .cta-btn-w{background:#fff;color:var(--black);padding:15px 32px;border-radius:8px;font-family:var(--font);font-weight:800;font-size:12px;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
@@ -492,7 +517,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
   nav{padding:1rem 1.5rem}
   .nav-links{display:none}
   .logo img{height:38px}
-  section{padding:5rem 1.5rem}
+  :root{--sp-section:5rem;--sp-gutter:1.5rem;--rh-sub:2.75rem;--rh-cta:2.5rem}
   #hero{padding:6rem 1.5rem 3rem}
   .hero-h{font-size:clamp(48px,9vw,96px)}
   .fn-grid{grid-template-columns:repeat(2,1fr)}
@@ -520,7 +545,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 @media(max-width:560px){
   nav{padding:.9rem 1.25rem}
   .logo img{height:32px}
-  section{padding:4rem 1.25rem}
+  :root{--sp-section:4rem;--sp-gutter:1.25rem;--rh-eyebrow:1rem;--rh-sub:2.25rem;--rh-cta:2rem}
   #hero{padding:5.5rem 1.25rem 3rem}
   .hero-h{font-size:clamp(40px,11vw,72px);letter-spacing:-.03em;line-height:.92}
   .hero-p{font-size:15px;max-width:100%}
@@ -579,7 +604,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .story-facts li:last-child{border-bottom:none}
 .story-facts li span{color:var(--g400);font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:10.5px}
 .story-facts li strong{color:var(--black);font-weight:700;text-align:right}
-.story-tagline{margin-top:1.4rem;padding-top:1.3rem;border-top:1px solid var(--border);font-size:13px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.story-tagline{margin-top:1.4rem;padding-top:1.3rem;border-top:1px solid var(--border);font-size:13px;font-weight:800;background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit}
 .story-tagline span{background:none;-webkit-text-fill-color:var(--g400);color:var(--g400);font-weight:600}
 
 .founder-card{display:flex;gap:2.75rem;background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:2.75rem;align-items:flex-start;box-shadow:0 12px 40px rgba(0,0,0,.05)}
@@ -881,7 +906,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .booking-left-inner{position:relative}
 .booking-eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#4ecb87;font-weight:700;margin-bottom:.9rem}
 .booking-left h2{font-size:21px;font-weight:800;letter-spacing:-.01em;line-height:1.25;margin-bottom:.9rem}
-.booking-left h2 .g{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.booking-left h2 .g{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit}
 .booking-left p{font-size:12.5px;color:rgba(255,255,255,.55);line-height:1.65;margin-bottom:1.5rem}
 
 .bv{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin-bottom:1.6rem;padding:1.1rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px}
@@ -1139,7 +1164,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .unify-board-body{padding:6px 16px 18px}
 
 .unify-stat{text-align:center;font-size:15px;font-weight:700;color:var(--g600)}
-.unify-stat .g2{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:22px;font-weight:800}
+.unify-stat .g2{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit;opacity:.55;font-size:22px;font-weight:800}
 
 @media(max-width:680px){
  .unify-visual{max-width:360px}

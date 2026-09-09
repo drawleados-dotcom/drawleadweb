@@ -19,6 +19,14 @@ html{scroll-behavior:smooth}
  --amber:#23a065;
  --green:#32b46f;
  --orange:#14855a;
+ /* Vertical rhythm. One scale for the whole site, redefined at the two breakpoints,
+    so every section steps together instead of each carrying its own numbers. */
+ --sp-section:7rem;
+ --sp-gutter:3.5rem;
+ --rh-eyebrow:1.25rem;   /* eyebrow  -> heading  */
+ --rh-head:1rem;         /* heading  -> subline  */
+ --rh-sub:3.5rem;        /* subline  -> content  */
+ --rh-cta:3rem;          /* content  -> CTA      */
  --font:'Montserrat',sans-serif;
  --font-display:'Montserrat',sans-serif;
  --font-body:'Inter',sans-serif;
@@ -78,10 +86,8 @@ nav{
 .btn-outline2:hover{border-color:var(--black);transform:translateY(-1px)}
 
 /* ── SECTION BASE ── */
-section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relative}
-.eyebrow{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1.1rem}
-.eyebrow-line{width:32px;height:1.5px;background:var(--blue)}
-.eyebrow-text{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--violet);font-weight:500}
+section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(--border);position:relative}
+
 /* ── Homepage section headings: smaller + slightly bolder ──
    Scoped to the homepage's 9 section IDs (all verified unique to home-body.php) because
    the bare .sec-h class is shared by 15 other pages, which must keep their current size.
@@ -96,15 +102,15 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .sec-h{
  font-size:clamp(30px,4vw,46px);font-weight:700;
  letter-spacing:-.02em;line-height:1.15;
- text-align:center;margin-bottom:.85rem;
+ text-align:center;margin-bottom:var(--rh-head);
 }
 .sec-h .g{color:var(--violet)}
 .sec-h .fade{color:var(--g300)}
 .sec-sub{
  font-size:17px;color:var(--g500);text-align:center;
- max-width:560px;margin:0 auto 3.5rem;line-height:1.6;font-weight:400;
+ max-width:560px;margin:0 auto var(--rh-sub);line-height:1.6;font-weight:400;
 }
-.sec-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:3rem}
+.sec-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:var(--rh-cta)}
 
 /* ── HERO ── */
 /* White hero, two columns: copy on the left, live industry dashboard on the right. */
@@ -252,13 +258,13 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .hero-eyebrow{
  display:inline-flex;align-items:center;gap:9px;
  padding:9px 18px 9px 14px;width:fit-content;
- background:rgba(50,180,111,.07);border:1px solid rgba(50,180,111,.16);
+ background:rgba(127,127,127,.10);border:1px solid rgba(127,127,127,.22);
  border-radius:999px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
  box-shadow:0 1px 3px rgba(0,0,0,.03);
  margin-bottom:1.75rem;animation:fu .7s ease both;
 }
-.hero-eicon{width:7px;height:7px;border-radius:50%;background:var(--blue);flex-shrink:0;box-shadow:0 0 0 3px rgba(50,180,111,.15)}
-.hero-etxt{font-family:var(--font-body);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#14855a;font-weight:600}
+.hero-eicon{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0;box-shadow:0 0 0 3px rgba(127,127,127,.18)}
+.hero-etxt{font-family:var(--font-body);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:inherit;font-weight:600}
 
 /* BIG DISPLAY TYPE */
 .hero-h{
@@ -437,7 +443,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .hpf-url{display:flex;align-items:center;gap:5px;flex:1;background:var(--white);border:1px solid var(--border);border-radius:4px;padding:4px 10px;font-size:10px;color:var(--g400);font-weight:500;max-width:260px}
 .hpf-body{display:flex;height:340px}
 .hpf-sidebar{width:140px;flex-shrink:0;background:var(--black);padding:16px 12px;display:flex;flex-direction:column;gap:0}
-.hpf-logo-sm{font-size:14px;font-weight:900;letter-spacing:.04em;margin-bottom:20px;background:linear-gradient(115deg,#32b46f,#14855a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hpf-logo-sm{font-size:14px;font-weight:900;letter-spacing:.04em;margin-bottom:20px;background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit}
 .hpf-nav-items{display:flex;flex-direction:column;gap:3px}
 .hpf-nav{display:flex;align-items:center;gap:7px;font-size:10px;color:rgba(255,255,255,.45);padding:7px 8px;border-radius:8px;font-weight:600;cursor:pointer;transition:all .15s;letter-spacing:.02em}
 .hpf-nav.active{background:rgba(50,180,111,.25);color:#fff;border-left:2px solid var(--blue)}
@@ -1253,7 +1259,6 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
    Scoped under #why (homepage-only id). The legacy .why-card/.why-icon/.why-name/
    .why-desc rules below are left untouched because the About Us page still uses them. */
 #why{background:#05070a;color:#fff;overflow:hidden}
-#why .eyebrow{margin-bottom:1.2rem}
 .why-h{
  font-family:var(--font-display);
  font-size:clamp(44px,7vw,92px);font-weight:800;letter-spacing:-.035em;line-height:1;
@@ -1562,7 +1567,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
   nav{padding:1rem 1.5rem}
   .nav-links{display:none}
   .logo img{height:38px}
-  section{padding:5rem 1.5rem}
+  :root{--sp-section:5rem;--sp-gutter:1.5rem;--rh-sub:2.75rem;--rh-cta:2.5rem}
   #hero{padding:6rem 1.5rem 3rem}
   .hero-grid{grid-template-columns:1fr;gap:3rem}
   .hero-left{text-align:center}
@@ -1597,7 +1602,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 @media(max-width:560px){
   nav{padding:.9rem 1.25rem}
   .logo img{height:32px}
-  section{padding:4rem 1.25rem}
+  :root{--sp-section:4rem;--sp-gutter:1.25rem;--rh-eyebrow:1rem;--rh-sub:2.25rem;--rh-cta:2rem}
   #hero{padding:5.5rem 1.25rem 3rem}
   .hero-h{font-size:clamp(30px,9vw,40px);letter-spacing:-.02em;line-height:1.05}
   .hero-p{font-size:15px;max-width:100%}
@@ -1653,7 +1658,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .story-facts li:last-child{border-bottom:none}
 .story-facts li span{color:var(--g400);font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:10.5px}
 .story-facts li strong{color:var(--black);font-weight:700;text-align:right}
-.story-tagline{margin-top:1.4rem;padding-top:1.3rem;border-top:1px solid var(--border);font-size:13px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.story-tagline{margin-top:1.4rem;padding-top:1.3rem;border-top:1px solid var(--border);font-size:13px;font-weight:800;background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit}
 .story-tagline span{background:none;-webkit-text-fill-color:var(--g400);color:var(--g400);font-weight:600}
 
 .founder-card{display:flex;gap:2.75rem;background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:2.75rem;align-items:flex-start;box-shadow:0 12px 40px rgba(0,0,0,.05)}
@@ -1699,7 +1704,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .blog-card-img{height:190px;background:var(--bg2);border-bottom:1.5px solid var(--border);position:relative;overflow:hidden}
 .blog-card-img img{width:100%;height:100%;object-fit:cover;display:block}
 .blog-card-img.placeholder{display:flex;align-items:center;justify-content:center}
-.blog-card-img.placeholder::after{content:'Drawlead';font-size:15px;font-weight:800;letter-spacing:-.01em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.blog-card-img.placeholder::after{content:'Drawlead';font-size:15px;font-weight:800;letter-spacing:-.01em;background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit}
 .blog-card-body{padding:1.5rem 1.6rem;display:flex;flex-direction:column;gap:.6rem;flex:1}
 .blog-card-date{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--g400);font-weight:700}
 .blog-card-title{font-size:17px;font-weight:800;letter-spacing:-.01em;line-height:1.3}

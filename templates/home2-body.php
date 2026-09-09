@@ -109,16 +109,16 @@ $h2Cases = $pdo->query(
  <div class="h2-hero-grid">
   <div>
    <div class="h2-kicker rv">Operating System for Modern Business</div>
-   <h1 class="h2-hero-h rv">Run your entire business from <span class="g" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">one dashboard</span>.</h1>
+   <h1 class="h2-hero-h rv">Run your entire business from <span class="g">one dashboard</span>.</h1>
    <p class="h2-hero-p rv">Drawlead unifies ERP, AI automation, analytics, and cloud workflows into a single operating system — built for India's growing businesses.</p>
    <div class="h2-hero-btns rv">
     <button type="button" data-book class="btn btn-black">Get a Free Demo →</button>
     <a href="#h2-platform" class="btn btn-ghost">See How It Works</a>
    </div>
    <div class="h2-hero-stats rv">
-    <div><div class="h2-hstat-v" style="color:var(--blue)">7</div><div class="h2-hstat-l">Core functions</div></div>
+    <div><div class="h2-hstat-v">7</div><div class="h2-hstat-l">Core functions</div></div>
     <div><div class="h2-hstat-v">20+</div><div class="h2-hstat-l">Industries</div></div>
-    <div><div class="h2-hstat-v" style="color:var(--violet)">AI</div><div class="h2-hstat-l">Powered</div></div>
+    <div><div class="h2-hstat-v">AI</div><div class="h2-hstat-l">Powered</div></div>
     <div><div class="h2-hstat-v">∞</div><div class="h2-hstat-l">Scalable</div></div>
    </div>
   </div>
@@ -127,9 +127,9 @@ $h2Cases = $pdo->query(
     <div class="h2-fc-row">
      <div>
       <div class="h2-fc-label">Revenue Tracked</div>
-      <div class="h2-fc-value" style="color:var(--blue)">₹18.4L</div>
+      <div class="h2-fc-value">₹18.4L</div>
      </div>
-     <div style="font-size:12px;font-weight:700;color:var(--blue)">↑ 24%</div>
+     <div style="font-size:12px;font-weight:700">↑ 24%</div>
     </div>
     <div class="h2-fc-bars"><span style="height:40%"></span><span style="height:60%"></span><span style="height:48%"></span><span style="height:75%"></span><span style="height:58%"></span><span style="height:92%"></span></div>
    </div>
@@ -146,7 +146,7 @@ $h2Cases = $pdo->query(
    </div>
    <div class="h2-float-card">
     <div class="h2-fc-label">On-Time Delivery</div>
-    <div class="h2-fc-value" style="color:var(--violet)">96%</div>
+    <div class="h2-fc-value">96%</div>
    </div>
   </div>
  </div>
@@ -238,7 +238,7 @@ $h2Cases = $pdo->query(
 
  <div class="h2-sol-grid">
   <div class="h2-sol-card rv d1">
-   <div class="h2-sol-num" style="color:var(--blue)">Solution 01 · ERP</div>
+   <div class="h2-sol-num">Solution 01 · ERP</div>
    <div class="h2-sol-name">Custom Operational Solutions</div>
    <ul class="sol-list">
     <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Modules mapped to your real workflows</li>
@@ -258,7 +258,7 @@ $h2Cases = $pdo->query(
    <a href="/ecommerce-solutions" class="h2-sol-link">Explore ecommerce →</a>
   </div>
   <div class="h2-sol-card rv d3">
-   <div class="h2-sol-num" style="color:var(--violet)">Solution 03</div>
+   <div class="h2-sol-num">Solution 03</div>
    <div class="h2-sol-name">Marketing Solutions</div>
    <ul class="sol-list">
     <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="#32b46f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Technical SEO &amp; content engine</li>
@@ -273,7 +273,7 @@ $h2Cases = $pdo->query(
 <!-- ═══════════════════ RESULTS ═══════════════════ -->
 <section id="h2-results" style="background:#0a1310;color:#fff">
  <div class="grid-bg" style="opacity:.4"></div>
- <div class="eyebrow rv"><div class="eyebrow-line" style="background:#34a87c"></div><span class="eyebrow-text" style="color:#34a87c">Results</span><div class="eyebrow-line" style="background:#34a87c"></div></div>
+ <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Results</span><div class="eyebrow-line"></div></div>
  <h2 class="sec-h rv" style="color:#fff">Real businesses. <span style="color:rgba(255,255,255,.22)">Real numbers.</span></h2>
  <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">A few of the teams already running on Drawlead.</p>
 
@@ -299,8 +299,8 @@ $h2Cases = $pdo->query(
 
 <!-- ═══════════════════ WHY DRAWLEAD ═══════════════════ -->
 <section id="h2-why" style="background:var(--white)">
- <div class="eyebrow rv"><div class="eyebrow-line" style="background:#14855a"></div><span class="eyebrow-text" style="color:#14855a">Why Drawlead</span><div class="eyebrow-line" style="background:#14855a"></div></div>
- <h2 class="sec-h rv"><span style="color:#14855a">What Sets</span> Us Apart</h2>
+ <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Why Drawlead</span><div class="eyebrow-line"></div></div>
+ <h2 class="sec-h rv"><span>What Sets</span> Us Apart</h2>
  <p class="sec-sub rv">We're not just software — we're a long-term partner in your digital transformation and growth.</p>
 
  <div class="h2-why-grid">
@@ -347,8 +347,8 @@ $h2Cases = $pdo->query(
 
 <!-- ═══════════════════ INDUSTRIES ═══════════════════ -->
 <section id="h2-industries" style="background:var(--bg)">
- <div class="eyebrow rv"><div class="eyebrow-line" style="background:#14855a"></div><span class="eyebrow-text" style="color:#14855a">Industries</span><div class="eyebrow-line" style="background:#14855a"></div></div>
- <h2 class="sec-h rv">Built for <span style="color:#14855a">Your Industry</span></h2>
+ <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Industries</span><div class="eyebrow-line"></div></div>
+ <h2 class="sec-h rv">Built for <span>Your Industry</span></h2>
  <p class="sec-sub rv">20 industries, one adaptable platform. Pick yours.</p>
 
  <div class="h2-pill-cloud rv">

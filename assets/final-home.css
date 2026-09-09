@@ -24,6 +24,14 @@
  --amber:#23a065;
  --green:#32b46f;
  --orange:#14855a;
+ /* Vertical rhythm. One scale for the whole site, redefined at the two breakpoints,
+    so every section steps together instead of each carrying its own numbers. */
+ --sp-section:7rem;
+ --sp-gutter:3.5rem;
+ --rh-eyebrow:1.25rem;   /* eyebrow  -> heading  */
+ --rh-head:1rem;         /* heading  -> subline  */
+ --rh-sub:3.5rem;        /* subline  -> content  */
+ --rh-cta:3rem;          /* content  -> CTA      */
  --font:'Montserrat',sans-serif;
  --font-display:'Montserrat',sans-serif;
  --font-body:'Inter',sans-serif;
@@ -79,10 +87,8 @@ nav{
 .btn-outline2:hover{border-color:var(--black);transform:translateY(-1px)}
 
 /* SECTION BASE */
-section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relative}
-.eyebrow{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1.1rem}
-.eyebrow-line{width:32px;height:1.5px;background:var(--blue)}
-.eyebrow-text{font-size:10.5px;text-transform:uppercase;letter-spacing:.15em;color:var(--blue);font-weight:700}
+section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(--border);position:relative}
+
 #functions .sec-h,#unify .sec-h,#method .sec-h,#solutions .sec-h,#tech .sec-h,
 #cases .sec-h,#industries .sec-h,#why .sec-h,#dashboards .sec-h{
  font-size:clamp(30px,4vw,46px);
@@ -91,15 +97,15 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .sec-h{
  font-size:clamp(38px,5.5vw,62px);font-weight:800;
  letter-spacing:-.025em;line-height:1.04;
- text-align:center;margin-bottom:.85rem;
+ text-align:center;margin-bottom:var(--rh-head);
 }
-.sec-h .g{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-h .g{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit}
 .sec-h .fade{color:var(--g300)}
 .sec-sub{
  font-size:15px;color:var(--g500);text-align:center;
- max-width:490px;margin:0 auto 3.5rem;line-height:1.65;font-weight:400;
+ max-width:490px;margin:0 auto var(--rh-sub);line-height:1.65;font-weight:400;
 }
-.sec-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:3rem}
+.sec-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:var(--rh-cta)}
 
 /* HERO */
 #hero{
@@ -170,13 +176,13 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .hero-eyebrow{
  display:inline-flex;align-items:center;gap:9px;
  padding:9px 18px 9px 14px;width:fit-content;
- background:rgba(50,180,111,.07);border:1px solid rgba(50,180,111,.16);
+ background:rgba(127,127,127,.10);border:1px solid rgba(127,127,127,.22);
  border-radius:999px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
  box-shadow:0 1px 3px rgba(0,0,0,.03);
  margin-bottom:1.75rem;animation:fu .7s ease both;
 }
-.hero-eicon{width:7px;height:7px;border-radius:50%;background:var(--blue);flex-shrink:0;box-shadow:0 0 0 3px rgba(50,180,111,.15)}
-.hero-etxt{font-family:var(--font-body);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#14855a;font-weight:600}
+.hero-eicon{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0;box-shadow:0 0 0 3px rgba(127,127,127,.18)}
+.hero-etxt{font-family:var(--font-body);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:inherit;font-weight:600}
 .hero-h{
  font-family:var(--font-display);
  font-size:clamp(38px,4.2vw,68px);
@@ -184,8 +190,8 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  color:var(--black);
  margin-bottom:1.5rem;animation:fu .7s ease .1s both;
 }
-.grad-os{background:linear-gradient(115deg,#32b46f,#3cbd7a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;display:inline-block}
-.grad-ai{background:linear-gradient(115deg,#14855a,#14855a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;display:inline-block}
+.grad-os{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit;font-style:normal;display:inline-block}
+.grad-ai{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit;font-style:normal;display:inline-block}
 .hero-p{font-family:var(--font-body);font-size:18px;color:var(--g500);max-width:540px;line-height:1.6;font-weight:400;margin-bottom:2.25rem;animation:fu .7s ease .2s both}
 .hero-btns{display:flex;gap:14px;flex-wrap:wrap;animation:fu .7s ease .3s both;margin-bottom:2.5rem}
 .hero-btns .btn{font-family:var(--font-body);font-weight:600;padding:15px 30px;transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease}
@@ -198,12 +204,12 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .hstat:last-child{border-right:none;padding-right:0}
 .hstat-ico{width:50px;height:50px;border-radius:13px;background:rgba(50,180,111,.1);color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .hstat-n{font-family:var(--font-display);font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1}
-.hstat-n.gr{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hstat-n.gr{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit}
 .hstat-l{font-family:var(--font-body);font-size:13.5px;color:var(--g500);margin-top:2px;font-weight:500}
 #hero .hero-h{color:#fff}
 #hero .hero-p{color:rgba(255,255,255,.62)}
-#hero .hero-eyebrow{background:rgba(45,190,120,.10);border-color:rgba(45,190,120,.22)}
-#hero .hero-etxt{color:#4ecb87}
+#hero .hero-eyebrow{background:rgba(127,127,127,.12);border-color:rgba(127,127,127,.24)}
+#hero .hero-etxt{color:inherit}
 #hero .hstat{border-right-color:rgba(255,255,255,.1)}
 #hero .hstat-ico{background:rgba(45,190,120,.13);color:#4ecb87}
 #hero .hstat-n{color:#fff}
@@ -807,7 +813,6 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 
 /* WHY — centred editorial layout */
 #why{background:#05070a;color:#fff;overflow:hidden}
-#why .eyebrow{margin-bottom:1.2rem}
 .why-h{
  font-family:var(--font-display);
  font-size:clamp(44px,7vw,92px);font-weight:800;letter-spacing:-.035em;line-height:1;
@@ -969,7 +974,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
  box-shadow:0 10px 26px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.7);
 }
 .unify-stat{text-align:center;font-size:15px;font-weight:700;color:var(--g600)}
-.unify-stat .g2{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:22px;font-weight:800}
+.unify-stat .g2{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit;font-size:22px;font-weight:800}
 @media(max-width:900px){
  .phys-stage{height:440px;border-radius:22px}
  .phys-pill{padding:12px 20px;font-size:13.5px}
@@ -1071,9 +1076,9 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 .cta-glow{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);width:760px;height:620px;background:radial-gradient(circle,rgba(51,180,112,.16) 0%,rgba(51,180,112,.07) 38%,transparent 68%);pointer-events:none}
 .cta-h{font-size:clamp(50px,8vw,96px);font-weight:900;letter-spacing:-.035em;line-height:.94;color:#fff;margin-bottom:1.25rem;position:relative}
 .cta-h .fade{color:rgba(255,255,255,.2)}
-.cta-h .gr{background:linear-gradient(115deg,#4ecb87,#34a87c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block;padding-right:3px}
-.cta-h .gr2{background:linear-gradient(115deg,#32b46f,#4ecb87);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block;padding-right:3px}
-.cta-h .gr3{background:linear-gradient(115deg,#34a87c,#7fd9a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block}
+.cta-h .gr{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit;display:inline-block;padding-right:3px}
+.cta-h .gr2{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit;display:inline-block;padding-right:3px}
+.cta-h .gr3{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit;display:inline-block}
 .cta-p{font-size:16px;color:rgba(255,255,255,.48);margin-bottom:2.5rem;font-weight:400;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.65;position:relative}
 .cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative}
 .cta-btn-w{background:#fff;color:var(--black);padding:15px 32px;border-radius:8px;font-family:var(--font);font-weight:800;font-size:12px;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
@@ -1094,7 +1099,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
   nav{padding:1rem 1.5rem}
   .nav-links{display:none}
   .logo img{height:38px}
-  section{padding:5rem 1.5rem}
+  :root{--sp-section:5rem;--sp-gutter:1.5rem;--rh-sub:2.75rem;--rh-cta:2.5rem}
   #hero{padding:6rem 1.5rem 3rem}
   .hero-grid{grid-template-columns:1fr;gap:3rem}
   .hero-left{text-align:center}
@@ -1119,7 +1124,7 @@ section{padding:7rem 3.5rem;border-bottom:1px solid var(--border);position:relat
 @media(max-width:560px){
   nav{padding:.9rem 1.25rem}
   .logo img{height:32px}
-  section{padding:4rem 1.25rem}
+  :root{--sp-section:4rem;--sp-gutter:1.25rem;--rh-eyebrow:1rem;--rh-sub:2.25rem;--rh-cta:2rem}
   #hero{padding:5.5rem 1.25rem 3rem}
   .hero-h{font-size:clamp(34px,10vw,52px);letter-spacing:-.02em;line-height:1.05}
   .hero-p{font-size:15px;max-width:100%}
