@@ -2291,16 +2291,10 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  background:#32B46F;border-color:rgba(17,17,18,.12);color:#111112;--mark:#111112;
  box-shadow:0 10px 26px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.28);
 }
-/* Monochrome logos, done in CSS so eighteen hand-drawn SVGs stay untouched in the
-   markup. Every hard-coded brand fill and stroke resolves to currentColor; the base
-   plate of each mark then drops to a low opacity so the detail drawn on top of it stays
-   readable instead of merging into a silhouette. The plate is the first shape in every
-   one of these marks, bar Outlook, whose panel is called out by its own fill. */
-.phys-pill svg *{fill:currentColor;stroke:currentColor}
-.phys-pill svg [fill="none"]{fill:none}
-.phys-pill svg [stroke="none"]{stroke:none}
-.phys-pill svg > *:first-child,
-.phys-pill svg [fill="#0F6CBD"]{fill-opacity:.32}
+/* Logos keep their own brand colours: the marks were never edited in the markup, so
+   removing the monochrome overrides restores them as drawn. --mark still applies, but
+   only reaches the three icons that are drawn with currentColor because they have no
+   brand of their own: CRM, Calls and Bill Book. */
 
 
 /* still used by the #method section's "Understand → Measure → Automate → Scale" line */
