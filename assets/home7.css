@@ -686,7 +686,16 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
    derived from sticky.offsetHeight in JS, so the scroll distance follows automatically.
    min-height keeps the 436px of content from being clipped on short viewports, and
    max-height caps the dead space on tall ones, where 78vh would otherwise grow it back. */
-.cf-scroll-sticky{position:sticky;top:0;height:78vh;min-height:480px;max-height:620px;width:100%;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+/* One source of truth for the pinned height, because the sticky offset below is
+   derived from it and the two must not drift apart. */
+.cf-scroll-outer{--cf-pin-h:clamp(480px,78vh,620px)}
+/* top centres the pinned box in the viewport instead of pinning it flush to the top.
+   At top:0 a 620px box in an 855px viewport parked the cards at y 92-528 with 327px of
+   empty screen beneath them. This changes only where the box sticks, never where it
+   sits in normal flow, so the spacing under the heading is untouched.
+   JS reads the same offset back off the element, so the horizontal progress stays in
+   step with it. */
+.cf-scroll-sticky{position:sticky;top:calc((100vh - var(--cf-pin-h)) / 2);height:var(--cf-pin-h);width:100%;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
 /* The CTA is pinned inside the sticky box alongside the row, so it can no longer
    scroll into view while the horizontal run is still in progress - which is what
    left a growing gap of unconsumed scroll distance between the cards and the buttons. */

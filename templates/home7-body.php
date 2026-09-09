@@ -1210,10 +1210,14 @@ renderDash(0);
  const skipHijack = reduceMotion || window.matchMedia('(max-width:768px)').matches;
  if(skipHijack) return;
 
- const STICKY_TOP = 0;  // must match .cf-scroll-sticky's CSS top offset
+ // Read back off the element instead of being duplicated here: the box now pins
+ // centred in the viewport, and a hard-coded 0 would put the horizontal progress out
+ // of step with where it actually sticks.
+ let stickyTop = 0;
  let overflow = 0;
 
  function measure(){
+ stickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
  overflow = Math.max(0, row.scrollWidth - sticky.clientWidth);
  outer.style.height = (sticky.offsetHeight + overflow) + 'px';
  }
@@ -1221,7 +1225,7 @@ renderDash(0);
  function onScroll(){
  if(overflow <= 0){ row.style.transform = 'translateX(0)'; return; }
  const rect = outer.getBoundingClientRect();
- const progress = Math.min(1, Math.max(0, (STICKY_TOP - rect.top) / overflow));
+ const progress = Math.min(1, Math.max(0, (stickyTop - rect.top) / overflow));
  row.style.transform = `translateX(${-progress * overflow}px)`;
  }
 
