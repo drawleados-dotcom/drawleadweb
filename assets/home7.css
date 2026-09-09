@@ -236,7 +236,7 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 /* two columns again: copy left, live dashboard right */
 .hero-grid{
  display:grid;grid-template-columns:minmax(0,1fr);
- gap:3.25rem;justify-items:center;max-width:1400px;width:100%;margin:0 auto;
+ gap:2.75rem;justify-items:center;max-width:1400px;width:100%;margin:0 auto;
  position:relative;z-index:2;
 }
 .hero-left{text-align:center;max-width:860px;width:100%}
@@ -300,16 +300,26 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 .grad-ai{color:var(--violet);font-style:normal;display:inline-block}
 .hero-p{font-family:var(--font-body);font-size:18px;color:var(--g500);max-width:540px;line-height:1.6;font-weight:400;margin-bottom:2.25rem;animation:fu .7s ease .2s both}
 
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap;animation:fu .7s ease .3s both;margin-bottom:2.5rem}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;animation:fu .7s ease .3s both;margin-bottom:2.75rem}
 .hero-btns .btn{font-family:var(--font-body);font-weight:600;padding:15px 30px;transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease}
 .hero-btns .btn-primary{background:var(--blue);color:#fff;border-radius:6px}
 .hero-btns .btn-primary:hover{opacity:.9;transform:translateY(-2px);box-shadow:0 10px 24px rgba(50,180,111,.35)}
 .hero-btns .btn-ghost{transform:translateY(0)}
 .hero-btns .btn-ghost:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
 
-.hero-stats{display:flex;width:100%;padding-top:1.75rem;animation:fu .7s ease .4s both}
-.hstat{flex:1;display:flex;align-items:center;gap:12px;padding-right:1rem}
-.hstat:last-child{padding-right:0}
+/* Group-centred, not four equal cells. flex:1 gave every metric a quarter of the row
+   and left-aligned its content inside that quarter, so the visible mass sat left of
+   centre while the row itself was full width. Sizing each to its content and centring
+   the group fixes it, and a single gap replaces the padding-right/last-child pair so
+   the spacing between metrics is equal by construction. */
+/* max-width and margin-top are reset explicitly: partials/style.php caps this row at
+   700px and adds margin-top:4rem, and since that margin collapses with the buttons'
+   margin-bottom the gap above was 64px rather than the 44px intended. */
+.hero-stats{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:2.5rem;width:100%;max-width:none;margin-top:0;padding-top:0;animation:fu .7s ease .4s both}
+.hstat{flex:0 0 auto;display:flex;align-items:center;gap:12px;padding:0}  /* shared rule adds 1.5rem each side */
+/* "Core functions" wrapped to two lines while its neighbours stayed on one, which made
+   the first metric taller than the rest and threw the row off its baseline. */
+.hstat-l{white-space:nowrap}
 .hstat-ico{width:50px;height:50px;border-radius:12px;background:rgba(50,180,111,.1);color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .hstat-n{font-family:var(--font-display);font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1}
 .hstat-n.gr{color:inherit}  /* the sibling stats are unstyled, so this one matched them in green only */
@@ -1600,8 +1610,8 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
   .hero-btns{justify-content:center}
   .hero-right{max-width:560px}
   .ind-tabs{margin-left:auto;margin-right:auto}
-  .hero-stats{flex-wrap:wrap;gap:1.5rem;max-width:520px;margin:0 auto}
-  .hstat{flex:1 1 40%;justify-content:center}
+  .hero-stats{gap:1.75rem;max-width:560px;margin:0 auto}
+  .hstat{flex:0 0 auto}
   .fn-grid{grid-template-columns:repeat(2,1fr)}
   .tech-grid{grid-template-columns:repeat(2,1fr)}
   .dash-grid{grid-template-columns:1fr}
@@ -1646,8 +1656,8 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
   .ind-tabs{flex-wrap:nowrap;width:100%;max-width:100%;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
   .ind-tabs::-webkit-scrollbar{display:none}
   .ind-tab{flex:0 0 auto}
-  .hero-stats{flex-wrap:wrap;gap:1.25rem;justify-content:center;max-width:100%}
-  .hstat{flex:1 1 40%;padding-bottom:1rem;justify-content:center}
+  .hero-stats{gap:1.5rem;max-width:100%}
+  .hstat{flex:0 0 auto}
   .hstat-n{font-size:24px}
   .sec-h{font-size:clamp(26px,7vw,34px);letter-spacing:-.02em}
   #functions .sec-h,#unify .sec-h,#method .sec-h,#solutions .sec-h,#tech .sec-h,
