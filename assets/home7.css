@@ -672,11 +672,21 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 }
 
 #functions{background:var(--white)}
+/* The cards read as this heading's content, so they sit closer than the standard
+   subheading-to-content step used between unrelated blocks. */
+#functions .sec-sub{margin-bottom:2rem}
 .cf-scroll-outer{position:relative;width:100%}
 /* Pinned to the middle of the viewport rather than just under the nav: the sticky box
    spans the full screen height and centres the row and its CTA inside it, so the cards
    sit at eye level for the whole horizontal run. */
-.cf-scroll-sticky{position:sticky;top:0;height:100vh;width:100%;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+/* 78vh rather than 100vh. The row is centred inside this box, so a full-viewport box
+   left (100vh - content)/2 of dead space above the cards - 208px on an 855px viewport,
+   which is most of the gap under the subheading. Shortening the box shrinks that
+   padding while keeping the pinned block near the middle of the screen. The runway is
+   derived from sticky.offsetHeight in JS, so the scroll distance follows automatically.
+   min-height keeps the 436px of content from being clipped on short viewports, and
+   max-height caps the dead space on tall ones, where 78vh would otherwise grow it back. */
+.cf-scroll-sticky{position:sticky;top:0;height:78vh;min-height:480px;max-height:620px;width:100%;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
 /* The CTA is pinned inside the sticky box alongside the row, so it can no longer
    scroll into view while the horizontal run is still in progress - which is what
    left a growing gap of unconsumed scroll distance between the cards and the buttons. */
