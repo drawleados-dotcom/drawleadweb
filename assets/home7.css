@@ -628,11 +628,13 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
  white-space:nowrap;text-align:center;
 }
 /* Each chip overlaps the one above it, so z-index climbs downward. Negative margins are
-   in em so the overlap scales with the chip rather than drifting at small widths. */
+   in em so the overlap scales with the chip rather than drifting at small widths.
+   Loosened from -.20em: the words still overlap, but each one clears the shadow of the
+   one above it instead of being tucked under it. */
 #method .mth-chip-1{width:56%;font-size:clamp(17px,1.87vw,27px);transform:rotate(-3deg);z-index:1}
-#method .mth-chip-2{width:83%;font-size:clamp(27px,3.05vw,44px);transform:rotate(1.8deg);margin-top:-.20em;z-index:2}
-#method .mth-chip-3{width:75%;font-size:clamp(21px,2.36vw,34px);transform:rotate(-1.8deg);margin-top:-.20em;z-index:3}
-#method .mth-chip-4{width:56%;font-size:clamp(19px,2.15vw,31px);transform:rotate(2.6deg);margin-top:-.20em;z-index:4}
+#method .mth-chip-2{width:83%;font-size:clamp(27px,3.05vw,44px);transform:rotate(1.8deg);margin-top:-.05em;z-index:2}
+#method .mth-chip-3{width:75%;font-size:clamp(21px,2.36vw,34px);transform:rotate(-1.8deg);margin-top:-.05em;z-index:3}
+#method .mth-chip-4{width:56%;font-size:clamp(19px,2.15vw,31px);transform:rotate(2.6deg);margin-top:-.05em;z-index:4}
 /* Wide button, as in the reference. #0B8043 rather than the brand #32B46F: white on the
    brand green is 2.3:1, and on the reference's lighter green 3.0:1, both under the 4.5:1
    this bold label needs. This shade clears it at 5.0:1. */
