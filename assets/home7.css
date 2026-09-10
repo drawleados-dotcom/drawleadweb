@@ -496,11 +496,24 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 }
 
 /* ── MARQUEE ── */
-.mq-wrap{overflow:hidden;border-bottom:1px solid var(--border);background:var(--white);padding:0}
-.mq-track{display:flex;width:max-content;animation:marquee 26s linear infinite}
-.mq-item{display:flex;align-items:center;gap:1rem;padding:.95rem 2.5rem;border-right:1px solid var(--border);white-space:nowrap}
-.mq-icon{width:14px;height:14px;color:var(--blue);flex-shrink:0}
-.mq-item span{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g500)}
+.mq-wrap{
+ position:relative;overflow:hidden;isolation:isolate;
+ border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+ background:linear-gradient(90deg,#f7faf8 0%,var(--white) 18%,var(--white) 82%,#f7faf8 100%);
+}
+.mq-wrap::before,.mq-wrap::after{
+ content:"";position:absolute;top:0;bottom:0;width:clamp(36px,7vw,112px);z-index:1;pointer-events:none;
+}
+.mq-wrap::before{left:0;background:linear-gradient(90deg,#f7faf8 8%,rgba(247,250,248,0))}
+.mq-wrap::after{right:0;background:linear-gradient(270deg,#f7faf8 8%,rgba(247,250,248,0))}
+.mq-track{display:flex;width:max-content;animation:marquee 34s linear infinite;will-change:transform}
+.mq-wrap:hover .mq-track{animation-play-state:paused}
+.mq-item{
+ display:flex;align-items:center;gap:.7rem;min-height:64px;padding:0 clamp(1.6rem,3vw,3.25rem);
+ border-right:1px solid var(--border);white-space:nowrap;
+}
+.mq-icon{width:16px;height:16px;color:var(--blue);flex-shrink:0}
+.mq-item span{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--g600)}
 
 /* ── FUNCTIONS (homepage) — minimal editorial cards, single row.
    Namespaced "cf-" (Core Functions) — deliberately NOT reusing .fn-* below, which is
