@@ -1069,17 +1069,11 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 }
 /* ── TECH ── */
 .tech-icon-new{
-  width:52px;height:52px;border-radius:13px;
+  width:56px;height:56px;border-radius:14px;
   display:flex;align-items:center;justify-content:center;
   margin-bottom:.25rem;flex-shrink:0;
   box-shadow:0 8px 24px rgba(0,0,0,.3);
 }
-/* Bolder and larger inside the tile. The marks were already filled shapes, but drawn at
-   0.5-0.95 white, which is what made them read soft rather than solid; the depth those
-   opacities gave is not worth the loss of weight at 30px on a green tile. */
-#tech .tech-icon-new svg{width:30px;height:30px}
-#tech .tech-icon-new svg [fill^="rgba(255,255,255"]{fill:#fff}
-#tech .tech-icon-new svg [stroke^="rgba(255,255,255"]{stroke:#fff}
 /* Dark base. This used to be var(--white) with a full-bleed ::before overlay
    painting the artwork and its scrim on top; with the overlay gone the white would
    show straight through under white card text, so the section owns the colour now.
@@ -1088,11 +1082,7 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 /* ══════ TECH — static card grid ══════
    padding-top is zeroed because .tech-head supplies it; the global section rule still
    provides the bottom padding, which the pin used to carry. */
-/* No vertical padding of its own. #method above and #cases below each carry 7rem, so
-   the section still has ~112px of air on each side of it without adding its own on top.
-   The horizontal gutter stays: the grid is capped at 1180px and centred, so it only
-   bites under ~1292px, where dropping it would put cards against the screen edge. */
-#tech{position:relative;padding-top:0;padding-bottom:0}
+#tech{position:relative;padding-top:0}
 /* Static 3-up grid, six cards in two rows. Was a horizontal scroll-jack: all six in one
    absolutely-positioned slot, moved per frame from scroll position, with only the
    active one legible. Now every card is readable at once and no JS runs. The .tech-track
@@ -1115,11 +1105,11 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
    pinned. #tech zeroes its own vertical padding because the pin used to supply all of
    it, so these two blocks carry their own. The artwork is transparent PNG and blends
    straight onto the section colour with no plate behind it. */
-#tech .tech-head{padding:0}
+#tech .tech-head{padding:7rem 0 0}
 #tech .tech-shot{max-width:1180px;margin:0 auto;padding:1rem 0 0}  /* matches .tech-grid so their edges line up */
 #tech .tech-shot img{display:block;width:100%;height:auto}
 @media(max-width:900px){
- #tech .tech-head{padding:0}
+ #tech .tech-head{padding:4.5rem 0 0}
  #tech .tech-shot{padding:.5rem 0 0}
 }
 
