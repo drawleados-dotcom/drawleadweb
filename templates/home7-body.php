@@ -313,10 +313,10 @@ include __DIR__ . '/partials/nav.php';
   <div class="sol-tag">An ERP shaped around how you actually work.</div>
   <p class="sol-desc">Off-the-shelf ERP forces your team to bend to the software. We build the opposite. Modules are mapped to your real workflows, your approval chains, your terminology, deployed as a system you own outright.</p>
   <ul class="sol-list">
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sol-benefit"><strong>Custom modules</strong><small>For your exact operating process</small></span></li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sol-benefit"><strong>Role-based access</strong><small>Approvals and audit trails built in</small></span></li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sol-benefit"><strong>Migration support</strong><small>From spreadsheets and legacy systems</small></span></li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sol-benefit"><strong>Seamless integrations</strong><small>Tally, banking and GST filing connected</small></span></li>
+   <li><span class="sol-check sol-check-modules" aria-hidden="true"></span><span class="sol-benefit"><strong>Custom modules</strong><small>For your exact operating process</small></span></li>
+   <li><span class="sol-check sol-check-access" aria-hidden="true"></span><span class="sol-benefit"><strong>Role-based access</strong><small>Approvals and audit trails built in</small></span></li>
+   <li><span class="sol-check sol-check-migration" aria-hidden="true"></span><span class="sol-benefit"><strong>Migration support</strong><small>From spreadsheets and legacy systems</small></span></li>
+   <li><span class="sol-check sol-check-integrations" aria-hidden="true"></span><span class="sol-benefit"><strong>Seamless integrations</strong><small>Tally, banking and GST filing connected</small></span></li>
   </ul>
   <div class="sol-metrics">
    <div><div class="sol-metric-v">100%</div><div class="sol-metric-l">Ownership</div></div>
@@ -337,10 +337,10 @@ include __DIR__ . '/partials/nav.php';
   <div class="sol-tag">From storefront to fulfilment, one connected stack.</div>
   <p class="sol-desc">Launch and scale an online store that talks directly to your inventory, billing, and delivery operations. No spreadsheets in between, no orders lost in the gap between platforms.</p>
   <ul class="sol-list">
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sol-benefit"><strong>Storefronts that convert</strong><small>Shopify, WooCommerce or custom built</small></span></li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sol-benefit"><strong>Live inventory sync</strong><small>Across every sales channel</small></span></li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sol-benefit"><strong>Automated workflows</strong><small>Orders, invoices and GST handled together</small></span></li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sol-benefit"><strong>End-to-end fulfilment</strong><small>Payments, logistics and returns connected</small></span></li>
+   <li><span class="sol-check sol-check-store" aria-hidden="true"></span><span class="sol-benefit"><strong>Storefronts that convert</strong><small>Shopify, WooCommerce or custom built</small></span></li>
+   <li><span class="sol-check sol-check-sync" aria-hidden="true"></span><span class="sol-benefit"><strong>Live inventory sync</strong><small>Across every sales channel</small></span></li>
+   <li><span class="sol-check sol-check-workflow" aria-hidden="true"></span><span class="sol-benefit"><strong>Automated workflows</strong><small>Orders, invoices and GST handled together</small></span></li>
+   <li><span class="sol-check sol-check-fulfilment" aria-hidden="true"></span><span class="sol-benefit"><strong>End-to-end fulfilment</strong><small>Payments, logistics and returns connected</small></span></li>
   </ul>
   <div class="sol-metrics">
    <div><div class="sol-metric-v">3x</div><div class="sol-metric-l">Faster launch</div></div>
@@ -361,10 +361,10 @@ include __DIR__ . '/partials/nav.php';
   <div class="sol-tag">Fix the leak between lead and conversion.</div>
   <p class="sol-desc">Most businesses don't have a traffic problem. They have a follow-up problem. Two engines run the funnel. Organic search that compounds over time, and paid campaigns that buy demand on demand.</p>
   <ul class="sol-list">
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sol-benefit"><strong>Technical SEO</strong><small>Core Web Vitals and site architecture</small></span></li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sol-benefit"><strong>Content engine</strong><small>On-page optimisation at scale</small></span></li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sol-benefit"><strong>Performance campaigns</strong><small>Google, Meta and LinkedIn activation</small></span></li>
-   <li><span class="sol-check"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 L4.7 9 L10 3.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sol-benefit"><strong>Instant follow-up</strong><small>WhatsApp and email on every lead</small></span></li>
+   <li><span class="sol-check sol-check-search" aria-hidden="true"></span><span class="sol-benefit"><strong>Technical SEO</strong><small>Core Web Vitals and site architecture</small></span></li>
+   <li><span class="sol-check sol-check-content" aria-hidden="true"></span><span class="sol-benefit"><strong>Content engine</strong><small>On-page optimisation at scale</small></span></li>
+   <li><span class="sol-check sol-check-growth" aria-hidden="true"></span><span class="sol-benefit"><strong>Performance campaigns</strong><small>Google, Meta and LinkedIn activation</small></span></li>
+   <li><span class="sol-check sol-check-message" aria-hidden="true"></span><span class="sol-benefit"><strong>Instant follow-up</strong><small>WhatsApp and email on every lead</small></span></li>
   </ul>
   <div class="sol-metrics">
    <div><div class="sol-metric-v">4x</div><div class="sol-metric-l">Organic traffic</div></div>
