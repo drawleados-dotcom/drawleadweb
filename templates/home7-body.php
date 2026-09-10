@@ -389,7 +389,7 @@ include __DIR__ . '/partials/nav.php';
       would have had to shrink to a ~100px strip. Copy and diagram scroll normally
       instead, and only the cards and CTA are pinned. -->
  <div class="tech-shot rv">
-  <img src="<?= asset_url('/assets/img/tech-stack.png') ?>" alt="Drawlead at the centre of an integration map connecting AWS, GitHub, Slack, Salesforce, Zapier, Cloudflare, SAP and Microsoft Copilot" decoding="async" fetchpriority="low">
+  <img src="<?= asset_url('/assets/img/tech-stack.webp') ?>" width="2177" height="826" alt="Drawlead at the centre of an integration map connecting AWS, GitHub, Claude, Slack, Salesforce, Microsoft Copilot, Zapier, Cloudflare, SAP and Make" decoding="async" fetchpriority="low">
  </div>
 
   <div class="tech-grid">
