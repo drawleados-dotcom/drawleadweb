@@ -1056,7 +1056,7 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
  font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--black);margin-bottom:.6rem;
 }
 .ind-rule{width:4px;height:18px;border-radius:2px;flex-shrink:0}
-.ind-rule-p{background:var(--g300)}
+.ind-rule-p{background:var(--rose)}  /* red marks the problems; grey read as disabled */
 .ind-rule-s{background:var(--blue)}
 .ind-line{
  display:flex;align-items:flex-start;gap:10px;padding:4.5px 0 4.5px 13px;
@@ -1065,13 +1065,20 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 }
 .ind-line svg{flex-shrink:0;margin-top:3px;opacity:.85;width:13px;height:13px}
 
+/* A filled button rather than a text link. #14855a, not the lighter #1c9558 used on the
+   icon tile: white on that is 3.7:1, under the 4.5:1 this label needs, while this shade
+   clears it at 4.6:1. */
 .ind-scard-cta{
- display:inline-flex;align-items:center;gap:8px;margin-top:.5rem;
- font-family:var(--font-body);font-size:15px;font-weight:600;color:var(--violet);text-decoration:none;
- transition:gap .2s ease;
+ display:inline-flex;align-items:center;gap:8px;margin-top:.85rem;
+ padding:11px 20px;border-radius:10px;
+ background:#14855a;color:#fff;text-decoration:none;
+ font-family:var(--font-body);font-size:14.5px;font-weight:600;
+ transition:background .2s ease,gap .2s ease;
 }
 .ind-scard-cta span{font-size:18px;line-height:1}
-.ind-scard-cta:hover{gap:14px}
+.ind-scard-cta:hover{background:#0f6f4a;gap:12px}
+/* the cross marks belong to the problems block, so they follow its red rule */
+.ind-block:has(.ind-rule-p) .ind-line svg{color:var(--rose);opacity:1}
 
 @media(max-width:700px){
  .ind-scard{width:min(340px,88vw);border-radius:22px}
