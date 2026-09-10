@@ -140,14 +140,7 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
  min-height:100vh;display:flex;align-items:center;justify-content:center;
  padding:7rem 3.5rem 4rem;overflow:hidden;border-bottom:1px solid var(--border);
  position:relative;color:var(--black);
- background-color:#FFFFFF;
- /* Soft #32B46F atmosphere, strongest just above centre and gone well before the
-    edges, so the white stays dominant and nothing reads as a coloured block. */
- background-image:
-  radial-gradient(ellipse 72% 62% at 50% 45%,
-   rgba(50,180,111,.055) 0%,
-   rgba(50,180,111,.025) 45%,
-   transparent 74%);
+ background-color:#FFFFFF;  /* the artwork below carries its own glow and grid */
 }
 
 /* Architectural planning grid: two 1px linear-gradient rules on a 36px pitch, laid in a
@@ -155,14 +148,18 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
    keeps the lines legible through the middle and dissolves them smoothly before they
    reach any edge, which is what separates this from a dashboard grid. Sits at z-index 0
    behind .hero-grid (z-index 2) and takes no pointer events. */
+/* Hero artwork: a band from under the header down past the trust metrics. It replaces
+   the CSS grid that used to live here rather than layering over it, because the image
+   is itself a perspective grid and the two would moire against each other.
+   cover with a top anchor keeps the artwork's own glow at the top of the band; the
+   mask fades it out before the band ends, so there is no hard horizontal edge across
+   the page where it stops. */
 #hero::before{
- content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
- background-image:
-  linear-gradient(to right,rgba(50,180,111,.085) 1px,transparent 1px),
-  linear-gradient(to bottom,rgba(50,180,111,.085) 1px,transparent 1px);
- background-size:36px 36px;
- -webkit-mask-image:radial-gradient(ellipse 64% 60% at 50% 47%,#000 18%,rgba(0,0,0,.5) 54%,transparent 84%);
- mask-image:radial-gradient(ellipse 64% 60% at 50% 47%,#000 18%,rgba(0,0,0,.5) 54%,transparent 84%);
+ content:'';position:absolute;top:0;left:0;right:0;height:660px;z-index:0;pointer-events:none;
+ background-image:url('/assets/img/hero-bg.webp');
+ background-size:cover;background-position:center top;background-repeat:no-repeat;
+ -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 56%,transparent 100%);
+ mask-image:linear-gradient(to bottom,#000 0%,#000 56%,transparent 100%);
 }
 
 /* ══════════ HERO — star dust + green shooting stars ══════════
