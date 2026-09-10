@@ -1011,6 +1011,42 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 }
 .ind-visual svg{width:54px;height:54px;stroke:#fff;fill:none}
 
+/* ── Industry marks: green on a soft tint ─────────────────────────────────────
+   The tile was a saturated #1c9558 plate carrying white glyphs. It is a subtle tint
+   now, so the glyphs invert to green to stay readable on it.
+   The recolour is a per-alpha remap rather than a blanket fill. These marks are built
+   from layered shapes at graded opacity - the construction roof is a polygon at .3
+   sitting over the buildings behind it - so flattening them all to full strength would
+   paint the front shape straight over the composition. Each alpha maps to green at a
+   slightly higher one, which reads bolder while keeping the depth.
+   Scoped to #industries because includes/industries.php also feeds the nav mega-menu
+   and all twenty industry pages, which keep the white-on-green treatment. */
+#industries .ind-visual{
+ background:rgba(50,180,111,.12);
+ border:1px solid rgba(50,180,111,.22);
+ box-shadow:none;
+}
+#industries .ind-visual svg{stroke:#1c9558;fill:none}
+#industries .ind-visual svg [fill="rgba(255,255,255,.9)"]  {fill:rgba(28,149,88,1)}
+#industries .ind-visual svg [fill="rgba(255,255,255,.85)"] {fill:rgba(28,149,88,.95)}
+#industries .ind-visual svg [fill="rgba(255,255,255,.8)"]  {fill:rgba(28,149,88,.92)}
+#industries .ind-visual svg [fill="rgba(255,255,255,.75)"] {fill:rgba(28,149,88,.88)}
+#industries .ind-visual svg [fill="rgba(255,255,255,.7)"]  {fill:rgba(28,149,88,.82)}
+#industries .ind-visual svg [fill="rgba(255,255,255,.65)"] {fill:rgba(28,149,88,.76)}
+#industries .ind-visual svg [fill="rgba(255,255,255,.6)"]  {fill:rgba(28,149,88,.70)}
+#industries .ind-visual svg [fill="rgba(255,255,255,.5)"]  {fill:rgba(28,149,88,.58)}
+#industries .ind-visual svg [fill="rgba(255,255,255,.4)"]  {fill:rgba(28,149,88,.46)}
+#industries .ind-visual svg [fill="rgba(255,255,255,.3)"]  {fill:rgba(28,149,88,.34)}
+#industries .ind-visual svg [fill="rgba(255,255,255,.2)"]  {fill:rgba(28,149,88,.24)}
+#industries .ind-visual svg [fill="rgba(255,255,255,.15)"] {fill:rgba(28,149,88,.18)}
+#industries .ind-visual svg [stroke="white"]               {stroke:rgba(28,149,88,1)}
+#industries .ind-visual svg [stroke="rgba(255,255,255,.9)"] {stroke:rgba(28,149,88,1)}
+#industries .ind-visual svg [stroke="rgba(255,255,255,.85)"]{stroke:rgba(28,149,88,.95)}
+#industries .ind-visual svg [stroke="rgba(255,255,255,.75)"]{stroke:rgba(28,149,88,.88)}
+#industries .ind-visual svg [stroke="rgba(255,255,255,.7)"] {stroke:rgba(28,149,88,.82)}
+#industries .ind-visual svg [stroke="rgba(255,255,255,.6)"] {stroke:rgba(28,149,88,.70)}
+#industries .ind-visual svg [stroke="rgba(20,133,90,.4)"]   {stroke:rgba(20,133,90,.55)}
+
 .ind-scard-title{font-family:var(--font-display);font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1.15;color:var(--black);margin-bottom:.3rem}
 .ind-scard-tag{font-family:var(--font-body);font-size:16px;font-weight:400;color:var(--g500);margin-bottom:1.5rem}
 
