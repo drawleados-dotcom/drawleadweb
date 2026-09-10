@@ -668,6 +668,69 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
 </section>
 
 <!-- DASHBOARDS -->
+<?php
+/*
+ * Platform Dashboards — six product mock-ups.
+ *
+ * These are pictures of an interface, not an interface: every control (period
+ * select, kebab, "View report") is a <span>, never an <a> or <button>, so the
+ * section adds no dead links and nothing focusable that leads nowhere.
+ *
+ * The icon set and the three builders below exist so each card's markup stays
+ * readable — six cards x (1 module glyph + 3 KPI glyphs + chrome) is otherwise
+ * ~120 lines of inline SVG. All styling lives in /assets/home7.css under
+ * #dashboards; .dash-* / .d-* are shared with eleven other templates, so every
+ * rule there is scoped to the section id.
+ */
+$dIco = [
+ 'info'   => '<svg class="d-i" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.3" stroke="currentColor" stroke-width="1.3"/><path d="M8 7.3v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="4.8" r=".95" fill="currentColor"/></svg>',
+ 'chev'   => '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6.5 8 10.5 12 6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ 'kebab'  => '<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg>',
+ 'arrow'  => '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+
+ 'bars'   => '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="13" width="4.6" height="8" rx="1.3"/><rect x="9.7" y="8" width="4.6" height="13" rx="1.3"/><rect x="16.4" y="3" width="4.6" height="18" rx="1.3"/></svg>',
+ 'trend'  => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5l5.5-5.5 3.5 3.5L21 5.5"/><path d="M15 5.5h6v6"/></svg>',
+ 'users'  => '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9.2" cy="7.6" r="4.1"/><path d="M1.4 20.8c0-4.3 3.5-6.9 7.8-6.9s7.8 2.6 7.8 6.9z"/><circle cx="18.3" cy="9" r="3"/><path d="M17.2 20.8h5.4v-1c0-2.7-1.9-4.4-4.3-4.4-.8 0-1.6.2-2.2.5.7 1.4 1.1 3 1.1 4.9z"/></svg>',
+ 'wallet' => '<svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="M4.5 3.5h12a1.4 1.4 0 0 1 0 2.8h-12a1.4 1.4 0 0 1 0-2.8z"/><path d="M3.6 5.4h16.8A2.6 2.6 0 0 1 23 8v10.4a2.6 2.6 0 0 1-2.6 2.6H3.6A2.6 2.6 0 0 1 1 18.4V8a2.6 2.6 0 0 1 2.6-2.6zm14.6 9.5a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4z"/></svg>',
+ 'check'  => '<svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="M12 1.6a10.4 10.4 0 1 0 0 20.8 10.4 10.4 0 0 0 0-20.8zm5.3 7.7-6.4 6.4a1.3 1.3 0 0 1-1.8 0l-3.1-3.1a1.3 1.3 0 0 1 1.8-1.8l2.2 2.2 5.5-5.5a1.3 1.3 0 0 1 1.8 1.8z"/></svg>',
+ 'clock'  => '<svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="M12 1.6a10.4 10.4 0 1 0 0 20.8 10.4 10.4 0 0 0 0-20.8zm1.3 5.6v4.9l3.4 2a1.3 1.3 0 1 1-1.3 2.2l-4-2.4a1.3 1.3 0 0 1-.6-1.1V7.2a1.3 1.3 0 0 1 2.5 0z"/></svg>',
+ 'layers' => '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.8 22.6 7 12 12.2 1.4 7z"/><path d="M2.6 11.1 12 15.7l9.4-4.6 1.2.6a1 1 0 0 1 0 1.8L12 18.7 1.4 13.5a1 1 0 0 1 0-1.8z" opacity=".72"/><path d="M2.6 16.2 12 20.8l9.4-4.6 1.2.6a1 1 0 0 1 0 1.8L12 23.8 1.4 18.6a1 1 0 0 1 0-1.8z" opacity=".45"/></svg>',
+ 'box'    => '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.9 21.8 6 12 10.1 2.2 6z"/><path d="M1.4 7.6 11 11.6v10.6L1.4 18.1z" opacity=".72"/><path d="M22.6 7.6 13 11.6v10.6l9.6-4.1z" opacity=".45"/></svg>',
+ 'mega'   => '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.6 2.4a1.3 1.3 0 0 1 2.1 1v17.2a1.3 1.3 0 0 1-2.1 1L11 15.6V8.4z"/><path d="M2.2 9.3A1.9 1.9 0 0 1 4.1 7.4h5.2v9.2H4.1a1.9 1.9 0 0 1-1.9-1.9z" opacity=".72"/><path d="M5.2 18h3.4l.9 3.7a1.1 1.1 0 0 1-1 1.4H7a1.1 1.1 0 0 1-1.1-.9z" opacity=".72"/></svg>',
+ 'target' => '<svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="M12 1.7a10.3 10.3 0 1 0 0 20.6 10.3 10.3 0 0 0 0-20.6zm0 2.6a7.7 7.7 0 1 1 0 15.4 7.7 7.7 0 0 1 0-15.4z"/><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2.6a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8z"/></svg>',
+ 'gauge'  => '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3.6A10.4 10.4 0 0 0 2.6 18.4a1.6 1.6 0 0 0 1.4.8h16a1.6 1.6 0 0 0 1.4-.8A10.4 10.4 0 0 0 12 3.6zm0 2.8a7.6 7.6 0 0 1 6.9 10.6H5.1A7.6 7.6 0 0 1 12 6.4z" opacity=".55"/><path d="M16.4 9.1a1.3 1.3 0 0 1 .3 1.9l-3.3 3.9a1.9 1.9 0 1 1-2.5-2.1l3.7-3.5a1.3 1.3 0 0 1 1.8-.2z"/></svg>',
+];
+
+/* One KPI tile. $tone picks the tint (g/b/o); $trend is 'up' or 'down'. */
+$dKpi = function ($tone, $label, $value, $trend, $delta, $note, $icon) use ($dIco) {
+ return '<div class="d-k d-k-' . $tone . '">'
+      . '<div class="d-k-txt">'
+      .  '<div class="d-kl">' . $label . $dIco['info'] . '</div>'
+      .  '<div class="d-kv">' . $value . '</div>'
+      .  '<div class="d-kd"><span class="d-' . $trend . '">'
+      .   ($trend === 'up' ? '&uarr;' : '&darr;') . ' ' . $delta . '</span> ' . $note . '</div>'
+      . '</div>'
+      . '<div class="d-k-ico">' . $dIco[$icon] . '</div>'
+      . '</div>';
+};
+
+/* A heading inside a card, with its inert "view" affordance. */
+$dSec = function ($title, $link, $push = false) use ($dIco) {
+ return '<div class="d-sec' . ($push ? ' d-sec-push' : '') . '"><div class="d-sec-t">' . $title . '</div>'
+      . '<span class="d-sec-a">' . $link . $dIco['arrow'] . '</span></div>';
+};
+
+/* Card chrome: green module tile, title, subtitle, period select, kebab. */
+$dHead = function ($glyph, $name, $sub, $period) use ($dIco) {
+ return '<div class="dash-head">'
+      . '<div class="dash-ico">' . $glyph . '</div>'
+      . '<div class="dash-titles"><div class="dash-mod-name">' . $name . '</div>'
+      .  '<div class="dash-mod-sub">' . $sub . '</div></div>'
+      . '<div class="dash-tools"><span class="dash-sel">' . $period . $dIco['chev'] . '</span>'
+      .  '<span class="dash-kebab">' . $dIco['kebab'] . '</span></div>'
+      . '</div>';
+};
+?>
 <section id="dashboards" style="background:var(--bg2)">
  <div class="eyebrow rv"><span class="eyebrow-text">Platform Dashboards</span></div>
  <h2 class="sec-h rv">Every Module. <span class="fade">One Screen.</span></h2>
@@ -676,179 +739,215 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
 
   <!-- SALES -->
   <div class="dash-card d1">
-    <div class="dash-head">
-      <div class="dash-ico">
-        <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><rect x="3" y="22" width="6" height="10" rx="1" fill="rgba(255,255,255,.5)"/><rect x="12" y="14" width="6" height="18" rx="1" fill="rgba(255,255,255,.75)"/><rect x="21" y="6" width="6" height="26" rx="1" fill="white"/><polyline points="6,18 15,10 24,3" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="3" r="3" fill="white"/></svg>
-      </div>
-      <div class="dash-mod-name">Sales Pipeline</div>
+   <?= $dHead(
+    '<svg viewBox="0 0 36 36" fill="none"><rect x="3" y="22" width="6" height="10" rx="1" fill="rgba(255,255,255,.5)"/><rect x="12" y="14" width="6" height="18" rx="1" fill="rgba(255,255,255,.75)"/><rect x="21" y="6" width="6" height="26" rx="1" fill="white"/><polyline points="6,18 15,10 24,3" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="3" r="3" fill="white"/></svg>',
+    'Sales Pipeline', 'Track your revenue and deal progress', 'This Year') ?>
+   <div class="dash-body">
+    <div class="d-krow">
+     <?= $dKpi('g', 'Total Revenue', '&#8377;2.4 Cr', 'up', '18%', 'vs last year',  'bars')  ?>
+     <?= $dKpi('b', 'Growth',        '+28%',          'up', '6%',  'vs last month', 'trend') ?>
+     <?= $dKpi('o', 'Leads',         '247',           'up', '12%', 'vs last month', 'users') ?>
     </div>
-    <div class="dash-body">
-      <div class="d-krow">
-        <div class="d-k"><div class="d-kv">₹2.4Cr</div><div class="d-kl">Revenue</div></div>
-        <div class="d-k"><div class="d-kv">↑ 28%</div><div class="d-kl">Growth</div></div>
-        <div class="d-k"><div class="d-kv">247</div><div class="d-kl">Leads</div></div>
+
+    <?= $dSec('Monthly Revenue', 'View Report') ?>
+    <div class="d-chart">
+     <div class="d-yax"><span>&#8377;60L</span><span>&#8377;40L</span><span>&#8377;20L</span><span>&#8377;0</span></div>
+     <div class="d-plotwrap">
+      <div class="d-plot">
+       <div class="d-grid"><i></i><i></i><i></i><i></i></div>
+       <div class="d-bars">
+        <div class="d-bar" style="height:36%"></div>
+        <div class="d-bar" style="height:40%"></div>
+        <div class="d-bar" style="height:43%"></div>
+        <div class="d-bar" style="height:70%"></div>
+        <div class="d-bar" style="height:62%"></div>
+        <div class="d-bar d-bar-hi" style="height:78%"></div>
+       </div>
       </div>
-      <div class="d-lbl">Monthly Revenue</div>
-      <div class="d-bars">
-        <div class="d-bar" style="height:40%"><span>J</span></div>
-        <div class="d-bar" style="height:55%"><span>F</span></div>
-        <div class="d-bar" style="height:48%"><span>M</span></div>
-        <div class="d-bar" style="height:72%"><span>A</span></div>
-        <div class="d-bar" style="height:64%"><span>M</span></div>
-        <div class="d-bar" style="height:90%;background:#32b46f"><span style="color:#fff">J</span></div>
-      </div>
-      <div class="d-hr"></div>
-      <div class="d-rows">
-        <div class="d-row"><div class="d-dot" style="background:#32b46f"></div>Infra Corp Won<span class="d-val" style="color:#32b46f">₹12L</span></div>
-        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>MedPlus Proposal<span class="d-val" style="color:#14855a">₹8L</span></div>
-        <div class="d-row"><div class="d-dot" style="background:#23a065"></div>LogiTrack Demo<span class="d-val" style="color:#23a065">₹6L</span></div>
-      </div>
+      <div class="d-xax"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+     </div>
     </div>
+
+    <?= $dSec('Recent Deals', 'View All', true) ?>
+    <div class="d-rows">
+     <div class="d-row"><span class="d-dot"></span><div class="d-row-txt"><div class="d-row-t">Infra Corp Won</div><div class="d-row-s">Enterprise Solution</div></div><div class="d-row-v">&#8377;12L</div><div class="d-row-d">Jun 15, 2024</div></div>
+     <div class="d-row"><span class="d-dot"></span><div class="d-row-txt"><div class="d-row-t">MedPlus Proposal</div><div class="d-row-s">IT Infrastructure</div></div><div class="d-row-v">&#8377;8L</div><div class="d-row-d">Jun 12, 2024</div></div>
+     <div class="d-row"><span class="d-dot"></span><div class="d-row-txt"><div class="d-row-t">LogiTrack Demo</div><div class="d-row-s">Logistics Management</div></div><div class="d-row-v">&#8377;6L</div><div class="d-row-d">Jun 10, 2024</div></div>
+    </div>
+   </div>
   </div>
 
   <!-- FINANCE -->
   <div class="dash-card d2">
-    <div class="dash-head">
-      <div class="dash-ico">
-        <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><ellipse cx="18" cy="10" rx="12" ry="4.5" fill="white"/><path d="M6 10 Q6 17 18 17 Q30 17 30 10" fill="rgba(255,255,255,.7)"/><path d="M6 17 Q6 24 18 24 Q30 24 30 17" fill="rgba(255,255,255,.45)"/><path d="M6 24 Q6 31 18 31 Q30 31 30 24" fill="rgba(255,255,255,.25)"/></svg>
-      </div>
-      <div class="dash-mod-name">Finance and Billing</div>
+   <?= $dHead(
+    '<svg viewBox="0 0 36 36" fill="none"><ellipse cx="18" cy="10" rx="12" ry="4.5" fill="white"/><path d="M6 10 Q6 17 18 17 Q30 17 30 10" fill="rgba(255,255,255,.7)"/><path d="M6 17 Q6 24 18 24 Q30 24 30 17" fill="rgba(255,255,255,.45)"/><path d="M6 24 Q6 31 18 31 Q30 31 30 24" fill="rgba(255,255,255,.25)"/></svg>',
+    'Finance &amp; Billing', 'Monitor invoices, collections and cash flow', 'This Quarter') ?>
+   <div class="dash-body">
+    <div class="d-krow">
+     <?= $dKpi('g', 'Invoiced',    '&#8377;86L', 'up',   '12%', 'vs last quarter', 'wallet') ?>
+     <?= $dKpi('b', 'Collected',   '&#8377;72L', 'up',   '9%',  'vs last quarter', 'check')  ?>
+     <?= $dKpi('o', 'Outstanding', '&#8377;14L', 'down', '4%',  'vs last quarter', 'clock')  ?>
     </div>
-    <div class="dash-body">
-      <div class="d-krow">
-        <div class="d-k"><div class="d-kv">₹86L</div><div class="d-kl">Invoiced</div></div>
-        <div class="d-k"><div class="d-kv">₹72L</div><div class="d-kl">Collected</div></div>
-        <div class="d-k"><div class="d-kv">₹14L</div><div class="d-kl">Pending</div></div>
-      </div>
-      <div class="d-lbl">Collection Funnel</div>
-      <div class="d-funnel">
-        <div class="d-fbar" style="width:100%;background:rgba(50,180,111,.12);color:#32b46f">Leads · 847</div>
-        <div class="d-fbar" style="width:72%;background:rgba(50,180,111,.2);color:#32b46f">Qualified · 612</div>
-        <div class="d-fbar" style="width:48%;background:rgba(50,180,111,.32);color:#32b46f">Proposals · 406</div>
-        <div class="d-fbar" style="width:28%;background:#32b46f;color:#fff">Closed · 237</div>
-      </div>
-      <div class="d-rows">
-        <div class="d-row"><div class="d-dot" style="background:#32b46f"></div>GST filed on time<span class="d-val" style="color:#32b46f">✓</span></div>
-        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>3 invoices overdue<span class="d-val" style="color:#14855a">!</span></div>
-      </div>
+
+    <?= $dSec('Collection Funnel', 'View Breakdown') ?>
+    <div class="d-funnel">
+     <div class="d-fbar" style="width:100%"><span>Leads</span><b>847</b><em>100%</em></div>
+     <div class="d-fbar d-fbar-2" style="width:82%"><span>Qualified</span><b>612</b><em>72%</em></div>
+     <div class="d-fbar d-fbar-3" style="width:63%"><span>Proposals</span><b>406</b><em>48%</em></div>
+     <div class="d-fbar d-fbar-4" style="width:44%"><span>Closed</span><b>237</b><em>28%</em></div>
     </div>
+
+    <?= $dSec('Recent Activity', 'View Ledger', true) ?>
+    <div class="d-rows">
+     <div class="d-row"><span class="d-dot"></span><div class="d-row-txt"><div class="d-row-t">GST return filed</div><div class="d-row-s">Q1 FY 2024-25</div></div><div class="d-row-v">On time</div><div class="d-row-d">Jun 14, 2024</div></div>
+     <div class="d-row"><span class="d-dot d-dot-w"></span><div class="d-row-txt"><div class="d-row-t">Invoice #4821 overdue</div><div class="d-row-s">Sterling Traders</div></div><div class="d-row-v d-row-v-w">&#8377;3.2L</div><div class="d-row-d">Jun 09, 2024</div></div>
+     <div class="d-row"><span class="d-dot"></span><div class="d-row-txt"><div class="d-row-t">Payment received</div><div class="d-row-s">Infra Corp</div></div><div class="d-row-v">&#8377;12L</div><div class="d-row-d">Jun 07, 2024</div></div>
+    </div>
+   </div>
   </div>
 
   <!-- OPERATIONS -->
   <div class="dash-card d3">
-    <div class="dash-head">
-      <div class="dash-ico">
-        <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="6.5" fill="white"/><circle cx="18" cy="18" r="3" fill="rgba(50,180,111,.7)"/><rect x="16" y="2" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="16" y="28" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="2" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="28" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/></svg>
-      </div>
-      <div class="dash-mod-name">Operations</div>
+   <?= $dHead(
+    '<svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="6.5" fill="white"/><circle cx="18" cy="18" r="3" fill="rgba(50,180,111,.7)"/><rect x="16" y="2" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="16" y="28" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="2" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="28" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/></svg>',
+    'Operations', 'Track tasks, vendors and delivery timelines', 'This Month') ?>
+   <div class="dash-body">
+    <div class="d-krow">
+     <?= $dKpi('g', 'Total Tasks',    '1,248', 'up', '6%', 'vs last month', 'layers') ?>
+     <?= $dKpi('b', 'On-Time Rate',   '94%',   'up', '3%', 'vs last month', 'clock')  ?>
+     <?= $dKpi('o', 'Vendors',        '38',    'up', '2',  'vs last month', 'box')    ?>
     </div>
-    <div class="dash-body">
-      <div class="d-krow">
-        <div class="d-k"><div class="d-kv">1,248</div><div class="d-kl">Tasks</div></div>
-        <div class="d-k"><div class="d-kv">94%</div><div class="d-kl">On Time</div></div>
-        <div class="d-k"><div class="d-kv">38</div><div class="d-kl">Vendors</div></div>
-      </div>
-      <div class="d-lbl">Task Status</div>
-      <div class="d-status">
-        <div class="d-sbox" style="background:rgba(50,180,111,.08);border:1px solid rgba(50,180,111,.2)"><div class="d-sv" style="color:#32b46f">842</div><div class="d-sl">Done</div></div>
-        <div class="d-sbox" style="background:rgba(35,160,101,.08);border:1px solid rgba(35,160,101,.2)"><div class="d-sv" style="color:#23a065">284</div><div class="d-sl">Active</div></div>
-        <div class="d-sbox" style="background:rgba(20,133,90,.08);border:1px solid rgba(20,133,90,.2)"><div class="d-sv" style="color:#14855a">104</div><div class="d-sl">Review</div></div>
-        <div class="d-sbox" style="background:rgba(50,180,111,.06);border:1px solid rgba(50,180,111,.15)"><div class="d-sv" style="color:#32b46f">18</div><div class="d-sl">Late</div></div>
-      </div>
-      <div class="d-rows">
-        <div class="d-row"><div class="d-dot" style="background:#32b46f"></div>Warehouse restock done<span class="d-val" style="color:#32b46f">✓</span></div>
-        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>Vendor delay Site B<span class="d-val" style="color:#14855a">Alert</span></div>
-      </div>
+
+    <?= $dSec('Task Status', 'View Board') ?>
+    <div class="d-status">
+     <div class="d-sbox"><div class="d-sv">842</div><div class="d-sl">Done</div><div class="d-sbar"><i style="width:100%"></i></div></div>
+     <div class="d-sbox d-sbox-2"><div class="d-sv">284</div><div class="d-sl">Active</div><div class="d-sbar"><i style="width:34%"></i></div></div>
+     <div class="d-sbox d-sbox-3"><div class="d-sv">104</div><div class="d-sl">In Review</div><div class="d-sbar"><i style="width:12%"></i></div></div>
+     <div class="d-sbox d-sbox-4"><div class="d-sv">18</div><div class="d-sl">Overdue</div><div class="d-sbar"><i style="width:4%"></i></div></div>
     </div>
+
+    <?= $dSec('Recent Activity', 'View All', true) ?>
+    <div class="d-rows">
+     <div class="d-row"><span class="d-dot"></span><div class="d-row-txt"><div class="d-row-t">Warehouse restock closed</div><div class="d-row-s">Chennai &middot; Hub 2</div></div><div class="d-row-v">Done</div><div class="d-row-d">Jun 13, 2024</div></div>
+     <div class="d-row"><span class="d-dot d-dot-w"></span><div class="d-row-txt"><div class="d-row-t">Vendor delay flagged</div><div class="d-row-s">Site B &middot; Steel supply</div></div><div class="d-row-v d-row-v-w">2 days</div><div class="d-row-d">Jun 11, 2024</div></div>
+     <div class="d-row"><span class="d-dot"></span><div class="d-row-txt"><div class="d-row-t">Dispatch schedule approved</div><div class="d-row-s">Week 24</div></div><div class="d-row-v">126 orders</div><div class="d-row-d">Jun 10, 2024</div></div>
+    </div>
+   </div>
   </div>
 
   <!-- HR -->
   <div class="dash-card d1">
-    <div class="dash-head">
-      <div class="dash-ico">
-        <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><circle cx="13" cy="11" r="6" fill="white"/><circle cx="25" cy="13" r="4.5" fill="rgba(255,255,255,.6)"/><path d="M1 32 C1 23 7 20 13 20 C19 20 25 23 25 32 Z" fill="rgba(255,255,255,.8)"/><path d="M25 26 C25 23 28 21 31 21 C34 21 36 23 36 26 L36 32 L25 32 Z" fill="rgba(255,255,255,.4)"/></svg>
-      </div>
-      <div class="dash-mod-name">HR and Payroll</div>
+   <?= $dHead(
+    '<svg viewBox="0 0 36 36" fill="none"><circle cx="13" cy="11" r="6" fill="white"/><circle cx="25" cy="13" r="4.5" fill="rgba(255,255,255,.6)"/><path d="M1 32 C1 23 7 20 13 20 C19 20 25 23 25 32 Z" fill="rgba(255,255,255,.8)"/><path d="M25 26 C25 23 28 21 31 21 C34 21 36 23 36 26 L36 32 L25 32 Z" fill="rgba(255,255,255,.4)"/></svg>',
+    'HR &amp; Payroll', 'Manage headcount, attendance and payroll', 'This Month') ?>
+   <div class="dash-body">
+    <div class="d-krow">
+     <?= $dKpi('g', 'Total Staff', '248',        'up', '8',    'vs last month', 'users')  ?>
+     <?= $dKpi('b', 'Attendance',  '97.4%',      'up', '1.2%', 'vs last month', 'check')  ?>
+     <?= $dKpi('o', 'Payroll Run', '&#8377;34L', 'up', '5%',   'vs last month', 'wallet') ?>
     </div>
-    <div class="dash-body">
-      <div class="d-krow">
-        <div class="d-k"><div class="d-kv">248</div><div class="d-kl">Staff</div></div>
-        <div class="d-k"><div class="d-kv">97.4%</div><div class="d-kl">Present</div></div>
-        <div class="d-k"><div class="d-kv">₹34L</div><div class="d-kl">Payroll</div></div>
-      </div>
-      <div class="d-lbl">Dept. Headcount</div>
-      <div class="d-hbars">
-        <div class="d-hbar"><span>Engineering</span><div class="d-track"><div class="d-fill" style="width:80%;background:#32b46f"></div></div><span>80</span></div>
-        <div class="d-hbar"><span>Sales</span><div class="d-track"><div class="d-fill" style="width:60%;background:#23a065"></div></div><span>60</span></div>
-        <div class="d-hbar"><span>Operations</span><div class="d-track"><div class="d-fill" style="width:52%;background:#14855a"></div></div><span>52</span></div>
-        <div class="d-hbar"><span>Finance</span><div class="d-track"><div class="d-fill" style="width:36%;background:#32b46f"></div></div><span>36</span></div>
-        <div class="d-hbar"><span>HR</span><div class="d-track"><div class="d-fill" style="width:20%;background:#14855a"></div></div><span>20</span></div>
-      </div>
+
+    <?= $dSec('Department Headcount', 'View Directory') ?>
+    <div class="d-hbars">
+     <div class="d-hbar"><span>Engineering</span><div class="d-track"><div class="d-fill" style="width:100%"></div></div><span>80</span></div>
+     <div class="d-hbar"><span>Sales</span><div class="d-track"><div class="d-fill" style="width:75%"></div></div><span>60</span></div>
+     <div class="d-hbar"><span>Operations</span><div class="d-track"><div class="d-fill" style="width:65%"></div></div><span>52</span></div>
+     <div class="d-hbar"><span>Finance</span><div class="d-track"><div class="d-fill" style="width:45%"></div></div><span>36</span></div>
+     <div class="d-hbar"><span>HR</span><div class="d-track"><div class="d-fill" style="width:25%"></div></div><span>20</span></div>
     </div>
+
+    <?= $dSec('Recent Activity', 'View All', true) ?>
+    <div class="d-rows">
+     <div class="d-row"><span class="d-dot"></span><div class="d-row-txt"><div class="d-row-t">June payroll processed</div><div class="d-row-s">248 employees</div></div><div class="d-row-v">&#8377;34L</div><div class="d-row-d">Jun 01, 2024</div></div>
+     <div class="d-row"><span class="d-dot"></span><div class="d-row-txt"><div class="d-row-t">6 new joiners onboarded</div><div class="d-row-s">Engineering &middot; Sales</div></div><div class="d-row-v">Complete</div><div class="d-row-d">Jun 03, 2024</div></div>
+     <div class="d-row"><span class="d-dot d-dot-w"></span><div class="d-row-txt"><div class="d-row-t">4 leave requests pending</div><div class="d-row-s">Awaiting manager sign-off</div></div><div class="d-row-v d-row-v-w">Pending</div><div class="d-row-d">Jun 12, 2024</div></div>
+    </div>
+   </div>
   </div>
 
   <!-- MARKETING -->
   <div class="dash-card d2">
-    <div class="dash-head">
-      <div class="dash-ico">
-        <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><path d="M4 13 L4 23 L10 23 L10 13 Z" fill="rgba(255,255,255,.6)"/><path d="M10 13 L28 5 L28 31 L10 23 Z" fill="white"/><path d="M30 14 Q36 18 30 22" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2.5" stroke-linecap="round"/></svg>
-      </div>
-      <div class="dash-mod-name">Marketing</div>
+   <?= $dHead(
+    '<svg viewBox="0 0 36 36" fill="none"><path d="M4 13 L4 23 L10 23 L10 13 Z" fill="rgba(255,255,255,.6)"/><path d="M10 13 L28 5 L28 31 L10 23 Z" fill="white"/><path d="M30 14 Q36 18 30 22" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2.5" stroke-linecap="round"/></svg>',
+    'Marketing', 'Measure campaigns, reach and engagement', 'Last 30 Days') ?>
+   <div class="dash-body">
+    <div class="d-krow">
+     <?= $dKpi('g', 'Campaigns',   '14',   'up', '3',   'vs last month', 'mega')   ?>
+     <?= $dKpi('b', 'Engagement',  '+44%', 'up', '12%', 'vs last month', 'trend')  ?>
+     <?= $dKpi('o', 'Total Reach', '8.2K', 'up', '18%', 'vs last month', 'target') ?>
     </div>
-    <div class="dash-body">
-      <div class="d-krow">
-        <div class="d-k"><div class="d-kv">14</div><div class="d-kl">Campaigns</div></div>
-        <div class="d-k"><div class="d-kv">↑ 44%</div><div class="d-kl">Engage.</div></div>
-        <div class="d-k"><div class="d-kv">8.2K</div><div class="d-kl">Reach</div></div>
-      </div>
-      <div class="d-lbl">Channel Performance</div>
-      <div class="d-channels">
-        <div class="d-ch">
-          <div class="d-ch-ico" style="background:rgba(50,180,111,.1)"><svg fill="none" stroke="#32b46f" stroke-width="2" viewBox="0 0 24 24"><path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg></div>
-          <div class="d-ch-name">Email</div><div class="d-ch-pct">42%</div>
-          <div class="d-ch-track"><div class="d-ch-fill" style="width:42%;background:#32b46f"></div></div>
-        </div>
-        <div class="d-ch">
-          <div class="d-ch-ico" style="background:rgba(35,160,101,.1)"><svg fill="none" stroke="#23a065" stroke-width="2" viewBox="0 0 24 24"><path d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501"/></svg></div>
-          <div class="d-ch-name">WhatsApp</div><div class="d-ch-pct">31%</div>
-          <div class="d-ch-track"><div class="d-ch-fill" style="width:31%;background:#23a065"></div></div>
-        </div>
-        <div class="d-ch">
-          <div class="d-ch-ico" style="background:rgba(20,133,90,.1)"><svg fill="none" stroke="#14855a" stroke-width="2" viewBox="0 0 24 24"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3"/></svg></div>
-          <div class="d-ch-name">Social</div><div class="d-ch-pct">27%</div>
-          <div class="d-ch-track"><div class="d-ch-fill" style="width:27%;background:#14855a"></div></div>
-        </div>
-      </div>
+
+    <?= $dSec('Channel Performance', 'View Report') ?>
+    <div class="d-channels">
+     <div class="d-ch">
+      <div class="d-ch-ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 4.5h18A1.5 1.5 0 0 1 22.5 6v.4l-9.7 6a1.5 1.5 0 0 1-1.6 0l-9.7-6V6A1.5 1.5 0 0 1 3 4.5zM1.5 9.1l8.9 5.5a3 3 0 0 0 3.2 0l8.9-5.5V18a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 18z"/></svg></div>
+      <div class="d-ch-txt"><div class="d-ch-name">Email</div><div class="d-ch-sub">3,441 opens</div></div>
+      <div class="d-ch-right"><div class="d-ch-pct">42%</div><div class="d-ch-track"><div class="d-ch-fill" style="width:42%"></div></div></div>
+     </div>
+     <div class="d-ch">
+      <div class="d-ch-ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2a9.6 9.6 0 0 0-8.2 14.6L2.4 21.8l5.2-1.3A9.6 9.6 0 1 0 12 2.2zm5 13.4c-.2.6-1.2 1.2-1.7 1.2-1.3.1-1.4.9-4.6-.8s-3.7-3.9-3.8-4.1c-.2-.2-.9-1.3-.8-2.4s.7-1.6 1-1.8c.2-.2.5-.2.6-.2h.5c.2 0 .4-.1.6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.3.3c-.1.1-.2.3-.1.5s.5.9 1.1 1.5c.8.7 1.4.9 1.6 1s.4.1.5 0l.7-.8c.2-.2.3-.2.5-.1l1.9 1c.2.1.4.2.4.3z"/></svg></div>
+      <div class="d-ch-txt"><div class="d-ch-name">WhatsApp</div><div class="d-ch-sub">2,540 replies</div></div>
+      <div class="d-ch-right"><div class="d-ch-pct">31%</div><div class="d-ch-track"><div class="d-ch-fill" style="width:31%"></div></div></div>
+     </div>
+     <div class="d-ch">
+      <div class="d-ch-ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6" cy="12" r="3.2"/><circle cx="18" cy="5.5" r="3.2"/><circle cx="18" cy="18.5" r="3.2"/><path d="M7.9 10.2 16.1 6.4l.9 1.9-8.2 3.8zm0 3.6 8.2 3.8-.9 1.9-8.2-3.8z"/></svg></div>
+      <div class="d-ch-txt"><div class="d-ch-name">Social</div><div class="d-ch-sub">2,213 clicks</div></div>
+      <div class="d-ch-right"><div class="d-ch-pct">27%</div><div class="d-ch-track"><div class="d-ch-fill" style="width:27%"></div></div></div>
+     </div>
     </div>
+
+    <?= $dSec('Recent Activity', 'View All', true) ?>
+    <div class="d-rows">
+     <div class="d-row"><span class="d-dot"></span><div class="d-row-txt"><div class="d-row-t">Monsoon offer launched</div><div class="d-row-s">Email &middot; WhatsApp</div></div><div class="d-row-v">1,204 leads</div><div class="d-row-d">Jun 08, 2024</div></div>
+     <div class="d-row"><span class="d-dot"></span><div class="d-row-txt"><div class="d-row-t">Landing page A/B closed</div><div class="d-row-s">Variant B won</div></div><div class="d-row-v">+19% CVR</div><div class="d-row-d">Jun 05, 2024</div></div>
+    </div>
+   </div>
   </div>
 
   <!-- MANAGEMENT -->
   <div class="dash-card d3">
-    <div class="dash-head">
-      <div class="dash-ico">
-        <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><rect x="3" y="3" width="13" height="13" rx="2" fill="white" opacity=".9"/><rect x="20" y="3" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="3" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="20" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.75)"/><line x1="16" y1="9.5" x2="20" y2="9.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="9.5" y1="16" x2="9.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="26.5" y1="16" x2="26.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="16" y1="26.5" x2="20" y2="26.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/></svg>
-      </div>
-      <div class="dash-mod-name">Management Overview</div>
+   <?= $dHead(
+    '<svg viewBox="0 0 36 36" fill="none"><rect x="3" y="3" width="13" height="13" rx="2" fill="white" opacity=".9"/><rect x="20" y="3" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="3" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="20" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.75)"/><line x1="16" y1="9.5" x2="20" y2="9.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="9.5" y1="16" x2="9.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="26.5" y1="16" x2="26.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="16" y1="26.5" x2="20" y2="26.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/></svg>',
+    'Management Overview', 'Company-wide health across every module', 'This Year') ?>
+   <div class="dash-body">
+    <div class="d-krow">
+     <?= $dKpi('g', 'KPI Score',    '92',   'up', '6',  'vs last year', 'gauge')  ?>
+     <?= $dKpi('b', 'Efficiency',   '+18%', 'up', '4%', 'vs last year', 'trend')  ?>
+     <?= $dKpi('o', 'Modules Live', '7/7',  'up', '2',  'vs last year', 'layers') ?>
     </div>
-    <div class="dash-body">
-      <div class="d-krow">
-        <div class="d-k"><div class="d-kv">92</div><div class="d-kl">KPI Score</div></div>
-        <div class="d-k"><div class="d-kv">↑ 18%</div><div class="d-kl">Efficiency</div></div>
-        <div class="d-k"><div class="d-kv">7/7</div><div class="d-kl">Modules</div></div>
-      </div>
-      <div class="d-lbl">Business Health Radar</div>
-      <svg viewBox="0 0 140 106" width="100%" height="96" style="margin-bottom:10px">
-        <polygon points="70,10 116,36 116,76 70,102 24,76 24,36" fill="none" stroke="var(--border)" stroke-width="1.5"/>
-        <polygon points="70,26 100,44 100,70 70,86 40,70 40,44" fill="none" stroke="var(--border)" stroke-width="1"/>
-        <polygon points="70,42 84,52 84,64 70,72 56,64 56,52" fill="none" stroke="var(--border)" stroke-width="1"/>
-        <polygon points="70,14 112,38 110,74 70,98 30,74 28,38" fill="rgba(50,180,111,.1)" stroke="#32b46f" stroke-width="1.8"/>
-        <text x="70" y="60" text-anchor="middle" fill="#32b46f" font-size="12" font-family="Montserrat,sans-serif" font-weight="800">92</text>
-      </svg>
-      <div class="d-rows">
-        <div class="d-row"><div class="d-dot" style="background:#32b46f"></div>Sales 94%<span class="d-val" style="color:#32b46f">↑</span></div>
-        <div class="d-row"><div class="d-dot" style="background:#14855a"></div>Finance 95%<span class="d-val" style="color:#14855a">↑</span></div>
-      </div>
+
+    <?= $dSec('Business Health Radar', 'View Report') ?>
+    <div class="d-radar">
+     <svg viewBox="0 0 150 118" aria-hidden="true">
+      <polygon points="75,8 121,35 121,83 75,110 29,83 29,35" fill="none" stroke="#e6eaef" stroke-width="1.4"/>
+      <polygon points="75,25 106,43 106,75 75,93 44,75 44,43" fill="none" stroke="#eef1f5" stroke-width="1.2"/>
+      <polygon points="75,42 91,51 91,67 75,76 59,67 59,51" fill="none" stroke="#eef1f5" stroke-width="1.2"/>
+      <line x1="75" y1="59" x2="75" y2="8" stroke="#eef1f5" stroke-width="1"/>
+      <line x1="75" y1="59" x2="121" y2="35" stroke="#eef1f5" stroke-width="1"/>
+      <line x1="75" y1="59" x2="121" y2="83" stroke="#eef1f5" stroke-width="1"/>
+      <line x1="75" y1="59" x2="75" y2="110" stroke="#eef1f5" stroke-width="1"/>
+      <line x1="75" y1="59" x2="29" y2="83" stroke="#eef1f5" stroke-width="1"/>
+      <line x1="75" y1="59" x2="29" y2="35" stroke="#eef1f5" stroke-width="1"/>
+      <polygon points="75,12 117,37 115,81 75,106 35,81 33,37" fill="rgba(28,149,88,.14)" stroke="#1c9558" stroke-width="1.9" stroke-linejoin="round"/>
+      <circle cx="75" cy="12" r="2.6" fill="#1c9558"/><circle cx="117" cy="37" r="2.6" fill="#1c9558"/><circle cx="115" cy="81" r="2.6" fill="#1c9558"/>
+      <circle cx="75" cy="106" r="2.6" fill="#1c9558"/><circle cx="35" cy="81" r="2.6" fill="#1c9558"/><circle cx="33" cy="37" r="2.6" fill="#1c9558"/>
+     </svg>
+     <div class="d-radar-key">
+      <div class="d-rk"><span class="d-dot"></span>Sales<b>94%</b></div>
+      <div class="d-rk"><span class="d-dot"></span>Finance<b>95%</b></div>
+      <div class="d-rk"><span class="d-dot"></span>Operations<b>91%</b></div>
+      <div class="d-rk"><span class="d-dot"></span>HR<b>89%</b></div>
+      <div class="d-rk"><span class="d-dot"></span>Marketing<b>88%</b></div>
+      <div class="d-rk"><span class="d-dot"></span>Inventory<b>93%</b></div>
+     </div>
     </div>
+
+    <?= $dSec('Board Highlights', 'View All', true) ?>
+    <div class="d-rows">
+     <div class="d-row"><span class="d-dot"></span><div class="d-row-txt"><div class="d-row-t">Q1 targets exceeded</div><div class="d-row-s">All seven modules live</div></div><div class="d-row-v">+18%</div><div class="d-row-d">Jun 30, 2024</div></div>
+     <div class="d-row"><span class="d-dot"></span><div class="d-row-txt"><div class="d-row-t">Manual reporting retired</div><div class="d-row-s">14 hrs saved weekly</div></div><div class="d-row-v">Automated</div><div class="d-row-d">Jun 18, 2024</div></div>
+    </div>
+   </div>
   </div>
 
  </div><!-- /dash-grid -->

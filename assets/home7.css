@@ -1490,48 +1490,270 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 .d-ch-track{flex:1;height:3.5px;background:var(--border);border-radius:8px;overflow:hidden}
 .d-ch-fill{height:100%;border-radius:8px;}
 
-/* ── #dashboards: hero-dashboard theme ────────────────────────────────────────
-   Borrows the visual language of the .ap-* application preview in the hero: white
-   surfaces, #eceff2 hairlines, 10-12px radii, small muted labels over dark values,
-   and the same tinted KPI tiles. Brand green is kept as the accent rather than the
-   hero's blue, so the section still reads as Drawlead.
-   Every rule is scoped to #dashboards on purpose: .dash-* and .d-* are a shared card
-   system used by eleven other templates. */
+/* ── #dashboards: full product mock-ups ───────────────────────────────────────
+   Six cards, each a detailed picture of a real screen: module header with a
+   period control, three tinted KPI tiles carrying a delta line, a labelled main
+   visual, and a dated activity list.
+
+   Two columns, not three. The KPI tile alone needs ~150px for a label, a 27px
+   value, a delta line and its icon; at three columns the card is ~430px and the
+   tiles collapse. At two the card is ~575px, which is where this layout works.
+
+   Every rule is scoped to #dashboards on purpose: .dash-* and .d-* are a shared
+   card system used by eleven other templates.
+
+   Green text on white needs #14855a to clear 4.5:1 — #32b46f is only 2.3:1 and
+   fails, so the brand green is kept for fills and swapped for #14855a wherever
+   it carries a word or a number. */
+#dashboards .dash-grid{grid-template-columns:repeat(2,1fr);gap:26px;max-width:1180px;margin:0 auto}
 #dashboards .dash-card{
- background:#fff;border:1px solid #eceff2;border-radius:12px;
+ background:#fff;border:1px solid #e6eaef;border-radius:16px;
  box-shadow:0 10px 30px rgba(16,32,48,.06);
+ display:flex;flex-direction:column;
 }
 #dashboards .dash-card:hover{box-shadow:0 18px 46px rgba(16,32,48,.10)}
-#dashboards .dash-head{background:#fff;border-bottom:1px solid #eceff2;padding:13px 14px;gap:10px}
-#dashboards .dash-ico{width:30px;height:30px;border-radius:9px;background:#1c9558;box-shadow:none}
-#dashboards .dash-ico svg{width:16px;height:16px}
-#dashboards .dash-mod-name{font-family:var(--font-display);font-size:13px;font-weight:600;letter-spacing:-.01em;color:#0f172a}
-#dashboards .dash-body{padding:14px}
 
-/* KPI tiles take the hero's tints in source order, so no per-tile class is needed */
-#dashboards .d-krow{gap:8px;margin-bottom:13px}
-#dashboards .d-k{border:1px solid #eceff2;border-radius:10px;padding:9px}
-#dashboards .d-k:nth-child(1){background:#eefbf3;border-color:#dcf3e6}
-#dashboards .d-k:nth-child(2){background:#eff5ff;border-color:#dfe9fe}
-#dashboards .d-k:nth-child(3){background:#fef3ec;border-color:#fbe5d7}
-#dashboards .d-kv{font-family:var(--font-display);font-size:16px;font-weight:700;letter-spacing:-.025em;color:#0f172a;line-height:1.05;margin-bottom:3px}
-#dashboards .d-kl{font-family:var(--font-body);font-size:9.5px;color:#64748b;letter-spacing:.05em}
-#dashboards .d-lbl{color:#8a94a4;font-size:9px}
+/* ── card header ── */
+#dashboards .dash-head{
+ background:#fff;border-bottom:1px solid #eceff2;
+ padding:18px 20px;gap:13px;align-items:center;
+}
+#dashboards .dash-ico{
+ width:46px;height:46px;border-radius:13px;background:#1c9558;box-shadow:none;
+}
+#dashboards .dash-ico svg{width:24px;height:24px}
+#dashboards .dash-titles{min-width:0}
+#dashboards .dash-mod-name{
+ font-family:var(--font-display);font-size:19px;font-weight:700;
+ letter-spacing:-.02em;color:#0f172a;line-height:1.2;
+}
+#dashboards .dash-mod-sub{
+ font-family:var(--font-body);font-size:12.5px;color:#64748b;
+ line-height:1.35;margin-top:2px;
+}
+#dashboards .dash-tools{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
+#dashboards .dash-sel{
+ display:inline-flex;align-items:center;gap:6px;
+ border:1px solid #e2e8f0;border-radius:9px;padding:7px 11px;
+ font-family:var(--font-body);font-size:12.5px;font-weight:600;color:#334155;
+ white-space:nowrap;
+}
+#dashboards .dash-sel svg{width:13px;height:13px;color:#64748b}
+#dashboards .dash-kebab{display:inline-flex;color:#94a3b8}
+#dashboards .dash-kebab svg{width:15px;height:15px}
+#dashboards .dash-body{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
 
-/* neutral bars with the brand green as the peak, mirroring the hero chart */
-#dashboards .d-bars{gap:5px;height:56px;margin-bottom:13px}
-#dashboards .d-bar{background:#e9edf2;border-radius:7px 7px 0 0}
-#dashboards .d-bar span{font-size:7px;color:#98a1af}
-#dashboards .d-hr{background:#eceff2;margin:11px 0}
-#dashboards .d-rows{gap:6px}
-#dashboards .d-row{font-family:var(--font-body);font-size:10.5px;color:#64748b}
-#dashboards .d-track,#dashboards .d-ch-track{background:#eceff2}
-#dashboards .d-sbox{border-radius:8px}
-#dashboards .d-sv{font-family:var(--font-display);font-weight:700}
-#dashboards .d-sl{color:#64748b;font-size:7.5px}
-#dashboards .d-fbar{border-radius:7px;height:21px}
-#dashboards .d-hbar,#dashboards .d-ch-name{color:#64748b}
+/* ── KPI tiles ── */
+#dashboards .d-krow{gap:11px;margin-bottom:20px}
+/* Three-row grid, not a flex row: the delta line ("18% vs last year") has to span
+   the full tile and pass UNDER the icon, or it wraps at ~100px and the tiles go
+   ragged. .d-k-txt is display:contents so its children join this grid. */
+#dashboards .d-k{
+ display:grid;grid-template-columns:minmax(0,1fr) auto;
+ column-gap:8px;align-items:start;
+ border:1px solid;border-radius:12px;padding:13px 13px 12px;
+}
+#dashboards .d-k-txt{display:contents}
+#dashboards .d-k-g{background:#eefbf3;border-color:#dcf3e6}
+#dashboards .d-k-b{background:#eff5ff;border-color:#dfe9fe}
+#dashboards .d-k-o{background:#fef5ee;border-color:#fbe5d7}
+#dashboards .d-kl{
+ grid-column:1;grid-row:1;
+ display:flex;align-items:center;gap:4px;
+ font-family:var(--font-body);font-size:12px;font-weight:500;color:#5a6675;
+ letter-spacing:0;text-transform:none;line-height:1.2;margin-bottom:5px;
+}
+#dashboards .d-kl .d-i{width:12px;height:12px;flex:none;color:#8a94a4}
+#dashboards .d-kv{
+ grid-column:1;grid-row:2;
+ font-family:var(--font-display);font-size:26px;font-weight:700;
+ letter-spacing:-.03em;color:#0f172a;line-height:1.05;margin-bottom:5px;
+}
+#dashboards .d-kd{grid-column:1/-1;grid-row:3;font-family:var(--font-body);font-size:11.5px;color:#5a6675;line-height:1.2}
+#dashboards .d-kd .d-up{color:#0f7048;font-weight:700}
+#dashboards .d-kd .d-down{color:#b42318;font-weight:700}
+#dashboards .d-k-ico{
+ grid-column:2;grid-row:1/3;align-self:center;
+ width:34px;height:34px;border-radius:50%;flex:none;
+ display:flex;align-items:center;justify-content:center;
+}
+#dashboards .d-k-ico svg{width:17px;height:17px}
+#dashboards .d-k-g .d-k-ico{background:#d3f1e0;color:#14855a}
+#dashboards .d-k-b .d-k-ico{background:#dbe8fe;color:#2563eb}
+#dashboards .d-k-o .d-k-ico{background:#fbe0cd;color:#c2410c}
 
+/* ── heading inside a card ── */
+#dashboards .d-sec{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+#dashboards .d-sec-t{
+ font-family:var(--font-display);font-size:16px;font-weight:700;
+ letter-spacing:-.02em;color:#0f172a;
+}
+#dashboards .d-sec-a{
+ display:inline-flex;align-items:center;gap:6px;flex-shrink:0;
+ font-family:var(--font-body);font-size:12.5px;font-weight:600;color:#14855a;
+}
+#dashboards .d-sec-a svg{width:13px;height:13px}
+#dashboards .d-lbl{display:none}
+
+/* ── bar chart with a real axis ── */
+#dashboards .d-chart{--dch:150px;display:flex;gap:10px;margin-bottom:22px}
+#dashboards .d-yax{position:relative;height:var(--dch);width:34px;flex:none}
+#dashboards .d-yax span{
+ position:absolute;right:0;transform:translateY(-50%);
+ font-family:var(--font-body);font-size:10px;color:#64748b;white-space:nowrap;
+}
+#dashboards .d-yax span:nth-child(1){top:0}
+#dashboards .d-yax span:nth-child(2){top:33.333%}
+#dashboards .d-yax span:nth-child(3){top:66.666%}
+#dashboards .d-yax span:nth-child(4){top:100%}
+#dashboards .d-plotwrap{flex:1;min-width:0}
+#dashboards .d-plot{position:relative;height:var(--dch);border-left:1px solid #e6eaef}
+#dashboards .d-grid{
+ position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;
+}
+#dashboards .d-grid i{display:block;height:0;border-top:1px dashed #e2e8f0}
+#dashboards .d-bars{
+ position:absolute;inset:0;display:flex;align-items:flex-end;gap:0;
+ height:auto;margin:0;padding:0 6px;
+}
+#dashboards .d-bar{
+ flex:1;margin:0 8px;background:#cbd5e1;border-radius:5px 5px 0 0;
+ display:block;overflow:visible;
+}
+#dashboards .d-bar-hi{background:#2aa35f}
+#dashboards .d-xax{display:flex;padding:8px 6px 0 7px}
+#dashboards .d-xax span{
+ flex:1;text-align:center;
+ font-family:var(--font-body);font-size:11px;color:#64748b;
+}
+
+/* ── activity rows ── */
+#dashboards .d-rows{gap:0}
+/* carries the closing heading AND its list to the card floor together */
+#dashboards .d-sec-push{margin-top:auto}
+#dashboards .d-row{
+ display:flex;align-items:center;gap:11px;padding:11px 0;
+ border-top:1px solid #f1f4f7;
+ font-family:var(--font-body);font-size:13px;color:#0f172a;
+}
+#dashboards .d-row:first-child{border-top:0;padding-top:2px}
+#dashboards .d-dot{width:8px;height:8px;border-radius:50%;flex:none;background:#22a35f}
+#dashboards .d-dot-w{background:#e8a33d}
+#dashboards .d-row-txt{min-width:0;flex:1}
+#dashboards .d-row-t{font-size:13.5px;font-weight:600;color:#0f172a;line-height:1.25}
+#dashboards .d-row-s{font-size:11.5px;color:#64748b;line-height:1.3;margin-top:2px}
+#dashboards .d-row-v{
+ font-family:var(--font-display);font-size:13.5px;font-weight:700;
+ color:#14855a;white-space:nowrap;flex:none;
+}
+#dashboards .d-row-v-w{color:#8f5410}
+#dashboards .d-row-d{
+ font-family:var(--font-body);font-size:11.5px;color:#64748b;
+ white-space:nowrap;flex:none;width:82px;text-align:right;
+}
+
+/* ── funnel ── */
+#dashboards .d-funnel{gap:7px;margin-bottom:22px}
+#dashboards .d-fbar{
+ height:38px;border-radius:9px;padding:0 14px;gap:10px;
+ background:#e6f7ee;color:#0f172a;
+ font-family:var(--font-body);font-size:13px;font-weight:600;
+}
+#dashboards .d-fbar b{font-family:var(--font-display);font-weight:700;margin-left:auto}
+#dashboards .d-fbar em{font-style:normal;font-size:11.5px;color:#47535f;width:38px;text-align:right}
+#dashboards .d-fbar-2{background:#cdefdd}
+#dashboards .d-fbar-3{background:#a8e2c4}
+#dashboards .d-fbar-4{background:#14855a;color:#fff}
+#dashboards .d-fbar-4 em{color:rgba(255,255,255,.82)}
+
+/* ── task status ── */
+#dashboards .d-status{grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:22px}
+#dashboards .d-sbox{
+ border-radius:12px;padding:13px 12px 12px;text-align:left;
+ background:#eefbf3;border:1px solid #dcf3e6;
+}
+#dashboards .d-sv{
+ font-family:var(--font-display);font-size:23px;font-weight:700;
+ letter-spacing:-.03em;color:#0f172a;line-height:1;
+}
+#dashboards .d-sl{
+ font-family:var(--font-body);font-size:11.5px;font-weight:500;color:#5a6675;
+ text-transform:none;letter-spacing:0;margin-top:4px;
+}
+#dashboards .d-sbar{height:4px;border-radius:4px;background:rgba(15,23,42,.07);margin-top:9px;overflow:hidden}
+#dashboards .d-sbar i{display:block;height:100%;border-radius:4px;background:#22a35f}
+#dashboards .d-sbox-2{background:#eff5ff;border-color:#dfe9fe}
+#dashboards .d-sbox-2 .d-sbar i{background:#2563eb}
+#dashboards .d-sbox-3{background:#fef5ee;border-color:#fbe5d7}
+#dashboards .d-sbox-3 .d-sbar i{background:#c2410c}
+#dashboards .d-sbox-4{background:#fdf0f0;border-color:#f8dcdc}
+#dashboards .d-sbox-4 .d-sbar i{background:#b42318}
+
+/* ── department bars ── */
+#dashboards .d-hbars{gap:13px;margin-bottom:22px}
+#dashboards .d-hbar{gap:12px;font-family:var(--font-body);color:#334155}
+#dashboards .d-hbar span:first-child{width:96px;font-size:12.5px;font-weight:500;color:#475569}
+#dashboards .d-hbar span:last-child{
+ width:28px;text-align:right;
+ font-family:var(--font-display);font-size:13px;font-weight:700;color:#0f172a;
+}
+#dashboards .d-track{height:8px;border-radius:8px;background:#eef1f5}
+#dashboards .d-fill{background:#22a35f}
+
+/* ── channels ── */
+#dashboards .d-channels{gap:14px;margin-bottom:22px}
+#dashboards .d-ch{gap:12px}
+#dashboards .d-ch-ico{
+ width:36px;height:36px;border-radius:11px;flex:none;
+ background:#eefbf3;color:#14855a;
+}
+#dashboards .d-ch-ico svg{width:19px;height:19px}
+#dashboards .d-ch-txt{flex:1;min-width:0}
+#dashboards .d-ch-name{
+ width:auto;font-family:var(--font-body);font-size:13.5px;font-weight:600;color:#0f172a;line-height:1.25;
+}
+#dashboards .d-ch-sub{font-family:var(--font-body);font-size:11.5px;color:#64748b;margin-top:2px}
+#dashboards .d-ch-right{width:112px;flex:none}
+#dashboards .d-ch-pct{
+ width:auto;text-align:right;
+ font-family:var(--font-display);font-size:13.5px;font-weight:700;color:#0f172a;margin-bottom:5px;
+}
+#dashboards .d-ch-track{height:6px;border-radius:6px;background:#eef1f5;flex:none}
+#dashboards .d-ch-fill{background:#22a35f}
+
+/* ── radar ── */
+#dashboards .d-radar{display:flex;align-items:center;gap:18px;margin-bottom:22px}
+#dashboards .d-radar svg{width:170px;height:134px;flex:none}
+#dashboards .d-radar-key{
+ flex:1;min-width:0;display:grid;grid-template-columns:repeat(2,1fr);
+ gap:9px 14px;align-content:center;
+}
+#dashboards .d-rk{
+ display:flex;align-items:center;gap:7px;
+ font-family:var(--font-body);font-size:12.5px;color:#64748b;
+}
+#dashboards .d-rk b{
+ margin-left:auto;font-family:var(--font-display);font-size:12.5px;font-weight:700;color:#0f172a;
+}
+#dashboards .d-rk .d-dot{width:7px;height:7px}
+
+@media(max-width:1120px){
+ #dashboards .dash-grid{grid-template-columns:1fr;max-width:660px}
+}
+@media(max-width:640px){
+ #dashboards .dash-head{padding:15px 15px;gap:10px;flex-wrap:wrap}
+ #dashboards .dash-mod-name{font-size:17px}
+ #dashboards .dash-sel{display:none}
+ #dashboards .dash-body{padding:15px}
+ #dashboards .d-krow{flex-direction:column;gap:9px}
+ #dashboards .d-kv{font-size:23px}
+ #dashboards .d-status{grid-template-columns:repeat(2,1fr)}
+ #dashboards .d-radar{flex-direction:column;gap:14px}
+ #dashboards .d-radar svg{width:150px;height:118px}
+ #dashboards .d-radar-key{width:100%}
+ #dashboards .d-row-d{display:none}
+ #dashboards .d-hbar span:first-child{width:78px;font-size:11.5px}
+}
 /* ── CTA ── */
 /* Base #cta stays dark & full-bleed — About Us and /home-2 both use this section and
    have no .cta-card wrapper, so changing the base here would blow out their CTAs. */
