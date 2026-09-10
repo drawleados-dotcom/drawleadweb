@@ -1128,6 +1128,27 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 .tech-tags{display:flex;flex-wrap:wrap;gap:4px}
 .t-tag{font-size:11px;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:2.5px 6px;color:rgba(255,255,255,.4);background:rgba(255,255,255,.05);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
 
+/* ── #tech cards: chrome off, icons in bordered boxes ─────────────────────────
+   The reference has no card surface: each item sits directly on the section
+   background. Removing only the padding would have pushed the copy against the card
+   border, so the background and border go with it. The grid gap grows to carry the
+   separation the card edges used to provide. */
+#tech .tech-card{background:none;border:none;border-radius:0;padding:0;box-shadow:none;gap:.7rem}
+#tech .tech-card:hover{background:none;border-color:transparent;transform:none}
+#tech .tech-grid{gap:2.75rem 2.5rem}
+/* Icon box: dark with a hairline border rather than the solid green plate, matching the
+   reference. The glyphs were already filled shapes but drawn at 0.5-0.95 white, which is
+   what made them read soft; they go to full strength and up from 26px to 28px. */
+#tech .tech-icon-new{
+ width:48px;height:48px;border-radius:12px;
+ background:rgba(255,255,255,.04);
+ border:1px solid rgba(255,255,255,.15);
+ box-shadow:none;margin-bottom:.35rem;
+}
+#tech .tech-icon-new svg{width:28px;height:28px}
+#tech .tech-icon-new svg [fill^="rgba(255,255,255"]{fill:#fff}
+#tech .tech-icon-new svg [stroke^="rgba(255,255,255"]{stroke:#fff}
+
 /* ── CASES ── */
 #cases{background:var(--bg)}
 /* ══════════ CASE STUDIES — scroll-driven horizontal gallery (homepage only) ══════════

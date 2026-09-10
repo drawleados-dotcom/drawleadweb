@@ -396,7 +396,7 @@ include __DIR__ . '/partials/nav.php';
 
     <!-- ERP -->
     <div class="tech-card rv d1">
-      <div class="tech-icon-new" style="background:#1c9558">
+      <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <rect x="4" y="4" width="14" height="14" rx="2" fill="rgba(255,255,255,0.9)"/>
           <rect x="22" y="4" width="14" height="14" rx="2" fill="rgba(255,255,255,0.5)"/>
@@ -415,7 +415,7 @@ include __DIR__ . '/partials/nav.php';
 
     <!-- AI -->
     <div class="tech-card rv d2">
-      <div class="tech-icon-new" style="background:#1c9558">
+      <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <circle cx="20" cy="20" r="7" fill="rgba(255,255,255,0.95)"/>
           <circle cx="20" cy="6" r="3" fill="rgba(255,255,255,0.6)"/>
@@ -439,7 +439,7 @@ include __DIR__ . '/partials/nav.php';
 
     <!-- CRM -->
     <div class="tech-card rv d3">
-      <div class="tech-icon-new" style="background:#1c9558">
+      <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <circle cx="14" cy="13" r="6" fill="rgba(255,255,255,0.9)"/>
           <circle cx="28" cy="10" r="4" fill="rgba(255,255,255,0.55)"/>
@@ -456,7 +456,7 @@ include __DIR__ . '/partials/nav.php';
 
     <!-- Analytics -->
     <div class="tech-card rv d1">
-      <div class="tech-icon-new" style="background:#1c9558">
+      <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <rect x="4" y="28" width="6" height="8" rx="1" fill="rgba(255,255,255,0.5)"/>
           <rect x="13" y="20" width="6" height="16" rx="1" fill="rgba(255,255,255,0.7)"/>
@@ -473,7 +473,7 @@ include __DIR__ . '/partials/nav.php';
 
     <!-- Cloud -->
     <div class="tech-card rv d2">
-      <div class="tech-icon-new" style="background:#1c9558">
+      <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <path d="M10 28a8 8 0 010-16 8.001 8.001 0 0115.32-3A7 7 0 1132 28z" fill="rgba(255,255,255,0.85)"/>
           <rect x="16" y="22" width="2" height="10" rx="1" fill="rgba(20,78,74,0.9)"/>
@@ -488,7 +488,7 @@ include __DIR__ . '/partials/nav.php';
 
     <!-- Workflow -->
     <div class="tech-card rv d3">
-      <div class="tech-icon-new" style="background:#1c9558">
+      <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <rect x="3" y="7" width="10" height="8" rx="2" fill="rgba(255,255,255,0.9)"/>
           <rect x="16" y="3" width="10" height="8" rx="2" fill="rgba(255,255,255,0.6)"/>
