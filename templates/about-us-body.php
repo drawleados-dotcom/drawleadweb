@@ -66,9 +66,14 @@
  <h2 class="sec-h rv">Everything a growing business needs, <span class="g">under one roof</span></h2>
  <p class="sec-sub rv">From the first line of code to the last rupee of ad spend — Drawlead runs it end-to-end.</p>
 
- <div class="fn-grid">
+ <!-- Sticky horizontal scroll, mirroring Home 7's Core Platform. The wrapper is
+      sized by JS to the row's own overflow, so the pinned run consumes exactly
+      the scroll distance the cards need. Styles: .svc-* in partials/style.php. -->
+ <div class="svc-scroll-outer" id="svcScrollOuter">
+  <div class="svc-scroll-sticky" id="svcScrollSticky">
+   <div class="fn-grid" id="svcRow">
  <!-- 01 Website Development -->
- <div class="fn-card rv d1">
+ <div class="fn-card">
  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
  <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="4" y="7" width="32" height="26" rx="3" fill="white" fill-opacity=".12" stroke="white" stroke-width="2"/><line x1="4" y1="15" x2="36" y2="15" stroke="white" stroke-width="2"/><circle cx="9" cy="11" r="1.6" fill="white"/><circle cx="14.5" cy="11" r="1.6" fill="white" fill-opacity=".6"/><path d="M10 25 L16 20 L22 26 L30 17" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".9"/></svg>
  </div>
@@ -78,7 +83,7 @@
  <div class="fn-tags"><span class="fn-tag">Custom Builds</span><span class="fn-tag">WordPress</span><span class="fn-tag">Shopify</span></div>
  </div>
  <!-- 02 Social Media Marketing -->
- <div class="fn-card rv d2">
+ <div class="fn-card">
  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
  <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M20 33 C10 26 4 20 4 13.5 C4 8.5 8 5 12.5 5 C16 5 18.5 7 20 9.5 C21.5 7 24 5 27.5 5 C32 5 36 8.5 36 13.5 C36 20 30 26 20 33 Z" fill="white" opacity=".92"/></svg>
  </div>
@@ -88,7 +93,7 @@
  <div class="fn-tags"><span class="fn-tag">Content</span><span class="fn-tag">Video</span><span class="fn-tag">Analytics</span></div>
  </div>
  <!-- 03 SEO -->
- <div class="fn-card rv d3">
+ <div class="fn-card">
  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
  <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="17" cy="17" r="11" fill="none" stroke="white" stroke-width="3"/><line x1="25" y1="25" x2="35" y2="35" stroke="white" stroke-width="3.5" stroke-linecap="round"/><polyline points="10,19 14,14 18,17 24,10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/></svg>
  </div>
@@ -98,7 +103,7 @@
  <div class="fn-tags"><span class="fn-tag">On-Page</span><span class="fn-tag">Technical</span><span class="fn-tag">Local SEO</span></div>
  </div>
  <!-- 04 ERP Software -->
- <div class="fn-card rv d4">
+ <div class="fn-card">
  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
  <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="6" y="24" width="28" height="8" rx="2" fill="white" opacity=".4"/><rect x="6" y="14" width="28" height="8" rx="2" fill="white" opacity=".7"/><rect x="6" y="4" width="28" height="8" rx="2" fill="white"/></svg>
  </div>
@@ -108,7 +113,7 @@
  <div class="fn-tags"><span class="fn-tag">Automation</span><span class="fn-tag">Workflows</span><span class="fn-tag">Reporting</span></div>
  </div>
  <!-- 05 Lead Generation -->
- <div class="fn-card rv d1">
+ <div class="fn-card">
  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
  <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M4 6 L36 6 L24 20 L24 32 L16 36 L16 20 Z" fill="white" opacity=".92"/></svg>
  </div>
@@ -118,7 +123,7 @@
  <div class="fn-tags"><span class="fn-tag">Funnels</span><span class="fn-tag">CRM</span><span class="fn-tag">Nurturing</span></div>
  </div>
  <!-- 06 AI Website Solutions -->
- <div class="fn-card rv d2">
+ <div class="fn-card">
  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
  <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M20 3 L24 16 L37 20 L24 24 L20 37 L16 24 L3 20 L16 16 Z" fill="white"/></svg>
  </div>
@@ -128,7 +133,7 @@
  <div class="fn-tags"><span class="fn-tag">AI Automation</span><span class="fn-tag">Personalization</span></div>
  </div>
  <!-- 07 Google Ads -->
- <div class="fn-card rv d3">
+ <div class="fn-card">
  <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
  <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="15" fill="none" stroke="white" stroke-width="2.5" opacity=".5"/><circle cx="20" cy="20" r="9" fill="none" stroke="white" stroke-width="2.5" opacity=".8"/><circle cx="20" cy="20" r="3.5" fill="white"/></svg>
  </div>
@@ -138,18 +143,64 @@
  <div class="fn-tags"><span class="fn-tag">Search Ads</span><span class="fn-tag">Display</span><span class="fn-tag">ROAS</span></div>
  </div>
  <!-- 08 Meta Ads -->
- <div class="fn-card fn-cta-card rv d4">
+ <div class="fn-card fn-cta-card">
  <div style="font-size:24px;font-weight:800;color:#fff;line-height:1.15;letter-spacing:-.02em">Meta Ads,<br>done right</div>
  <div style="font-size:12px;color:rgba(255,255,255,.44);line-height:1.65;font-weight:400">High-performing Instagram &amp; Facebook campaigns tuned for reach, engagement, and conversions.</div>
  <button type="button" data-book style="background:#fff;color:var(--black);padding:11px 22px;border-radius:6px;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:opacity .2s" onmouseover="this.style.opacity='.84'" onmouseout="this.style.opacity='1'">Talk to Us →</button>
  </div>
- </div>
-
- <div class="sec-cta rv">
+   </div><!-- /fn-grid -->
+   <div class="sec-cta rv">
  <button type="button" data-book class="btn btn-black">Book Free Consultation →</button>
  <a href="/#solutions" class="btn btn-outline2">Explore Solutions</a>
- </div>
+   </div>
+  </div><!-- /svc-scroll-sticky -->
+ </div><!-- /svc-scroll-outer -->
 </section>
+
+<script>
+// "What We Do": sticky horizontal scroll.
+// A verbatim copy of Home 7's Core Platform driver (templates/home7-body.php),
+// with only the three element ids changed. The row is pinned via CSS
+// position:sticky; as the user scrolls down through the wrapper this maps that
+// scroll distance 1:1 to translateX so the row reveals left -> right, then
+// releases back to normal vertical scroll once done. The sticky box is sized to
+// its own natural content height, so the scroll distance consumed matches only
+// the actual horizontal overflow and not an inflated viewport-sized box.
+(function(){
+ const outer = document.getElementById('svcScrollOuter');
+ const sticky = document.getElementById('svcScrollSticky');
+ const row = document.getElementById('svcRow');
+ if(!outer || !sticky || !row) return;
+
+ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const skipHijack = reduceMotion || window.matchMedia('(max-width:768px)').matches;
+ if(skipHijack) return;
+
+ // Read back off the element instead of being duplicated here: the box pins
+ // centred in the viewport, and a hard-coded 0 would put the horizontal progress
+ // out of step with where it actually sticks.
+ let stickyTop = 0;
+ let overflow = 0;
+
+ function measure(){
+  stickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
+  overflow = Math.max(0, row.scrollWidth - sticky.clientWidth);
+  outer.style.height = (sticky.offsetHeight + overflow) + 'px';
+ }
+
+ function onScroll(){
+  if(overflow <= 0){ row.style.transform = 'translateX(0)'; return; }
+  const rect = outer.getBoundingClientRect();
+  const progress = Math.min(1, Math.max(0, (stickyTop - rect.top) / overflow));
+  row.style.transform = `translateX(${-progress * overflow}px)`;
+ }
+
+ measure();
+ onScroll();
+ window.addEventListener('resize', ()=>{ measure(); onScroll(); });
+ window.addEventListener('scroll', onScroll, { passive: true });
+})();
+</script>
 
 <!-- ═══════════════════ INDUSTRIES ═══════════════════ -->
 <section id="industries-about" style="background:var(--white)">

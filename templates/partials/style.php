@@ -1227,3 +1227,45 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .mega-ind-col .mega-col-icon svg{width:17px;height:17px}
 .mega-ind-title{font-size:12.5px;font-weight:800;letter-spacing:-.01em;color:var(--black);margin-bottom:.3rem;line-height:1.3}
 .mega-ind-desc{font-size:10px;color:var(--g400);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.6rem}
+
+/* ══════════ ABOUT US "What We Do" — sticky horizontal scroll ══════════
+   A copy of Home 7's Core Platform scroller. That one lives in /assets/home7.css
+   under .cf-scroll-* / .cf-row, which this page never loads; redefining those
+   names here would inline them on every page and leak into Home 7's Core Platform,
+   so the geometry is duplicated under .svc-* names instead of shared. Every value
+   below is the original's, unchanged: the same clamp for the pinned height, the
+   same centred sticky offset, the same 2.25rem CTA gap, the same 320px card width.
+
+   The card track keeps .fn-grid's own look — 1px hairline gutters, the 1.5px
+   border, the 12px radius — and only changes arrangement, from a 4x2 grid to one
+   row. Nothing here touches .fn-card's padding, type, icons or colours. */
+.svc-scroll-outer{position:relative;width:100%}
+/* One source of truth for the pinned height: the sticky offset below is derived
+   from it and the two must not drift apart. */
+.svc-scroll-outer{--svc-pin-h:clamp(480px,78vh,620px)}
+/* Centres the pinned box in the viewport rather than pinning it flush to the top,
+   so the cards sit at eye level for the whole horizontal run. The JS reads this
+   same offset back off the element, so horizontal progress stays in step with it. */
+.svc-scroll-sticky{
+ position:sticky;top:calc((100vh - var(--svc-pin-h)) / 2);
+ height:var(--svc-pin-h);width:100%;
+ display:flex;flex-direction:column;justify-content:center;overflow:hidden;
+}
+/* Pinned inside the sticky box alongside the track, so it cannot scroll into view
+   while the horizontal run is still going — which would leave a growing gap of
+   unconsumed scroll distance between the cards and the buttons. */
+.svc-scroll-sticky .sec-cta{margin-top:2.25rem;flex:none}
+/* grid -> single row. Only display/width/flex change; the slab's gap, background,
+   border and radius are inherited from .fn-grid untouched. */
+#services .fn-grid{display:flex;width:max-content;flex:none;will-change:transform}
+#services .fn-card{flex:0 0 320px;width:320px}
+
+/* Below the hijack threshold the JS bails out, so the original responsive grid is
+   restored verbatim and the existing 2-col / 1-col rules apply as before. */
+@media(max-width:768px),(prefers-reduced-motion:reduce){
+ .svc-scroll-outer{height:auto !important}
+ .svc-scroll-sticky{position:static;height:auto;overflow:visible}
+ .svc-scroll-sticky .sec-cta{margin-top:var(--rh-cta)}
+ #services .fn-grid{display:grid;width:auto;flex:initial;transform:none !important;will-change:auto}
+ #services .fn-card{flex:initial;width:auto}
+}
