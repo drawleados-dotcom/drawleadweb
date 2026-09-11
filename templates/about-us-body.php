@@ -250,17 +250,120 @@ $svcCards = [
  <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Who We Work With</span><div class="eyebrow-line"></div></div>
  <h2 class="sec-h rv">Industries we help <span class="g">grow</span></h2>
  <p class="sec-sub rv">Across sectors, the goal stays the same: measurable growth, without the guesswork.</p>
- <div class="industry-chips rv">
-  <span class="ind-chip2">E-commerce</span>
-  <span class="ind-chip2">Healthcare</span>
-  <span class="ind-chip2">Education</span>
-  <span class="ind-chip2">SaaS</span>
-  <span class="ind-chip2">Hospitality</span>
-  <span class="ind-chip2">Fashion</span>
-  <span class="ind-chip2">Food &amp; Beverage</span>
-  <span class="ind-chip2">Trainers &amp; Coaches</span>
+<?php
+/*
+ * Eight editorial industry cards: rounded image left, numbered content right.
+ *
+ * Each image is optional. Until assets/img/ind-<slug>.webp exists the card renders
+ * a numbered plate in its place, so the section never shows a broken image and the
+ * layout holds at full height; dropping the files in swaps them over with no
+ * template change.
+ *
+ * Scroll animation is .iw-* in partials/style.php plus the block at the foot of
+ * this file. The animated state is opt-in — the JS adds .iw-anim — so with no JS,
+ * a thrown error or reduced motion every card is simply visible.
+ */
+$industries = [
+ ['slug' => 'ecommerce',        'name' => 'E-commerce',          'desc' => 'Shopify and WooCommerce stores built to convert, backed by the SEO, ads and automation that keep repeat orders coming in.'],
+ ['slug' => 'healthcare',       'name' => 'Healthcare',          'desc' => 'Clinic and hospital systems that handle appointments, records and billing, behind a site patients actually trust.'],
+ ['slug' => 'education',        'name' => 'Education',           'desc' => 'Institutions and edtech brands get admissions funnels, course platforms and the reporting to see what really enrols students.'],
+ ['slug' => 'saas',             'name' => 'SaaS',                'desc' => 'Product sites, onboarding flows and lifecycle campaigns that turn free trials into paying, long-retained subscribers.'],
+ ['slug' => 'hospitality',      'name' => 'Hospitality',         'desc' => 'Hotels, restaurants and venues get direct-booking sites and local SEO that cut the commission paid to aggregators.'],
+ ['slug' => 'fashion',          'name' => 'Fashion',             'desc' => 'Lookbook-grade storefronts and campaign creative, wired to inventory so every drop goes live without the scramble.'],
+ ['slug' => 'food-beverage',    'name' => 'Food &amp; Beverage',     'desc' => 'Ordering, delivery and multi-outlet operations brought into one system, with marketing that keeps the kitchen busy.'],
+ ['slug' => 'trainers-coaches', 'name' => 'Trainers &amp; Coaches',  'desc' => 'Personal brands get booking, payments and content engines, so the hours go into coaching instead of chasing admin.'],
+];
+$iwTotal = str_pad((string) count($industries), 2, '0', STR_PAD_LEFT);
+?>
+ <div class="iw-list" id="iwList">
+<?php foreach ($industries as $n => $ind):
+  $num  = str_pad((string) ($n + 1), 2, '0', STR_PAD_LEFT);
+  $rel  = '/assets/img/ind-' . $ind['slug'] . '.webp';
+  $has  = is_file(__DIR__ . '/..' . $rel);
+?>
+  <article class="iw-card">
+   <div class="iw-media<?= $has ? '' : ' iw-media-empty' ?>">
+<?php if ($has): ?>
+    <img src="<?= asset_url($rel) ?>" alt="<?= strip_tags($ind['name']) ?> businesses Drawlead works with" loading="lazy" decoding="async">
+<?php else: ?>
+    <span class="iw-plate" aria-hidden="true"><?= $num ?></span>
+<?php endif; ?>
+   </div>
+   <div class="iw-body">
+    <div class="iw-count"><b><?= $num ?></b>/<?= $iwTotal ?></div>
+    <h3 class="iw-name"><?= $ind['name'] ?></h3>
+    <p class="iw-desc"><?= $ind['desc'] ?></p>
+    <button type="button" data-book class="btn btn-black iw-cta">Learn more</button>
+   </div>
+  </article>
+<?php endforeach; ?>
  </div>
 </section>
+
+<script>
+// Industry cards: scroll-linked reveal.
+// Each card maps its own travel through the viewport to two things — the image
+// scales down and drifts slightly, the content fades and slides up. Both are read
+// from scroll position rather than fired by a transition, so they track the scroll
+// exactly instead of running on their own clock.
+//
+// Cost control: an IntersectionObserver keeps the set of cards near the viewport,
+// and only those are measured on each frame. Everything else is untouched, so the
+// per-frame work stays at a couple of rect reads however long the list grows.
+(function(){
+ const list = document.getElementById('iwList');
+ if(!list) return;
+ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+ const cards = Array.from(list.querySelectorAll('.iw-card'));
+ if(!cards.length) return;
+
+ // opt in only once we know we can run: without this the cards stay plainly visible
+ list.classList.add('iw-anim');
+
+ const live = new Set();
+ let ticking = false;
+
+ const io = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+   if(e.isIntersecting) live.add(e.target); else live.delete(e.target);
+  });
+  request();
+ }, { rootMargin: '240px 0px' });
+ cards.forEach(function(c){ io.observe(c); });
+
+ function apply(card){
+  const r = card.getBoundingClientRect();
+  const vh = window.innerHeight || 1;
+  // 0 while the card is still below the fold, 1 once it has risen into place
+  const from = vh * 0.92, to = vh * 0.30;
+  let p = (from - r.top) / (from - to);
+  p = p < 0 ? 0 : p > 1 ? 1 : p;
+  const ease = 1 - Math.pow(1 - p, 3);
+
+  // continuous drift, keyed to how far the card's centre sits from the viewport's
+  const mid = (r.top + r.height / 2 - vh / 2) / vh;
+  const drift = Math.max(-1, Math.min(1, mid)) * -18;
+
+  card.style.setProperty('--iw-p', ease.toFixed(4));
+  card.style.setProperty('--iw-drift', drift.toFixed(2) + 'px');
+ }
+
+ function frame(){
+  ticking = false;
+  live.forEach(apply);
+ }
+ function request(){
+  if(ticking) return;
+  ticking = true;
+  window.requestAnimationFrame(frame);
+ }
+
+ cards.forEach(apply);
+ window.addEventListener('scroll', request, { passive: true });
+ window.addEventListener('resize', request);
+})();
+</script>
 
 <!-- ═══════════════════ HOW WE WORK ═══════════════════ -->
 <section id="values" style="background:#0a1310;color:#fff">

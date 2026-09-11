@@ -610,9 +610,6 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 
 .why-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 
-.industry-chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:840px;margin:0 auto}
-.ind-chip2{font-size:13px;font-weight:700;color:var(--g600);background:var(--white);border:1.5px solid var(--border);border-radius:30px;padding:10px 22px;transition:all .2s;cursor:default}
-.ind-chip2:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px)}
 
 @media(max-width:960px){
   .story-grid{grid-template-columns:1fr;gap:2.5rem}
@@ -621,8 +618,6 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 @media(max-width:560px){
   #about-hero{padding-top:7.5rem}
   .why-grid-4{grid-template-columns:1fr}
-  .industry-chips{gap:8px}
-  .ind-chip2{padding:9px 16px;font-size:12px}
   .story-facts li strong{text-align:right;font-size:12px}
 }
 
@@ -1422,4 +1417,89 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  /* Back to a stacked grid; the cards keep their own plate so the slab stays off. */
  #services .fn-grid{padding:0;margin:0;gap:20px}
  #services .fn-card{width:auto}
+}
+
+/* ══════════ ABOUT US — Industries, editorial cards ══════════
+   Rounded image left, numbered content right, one card per industry. Replaces the
+   .industry-chips pill row; the eyebrow, heading and subline above are untouched.
+
+   The animated state is opt-in: every value below is the RESTING one, so with no
+   JS, a thrown error or reduced motion the cards render complete and static. Only
+   once the JS adds .iw-anim do --iw-p (0 to 1 entry progress) and --iw-drift
+   (parallax offset) start driving anything.
+
+   Scoped to #industries-about, which exists only on About Us. */
+.iw-list{display:flex;flex-direction:column;gap:7rem;max-width:1280px;margin:0 auto}
+.iw-card{
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+ gap:4.5rem;align-items:center;
+}
+.iw-media{
+ position:relative;overflow:hidden;border-radius:18px;
+ aspect-ratio:6/5;background:var(--bg);
+ /* isolation gives the clip its own stacking context. Without it Safari lets a
+    transformed child bleed past a rounded overflow:hidden corner. */
+ isolation:isolate;
+}
+.iw-media img{
+ width:100%;height:100%;object-fit:cover;display:block;
+ /* transform-origin centre so the scale reads as a push-in, not a slide */
+ will-change:transform;
+}
+/* Stand-in until assets/img/ind-<slug>.webp is supplied. */
+.iw-media-empty{
+ background:linear-gradient(145deg,#f4f5f4 0%,#e9ebe9 55%,#e3e7e4 100%);
+ display:flex;align-items:center;justify-content:center;
+}
+.iw-plate{
+ font-family:var(--font);font-size:clamp(64px,9vw,132px);font-weight:800;
+ letter-spacing:-.04em;color:rgba(17,17,18,.07);line-height:1;
+}
+.iw-body{min-width:0}
+.iw-count{
+ font-family:var(--font);font-size:14px;font-weight:600;
+ color:var(--g400);letter-spacing:.02em;margin-bottom:1.6rem;
+}
+.iw-count b{color:var(--black);font-weight:700}
+.iw-name{
+ font-family:var(--font);font-size:clamp(30px,3.6vw,52px);font-weight:800;
+ letter-spacing:-.03em;line-height:1.06;color:var(--black);margin:0 0 1.15rem;
+}
+.iw-desc{
+ font-family:var(--font);font-size:16.5px;font-weight:400;line-height:1.7;
+ color:var(--g500);margin:0 0 2rem;max-width:30rem;
+}
+.iw-cta{align-self:flex-start}
+
+/* ── animated state, driven entirely by the two custom properties ── */
+.iw-anim .iw-media img,
+.iw-anim .iw-plate{
+ transform:scale(calc(1 + (1 - var(--iw-p,1)) * .09)) translateY(var(--iw-drift,0px));
+}
+.iw-anim .iw-count,
+.iw-anim .iw-name,
+.iw-anim .iw-desc,
+.iw-anim .iw-cta{
+ opacity:var(--iw-p,1);
+ transform:translateY(calc((1 - var(--iw-p,1)) * 26px));
+}
+/* Staggered so the block assembles rather than arriving as one slab. */
+.iw-anim .iw-name{transform:translateY(calc((1 - var(--iw-p,1)) * 34px))}
+.iw-anim .iw-desc{transform:translateY(calc((1 - var(--iw-p,1)) * 42px))}
+.iw-anim .iw-cta {transform:translateY(calc((1 - var(--iw-p,1)) * 50px))}
+
+@media(max-width:1024px){
+ .iw-list{gap:5rem}
+ .iw-card{gap:3rem}
+ .iw-count{margin-bottom:1.1rem}
+ .iw-desc{font-size:15.5px;margin-bottom:1.6rem}
+}
+@media(max-width:768px){
+ /* Image on top, content beneath; the drift would fight a stacked card, so it goes. */
+ .iw-list{gap:3.5rem}
+ .iw-card{grid-template-columns:1fr;gap:1.6rem}
+ .iw-media{aspect-ratio:16/11}
+ .iw-anim .iw-media img,
+ .iw-anim .iw-plate{transform:scale(calc(1 + (1 - var(--iw-p,1)) * .05))}
+ .iw-desc{max-width:none}
 }
