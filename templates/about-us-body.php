@@ -252,16 +252,18 @@ $svcCards = [
  <p class="sec-sub rv">Across sectors, the goal stays the same: measurable growth, without the guesswork.</p>
 <?php
 /*
- * Eight editorial industry cards: rounded image left, numbered content right.
+ * Eight industries shown one at a time in a pinned stage: rounded image left,
+ * numbered content right. The slides are stacked on top of each other and
+ * crossfaded by scroll position, so each replaces the last inside one layout;
+ * after the eighth the pin releases and the page scrolls on.
  *
- * Each image is optional. Until assets/img/ind-<slug>.webp exists the card renders
- * a numbered plate in its place, so the section never shows a broken image and the
- * layout holds at full height; dropping the files in swaps them over with no
- * template change.
+ * Each image is optional. Until assets/img/ind-<slug>.webp exists the slide
+ * renders a numbered plate in its place, so nothing breaks and the stage keeps
+ * its height; dropping the files in swaps them over with no template change.
  *
- * Scroll animation is .iw-* in partials/style.php plus the block at the foot of
- * this file. The animated state is opt-in — the JS adds .iw-anim — so with no JS,
- * a thrown error or reduced motion every card is simply visible.
+ * Styles are .iw-* in partials/style.php. The pinned state is opt-in — the JS
+ * adds .iw-on — so with no JS, a thrown error, reduced motion or a narrow
+ * viewport the eight slides simply stack and scroll as an ordinary list.
  */
 $industries = [
  ['slug' => 'ecommerce',        'name' => 'E-commerce',          'desc' => 'Shopify and WooCommerce stores built to convert, backed by the SEO, ads and automation that keep repeat orders coming in.'],
@@ -275,93 +277,144 @@ $industries = [
 ];
 $iwTotal = str_pad((string) count($industries), 2, '0', STR_PAD_LEFT);
 ?>
- <div class="iw-list" id="iwList">
+ <div class="iw-outer" id="iwOuter" style="--iw-count:<?= count($industries) ?>">
+  <div class="iw-pin" id="iwPin">
+   <div class="iw-stage" id="iwStage">
 <?php foreach ($industries as $n => $ind):
-  $num  = str_pad((string) ($n + 1), 2, '0', STR_PAD_LEFT);
-  $rel  = '/assets/img/ind-' . $ind['slug'] . '.webp';
-  $has  = is_file(__DIR__ . '/..' . $rel);
+  $num = str_pad((string) ($n + 1), 2, '0', STR_PAD_LEFT);
+  $rel = '/assets/img/ind-' . $ind['slug'] . '.webp';
+  $has = is_file(__DIR__ . '/..' . $rel);
 ?>
-  <article class="iw-card">
-   <div class="iw-media<?= $has ? '' : ' iw-media-empty' ?>">
+    <article class="iw-slide<?= $n === 0 ? ' is-active' : '' ?>">
+     <div class="iw-media<?= $has ? '' : ' iw-media-empty' ?>">
 <?php if ($has): ?>
-    <img src="<?= asset_url($rel) ?>" alt="<?= strip_tags($ind['name']) ?> businesses Drawlead works with" loading="lazy" decoding="async">
+      <img src="<?= asset_url($rel) ?>" alt="<?= strip_tags($ind['name']) ?> businesses Drawlead works with" loading="lazy" decoding="async" fetchpriority="<?= $n === 0 ? 'high' : 'low' ?>">
 <?php else: ?>
-    <span class="iw-plate" aria-hidden="true"><?= $num ?></span>
+      <span class="iw-plate" aria-hidden="true"><?= $num ?></span>
 <?php endif; ?>
-   </div>
-   <div class="iw-body">
-    <div class="iw-count"><b><?= $num ?></b>/<?= $iwTotal ?></div>
-    <h3 class="iw-name"><?= $ind['name'] ?></h3>
-    <p class="iw-desc"><?= $ind['desc'] ?></p>
-    <button type="button" data-book class="btn btn-black iw-cta">Learn more</button>
-   </div>
-  </article>
+     </div>
+     <div class="iw-body">
+      <div class="iw-count"><b><?= $num ?></b>/<?= $iwTotal ?></div>
+      <h3 class="iw-name"><?= $ind['name'] ?></h3>
+      <p class="iw-desc"><?= $ind['desc'] ?></p>
+      <button type="button" data-book class="btn btn-black iw-cta">Learn more</button>
+     </div>
+    </article>
 <?php endforeach; ?>
+   </div>
+  </div>
  </div>
 </section>
 
 <script>
-// Industry cards: scroll-linked reveal.
-// Each card maps its own travel through the viewport to two things — the image
-// scales down and drifts slightly, the content fades and slides up. Both are read
-// from scroll position rather than fired by a transition, so they track the scroll
-// exactly instead of running on their own clock.
+// "Who We Work With": pinned crossfade sequence.
 //
-// Cost control: an IntersectionObserver keeps the set of cards near the viewport,
-// and only those are measured on each frame. Everything else is untouched, so the
-// per-frame work stays at a couple of rect reads however long the list grows.
+// The stage is held by CSS position:sticky. This maps the distance scrolled through
+// the taller wrapper onto a float position along the slides, then crossfades between
+// the two slides either side of it. Nothing is on a timer — every value is read from
+// scroll position, so the sequence tracks the scrollbar exactly and reverses cleanly.
+//
+// Two slides are ever non-zero at once, and smoothstep(x) + smoothstep(1-x) === 1, so
+// the pair always sums to full opacity: no dip to grey at the midpoint, no flash.
 (function(){
- const list = document.getElementById('iwList');
- if(!list) return;
- if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+ const outer = document.getElementById('iwOuter');
+ const pin   = document.getElementById('iwPin');
+ const stage = document.getElementById('iwStage');
+ if(!outer || !pin || !stage) return;
 
- const cards = Array.from(list.querySelectorAll('.iw-card'));
- if(!cards.length) return;
+ const slides = Array.from(stage.querySelectorAll('.iw-slide'));
+ if(slides.length < 2) return;
 
- // opt in only once we know we can run: without this the cards stay plainly visible
- list.classList.add('iw-anim');
+ const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+ const narrow = window.matchMedia('(max-width:900px)');
 
- const live = new Set();
- let ticking = false;
+ const media = slides.map(s => s.querySelector('.iw-media img, .iw-plate'));
+ const bodies = slides.map(s => s.querySelector('.iw-body'));
 
- const io = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){
-   if(e.isIntersecting) live.add(e.target); else live.delete(e.target);
+ let stickyTop = 0, runway = 0, last = -1, ticking = false, on = false;
+
+ // smoothstep: eases the crossfade without breaking the pair summing to 1
+ function ss(x){ return x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x); }
+
+ function enable(){
+  if(on) return;
+  on = true;
+  outer.classList.add('iw-on');
+ }
+ function disable(){
+  if(!on) return;
+  on = false;
+  outer.classList.remove('iw-on');
+  slides.forEach(function(s, i){
+   s.style.opacity = ''; s.classList.toggle('is-active', i === 0);
+   s.removeAttribute('inert'); s.removeAttribute('aria-hidden');
+   if(media[i]) media[i].style.transform = '';
+   if(bodies[i]) bodies[i].style.transform = '';
   });
-  request();
- }, { rootMargin: '240px 0px' });
- cards.forEach(function(c){ io.observe(c); });
-
- function apply(card){
-  const r = card.getBoundingClientRect();
-  const vh = window.innerHeight || 1;
-  // 0 while the card is still below the fold, 1 once it has risen into place
-  const from = vh * 0.92, to = vh * 0.30;
-  let p = (from - r.top) / (from - to);
-  p = p < 0 ? 0 : p > 1 ? 1 : p;
-  const ease = 1 - Math.pow(1 - p, 3);
-
-  // continuous drift, keyed to how far the card's centre sits from the viewport's
-  const mid = (r.top + r.height / 2 - vh / 2) / vh;
-  const drift = Math.max(-1, Math.min(1, mid)) * -18;
-
-  card.style.setProperty('--iw-p', ease.toFixed(4));
-  card.style.setProperty('--iw-drift', drift.toFixed(2) + 'px');
  }
 
- function frame(){
+ function measure(){
+  if(reduce.matches || narrow.matches){ disable(); return; }
+  enable();
+  stickyTop = parseFloat(getComputedStyle(pin).top) || 0;
+  // .iw-on sizes the wrapper in CSS (pin height + one --iw-step per transition),
+  // so the runway is just whatever is left once the pin is accounted for.
+  runway = Math.max(0, outer.offsetHeight - pin.offsetHeight);
+ }
+
+ function render(){
   ticking = false;
-  live.forEach(apply);
+  if(!on || runway <= 0) return;
+
+  const rect = outer.getBoundingClientRect();
+  let p = (stickyTop - rect.top) / runway;
+  p = p < 0 ? 0 : p > 1 ? 1 : p;
+
+  const pos = p * (slides.length - 1);
+  const active = Math.round(pos);
+
+  for(let i = 0; i < slides.length; i++){
+   const d = pos - i;                      // <0 upcoming, 0 active, >0 already passed
+   const a = Math.abs(d);
+   const o = a >= 1 ? 0 : ss(1 - a);
+   slides[i].style.opacity = o.toFixed(4);
+   if(media[i]){
+    // incoming eases down from slightly larger; outgoing settles slightly smaller
+    const sc = 1 - Math.max(-1, Math.min(1, d)) * 0.06;
+    media[i].style.transform = 'scale(' + sc.toFixed(4) + ')';
+   }
+   if(bodies[i]){
+    // clamped like the scale: a slide seven places away would otherwise be pushed
+    // 210px, which is invisible at opacity 0 but still costs layout on every frame
+    const dy = Math.max(-1, Math.min(1, d)) * -30;
+    bodies[i].style.transform = 'translateY(' + dy.toFixed(2) + 'px)';
+   }
+  }
+
+  if(active !== last){
+   last = active;
+   for(let i = 0; i < slides.length; i++){
+    const isActive = i === active;
+    slides[i].classList.toggle('is-active', isActive);
+    // keeps the eight hidden buttons out of the tab order and off screen readers
+    if(isActive){ slides[i].removeAttribute('inert'); slides[i].removeAttribute('aria-hidden'); }
+    else { slides[i].setAttribute('inert', ''); slides[i].setAttribute('aria-hidden', 'true'); }
+   }
+  }
  }
+
  function request(){
   if(ticking) return;
   ticking = true;
-  window.requestAnimationFrame(frame);
+  window.requestAnimationFrame(render);
  }
 
- cards.forEach(apply);
+ measure();
+ render();
  window.addEventListener('scroll', request, { passive: true });
- window.addEventListener('resize', request);
+ window.addEventListener('resize', function(){ measure(); last = -1; render(); });
+ if(reduce.addEventListener) reduce.addEventListener('change', function(){ measure(); last = -1; render(); });
+ if(narrow.addEventListener) narrow.addEventListener('change', function(){ measure(); last = -1; render(); });
 })();
 </script>
 

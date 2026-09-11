@@ -1419,18 +1419,21 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  #services .fn-card{width:auto}
 }
 
-/* ══════════ ABOUT US — Industries, editorial cards ══════════
-   Rounded image left, numbered content right, one card per industry. Replaces the
-   .industry-chips pill row; the eyebrow, heading and subline above are untouched.
 
-   The animated state is opt-in: every value below is the RESTING one, so with no
-   JS, a thrown error or reduced motion the cards render complete and static. Only
-   once the JS adds .iw-anim do --iw-p (0 to 1 entry progress) and --iw-drift
-   (parallax offset) start driving anything.
+/* ══════════ ABOUT US — Industries, pinned crossfade ══════════
+   Eight slides stacked in one pinned stage, crossfaded by scroll position. The
+   eyebrow, heading and subline above scroll normally and are untouched.
+
+   Defaults here are the UNPINNED state: the slides sit in normal flow, fully
+   opaque, and read as an ordinary stacked list. Everything that pins or hides is
+   nested under .iw-on, which only the JS adds, and only on a wide viewport with
+   motion allowed — so no JS, a thrown error, reduced motion or a phone all land
+   on the same readable fallback rather than a blank stage.
 
    Scoped to #industries-about, which exists only on About Us. */
-.iw-list{display:flex;flex-direction:column;gap:7rem;max-width:1280px;margin:0 auto}
-.iw-card{
+.iw-outer{position:relative;width:100%;--iw-step:58vh}
+.iw-stage{display:flex;flex-direction:column;gap:3.5rem}
+.iw-slide{
  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
  gap:4.5rem;align-items:center;
 }
@@ -1441,11 +1444,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
     transformed child bleed past a rounded overflow:hidden corner. */
  isolation:isolate;
 }
-.iw-media img{
- width:100%;height:100%;object-fit:cover;display:block;
- /* transform-origin centre so the scale reads as a push-in, not a slide */
- will-change:transform;
-}
+.iw-media img{width:100%;height:100%;object-fit:cover;display:block}
 /* Stand-in until assets/img/ind-<slug>.webp is supplied. */
 .iw-media-empty{
  background:linear-gradient(145deg,#f4f5f4 0%,#e9ebe9 55%,#e3e7e4 100%);
@@ -1471,35 +1470,45 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 }
 .iw-cta{align-self:flex-start}
 
-/* ── animated state, driven entirely by the two custom properties ── */
-.iw-anim .iw-media img,
-.iw-anim .iw-plate{
- transform:scale(calc(1 + (1 - var(--iw-p,1)) * .09)) translateY(var(--iw-drift,0px));
+/* ── pinned state ──
+   The wrapper is made tall by JS (pin height + one step per transition); the pin
+   sticks centred in the viewport and the slides stack inside it. */
+/* Height is pure CSS: pin height plus one step per transition. Custom properties
+   come back from getComputedStyle as their raw token ("58vh", not a pixel count),
+   so computing this in JS would need unit parsing; calc does it correctly and the
+   JS simply reads the resulting box. */
+.iw-on{
+ --iw-pin-h:clamp(460px,74vh,620px);
+ height:calc(var(--iw-pin-h) + var(--iw-step) * (var(--iw-count,8) - 1));
 }
-.iw-anim .iw-count,
-.iw-anim .iw-name,
-.iw-anim .iw-desc,
-.iw-anim .iw-cta{
- opacity:var(--iw-p,1);
- transform:translateY(calc((1 - var(--iw-p,1)) * 26px));
+.iw-on .iw-pin{
+ position:sticky;top:calc((100vh - var(--iw-pin-h)) / 2);
+ height:var(--iw-pin-h);width:100%;
 }
-/* Staggered so the block assembles rather than arriving as one slab. */
-.iw-anim .iw-name{transform:translateY(calc((1 - var(--iw-p,1)) * 34px))}
-.iw-anim .iw-desc{transform:translateY(calc((1 - var(--iw-p,1)) * 42px))}
-.iw-anim .iw-cta {transform:translateY(calc((1 - var(--iw-p,1)) * 50px))}
+.iw-on .iw-stage{display:block;position:relative;height:100%;gap:0}
+.iw-on .iw-slide{
+ position:absolute;inset:0;
+ opacity:0;pointer-events:none;
+ will-change:opacity;
+}
+/* Only the slide in front takes clicks; `inert` on the rest keeps their buttons
+   out of the tab order, which opacity alone would not do. */
+.iw-on .iw-slide.is-active{pointer-events:auto}
+.iw-on .iw-media{aspect-ratio:auto;height:100%}
+.iw-on .iw-media img,
+.iw-on .iw-plate{will-change:transform}
+.iw-on .iw-body{will-change:transform}
 
 @media(max-width:1024px){
- .iw-list{gap:5rem}
- .iw-card{gap:3rem}
+ .iw-slide{gap:3rem}
  .iw-count{margin-bottom:1.1rem}
  .iw-desc{font-size:15.5px;margin-bottom:1.6rem}
 }
-@media(max-width:768px){
- /* Image on top, content beneath; the drift would fight a stacked card, so it goes. */
- .iw-list{gap:3.5rem}
- .iw-card{grid-template-columns:1fr;gap:1.6rem}
+/* Below 900px the JS never pins (it checks the same width), so these only ever
+   style the stacked fallback. */
+@media(max-width:900px){
+ .iw-stage{gap:3.5rem}
+ .iw-slide{grid-template-columns:1fr;gap:1.6rem}
  .iw-media{aspect-ratio:16/11}
- .iw-anim .iw-media img,
- .iw-anim .iw-plate{transform:scale(calc(1 + (1 - var(--iw-p,1)) * .05))}
  .iw-desc{max-width:none}
 }
