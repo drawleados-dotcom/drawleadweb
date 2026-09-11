@@ -117,82 +117,80 @@ $fdrIcons = [
  <div class="svc-scroll-outer" id="svcScrollOuter">
   <div class="svc-scroll-sticky" id="svcScrollSticky">
    <div class="fn-grid" id="svcRow">
- <!-- 01 Website Development -->
- <div class="fn-card">
- <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
- <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="4" y="7" width="32" height="26" rx="3" fill="white" fill-opacity=".12" stroke="white" stroke-width="2"/><line x1="4" y1="15" x2="36" y2="15" stroke="white" stroke-width="2"/><circle cx="9" cy="11" r="1.6" fill="white"/><circle cx="14.5" cy="11" r="1.6" fill="white" fill-opacity=".6"/><path d="M10 25 L16 20 L22 26 L30 17" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".9"/></svg>
- </div>
- <div class="fn-num">01 — Web</div>
- <div class="fn-name">Website Development</div>
- <div class="fn-desc">Custom websites, WordPress builds, Shopify stores, ecommerce platforms, and high-converting landing pages.</div>
- <div class="fn-tags"><span class="fn-tag">Custom Builds</span><span class="fn-tag">WordPress</span><span class="fn-tag">Shopify</span></div>
- </div>
- <!-- 02 Social Media Marketing -->
- <div class="fn-card">
- <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
- <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M20 33 C10 26 4 20 4 13.5 C4 8.5 8 5 12.5 5 C16 5 18.5 7 20 9.5 C21.5 7 24 5 27.5 5 C32 5 36 8.5 36 13.5 C36 20 30 26 20 33 Z" fill="white" opacity=".92"/></svg>
- </div>
- <div class="fn-num" style="color:#32b46f">02 — Social</div>
- <div class="fn-name">Social Media Marketing</div>
- <div class="fn-desc">Strategy, content creation, video production, and analytics across Instagram, Facebook, YouTube &amp; LinkedIn.</div>
- <div class="fn-tags"><span class="fn-tag">Content</span><span class="fn-tag">Video</span><span class="fn-tag">Analytics</span></div>
- </div>
- <!-- 03 SEO -->
- <div class="fn-card">
- <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
- <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="17" cy="17" r="11" fill="none" stroke="white" stroke-width="3"/><line x1="25" y1="25" x2="35" y2="35" stroke="white" stroke-width="3.5" stroke-linecap="round"/><polyline points="10,19 14,14 18,17 24,10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/></svg>
- </div>
- <div class="fn-num">03 — SEO</div>
- <div class="fn-name">Search Engine Optimization</div>
- <div class="fn-desc">On-page, off-page, local, and technical SEO backed by keyword research and authoritative link building.</div>
- <div class="fn-tags"><span class="fn-tag">On-Page</span><span class="fn-tag">Technical</span><span class="fn-tag">Local SEO</span></div>
- </div>
- <!-- 04 ERP Software -->
- <div class="fn-card">
- <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
- <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="6" y="24" width="28" height="8" rx="2" fill="white" opacity=".4"/><rect x="6" y="14" width="28" height="8" rx="2" fill="white" opacity=".7"/><rect x="6" y="4" width="28" height="8" rx="2" fill="white"/></svg>
- </div>
- <div class="fn-num" style="color:#14855a">04 — ERP</div>
- <div class="fn-name">ERP Software Solutions</div>
- <div class="fn-desc">Custom ERP systems that digitize operations, automate workflows, and give founders real-time visibility.</div>
- <div class="fn-tags"><span class="fn-tag">Automation</span><span class="fn-tag">Workflows</span><span class="fn-tag">Reporting</span></div>
- </div>
- <!-- 05 Lead Generation -->
- <div class="fn-card">
- <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
- <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M4 6 L36 6 L24 20 L24 32 L16 36 L16 20 Z" fill="white" opacity=".92"/></svg>
- </div>
- <div class="fn-num" style="color:#32b46f">05 — Leads</div>
- <div class="fn-name">Lead Generation</div>
- <div class="fn-desc">Full-funnel systems that turn strangers into qualified leads, and leads into paying customers.</div>
- <div class="fn-tags"><span class="fn-tag">Funnels</span><span class="fn-tag">CRM</span><span class="fn-tag">Nurturing</span></div>
- </div>
- <!-- 06 AI Website Solutions -->
- <div class="fn-card">
- <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
- <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M20 3 L24 16 L37 20 L24 24 L20 37 L16 24 L3 20 L16 16 Z" fill="white"/></svg>
- </div>
- <div class="fn-num" style="color:#23a065">06 — AI</div>
- <div class="fn-name">AI Website Solutions</div>
- <div class="fn-desc">AI-assisted websites and tools that personalize experiences and automate routine business tasks.</div>
- <div class="fn-tags"><span class="fn-tag">AI Automation</span><span class="fn-tag">Personalization</span></div>
- </div>
- <!-- 07 Google Ads -->
- <div class="fn-card">
- <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
- <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="15" fill="none" stroke="white" stroke-width="2.5" opacity=".5"/><circle cx="20" cy="20" r="9" fill="none" stroke="white" stroke-width="2.5" opacity=".8"/><circle cx="20" cy="20" r="3.5" fill="white"/></svg>
- </div>
- <div class="fn-num">07 — Ads</div>
- <div class="fn-name">Google Ads</div>
- <div class="fn-desc">Performance-driven search and display campaigns engineered for measurable return on ad spend.</div>
- <div class="fn-tags"><span class="fn-tag">Search Ads</span><span class="fn-tag">Display</span><span class="fn-tag">ROAS</span></div>
- </div>
- <!-- 08 Meta Ads -->
- <div class="fn-card fn-cta-card">
- <div style="font-size:24px;font-weight:800;color:#fff;line-height:1.15;letter-spacing:-.02em">Meta Ads,<br>done right</div>
- <div style="font-size:12px;color:rgba(255,255,255,.44);line-height:1.65;font-weight:400">High-performing Instagram &amp; Facebook campaigns tuned for reach, engagement, and conversions.</div>
- <button type="button" data-book style="background:#fff;color:var(--black);padding:11px 22px;border-radius:6px;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:opacity .2s" onmouseover="this.style.opacity='.84'" onmouseout="this.style.opacity='1'">Talk to Us →</button>
- </div>
+<?php
+/*
+ * What We Do — eight service cards, styled to match Home 7's Core Platform card
+ * (.cf-card): white plate, 1px #F0F0F0 border, 12px radius, soft shadow, a 28px
+ * black line icon, then name / description / tags / action.
+ *
+ * Driven by a data array rather than eight hand-written blocks so the copy and the
+ * markup stay separable. Icons use the same idiom as .cf-icon — 24x24, no fill,
+ * currentColor stroke at 1.75 with round caps and joins — so they sit at the same
+ * visual weight as the ones on Home 7.
+ *
+ * Card styling is .svc-* in partials/style.php, scoped to #services: .fn-card is
+ * shared with four other templates and must not shift under them.
+ */
+$svcCards = [
+ [
+  'icon' => '<path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 9h18"/><path d="M9 13l-1.6 1.6L9 16.2"/><path d="M15 13l1.6 1.6L15 16.2"/>',
+  'name' => 'Website Development',
+  'desc' => 'Custom websites, WordPress builds, Shopify stores, ecommerce platforms, and high-converting landing pages.',
+  'tags' => ['Custom Builds', 'WordPress', 'Shopify'],
+ ],
+ [
+  'icon' => '<circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8 15.8 6.7"/><path d="M8.2 13.2 15.8 17.3"/>',
+  'name' => 'Social Media Marketing',
+  'desc' => 'Strategy, content creation, video production, and analytics across Instagram, Facebook, YouTube &amp; LinkedIn.',
+  'tags' => ['Content', 'Video', 'Analytics'],
+ ],
+ [
+  'icon' => '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/><path d="M7.5 12.1 9.6 9.4l1.9 1.6 2.4-3"/>',
+  'name' => 'Search Engine Optimization',
+  'desc' => 'On-page, off-page, local, and technical SEO backed by keyword research and authoritative link building.',
+  'tags' => ['On-Page', 'Technical', 'Local SEO'],
+ ],
+ [
+  'icon' => '<path d="M12 3 21 7.5 12 12 3 7.5z"/><path d="M3 12.2 12 16.7l9-4.5"/><path d="M3 16.7 12 21.2l9-4.5"/>',
+  'name' => 'ERP Software Solutions',
+  'desc' => 'Custom ERP systems that digitize operations, automate workflows, and give founders real-time visibility.',
+  'tags' => ['Automation', 'Workflows', 'Reporting'],
+ ],
+ [
+  'icon' => '<path d="M3 4.5h18l-7 8.2v6.6l-4 2.2v-8.8z"/>',
+  'name' => 'Lead Generation',
+  'desc' => 'Full-funnel systems that turn strangers into qualified leads, and leads into paying customers.',
+  'tags' => ['Funnels', 'CRM', 'Nurturing'],
+ ],
+ [
+  'icon' => '<path d="M12 3.2 13.9 9 19.8 10.9 13.9 12.8 12 18.6 10.1 12.8 4.2 10.9 10.1 9z"/><path d="M18.4 16.4 19.2 18.6 21.4 19.4 19.2 20.2 18.4 22.4 17.6 20.2 15.4 19.4 17.6 18.6z"/>',
+  'name' => 'AI Website Solutions',
+  'desc' => 'AI-assisted websites and tools that personalize experiences and automate routine business tasks.',
+  'tags' => ['AI Automation', 'Personalization'],
+ ],
+ [
+  'icon' => '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/>',
+  'name' => 'Google Ads',
+  'desc' => 'Performance-driven search and display campaigns engineered for measurable return on ad spend.',
+  'tags' => ['Search Ads', 'Display', 'ROAS'],
+ ],
+ [
+  'icon' => '<path d="M3 10.2v3.6a1 1 0 0 0 1 1h2.2l6.3 4.2V5l-6.3 4.2H4a1 1 0 0 0-1 1z"/><path d="M17 9.4a4 4 0 0 1 0 5.2"/><path d="M19.8 6.8a8 8 0 0 1 0 10.4"/>',
+  'name' => 'Meta Ads',
+  'desc' => 'High-performing Instagram and Facebook campaigns tuned for reach, engagement, and conversions.',
+  'tags' => ['Instagram', 'Facebook', 'Conversions'],
+ ],
+];
+?>
+<?php foreach ($svcCards as $c): ?>
+    <div class="fn-card">
+     <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><?= $c['icon'] ?></svg></div>
+     <div class="svc-name"><?= $c['name'] ?></div>
+     <div class="svc-desc"><?= $c['desc'] ?></div>
+     <div class="svc-tags"><?php foreach ($c['tags'] as $t): ?><span class="svc-tag"><?= $t ?></span><?php endforeach; ?></div>
+     <button type="button" data-book class="svc-go">Explore service</button>
+    </div>
+<?php endforeach; ?>
    </div><!-- /fn-grid -->
    <div class="sec-cta rv">
  <button type="button" data-book class="btn btn-black">Book Free Consultation →</button>

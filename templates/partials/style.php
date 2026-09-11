@@ -1366,3 +1366,60 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  .fdr-bio{font-size:15.5px}
  .fdr-socials{justify-content:flex-start}
 }
+
+/* ══════════ What We Do — Core Platform card treatment ══════════
+   Mirrors Home 7's .cf-card exactly: white plate, 1px #F0F0F0 border, 12px radius,
+   0 4px 20px shadow, 26px padding, 28px black line icon, 20px/600 name, 16px
+   #777 copy, bordered uppercase tags, green uppercase action.
+
+   Two deliberate departures from home7.css, both forced by this page:
+   - var(--font) throughout. Home 7 sets body copy in --font-body (Inter), which
+     only home7.css defines and only Home 7 loads; here that would resolve to
+     nothing and inherit anyway.
+   - The track drops .fn-grid's slab (1px hairline gutters over a border-coloured
+     backplate) for 20px gaps, because these cards now carry their own border and
+     shadow. Scoped to #services so the four other .fn-grid templates keep theirs. */
+#services .fn-grid{
+ gap:20px;background:none;border:none;border-radius:0;overflow:visible;
+ /* Room for the cards' 20px-blur shadow to fall inside the row, since
+    .svc-scroll-sticky clips with overflow:hidden. Negative margins cancel the
+    padding so the section keeps its spacing. Same trick as .cf-row. */
+ padding:16px 16px 28px;margin:-16px -16px -14px;
+}
+#services .fn-card{
+ flex:0 0 320px;width:320px;min-height:300px;
+ background:#FFFFFF;border:1px solid #F0F0F0;border-radius:12px;
+ box-shadow:0 4px 20px rgba(0,0,0,.06);
+ padding:26px;display:flex;flex-direction:column;overflow:visible;
+}
+#services .fn-card:hover{background:#FFFFFF}
+
+#services .svc-icon{width:28px;height:28px;color:#111111;flex-shrink:0;margin-bottom:16px}
+#services .svc-icon svg{width:100%;height:100%;display:block}
+#services .svc-name{
+ font-family:var(--font);font-size:20px;font-weight:600;letter-spacing:-.01em;
+ line-height:1.25;color:#111111;margin-bottom:.6rem;
+}
+#services .svc-desc{
+ font-family:var(--font);font-size:16px;font-weight:400;color:#777777;
+ line-height:1.58;margin-bottom:1.1rem;
+}
+#services .svc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1.2rem;margin-top:auto}
+#services .svc-tag{
+ font-family:var(--font);font-size:11px;border:1px solid #E3E3E1;border-radius:8px;
+ padding:3px 7px;color:#8a8a86;background:#fff;
+ text-transform:uppercase;letter-spacing:.05em;font-weight:600;
+}
+#services .svc-go{
+ font-family:var(--font);font-size:13px;font-weight:600;letter-spacing:.04em;
+ text-transform:uppercase;color:var(--blue);text-decoration:none;
+ display:flex;align-items:center;gap:5px;
+ border:none;background:none;cursor:pointer;padding:0;transition:gap .2s;
+}
+#services .svc-go:hover{gap:9px}
+
+@media(max-width:768px),(prefers-reduced-motion:reduce){
+ /* Back to a stacked grid; the cards keep their own plate so the slab stays off. */
+ #services .fn-grid{padding:0;margin:0;gap:20px}
+ #services .fn-card{width:auto}
+}
