@@ -38,23 +38,68 @@
 </section>
 
 <!-- ═══════════════════ FOUNDER ═══════════════════ -->
-<section id="founder" style="background:var(--bg)">
- <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Leadership</span><div class="eyebrow-line"></div></div>
- <h2 class="sec-h rv">Meet the <span class="g">Founder</span></h2>
- <p class="sec-sub rv">An engineer-turned-growth-marketer who still gets hands-on with every website, SEO, and Shopify build.</p>
+<section id="founder">
+<?php
+/*
+ * Leadership. Two bands: a full-bleed grey masthead carrying the name, the role
+ * and the portrait flush to the right edge, then a white block split into the
+ * bio/quote column and the competencies/socials column.
+ *
+ * The portrait is optional on purpose. Until assets/img/founder.webp exists the
+ * monogram plate renders instead, so the section never shows a broken image; drop
+ * the file in and it swaps itself over with no template change.
+ */
+$fdrPhoto = __DIR__ . '/../assets/img/founder.webp';
+$fdrHasPhoto = is_file($fdrPhoto);
 
- <div class="founder-card rv">
-  <div class="founder-avatar">VB</div>
-  <div class="founder-body">
-   <div class="founder-name">Vinothkumar Babu</div>
-   <div class="founder-title">Founder, Drawlead</div>
-   <div class="founder-loc">Sriperumbudur &amp; Chennai, Tamil Nadu, India</div>
-   <p class="founder-bio">Vinothkumar founded Drawlead after studying Computer Science (B.E., St. Joseph College of Engineering, 2018–2022), pairing an engineer's systems thinking with hands-on expertise in web design, WordPress and Shopify development, SEO, and performance marketing. He stays close to the work — personally shaping strategy on Drawlead's website, SEO, and Shopify growth engagements — and shares what he learns with a growing community of 7,000+ followers on LinkedIn.</p>
-   <blockquote class="founder-quote">"Most Shopify stores don't fail because of traffic. They fail because the store…"<cite>— Vinothkumar Babu, on LinkedIn</cite></blockquote>
-   <div class="founder-skills">
-    <span class="fn-tag">Web Design</span><span class="fn-tag">Web Development</span><span class="fn-tag">WordPress</span><span class="fn-tag">Shopify</span><span class="fn-tag">SEO</span><span class="fn-tag">SEM</span><span class="fn-tag">Social Media Marketing</span><span class="fn-tag">Lead Generation</span><span class="fn-tag">Graphic Design</span>
+/* Only profiles with a real URL are rendered — no placeholder hrefs. */
+$fdrSocials = [
+ 'linkedin'  => 'https://www.linkedin.com/in/vinothkumarbabu7/',
+ 'instagram' => '',
+ 'x'         => '',
+ 'facebook'  => '',
+];
+$fdrIcons = [
+ 'linkedin'  => '<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="8" fill="#0A66C2"/><path fill="#fff" d="M17.6 19.4h-5.1V37h5.1V19.4zm.34-5.2a2.9 2.9 0 1 0-5.8 0 2.9 2.9 0 0 0 5.8 0zM37 27.3c0-4.9-2.6-7.2-6.1-7.2-2.8 0-4.1 1.55-4.8 2.64V19.4h-5.1c.07 1.44 0 17.6 0 17.6h5.1v-9.8c0-.46.03-.92.17-1.25.37-.92 1.2-1.86 2.62-1.86 1.85 0 2.59 1.4 2.59 3.47V37H37v-9.7z"/></svg>',
+ 'instagram' => '<svg viewBox="0 0 48 48" aria-hidden="true"><defs><radialGradient id="fdrIg" cx=".3" cy="1.1" r="1.3"><stop offset="0" stop-color="#FDD05C"/><stop offset=".3" stop-color="#F25F4C"/><stop offset=".6" stop-color="#D92E7F"/><stop offset="1" stop-color="#8A3AB9"/></radialGradient></defs><rect width="48" height="48" rx="11" fill="url(#fdrIg)"/><rect x="12" y="12" width="24" height="24" rx="7" fill="none" stroke="#fff" stroke-width="2.6"/><circle cx="24" cy="24" r="5.6" fill="none" stroke="#fff" stroke-width="2.6"/><circle cx="31.4" cy="16.6" r="1.8" fill="#fff"/></svg>',
+ 'x'         => '<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="8" fill="#000"/><path fill="#fff" d="M27.6 21.9 36.4 12h-2.6l-7.6 8.6L20.1 12h-7l9.2 13.1L13.1 36h2.6l8-9.1 6.4 9.1h7l-9.5-14.1zm-2.9 3.2-.93-1.3-7.4-10.4h3.1l6 8.4.93 1.3 7.8 10.9h-3.1l-6.4-8.9z"/></svg>',
+ 'facebook'  => '<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21" fill="#1877F2"/><path fill="#fff" d="M31.5 30.2l.93-6.1h-5.85v-3.95c0-1.67.82-3.3 3.44-3.3h2.66v-5.2s-2.42-.41-4.72-.41c-4.82 0-7.97 2.92-7.97 8.21v4.65h-5.36v6.1h5.36V45a21.3 21.3 0 0 0 6.59 0V30.2h4.92z"/></svg>',
+];
+?>
+ <div class="fdr-band">
+  <div class="fdr-id">
+   <h2 class="fdr-name rv">Vinothkumar Babu</h2>
+   <div class="fdr-role rv">Founder &amp; CEO</div>
+  </div>
+  <div class="fdr-photo">
+<?php if ($fdrHasPhoto): ?>
+   <img src="<?= asset_url('/assets/img/founder.webp') ?>" alt="Vinothkumar Babu, founder and CEO of Drawlead" decoding="async" fetchpriority="low">
+<?php else: ?>
+   <div class="fdr-mono" aria-hidden="true">VB</div>
+<?php endif; ?>
+  </div>
+ </div>
+
+ <div class="fdr-lower">
+  <div class="fdr-main">
+   <p class="fdr-bio rv">Vinothkumar founded Drawlead after studying Computer Science (B.E., St. Joseph College of Engineering, 2018–2022), pairing an engineer's systems thinking with hands-on expertise in web design, WordPress and Shopify development, SEO, and performance marketing. He stays close to the work — personally shaping strategy on Drawlead's website, SEO, and Shopify growth engagements — and shares what he learns with a growing community of 7,000+ followers on LinkedIn.</p>
+   <blockquote class="fdr-quote rv">
+    <span class="fdr-qmark" aria-hidden="true">&ldquo;</span>
+    <p>"Most Shopify stores don't fail because of traffic. They fail because the store…"</p>
+    <cite>— Vinothkumar Babu, on LinkedIn</cite>
+   </blockquote>
+  </div>
+
+  <div class="fdr-aside">
+   <div class="fdr-label rv">Core Competencies</div>
+   <div class="fdr-skills rv">
+    <span class="fdr-tag">Web Design</span><span class="fdr-tag">Web Development</span><span class="fdr-tag">WordPress</span><span class="fdr-tag fdr-tag-on">Shopify</span><span class="fdr-tag">SEO</span><span class="fdr-tag">Social Media Marketing</span><span class="fdr-tag">Lead Generation</span><span class="fdr-tag">Graphic Design</span><span class="fdr-tag">SEM</span>
    </div>
-   <a href="https://www.linkedin.com/in/vinothkumarbabu7/" target="_blank" rel="noopener" class="btn btn-ghost btn-sm" style="margin-top:1.5rem">View LinkedIn Profile →</a>
+   <div class="fdr-socials rv">
+<?php foreach ($fdrSocials as $net => $url): if ($url === '') continue; ?>
+    <a href="<?= htmlspecialchars($url, ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener" class="fdr-social" aria-label="<?= ucfirst($net) ?>"><?= $fdrIcons[$net] ?></a>
+<?php endforeach; ?>
+   </div>
   </div>
  </div>
 </section>

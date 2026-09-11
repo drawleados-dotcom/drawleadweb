@@ -607,15 +607,6 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .story-tagline{margin-top:1.4rem;padding-top:1.3rem;border-top:1px solid var(--border);font-size:13px;font-weight:800;background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit}
 .story-tagline span{background:none;-webkit-text-fill-color:var(--g400);color:var(--g400);font-weight:600}
 
-.founder-card{display:flex;gap:2.75rem;background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:2.75rem;align-items:flex-start;box-shadow:0 12px 40px rgba(0,0,0,.05)}
-.founder-avatar{width:118px;height:118px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;font-size:36px;font-weight:800;letter-spacing:-.02em;flex-shrink:0;box-shadow:0 12px 32px rgba(50,180,111,.35)}
-.founder-name{font-size:23px;font-weight:800;letter-spacing:-.01em}
-.founder-title{font-size:13px;color:var(--blue);font-weight:700;margin-top:.2rem;margin-bottom:.3rem}
-.founder-loc{font-size:10.5px;color:var(--g400);text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:1.3rem}
-.founder-bio{font-size:14px;color:var(--g500);line-height:1.75;margin-bottom:1.3rem;font-weight:400}
-.founder-quote{border-left:3px solid var(--blue);padding:.15rem 0 .15rem 1.15rem;font-size:15.5px;font-weight:600;color:var(--black);font-style:italic;margin-bottom:1.4rem;line-height:1.5}
-.founder-quote cite{display:block;margin-top:.5rem;font-size:10.5px;font-style:normal;color:var(--g400);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
-.founder-skills{display:flex;flex-wrap:wrap;gap:6px}
 
 .why-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 
@@ -625,16 +616,11 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 
 @media(max-width:960px){
   .story-grid{grid-template-columns:1fr;gap:2.5rem}
-  .founder-card{flex-direction:column;align-items:center;text-align:center;padding:2.25rem}
-  .founder-skills{justify-content:center}
-  .founder-quote{text-align:left}
   .why-grid-4{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:560px){
   #about-hero{padding-top:7.5rem}
   .why-grid-4{grid-template-columns:1fr}
-  .founder-card{padding:1.75rem}
-  .founder-avatar{width:96px;height:96px;font-size:30px}
   .industry-chips{gap:8px}
   .ind-chip2{padding:9px 16px;font-size:12px}
   .story-facts li strong{text-align:right;font-size:12px}
@@ -1268,4 +1254,115 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  .svc-scroll-sticky .sec-cta{margin-top:var(--rh-cta)}
  #services .fn-grid{display:grid;width:auto;flex:initial;transform:none !important;will-change:auto}
  #services .fn-card{flex:initial;width:auto}
+}
+
+/* ══════════ ABOUT US — Leadership ══════════
+   Full-bleed grey masthead (name + role left, portrait flush to the right edge)
+   over a white two-column block. The section cancels the global section padding
+   so the band can run edge to edge; each band supplies its own.
+
+   All scoped to #founder, which exists only on About Us. */
+#founder{padding:0;background:var(--white);border-bottom:1px solid var(--border)}
+
+/* ── masthead ── */
+.fdr-band{
+ background:var(--bg);
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(0,41%);
+ align-items:stretch;
+ padding-left:var(--sp-gutter);
+}
+.fdr-id{align-self:center;padding:4.5rem 2.5rem 4.5rem 0;min-width:0}
+.fdr-name{
+ font-family:var(--font);font-size:clamp(32px,4.3vw,58px);font-weight:800;
+ letter-spacing:-.025em;line-height:1.08;color:var(--black);margin:0;
+}
+/* #32b46f is only 2.4:1 on the grey band and fails the 3:1 that large text needs,
+   so the role sits one step deeper at 3.35:1. Visually near-identical. */
+.fdr-role{
+ font-family:var(--font);font-size:clamp(19px,2.4vw,33px);font-weight:700;
+ letter-spacing:.005em;line-height:1.2;color:#1c9558;
+ text-transform:uppercase;margin-top:.5rem;
+}
+/* Sits 3.5rem below the band top and runs to its floor, so the portrait is
+   cropped by the band rather than floating inside it. */
+.fdr-photo{
+ position:relative;margin-top:3.5rem;min-height:408px;overflow:hidden;
+ background:linear-gradient(155deg,#ffffff 0%,#f7f8f7 100%);
+ display:flex;align-items:flex-end;justify-content:center;
+}
+.fdr-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 0%;display:block}
+/* Stand-in while assets/img/founder.webp is absent. */
+.fdr-mono{
+ align-self:center;width:150px;height:150px;border-radius:50%;background:var(--grad);
+ display:flex;align-items:center;justify-content:center;
+ color:#fff;font-family:var(--font);font-size:46px;font-weight:800;letter-spacing:-.02em;
+ box-shadow:0 14px 36px rgba(50,180,111,.35);margin-bottom:3.5rem;
+}
+
+/* ── lower block ── */
+.fdr-lower{
+ display:grid;grid-template-columns:1.15fr 1fr;gap:3.5rem;
+ padding:4rem var(--sp-gutter) 5rem;
+}
+.fdr-bio{
+ font-family:var(--font);font-size:17px;font-weight:400;line-height:1.72;
+ color:var(--g600);margin:0 0 2rem;
+}
+.fdr-quote{
+ position:relative;border-left:4px solid var(--blue);border-radius:0 10px 10px 0;
+ background:linear-gradient(90deg,#f1fbf5 0%,rgba(241,251,245,0) 100%);
+ padding:1.35rem 1.6rem 1.5rem;margin:0;
+}
+.fdr-qmark{
+ display:block;font-family:Georgia,'Times New Roman',serif;
+ font-size:44px;line-height:.7;color:#5cc98d;margin-bottom:.35rem;
+}
+.fdr-quote p{
+ font-family:var(--font);font-size:15.5px;font-weight:500;font-style:italic;
+ line-height:1.62;color:var(--black);margin:0;
+}
+.fdr-quote cite{
+ display:block;margin-top:.7rem;font-size:10.5px;font-style:normal;
+ color:var(--g500);font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+}
+
+/* ── competencies + socials ── */
+.fdr-label{
+ font-family:var(--font);font-size:11px;font-weight:600;color:var(--g500);
+ text-transform:uppercase;letter-spacing:.13em;margin-bottom:1.1rem;
+}
+.fdr-skills{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:2.5rem}
+.fdr-tag{
+ font-family:var(--font);font-size:11px;font-weight:600;
+ text-transform:uppercase;letter-spacing:.055em;
+ color:var(--g600);background:#eff1f1;border:1px solid transparent;
+ border-radius:7px;padding:9px 14px;white-space:nowrap;
+}
+/* #14855a is 4.2:1 on this tint and 11px is below the large-text threshold, so the
+   highlighted pill uses #0f7048 at 5.6:1. */
+.fdr-tag-on{background:#e8f7ef;border-color:#bfe8d3;color:#0f7048}
+.fdr-socials{display:flex;flex-wrap:wrap;gap:16px}
+.fdr-social{
+ display:block;width:52px;height:52px;border-radius:12px;
+ transition:transform .2s ease;
+}
+.fdr-social svg{width:100%;height:100%;display:block;border-radius:12px}
+.fdr-social:hover{transform:translateY(-3px)}
+
+@media(max-width:960px){
+ .fdr-band{grid-template-columns:minmax(0,1fr) minmax(0,44%)}
+ .fdr-id{padding:3.25rem 1.75rem 3.25rem 0}
+ .fdr-photo{min-height:330px;margin-top:2.5rem}
+ .fdr-lower{grid-template-columns:1fr;gap:2.75rem;padding:3rem var(--sp-gutter) 3.5rem}
+ .fdr-skills{margin-bottom:1.75rem}
+}
+@media(max-width:640px){
+ /* The portrait stops competing with the name and takes its own row. */
+ .fdr-band{grid-template-columns:1fr;padding-left:0}
+ .fdr-id{padding:2.75rem var(--sp-gutter) 1.75rem;text-align:center}
+ .fdr-photo{margin-top:0;min-height:300px}
+ .fdr-mono{margin-bottom:2.5rem;width:120px;height:120px;font-size:38px}
+ .fdr-lower{padding:2.5rem var(--sp-gutter) 3rem}
+ .fdr-bio{font-size:15.5px}
+ .fdr-socials{justify-content:flex-start}
 }
