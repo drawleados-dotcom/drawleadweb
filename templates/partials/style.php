@@ -597,15 +597,6 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 #about-hero .sec-h{margin-left:auto;margin-right:auto}
 
 .story-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:3.5rem;align-items:start}
-.story-card{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:2.1rem 2rem;box-shadow:0 12px 40px rgba(0,0,0,.05)}
-.story-card-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--blue);font-weight:700;margin-bottom:1.3rem}
-.story-facts{list-style:none;display:flex;flex-direction:column}
-.story-facts li{display:flex;justify-content:space-between;gap:1rem;padding:.85rem 0;border-bottom:1px solid var(--border);font-size:12.5px}
-.story-facts li:last-child{border-bottom:none}
-.story-facts li span{color:var(--g400);font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:10.5px}
-.story-facts li strong{color:var(--black);font-weight:700;text-align:right}
-.story-tagline{margin-top:1.4rem;padding-top:1.3rem;border-top:1px solid var(--border);font-size:13px;font-weight:800;background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:inherit}
-.story-tagline span{background:none;-webkit-text-fill-color:var(--g400);color:var(--g400);font-weight:600}
 
 
 
@@ -615,7 +606,6 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 }
 @media(max-width:560px){
   #about-hero{padding-top:7.5rem}
-  .story-facts li strong{text-align:right;font-size:12px}
 }
 
 /* ══════════════════ BLOG ══════════════════ */
@@ -1701,4 +1691,82 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 @media(max-width:360px){
  #cta.cta-about .cta-btn-w,
  #cta.cta-about .cta-btn-g{font-size:12px;padding-left:12px;padding-right:12px}
+}
+
+/* ══════════ ABOUT US — Our Story, at-a-glance column ══════════
+   Two headline stat cards over a detail card, on a white section. Replaces the
+   single .story-card list, whose rules were only used here.
+
+   Green that carries text is darkened for contrast on white: #14855a (4.6:1) for
+   small type, #1c9558 (3.8:1) for the large "8+", which only needs 3:1. Labels
+   use #64748b (4.8:1). Scoped to #story, which exists only on About Us. */
+#story{background:var(--white)}
+#story .story-grid{align-items:center}
+#story .ss-side{display:flex;flex-direction:column;gap:18px}
+#story .ss-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+#story .ss-stat,
+#story .ss-glance{
+ background:#fff;border:1px solid #e6e9ee;border-radius:20px;
+ box-shadow:0 10px 30px rgba(16,32,48,.05);
+}
+#story .ss-stat{padding:1.35rem 1.5rem 1.4rem}
+#story .ss-stat-label,
+#story .ss-row dt{
+ font-family:var(--font);font-size:11px;font-weight:600;
+ text-transform:uppercase;letter-spacing:.07em;color:#64748b;
+}
+#story .ss-stat-num{
+ font-family:var(--font);font-size:clamp(30px,2.8vw,38px);font-weight:800;
+ letter-spacing:-.03em;line-height:1.1;color:#0f172a;margin:.45rem 0 .3rem;
+}
+#story .ss-stat-sub{font-family:var(--font);font-size:14px;font-weight:500;color:#334155}
+#story .ss-green{color:#14855a}
+#story .ss-stat-num.ss-green{color:#1c9558}
+
+#story .ss-glance{padding:.35rem 1.6rem .5rem}
+#story .ss-head{
+ display:flex;align-items:center;justify-content:space-between;gap:1rem;
+ padding:1.2rem 0 1.05rem;border-bottom:1px solid #eef1f4;
+}
+#story .ss-title{
+ font-family:var(--font);font-size:12.5px;font-weight:700;
+ text-transform:uppercase;letter-spacing:.1em;color:#14855a;
+}
+#story .ss-verified{
+ display:inline-flex;align-items:center;gap:7px;
+ font-family:var(--font);font-size:12px;font-weight:500;color:#64748b;white-space:nowrap;
+}
+#story .ss-verified i{width:7px;height:7px;border-radius:50%;background:#32b46f;box-shadow:0 0 0 3px rgba(50,180,111,.16)}
+#story .ss-rows{margin:0}
+#story .ss-row{
+ display:flex;align-items:center;justify-content:space-between;gap:1.25rem;
+ padding:1.05rem 0;border-bottom:1px solid #eef1f4;
+}
+#story .ss-row:last-child{border-bottom:0}
+#story .ss-row dt{flex:none}
+#story .ss-row dd{
+ margin:0;text-align:right;
+ font-family:var(--font);font-size:14.5px;font-weight:600;color:#0f172a;
+}
+#story .ss-row dd.ss-green{color:#14855a;font-weight:700}
+/* the spec row sits apart from the facts above it, as in the reference */
+#story .ss-spec{padding-top:1.5rem}
+#story .ss-spec code{
+ display:inline-block;padding:5px 10px;border-radius:7px;
+ background:#eef1f4;color:#334155;
+ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+ font-size:11.5px;font-weight:700;letter-spacing:.08em;
+}
+
+@media(max-width:560px){
+ #story .ss-stats,#story .ss-side{gap:12px}
+ #story .ss-stat{padding:1.1rem 1.1rem 1.15rem}
+ /* "Industries Served" wraps here; reserve two lines so both numbers stay level */
+ #story .ss-stat-label{min-height:2.7em}
+ #story .ss-glance{padding:.25rem 1.15rem .4rem}
+ #story .ss-row{align-items:flex-start;gap:1rem}
+ #story .ss-row dd{font-size:13.5px}
+}
+@media(max-width:360px){
+ #story .ss-stats{grid-template-columns:1fr}
 }

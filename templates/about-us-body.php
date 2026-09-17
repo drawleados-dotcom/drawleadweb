@@ -22,17 +22,34 @@
    <p style="font-size:14.5px;color:var(--g500);line-height:1.75;margin-bottom:1.1rem">Today, Drawlead works with founders, doctors, chefs, hospitality brands, and D2C companies across India — including collaborations with names like Dr. Velumani, Chef Koushik, and hospitality group V Hospitals — turning ambitious ideas into lasting online impressions that connect businesses with the audiences that matter most.</p>
    <p style="font-size:14.5px;color:var(--g500);line-height:1.75">Every engagement follows the same disciplined path: a free consultation to understand the business, a customized growth strategy built around real data, and a hands-on partnership to execute it — not a one-off project handoff.</p>
   </div>
-  <div class="story-card rv d2">
-   <div class="story-card-label">At a Glance</div>
-   <ul class="story-facts">
-    <li><span>Headquarters</span><strong>Chennai, Tamil&nbsp;Nadu, India</strong></li>
-    <li><span>Founded &amp; Led By</span><strong>Vinothkumar Babu</strong></li>
-    <li><span>Focus</span><strong>MSMEs &amp; SMEs</strong></li>
-    <li><span>Core Services</span><strong>8 Growth Disciplines</strong></li>
-    <li><span>Industries Served</span><strong>8+ Sectors</strong></li>
-    <li><span>Approach</span><strong>Consult → Strategize → Grow</strong></li>
-   </ul>
-   <div class="story-tagline">செயலை மாற்றும் <span>· Transforming Action</span></div>
+  <!-- right column: two headline stats over a detail card. Styles are .ss-* in
+       partials/style.php, scoped to #story. -->
+  <div class="ss-side rv d2">
+   <div class="ss-stats">
+    <div class="ss-stat">
+     <div class="ss-stat-label">Core Services</div>
+     <div class="ss-stat-num">8</div>
+     <div class="ss-stat-sub">Growth Disciplines</div>
+    </div>
+    <div class="ss-stat">
+     <div class="ss-stat-label">Industries Served</div>
+     <div class="ss-stat-num ss-green">8+</div>
+     <div class="ss-stat-sub">Sectors</div>
+    </div>
+   </div>
+   <div class="ss-glance">
+    <div class="ss-head">
+     <span class="ss-title">At a Glance</span>
+     <span class="ss-verified"><i aria-hidden="true"></i>Verified Profile</span>
+    </div>
+    <dl class="ss-rows">
+     <div class="ss-row"><dt>Headquarters</dt><dd>Chennai, Tamil&nbsp;Nadu, India</dd></div>
+     <div class="ss-row"><dt>Founded &amp; Led By</dt><dd>Vinothkumar Babu</dd></div>
+     <div class="ss-row"><dt>Focus</dt><dd class="ss-green">MSMEs &amp; SMEs</dd></div>
+     <div class="ss-row"><dt>Approach</dt><dd>Consult &rarr; Strategize &rarr; Grow</dd></div>
+     <div class="ss-row ss-spec"><dt>System Spec</dt><dd><code>DRAWLEAD-OS</code></dd></div>
+    </dl>
+   </div>
   </div>
  </div>
 </section>
