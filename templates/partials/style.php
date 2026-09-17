@@ -1629,3 +1629,67 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  #values .hw-card{padding:2.4rem 1.4rem 1.8rem}
  #values .hw-br{display:none}
 }
+
+/* ══════════ ABOUT US — Final CTA, framed like Home 7 ══════════
+   The dark treatment moves onto an inset .cta-card so white space frames it, with
+   Home 7's tightened proportions. Scoped to #cta.cta-about: the base #cta/.cta-*
+   rules above are shared with four other homepages and Home 7 keeps its own copy
+   in home7.css, so neither is touched. Montserrat throughout, since Inter (Home 7's
+   eyebrow face) is not loaded here. */
+#cta.cta-about{padding:4.25rem 3.5rem;background:var(--white);overflow:visible}
+#cta.cta-about .cta-card{
+ position:relative;overflow:hidden;
+ max-width:960px;margin:0 auto;
+ padding:4.25rem 2.5rem 3.75rem;border-radius:36px;
+ border:1px solid rgba(51,180,112,.22);
+ background:
+  radial-gradient(70% 58% at 50% 44%,rgba(51,180,112,.20) 0%,rgba(30,120,80,.09) 40%,transparent 72%),
+  radial-gradient(120% 90% at 50% 50%,#0a2018 0%,#04120c 55%,#020806 100%);
+ box-shadow:inset 0 0 130px rgba(51,180,112,.07),0 40px 90px rgba(0,0,0,.16);
+}
+#cta.cta-about .cta-glow{
+ top:44%;width:620px;height:500px;
+ background:radial-gradient(circle,rgba(51,180,112,.16) 0%,rgba(51,180,112,.07) 38%,transparent 68%);
+}
+#cta.cta-about .cta-eyebrow{
+ display:inline-flex;align-items:center;position:relative;
+ padding:7px 16px;border-radius:999px;margin-bottom:1.5rem;
+ background:rgba(51,180,112,.10);border:1px solid rgba(51,180,112,.26);
+ font-family:var(--font);font-size:12.5px;font-weight:600;color:#4ecb87;
+}
+#cta.cta-about .cta-h{
+ font-size:clamp(38px,6vw,64px);font-weight:700;
+ letter-spacing:-.03em;line-height:1.08;margin-bottom:1rem;
+}
+#cta.cta-about .cta-h .gr,
+#cta.cta-about .cta-h .gr2{display:inline;padding-right:0}
+#cta.cta-about .cta-p{margin-bottom:2rem}
+#cta.cta-about .cta-btns{gap:12px}
+#cta.cta-about .cta-btn-w{padding:13px 26px;font-size:13px;font-weight:600}
+/* one px less padding than the solid button, to absorb its 1.5px border */
+#cta.cta-about .cta-btn-g{padding:12px 25px;font-size:13px;font-weight:600}
+#cta.cta-about .cta-note{margin-top:1.9rem;font-size:12px;font-weight:500}
+
+@media(max-width:960px){
+ #cta.cta-about .cta-h{font-size:clamp(34px,6vw,52px)}
+}
+@media(max-width:820px){
+ #cta.cta-about{padding:2.75rem 1.25rem}
+ #cta.cta-about .cta-card{padding:3.25rem 1.5rem 3rem;border-radius:28px}
+ #cta.cta-about .cta-glow{width:480px;height:420px}
+}
+@media(max-width:560px){
+ #cta.cta-about{padding:2.25rem 1rem}
+ #cta.cta-about .cta-card{padding:2.75rem 1.25rem 2.5rem;border-radius:24px}
+ #cta.cta-about .cta-eyebrow{margin-bottom:1.25rem}
+ #cta.cta-about .cta-h{font-size:clamp(30px,8vw,42px)}
+ #cta.cta-about .cta-p{margin-bottom:1.75rem}
+ #cta.cta-about .cta-btn-w,
+ #cta.cta-about .cta-btn-g{max-width:320px;white-space:nowrap;letter-spacing:.05em;padding-left:16px;padding-right:16px}
+}
+/* "Schedule Free Consultation →" carries an arrow Home 7's label does not, so on the
+   narrowest phones it needs a step down to stay on one line inside the button. */
+@media(max-width:360px){
+ #cta.cta-about .cta-btn-w,
+ #cta.cta-about .cta-btn-g{font-size:12px;padding-left:12px;padding-right:12px}
+}

@@ -513,9 +513,13 @@ $hwLast = count($hwSteps) - 1;
 </script>
 
 <!-- ═══════════════════ CTA ═══════════════════ -->
-<section id="cta">
+<section id="cta" class="cta-about">
+ <!-- dark rounded card inset in white space, matching Home 7's final CTA;
+      styles are #cta.cta-about in partials/style.php -->
+ <div class="cta-card">
  <div class="cta-grid-bg"></div>
  <div class="cta-glow"></div>
+ <div class="cta-eyebrow rv">Let's Work Together</div>
  <h2 class="cta-h rv">Let's build your<br><span class="gr">growth</span> <span class="gr2">engine</span><br>together</h2>
  <p class="cta-p rv">Book a free consultation with Vinothkumar and the Drawlead team — no commitment needed.</p>
  <div class="cta-btns rv">
@@ -523,6 +527,7 @@ $hwLast = count($hwSteps) - 1;
  <a href="/" class="cta-btn-g">Back to Home</a>
  </div>
  <div class="cta-note rv">செயலை மாற்றும் · Intelligent Operating System · Secure · Scalable · Future-Ready</div>
+ </div>
 </section>
 
 <?php include __DIR__ . '/partials/footer.php'; ?>
