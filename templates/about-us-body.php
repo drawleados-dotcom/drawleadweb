@@ -441,22 +441,22 @@ $hwSteps = [
  [
   'title' => 'MSME-First',
   'desc'  => 'Every strategy is built around what actually moves the needle for a small or growing business — not vanity metrics.',
-  'icon'  => '<path d="M12 20.6s-7.6-4.6-9.4-9.3C1.4 8.1 3.3 4.6 6.9 4.6c2.1 0 3.6 1.2 5.1 3 1.5-1.8 3-3 5.1-3 3.6 0 5.5 3.5 4.3 6.7-1.8 4.7-9.4 9.3-9.4 9.3z" fill="currentColor"/>',
+  'icon'  => '<path class="ks" paint-order="stroke" stroke-width="2.6" stroke-linejoin="round" fill="currentColor" d="M21.5 28.6s-6.2-3.7-7.6-7.5c-.9-2.6.6-5.3 3.5-5.3 1.7 0 3 1 4.1 2.5 1.1-1.5 2.4-2.5 4.1-2.5 2.9 0 4.4 2.7 3.5 5.3-1.4 3.8-7.6 7.5-7.6 7.5z"/>',
  ],
  [
   'title' => 'Data Before Design',
   'desc'  => 'We start with keyword research, funnel data, and market reality — then design and build around it.',
-  'icon'  => '<rect x="3.6" y="12.2" width="4.4" height="8.4" rx="1.3" fill="currentColor"/><rect x="9.8" y="7.4" width="4.4" height="13.2" rx="1.3" fill="currentColor"/><rect x="16" y="3.4" width="4.4" height="17.2" rx="1.3" fill="currentColor"/>',
+  'icon'  => '<rect class="ks" paint-order="stroke" stroke-width="2.6" stroke-linejoin="round" fill="currentColor" x="13.6" y="21" width="3.8" height="7.6" rx="1"/><rect class="ks" paint-order="stroke" stroke-width="2.6" stroke-linejoin="round" fill="currentColor" x="19.1" y="16.6" width="3.8" height="12" rx="1"/><rect class="ks" paint-order="stroke" stroke-width="2.6" stroke-linejoin="round" fill="currentColor" x="24.6" y="12.4" width="3.8" height="16.2" rx="1"/>',
  ],
  [
-  'title' => 'End-to-End Ownership',
+  'title' => '<span class="hw-nb">End-to-End</span> Ownership',
   'desc'  => 'From strategy to code to ad spend — one team owns the outcome. No handoffs, no finger-pointing.',
-  'icon'  => '<path d="M12 2.4l7.8 3v5.8c0 5-3.3 9.2-7.8 10.7-4.5-1.5-7.8-5.7-7.8-10.7V5.4z" fill="currentColor"/><path d="M8.4 12.1l2.5 2.5 4.8-5" fill="none" stroke="#12764a" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>',
+  'icon'  => '<path class="ks" paint-order="stroke" stroke-width="2.6" stroke-linejoin="round" fill="currentColor" d="M21.5 12.4l7.2 2.8v5.3c0 4.6-3.1 8.4-7.2 9.8-4.1-1.4-7.2-5.2-7.2-9.8v-5.3z"/><path class="ks" fill="none" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" d="M18.2 21.2l2.3 2.3 4.4-4.6"/>',
  ],
  [
   'title' => 'Founder-Led Execution',
   'desc'  => 'Vinothkumar and the core team stay hands-on with strategy and execution on every single engagement.',
-  'icon'  => '<circle cx="12" cy="7.8" r="4.2" fill="currentColor"/><path d="M3.8 21c0-4.4 3.7-7.2 8.2-7.2s8.2 2.8 8.2 7.2z" fill="currentColor"/>',
+  'icon'  => '<circle class="ks" paint-order="stroke" stroke-width="2.6" stroke-linejoin="round" fill="currentColor" cx="21.5" cy="17" r="4"/><path class="ks" paint-order="stroke" stroke-width="2.6" stroke-linejoin="round" fill="currentColor" d="M13.8 29.6c0-4.2 3.4-6.8 7.7-6.8s7.7 2.6 7.7 6.8z"/>',
  ],
 ];
 $hwLast = count($hwSteps) - 1;
@@ -466,7 +466,7 @@ $hwLast = count($hwSteps) - 1;
   <div class="hw-step" style="--i:<?= $i ?>">
    <article class="hw-card">
     <span class="hw-num"><?= $num ?></span>
-    <div class="hw-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><?= $st['icon'] ?></svg></div>
+    <div class="hw-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="4" width="19" height="14.5" rx="2" fill="currentColor"/><rect class="k" x="3" y="7.6" width="19" height="1"/><circle class="k" cx="5.8" cy="5.9" r=".75"/><circle class="k" cx="8" cy="5.9" r=".75"/><circle class="k" cx="10.2" cy="5.9" r=".75"/><?= $st['icon'] ?></svg></div>
     <h3 class="hw-title"><?= $st['title'] ?></h3>
     <p class="hw-desc"><?= $st['desc'] ?></p>
    </article>

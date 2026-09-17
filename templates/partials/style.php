@@ -1552,19 +1552,28 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  color:#5fd394;background:rgba(50,180,111,.10);
  border:1px solid rgba(50,180,111,.22);border-radius:999px;padding:3px 9px;
 }
+/* Black tile with a hairline border and a bold white glyph over a small browser-
+   window motif. --hw-tile is also the colour of the glyphs' cut-out outline, so the
+   two must stay the same. */
 #values .hw-icon{
- width:62px;height:62px;border-radius:19px;margin-bottom:1.4rem;
+ --hw-tile:#050806;
+ width:56px;height:56px;border-radius:13px;margin-bottom:1.4rem;
  display:flex;align-items:center;justify-content:center;color:#fff;
- background:linear-gradient(145deg,#40c983 0%,#1a8a55 100%);
- box-shadow:0 10px 30px rgba(50,180,111,.26),inset 0 1px 0 rgba(255,255,255,.22);
+ background:var(--hw-tile);
+ border:1px solid rgba(255,255,255,.14);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 8px 22px rgba(0,0,0,.35);
 }
-#values .hw-icon svg{width:28px;height:28px;display:block;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+#values .hw-icon svg{width:34px;height:34px;display:block;overflow:visible;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+#values .hw-icon .k{fill:var(--hw-tile)}
+#values .hw-icon .ks{stroke:var(--hw-tile)}
 #values .hw-card:hover .hw-icon svg{transform:translateY(-2px) scale(1.07)}
 #values .hw-title{
  font-family:var(--font);font-size:19px;font-weight:800;letter-spacing:-.015em;
  line-height:1.25;color:#fff;margin:0 0 .7rem;
  text-wrap:balance;
 }
+/* keeps "End-to-End" from breaking at its hyphens under text-wrap:balance */
+#values .hw-nb{white-space:nowrap}
 /* #9db0a6 on #0e1c15 is 7.9:1. */
 #values .hw-desc{
  font-family:var(--font);font-size:14px;font-weight:400;line-height:1.65;
