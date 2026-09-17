@@ -422,31 +422,95 @@ $iwTotal = str_pad((string) count($industries), 2, '0', STR_PAD_LEFT);
 <section id="values" style="background:#0a1310;color:#fff">
  <div class="grid-bg" style="opacity:.45"></div>
  <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">How We Work</span><div class="eyebrow-line"></div></div>
- <h2 class="sec-h rv" style="color:#fff">The principles behind <span>every engagement</span></h2>
- <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">Four commitments that shape how Drawlead partners with every business we work with.</p>
- <div class="why-grid-4">
- <div class="why-card rv d1">
- <div class="why-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 18px rgba(0,0,0,.2)"><svg width="24" height="24" fill="none" viewBox="0 0 40 40"><path d="M20 34 C11 28 5 22 5 15 C5 10 9 6 13.5 6 C17 6 19 8.5 20 11 C21 8.5 23 6 26.5 6 C31 6 35 10 35 15 C35 22 29 28 20 34 Z" fill="rgba(255,255,255,.92)"/></svg></div>
- <div class="why-name">MSME-First</div>
- <div class="why-desc">Every strategy is built around what actually moves the needle for a small or growing business — not vanity metrics.</div>
- </div>
- <div class="why-card rv d2">
- <div class="why-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 18px rgba(0,0,0,.2)"><svg width="24" height="24" fill="none" viewBox="0 0 40 40"><rect x="6" y="24" width="6" height="10" fill="rgba(255,255,255,.5)"/><rect x="17" y="16" width="6" height="18" fill="rgba(255,255,255,.75)"/><rect x="28" y="6" width="6" height="28" fill="white"/></svg></div>
- <div class="why-name">Data Before Design</div>
- <div class="why-desc">We start with keyword research, funnel data, and market reality — then design and build around it.</div>
- </div>
- <div class="why-card rv d3">
- <div class="why-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 18px rgba(0,0,0,.2)"><svg width="24" height="24" fill="none" viewBox="0 0 40 40"><path d="M20 4 L33 9 L33 20 Q33 30 20 36 Q7 30 7 20 L7 9 Z" fill="rgba(255,255,255,.85)"/><polyline points="13,20 18,25 27,14" fill="none" stroke="#14855a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
- <div class="why-name">End-to-End Ownership</div>
- <div class="why-desc">From strategy to code to ad spend — one team owns the outcome. No handoffs, no finger-pointing.</div>
- </div>
- <div class="why-card rv d4">
- <div class="why-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 18px rgba(0,0,0,.2)"><svg width="24" height="24" fill="none" viewBox="0 0 40 40"><circle cx="20" cy="13" r="8" fill="white"/><path d="M4 36 C4 25 11 21 20 21 C29 21 36 25 36 36 Z" fill="rgba(255,255,255,.8)"/></svg></div>
- <div class="why-name">Founder-Led Execution</div>
- <div class="why-desc">Vinothkumar and the core team stay hands-on with strategy and execution on every single engagement.</div>
- </div>
+ <h2 class="sec-h rv" style="color:#fff">The principles behind every <br class="hw-br">engagement</h2>
+ <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">Four commitments that shape how Drawlead partners with <br class="hw-br">every business we work with.</p>
+<?php
+/*
+ * How We Work — four principles as a connected, staggered journey.
+ *
+ * Desktop: one row, cards alternating high/low, a thin curved arrow in each gap.
+ * Tablet: 2x2, with a return arrow carrying 02 down to 03 across the row gap.
+ * Mobile: a single column with a short vertical arrow between each card.
+ * Each step carries all three arrow variants; CSS shows the one for the width.
+ *
+ * The reveal is opt-in: the JS adds .hw-anim (hidden start) and then .hw-in when
+ * the row scrolls into view, so with no JS or reduced motion everything is simply
+ * visible. Styles are .hw-* in partials/style.php, scoped to #values.
+ */
+$hwSteps = [
+ [
+  'title' => 'MSME-First',
+  'desc'  => 'Every strategy is built around what actually moves the needle for a small or growing business — not vanity metrics.',
+  'icon'  => '<path d="M12 20.6s-7.6-4.6-9.4-9.3C1.4 8.1 3.3 4.6 6.9 4.6c2.1 0 3.6 1.2 5.1 3 1.5-1.8 3-3 5.1-3 3.6 0 5.5 3.5 4.3 6.7-1.8 4.7-9.4 9.3-9.4 9.3z" fill="currentColor"/>',
+ ],
+ [
+  'title' => 'Data Before Design',
+  'desc'  => 'We start with keyword research, funnel data, and market reality — then design and build around it.',
+  'icon'  => '<rect x="3.6" y="12.2" width="4.4" height="8.4" rx="1.3" fill="currentColor"/><rect x="9.8" y="7.4" width="4.4" height="13.2" rx="1.3" fill="currentColor"/><rect x="16" y="3.4" width="4.4" height="17.2" rx="1.3" fill="currentColor"/>',
+ ],
+ [
+  'title' => 'End-to-End Ownership',
+  'desc'  => 'From strategy to code to ad spend — one team owns the outcome. No handoffs, no finger-pointing.',
+  'icon'  => '<path d="M12 2.4l7.8 3v5.8c0 5-3.3 9.2-7.8 10.7-4.5-1.5-7.8-5.7-7.8-10.7V5.4z" fill="currentColor"/><path d="M8.4 12.1l2.5 2.5 4.8-5" fill="none" stroke="#12764a" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>',
+ ],
+ [
+  'title' => 'Founder-Led Execution',
+  'desc'  => 'Vinothkumar and the core team stay hands-on with strategy and execution on every single engagement.',
+  'icon'  => '<circle cx="12" cy="7.8" r="4.2" fill="currentColor"/><path d="M3.8 21c0-4.4 3.7-7.2 8.2-7.2s8.2 2.8 8.2 7.2z" fill="currentColor"/>',
+ ],
+];
+$hwLast = count($hwSteps) - 1;
+?>
+ <div class="hw-flow" id="hwFlow">
+<?php foreach ($hwSteps as $i => $st): $num = str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT); ?>
+  <div class="hw-step" style="--i:<?= $i ?>">
+   <article class="hw-card">
+    <span class="hw-num"><?= $num ?></span>
+    <div class="hw-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><?= $st['icon'] ?></svg></div>
+    <h3 class="hw-title"><?= $st['title'] ?></h3>
+    <p class="hw-desc"><?= $st['desc'] ?></p>
+   </article>
+<?php if ($i < $hwLast): $up = ($i % 2 === 1); ?>
+   <svg class="hw-link hw-link-h <?= $up ? 'hw-up' : 'hw-down' ?>" viewBox="0 0 76 100" aria-hidden="true">
+<?php if ($up): ?>
+    <path class="hw-line" pathLength="1" d="M6 78C36 78 34 22 64 22"/><path class="hw-head" d="M62 16.5 69 22l-7 5.5"/>
+<?php else: ?>
+    <path class="hw-line" pathLength="1" d="M6 22C36 22 34 78 64 78"/><path class="hw-head" d="M62 72.5 69 78l-7 5.5"/>
+<?php endif; ?>
+   </svg>
+<?php if ($i === 1): ?>
+   <svg class="hw-link hw-link-r" viewBox="0 0 236 90" aria-hidden="true">
+    <path class="hw-line" pathLength="1" d="M190 6C190 52 46 38 46 80"/><path class="hw-head" d="M40.5 75 46 82.5l5.5-7.5"/>
+   </svg>
+<?php endif; ?>
+   <svg class="hw-link hw-link-v" viewBox="0 0 24 56" aria-hidden="true">
+    <path class="hw-line" pathLength="1" d="M12 5C4 19 20 31 12 46"/><path class="hw-head" d="M6.5 42 12 49.5l5.5-7.5"/>
+   </svg>
+<?php endif; ?>
+  </div>
+<?php endforeach; ?>
  </div>
 </section>
+
+<script>
+// How We Work: reveal the four steps left to right as the row scrolls into view,
+// drawing each connector after the card before it. Opt-in, so a failure or reduced
+// motion leaves the row fully visible.
+(function(){
+ const flow = document.getElementById('hwFlow');
+ if(!flow || !('IntersectionObserver' in window)) return;
+ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+ flow.classList.add('hw-anim');
+ const io = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+   if(!e.isIntersecting) return;
+   flow.classList.add('hw-in');
+   io.disconnect();
+  });
+ }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+ io.observe(flow);
+})();
+</script>
 
 <!-- ═══════════════════ CTA ═══════════════════ -->
 <section id="cta">

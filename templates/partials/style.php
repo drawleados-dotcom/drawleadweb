@@ -608,16 +608,13 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .story-tagline span{background:none;-webkit-text-fill-color:var(--g400);color:var(--g400);font-weight:600}
 
 
-.why-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 
 
 @media(max-width:960px){
   .story-grid{grid-template-columns:1fr;gap:2.5rem}
-  .why-grid-4{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:560px){
   #about-hero{padding-top:7.5rem}
-  .why-grid-4{grid-template-columns:1fr}
   .story-facts li strong{text-align:right;font-size:12px}
 }
 
@@ -1511,4 +1508,124 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  .iw-slide{grid-template-columns:1fr;gap:1.6rem}
  .iw-media{aspect-ratio:16/11}
  .iw-desc{max-width:none}
+}
+
+/* ══════════ ABOUT US — How We Work, connected journey ══════════
+   Four principles in one staggered row joined by thin curved arrows (2x2 on
+   tablet, a vertical timeline on phones). Replaces .why-grid-4, which only this
+   section used; the shared .why-* card classes are left alone for the homepages.
+
+   Stagger uses margins, not transforms, so the reveal and the hover lift each have
+   transform to themselves. Steps 02 and 04 drop by --hw-drop via margin-top and
+   01 and 03 give the same back via margin-bottom, so every card ends up the same
+   height and each arrow can aim at its neighbour's midpoint exactly.
+
+   Scoped to #values, which exists only on About Us. */
+#values .hw-flow{
+ --hw-gap:76px;--hw-drop:56px;
+ position:relative;z-index:1;
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+ column-gap:var(--hw-gap);
+ max-width:1180px;margin:0 auto;
+}
+#values .hw-step{position:relative;display:flex;flex-direction:column}
+#values .hw-step:nth-child(odd){margin-bottom:var(--hw-drop)}
+#values .hw-step:nth-child(even){margin-top:var(--hw-drop)}
+
+#values .hw-card{
+ position:relative;flex:1;
+ display:flex;flex-direction:column;align-items:center;text-align:center;
+ padding:2.6rem 1.5rem 2rem;
+ background:linear-gradient(180deg,#112219 0%,#0e1c15 100%);
+ border:1px solid rgba(255,255,255,.07);border-radius:24px;
+ transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s ease,box-shadow .35s ease;
+}
+#values .hw-card:hover{
+ transform:translateY(-6px);
+ border-color:rgba(50,180,111,.32);
+ box-shadow:0 20px 44px rgba(0,0,0,.38);
+}
+/* #5fd394 on the card surface is 9:1 — the step number stays quiet but legible. */
+#values .hw-num{
+ position:absolute;top:16px;left:18px;
+ font-family:var(--font);font-size:11.5px;font-weight:700;letter-spacing:.06em;
+ color:#5fd394;background:rgba(50,180,111,.10);
+ border:1px solid rgba(50,180,111,.22);border-radius:999px;padding:3px 9px;
+}
+#values .hw-icon{
+ width:62px;height:62px;border-radius:19px;margin-bottom:1.4rem;
+ display:flex;align-items:center;justify-content:center;color:#fff;
+ background:linear-gradient(145deg,#40c983 0%,#1a8a55 100%);
+ box-shadow:0 10px 30px rgba(50,180,111,.26),inset 0 1px 0 rgba(255,255,255,.22);
+}
+#values .hw-icon svg{width:28px;height:28px;display:block;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+#values .hw-card:hover .hw-icon svg{transform:translateY(-2px) scale(1.07)}
+#values .hw-title{
+ font-family:var(--font);font-size:19px;font-weight:800;letter-spacing:-.015em;
+ line-height:1.25;color:#fff;margin:0 0 .7rem;
+ text-wrap:balance;
+}
+/* #9db0a6 on #0e1c15 is 7.9:1. */
+#values .hw-desc{
+ font-family:var(--font);font-size:14px;font-weight:400;line-height:1.65;
+ color:#9db0a6;margin:0;
+ text-wrap:pretty;
+}
+
+/* ── connectors ── */
+#values .hw-link{position:absolute;display:none;overflow:visible;pointer-events:none}
+#values .hw-link path{fill:none;stroke:#32b46f;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#values .hw-link .hw-line{stroke-opacity:.6}
+/* in the column gap, from this card's midpoint to the next card's midpoint */
+#values .hw-link-h{display:block;left:100%;width:var(--hw-gap);height:100px}
+#values .hw-down{top:calc(50% - 22px)}
+#values .hw-up{top:calc(50% - 78px)}
+
+/* ── reveal: opt-in, left to right, each arrow drawn after its card ── */
+#values .hw-anim .hw-step{opacity:0;transform:translateX(-26px)}
+#values .hw-anim .hw-line{stroke-dasharray:1;stroke-dashoffset:1}
+#values .hw-anim .hw-head{opacity:0}
+#values .hw-in .hw-step{
+ opacity:1;transform:none;
+ transition:opacity .7s ease,transform .8s cubic-bezier(.2,.7,.2,1);
+ transition-delay:calc(var(--i) * .18s);
+}
+#values .hw-in .hw-line{
+ stroke-dashoffset:0;
+ transition:stroke-dashoffset .7s cubic-bezier(.45,0,.2,1);
+ transition-delay:calc(var(--i) * .18s + .45s);
+}
+#values .hw-in .hw-head{
+ opacity:1;transition:opacity .3s ease;
+ transition-delay:calc(var(--i) * .18s + 1s);
+}
+
+/* ── tablet: 2x2, 01→02 and 03→04 across, 02→03 back down across the row gap ── */
+@media(max-width:1080px){
+ #values .hw-flow{
+  --hw-rgap:90px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  row-gap:var(--hw-rgap);max-width:720px;
+ }
+ #values .hw-step:nth-child(2) .hw-link-h{display:none}
+ #values .hw-link-r{
+  display:block;top:100%;
+  left:calc(-1 * var(--hw-gap) - 80px);
+  width:calc(var(--hw-gap) + 160px);height:var(--hw-rgap);
+ }
+}
+
+/* ── phone: one column, a short vertical arrow under each card ── */
+@media(max-width:640px){
+ #values .hw-flow{--hw-drop:0px;--hw-vgap:64px;grid-template-columns:1fr;row-gap:var(--hw-vgap);max-width:420px}
+ #values .hw-step:nth-child(n){margin:0}
+ #values .hw-link-h,
+ #values .hw-step:nth-child(2) .hw-link-r{display:none}
+ #values .hw-link-v{
+  display:block;top:100%;left:50%;
+  width:24px;height:var(--hw-vgap);margin-left:-12px;
+ }
+ #values .hw-anim:not(.hw-in) .hw-step{transform:translateY(22px)}
+ #values .hw-card{padding:2.4rem 1.4rem 1.8rem}
+ #values .hw-br{display:none}
 }
