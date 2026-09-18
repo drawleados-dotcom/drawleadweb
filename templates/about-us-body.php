@@ -1,5 +1,11 @@
 <?php $activePage = 'about-us'; include __DIR__ . '/partials/nav.php'; ?>
 
+<!-- About Us sits on a slightly cooler page ground than the rest of the site.
+     This rewrites the --bg token for this page only: partials/style.php is
+     inlined in <head>, so a later :root block outranks it without touching
+     the shared value every other page uses. -->
+<style>:root{--bg:#f8f9fa}</style>
+
 <!-- ═══════════════════ ABOUT HERO ═══════════════════ -->
 <section id="about-hero">
  <!-- Cursor glow: hidden until the pointer enters the hero, then a soft green
