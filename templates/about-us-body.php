@@ -2,13 +2,11 @@
 
 <!-- ═══════════════════ ABOUT HERO ═══════════════════ -->
 <section id="about-hero">
- <!-- Glow field behind the headline: two slow green blobs, each paired with a
-      masked copy of the grid that lights up where it passes. Decorative only. -->
- <div class="ah-fx" aria-hidden="true">
-  <span class="ah-blob ah-b1"></span>
-  <span class="ah-blob ah-b2"></span>
-  <span class="ah-lines ah-l1"></span>
-  <span class="ah-lines ah-l2"></span>
+ <!-- Cursor glow: hidden until the pointer enters the hero, then a soft green
+      light trails it and the grid lights up beneath. Decorative only. -->
+ <div class="ah-fx" id="ahFx" aria-hidden="true">
+  <span class="ah-blob"></span>
+  <span class="ah-lines"></span>
  </div>
  <div class="grid-bg" style="opacity:.45"></div>
  <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">About Drawlead</span><div class="eyebrow-line"></div></div>
@@ -19,6 +17,57 @@
  <a href="/#cases" class="btn btn-outline2">See Our Work</a>
  </div>
 </section>
+
+<script>
+// Hero cursor glow. Writes the pointer position into two custom properties and
+// lets CSS place the light and the grid mask; the element itself is never
+// re-laid-out, only composited.
+//
+// The light eases toward the pointer instead of snapping to it — that trailing is
+// what makes it read as a soft light rather than a cursor attachment. The rAF loop
+// only runs while the pointer is inside and stops once the light has caught up.
+(function(){
+ const fx = document.getElementById('ahFx');
+ if(!fx) return;
+ const hero = fx.closest('section');
+ if(!hero) return;
+ // hover-capable, fine pointers only: on touch there is no hover to fade out of
+ if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+
+ const snap = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ let tx = 0, ty = 0, x = 0, y = 0, raf = 0, seeded = false;
+
+ function paint(){
+  fx.style.setProperty('--ah-x', x.toFixed(1) + 'px');
+  fx.style.setProperty('--ah-y', y.toFixed(1) + 'px');
+ }
+ function step(){
+  raf = 0;
+  const dx = tx - x, dy = ty - y;
+  if(Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5){ x = tx; y = ty; paint(); return; }
+  x += dx * 0.12;            // ease factor: lower trails further behind
+  y += dy * 0.12;
+  paint();
+  raf = requestAnimationFrame(step);
+ }
+ function queue(){ if(!raf) raf = requestAnimationFrame(step); }
+
+ hero.addEventListener('pointermove', function(e){
+  const r = hero.getBoundingClientRect();
+  tx = e.clientX - r.left;
+  ty = e.clientY - r.top;
+  if(!seeded){ seeded = true; x = tx; y = ty; paint(); fx.classList.add('is-on'); return; }
+  if(snap){ x = tx; y = ty; paint(); return; }
+  queue();
+ }, { passive: true });
+
+ hero.addEventListener('pointerenter', function(){ if(seeded) fx.classList.add('is-on'); }, { passive: true });
+ hero.addEventListener('pointerleave', function(){
+  fx.classList.remove('is-on');
+  if(raf){ cancelAnimationFrame(raf); raf = 0; }
+ }, { passive: true });
+})();
+</script>
 
 <!-- ═══════════════════ STORY ═══════════════════ -->
 <section id="story">

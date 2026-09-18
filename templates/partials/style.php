@@ -1773,41 +1773,40 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  #story .ss-stats{grid-template-columns:1fr}
 }
 
-/* ══════════ ABOUT US — hero glow field ══════════
-   A soft green light drifting behind the headline, with the grid lighting up as it
-   passes. Typography, spacing and the existing .grid-bg are untouched.
 
-   The "reaction" is a second copy of the grid drawn in green and masked by a soft
-   radial. Each masked copy shares its blob's keyframe timing, so the lit patch and
-   the glow travel together. The grid pattern itself never moves — only the mask
-   does — so the lines stay locked to the page.
+/* ══════════ ABOUT US — hero cursor glow ══════════
+   No green at rest: the layer is fully transparent until the pointer enters, then
+   a soft #32B46F light follows it and the grid lights up beneath. The existing
+   .grid-bg, typography and spacing are untouched.
 
-   Everything is transform/opacity and mask-position only, and the layer sits below
-   the content, which is raised to z-index 1. Scoped to #about-hero. */
+   The JS only writes --ah-x/--ah-y; everything positional is computed here, so the
+   light and the grid mask are driven by one pair of numbers and cannot drift apart.
+   --ah-w/--ah-h size the blob and the mask together for the same reason.
+
+   Touch devices never get this: there is no hover to fade out of, so the driver
+   bails and the layer stays at opacity 0. Scoped to #about-hero. */
 #about-hero{overflow:hidden}
 #about-hero > *:not(.ah-fx):not(.grid-bg){position:relative;z-index:1}
 #about-hero .grid-bg{z-index:0}
-.ah-fx{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.ah-fx{
+ --ah-w:620px;--ah-h:480px;
+ --ah-x:50%;--ah-y:50%;
+ position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+ opacity:0;transition:opacity .45s ease;
+}
+.ah-fx.is-on{opacity:1}
 
 .ah-blob{
- position:absolute;top:50%;left:50%;
- width:min(60vw,720px);aspect-ratio:1.35/1;border-radius:50%;
- margin:-18% 0 0 -30%;
+ position:absolute;top:0;left:0;
+ width:var(--ah-w);height:var(--ah-h);border-radius:50%;
+ transform:translate3d(calc(var(--ah-x) - var(--ah-w) / 2),calc(var(--ah-y) - var(--ah-h) / 2),0);
  background:radial-gradient(circle at 50% 50%,
-   rgba(50,180,111,.42) 0%,rgba(50,180,111,.22) 38%,rgba(50,180,111,0) 70%);
- filter:blur(58px);
+   rgba(50,180,111,.40) 0%,rgba(50,180,111,.20) 38%,rgba(50,180,111,0) 70%);
+ filter:blur(56px);
  will-change:transform;
 }
-.ah-b1{animation:ah-drift-a 26s ease-in-out infinite alternate}
-.ah-b2{
- width:min(46vw,540px);
- background:radial-gradient(circle at 50% 50%,
-   rgba(50,180,111,.30) 0%,rgba(50,180,111,.14) 42%,rgba(50,180,111,0) 72%);
- filter:blur(72px);
- animation:ah-drift-b 34s ease-in-out infinite alternate;
-}
 
-/* the grid, redrawn in green and revealed only under the moving light */
+/* the same 68px grid in green, revealed only under the light */
 .ah-lines{
  position:absolute;inset:0;
  background-image:
@@ -1817,42 +1816,12 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  -webkit-mask-image:radial-gradient(circle at 50% 50%,#000 0%,rgba(0,0,0,.45) 38%,transparent 68%);
  mask-image:radial-gradient(circle at 50% 50%,#000 0%,rgba(0,0,0,.45) 38%,transparent 68%);
  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
- -webkit-mask-size:min(60vw,720px) min(44vw,540px);mask-size:min(60vw,720px) min(44vw,540px);
- will-change:mask-position;
-}
-.ah-l1{animation:ah-mask-a 26s ease-in-out infinite alternate}
-.ah-l2{
- opacity:.7;
- -webkit-mask-size:min(46vw,540px) min(34vw,400px);mask-size:min(46vw,540px) min(34vw,400px);
- animation:ah-mask-b 34s ease-in-out infinite alternate;
-}
-
-@keyframes ah-drift-a{
- 0%  {transform:translate3d(-9%,-7%,0) scale(1)}
- 50% {transform:translate3d(4%,3%,0) scale(1.06)}
- 100%{transform:translate3d(10%,6%,0) scale(1)}
-}
-@keyframes ah-mask-a{
- 0%  {-webkit-mask-position:41% 40%;mask-position:41% 40%}
- 50% {-webkit-mask-position:52% 51%;mask-position:52% 51%}
- 100%{-webkit-mask-position:59% 57%;mask-position:59% 57%}
-}
-@keyframes ah-drift-b{
- 0%  {transform:translate3d(14%,10%,0) scale(1.04)}
- 50% {transform:translate3d(2%,-4%,0) scale(1)}
- 100%{transform:translate3d(-12%,-9%,0) scale(1.05)}
-}
-@keyframes ah-mask-b{
- 0%  {-webkit-mask-position:62% 60%;mask-position:62% 60%}
- 50% {-webkit-mask-position:51% 45%;mask-position:51% 45%}
- 100%{-webkit-mask-position:38% 36%;mask-position:38% 36%}
+ -webkit-mask-size:var(--ah-w) var(--ah-h);mask-size:var(--ah-w) var(--ah-h);
+ -webkit-mask-position:calc(var(--ah-x) - var(--ah-w) / 2) calc(var(--ah-y) - var(--ah-h) / 2);
+ mask-position:calc(var(--ah-x) - var(--ah-w) / 2) calc(var(--ah-y) - var(--ah-h) / 2);
 }
 
 @media(max-width:768px){
- /* smaller, softer, and the second pass is dropped so phones paint one blur */
- .ah-blob{filter:blur(46px)}
- .ah-b2,.ah-l2{display:none}
-}
-@media(prefers-reduced-motion:reduce){
- .ah-blob,.ah-lines{animation:none}
+ .ah-fx{--ah-w:420px;--ah-h:340px}
+ .ah-blob{filter:blur(42px)}
 }
