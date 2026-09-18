@@ -132,7 +132,8 @@
 $fdrPhoto = __DIR__ . '/../assets/img/founder.webp';
 $fdrHasPhoto = is_file($fdrPhoto);
 
-/* Only profiles with a real URL are rendered — no placeholder hrefs. */
+/* A blank URL still renders its icon, but as a plain span: shown for balance,
+   not clickable, and out of the tab order until a real profile URL exists. */
 $fdrSocials = [
  'linkedin'  => 'https://www.linkedin.com/in/vinothkumarbabu7/',
  'instagram' => '',
@@ -176,8 +177,12 @@ $fdrIcons = [
     <span class="fdr-tag">Web Design</span><span class="fdr-tag">Web Development</span><span class="fdr-tag">WordPress</span><span class="fdr-tag fdr-tag-on">Shopify</span><span class="fdr-tag">SEO</span><span class="fdr-tag">Social Media Marketing</span><span class="fdr-tag">Lead Generation</span><span class="fdr-tag">Graphic Design</span><span class="fdr-tag">SEM</span>
    </div>
    <div class="fdr-socials rv">
-<?php foreach ($fdrSocials as $net => $url): if ($url === '') continue; ?>
+<?php foreach ($fdrSocials as $net => $url): ?>
+<?php if ($url !== ''): ?>
     <a href="<?= htmlspecialchars($url, ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener" class="fdr-social" aria-label="<?= ucfirst($net) ?>"><?= $fdrIcons[$net] ?></a>
+<?php else: ?>
+    <span class="fdr-social fdr-social-idle" aria-hidden="true"><?= $fdrIcons[$net] ?></span>
+<?php endif; ?>
 <?php endforeach; ?>
    </div>
   </div>

@@ -1332,6 +1332,9 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 }
 .fdr-social svg{width:100%;height:100%;display:block;border-radius:12px}
 .fdr-social:hover{transform:translateY(-3px)}
+/* placeholder icons: no link yet, so no pointer, no lift, no focus stop */
+.fdr-social-idle{cursor:default}
+.fdr-social-idle:hover{transform:none}
 
 @media(max-width:960px){
  .fdr-band{grid-template-columns:minmax(0,1fr) minmax(0,44%)}
