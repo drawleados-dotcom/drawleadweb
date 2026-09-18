@@ -16,6 +16,13 @@ if (!$industry) {
     return;
 }
 
+/* Construction & Real Estate has its own page. Handing off here keeps the other
+   19 industries on this shared renderer and needs no change to pages.template. */
+if ($industryKey === 'construction' && is_file(__DIR__ . '/industry-construction-body.php')) {
+    include __DIR__ . '/industry-construction-body.php';
+    return;
+}
+
 $activePage = 'industry-' . $industryKey;
 include __DIR__ . '/partials/nav.php';
 
