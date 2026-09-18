@@ -1269,7 +1269,9 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
    cropped by the band rather than floating inside it. */
 .fdr-photo{
  position:relative;margin-top:3.5rem;min-height:408px;overflow:hidden;
- background:linear-gradient(155deg,#ffffff 0%,#f7f8f7 100%);
+ /* transparent: the portrait is a cut-out, so it sits straight on the band rather
+    than on a white plate */
+ background:transparent;
  display:flex;align-items:flex-end;justify-content:center;
 }
 .fdr-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 0%;display:block}
