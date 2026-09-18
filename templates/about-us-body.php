@@ -2,6 +2,14 @@
 
 <!-- ═══════════════════ ABOUT HERO ═══════════════════ -->
 <section id="about-hero">
+ <!-- Glow field behind the headline: two slow green blobs, each paired with a
+      masked copy of the grid that lights up where it passes. Decorative only. -->
+ <div class="ah-fx" aria-hidden="true">
+  <span class="ah-blob ah-b1"></span>
+  <span class="ah-blob ah-b2"></span>
+  <span class="ah-lines ah-l1"></span>
+  <span class="ah-lines ah-l2"></span>
+ </div>
  <div class="grid-bg" style="opacity:.45"></div>
  <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">About Drawlead</span><div class="eyebrow-line"></div></div>
  <h1 class="sec-h rv" style="font-size:clamp(38px,6vw,68px);max-width:920px">Turning MSME dreams into <span class="g">digital growth systems</span></h1>
