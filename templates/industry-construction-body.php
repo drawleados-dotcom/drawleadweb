@@ -22,26 +22,45 @@ include __DIR__ . '/partials/nav.php';
 $cxHero = is_file(__DIR__ . '/../assets/img/cx-hero.webp');
 $cxCta  = is_file(__DIR__ . '/../assets/img/cx-cta.webp');
 
+/* Small inline marks that sit inside the card headline, as in the reference.
+   Keyed so a card names its icon rather than carrying 400 bytes of SVG. */
+$cxIcons = [
+ 'eye'    => '<path d="M1.8 12S5.4 5.2 12 5.2 22.2 12 22.2 12 18.6 18.8 12 18.8 1.8 12 1.8 12z"/><circle cx="12" cy="12" r="3.1"/>',
+ 'trend'  => '<path d="M3 16.4l5.4-5.4 3.4 3.4L21 5.6"/><path d="M15.2 5.6H21v5.8"/>',
+ 'box'    => '<path d="M12 2.8 21 7v10l-9 4.2L3 17V7z"/><path d="M3 7l9 4.2L21 7"/><path d="M12 11.2v10"/>',
+ 'users'  => '<circle cx="9.2" cy="8.4" r="3.4"/><path d="M2.6 19.6c0-3.4 2.9-5.6 6.6-5.6s6.6 2.2 6.6 5.6"/><path d="M17.2 7.6a3 3 0 0 1 0 5.6"/><path d="M18.4 19.6c0-2.2-.8-3.8-2.2-4.8"/>',
+ 'inbox'  => '<path d="M3.2 13.4 5.6 5.2A2 2 0 0 1 7.5 3.8h9a2 2 0 0 1 1.9 1.4l2.4 8.2"/><path d="M3.2 13.4h4.6l1.2 2.6h6l1.2-2.6h4.6v4.8a2 2 0 0 1-2 2H5.2a2 2 0 0 1-2-2z"/>',
+ 'rupee'  => '<path d="M7.6 4.6h8.8M7.6 8.8h8.8M14.4 4.6c2 0 3.2 1.4 3.2 3.2s-1.2 3.4-3.6 3.4H7.6l7.4 8.2"/>',
+ 'file'   => '<path d="M13.6 2.8H7a2 2 0 0 0-2 2v14.4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8.2z"/><path d="M13.6 2.8V8.2H19"/><path d="M8.6 13.2h6.8M8.6 16.8h4.4"/>',
+ 'chat'   => '<path d="M20.4 14.2a2 2 0 0 1-2 2H8.2L4 20.2V6a2 2 0 0 1 2-2h12.4a2 2 0 0 1 2 2z"/><path d="M8.4 9.4h7.6M8.4 12.6h5"/>',
+ 'pulse'  => '<path d="M2.8 12.4h4l2.4-6.2 3.6 12 2.6-5.8h5.8"/>',
+ 'wallet' => '<path d="M3.4 7.4a2 2 0 0 1 2-2h11.2a1.4 1.4 0 0 0 0-2.8H5.6"/><path d="M3.4 7.4h16.2a1.4 1.4 0 0 1 1.4 1.4v9.4a2 2 0 0 1-2 2H5.4a2 2 0 0 1-2-2z"/><circle cx="16.8" cy="13.4" r="1.2"/>',
+ 'target' => '<circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="4.2"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>',
+ 'shield' => '<path d="M12 3 19 5.6v5.6c0 4.4-3 8-7 9.2-4-1.2-7-4.8-7-9.2V5.6z"/><path d="M9.2 12.2l2 2 3.6-3.8"/>',
+];
+
+/* Each card: highlighted headline (the <em> is the accent, as in the reference),
+   the icon that sits inline after it, and one supporting line. */
 $cxProblems = [
- ['Limited Project Visibility',        'No single view of where each site actually stands today.'],
- ['Budget Overruns',                   'Costs drift past estimates before anyone sees the trend.'],
- ['Material Shortages and Wastage',    'Stock runs out mid-pour, or sits unused across sites.'],
- ['Poor Team Coordination',            'Engineers, contractors and office staff work off different numbers.'],
- ['Missed Leads and Follow-Ups',       'Enquiries sit in inboxes and WhatsApp until the buyer moves on.'],
- ['Payment and Cash Flow Issues',      'Invoices, retentions and receivables tracked in scattered sheets.'],
- ['Unorganized Data and Reports',      'Every report is rebuilt by hand from files nobody trusts.'],
- ['Customer Communication Gaps',       'Buyers chase updates that should reach them automatically.'],
+ ['Limited <em>project visibility</em>',        'eye',    'No single view of where each site actually stands today.'],
+ ['Silent <em>budget overruns</em>',            'trend',  'Costs drift past estimates before anyone sees the trend.'],
+ ['Material <em>shortages and wastage</em>',    'box',    'Stock runs out mid-pour, or sits unused across sites.'],
+ ['Poor <em>team coordination</em>',            'users',  'Engineers, contractors and office staff work off different numbers.'],
+ ['Missed <em>leads and follow-ups</em>',       'inbox',  'Enquiries sit in inboxes and WhatsApp until the buyer moves on.'],
+ ['Payment and <em>cash flow issues</em>',      'rupee',  'Invoices, retentions and receivables tracked in scattered sheets.'],
+ ['Unorganized <em>data and reports</em>',      'file',   'Every report is rebuilt by hand from files nobody trusts.'],
+ ['Customer <em>communication gaps</em>',       'chat',   'Buyers chase updates that should reach them automatically.'],
 ];
 
 $cxFeatures = [
- ['Real-Time Project Tracking',        'Live status, milestones and delays across every site.'],
- ['Budget and Expense Management',     'Estimates against actuals, with approvals before spend.'],
- ['Material and Inventory Management', 'Stock, indents and transfers tracked site by site.'],
- ['Team and Contractor Management',    'Assignments, attendance and contractor bills in one place.'],
- ['Lead and Sales Management',         'Every enquiry captured, assigned and followed up on time.'],
- ['Payment and Cash Flow Tracking',    'Receivables, payables and retentions visible as they move.'],
- ['Centralized Data and Reports',      'One source of truth, with reports generated not assembled.'],
- ['Better Customer Communication',     'Buyers kept updated automatically at every stage.'],
+ ['Real-time <em>project tracking</em>',        'pulse',  'Live status, milestones and delays across every site.'],
+ ['Budget and <em>expense management</em>',     'trend',  'Estimates against actuals, with approvals before spend.'],
+ ['Material and <em>inventory control</em>',    'box',    'Stock, indents and transfers tracked site by site.'],
+ ['Team and <em>contractor management</em>',    'users',  'Assignments, attendance and contractor bills in one place.'],
+ ['Lead and <em>sales management</em>',         'target', 'Every enquiry captured, assigned and followed up on time.'],
+ ['Payment and <em>cash flow tracking</em>',    'wallet', 'Receivables, payables and retentions visible as they move.'],
+ ['Centralized <em>data and reports</em>',      'file',   'One source of truth, with reports generated not assembled.'],
+ ['Better <em>customer communication</em>',     'chat',   'Buyers kept updated automatically at every stage.'],
 ];
 
 $cxOutcomes = [
@@ -126,17 +145,20 @@ $cxFaqs = [
  <div class="eyebrow rv"><span class="eyebrow-text">The Problem</span></div>
  <h2 class="sec-h rv">Where Construction &amp; Real Estate Teams Get Stuck</h2>
  <p class="sec-sub rv">Construction and real estate businesses must manage projects, teams, expenses, materials, leads, payments, and customers. Without a connected system, daily operations can become difficult to control.</p>
- <div class="cx-prob-grid">
+ <!-- Pinned horizontal run. data-hx marks a track for the shared driver at the
+      foot of this file; below 900px it degrades to an ordinary swipe row. -->
+ <div class="cx-hx" data-hx>
+  <div class="cx-hx-pin">
+   <div class="cx-hx-track">
 <?php foreach ($cxProblems as $n => $prob): ?>
-  <article class="cx-prob rv" style="--d:<?= $n % 2 ?>">
-   <span class="cx-prob-n"><?= str_pad((string) ($n + 1), 2, '0', STR_PAD_LEFT) ?></span>
-   <span class="cx-prob-i" aria-hidden="true">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8.6v5"/><path d="M12 16.6h.01"/><path d="M10.6 3.9 2.5 18a1.6 1.6 0 0 0 1.4 2.4h16.2a1.6 1.6 0 0 0 1.4-2.4L13.4 3.9a1.6 1.6 0 0 0-2.8 0z"/></svg>
-   </span>
-   <h3 class="cx-prob-t"><?= $prob[0] ?></h3>
-   <p class="cx-prob-d"><?= $prob[1] ?></p>
-  </article>
+    <article class="cx-card">
+     <span class="cx-card-n"><?= str_pad((string) ($n + 1), 2, '0', STR_PAD_LEFT) ?></span>
+     <h3 class="cx-card-t"><?= $prob[0] ?><span class="cx-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><?= $cxIcons[$prob[1]] ?></svg></span></h3>
+     <p class="cx-card-d"><?= $prob[2] ?></p>
+    </article>
 <?php endforeach; ?>
+   </div>
+  </div>
  </div>
 </section>
 
@@ -146,43 +168,44 @@ $cxFaqs = [
  <h2 class="sec-h rv">Built for How Construction &amp; Real Estate Actually Works</h2>
  <p class="sec-sub rv">Drawlead provides custom ERP and CRM software that connects projects, teams, materials, finances, sales, and customers in one system.</p>
 
- <div class="cx-erp-wrap">
-  <div class="cx-erp-col">
-<?php foreach (array_slice($cxFeatures, 0, 4) as $f): ?>
-   <article class="cx-feat rv"><h3><?= $f[0] ?></h3><p><?= $f[1] ?></p></article>
-<?php endforeach; ?>
+ <!-- The product first, built rather than photographed so it stays sharp and
+      on-brand, then the capabilities as a pinned horizontal run beneath it. -->
+ <div class="cx-dash rv" aria-hidden="true">
+  <div class="cx-dash-top">
+   <span class="cx-dot"></span><span class="cx-dot"></span><span class="cx-dot"></span>
+   <span class="cx-dash-title">Drawlead ERP · Projects</span>
   </div>
-
-  <!-- the product, built rather than photographed, so it stays sharp and on-brand -->
-  <div class="cx-dash rv" aria-hidden="true">
-   <div class="cx-dash-top">
-    <span class="cx-dot"></span><span class="cx-dot"></span><span class="cx-dot"></span>
-    <span class="cx-dash-title">Drawlead ERP · Projects</span>
+  <div class="cx-dash-body">
+   <div class="cx-dash-kpis">
+    <div class="cx-kpi"><span>Projects</span><b>12</b></div>
+    <div class="cx-kpi"><span>On Track</span><b class="cx-ok">9</b></div>
+    <div class="cx-kpi"><span>Delayed</span><b class="cx-warn">3</b></div>
    </div>
-   <div class="cx-dash-body">
-    <div class="cx-dash-kpis">
-     <div class="cx-kpi"><span>Projects</span><b>12</b></div>
-     <div class="cx-kpi"><span>On Track</span><b class="cx-ok">9</b></div>
-     <div class="cx-kpi"><span>Delayed</span><b class="cx-warn">3</b></div>
-    </div>
-    <div class="cx-dash-rows">
-     <div class="cx-row"><span>Skyline Tower B</span><i><em style="width:82%"></em></i><b>82%</b></div>
-     <div class="cx-row"><span>Green Acres Villas</span><i><em style="width:64%"></em></i><b>64%</b></div>
-     <div class="cx-row"><span>Harbour Offices</span><i><em style="width:41%" class="cx-bar-warn"></em></i><b>41%</b></div>
-     <div class="cx-row"><span>Lakeview Phase 2</span><i><em style="width:23%"></em></i><b>23%</b></div>
-    </div>
-    <div class="cx-dash-foot">
-     <div class="cx-chip"><span>Materials</span><b>Indent #418 approved</b></div>
-     <div class="cx-chip"><span>Payments</span><b>₹62L received</b></div>
-     <div class="cx-chip"><span>Leads</span><b>34 new this week</b></div>
-    </div>
+   <div class="cx-dash-rows">
+    <div class="cx-row"><span>Skyline Tower B</span><i><em style="width:82%"></em></i><b>82%</b></div>
+    <div class="cx-row"><span>Green Acres Villas</span><i><em style="width:64%"></em></i><b>64%</b></div>
+    <div class="cx-row"><span>Harbour Offices</span><i><em style="width:41%" class="cx-bar-warn"></em></i><b>41%</b></div>
+    <div class="cx-row"><span>Lakeview Phase 2</span><i><em style="width:23%"></em></i><b>23%</b></div>
+   </div>
+   <div class="cx-dash-foot">
+    <div class="cx-chip"><span>Materials</span><b>Indent #418 approved</b></div>
+    <div class="cx-chip"><span>Payments</span><b>₹62L received</b></div>
+    <div class="cx-chip"><span>Leads</span><b>34 new this week</b></div>
    </div>
   </div>
+ </div>
 
-  <div class="cx-erp-col">
-<?php foreach (array_slice($cxFeatures, 4) as $f): ?>
-   <article class="cx-feat rv"><h3><?= $f[0] ?></h3><p><?= $f[1] ?></p></article>
+ <div class="cx-hx" data-hx>
+  <div class="cx-hx-pin">
+   <div class="cx-hx-track">
+<?php foreach ($cxFeatures as $n => $f): ?>
+    <article class="cx-card cx-card-sol">
+     <span class="cx-card-n"><?= str_pad((string) ($n + 1), 2, '0', STR_PAD_LEFT) ?></span>
+     <h3 class="cx-card-t"><?= $f[0] ?><span class="cx-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><?= $cxIcons[$f[1]] ?></svg></span></h3>
+     <p class="cx-card-d"><?= $f[2] ?></p>
+    </article>
 <?php endforeach; ?>
+   </div>
   </div>
  </div>
 </section>
@@ -192,9 +215,9 @@ $cxFaqs = [
  <div class="eyebrow rv"><span class="eyebrow-text">Expected Outcomes</span></div>
  <h2 class="sec-h rv">What Changes After Go-Live</h2>
  <p class="sec-sub rv">See how your operations improve with better control, security, accuracy, and transparency.</p>
- <div class="cx-track-outer" id="cxTrackOuter">
-  <div class="cx-track-pin" id="cxTrackPin">
-   <div class="cx-track" id="cxTrack">
+ <div class="cx-hx" data-hx>
+  <div class="cx-hx-pin">
+   <div class="cx-hx-track">
 <?php foreach ($cxOutcomes as $o): ?>
     <article class="cx-out">
      <span class="cx-out-n"><?= $o[0] ?></span>
@@ -304,36 +327,56 @@ $cxFaqs = [
  });
 })();
 
-/* ── Outcomes: horizontal run while pinned ────────────────────────────────
-   Same approach as Home 7's Core Platform row: the wrapper is made as tall as the
-   horizontal overflow, the track is pinned by CSS position:sticky, and scroll
-   distance maps 1:1 to translateX. Below 900px it is a normal swipe row. */
+/* ── Pinned horizontal runs ───────────────────────────────────────────────
+   One driver for every [data-hx] track on the page: the problem cards, the
+   solution cards and the outcomes. The wrapper is made as tall as the track's
+   horizontal overflow, CSS position:sticky pins the viewport-height box, and
+   scroll distance through the wrapper maps 1:1 to translateX.
+
+   Each track measures itself, so cards of different widths per section are fine.
+   Below 900px, or with reduced motion, nothing is pinned and the track is an
+   ordinary swipe row — the class the CSS keys off is never added. */
 (function(){
- const outer = document.getElementById('cxTrackOuter');
- const pin   = document.getElementById('cxTrackPin');
- const track = document.getElementById('cxTrack');
- if(!outer || !pin || !track) return;
+ const tracks = Array.from(document.querySelectorAll('[data-hx]'));
+ if(!tracks.length) return;
  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
  if(window.matchMedia('(max-width:900px)').matches) return;
 
- let stickyTop = 0, overflow = 0, ticking = false;
+ const runs = tracks.map(function(outer){
+  return {
+   outer: outer,
+   pin: outer.querySelector('.cx-hx-pin'),
+   track: outer.querySelector('.cx-hx-track'),
+   stickyTop: 0,
+   overflow: 0
+  };
+ }).filter(function(r){ return r.pin && r.track; });
+ if(!runs.length) return;
+
+ let ticking = false;
 
  function measure(){
-  stickyTop = parseFloat(getComputedStyle(pin).top) || 0;
-  overflow = Math.max(0, track.scrollWidth - pin.clientWidth);
-  outer.style.height = (pin.offsetHeight + overflow) + 'px';
+  runs.forEach(function(r){
+   r.outer.classList.add('cx-hx-on');
+   r.stickyTop = parseFloat(getComputedStyle(r.pin).top) || 0;
+   r.overflow = Math.max(0, r.track.scrollWidth - r.pin.clientWidth);
+   r.outer.style.height = (r.pin.offsetHeight + r.overflow) + 'px';
+  });
  }
  function render(){
   ticking = false;
-  if(overflow <= 0){ track.style.transform = 'translateX(0)'; return; }
-  const rect = outer.getBoundingClientRect();
-  let p = (stickyTop - rect.top) / overflow;
-  p = p < 0 ? 0 : p > 1 ? 1 : p;
-  track.style.transform = 'translateX(' + (-p * overflow).toFixed(1) + 'px)';
+  runs.forEach(function(r){
+   if(r.overflow <= 0){ r.track.style.transform = 'translateX(0)'; return; }
+   const rect = r.outer.getBoundingClientRect();
+   // only the runs near the viewport are worth touching
+   if(rect.bottom < -200 || rect.top > window.innerHeight + 200) return;
+   let p = (r.stickyTop - rect.top) / r.overflow;
+   p = p < 0 ? 0 : p > 1 ? 1 : p;
+   r.track.style.transform = 'translateX(' + (-p * r.overflow).toFixed(1) + 'px)';
+  });
  }
  function request(){ if(!ticking){ ticking = true; requestAnimationFrame(render); } }
 
- outer.classList.add('cx-track-on');
  measure(); render();
  window.addEventListener('scroll', request, { passive: true });
  window.addEventListener('resize', function(){ measure(); render(); });

@@ -69,58 +69,6 @@
 .cx-float-bar i{display:block;height:100%;border-radius:5px;background:#32b46f}
 @keyframes cx-bob{from{transform:translateY(-5px)}to{transform:translateY(5px)}}
 
-/* ══════════ 02 · THE PROBLEM ══════════ */
-.cx-prob-grid{
- display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
- gap:18px;max-width:1080px;margin:0 auto;
-}
-.cx-prob{
- position:relative;padding:1.9rem 1.8rem 1.75rem;
- background:var(--white);border:1px solid var(--border);border-radius:18px;
- transition:border-color .3s ease,transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s ease;
-}
-.cx-prob:hover{
- border-color:#32b46f;transform:translateY(-4px);
- box-shadow:0 18px 40px rgba(16,32,48,.07);
-}
-.cx-prob-n{
- position:absolute;top:1.5rem;right:1.6rem;
- font-family:var(--font);font-size:13px;font-weight:800;letter-spacing:.02em;color:var(--g300);
- transition:color .3s ease;
-}
-.cx-prob:hover .cx-prob-n{color:#32b46f}
-.cx-prob-i{display:block;width:26px;height:26px;color:#14855a;margin-bottom:1rem}
-.cx-prob-i svg{width:100%;height:100%;display:block}
-.cx-prob-t{font-family:var(--font);font-size:18px;font-weight:700;letter-spacing:-.015em;color:var(--black);margin:0 0 .5rem}
-.cx-prob-d{font-family:var(--font);font-size:14.5px;line-height:1.65;color:var(--g500);margin:0;max-width:30rem}
-
-/* ══════════ 03 · UNIFIED ERP ══════════ */
-.cx-erp-wrap{
- position:relative;display:grid;
- grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) minmax(0,1fr);
- gap:2.5rem;align-items:center;max-width:1180px;margin:0 auto;
-}
-/* Connectors are drawn from the cards, not from a fixed-coordinate overlay, so they
-   stay aligned with each card whatever its height. Decorative, hidden when the
-   dashboard is no longer flanked by both columns. */
-.cx-erp-col .cx-feat{position:relative}
-.cx-erp-col .cx-feat::after{
- content:"";position:absolute;top:50%;width:2.5rem;height:1px;
- background:linear-gradient(90deg,rgba(50,180,111,.45),rgba(50,180,111,0));
- pointer-events:none;
-}
-.cx-erp-col:first-of-type .cx-feat::after{left:100%}
-.cx-erp-col:last-of-type .cx-feat::after{right:100%;background:linear-gradient(270deg,rgba(50,180,111,.45),rgba(50,180,111,0))}
-.cx-erp-col{display:flex;flex-direction:column;gap:14px;position:relative;z-index:1}
-.cx-feat{
- background:var(--white);border:1px solid var(--border);border-radius:14px;
- padding:1.1rem 1.15rem;
- transition:border-color .3s ease,transform .3s cubic-bezier(.2,.7,.2,1);
-}
-.cx-feat:hover{border-color:#32b46f;transform:translateY(-3px)}
-.cx-feat h3{font-family:var(--font);font-size:14.5px;font-weight:700;letter-spacing:-.01em;color:var(--black);margin:0 0 .3rem}
-.cx-feat p{font-family:var(--font);font-size:12.5px;line-height:1.55;color:var(--g500);margin:0}
-
 /* the dashboard is built, not photographed: stays sharp and always on-brand */
 .cx-dash{
  position:relative;z-index:1;border-radius:18px;overflow:hidden;
@@ -154,31 +102,6 @@
 .cx-chip{background:rgba(50,180,111,.08);border:1px solid rgba(50,180,111,.18);border-radius:10px;padding:9px 11px}
 .cx-chip span{display:block;font-family:var(--font);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#5fd394}
 .cx-chip b{display:block;font-family:var(--font);font-size:11.5px;font-weight:600;color:#dbe7e1;margin-top:3px}
-
-/* ══════════ 04 · OUTCOMES ══════════ */
-.cx-track-outer{position:relative;width:100%}
-.cx-track-pin{width:100%}
-.cx-track{display:flex;gap:24px;padding:6px 0 10px}
-/* only once the JS confirms it can run: without it this is a plain swipe row */
-.cx-track-on{--cx-pin-h:clamp(300px,42vh,380px)}
-.cx-track-on .cx-track-pin{
- position:sticky;top:calc((100vh - var(--cx-pin-h)) / 2);
- height:var(--cx-pin-h);display:flex;align-items:center;overflow:hidden;
-}
-.cx-track-on .cx-track{width:max-content;flex:none;will-change:transform}
-.cx-out{
- flex:0 0 384px;width:384px;
- background:var(--white);border:1px solid var(--border);border-radius:20px;
- padding:2rem 1.9rem;
- transition:border-color .3s ease;
-}
-.cx-out:hover{border-color:#32b46f}
-.cx-out-n{
- font-family:var(--font);font-size:34px;font-weight:800;letter-spacing:-.04em;
- color:#1c9558;line-height:1;display:block;margin-bottom:1.1rem;
-}
-.cx-out-t{font-family:var(--font);font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--black);margin:0 0 .55rem}
-.cx-out-d{font-family:var(--font);font-size:14.5px;line-height:1.65;color:var(--g500);margin:0}
 
 /* ══════════ 05 · WHY DRAWLEAD ══════════ */
 .cx-why-grid{
@@ -288,25 +211,15 @@
  .cx-float-a{left:2%}
  .cx-float-b{left:1%}
  .cx-float-c{right:2%}
- /* connectors only make sense while the dashboard is flanked by both columns */
- .cx-erp-col .cx-feat::after{display:none}
- .cx-erp-wrap{grid-template-columns:1fr;gap:1.6rem;max-width:680px}
- .cx-erp-col{gap:12px}
  .cx-why-grid{grid-template-columns:1fr;gap:2.5rem}
 }
 @media(max-width:900px){
- .cx-track-outer{height:auto !important}
- .cx-track{overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;transform:none !important;padding-bottom:1rem}
- .cx-out{scroll-snap-align:start}
 }
 @media(max-width:768px){
  #cx-hero{padding-top:7.5rem}
- .cx-prob-grid{grid-template-columns:1fr}
- .cx-prob{padding:1.6rem 1.4rem}
  .cx-why-right{grid-template-columns:1fr}
  .cx-offset{transform:none}
  .cx-offset:hover{transform:translateY(-4px)}
- .cx-out{flex-basis:280px;width:280px}
  .cx-faq-q{font-size:15.5px;padding:1.25rem 0}
  .cx-cta-shot{aspect-ratio:16/10}
  .cx-glow{--cx-w:380px;--cx-h:320px}
@@ -320,4 +233,92 @@
 }
 @media(prefers-reduced-motion:reduce){
  .cx-float{animation:none}
+}
+
+/* ══════════ pinned horizontal runs ══════════
+   Shared by the problem cards, the solution cards and the outcomes. The wrapper
+   is given its height by JS (pin height + the track's horizontal overflow); the
+   pin sticks centred in the viewport and the track slides inside it.
+
+   Everything below .cx-hx-on is the pinned state, and the JS only adds that class
+   on a wide viewport with motion allowed. Without it — no JS, an error, reduced
+   motion, or a phone — these rules never apply and the track is a plain swipe
+   row, which is why the defaults here are the unpinned ones. */
+.cx-hx{position:relative;width:100%}
+.cx-hx-track{
+ display:flex;gap:20px;padding:6px 2px 14px;
+ overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;
+ scrollbar-width:none;
+}
+.cx-hx-track::-webkit-scrollbar{display:none}
+.cx-hx-on{--cx-pin-h:clamp(340px,54vh,460px)}
+.cx-hx-on .cx-hx-pin{
+ position:sticky;top:calc((100vh - var(--cx-pin-h)) / 2);
+ height:var(--cx-pin-h);display:flex;align-items:center;overflow:hidden;
+}
+.cx-hx-on .cx-hx-track{
+ width:max-content;flex:none;overflow:visible;
+ will-change:transform;padding-bottom:6px;
+}
+
+/* ══════════ dark statement cards ══════════ */
+.cx-card{
+ flex:0 0 340px;width:340px;scroll-snap-align:start;
+ display:flex;flex-direction:column;
+ min-height:300px;padding:1.9rem 1.8rem 1.75rem;
+ background:#141517;border:1px solid rgba(255,255,255,.07);border-radius:26px;
+ transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s ease,box-shadow .35s ease;
+}
+.cx-card:hover{
+ transform:translateY(-5px);border-color:rgba(50,180,111,.38);
+ box-shadow:0 24px 50px rgba(6,20,14,.3);
+}
+.cx-card-n{
+ font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:.08em;
+ color:rgba(255,255,255,.34);margin-bottom:1.35rem;
+}
+/* the headline carries the accent, with the icon sitting inline after it */
+.cx-card-t{
+ font-family:var(--font);font-size:clamp(21px,1.7vw,26px);font-weight:600;
+ letter-spacing:-.02em;line-height:1.28;color:#fff;margin:0 0 .9rem;
+}
+.cx-card-t em{font-style:normal;color:#5fd394}
+.cx-ic{
+ display:inline-flex;align-items:center;justify-content:center;
+ width:1.5em;height:1.5em;margin-left:.35em;vertical-align:-.3em;
+ border:1px solid rgba(50,180,111,.4);border-radius:7px;color:#5fd394;
+}
+.cx-ic svg{width:.95em;height:.95em;display:block}
+/* #9aa6a0 on #141517 is 6.4:1 */
+.cx-card-d{
+ font-family:var(--font);font-size:14px;line-height:1.65;color:#9aa6a0;
+ margin:0;
+}
+.cx-card-sol .cx-card-t em{color:#7adfa8}
+
+/* outcomes keep the light treatment; only the mechanism is shared */
+.cx-out{
+ flex:0 0 384px;width:384px;scroll-snap-align:start;
+ background:var(--white);border:1px solid var(--border);border-radius:20px;
+ padding:2rem 1.9rem;transition:border-color .3s ease;
+}
+.cx-out:hover{border-color:#32b46f}
+.cx-out-n{
+ font-family:var(--font);font-size:34px;font-weight:800;letter-spacing:-.04em;
+ color:#1c9558;line-height:1;display:block;margin-bottom:1.1rem;
+}
+.cx-out-t{font-family:var(--font);font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--black);margin:0 0 .55rem}
+.cx-out-d{font-family:var(--font);font-size:14.5px;line-height:1.65;color:var(--g500);margin:0}
+
+/* the built dashboard now leads its section rather than being flanked */
+.cx-dash{max-width:900px;margin:0 auto 2.75rem}
+
+@media(max-width:900px){
+ .cx-hx{height:auto !important}
+ .cx-hx-track{transform:none !important}
+}
+@media(max-width:768px){
+ .cx-card{flex-basis:288px;width:288px;min-height:0;padding:1.6rem 1.5rem 1.5rem}
+ .cx-out{flex-basis:288px;width:288px}
+ .cx-dash{margin-bottom:2rem}
 }
