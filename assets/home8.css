@@ -271,3 +271,36 @@ nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
 .hstat-n{font-weight:700}
 .sol-metric-v{font-weight:700}
 .ft-logo{font-weight:700}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   19 · HERO CURSOR GLOW
+   The About Us hero's effect, brought onto this hero.
+
+   The .ah-fx / .ah-blob / .ah-lines rules live in partials/style.php, which is
+   inlined on every page, so they already apply here — only the stacking and the
+   dark-ground tuning are needed. The markup and the driver are added by
+   tools/sync-home8.pl, which keeps them through a regeneration.
+
+   #hero already has overflow:hidden and position:relative, so the layer is
+   clipped and positioned without touching the section.
+
+   Layering inside #hero: the inverted artwork band is z-index 0, .hero-stars is
+   1 and .hero-grid (the copy and the dashboard) is 2. The glow goes at 1,
+   inserted before the stars, so it washes over the artwork and the stars still
+   twinkle on top of it. Nothing can reach the copy. */
+#hero .ah-fx{z-index:1}
+
+/* On About Us this sits on a near-white page, where a 40%-alpha green reads as
+   a strong light. On black the same values are barely there: an additive light
+   needs more of itself to register against a dark ground, so the blob is
+   brightened and the grid lines lifted. The geometry — size, blur, mask, ease —
+   is untouched, so it behaves exactly as it does on About Us. */
+#hero .ah-blob{
+ background:radial-gradient(circle at 50% 50%,
+   rgba(60,220,135,.58) 0%,rgba(50,180,111,.28) 38%,rgba(50,180,111,0) 70%);
+}
+#hero .ah-lines{
+ background-image:
+  linear-gradient(rgba(80,235,155,.42) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(80,235,155,.42) 1px,transparent 1px);
+}

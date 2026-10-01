@@ -28,6 +28,65 @@ include __DIR__ . '/partials/nav.php';
       runners. Purely decorative and inert, aria-hidden, pointer-events:none, and
       pinned behind .hero-grid (which already sits at z-index:2), so no existing hero
       element is touched or obstructed. Animation is CSS-only (transform + opacity). -->
+ <!-- Cursor glow, the same effect as the About Us hero: nothing at rest, then a
+      soft green light trails the pointer and a green grid lights up beneath it.
+      Decorative only — aria-hidden, pointer-events:none, and pinned behind
+      .hero-grid, so it never obstructs the copy or the dashboard. -->
+ <div class="ah-fx" id="ahFx" aria-hidden="true">
+  <span class="ah-blob"></span>
+  <span class="ah-lines"></span>
+ </div>
+ <script>
+ // Verbatim copy of the About Us hero driver (templates/about-us-body.php). It
+ // writes the pointer position into two custom properties and lets CSS place the
+ // light and the grid mask; the element is never re-laid-out, only composited.
+ //
+ // The light eases toward the pointer instead of snapping to it — that trailing
+ // is what makes it read as a soft light rather than a cursor attachment. The
+ // rAF loop only runs while the pointer is inside and stops once it catches up.
+ (function(){
+  const fx = document.getElementById('ahFx');
+  if(!fx) return;
+  const hero = fx.closest('section');
+  if(!hero) return;
+  // hover-capable, fine pointers only: on touch there is no hover to fade out of
+  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+
+  const snap = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let tx = 0, ty = 0, x = 0, y = 0, raf = 0, seeded = false;
+
+  function paint(){
+   fx.style.setProperty('--ah-x', x.toFixed(1) + 'px');
+   fx.style.setProperty('--ah-y', y.toFixed(1) + 'px');
+  }
+  function step(){
+   raf = 0;
+   const dx = tx - x, dy = ty - y;
+   if(Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5){ x = tx; y = ty; paint(); return; }
+   x += dx * 0.12;            // ease factor: lower trails further behind
+   y += dy * 0.12;
+   paint();
+   raf = requestAnimationFrame(step);
+  }
+  function queue(){ if(!raf) raf = requestAnimationFrame(step); }
+
+  hero.addEventListener('pointermove', function(e){
+   const r = hero.getBoundingClientRect();
+   tx = e.clientX - r.left;
+   ty = e.clientY - r.top;
+   if(!seeded){ seeded = true; x = tx; y = ty; paint(); fx.classList.add('is-on'); return; }
+   if(snap){ x = tx; y = ty; paint(); return; }
+   queue();
+  }, { passive: true });
+
+  hero.addEventListener('pointerenter', function(){ if(seeded) fx.classList.add('is-on'); }, { passive: true });
+  hero.addEventListener('pointerleave', function(){
+   fx.classList.remove('is-on');
+   if(raf){ cancelAnimationFrame(raf); raf = 0; }
+  }, { passive: true });
+ })();
+ </script>
+
  <div class="hero-stars" aria-hidden="true">
   <div class="hero-dust"></div>
   <span class="hero-star"></span>
