@@ -257,8 +257,10 @@ $cxFaqs = [
   <div class="cx-faq-item">
    <h3 class="cx-faq-h">
     <button type="button" class="cx-faq-q" aria-expanded="false" aria-controls="<?= $id ?>">
-     <span><?= $faq[0] ?></span>
-     <span class="cx-faq-ico" aria-hidden="true"></span>
+     <span class="cx-faq-t"><span class="cx-faq-num"><?= $n + 1 ?>.</span><?= $faq[0] ?></span>
+     <span class="cx-faq-ico" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.2 8 10.2l4-4"/></svg>
+     </span>
     </button>
    </h3>
    <div class="cx-faq-a" id="<?= $id ?>" role="region" hidden>
