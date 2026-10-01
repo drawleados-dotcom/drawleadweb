@@ -70,27 +70,6 @@ $cxOutcomes = [
  ['04', 'Clear Audit History',  'Track every update, approval, and transaction.'],
 ];
 
-/* The four steps of the engagement, in order. Each: name, icon, what happens, and
-   the two tags that label it. */
-$cxSteps = [
- ['Audit',
-  '<path d="M13.6 2.8H7a2 2 0 0 0-2 2v14.4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8.2z"/><path d="M13.6 2.8V8.2H19"/><circle cx="11.4" cy="13.4" r="2.6"/><path d="M13.4 15.4 15.6 17.6"/>',
-  'We map your current sites, workflows, tools and reporting to find exactly where projects lose time and money.',
-  ['Workflows', 'Bottlenecks']],
- ['Measure',
-  '<path d="M4.4 20.2h15.2"/><rect x="5.6" y="12.6" width="3.4" height="5.4" rx="1"/><rect x="10.8" y="8.4" width="3.4" height="9.6" rx="1"/><rect x="16" y="4.6" width="3.4" height="13.4" rx="1"/>',
-  'We set up KPIs, dashboards and tracking so every decision from here on is backed by real site data.',
-  ['KPIs', 'Dashboards']],
- ['Automate',
-  '<path d="M4.6 8.4h10.8l-2.8-2.8"/><path d="M4.6 8.4l2.8 2.8"/><path d="M19.4 15.6H8.6l2.8 2.8"/><path d="M19.4 15.6l-2.8-2.8"/>',
-  'We remove the repetitive manual work — approvals, indents, follow-ups — before we build anything new.',
-  ['Approvals', 'Follow-ups']],
- ['Scale',
-  '<path d="M3.4 16.6l5.2-5.2 3.4 3.4L20.6 6.6"/><path d="M15 6.6h5.6v5.6"/>',
-  'Only then do we build the ERP, CRM and integrations, designed to grow with every new project you take on.',
-  ['Custom ERP', 'Automation']],
-];
-
 $cxWhy = [
  ['Industry-Focused Solutions',   'Built around construction and real estate workflows, not a generic template.'],
  ['Custom Development',           'Your process drives the system, rather than the other way round.'],
@@ -251,28 +230,7 @@ $cxFaqs = [
  </div>
 </section>
 
-<!-- ═════════ 05 · HOW WE WORK ═════════ -->
-<section id="cx-how">
- <div class="cxh-inner">
-  <div class="cxh-eyebrow rv"><i aria-hidden="true"></i>How We Work</div>
-  <h2 class="cxh-h rv">We don't build first. We understand first.</h2>
-  <p class="cxh-p rv">Before a single line of code goes live, we audit how your projects actually run, so every system we build is measurable, automated, and built to scale.</p>
-  <div class="cxh-grid">
-<?php foreach ($cxSteps as $st): ?>
-   <article class="cxh-card rv">
-    <span class="cxh-ico" aria-hidden="true">
-     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><?= $st[1] ?></svg>
-    </span>
-    <h3 class="cxh-t"><?= $st[0] ?></h3>
-    <p class="cxh-d"><?= $st[2] ?></p>
-    <div class="cxh-tags"><?php foreach ($st[3] as $tag): ?><span class="cxh-tag"><?= $tag ?></span><?php endforeach; ?></div>
-   </article>
-<?php endforeach; ?>
-  </div>
- </div>
-</section>
-
-<!-- ═════════ 06 · WHY DRAWLEAD ═════════ -->
+<!-- ═════════ 05 · WHY DRAWLEAD ═════════ -->
 <section id="cx-why">
  <div class="cx-why-grid">
   <div class="cx-why-left">
@@ -291,7 +249,7 @@ $cxFaqs = [
  </div>
 </section>
 
-<!-- ═════════ 07 · FAQ ═════════ -->
+<!-- ═════════ 06 · FAQ ═════════ -->
 <section id="cx-faq">
  <h2 class="sec-h rv">Frequently Asked Questions</h2>
  <div class="cx-faq-list rv">
@@ -313,7 +271,7 @@ $cxFaqs = [
  </div>
 </section>
 
-<!-- ═════════ 08 · FINAL CTA ═════════ -->
+<!-- ═════════ 07 · FINAL CTA ═════════ -->
 <section id="cx-cta">
  <!-- Dark rounded card inset in the page, matching the Home 7 and About Us closing
       CTAs. The grid and the cursor glow live inside the card now, not on the page. -->
