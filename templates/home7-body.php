@@ -735,7 +735,9 @@ $dHead = function ($glyph, $name, $sub, $period) use ($dIco) {
  <div class="eyebrow rv"><span class="eyebrow-text">Platform Dashboards</span></div>
  <h2 class="sec-h rv">Every Module. <span class="fade">One Screen.</span></h2>
  <p class="sec-sub rv">Live ERP dashboards for every function. See exactly what Drawlead looks like in action.</p>
- <div class="dash-grid">
+ <div class="dash-scroll-outer" id="dashScrollOuter">
+ <div class="dash-scroll-sticky" id="dashScrollSticky">
+ <div class="dash-grid" id="dashRow">
 
   <!-- SALES -->
   <div class="dash-card d1">
@@ -951,6 +953,8 @@ $dHead = function ($glyph, $name, $sub, $period) use ($dIco) {
   </div>
 
  </div><!-- /dash-grid -->
+ </div><!-- /dash-scroll-sticky -->
+ </div><!-- /dash-scroll-outer -->
  <div class="sec-cta rv" style="margin-top:3rem">
  <button type="button" data-book class="btn btn-black">Book a Live Demo</button>
  <button type="button" data-book class="btn btn-outline2">Schedule Consultation</button>
@@ -1332,6 +1336,53 @@ renderDash(0);
  onScroll();
  window.addEventListener('resize', ()=>{ measure(); onScroll(); });
  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
+// Platform Dashboards: one row of cards. While the row is pinned, vertical scroll
+// slides it left so the dashboards pass by one after another. Same runway technique
+// as the Core Functions row above: the outer box is made exactly as tall as the
+// pinned box plus the horizontal overflow, so the run ends on the last card.
+// Phones and reduced motion keep a plain swipeable row (see home7.css).
+(function(){
+ const outer = document.getElementById('dashScrollOuter');
+ const sticky = document.getElementById('dashScrollSticky');
+ const row = document.getElementById('dashRow');
+ if(!outer || !sticky || !row) return;
+
+ const mq = window.matchMedia('(max-width:768px), (prefers-reduced-motion: reduce)');
+ let stickyTop = 0;
+ let overflow = 0;
+ let ticking = false;
+
+ function measure(){
+  if(mq.matches){
+   outer.style.height = ''; sticky.style.top = ''; row.style.transform = '';
+   overflow = 0; return;
+  }
+  // centre the pinned row in the viewport, but never tuck it under the fixed nav
+  stickyTop = Math.max(84, (window.innerHeight - sticky.offsetHeight) / 2);
+  sticky.style.top = stickyTop + 'px';
+  overflow = Math.max(0, row.scrollWidth - sticky.clientWidth);
+  outer.style.height = (sticky.offsetHeight + overflow) + 'px';
+ }
+
+ function update(){
+  ticking = false;
+  if(mq.matches) return;
+  if(overflow <= 0){ row.style.transform = 'translate3d(0,0,0)'; return; }
+  const rect = outer.getBoundingClientRect();
+  const progress = Math.min(1, Math.max(0, (stickyTop - rect.top) / overflow));
+  row.style.transform = 'translate3d(' + (-progress * overflow) + 'px,0,0)';
+ }
+
+ function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+ function refresh(){ measure(); update(); }
+
+ refresh();
+ window.addEventListener('scroll', onScroll, { passive: true });
+ window.addEventListener('resize', refresh);
+ window.addEventListener('load', refresh);
+ if(mq.addEventListener) mq.addEventListener('change', refresh);
 })();
 
 // Sticky card stacks: scroll-linked "overlap → fade → next becomes active"
