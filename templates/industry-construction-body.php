@@ -63,11 +63,18 @@ $cxFeatures = [
  ['Better <em>customer communication</em>',     'chat',   'Buyers kept updated automatically at every stage.'],
 ];
 
+/* The four outcomes that radiate from the go-live tile. Each: title, the line
+   under it, and its mark. The marks are two-tone — the outline is ink, the tick
+   is the brand green — so the <path class="g"> parts are coloured separately. */
 $cxOutcomes = [
- ['01', 'Accurate Estimates',   'Create reliable BOQs based on actual project costs.'],
- ['02', 'Controlled Approvals', 'Reduce unauthorized purchases and expenses.'],
- ['03', 'Secure Access',        'Protect business data with role-based permissions.'],
- ['04', 'Clear Audit History',  'Track every update, approval, and transaction.'],
+ ['Accurate Estimates', 'Create reliable BOQs based on actual project costs.',
+  '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13.4h6"/><path d="M9 17h3.2"/>'],
+ ['Controlled Approvals', 'Reduce unauthorized purchases and expenses.',
+  '<circle cx="9.8" cy="7.2" r="3.6"/><path d="M3.2 20.2c0-3.7 3-6.2 6.6-6.2 1 0 2 .2 2.9.6"/><path d="M14.2 17.4l2.4 2.4 4.4-4.9" class="g"/>'],
+ ['Secure Access', 'Protect business data with role-based permissions.',
+  '<path d="M12 2.6 20 5.6v5.9c0 4.7-3.3 8.7-8 9.9-4.7-1.2-8-5.2-8-9.9V5.6z"/><path d="M8.5 12.1l2.5 2.5 4.5-4.9" class="g"/>'],
+ ['Clear Audit History', 'Track every update, approval, and transaction.',
+  '<path d="M3.6 12a8.4 8.4 0 1 0 2.5-6"/><path d="M3.2 4.4v4.3h4.3"/><path d="M12 7.6V12l3.2 2" class="g"/>'],
 ];
 
 $cxWhy = [
@@ -188,16 +195,47 @@ $cxFaqs = [
  <div class="eyebrow rv"><span class="eyebrow-text">Expected Outcomes</span></div>
  <h2 class="sec-h rv">What Changes After Go-Live</h2>
  <p class="sec-sub rv">See how your operations improve with better control, security, accuracy, and transparency.</p>
- <div class="cx-hx" data-hx>
-  <div class="cx-hx-pin">
-   <div class="cx-hx-track">
-<?php foreach ($cxOutcomes as $o): ?>
-    <article class="cx-out">
-     <span class="cx-out-n"><?= $o[0] ?></span>
-     <h3 class="cx-out-t"><?= $o[1] ?></h3>
-     <p class="cx-out-d"><?= $o[2] ?></p>
-    </article>
+
+ <!-- A hub and its four spokes. The nodes are placed by grid area rather than by
+      source order, so the DOM stays in reading order for a screen reader while
+      two of them render on the right. The wires are decoration. -->
+ <div class="cx-og rv">
+  <div class="cx-og-wire cx-og-l" aria-hidden="true">
+   <svg viewBox="0 0 100 100" preserveAspectRatio="none" fill="none">
+    <path d="M100 44C52 44 48 0 0 0"/>
+    <path d="M100 56C52 56 48 100 0 100"/>
+   </svg>
+   <i></i><i></i><i></i><i></i>
+  </div>
+  <div class="cx-og-wire cx-og-r" aria-hidden="true">
+   <svg viewBox="0 0 100 100" preserveAspectRatio="none" fill="none">
+    <path d="M0 44C48 44 52 0 100 0"/>
+    <path d="M0 56C48 56 52 100 100 100"/>
+   </svg>
+   <i></i><i></i><i></i><i></i>
+  </div>
+
+<?php foreach ($cxOutcomes as $n => $o): ?>
+  <article class="cx-og-n cx-og-n<?= $n + 1 ?>">
+   <span class="cx-og-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><?= $o[2] ?></svg></span>
+   <div class="cx-og-tx">
+    <h3 class="cx-og-t"><?= $o[0] ?></h3>
+    <p class="cx-og-d"><?= $o[1] ?></p>
+   </div>
+  </article>
 <?php endforeach; ?>
+
+  <div class="cx-og-hub">
+   <span class="cx-og-ring" aria-hidden="true"></span>
+   <span class="cx-og-ring" aria-hidden="true"></span>
+   <div class="cx-og-tile">
+    <svg class="cx-og-bars" viewBox="0 0 48 34" aria-hidden="true">
+     <rect x="1" y="17" width="11" height="17" rx="3.2"/>
+     <rect x="18.5" y="8" width="11" height="26" rx="3.2"/>
+     <rect x="36" y="0" width="11" height="34" rx="3.2"/>
+    </svg>
+    <span class="cx-og-hub-t">Go-Live</span>
+    <span class="cx-og-hub-s">Better Operations</span>
    </div>
   </div>
  </div>

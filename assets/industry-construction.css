@@ -318,20 +318,6 @@
 /* the hover edge follows the accent, so no green is left on these cards */
 .cx-card:not(.cx-card-sol):hover{border-color:rgba(255,92,92,.38)}
 
-/* outcomes keep the light treatment; only the mechanism is shared */
-.cx-out{
- flex:0 0 384px;width:384px;scroll-snap-align:start;
- background:var(--white);border:1px solid var(--border);border-radius:20px;
- padding:2rem 1.9rem;transition:border-color .3s ease;
-}
-.cx-out:hover{border-color:#32b46f}
-.cx-out-n{
- font-family:var(--font);font-size:34px;font-weight:800;letter-spacing:-.04em;
- color:#1c9558;line-height:1;display:block;margin-bottom:1.1rem;
-}
-.cx-out-t{font-family:var(--font);font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--black);margin:0 0 .55rem}
-.cx-out-d{font-family:var(--font);font-size:14.5px;line-height:1.65;color:var(--g500);margin:0}
-
 
 @media(max-width:900px){
  .cx-hx{height:auto !important}
@@ -339,7 +325,6 @@
 }
 @media(max-width:768px){
  .cx-card{flex-basis:288px;width:288px;min-height:0;padding:1.6rem 1.5rem 1.5rem}
- .cx-out{flex-basis:288px;width:288px}
 }
 
 /* ══════════ section headings ══════════
@@ -355,4 +340,153 @@
 }
 @media(max-width:640px){
  #cx-problem .sec-h,#cx-erp .sec-h{font-size:clamp(28px,7.4vw,38px);line-height:1.1}
+}
+
+/* ══════════ 04 · EXPECTED OUTCOMES ══════════
+   A hub-and-spoke diagram: four outcomes radiate from the go-live tile, joined
+   by curved wires.
+
+   The whole geometry hangs off four custom properties. The two side rows are a
+   fixed height so the wire box can be pinned from one row's centre to the
+   other's; that makes the SVG's y=0 and y=100 land exactly on the outer dots
+   with nothing measured in JS. The paths are stretched (preserveAspectRatio:
+   none) because the box is wider than it is tall at some widths — a horizontal
+   stretch keeps a mostly-horizontal curve smooth, and non-scaling-stroke keeps
+   the line a hairline. The dots are real elements, so they stay round. */
+#cx-outcomes .cx-og{
+ --og-row:132px;                  /* one side row */
+ --og-rgap:76px;                  /* between the two rows */
+ --og-hub:240px;                  /* the centre tile, and its column */
+ --og-gap:clamp(40px,8vw,120px);  /* hub -> node: this is the wire's width */
+ --og-inset:clamp(14px,2.6vw,38px); /* text -> dot, so the copy never reaches it */
+ position:relative;
+ display:grid;
+ grid-template-columns:1fr var(--og-hub) 1fr;
+ grid-template-rows:var(--og-row) var(--og-row);
+ column-gap:var(--og-gap);row-gap:var(--og-rgap);
+ max-width:1240px;margin:0 auto;
+}
+
+/* ── the wires ── */
+.cx-og-wire{
+ position:absolute;top:calc(var(--og-row)/2);bottom:calc(var(--og-row)/2);
+ width:var(--og-gap);pointer-events:none;
+}
+.cx-og-l{left:calc(50% - var(--og-hub)/2 - var(--og-gap))}
+.cx-og-r{left:calc(50% + var(--og-hub)/2)}
+.cx-og-wire svg{width:100%;height:100%;display:block;overflow:visible}
+.cx-og-wire path{
+ fill:none;stroke:rgba(26,140,84,.55);stroke-width:1;vector-effect:non-scaling-stroke;
+}
+.cx-og-wire i{
+ position:absolute;width:9px;height:9px;border-radius:50%;
+ background:#32b46f;transform:translate(-50%,-50%);
+ box-shadow:0 0 0 3.5px rgba(50,180,111,.12);
+}
+/* inner pair sits on the tile's edge, outer pair on the node's inner edge */
+.cx-og-r i:nth-of-type(1){left:0;top:44%}
+.cx-og-r i:nth-of-type(2){left:0;top:56%}
+.cx-og-r i:nth-of-type(3){left:100%;top:0}
+.cx-og-r i:nth-of-type(4){left:100%;top:100%}
+.cx-og-l i:nth-of-type(1){left:100%;top:44%}
+.cx-og-l i:nth-of-type(2){left:100%;top:56%}
+.cx-og-l i:nth-of-type(3){left:0;top:0}
+.cx-og-l i:nth-of-type(4){left:0;top:100%}
+.cx-og-wire i:nth-of-type(1),.cx-og-wire i:nth-of-type(2){
+ width:8px;height:8px;background:#2fc078;box-shadow:none;
+}
+
+/* ── the four nodes ── */
+.cx-og-n{
+ display:flex;align-items:center;gap:clamp(14px,1.5vw,22px);
+ align-self:center;position:relative;
+}
+.cx-og-n1,.cx-og-n2{padding-right:var(--og-inset)}
+.cx-og-n3,.cx-og-n4{padding-left:var(--og-inset)}
+.cx-og-n1{grid-area:1/1/2/2}
+.cx-og-n2{grid-area:2/1/3/2}
+.cx-og-n3{grid-area:1/3/2/4}
+.cx-og-n4{grid-area:2/3/3/4}
+.cx-og-tx{min-width:0;max-width:18.5rem}
+.cx-og-ic{flex:none;display:block;color:var(--black)}
+.cx-og-ic svg{width:clamp(42px,3.7vw,54px);height:clamp(42px,3.7vw,54px);display:block}
+.cx-og-ic .g{stroke:#1c8c54}
+.cx-og-t{
+ font-family:var(--font);font-size:clamp(19px,1.6vw,24px);font-weight:700;
+ letter-spacing:-.02em;line-height:1.25;color:var(--black);margin:0 0 .4rem;
+}
+.cx-og-d{
+ font-family:var(--font);font-size:15.5px;line-height:1.62;color:var(--g500);
+ margin:0;
+}
+
+/* ── the hub ── */
+.cx-og-hub{
+ grid-area:1/2/3/3;position:relative;
+ display:flex;align-items:center;justify-content:center;
+}
+/* the bloom, behind everything, kept off the tile so its blur never softens the
+   type sitting on top of it */
+.cx-og-hub::before{
+ content:'';position:absolute;left:50%;top:50%;
+ width:calc(var(--og-hub) * 2.1);height:calc(var(--og-hub) * 2.1);
+ transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;
+ background:radial-gradient(circle,rgba(50,180,111,.46) 0%,rgba(50,180,111,.15) 40%,transparent 66%);
+ filter:blur(18px);
+}
+.cx-og-ring{
+ position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+ border-radius:50%;border:1px solid rgba(50,180,111,.16);pointer-events:none;
+}
+.cx-og-ring:nth-of-type(1){width:calc(var(--og-hub) * 1.4);height:calc(var(--og-hub) * 1.4)}
+.cx-og-ring:nth-of-type(2){width:calc(var(--og-hub) * 1.78);height:calc(var(--og-hub) * 1.78)}
+.cx-og-tile{
+ position:relative;width:var(--og-hub);height:var(--og-hub);
+ border-radius:34px;isolation:isolate;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;
+ background:
+   radial-gradient(130% 95% at 50% 116%,rgba(60,220,135,.72) 0%,rgba(50,180,111,.22) 46%,transparent 70%),
+   linear-gradient(158deg,#1d2b23 0%,#0e1714 52%,#060f0c 100%);
+ border:1px solid rgba(50,180,111,.22);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 30px 70px -18px rgba(20,160,92,.72);
+}
+.cx-og-bars{width:60px;height:43px;display:block;margin-bottom:1.25rem}
+.cx-og-bars rect:nth-child(1){fill:#2ea86a}
+.cx-og-bars rect:nth-child(2){fill:#45d184}
+.cx-og-bars rect:nth-child(3){fill:#7ef0ad}
+.cx-og-hub-t{
+ font-family:var(--font);font-size:36px;font-weight:800;letter-spacing:-.03em;
+ line-height:1;color:#fff;
+}
+.cx-og-hub-s{
+ font-family:var(--font);font-size:10.5px;font-weight:700;
+ text-transform:uppercase;letter-spacing:.2em;color:#9fdcbb;margin-top:.7rem;
+}
+
+/* Two columns and no wires once the spokes would be too cramped to read, then a
+   single column on a phone. The tile leads in both. */
+@media(max-width:980px){
+ #cx-outcomes .cx-og{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-rows:auto auto auto;
+  column-gap:28px;row-gap:34px;max-width:720px;
+ }
+ .cx-og-wire{display:none}
+ .cx-og-hub{grid-area:1/1/2/3;margin-bottom:2.75rem}
+ .cx-og-n1,.cx-og-n2,.cx-og-n3,.cx-og-n4{padding:0}
+ .cx-og-n1{grid-area:2/1/3/2}
+ .cx-og-n2{grid-area:2/2/3/3}
+ .cx-og-n3{grid-area:3/1/4/2}
+ .cx-og-n4{grid-area:3/2/4/3}
+ .cx-og-n{align-items:flex-start}
+}
+@media(max-width:620px){
+ #cx-outcomes .cx-og{--og-hub:196px;grid-template-columns:1fr;row-gap:28px}
+ .cx-og-hub,.cx-og-n1,.cx-og-n2,.cx-og-n3,.cx-og-n4{grid-area:auto}
+ /* auto-placement follows source order, where the tile is last; order pulls it
+    back to the front without moving it in the DOM */
+ .cx-og-hub{order:-1}
+ .cx-og-tile{border-radius:28px}
+ .cx-og-hub-t{font-size:28px}
+ .cx-og-bars{width:42px;height:30px;margin-bottom:.9rem}
 }
