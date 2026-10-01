@@ -340,6 +340,23 @@
 }
 .cx-card-sol .cx-card-t em{color:#7adfa8}
 
+/* ── problem cards: red accent, no icon chip ──
+   Scoped with :not(.cx-card-sol) so the solution run keeps its green. #FF5C5C on
+   the #141517 card is 6.2:1. The icon loses its box entirely and sits as a bare
+   red mark inline after the headline; it keeps its inline-flex box so the
+   baseline alignment with the text does not shift. */
+.cx-card:not(.cx-card-sol) .cx-card-t{
+ font-size:clamp(22px,1.55vw,24px);font-weight:600;line-height:1.15;
+}
+.cx-card:not(.cx-card-sol) .cx-card-t em{color:#FF5C5C}
+.cx-card:not(.cx-card-sol) .cx-ic{
+ width:1.18em;height:1.18em;margin-left:.3em;vertical-align:-.17em;
+ border:0;border-radius:0;background:none;box-shadow:none;color:#FF5C5C;
+}
+.cx-card:not(.cx-card-sol) .cx-ic svg{width:100%;height:100%}
+/* the hover edge follows the accent, so no green is left on these cards */
+.cx-card:not(.cx-card-sol):hover{border-color:rgba(255,92,92,.38)}
+
 /* outcomes keep the light treatment; only the mechanism is shared */
 .cx-out{
  flex:0 0 384px;width:384px;scroll-snap-align:start;
