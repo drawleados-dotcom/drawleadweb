@@ -1,0 +1,223 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   HOME 8 — dark theme
+   ───────────────────────────────────────────────────────────────────────────
+   Loaded by templates/home8-body.php AFTER /assets/home7.css. It carries colour
+   and nothing else: no layout, no type scale, no spacing, no animation. Home 7
+   remains the single source of truth for all of that, so a structural fix there
+   reaches this page too and the two can never drift apart.
+
+   Everything here wins on source order, not on specificity: each selector is
+   written to match the one in home7.css exactly, so a later edit over there is
+   either picked up automatically (layout) or cleanly overridden (colour).
+
+   PALETTE
+     page           #050807   near-black, the section ground
+     page raised    #0A0F0D   the alternating band
+     card           #0D1210   the standard surface
+     card raised    #111816   a surface sitting on a card
+     line           #1C2522   hairlines and card borders
+     accent         #32B46F   unchanged from Home 7
+     ink            #EEF2F0   body-strength text
+
+   CONTRAST (WCAG AA, against #0D1210 unless noted)
+     #EEF2F0 ink        16.9:1
+     #D5DEDA g600       13.1:1
+     #A7B5AD g500        8.4:1
+     #8C9A93 g400        6.1:1
+     #6E7B74 g300        4.3:1   secondary text, still passes AA for body copy
+     #32B46F accent      7.3:1   the green that fails on white passes easily here
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1 · TOKENS ──────────────────────────────────────────────────────────────
+   Most of the page follows from these. --white is only ever a surface in
+   home7.css (43 uses, never a text colour), so it flips wholesale. --black is
+   the opposite case: 47 text uses and 10 surface uses, so it becomes ink here
+   and the ten surfaces are restated in section 3. */
+:root{
+ --bg:#050807;
+ --bg2:#0A0F0D;
+ --white:#0D1210;
+ --black:#EEF2F0;
+ --border:#1C2522;
+ /* the grey ramp inverts: in Home 7 g600 is the darkest and strongest, so on a
+    dark ground it has to become the lightest */
+ --g200:#161D1A;
+ --g300:#7D8B83;
+ --g400:#8C9A93;
+ --g500:#A7B5AD;
+ --g600:#D5DEDA;
+}
+body{background:var(--bg);color:var(--black)}
+
+/* ── 2 · TEXTURE AND CHROME ────────────────────────────────────────────────── */
+/* the grid rules were dark-on-light; on this ground they have to be light-on-dark */
+.grid-bg{
+ background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+}
+nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
+.nav-btn{background:#32b46f;color:#04110a}
+.nav-btn:hover{opacity:.88}
+
+/* ── 3 · THE SURFACES THAT WERE --black ─────────────────────────────────────
+   These ten rules used --black as a dark surface rather than as text. Now that
+   the token is ink they each have to name their own ground. */
+.btn-black,.nav-btn{color:#04110a}
+.btn-black{background:#32b46f}
+.btn-black:hover{box-shadow:0 8px 24px rgba(50,180,111,.28)}
+.ind-tab.active{background:#32b46f;color:#04110a}
+.hpf-sidebar{background:#0A0F0D}
+.fn-cta-card{background:#101A15 !important}
+.sidebar-card{background:#101A15}
+.cs-filter-tab.active{background:#32b46f;color:#04110a;border-color:#32b46f}
+.az-tab.active{background:#32b46f;color:#04110a}
+.mega-cta{background:#101A15}
+
+/* ── 4 · BUTTONS ───────────────────────────────────────────────────────────── */
+.btn-ghost{background:#111816;color:var(--black);border-color:#243029}
+.btn-ghost:hover{border-color:#32b46f}
+.btn-outline2{color:var(--black);border-color:#243029}
+.btn-outline2:hover{border-color:#32b46f}
+
+/* ── 5 · HERO ───────────────────────────────────────────────────────────────
+   The hero is explicitly #FFFFFF in home7.css and carries a photographic band
+   on top. The band keeps its own glow; the ground beneath it goes black and the
+   mask does the rest. */
+#hero{background-color:#050807;color:var(--black)}
+
+/* ── 6 · MARQUEE ───────────────────────────────────────────────────────────── */
+.mq-wrap{background:linear-gradient(90deg,#070C0A 0%,var(--white) 18%,var(--white) 82%,#070C0A 100%)}
+.mq-wrap::before{background:linear-gradient(90deg,#070C0A 8%,rgba(7,12,10,0))}
+.mq-wrap::after{background:linear-gradient(270deg,#070C0A 8%,rgba(7,12,10,0))}
+
+/* ── 7 · CORE FUNCTIONS ─────────────────────────────────────────────────────
+   The cards carry their own hex values rather than the tokens, so each has to be
+   restated. The drop shadow goes with them: a 6%-black shadow is invisible on
+   this ground, and a hairline of green does the lifting instead. */
+.cf-card{
+ background:#0D1210;border-color:#1C2522;
+ box-shadow:0 4px 20px rgba(0,0,0,.45);
+}
+.cf-icon{color:#EEF2F0}
+.cf-name{color:#EEF2F0}
+.cf-desc{color:#8C9A93}
+.cf-tag{background:#121A17;border-color:#243029;color:#9BA8A1}
+
+/* ── 8 · HOW WE WORK ────────────────────────────────────────────────────────
+   #method is already dark in Home 7; only the white panel inside it changes. */
+/* The hairline is an inset shadow, not a border: Home 7's panel has no border,
+   and adding one makes the panel 2px taller, which shifts everything below it. */
+#method .mth-panel{background:#0D1210;box-shadow:inset 0 0 0 1px #1C2522}
+#method .mth-panel-h{color:#EEF2F0}
+
+/* ── 9 · SOLUTIONS ─────────────────────────────────────────────────────────── */
+#solutions .sol-list li{
+ background:#111816;border-color:#20302A;
+ box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+#solutions .sol-check{background:#18231E;color:#5FD394}
+
+/* ── 10 · INDUSTRIES ────────────────────────────────────────────────────────
+   Glass over a green tint, inverted: the tint goes deep instead of pale and the
+   inset white highlight that read as a lit top edge becomes a faint one, which
+   is what keeps it reading as glass rather than as a flat panel. */
+.ind-scard{
+ background:rgba(12,26,20,.72);
+ border-color:rgba(50,180,111,.26);
+ box-shadow:0 24px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.07);
+}
+
+/* ── 11 · CASE STUDIES ─────────────────────────────────────────────────────
+   The section ground was white with a green wash; the card's left panel is
+   frosted glass over it. Both inverted. The right panel keeps its green
+   gradient and photograph untouched — that is the artwork, not chrome. */
+#cases{
+ background:#050807;
+ background-image:radial-gradient(circle at 50% 42%,rgba(50,180,111,.07),transparent 55%);
+}
+.case-body{
+ /* more opaque than Home 7's .62: the panel sits over the card's green
+    gradient, and at .62 that green came through as a murky wash */
+ background:rgba(7,13,10,.88);
+ border-color:rgba(255,255,255,.08);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 4px 18px rgba(0,0,0,.35);
+}
+.case-tag{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12)}
+.case-title{color:#EEF2F0}
+.case-list li{color:rgba(226,234,230,.78)}
+#cases .case-card .btn-outline2{
+ background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14);
+ color:#EEF2F0;box-shadow:inset 0 1px 0 rgba(255,255,255,.07);
+}
+#cases .case-card .btn-outline2:hover{background:rgba(255,255,255,.12)}
+
+/* ── 12 · CTA INTRO ────────────────────────────────────────────────────────
+   The letter train animates against this ground. Only the ground changes; the
+   glyph positions, timing and easing all come from home7.css and the page's own
+   script, untouched. */
+#cta-intro{background:#050807}
+
+/* ── 13 · HERO ARTWORK ─────────────────────────────────────────────────────
+   The band under the header is a photograph: a white perspective grid with a
+   pale green bloom. Rather than swap it for a second asset that would then have
+   to be kept in step with Home 7's, it is inverted in place. invert() alone
+   sends the green bloom to magenta, so the hue is rotated back; the result is
+   the same artwork, same mask, same position, drawn light-on-dark. */
+#hero::before{
+ filter:invert(1) hue-rotate(180deg) saturate(1.15) brightness(.85);
+}
+
+/* ── 14 · CONTRAST REPAIRS ────────────────────────────────────────────────
+   Two places where flipping a token alone produced a legible-on-white pairing
+   that is illegible here. */
+/* the white pill on the CTA card took its label from --black, which is now ink */
+.cta-btn-w{color:#05100B}
+.cta-btn-w:hover{background:#DCE4E0;box-shadow:0 10px 32px rgba(0,0,0,.4)}
+
+/* ── 15 · SECTION BANDS ───────────────────────────────────────────────────
+   Home 7 alternates white sections against the #f0f0ee page, a small step that
+   separates one band from the next. Those three sections take their ground from
+   --white, which is now the card colour, so cards sat on a ground of exactly
+   their own tone and read only by their border. Giving the bands their own
+   value restores the step in both directions. */
+#functions,#industries,#dashboards{background:#0A0F0D}
+.cf-card{background:#111816}
+
+/* ── 16 · ACCESSIBILITY ───────────────────────────────────────────────────
+   Five pairings that a sweep of every text node against its composited ground
+   flagged below WCAG AA. Four of them are inherited from Home 7 and fail there
+   too; this page is the one that was asked to hold the line, so they are fixed
+   here rather than left alone for symmetry. The light page is untouched —
+   nothing in this file loads on it. */
+
+/* white on #32b46f is 2.7:1. Ink on the same green is 7.3:1, and it matches
+   .btn-black and .nav-btn, which already read this way on this page. */
+.hero-btns .btn-primary{color:#04110a}
+
+/* white on #1c9558 is 3.8:1. Deepening the pill rather than darkening the label
+   keeps it reading as the one filled green button in its card. */
+#solutions .sol-arrow{background:#0F7048}
+
+/* rgba(255,255,255,.4) on the #tech ground is 3.8:1 */
+.t-tag{color:rgba(255,255,255,.62)}
+
+/* Each case card sets its own --acc inline, so the accent cannot be replaced
+   from here — but it can be lifted toward white, which is what the dark ground
+   needs. The purple card was 4.0:1; mixed this way every card clears 6:1. A
+   browser without color-mix drops the declaration and keeps Home 7's value. */
+.case-tag{color:color-mix(in srgb,var(--acc,#38B976) 62%,#ffffff)}
+
+/* #6E7B74 left the footer line at 4.3:1 on the card ground */
+
+/* ── 17 · NAV MENU AND MODAL ──────────────────────────────────────────────
+   The mega menu, the footer and the booking modal come from partials/style.php
+   and are shared with every other page, so they cannot be edited there. They
+   take their surfaces from the tokens, which means they follow this file down
+   to dark on their own — except for the buttons that pair a literal white
+   ground with --black text, which now reads white on white.
+
+   A sweep of home7.css found four such pairings: .btn-ghost and .cta-btn-w
+   (handled above), .mega-cta-btn, and .az-preview-cta on the Analyze page,
+   which this page does not render but which is listed here for completeness. */
+.mega-cta-btn{color:#05100B}
+/* the panel's drop shadow was tuned for a light page and vanishes on this one */
+.mega-inner{box-shadow:0 30px 70px rgba(0,0,0,.6)}

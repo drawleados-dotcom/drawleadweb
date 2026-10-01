@@ -590,6 +590,20 @@ function migration_024_statements(): array
     ];
 }
 
+function migration_025_statements(): array
+{
+    // No show_in_menu update here, unlike 022-024: the nav link it would switch
+    // on renders on every page of the site, Home 7 included, and Home 7 is not
+    // to change. Tick "Show in Menu" in Admin -> Pages when the link is wanted.
+    return [
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Home 8', '/home-8',
+           'Drawlead | Intelligent Business Operating System',
+           'Drawlead helps MSMEs and SMEs grow with websites, SEO, performance marketing and a unified business operating system.',
+           'home8')",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -665,6 +679,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '024' || $which === 'all') {
         $toRun['024'] = migration_024_statements();
+    }
+    if ($which === '025' || $which === 'all') {
+        $toRun['025'] = migration_025_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -744,6 +761,9 @@ $migration023Done = (int) $stmt023->fetchColumn() >= 1;
 $stmt024 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
 $stmt024->execute(['/home-7']);
 $migration024Done = (int) $stmt024->fetchColumn() >= 1;
+$stmt025 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
+$stmt025->execute(['/home-8']);
+$migration025Done = (int) $stmt025->fetchColumn() >= 1;
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -1053,7 +1073,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done): ?>
+<div class="card">
+  <div class="card-title">025 — Home 8 page (dark theme)</div>
+  <div class="card-desc">Adds Home 8 as a real page (/home-8), rendered by templates/home8-body.php — Home 7's page in a dark theme. It loads /assets/home7.css for layout and animation and /assets/home8.css for colour. /home-7 is not affected. Starts hidden from the nav; tick "Show in Menu" in Admin → Pages to add the link.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration025Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration025Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration025Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="025">
+    <button type="submit" class="btn btn-primary">Run Migration 025</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

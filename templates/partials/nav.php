@@ -1,7 +1,8 @@
 <?php
 /**
  * Shared site nav, included by every public template.
- * Set $activePage (one of: home, home2, home5, final_home, home7, blog,
+ * Set $activePage (one of: home, home2, home5, final_home, home7, home8,
+ * blog,
  * analyze, about-us) before including this to highlight the current link.
  */
 $activePage = $activePage ?? '';
@@ -14,14 +15,14 @@ $activePage = $activePage ?? '';
 // "not found" unless we default it — the loop below only ever overwrites a
 // default when a row actually comes back, so a real draft/hidden row still
 // wins once it exists.
-// '/home-5', '/final-home' and '/home-7' default to false (not true like the
+// '/home-5', '/final-home', '/home-7' and '/home-8' default to false (not true like the
 // others): their nav links should only appear once the page row exists with
 // "Show in Menu" checked, so there's no dead link in the gap before their
 // migration runs.
-$navFlags = ['/' => true, '/home-2' => true, '/about-us' => true, '/analyze' => true, '/home-5' => false, '/final-home' => false, '/home-7' => false];
+$navFlags = ['/' => true, '/home-2' => true, '/about-us' => true, '/analyze' => true, '/home-5' => false, '/final-home' => false, '/home-7' => false, '/home-8' => false];
 try {
     $navRows = $pdo->query(
-        "SELECT slug, show_in_menu, status FROM pages WHERE slug IN ('/', '/home-2', '/about-us', '/analyze', '/home-5', '/final-home', '/home-7')"
+        "SELECT slug, show_in_menu, status FROM pages WHERE slug IN ('/', '/home-2', '/about-us', '/analyze', '/home-5', '/final-home', '/home-7', '/home-8')"
     )->fetchAll();
     foreach ($navRows as $navRow) {
         $navFlags[$navRow['slug']] = (($navRow['status'] ?? 'published') === 'published') && !empty($navRow['show_in_menu']);
@@ -198,6 +199,9 @@ try {
  <?php endif; ?>
  <?php if (!empty($navFlags['/home-7'])): ?>
  <li><a href="/home-7"<?= $activePage === 'home7' ? ' style="color:var(--black)"' : '' ?>>Home Seven</a></li>
+ <?php endif; ?>
+ <?php if (!empty($navFlags['/home-8'])): ?>
+ <li><a href="/home-8"<?= $activePage === 'home8' ? ' style="color:var(--black)"' : '' ?>>Home Eight</a></li>
  <?php endif; ?>
  </ul>
  <button type="button" data-book class="nav-btn">Free Consultation Call →</button>
