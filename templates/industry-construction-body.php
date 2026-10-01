@@ -273,19 +273,18 @@ $cxFaqs = [
 
 <!-- ═════════ 07 · FINAL CTA ═════════ -->
 <section id="cx-cta">
- <div class="grid-bg" style="opacity:.5"></div>
- <div class="cx-glow" id="cxGlow" aria-hidden="true"><span class="cx-glow-blob"></span><span class="cx-glow-lines"></span></div>
- <div class="cx-cta-inner">
+ <!-- Dark rounded card inset in the page, matching the Home 7 and About Us closing
+      CTAs. The grid and the cursor glow live inside the card now, not on the page. -->
+ <div class="cx-cta-card">
+<?php if ($cxCta): ?>
+  <img class="cx-cta-bg" src="<?= asset_url('/assets/img/cx-cta.webp') ?>" alt="" aria-hidden="true" loading="lazy" decoding="async">
+<?php endif; ?>
+  <div class="cx-cta-grid" aria-hidden="true"></div>
+  <div class="cx-glow" id="cxGlow" aria-hidden="true"><span class="cx-glow-blob"></span><span class="cx-glow-lines"></span></div>
+  <div class="cx-cta-eyebrow rv">Start Your ERP Journey</div>
   <h2 class="cx-cta-h rv">Ready to Build a Smarter Business?</h2>
   <p class="cx-cta-p rv">Get a custom ERP and CRM solution built around your projects, teams, sales process, and business needs.</p>
-  <div class="cx-cta-btn rv"><button type="button" data-book class="btn btn-black">Get a Free Quote</button></div>
-  <div class="cx-cta-shot<?= $cxCta ? '' : ' cx-shot-empty' ?> rv">
-<?php if ($cxCta): ?>
-   <img src="<?= asset_url('/assets/img/cx-cta.webp') ?>" alt="Architectural view of a completed development" loading="lazy" decoding="async">
-<?php else: ?>
-   <span class="cx-plate" aria-hidden="true">Architectural photography</span>
-<?php endif; ?>
-  </div>
+  <div class="cx-cta-btn rv"><button type="button" data-book class="cta-btn-w">Get a Free Quote</button></div>
  </div>
 </section>
 
@@ -391,7 +390,7 @@ $cxFaqs = [
 (function(){
  const fx = document.getElementById('cxGlow');
  if(!fx) return;
- const host = fx.closest('section');
+ const host = fx.closest('.cx-cta-card') || fx.closest('section');
  if(!host) return;
  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
  const snap = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
