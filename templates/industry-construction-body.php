@@ -77,13 +77,27 @@ $cxOutcomes = [
   '<path d="M3.6 12a8.4 8.4 0 1 0 2.5-6"/><path d="M3.2 4.4v4.3h4.3"/><path d="M12 7.6V12l3.2 2" class="g"/>'],
 ];
 
+/* Why Drawlead: title, the line under it, the mark, and the two labels that sit
+   at the foot of the card. */
 $cxWhy = [
- ['Industry-Focused Solutions',   'Built around construction and real estate workflows, not a generic template.'],
- ['Custom Development',           'Your process drives the system, rather than the other way round.'],
- ['Experienced Development Team', 'Engineers who have shipped ERP and CRM for operations like yours.'],
- ['Latest Technologies',          'A modern, maintainable stack that will still be supportable in five years.'],
- ['Ongoing Support',              'A team that stays after go-live, through every change and new site.'],
- ['Flexible Pricing',             'Scoped in phases, so the spend follows the value delivered.'],
+ ['Industry-Focused Solutions', 'Built around construction and real estate workflows, not a generic template.',
+  '<path d="M3.4 21h17.2"/><path d="M5.6 21V5.2a2 2 0 0 1 2-2h4.8a2 2 0 0 1 2 2V21"/><path d="M14.4 21V10.4h3.2a2 2 0 0 1 2 2V21"/><path d="M8.4 7.2h3M8.4 10.8h3M8.4 14.4h3"/>',
+  ['Construction', 'Real Estate']],
+ ['Custom Development', 'Your process drives the system, rather than the other way round.',
+  '<path d="M9 7.4 4.4 12 9 16.6"/><path d="M15 7.4 19.6 12 15 16.6"/><path d="M13.2 4.8 10.8 19.2"/>',
+  ['Tailored', 'Scalable']],
+ ['Experienced Development Team', 'Engineers who have shipped ERP and CRM for operations like yours.',
+  '<circle cx="9" cy="9.2" r="2.8"/><circle cx="16.8" cy="9.6" r="2.2"/><path d="M3 18.8c0-2.7 2.7-4.6 6-4.6s6 1.9 6 4.6"/><path d="M16.2 14.4c2.9.2 4.8 1.6 4.8 3.9"/>',
+  ['Expert Team', 'Domain Knowledge']],
+ ['Latest Technologies', 'A modern, maintainable stack that will still be supportable in five years.',
+  '<ellipse cx="12" cy="6.2" rx="7.4" ry="3.2"/><path d="M4.6 6.2v5.6c0 1.8 3.3 3.2 7.4 3.2s7.4-1.4 7.4-3.2V6.2"/><path d="M4.6 11.8v5.8c0 1.8 3.3 3.2 7.4 3.2s7.4-1.4 7.4-3.2v-5.8"/>',
+  ['Modern Stack', 'Future Ready']],
+ ['Ongoing Support', 'A team that stays after go-live, through every change and new site.',
+  '<path d="M4.6 13.4v-1.8a7.4 7.4 0 0 1 14.8 0v1.8"/><rect x="2.8" y="12.6" width="4" height="6" rx="2"/><rect x="17.2" y="12.6" width="4" height="6" rx="2"/><path d="M19.2 18.6v.5a2.2 2.2 0 0 1-2.2 2.2h-2.1"/>',
+  ['Dedicated Support', 'Long-Term']],
+ ['Flexible Pricing', 'Scoped in phases, so the spend follows the value delivered.',
+  '<rect x="2.6" y="5.2" width="18.8" height="13.6" rx="2.6"/><path d="M2.6 9.8h18.8"/><path d="M6.4 14.8h4.2"/>',
+  ['Phased Approach', 'Value Based']],
 ];
 
 $cxFaqs = [
@@ -243,17 +257,31 @@ $cxFaqs = [
 
 <!-- ═════════ 05 · WHY DRAWLEAD ═════════ -->
 <section id="cx-why">
+ <!-- the glow and the arc that sweeps out of the bottom-left corner -->
+ <span class="cx-why-glow" aria-hidden="true"></span>
+ <span class="cx-why-arc" aria-hidden="true"></span>
+
  <div class="cx-why-grid">
   <div class="cx-why-left">
    <div class="eyebrow rv" style="justify-content:flex-start"><span class="eyebrow-text">Your Trusted Technology Partner</span></div>
-   <h2 class="cx-why-h rv">Why Choose Drawlead</h2>
+   <h2 class="cx-why-h rv">Why Choose <span class="cx-why-g">Drawlead</span></h2>
    <p class="cx-why-p rv">Drawlead develops custom ERP and CRM solutions that match the real needs of construction and real estate businesses.</p>
    <p class="cx-why-statement rv">Technology built around the way your business actually works.</p>
   </div>
+
   <div class="cx-why-right">
-<?php foreach ($cxWhy as $n => $w): ?>
-   <article class="cx-why-card rv<?= $n % 2 ? ' cx-offset' : '' ?>">
-    <h3><?= $w[0] ?></h3><p><?= $w[1] ?></p>
+<?php foreach ($cxWhy as $w): ?>
+   <article class="cx-why-card rv">
+    <span class="cx-why-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><?= $w[2] ?></svg></span>
+    <div class="cx-why-body">
+     <h3><?= $w[0] ?></h3>
+     <p><?= $w[1] ?></p>
+     <div class="cx-why-tags">
+<?php foreach ($w[3] as $t): ?>
+      <span class="cx-why-tag"><?= $t ?></span>
+<?php endforeach; ?>
+     </div>
+    </div>
    </article>
 <?php endforeach; ?>
   </div>
