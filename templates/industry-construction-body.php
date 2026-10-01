@@ -168,33 +168,6 @@ $cxFaqs = [
  <h2 class="sec-h rv">Built for How Construction &amp; Real Estate Actually Works</h2>
  <p class="sec-sub rv">Drawlead provides custom ERP and CRM software that connects projects, teams, materials, finances, sales, and customers in one system.</p>
 
- <!-- The product first, built rather than photographed so it stays sharp and
-      on-brand, then the capabilities as a pinned horizontal run beneath it. -->
- <div class="cx-dash rv" aria-hidden="true">
-  <div class="cx-dash-top">
-   <span class="cx-dot"></span><span class="cx-dot"></span><span class="cx-dot"></span>
-   <span class="cx-dash-title">Drawlead ERP · Projects</span>
-  </div>
-  <div class="cx-dash-body">
-   <div class="cx-dash-kpis">
-    <div class="cx-kpi"><span>Projects</span><b>12</b></div>
-    <div class="cx-kpi"><span>On Track</span><b class="cx-ok">9</b></div>
-    <div class="cx-kpi"><span>Delayed</span><b class="cx-warn">3</b></div>
-   </div>
-   <div class="cx-dash-rows">
-    <div class="cx-row"><span>Skyline Tower B</span><i><em style="width:82%"></em></i><b>82%</b></div>
-    <div class="cx-row"><span>Green Acres Villas</span><i><em style="width:64%"></em></i><b>64%</b></div>
-    <div class="cx-row"><span>Harbour Offices</span><i><em style="width:41%" class="cx-bar-warn"></em></i><b>41%</b></div>
-    <div class="cx-row"><span>Lakeview Phase 2</span><i><em style="width:23%"></em></i><b>23%</b></div>
-   </div>
-   <div class="cx-dash-foot">
-    <div class="cx-chip"><span>Materials</span><b>Indent #418 approved</b></div>
-    <div class="cx-chip"><span>Payments</span><b>₹62L received</b></div>
-    <div class="cx-chip"><span>Leads</span><b>34 new this week</b></div>
-   </div>
-  </div>
- </div>
-
  <div class="cx-hx" data-hx>
   <div class="cx-hx-pin">
    <div class="cx-hx-track">
