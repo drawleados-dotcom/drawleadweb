@@ -1785,6 +1785,15 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 #dashboards .dash-grid .dash-card{flex:0 0 min(560px, 80vw);width:min(560px, 80vw)}
 /* the section already pads its sides; cancel that on the row so cards run edge to edge */
 #dashboards .dash-scroll-sticky{margin-inline:calc(50% - 50vw);width:100vw}
+/* Heading pinned with the row: spacing tightened so heading + cards fit one screen.
+   Its side padding matches the section gutter the 100vw breakout removes. */
+#dashboards .dash-pin-head{padding:0 var(--sp-gutter)}
+#dashboards .dash-pin-head .sec-h{margin-bottom:.6rem}
+#dashboards .dash-pin-head .sec-sub{margin-bottom:.4rem}
+@media(max-height:780px){
+ #dashboards .dash-pin-head .sec-sub{display:none}
+ #dashboards .dash-pin-head .sec-h{margin-bottom:0}
+}
 
 /* Compact cards for the pinned row: the whole card has to fit on screen while the
    row is held in place, so spacing, the main visual and the activity list are
@@ -1827,6 +1836,8 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 @media(max-width:768px),(prefers-reduced-motion:reduce){
  #dashboards .dash-scroll-outer{height:auto !important}
  #dashboards .dash-scroll-sticky{position:static;overflow:visible;margin-inline:0;width:100%}
+ #dashboards .dash-pin-head{padding:0}
+ #dashboards .dash-pin-head .sec-sub{display:block;margin-bottom:var(--rh-sub)}
  #dashboards .dash-grid{
   width:auto;padding:8px 2px 20px;transform:none !important;
   overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;

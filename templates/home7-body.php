@@ -732,11 +732,14 @@ $dHead = function ($glyph, $name, $sub, $period) use ($dIco) {
 };
 ?>
 <section id="dashboards" style="background:var(--bg2)">
- <div class="eyebrow rv"><span class="eyebrow-text">Platform Dashboards</span></div>
- <h2 class="sec-h rv">Every Module. <span class="fade">One Screen.</span></h2>
- <p class="sec-sub rv">Live ERP dashboards for every function. See exactly what Drawlead looks like in action.</p>
  <div class="dash-scroll-outer" id="dashScrollOuter">
  <div class="dash-scroll-sticky" id="dashScrollSticky">
+ <!-- heading is pinned with the row so it stays on screen while the cards slide -->
+ <div class="dash-pin-head">
+  <div class="eyebrow rv"><span class="eyebrow-text">Platform Dashboards</span></div>
+  <h2 class="sec-h rv">Every Module. <span class="fade">One Screen.</span></h2>
+  <p class="sec-sub rv">Live ERP dashboards for every function. See exactly what Drawlead looks like in action.</p>
+ </div>
  <div class="dash-grid" id="dashRow">
 
   <!-- SALES -->
@@ -1359,8 +1362,10 @@ renderDash(0);
    outer.style.height = ''; sticky.style.top = ''; row.style.transform = '';
    overflow = 0; return;
   }
-  // centre the pinned row in the viewport, but never tuck it under the fixed nav
-  stickyTop = Math.max(84, (window.innerHeight - sticky.offsetHeight) / 2);
+  // centre the pinned block (heading + row) in the space below the fixed nav
+  const nav = document.querySelector('nav');
+  const navH = nav ? nav.offsetHeight : 0;
+  stickyTop = navH + Math.max(0, (window.innerHeight - navH - sticky.offsetHeight) / 2);
   sticky.style.top = stickyTop + 'px';
   overflow = Math.max(0, row.scrollWidth - sticky.clientWidth);
   outer.style.height = (sticky.offsetHeight + overflow) + 'px';
