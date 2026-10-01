@@ -1,10 +1,11 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    HOME 8 — dark theme
    ───────────────────────────────────────────────────────────────────────────
-   Loaded by templates/home8-body.php AFTER /assets/home7.css. It carries colour
-   and nothing else: no layout, no type scale, no spacing, no animation. Home 7
-   remains the single source of truth for all of that, so a structural fix there
-   reaches this page too and the two can never drift apart.
+   Loaded by templates/home8-body.php AFTER /assets/home7.css. It carries colour,
+   plus one typographic rule (section 18) that puts every heading on weight 700.
+   Nothing else: no layout, no spacing, no animation. Home 7 remains the single
+   source of truth for all of that, so a structural fix there reaches this page
+   too and the two cannot drift apart.
 
    Everything here wins on source order, not on specificity: each selector is
    written to match the one in home7.css exactly, so a later edit over there is
@@ -221,3 +222,52 @@ nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
 .mega-cta-btn{color:#05100B}
 /* the panel's drop shadow was tuned for a light page and vanishes on this one */
 .mega-inner{box-shadow:0 30px 70px rgba(0,0,0,.6)}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   18 · HEADING WEIGHT
+   One weight for every heading on this page: 700.
+
+   Home 7 runs five weights across its headings — 600 on card titles, 650 on the
+   solutions standfirst, 700 on the section headings, 750 on the checklist
+   labels and 800 on the letter train, the method chips and the footer mark.
+   Here they all land on 700.
+
+   Each selector below is written to match the one in home7.css exactly, so it
+   wins on source order; where that file scopes a rule to a section (#solutions
+   .sol-tag, #method .mth-chip) the scope is repeated, or the override would
+   lose on specificity. The spans nested inside headings already inherit their
+   weight from home7.css, so .fade, .g, .gr, .grad-os and .ci-g follow.
+
+   This is a typographic change, not a colour one, so unlike everything above it
+   does move the layout: heavier and lighter glyphs are wider and narrower, so
+   wrap points can shift. It is deliberate and scoped to this page.
+
+   Two things are left alone:
+     · <strong> inside the solutions checklists (w750). That is inline emphasis
+       inside a sentence, not a heading.
+     · the hero application preview and the dashboard mock-ups. Their headings
+       belong to a simulated product UI that this page presents as a screenshot;
+       restyling their type would misrepresent the product rather than the page.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* display headings */
+.hero-h,.sec-h,.why-h,.cta-h{font-weight:700}
+.ci-line{font-weight:700}
+#method .mth-chip{font-weight:700}
+
+/* block and card titles */
+.cf-name{font-weight:700}
+.fn-name{font-weight:700}
+.sol-name{font-weight:700}
+#solutions .sol-tag{font-weight:700}
+.case-title{font-weight:700}
+.tech-name{font-weight:700}
+.why-fname{font-weight:700}
+.ind-scard-title{font-weight:700}
+.ind-block-label{font-weight:700}
+#method .mth-panel-h{font-weight:700}
+
+/* figures and the footer mark */
+.hstat-n{font-weight:700}
+.sol-metric-v{font-weight:700}
+.ft-logo{font-weight:700}
