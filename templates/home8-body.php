@@ -459,8 +459,124 @@ include __DIR__ . '/partials/nav.php';
       inside the pin: that box is one viewport tall and was already full, so the image
       would have had to shrink to a ~100px strip. Copy and diagram scroll normally
       instead, and only the cards and CTA are pinned. -->
+ <!-- Animated integration map, redrawn as SVG from /assets/img/tech-stack.webp: glowing
+      dots flow out from the central hub along every connector to the ten tools. Each logo
+      is that same artwork clipped to its tile, so no extra image files. The dots are
+      hidden under prefers-reduced-motion (home7.css). -->
+ <?php $tsImg = asset_url('/assets/img/tech-stack.webp'); ?>
  <div class="tech-shot rv">
-  <img src="<?= asset_url('/assets/img/tech-stack.webp') ?>" width="2177" height="826" alt="Drawlead at the centre of an integration map connecting AWS, GitHub, Claude, Slack, Salesforce, Microsoft Copilot, Zapier, Cloudflare, SAP and Make" decoding="async" fetchpriority="low">
+<svg class="ts-svg" viewBox="0 0 2000 759" role="img" aria-labelledby="tsTitle" xmlns="http://www.w3.org/2000/svg">
+<title id="tsTitle">Drawlead as the centralized hub of an integration map connecting AWS, GitHub, Claude, Slack, Salesforce, Microsoft Copilot, Zapier, Cloudflare, SAP and Make</title>
+<defs>
+<filter id="tsGlow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="tsShadow" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity=".55"/></filter>
+<filter id="tsHubGlow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="22" flood-color="#32b46f" flood-opacity=".55"/></filter>
+<linearGradient id="tsHubFill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3cc47c"/><stop offset="1" stop-color="#17945f"/></linearGradient>
+<clipPath id="tsClip-aws"><rect x="60" y="80" width="110" height="110" rx="16"/></clipPath>
+<clipPath id="tsClip-github"><rect x="410" y="25" width="110" height="110" rx="16"/></clipPath>
+<clipPath id="tsClip-claude"><rect x="185" y="272" width="110" height="110" rx="16"/></clipPath>
+<clipPath id="tsClip-slack"><rect x="122" y="492" width="110" height="110" rx="16"/></clipPath>
+<clipPath id="tsClip-salesforce"><rect x="530" y="552" width="110" height="110" rx="16"/></clipPath>
+<clipPath id="tsClip-copilot"><rect x="1480" y="25" width="110" height="110" rx="16"/></clipPath>
+<clipPath id="tsClip-zapier"><rect x="1830" y="80" width="110" height="110" rx="16"/></clipPath>
+<clipPath id="tsClip-cloudflare"><rect x="1705" y="272" width="110" height="110" rx="16"/></clipPath>
+<clipPath id="tsClip-sap"><rect x="1767" y="492" width="110" height="110" rx="16"/></clipPath>
+<clipPath id="tsClip-make"><rect x="1360" y="552" width="110" height="110" rx="16"/></clipPath>
+<path id="tsPath-aws" d="M875 327H465V193H302V135H177"/>
+<path id="tsPath-github" d="M875 327H465V142"/>
+<path id="tsPath-claude" d="M875 327H302"/>
+<path id="tsPath-slack" d="M875 327H380V547H239"/>
+<path id="tsPath-salesforce" d="M875 327H585V545"/>
+<path id="tsPath-zapier" d="M1125 327H1535V193H1698V135H1823"/>
+<path id="tsPath-copilot" d="M1125 327H1535V142"/>
+<path id="tsPath-cloudflare" d="M1125 327H1698"/>
+<path id="tsPath-sap" d="M1125 327H1620V547H1761"/>
+<path id="tsPath-make" d="M1125 327H1415V545"/>
+</defs>
+<g class="ts-rings" fill="none" stroke="#34a87c" stroke-width="2.5">
+<rect x="840" y="167" width="320" height="320" rx="44" opacity=".7"><animate attributeName="opacity" values=".25;.85;.25" dur="3.2s" begin="0.0s" repeatCount="indefinite"/></rect>
+<rect x="800" y="127" width="400" height="400" rx="56" opacity=".7"><animate attributeName="opacity" values=".25;.85;.25" dur="3.2s" begin="0.4s" repeatCount="indefinite"/></rect>
+<rect x="759" y="86" width="482" height="482" rx="68" opacity=".7"><animate attributeName="opacity" values=".25;.85;.25" dur="3.2s" begin="0.8s" repeatCount="indefinite"/></rect>
+<rect x="717" y="44" width="566" height="566" rx="80" opacity=".7"><animate attributeName="opacity" values=".25;.85;.25" dur="3.2s" begin="1.2s" repeatCount="indefinite"/></rect>
+</g>
+<g class="ts-lines" fill="none" stroke="#3fb57a" stroke-opacity=".55" stroke-width="2.5" stroke-linejoin="round">
+<use href="#tsPath-aws"/>
+<use href="#tsPath-github"/>
+<use href="#tsPath-claude"/>
+<use href="#tsPath-slack"/>
+<use href="#tsPath-salesforce"/>
+<use href="#tsPath-zapier"/>
+<use href="#tsPath-copilot"/>
+<use href="#tsPath-cloudflare"/>
+<use href="#tsPath-sap"/>
+<use href="#tsPath-make"/>
+</g>
+<g class="ts-balls" fill="#8ff5bd" filter="url(#tsGlow)">
+<circle r="6" opacity="0"><animateMotion dur="2.97s" begin="0.00s" repeatCount="indefinite"><mpath href="#tsPath-aws"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.97s" begin="0.00s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.97s" begin="1.48s" repeatCount="indefinite"><mpath href="#tsPath-aws"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.97s" begin="1.48s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.98s" begin="0.23s" repeatCount="indefinite"><mpath href="#tsPath-github"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.98s" begin="0.23s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.98s" begin="1.22s" repeatCount="indefinite"><mpath href="#tsPath-github"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.98s" begin="1.22s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.91s" begin="0.46s" repeatCount="indefinite"><mpath href="#tsPath-claude"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.91s" begin="0.46s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.91s" begin="1.42s" repeatCount="indefinite"><mpath href="#tsPath-claude"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.91s" begin="1.42s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.85s" begin="0.69s" repeatCount="indefinite"><mpath href="#tsPath-slack"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.85s" begin="0.69s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.85s" begin="2.12s" repeatCount="indefinite"><mpath href="#tsPath-slack"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.85s" begin="2.12s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.69s" begin="0.92s" repeatCount="indefinite"><mpath href="#tsPath-salesforce"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.69s" begin="0.92s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.69s" begin="0.07s" repeatCount="indefinite"><mpath href="#tsPath-salesforce"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.69s" begin="0.07s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.97s" begin="1.15s" repeatCount="indefinite"><mpath href="#tsPath-zapier"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.97s" begin="1.15s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.97s" begin="2.63s" repeatCount="indefinite"><mpath href="#tsPath-zapier"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.97s" begin="2.63s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.98s" begin="1.38s" repeatCount="indefinite"><mpath href="#tsPath-copilot"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.98s" begin="1.38s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.98s" begin="0.39s" repeatCount="indefinite"><mpath href="#tsPath-copilot"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.98s" begin="0.39s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.91s" begin="1.61s" repeatCount="indefinite"><mpath href="#tsPath-cloudflare"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.91s" begin="1.61s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.91s" begin="0.66s" repeatCount="indefinite"><mpath href="#tsPath-cloudflare"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.91s" begin="0.66s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.85s" begin="1.84s" repeatCount="indefinite"><mpath href="#tsPath-sap"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.85s" begin="1.84s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.85s" begin="0.41s" repeatCount="indefinite"><mpath href="#tsPath-sap"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.85s" begin="0.41s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.69s" begin="0.38s" repeatCount="indefinite"><mpath href="#tsPath-make"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.69s" begin="0.38s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.69s" begin="1.22s" repeatCount="indefinite"><mpath href="#tsPath-make"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.69s" begin="1.22s" repeatCount="indefinite"/></circle>
+</g>
+<g class="ts-tiles">
+<rect x="53" y="73" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
+<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-aws)"/>
+<rect x="403" y="18" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
+<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-github)"/>
+<rect x="178" y="265" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
+<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-claude)"/>
+<rect x="115" y="485" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
+<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-slack)"/>
+<rect x="523" y="545" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
+<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-salesforce)"/>
+<rect x="1473" y="18" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
+<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-copilot)"/>
+<rect x="1823" y="73" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
+<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-zapier)"/>
+<rect x="1698" y="265" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
+<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-cloudflare)"/>
+<rect x="1760" y="485" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
+<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-sap)"/>
+<rect x="1353" y="545" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
+<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-make)"/>
+</g>
+<g class="ts-hub">
+<rect x="875" y="202" width="250" height="250" rx="40" fill="url(#tsHubFill)" filter="url(#tsHubGlow)"/>
+<g transform="translate(1000 300)" fill="none" stroke="#fff" stroke-linecap="round">
+<circle r="62" stroke-opacity=".45" stroke-width="2.5" stroke-dasharray="6 9"><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="18s" repeatCount="indefinite"/></circle>
+<line x1="0.0" y1="-26.0" x2="0.0" y2="-49.6" stroke-width="4"/>
+<line x1="22.6" y1="-13.0" x2="43.0" y2="-24.8" stroke-width="4"/>
+<line x1="22.6" y1="13.0" x2="43.0" y2="24.8" stroke-width="4"/>
+<line x1="0.0" y1="26.0" x2="0.0" y2="49.6" stroke-width="4"/>
+<line x1="-22.6" y1="13.0" x2="-43.0" y2="24.8" stroke-width="4"/>
+<line x1="-22.6" y1="-13.0" x2="-43.0" y2="-24.8" stroke-width="4"/>
+<circle r="22" fill="#fff" stroke="none"><animate attributeName="r" values="21;25;21" dur="2.4s" repeatCount="indefinite"/></circle>
+<circle r="9" fill="#17945f" stroke="none"/>
+<circle cx="0.0" cy="-62.0" r="11" fill="#fff" stroke="none"/>
+<circle cx="53.7" cy="-31.0" r="11" fill="#fff" stroke="none"/>
+<circle cx="53.7" cy="31.0" r="11" fill="#fff" stroke="none"/>
+<circle cx="0.0" cy="62.0" r="11" fill="#fff" stroke="none"/>
+<circle cx="-53.7" cy="31.0" r="11" fill="#fff" stroke="none"/>
+<circle cx="-53.7" cy="-31.0" r="11" fill="#fff" stroke="none"/>
+</g>
+<text x="1000" y="414" text-anchor="middle" fill="#fff" font-size="27" font-weight="700" letter-spacing="1">Centralized</text>
+</g>
+</svg>
  </div>
 
  <!-- Same pinned horizontal run as the 7 Functions row: page scroll slides the cards

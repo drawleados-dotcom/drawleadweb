@@ -1199,6 +1199,10 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 #tech .tech-head{padding:7rem 0 0}
 #tech .tech-shot{max-width:1180px;margin:0 auto;padding:1rem 0 0}  /* matches .tech-grid so their edges line up */
 #tech .tech-shot img{display:block;width:100%;height:auto}
+#tech .tech-shot .ts-svg{display:block;width:100%;height:auto;overflow:visible;font-family:var(--font-display,inherit)}
+@media(prefers-reduced-motion:reduce){
+ #tech .ts-balls{display:none}
+}
 @media(max-width:900px){
  #tech .tech-head{padding:4.5rem 0 0}
  #tech .tech-shot{padding:.5rem 0 0}
