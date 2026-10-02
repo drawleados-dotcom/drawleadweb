@@ -459,124 +459,142 @@ include __DIR__ . '/partials/nav.php';
       inside the pin: that box is one viewport tall and was already full, so the image
       would have had to shrink to a ~100px strip. Copy and diagram scroll normally
       instead, and only the cards and CTA are pinned. -->
- <!-- Animated integration map, redrawn as SVG from /assets/img/tech-stack.webp: glowing
-      dots flow out from the central hub along every connector to the ten tools. Each logo
-      is that same artwork clipped to its tile, so no extra image files. The dots are
-      hidden under prefers-reduced-motion (home7.css). -->
- <?php $tsImg = asset_url('/assets/img/tech-stack.webp'); ?>
+ <!-- Animated module map: the fifteen business modules sit around the central hub and
+      glowing dots flow from every one of them into it, so everything visibly connects
+      to the centre. On phones the map would be unreadably small, so .ts-mobile shows
+      the same modules as a chip grid instead (home7.css). Dots hide under
+      prefers-reduced-motion. -->
  <div class="tech-shot rv">
-<svg class="ts-svg" viewBox="0 0 2000 759" role="img" aria-labelledby="tsTitle" xmlns="http://www.w3.org/2000/svg">
-<title id="tsTitle">Drawlead as the centralized hub of an integration map connecting AWS, GitHub, Claude, Slack, Salesforce, Microsoft Copilot, Zapier, Cloudflare, SAP and Make</title>
+<svg class="ts-svg" viewBox="0 0 2000 1000" role="img" aria-labelledby="tsTitle" xmlns="http://www.w3.org/2000/svg">
+<title id="tsTitle">Fifteen business modules, from Lead Management to Smart Alerts &amp; Reminders, all flowing into one centralized platform</title>
 <defs>
 <filter id="tsGlow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-<filter id="tsShadow" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity=".55"/></filter>
 <filter id="tsHubGlow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="22" flood-color="#32b46f" flood-opacity=".55"/></filter>
 <linearGradient id="tsHubFill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3cc47c"/><stop offset="1" stop-color="#17945f"/></linearGradient>
-<clipPath id="tsClip-aws"><rect x="60" y="80" width="110" height="110" rx="16"/></clipPath>
-<clipPath id="tsClip-github"><rect x="410" y="25" width="110" height="110" rx="16"/></clipPath>
-<clipPath id="tsClip-claude"><rect x="185" y="272" width="110" height="110" rx="16"/></clipPath>
-<clipPath id="tsClip-slack"><rect x="122" y="492" width="110" height="110" rx="16"/></clipPath>
-<clipPath id="tsClip-salesforce"><rect x="530" y="552" width="110" height="110" rx="16"/></clipPath>
-<clipPath id="tsClip-copilot"><rect x="1480" y="25" width="110" height="110" rx="16"/></clipPath>
-<clipPath id="tsClip-zapier"><rect x="1830" y="80" width="110" height="110" rx="16"/></clipPath>
-<clipPath id="tsClip-cloudflare"><rect x="1705" y="272" width="110" height="110" rx="16"/></clipPath>
-<clipPath id="tsClip-sap"><rect x="1767" y="492" width="110" height="110" rx="16"/></clipPath>
-<clipPath id="tsClip-make"><rect x="1360" y="552" width="110" height="110" rx="16"/></clipPath>
-<path id="tsPath-aws" d="M875 327H465V193H302V135H177"/>
-<path id="tsPath-github" d="M875 327H465V142"/>
-<path id="tsPath-claude" d="M875 327H302"/>
-<path id="tsPath-slack" d="M875 327H380V547H239"/>
-<path id="tsPath-salesforce" d="M875 327H585V545"/>
-<path id="tsPath-zapier" d="M1125 327H1535V193H1698V135H1823"/>
-<path id="tsPath-copilot" d="M1125 327H1535V142"/>
-<path id="tsPath-cloudflare" d="M1125 327H1698"/>
-<path id="tsPath-sap" d="M1125 327H1620V547H1761"/>
-<path id="tsPath-make" d="M1125 327H1415V545"/>
+<path id="tsPath-0" d="M200 105V200H1000V380"/>
+<path id="tsPath-1" d="M600 105V200H1000V380"/>
+<path id="tsPath-2" d="M1000 105V380"/>
+<path id="tsPath-3" d="M1400 105V200H1000V380"/>
+<path id="tsPath-4" d="M1800 105V200H1000V380"/>
+<path id="tsPath-5" d="M1615 340H1440V500H1120"/>
+<path id="tsPath-6" d="M1615 500H1120"/>
+<path id="tsPath-7" d="M1615 660H1440V500H1120"/>
+<path id="tsPath-8" d="M280 895V800H1000V620"/>
+<path id="tsPath-9" d="M760 895V800H1000V620"/>
+<path id="tsPath-10" d="M1240 895V800H1000V620"/>
+<path id="tsPath-11" d="M1720 895V800H1000V620"/>
+<path id="tsPath-12" d="M385 340H560V500H880"/>
+<path id="tsPath-13" d="M385 500H880"/>
+<path id="tsPath-14" d="M385 660H560V500H880"/>
 </defs>
-<g class="ts-rings" fill="none" stroke="#34a87c" stroke-width="2.5">
-<rect x="840" y="167" width="320" height="320" rx="44" opacity=".7"><animate attributeName="opacity" values=".25;.85;.25" dur="3.2s" begin="0.0s" repeatCount="indefinite"/></rect>
-<rect x="800" y="127" width="400" height="400" rx="56" opacity=".7"><animate attributeName="opacity" values=".25;.85;.25" dur="3.2s" begin="0.4s" repeatCount="indefinite"/></rect>
-<rect x="759" y="86" width="482" height="482" rx="68" opacity=".7"><animate attributeName="opacity" values=".25;.85;.25" dur="3.2s" begin="0.8s" repeatCount="indefinite"/></rect>
-<rect x="717" y="44" width="566" height="566" rx="80" opacity=".7"><animate attributeName="opacity" values=".25;.85;.25" dur="3.2s" begin="1.2s" repeatCount="indefinite"/></rect>
+<g fill="none" stroke="#34a87c" stroke-width="2.5">
+<rect x="840" y="340" width="320" height="320" rx="48" opacity=".6"><animate attributeName="opacity" values=".2;.8;.2" dur="3s" begin="0.8s" repeatCount="indefinite"/></rect>
+<rect x="800" y="300" width="400" height="400" rx="60" opacity=".6"><animate attributeName="opacity" values=".2;.8;.2" dur="3s" begin="0.4s" repeatCount="indefinite"/></rect>
+<rect x="760" y="260" width="480" height="480" rx="72" opacity=".6"><animate attributeName="opacity" values=".2;.8;.2" dur="3s" begin="0.0s" repeatCount="indefinite"/></rect>
 </g>
-<g class="ts-lines" fill="none" stroke="#3fb57a" stroke-opacity=".55" stroke-width="2.5" stroke-linejoin="round">
-<use href="#tsPath-aws"/>
-<use href="#tsPath-github"/>
-<use href="#tsPath-claude"/>
-<use href="#tsPath-slack"/>
-<use href="#tsPath-salesforce"/>
-<use href="#tsPath-zapier"/>
-<use href="#tsPath-copilot"/>
-<use href="#tsPath-cloudflare"/>
-<use href="#tsPath-sap"/>
-<use href="#tsPath-make"/>
+<g fill="none" stroke="#3fb57a" stroke-opacity=".5" stroke-width="2.5" stroke-linejoin="round">
+<use href="#tsPath-0"/>
+<use href="#tsPath-1"/>
+<use href="#tsPath-2"/>
+<use href="#tsPath-3"/>
+<use href="#tsPath-4"/>
+<use href="#tsPath-5"/>
+<use href="#tsPath-6"/>
+<use href="#tsPath-7"/>
+<use href="#tsPath-8"/>
+<use href="#tsPath-9"/>
+<use href="#tsPath-10"/>
+<use href="#tsPath-11"/>
+<use href="#tsPath-12"/>
+<use href="#tsPath-13"/>
+<use href="#tsPath-14"/>
 </g>
 <g class="ts-balls" fill="#8ff5bd" filter="url(#tsGlow)">
-<circle r="6" opacity="0"><animateMotion dur="2.97s" begin="0.00s" repeatCount="indefinite"><mpath href="#tsPath-aws"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.97s" begin="0.00s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="2.97s" begin="1.48s" repeatCount="indefinite"><mpath href="#tsPath-aws"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.97s" begin="1.48s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="1.98s" begin="0.23s" repeatCount="indefinite"><mpath href="#tsPath-github"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.98s" begin="0.23s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="1.98s" begin="1.22s" repeatCount="indefinite"><mpath href="#tsPath-github"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.98s" begin="1.22s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="1.91s" begin="0.46s" repeatCount="indefinite"><mpath href="#tsPath-claude"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.91s" begin="0.46s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="1.91s" begin="1.42s" repeatCount="indefinite"><mpath href="#tsPath-claude"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.91s" begin="1.42s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="2.85s" begin="0.69s" repeatCount="indefinite"><mpath href="#tsPath-slack"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.85s" begin="0.69s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="2.85s" begin="2.12s" repeatCount="indefinite"><mpath href="#tsPath-slack"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.85s" begin="2.12s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="1.69s" begin="0.92s" repeatCount="indefinite"><mpath href="#tsPath-salesforce"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.69s" begin="0.92s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="1.69s" begin="0.07s" repeatCount="indefinite"><mpath href="#tsPath-salesforce"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.69s" begin="0.07s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="2.97s" begin="1.15s" repeatCount="indefinite"><mpath href="#tsPath-zapier"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.97s" begin="1.15s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="2.97s" begin="2.63s" repeatCount="indefinite"><mpath href="#tsPath-zapier"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.97s" begin="2.63s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="1.98s" begin="1.38s" repeatCount="indefinite"><mpath href="#tsPath-copilot"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.98s" begin="1.38s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="1.98s" begin="0.39s" repeatCount="indefinite"><mpath href="#tsPath-copilot"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.98s" begin="0.39s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="1.91s" begin="1.61s" repeatCount="indefinite"><mpath href="#tsPath-cloudflare"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.91s" begin="1.61s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="1.91s" begin="0.66s" repeatCount="indefinite"><mpath href="#tsPath-cloudflare"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.91s" begin="0.66s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="2.85s" begin="1.84s" repeatCount="indefinite"><mpath href="#tsPath-sap"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.85s" begin="1.84s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="2.85s" begin="0.41s" repeatCount="indefinite"><mpath href="#tsPath-sap"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="2.85s" begin="0.41s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="1.69s" begin="0.38s" repeatCount="indefinite"><mpath href="#tsPath-make"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.69s" begin="0.38s" repeatCount="indefinite"/></circle>
-<circle r="6" opacity="0"><animateMotion dur="1.69s" begin="1.22s" repeatCount="indefinite"><mpath href="#tsPath-make"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="1.69s" begin="1.22s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="3.84s" begin="0.00s" repeatCount="indefinite"><mpath href="#tsPath-0"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="3.84s" begin="0.00s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="3.84s" begin="1.92s" repeatCount="indefinite"><mpath href="#tsPath-0"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="3.84s" begin="1.92s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.41s" begin="0.29s" repeatCount="indefinite"><mpath href="#tsPath-1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="2.41s" begin="0.29s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.41s" begin="1.50s" repeatCount="indefinite"><mpath href="#tsPath-1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="2.41s" begin="1.50s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.80s" begin="0.58s" repeatCount="indefinite"><mpath href="#tsPath-2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="1.80s" begin="0.58s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.80s" begin="1.48s" repeatCount="indefinite"><mpath href="#tsPath-2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="1.80s" begin="1.48s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.41s" begin="0.87s" repeatCount="indefinite"><mpath href="#tsPath-3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="2.41s" begin="0.87s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.41s" begin="2.08s" repeatCount="indefinite"><mpath href="#tsPath-3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="2.41s" begin="2.08s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="3.84s" begin="1.16s" repeatCount="indefinite"><mpath href="#tsPath-4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="3.84s" begin="1.16s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="3.84s" begin="3.08s" repeatCount="indefinite"><mpath href="#tsPath-4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="3.84s" begin="3.08s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.34s" begin="1.45s" repeatCount="indefinite"><mpath href="#tsPath-5"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="2.34s" begin="1.45s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.34s" begin="0.28s" repeatCount="indefinite"><mpath href="#tsPath-5"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="2.34s" begin="0.28s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.80s" begin="1.74s" repeatCount="indefinite"><mpath href="#tsPath-6"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="1.80s" begin="1.74s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.80s" begin="0.84s" repeatCount="indefinite"><mpath href="#tsPath-6"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="1.80s" begin="0.84s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.34s" begin="2.03s" repeatCount="indefinite"><mpath href="#tsPath-7"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="2.34s" begin="2.03s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.34s" begin="0.86s" repeatCount="indefinite"><mpath href="#tsPath-7"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="2.34s" begin="0.86s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="3.55s" begin="2.32s" repeatCount="indefinite"><mpath href="#tsPath-8"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="3.55s" begin="2.32s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="3.55s" begin="0.54s" repeatCount="indefinite"><mpath href="#tsPath-8"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="3.55s" begin="0.54s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.84s" begin="0.77s" repeatCount="indefinite"><mpath href="#tsPath-9"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="1.84s" begin="0.77s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.84s" begin="1.69s" repeatCount="indefinite"><mpath href="#tsPath-9"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="1.84s" begin="1.69s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.84s" begin="1.06s" repeatCount="indefinite"><mpath href="#tsPath-10"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="1.84s" begin="1.06s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.84s" begin="0.14s" repeatCount="indefinite"><mpath href="#tsPath-10"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="1.84s" begin="0.14s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="3.55s" begin="3.19s" repeatCount="indefinite"><mpath href="#tsPath-11"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="3.55s" begin="3.19s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="3.55s" begin="1.41s" repeatCount="indefinite"><mpath href="#tsPath-11"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="3.55s" begin="1.41s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.34s" begin="1.14s" repeatCount="indefinite"><mpath href="#tsPath-12"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="2.34s" begin="1.14s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.34s" begin="2.31s" repeatCount="indefinite"><mpath href="#tsPath-12"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="2.34s" begin="2.31s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.80s" begin="0.17s" repeatCount="indefinite"><mpath href="#tsPath-13"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="1.80s" begin="0.17s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="1.80s" begin="1.07s" repeatCount="indefinite"><mpath href="#tsPath-13"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="1.80s" begin="1.07s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.34s" begin="1.72s" repeatCount="indefinite"><mpath href="#tsPath-14"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="2.34s" begin="1.72s" repeatCount="indefinite"/></circle>
+<circle r="6" opacity="0"><animateMotion dur="2.34s" begin="0.55s" repeatCount="indefinite"><mpath href="#tsPath-14"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="2.34s" begin="0.55s" repeatCount="indefinite"/></circle>
 </g>
-<g class="ts-tiles">
-<rect x="53" y="73" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
-<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-aws)"/>
-<rect x="403" y="18" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
-<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-github)"/>
-<rect x="178" y="265" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
-<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-claude)"/>
-<rect x="115" y="485" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
-<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-slack)"/>
-<rect x="523" y="545" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
-<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-salesforce)"/>
-<rect x="1473" y="18" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
-<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-copilot)"/>
-<rect x="1823" y="73" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
-<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-zapier)"/>
-<rect x="1698" y="265" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
-<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-cloudflare)"/>
-<rect x="1760" y="485" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
-<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-sap)"/>
-<rect x="1353" y="545" width="124" height="124" rx="24" fill="#fff" filter="url(#tsShadow)"/>
-<image href="<?= $tsImg ?>" width="2000" height="759" clip-path="url(#tsClip-make)"/>
+<g class="ts-cards">
+<g transform="translate(15 35)"><rect width="370" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2M19 8v6M22 11h-6"/></g><text x="72" y="42" fill="#fff" font-size="22" font-weight="600">Lead Management</text></g>
+<g transform="translate(415 35)"><rect width="370" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9zM14 3v6h6M8 13h8M8 17h5"/></g><text x="72" y="42" fill="#fff" font-size="22" font-weight="600">Sales &amp; Quotations</text></g>
+<g transform="translate(815 35)"><rect width="370" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></g><text x="72" y="42" fill="#fff" font-size="22" font-weight="600">Finance &amp; Billing</text></g>
+<g transform="translate(1215 35)"><rect width="370" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12A9 9 0 1 1 12 3v9zM15 3.5A9 9 0 0 1 20.5 9H15z"/></g><text x="72" y="42" fill="#fff" font-size="22" font-weight="600">Expense Control</text></g>
+<g transform="translate(1615 35)"><rect width="370" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4L21 8M21 3v5h-5"/></g><text x="72" y="42" fill="#fff" font-size="22" font-weight="600">Follow-up Automation</text></g>
+<g transform="translate(1615 305)"><rect width="370" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2zM8 9h8M8 13h5"/></g><text x="72" y="42" fill="#fff" font-size="22" font-weight="600">Team Communication</text></g>
+<g transform="translate(1615 465)"><rect width="370" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></g><text x="72" y="42" fill="#fff" font-size="22" font-weight="600">Meetings &amp; Scheduling</text></g>
+<g transform="translate(1615 625)"><rect width="370" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></g><text x="72" y="42" fill="#fff" font-size="22" font-weight="600">Project Operations</text></g>
+<g transform="translate(95 895)"><rect width="370" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4zM3 7v10l9 4 9-4V7M12 11v10"/></g><text x="72" y="42" fill="#fff" font-size="22" font-weight="600">Inventory Control</text></g>
+<g transform="translate(575 895)"><rect width="370" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></g><text x="72" y="42" fill="#fff" font-size="22" font-weight="600">Document Management</text></g>
+<g transform="translate(1055 895)"><rect width="370" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M6 9v3a3 3 0 0 0 3 3h6"/></g><text x="72" y="42" fill="#fff" font-size="22" font-weight="600">Workflow Automation</text></g>
+<g transform="translate(1535 895)"><rect width="370" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M6 17v-5M11 17V5M16 17V9M20 17v-3"/></g><text x="72" y="42" fill="#fff" font-size="22" font-weight="600">Business Intelligence</text></g>
+<g transform="translate(15 305)"><rect width="370" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21v-1a6 6 0 0 1 12 0v1M16 4a4 4 0 0 1 0 8M22 21v-1a6 6 0 0 0-4-5.6"/></g><text x="72" y="42" fill="#fff" font-size="22" font-weight="600">People &amp; HR</text></g>
+<g transform="translate(15 465)"><rect width="370" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11l2-8H6.5"/></g><text x="72" y="42" fill="#fff" font-size="22" font-weight="600">Procurement &amp; Vendors</text></g>
+<g transform="translate(15 625)"><rect width="370" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21a2 2 0 0 0 4 0"/></g><text x="72" y="42" fill="#fff" font-size="22" font-weight="600">Smart Alerts &amp; Reminders</text></g>
 </g>
-<g class="ts-hub">
-<rect x="875" y="202" width="250" height="250" rx="40" fill="url(#tsHubFill)" filter="url(#tsHubGlow)"/>
-<g transform="translate(1000 300)" fill="none" stroke="#fff" stroke-linecap="round">
-<circle r="62" stroke-opacity=".45" stroke-width="2.5" stroke-dasharray="6 9"><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="18s" repeatCount="indefinite"/></circle>
-<line x1="0.0" y1="-26.0" x2="0.0" y2="-49.6" stroke-width="4"/>
-<line x1="22.6" y1="-13.0" x2="43.0" y2="-24.8" stroke-width="4"/>
-<line x1="22.6" y1="13.0" x2="43.0" y2="24.8" stroke-width="4"/>
-<line x1="0.0" y1="26.0" x2="0.0" y2="49.6" stroke-width="4"/>
-<line x1="-22.6" y1="13.0" x2="-43.0" y2="24.8" stroke-width="4"/>
-<line x1="-22.6" y1="-13.0" x2="-43.0" y2="-24.8" stroke-width="4"/>
-<circle r="22" fill="#fff" stroke="none"><animate attributeName="r" values="21;25;21" dur="2.4s" repeatCount="indefinite"/></circle>
-<circle r="9" fill="#17945f" stroke="none"/>
-<circle cx="0.0" cy="-62.0" r="11" fill="#fff" stroke="none"/>
-<circle cx="53.7" cy="-31.0" r="11" fill="#fff" stroke="none"/>
-<circle cx="53.7" cy="31.0" r="11" fill="#fff" stroke="none"/>
-<circle cx="0.0" cy="62.0" r="11" fill="#fff" stroke="none"/>
-<circle cx="-53.7" cy="31.0" r="11" fill="#fff" stroke="none"/>
-<circle cx="-53.7" cy="-31.0" r="11" fill="#fff" stroke="none"/>
+<g>
+<rect x="880" y="380" width="240" height="240" rx="40" fill="url(#tsHubFill)" filter="url(#tsHubGlow)"/>
+<g transform="translate(1000 478)" fill="none" stroke="#fff" stroke-linecap="round">
+<circle r="60" stroke-opacity=".45" stroke-width="2.5" stroke-dasharray="6 9"><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="18s" repeatCount="indefinite"/></circle>
+<line x1="0.0" y1="-25.2" x2="0.0" y2="-48.0" stroke-width="4"/>
+<line x1="21.8" y1="-12.6" x2="41.6" y2="-24.0" stroke-width="4"/>
+<line x1="21.8" y1="12.6" x2="41.6" y2="24.0" stroke-width="4"/>
+<line x1="0.0" y1="25.2" x2="0.0" y2="48.0" stroke-width="4"/>
+<line x1="-21.8" y1="12.6" x2="-41.6" y2="24.0" stroke-width="4"/>
+<line x1="-21.8" y1="-12.6" x2="-41.6" y2="-24.0" stroke-width="4"/>
+<circle r="22" fill="#fff" stroke="none"><animate attributeName="r" values="21;25;21" dur="2.4s" repeatCount="indefinite"/></circle><circle r="9" fill="#17945f" stroke="none"/>
+<circle cx="0.0" cy="-60.0" r="11" fill="#fff" stroke="none"/>
+<circle cx="52.0" cy="-30.0" r="11" fill="#fff" stroke="none"/>
+<circle cx="52.0" cy="30.0" r="11" fill="#fff" stroke="none"/>
+<circle cx="0.0" cy="60.0" r="11" fill="#fff" stroke="none"/>
+<circle cx="-52.0" cy="30.0" r="11" fill="#fff" stroke="none"/>
+<circle cx="-52.0" cy="-30.0" r="11" fill="#fff" stroke="none"/>
 </g>
-<text x="1000" y="414" text-anchor="middle" fill="#fff" font-size="27" font-weight="700" letter-spacing="1">Centralized</text>
-</g>
-</svg>
+<text x="1000" y="588" text-anchor="middle" fill="#fff" font-size="27" font-weight="700" letter-spacing="1">Centralized</text>
+</g></svg>
+<ul class="ts-mobile">
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2M19 8v6M22 11h-6"/></svg><span>Lead Management</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9zM14 3v6h6M8 13h8M8 17h5"/></svg><span>Sales &amp; Quotations</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg><span>Finance &amp; Billing</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12A9 9 0 1 1 12 3v9zM15 3.5A9 9 0 0 1 20.5 9H15z"/></svg><span>Expense Control</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4L21 8M21 3v5h-5"/></svg><span>Follow-up Automation</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2zM8 9h8M8 13h5"/></svg><span>Team Communication</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Meetings &amp; Scheduling</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span>Project Operations</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4zM3 7v10l9 4 9-4V7M12 11v10"/></svg><span>Inventory Control</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Document Management</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M6 9v3a3 3 0 0 0 3 3h6"/></svg><span>Workflow Automation</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M6 17v-5M11 17V5M16 17V9M20 17v-3"/></svg><span>Business Intelligence</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21v-1a6 6 0 0 1 12 0v1M16 4a4 4 0 0 1 0 8M22 21v-1a6 6 0 0 0-4-5.6"/></svg><span>People &amp; HR</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11l2-8H6.5"/></svg><span>Procurement &amp; Vendors</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21a2 2 0 0 0 4 0"/></svg><span>Smart Alerts &amp; Reminders</span></li>
+</ul>
  </div>
 
  <!-- Same pinned horizontal run as the 7 Functions row: page scroll slides the cards

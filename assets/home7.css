@@ -1199,9 +1199,18 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 #tech .tech-head{padding:7rem 0 0}
 #tech .tech-shot{max-width:1180px;margin:0 auto;padding:1rem 0 0}  /* matches .tech-grid so their edges line up */
 #tech .tech-shot img{display:block;width:100%;height:auto}
+#tech .tech-shot{max-width:1280px}
 #tech .tech-shot .ts-svg{display:block;width:100%;height:auto;overflow:visible;font-family:var(--font-display,inherit)}
 @media(prefers-reduced-motion:reduce){
  #tech .ts-balls{display:none}
+}
+/* Phones: the map is swapped for the same modules as a two-column chip grid. */
+#tech .ts-mobile{display:none}
+@media(max-width:768px){
+ #tech .tech-shot .ts-svg{display:none}
+ #tech .ts-mobile{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;list-style:none;margin:1.5rem 0 0;padding:0}
+ #tech .ts-mobile li{min-width:0;display:flex;align-items:center;gap:10px;padding:12px;border-radius:12px;background:#12201a;border:1px solid rgba(255,255,255,.12);color:#fff;font-size:13px;font-weight:600;line-height:1.3}
+ #tech .ts-mobile svg{flex:none;width:30px;height:30px;padding:6px;box-sizing:border-box;border-radius:9px;color:#5fd896;background:rgba(50,180,111,.16);border:1px solid rgba(50,180,111,.45)}
 }
 @media(max-width:900px){
  #tech .tech-head{padding:4.5rem 0 0}
