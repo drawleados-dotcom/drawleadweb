@@ -786,15 +786,18 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
  <h2 class="sec-h rv">Built for <span>Your Industry</span></h2>
  <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements, out of the box.</p>
 
- <!-- Solid full-width cards in the same sticky stack as #solutions: each parks 30px
-      below the one before and the next slides up over it (initStickyStack in the JS). -->
- <div class="ind-stack">
+ <!-- Solid wide cards in a pinned horizontal run, like the 7 Functions row: while the
+      row is pinned, page scroll slides it left one card after another (JS below).
+      Phones and reduced motion swipe instead. -->
+ <div class="ind-hscroll" id="indHOuter">
+  <div class="ind-hsticky" id="indHSticky">
+ <div class="ind-row" id="indRow">
   <?php $n = 0; foreach ($indStackOrder as $key):
    if (!isset($indByKey[$key])) { continue; }
    $ind = $indByKey[$key];
    $n++;
   ?>
-  <article class="ind-scard" style="--i:<?= $n - 1 ?>">
+  <article class="ind-scard">
    <div class="ind-scard-inner">
 
     <div class="ind-intro">
@@ -824,7 +827,9 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
    </div>
   </article>
   <?php endforeach; ?>
- </div><!-- /ind-stack -->
+ </div><!-- /ind-row -->
+  </div>
+ </div><!-- /ind-hscroll -->
 
  <div class="sec-cta rv" style="margin-top:3rem">
  <button type="button" data-book class="btn btn-black">Find Your Industry Solution</button>
@@ -1716,9 +1721,43 @@ renderDash(0);
  if(reduce) return;
 
  initStickyStack('#solutions .sol-card', { dimTo: 0.30, shrink: 0.04 });
- initStickyStack('#industries .ind-scard', { dimTo: 0.30, shrink: 0.04 });
 
 
+})();
+
+// Industries: sticky horizontal run, same technique as Core Functions / Tech Stack.
+// The pinned box is the card row only, centred in the screen below the fixed nav;
+// the scroll distance it consumes equals the row's horizontal overflow.
+(function(){
+ const outer = document.getElementById('indHOuter');
+ const sticky = document.getElementById('indHSticky');
+ const row = document.getElementById('indRow');
+ if(!outer || !sticky || !row) return;
+ if(reduceMotion || window.matchMedia('(max-width:768px)').matches) return;
+
+ let stickyTop = 0, overflow = 0;
+
+ function measure(){
+  const nav = document.querySelector('nav');
+  const navH = nav ? nav.offsetHeight : 0;
+  stickyTop = navH + Math.max(0, (window.innerHeight - navH - sticky.offsetHeight) / 2);
+  outer.style.setProperty('--ind-top', stickyTop + 'px');
+  overflow = Math.max(0, row.scrollWidth - sticky.clientWidth);
+  outer.style.height = (sticky.offsetHeight + overflow) + 'px';
+ }
+
+ function onScroll(){
+  if(overflow <= 0){ row.style.transform = 'translateX(0)'; return; }
+  const rect = outer.getBoundingClientRect();
+  const progress = Math.min(1, Math.max(0, (stickyTop - rect.top) / overflow));
+  row.style.transform = `translateX(${-progress * overflow}px)`;
+ }
+
+ measure();
+ onScroll();
+ window.addEventListener('resize', ()=>{ measure(); onScroll(); });
+ window.addEventListener('load', ()=>{ measure(); onScroll(); });
+ window.addEventListener('scroll', onScroll, { passive: true });
 })();
 
 // Section 3: physics tag stage (scroll-triggered, runs once)
