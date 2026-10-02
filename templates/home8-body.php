@@ -486,11 +486,14 @@ include __DIR__ . '/partials/nav.php';
 <path id="tsPath-12" d="M392 340H560V500H880"/>
 <path id="tsPath-13" d="M392 500H880"/>
 <path id="tsPath-14" d="M392 660H560V500H880"/>
+<path id="tsRing-0" d="M1000 340H1112A48 48 0 0 1 1160 388V612A48 48 0 0 1 1112 660H888A48 48 0 0 1 840 612V388A48 48 0 0 1 888 340Z"/>
+<path id="tsRing-1" d="M1000 300H1140A60 60 0 0 1 1200 360V640A60 60 0 0 1 1140 700H860A60 60 0 0 1 800 640V360A60 60 0 0 1 860 300Z"/>
+<path id="tsRing-2" d="M1000 260H1168A72 72 0 0 1 1240 332V668A72 72 0 0 1 1168 740H832A72 72 0 0 1 760 668V332A72 72 0 0 1 832 260Z"/>
 </defs>
 <g fill="none" stroke="#34a87c" stroke-width="2.5">
-<rect x="840" y="340" width="320" height="320" rx="48" opacity=".6"><animate attributeName="opacity" values=".2;.8;.2" dur="3s" begin="0.8s" repeatCount="indefinite"/></rect>
-<rect x="800" y="300" width="400" height="400" rx="60" opacity=".6"><animate attributeName="opacity" values=".2;.8;.2" dur="3s" begin="0.4s" repeatCount="indefinite"/></rect>
-<rect x="760" y="260" width="480" height="480" rx="72" opacity=".6"><animate attributeName="opacity" values=".2;.8;.2" dur="3s" begin="0.0s" repeatCount="indefinite"/></rect>
+<use href="#tsRing-0" opacity=".6"><animate attributeName="opacity" values=".2;.8;.2" dur="3s" begin="0.8s" repeatCount="indefinite"/></use>
+<use href="#tsRing-1" opacity=".6"><animate attributeName="opacity" values=".2;.8;.2" dur="3s" begin="0.4s" repeatCount="indefinite"/></use>
+<use href="#tsRing-2" opacity=".6"><animate attributeName="opacity" values=".2;.8;.2" dur="3s" begin="0.0s" repeatCount="indefinite"/></use>
 </g>
 <g fill="none" stroke="#3fb57a" stroke-opacity=".5" stroke-width="2.5" stroke-linejoin="round">
 <use href="#tsPath-0"/>
@@ -540,6 +543,15 @@ include __DIR__ . '/partials/nav.php';
 <circle r="6" opacity="0"><animateMotion dur="4.50s" begin="1.52s" repeatCount="indefinite"><mpath href="#tsPath-13"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="4.50s" begin="1.52s" repeatCount="indefinite"/></circle>
 <circle r="6" opacity="0"><animateMotion dur="5.89s" begin="4.06s" repeatCount="indefinite"><mpath href="#tsPath-14"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="5.89s" begin="4.06s" repeatCount="indefinite"/></circle>
 <circle r="6" opacity="0"><animateMotion dur="5.89s" begin="1.11s" repeatCount="indefinite"><mpath href="#tsPath-14"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.88;1" dur="5.89s" begin="1.11s" repeatCount="indefinite"/></circle>
+<circle r="5.5"><animateMotion dur="10.89s" begin="-0.00s" repeatCount="indefinite"><mpath href="#tsRing-0"/></animateMotion></circle>
+<circle r="5.5"><animateMotion dur="10.89s" begin="-3.63s" repeatCount="indefinite"><mpath href="#tsRing-0"/></animateMotion></circle>
+<circle r="5.5"><animateMotion dur="10.89s" begin="-7.26s" repeatCount="indefinite"><mpath href="#tsRing-0"/></animateMotion></circle>
+<circle r="5.5"><animateMotion dur="13.61s" begin="-0.00s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#tsRing-1"/></animateMotion></circle>
+<circle r="5.5"><animateMotion dur="13.61s" begin="-4.54s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#tsRing-1"/></animateMotion></circle>
+<circle r="5.5"><animateMotion dur="13.61s" begin="-9.07s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#tsRing-1"/></animateMotion></circle>
+<circle r="5.5"><animateMotion dur="16.33s" begin="-0.00s" repeatCount="indefinite"><mpath href="#tsRing-2"/></animateMotion></circle>
+<circle r="5.5"><animateMotion dur="16.33s" begin="-5.44s" repeatCount="indefinite"><mpath href="#tsRing-2"/></animateMotion></circle>
+<circle r="5.5"><animateMotion dur="16.33s" begin="-10.89s" repeatCount="indefinite"><mpath href="#tsRing-2"/></animateMotion></circle>
 </g>
 <g class="ts-cards">
 <g transform="translate(8 35)"><rect width="384" height="70" rx="16" fill="#12201a" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/><rect x="13" y="13" width="44" height="44" rx="12" fill="#32b46f" fill-opacity=".16" stroke="#32b46f" stroke-opacity=".45"/><g transform="translate(22 22) scale(1.08)" fill="none" stroke="#5fd896" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2M19 8v6M22 11h-6"/></g><text x="72" y="42" fill="#fff" font-size="21" font-weight="600">Lead Management</text></g>
