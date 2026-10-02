@@ -2841,27 +2841,3 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  #cta.cta-framed .cta-btn-g{max-width:320px}
 }
 
-/* ── #tech marquee (Home 8): the six cards in the Core Functions card style, four
-   across, drifting left in an endless loop. The track holds the cards twice; it
-   slides by exactly one set (its padding-right supplies the gap after card 6), so
-   the jump back to 0 lands on an identical frame. Pauses on hover and focus.
-   Reduced motion: no animation, the copy set is hidden, and the row swipes. */
-#tech .tech-marquee{
- --tc-gap:20px;
- --tc-w:max(270px, calc((min(100vw, 1440px) - 2 * var(--sp-gutter) - 3 * var(--tc-gap)) / 4));
- margin:2.5rem calc(50% - 50vw) 0;width:100vw;overflow:hidden;
- -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-         mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-}
-#tech .tech-track{
- display:flex;gap:var(--tc-gap);width:max-content;padding:16px var(--tc-gap) 28px 0;
- animation:techLoop 45s linear infinite;
-}
-#tech .tech-marquee:hover .tech-track,#tech .tech-marquee:focus-within .tech-track{animation-play-state:paused}
-#tech .tech-marquee .tech-card{flex:0 0 var(--tc-w);width:var(--tc-w);min-height:280px}
-@keyframes techLoop{to{transform:translate3d(-50%,0,0)}}
-@media(prefers-reduced-motion:reduce){
- #tech .tech-marquee{-webkit-mask-image:none;mask-image:none}
- #tech .tech-track{animation:none;overflow-x:auto;width:auto;padding-left:var(--sp-gutter);scroll-snap-type:x proximity}
- #tech .tech-track [aria-hidden="true"]{display:none}
-}
