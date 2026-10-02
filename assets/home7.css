@@ -1017,6 +1017,20 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
    can start with card 1 centred and end with card 6 centred. */
 .ind-hscroll{position:relative;margin-inline:calc(50% - 50vw);width:100vw}
 .ind-hsticky{position:sticky;top:var(--ind-top,0px);overflow:hidden;padding:12px 0 36px}
+.ind-pin-head{padding:0 var(--sp-gutter,1.5rem);margin-bottom:1.8rem;text-align:center}
+.ind-pin-head .sec-h{margin-bottom:.6rem}
+#industries .ind-pin-head .sec-sub{margin:0 auto}
+/* short windows: drop the description and tighten the cards so heading + row fit */
+@media(max-height:820px) and (min-width:769px){
+ #industries .ind-pin-head .sec-sub{display:none}
+ .ind-pin-head{margin-bottom:1.2rem}
+ .ind-scard-inner{padding:2rem 2.75rem 2.2rem}
+ .ind-visual{width:84px;height:84px;margin-bottom:1rem}
+ .ind-visual svg{width:44px;height:44px}
+ .ind-scard-tag{margin-bottom:1.3rem}
+ .ind-block{padding:16px 22px}
+ .ind-line{padding-top:3px;padding-bottom:3px}
+}
 .ind-row{
  --ind-w:min(1120px,84vw);
  display:flex;gap:28px;width:max-content;

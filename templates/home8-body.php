@@ -782,15 +782,17 @@ $indByKey = [];
 foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['industry']; }
 ?>
 <section id="industries">
- <div class="eyebrow rv"><span class="eyebrow-text">Industries</span></div>
- <h2 class="sec-h rv">Built for <span>Your Industry</span></h2>
- <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements, out of the box.</p>
-
  <!-- Solid wide cards in a pinned horizontal run, like the 7 Functions row: while the
       row is pinned, page scroll slides it left one card after another (JS below).
       Phones and reduced motion swipe instead. -->
  <div class="ind-hscroll" id="indHOuter">
   <div class="ind-hsticky" id="indHSticky">
+   <!-- heading is pinned with the row so it stays on screen while the cards slide -->
+   <div class="ind-pin-head">
+    <div class="eyebrow rv"><span class="eyebrow-text">Industries</span></div>
+    <h2 class="sec-h rv">Built for <span>Your Industry</span></h2>
+    <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements, out of the box.</p>
+   </div>
  <div class="ind-row" id="indRow">
   <?php $n = 0; foreach ($indStackOrder as $key):
    if (!isset($indByKey[$key])) { continue; }
@@ -1552,6 +1554,8 @@ renderDash(0);
 
  measure();
  onScroll();
+ window.addEventListener('load', ()=>{ measure(); onScroll(); });
+ if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{ measure(); onScroll(); });
  window.addEventListener('resize', ()=>{ measure(); onScroll(); });
  window.addEventListener('scroll', onScroll, { passive: true });
  window.addEventListener('load', ()=>{ measure(); onScroll(); });
@@ -1591,6 +1595,7 @@ renderDash(0);
  measure();
  onScroll();
  window.addEventListener('resize', ()=>{ measure(); onScroll(); });
+ if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{ measure(); onScroll(); });
  window.addEventListener('load', ()=>{ measure(); onScroll(); });
  window.addEventListener('scroll', onScroll, { passive: true });
 })();
@@ -1756,6 +1761,7 @@ renderDash(0);
  measure();
  onScroll();
  window.addEventListener('resize', ()=>{ measure(); onScroll(); });
+ if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{ measure(); onScroll(); });
  window.addEventListener('load', ()=>{ measure(); onScroll(); });
  window.addEventListener('scroll', onScroll, { passive: true });
 })();
@@ -2094,6 +2100,14 @@ renderDash(0);
   window.addEventListener('load', init);
  }
 })();
+
+// The 7 Functions, Tech Stack and Industries runways set their own heights from JS once
+// layout settles (load / webfonts). GSAP's pins further down (the "Ready to Transform"
+// letter train) cache their start positions when they are created, so without this
+// they go stale and the pinned train shows up early, behind the Industries cards.
+window.addEventListener('load', function(){
+ if(window.ScrollTrigger) ScrollTrigger.refresh();
+});
 
 // Case studies: carousel track driven entirely by vertical scroll
 // PERF NOTES (this section was janky before):
