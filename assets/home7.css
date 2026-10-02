@@ -727,10 +727,21 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
    JS reads the same offset back off the element, so the horizontal progress stays in
    step with it. */
 .cf-scroll-sticky{position:sticky;top:calc((100vh - var(--cf-pin-h)) / 2);height:var(--cf-pin-h);width:100%;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+/* The heading now pins with the row, so the pinned box is the whole screen below the
+   fixed nav (JS writes the nav height to --cf-top) and heading, cards and CTA sit
+   centred in it as one block, with tight steps between them. */
+.cf-scroll-sticky{top:var(--cf-top,0px);height:calc(100vh - var(--cf-top,0px))}
+.cf-pin-head{flex:none;margin-bottom:1.6rem}
+.cf-pin-head .sec-h{margin-bottom:.6rem}
+#functions .cf-pin-head .sec-sub{margin-bottom:0}
+@media(max-height:760px){
+ #functions .cf-pin-head .sec-sub{display:none}
+ .cf-pin-head .sec-h{margin-bottom:0}
+}
 /* The CTA is pinned inside the sticky box alongside the row, so it can no longer
    scroll into view while the horizontal run is still in progress - which is what
    left a growing gap of unconsumed scroll distance between the cards and the buttons. */
-.cf-scroll-sticky .sec-cta{margin-top:2.25rem;flex:none}
+.cf-scroll-sticky .sec-cta{margin-top:1.6rem;flex:none}
 .cf-row{
  display:flex;gap:20px;width:max-content;flex:none;
  overflow-x:hidden;
@@ -760,6 +771,8 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 @media(max-width:768px),(prefers-reduced-motion:reduce){
  .cf-scroll-outer{height:auto !important}
  .cf-scroll-sticky{position:static;height:auto;overflow:visible}
+ .cf-pin-head{margin-bottom:0}
+ #functions .cf-pin-head .sec-sub{display:block;margin-bottom:2rem}
  .cf-row{overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;transform:none !important}
 }
 

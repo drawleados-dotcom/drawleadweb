@@ -111,12 +111,14 @@ include __DIR__ . '/partials/nav.php';
 
 <!-- 7 FUNCTIONS -->
 <section id="functions">
- <div class="eyebrow rv"><span class="eyebrow-text">Core Platform</span></div>
- <h2 class="sec-h rv">The <span class="g">7 Functions</span> of Business <span class="fade">Unified</span></h2>
- <p class="sec-sub rv">Every core business function streamlined and intelligently connected through one operating system.</p>
-
  <div class="cf-scroll-outer" id="cfScrollOuter">
   <div class="cf-scroll-sticky" id="cfScrollSticky">
+   <!-- heading is pinned with the row so it stays on screen while the cards slide -->
+   <div class="cf-pin-head">
+    <div class="eyebrow rv"><span class="eyebrow-text">Core Platform</span></div>
+    <h2 class="sec-h rv">The <span class="g">7 Functions</span> of Business <span class="fade">Unified</span></h2>
+    <p class="sec-sub rv">Every core business function streamlined and intelligently connected through one operating system.</p>
+   </div>
    <div class="cf-row" id="cfRow">
 
     <!-- 01 Management -->
@@ -1323,6 +1325,9 @@ renderDash(0);
  let overflow = 0;
 
  function measure(){
+ // the pinned box fills the viewport below the fixed nav (see .cf-scroll-sticky)
+ const nav = document.querySelector('nav');
+ outer.style.setProperty('--cf-top', (nav ? nav.offsetHeight : 0) + 'px');
  stickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
  overflow = Math.max(0, row.scrollWidth - sticky.clientWidth);
  outer.style.height = (sticky.offsetHeight + overflow) + 'px';
