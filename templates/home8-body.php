@@ -786,20 +786,25 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
  <h2 class="sec-h rv">Built for <span>Your Industry</span></h2>
  <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements, out of the box.</p>
 
- <div class="ind-scroll" id="indScroll">
-  <div class="ind-viewport" id="indViewport">
+ <!-- Solid full-width cards in the same sticky stack as #solutions: each parks 30px
+      below the one before and the next slides up over it (initStickyStack in the JS). -->
+ <div class="ind-stack">
   <?php $n = 0; foreach ($indStackOrder as $key):
    if (!isset($indByKey[$key])) { continue; }
    $ind = $indByKey[$key];
    $n++;
   ?>
-  <article class="ind-scard">
+  <article class="ind-scard" style="--i:<?= $n - 1 ?>">
    <div class="ind-scard-inner">
 
-    <div class="ind-visual"><?= $ind['icon'] ?></div>
+    <div class="ind-intro">
+     <div class="ind-visual"><?= $ind['icon'] ?></div>
+     <h3 class="ind-scard-title"><?= h($ind['name']) ?></h3>
+     <div class="ind-scard-tag"><?= h($ind['tag']) ?></div>
+     <a href="/industry-<?= h($key) ?>" class="ind-scard-cta">Explore <?= h($ind['name']) ?> OS</a>
+    </div>
 
-    <h3 class="ind-scard-title"><?= h($ind['name']) ?></h3>
-    <div class="ind-scard-tag"><?= h($ind['tag']) ?></div>
+    <div class="ind-detail">
 
     <div class="ind-block">
      <div class="ind-block-label"><span class="ind-rule ind-rule-p"></span>Common Problems</div>
@@ -815,12 +820,11 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
      <?php endforeach; ?>
     </div>
 
-    <a href="/industry-<?= h($key) ?>" class="ind-scard-cta">Explore <?= h($ind['name']) ?> OS</a>
+    </div>
    </div>
   </article>
   <?php endforeach; ?>
- </div>
- </div><!-- /ind-scroll -->
+ </div><!-- /ind-stack -->
 
  <div class="sec-cta rv" style="margin-top:3rem">
  <button type="button" data-book class="btn btn-black">Find Your Industry Solution</button>
@@ -1712,63 +1716,9 @@ renderDash(0);
  if(reduce) return;
 
  initStickyStack('#solutions .sol-card', { dimTo: 0.30, shrink: 0.04 });
+ initStickyStack('#industries .ind-scard', { dimTo: 0.30, shrink: 0.04 });
 
 
-})();
-
-// Section 8: industries centred 3-up card stack
-// The tall .ind-scroll runway supplies scroll distance; .ind-viewport pins inside it.
-// Scroll progress maps to a fractional "active index", and every card is placed by its
-// signed distance d from that index:  d<0 -> left, d==0 -> centre, d>0 -> right.
-// Because d is continuous, cards glide between the three slots rather than snapping.
-(function(){
- const scroller = document.getElementById('indScroll');
- const viewport = document.getElementById('indViewport');
- if(!scroller || !viewport) return;
- if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
- const cards = Array.from(viewport.querySelectorAll('.ind-scard'));
- if(!cards.length) return;
-
- const last = cards.length - 1;
- let ticking = false;
-
- function layout(){
-  ticking = false;
-
-  const rect = scroller.getBoundingClientRect();
-  // total distance the runway scrolls past while pinned
-  const span = scroller.offsetHeight - viewport.offsetHeight;
-  let p = span > 0 ? (-rect.top / span) : 0;
-  p = p < 0 ? 0 : (p > 1 ? 1 : p);
-
-  const activeF = p * last;                      // fractional active index
-  const stepX = Math.max(96, cards[0].offsetWidth * 0.42);  // side-slot offset
-
-  for(let i = 0; i < cards.length; i++){
-   const card = cards[i];
-   const d = i - activeF;                        // <0 left, 0 centre, >0 right
-   const ad = Math.abs(d);
-
-   if(ad > 2.2){ card.style.visibility = 'hidden'; continue; }
-   card.style.visibility = 'visible';
-
-   const clamped = ad > 1 ? 1 + (ad - 1) * 0.35 : ad;   // fold distant cards inward
-   const x = Math.sign(d) * Math.min(clamped, 1.6) * stepX;
-   const scale = Math.max(0.72, 1 - ad * 0.09);         // centre 1, sides ~0.91
-   const op = ad <= 1 ? 1 - ad * 0.45 : Math.max(0, 0.55 - (ad - 1) * 0.55);
-
-   card.style.transform = 'translate(calc(-50% + ' + x.toFixed(1) + 'px), -50%) scale(' + scale.toFixed(3) + ')';
-   card.style.opacity = op.toFixed(3);
-   card.style.zIndex = String(100 - Math.round(ad * 10));  // centre always on top
-  }
- }
-
- function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(layout); } }
-
- layout();
- window.addEventListener('scroll', onScroll, { passive: true });
- window.addEventListener('resize', onScroll);
 })();
 
 // Section 3: physics tag stage (scroll-triggered, runs once)

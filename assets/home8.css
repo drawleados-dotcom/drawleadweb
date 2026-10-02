@@ -118,14 +118,13 @@ nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
 #solutions .sol-check{background:#18231E;color:#5FD394}
 
 /* ── 10 · INDUSTRIES ────────────────────────────────────────────────────────
-   Glass over a green tint, inverted: the tint goes deep instead of pale and the
-   inset white highlight that read as a lit top edge becomes a faint one, which
-   is what keeps it reading as glass rather than as a flat panel. */
+   Solid cards, same surfaces as the #solutions stack: #111816 card, #20302A
+   border, and the problem/solution panels on the darker list-item ground. */
 .ind-scard{
- background:rgba(12,26,20,.72);
- border-color:rgba(50,180,111,.26);
- box-shadow:0 24px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.07);
+ background:#111816;border-color:#20302A;
+ box-shadow:0 -2px 16px rgba(0,0,0,.25),0 18px 44px rgba(0,0,0,.5);
 }
+.ind-block{background:#0C1310;border-color:#1D2A25}
 
 /* ── 11 · CASE STUDIES ─────────────────────────────────────────────────────
    The section ground was white with a green wash; the card's left panel is
