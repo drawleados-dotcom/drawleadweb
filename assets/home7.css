@@ -1222,9 +1222,7 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
    background. Removing only the padding would have pushed the copy against the card
    border, so the background and border go with it. The grid gap grows to carry the
    separation the card edges used to provide. */
-#tech .tech-card{background:none;border:none;border-radius:0;padding:0;box-shadow:none;gap:.7rem}
-#tech .tech-card:hover{background:none;border-color:transparent;transform:none}
-#tech .tech-grid{gap:2.75rem 2.5rem}
+
 /* Icon box: dark with a hairline border rather than the solid green plate, matching the
    reference. The glyphs were already filled shapes but drawn at 0.5-0.95 white, which is
    what made them read soft; they go to full strength and up from 26px to 28px. */
@@ -1237,6 +1235,36 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
 #tech .tech-icon-new svg{width:28px;height:28px}
 #tech .tech-icon-new svg [fill^="rgba(255,255,255"]{fill:#fff}
 #tech .tech-icon-new svg [stroke^="rgba(255,255,255"]{stroke:#fff}
+
+/* ── #tech: pinned horizontal row, same run as the 7 Functions .cf-row ──────────
+   The six cards sit in one row of 320px boxes (the .cf-card size, in the section's
+   dark palette). While the row is pinned, page scroll drives its translateX (JS in
+   home7-body.php); the sticky box is the row + CTA only, centred in the viewport. */
+#tech .tech-scroll-outer{margin-top:2.5rem}
+.tech-scroll-sticky{position:sticky;top:var(--tech-top,0px);width:100%;overflow:hidden;display:flex;flex-direction:column}
+.tech-row{
+ display:flex;gap:20px;width:max-content;flex:none;
+ padding:16px 16px 28px;margin:-16px -16px -14px;
+ scrollbar-width:none;-ms-overflow-style:none;will-change:transform;
+}
+.tech-row::-webkit-scrollbar{display:none}
+#tech .tech-card{
+ flex:0 0 320px;width:320px;min-height:300px;margin:0;scroll-snap-align:start;
+ background:#12201a;border:1px solid rgba(255,255,255,.08);border-radius:12px;
+ box-shadow:0 4px 20px rgba(0,0,0,.25);
+ padding:26px;gap:.7rem;
+ transition:background .2s,border-color .2s;
+}
+#tech .tech-card:hover{background:#1a2e24;border-color:rgba(255,255,255,.18);transform:none}
+#tech .tech-card .tech-tags{margin-top:auto}
+#tech .tech-scroll-sticky .sec-cta{margin-top:1.6rem;flex:none}
+@media(max-width:768px),(prefers-reduced-motion:reduce){
+ .tech-scroll-sticky{position:static;overflow:visible}
+ .tech-row{overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;transform:none !important}
+}
+@media(max-width:560px){
+ #tech .tech-card{width:280px;flex-basis:280px}
+}
 
 /* ── CASES ── */
 #cases{background:var(--bg)}

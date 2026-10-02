@@ -394,10 +394,14 @@ include __DIR__ . '/partials/nav.php';
   <img src="<?= asset_url('/assets/img/tech-stack.webp') ?>" width="2177" height="826" alt="Drawlead at the centre of an integration map connecting AWS, GitHub, Claude, Slack, Salesforce, Microsoft Copilot, Zapier, Cloudflare, SAP and Make" decoding="async" fetchpriority="low">
  </div>
 
-  <div class="tech-grid">
+ <!-- Same pinned horizontal run as the 7 Functions row: page scroll slides the cards
+      left while the row and CTA stay on screen (JS below). Mobile swipes instead. -->
+ <div class="cf-scroll-outer tech-scroll-outer" id="techScrollOuter">
+  <div class="tech-scroll-sticky" id="techScrollSticky">
+  <div class="tech-row" id="techRow">
 
     <!-- ERP -->
-    <div class="tech-card rv d1">
+    <div class="tech-card">
       <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <rect x="4" y="4" width="14" height="14" rx="2" fill="rgba(255,255,255,0.9)"/>
@@ -416,7 +420,7 @@ include __DIR__ . '/partials/nav.php';
     </div>
 
     <!-- AI -->
-    <div class="tech-card rv d2">
+    <div class="tech-card">
       <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <circle cx="20" cy="20" r="7" fill="rgba(255,255,255,0.95)"/>
@@ -440,7 +444,7 @@ include __DIR__ . '/partials/nav.php';
     </div>
 
     <!-- CRM -->
-    <div class="tech-card rv d3">
+    <div class="tech-card">
       <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <circle cx="14" cy="13" r="6" fill="rgba(255,255,255,0.9)"/>
@@ -457,7 +461,7 @@ include __DIR__ . '/partials/nav.php';
     </div>
 
     <!-- Analytics -->
-    <div class="tech-card rv d1">
+    <div class="tech-card">
       <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <rect x="4" y="28" width="6" height="8" rx="1" fill="rgba(255,255,255,0.5)"/>
@@ -474,7 +478,7 @@ include __DIR__ . '/partials/nav.php';
     </div>
 
     <!-- Cloud -->
-    <div class="tech-card rv d2">
+    <div class="tech-card">
       <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <path d="M10 28a8 8 0 010-16 8.001 8.001 0 0115.32-3A7 7 0 1132 28z" fill="rgba(255,255,255,0.85)"/>
@@ -489,7 +493,7 @@ include __DIR__ . '/partials/nav.php';
     </div>
 
     <!-- Workflow -->
-    <div class="tech-card rv d3">
+    <div class="tech-card">
       <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <rect x="3" y="7" width="10" height="8" rx="2" fill="rgba(255,255,255,0.9)"/>
@@ -514,6 +518,8 @@ include __DIR__ . '/partials/nav.php';
     <button type="button" data-book class="btn btn-black" style="background:#fff;color:#0a1310">Discuss Technical Requirements</button>
     <a href="#functions" class="btn btn-outline2" style="color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.2)">View All Modules</a>
   </div>
+  </div>
+ </div>
 </section>
 
 <!-- CASE STUDIES -->
@@ -1343,6 +1349,44 @@ renderDash(0);
  measure();
  onScroll();
  window.addEventListener('resize', ()=>{ measure(); onScroll(); });
+ window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
+// Tech Stack: same sticky horizontal run as Core Functions. Here only the card row
+// and CTA are pinned (the heading and integrations image scroll normally above), so
+// the box keeps its content height and is centred in the viewport below the nav.
+(function(){
+ const outer = document.getElementById('techScrollOuter');
+ const sticky = document.getElementById('techScrollSticky');
+ const row = document.getElementById('techRow');
+ if(!outer || !sticky || !row) return;
+
+ const skipHijack = reduceMotion || window.matchMedia('(max-width:768px)').matches;
+ if(skipHijack) return;
+
+ let stickyTop = 0;
+ let overflow = 0;
+
+ function measure(){
+ const nav = document.querySelector('nav');
+ const navH = nav ? nav.offsetHeight : 0;
+ stickyTop = Math.max(navH, navH + (window.innerHeight - navH - sticky.offsetHeight) / 2);
+ outer.style.setProperty('--tech-top', stickyTop + 'px');
+ overflow = Math.max(0, row.scrollWidth - sticky.clientWidth);
+ outer.style.height = (sticky.offsetHeight + overflow) + 'px';
+ }
+
+ function onScroll(){
+ if(overflow <= 0){ row.style.transform = 'translateX(0)'; return; }
+ const rect = outer.getBoundingClientRect();
+ const progress = Math.min(1, Math.max(0, (stickyTop - rect.top) / overflow));
+ row.style.transform = `translateX(${-progress * overflow}px)`;
+ }
+
+ measure();
+ onScroll();
+ window.addEventListener('resize', ()=>{ measure(); onScroll(); });
+ window.addEventListener('load', ()=>{ measure(); onScroll(); });
  window.addEventListener('scroll', onScroll, { passive: true });
 })();
 
