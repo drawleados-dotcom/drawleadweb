@@ -180,12 +180,14 @@ include __DIR__ . '/partials/nav.php';
 
 <!-- 7 FUNCTIONS -->
 <section id="functions">
- <div class="eyebrow rv"><span class="eyebrow-text">Core Platform</span></div>
- <h2 class="sec-h rv">The <span class="g">7 Functions</span> of Business <span class="fade">Unified</span></h2>
- <p class="sec-sub rv">Every core business function streamlined and intelligently connected through one operating system.</p>
-
  <div class="cf-scroll-outer" id="cfScrollOuter">
   <div class="cf-scroll-sticky" id="cfScrollSticky">
+   <!-- heading is pinned with the row so it stays on screen while the cards slide -->
+   <div class="cf-pin-head">
+    <div class="eyebrow rv"><span class="eyebrow-text">Core Platform</span></div>
+    <h2 class="sec-h rv">The <span class="g">7 Functions</span> of Business <span class="fade">Unified</span></h2>
+    <p class="sec-sub rv">Every core business function streamlined and intelligently connected through one operating system.</p>
+   </div>
    <div class="cf-row" id="cfRow">
 
     <!-- 01 Management -->
@@ -453,18 +455,17 @@ include __DIR__ . '/partials/nav.php';
  <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">Enterprise-grade technologies combining to create scalable, intelligent digital ecosystems.</p>
  </div><!-- /tech-head -->
 
- <!-- Integrations diagram, between the copy and the pinned cards. It could not live
-      inside the pin: that box is one viewport tall and was already full, so the image
-      would have had to shrink to a ~100px strip. Copy and diagram scroll normally
-      instead, and only the cards and CTA are pinned. -->
+ <!-- Integrations diagram, between the copy and the looping card row. -->
  <div class="tech-shot rv">
   <img src="<?= asset_url('/assets/img/tech-stack.webp') ?>" width="2177" height="826" alt="Drawlead at the centre of an integration map connecting AWS, GitHub, Claude, Slack, Salesforce, Microsoft Copilot, Zapier, Cloudflare, SAP and Make" decoding="async" fetchpriority="low">
  </div>
 
-  <div class="tech-grid">
-
+  <!-- Endless loop: the six cards, then the same six again (aria-hidden) so the
+       track can slide by one full set and restart on an identical frame. -->
+  <div class="tech-marquee">
+   <div class="tech-track">
     <!-- ERP -->
-    <div class="tech-card rv d1">
+    <div class="tech-card">
       <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <rect x="4" y="4" width="14" height="14" rx="2" fill="rgba(255,255,255,0.9)"/>
@@ -481,9 +482,8 @@ include __DIR__ . '/partials/nav.php';
       <div class="tech-desc">Unified business backbone with all departments connected in a single source of truth with real-time data sync across every module.</div>
       <div class="tech-tags"><span class="t-tag">Multi-module</span><span class="t-tag">Real-time sync</span><span class="t-tag">Role-based access</span></div>
     </div>
-
     <!-- AI -->
-    <div class="tech-card rv d2">
+    <div class="tech-card">
       <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <circle cx="20" cy="20" r="7" fill="rgba(255,255,255,0.95)"/>
@@ -505,9 +505,8 @@ include __DIR__ . '/partials/nav.php';
       <div class="tech-desc">Intelligent workflows that learn and adapt, eliminating repetitive tasks and surfacing actionable insights before you ask.</div>
       <div class="tech-tags"><span class="t-tag">Predictive AI</span><span class="t-tag">Auto-workflows</span><span class="t-tag">Smart alerts</span></div>
     </div>
-
     <!-- CRM -->
-    <div class="tech-card rv d3">
+    <div class="tech-card">
       <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <circle cx="14" cy="13" r="6" fill="rgba(255,255,255,0.9)"/>
@@ -522,9 +521,8 @@ include __DIR__ . '/partials/nav.php';
       <div class="tech-desc">360° customer management, from first touch to retention, with pipeline tracking, follow-up automation, and revenue forecasting.</div>
       <div class="tech-tags"><span class="t-tag">Lead scoring</span><span class="t-tag">Pipeline</span><span class="t-tag">Auto follow-up</span></div>
     </div>
-
     <!-- Analytics -->
-    <div class="tech-card rv d1">
+    <div class="tech-card">
       <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <rect x="4" y="28" width="6" height="8" rx="1" fill="rgba(255,255,255,0.5)"/>
@@ -539,9 +537,8 @@ include __DIR__ . '/partials/nav.php';
       <div class="tech-desc">Real-time dashboards and drill-down reporting across every function, turning raw data into strategic advantage.</div>
       <div class="tech-tags"><span class="t-tag">Live dashboards</span><span class="t-tag">Custom reports</span><span class="t-tag">KPI tracking</span></div>
     </div>
-
     <!-- Cloud -->
-    <div class="tech-card rv d2">
+    <div class="tech-card">
       <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <path d="M10 28a8 8 0 010-16 8.001 8.001 0 0115.32-3A7 7 0 1132 28z" fill="rgba(255,255,255,0.85)"/>
@@ -554,9 +551,8 @@ include __DIR__ . '/partials/nav.php';
       <div class="tech-desc">Enterprise-grade cloud with 99.9% uptime SLA, end-to-end encryption, and auto-scaling built for any load.</div>
       <div class="tech-tags"><span class="t-tag">99.9% uptime</span><span class="t-tag">Auto-scale</span><span class="t-tag">E2E encrypted</span></div>
     </div>
-
     <!-- Workflow -->
-    <div class="tech-card rv d3">
+    <div class="tech-card">
       <div class="tech-icon-new">
         <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
           <rect x="3" y="7" width="10" height="8" rx="2" fill="rgba(255,255,255,0.9)"/>
@@ -576,6 +572,115 @@ include __DIR__ . '/partials/nav.php';
       <div class="tech-tags"><span class="t-tag">No-code builder</span><span class="t-tag">Triggers</span><span class="t-tag">Multi-step</span></div>
     </div>
 
+    <!-- second copy for the seamless loop -->
+    <!-- ERP -->
+    <div class="tech-card" aria-hidden="true">
+      <div class="tech-icon-new">
+        <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
+          <rect x="4" y="4" width="14" height="14" rx="2" fill="rgba(255,255,255,0.9)"/>
+          <rect x="22" y="4" width="14" height="14" rx="2" fill="rgba(255,255,255,0.5)"/>
+          <rect x="4" y="22" width="14" height="14" rx="2" fill="rgba(255,255,255,0.5)"/>
+          <rect x="22" y="22" width="14" height="14" rx="2" fill="rgba(255,255,255,0.7)"/>
+          <line x1="18" y1="11" x2="22" y2="11" stroke="rgba(255,255,255,0.8)" stroke-width="2"/>
+          <line x1="11" y1="18" x2="11" y2="22" stroke="rgba(255,255,255,0.8)" stroke-width="2"/>
+          <line x1="29" y1="18" x2="29" y2="22" stroke="rgba(255,255,255,0.8)" stroke-width="2"/>
+          <line x1="18" y1="29" x2="22" y2="29" stroke="rgba(255,255,255,0.8)" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="tech-name">ERP Systems</div>
+      <div class="tech-desc">Unified business backbone with all departments connected in a single source of truth with real-time data sync across every module.</div>
+      <div class="tech-tags"><span class="t-tag">Multi-module</span><span class="t-tag">Real-time sync</span><span class="t-tag">Role-based access</span></div>
+    </div>
+    <!-- AI -->
+    <div class="tech-card" aria-hidden="true">
+      <div class="tech-icon-new">
+        <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
+          <circle cx="20" cy="20" r="7" fill="rgba(255,255,255,0.95)"/>
+          <circle cx="20" cy="6" r="3" fill="rgba(255,255,255,0.6)"/>
+          <circle cx="20" cy="34" r="3" fill="rgba(255,255,255,0.6)"/>
+          <circle cx="6" cy="20" r="3" fill="rgba(255,255,255,0.6)"/>
+          <circle cx="34" cy="20" r="3" fill="rgba(255,255,255,0.6)"/>
+          <line x1="20" y1="9" x2="20" y2="13" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+          <line x1="20" y1="27" x2="20" y2="31" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+          <line x1="9" y1="20" x2="13" y2="20" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+          <line x1="27" y1="20" x2="31" y2="20" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+          <circle cx="11" cy="11" r="2.5" fill="rgba(255,255,255,0.4)"/>
+          <circle cx="29" cy="11" r="2.5" fill="rgba(255,255,255,0.4)"/>
+          <circle cx="11" cy="29" r="2.5" fill="rgba(255,255,255,0.4)"/>
+          <circle cx="29" cy="29" r="2.5" fill="rgba(255,255,255,0.4)"/>
+        </svg>
+      </div>
+      <div class="tech-name">AI Automation</div>
+      <div class="tech-desc">Intelligent workflows that learn and adapt, eliminating repetitive tasks and surfacing actionable insights before you ask.</div>
+      <div class="tech-tags"><span class="t-tag">Predictive AI</span><span class="t-tag">Auto-workflows</span><span class="t-tag">Smart alerts</span></div>
+    </div>
+    <!-- CRM -->
+    <div class="tech-card" aria-hidden="true">
+      <div class="tech-icon-new">
+        <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
+          <circle cx="14" cy="13" r="6" fill="rgba(255,255,255,0.9)"/>
+          <circle cx="28" cy="10" r="4" fill="rgba(255,255,255,0.55)"/>
+          <path d="M4 30c0-5.523 4.477-10 10-10s10 4.477 10 10" fill="rgba(255,255,255,0.7)"/>
+          <path d="M28 24c3.314 0 6 2.686 6 6H22c0-3.314 2.686-6 6-6z" fill="rgba(255,255,255,0.4)"/>
+          <rect x="30" y="20" width="8" height="2" rx="1" fill="rgba(255,255,255,0.5)"/>
+          <rect x="32" y="24" width="6" height="2" rx="1" fill="rgba(255,255,255,0.5)"/>
+        </svg>
+      </div>
+      <div class="tech-name">CRM Platform</div>
+      <div class="tech-desc">360° customer management, from first touch to retention, with pipeline tracking, follow-up automation, and revenue forecasting.</div>
+      <div class="tech-tags"><span class="t-tag">Lead scoring</span><span class="t-tag">Pipeline</span><span class="t-tag">Auto follow-up</span></div>
+    </div>
+    <!-- Analytics -->
+    <div class="tech-card" aria-hidden="true">
+      <div class="tech-icon-new">
+        <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
+          <rect x="4" y="28" width="6" height="8" rx="1" fill="rgba(255,255,255,0.5)"/>
+          <rect x="13" y="20" width="6" height="16" rx="1" fill="rgba(255,255,255,0.7)"/>
+          <rect x="22" y="12" width="6" height="24" rx="1" fill="rgba(255,255,255,0.9)"/>
+          <rect x="31" y="16" width="6" height="20" rx="1" fill="rgba(255,255,255,0.6)"/>
+          <polyline points="7,24 16,16 25,8 34,12" fill="none" stroke="rgba(255,255,255,0.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="34" cy="12" r="2.5" fill="white"/>
+        </svg>
+      </div>
+      <div class="tech-name">Analytics Engine</div>
+      <div class="tech-desc">Real-time dashboards and drill-down reporting across every function, turning raw data into strategic advantage.</div>
+      <div class="tech-tags"><span class="t-tag">Live dashboards</span><span class="t-tag">Custom reports</span><span class="t-tag">KPI tracking</span></div>
+    </div>
+    <!-- Cloud -->
+    <div class="tech-card" aria-hidden="true">
+      <div class="tech-icon-new">
+        <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
+          <path d="M10 28a8 8 0 010-16 8.001 8.001 0 0115.32-3A7 7 0 1132 28z" fill="rgba(255,255,255,0.85)"/>
+          <rect x="16" y="22" width="2" height="10" rx="1" fill="rgba(20,78,74,0.9)"/>
+          <rect x="22" y="22" width="2" height="10" rx="1" fill="rgba(20,78,74,0.9)"/>
+          <path d="M13 25l4-5 4 3 4-6" stroke="rgba(20,78,74,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="tech-name">Cloud Infrastructure</div>
+      <div class="tech-desc">Enterprise-grade cloud with 99.9% uptime SLA, end-to-end encryption, and auto-scaling built for any load.</div>
+      <div class="tech-tags"><span class="t-tag">99.9% uptime</span><span class="t-tag">Auto-scale</span><span class="t-tag">E2E encrypted</span></div>
+    </div>
+    <!-- Workflow -->
+    <div class="tech-card" aria-hidden="true">
+      <div class="tech-icon-new">
+        <svg width="26" height="26" fill="none" viewBox="0 0 40 40">
+          <rect x="3" y="7" width="10" height="8" rx="2" fill="rgba(255,255,255,0.9)"/>
+          <rect x="16" y="3" width="10" height="8" rx="2" fill="rgba(255,255,255,0.6)"/>
+          <rect x="16" y="15" width="10" height="8" rx="2" fill="rgba(255,255,255,0.75)"/>
+          <rect x="29" y="9" width="8" height="8" rx="2" fill="rgba(255,255,255,0.5)"/>
+          <rect x="3" y="25" width="10" height="8" rx="2" fill="rgba(255,255,255,0.55)"/>
+          <line x1="13" y1="11" x2="16" y2="7" stroke="rgba(255,255,255,0.8)" stroke-width="1.5"/>
+          <line x1="13" y1="11" x2="16" y2="19" stroke="rgba(255,255,255,0.8)" stroke-width="1.5"/>
+          <line x1="26" y1="7" x2="29" y2="13" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+          <line x1="26" y1="19" x2="29" y2="13" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+          <line x1="13" y1="29" x2="36" y2="29" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="2 2"/>
+        </svg>
+      </div>
+      <div class="tech-name">Workflow Intelligence</div>
+      <div class="tech-desc">Visual no-code workflow builder with triggers, conditions, and multi-step actions. Automate complex processes instantly.</div>
+      <div class="tech-tags"><span class="t-tag">No-code builder</span><span class="t-tag">Triggers</span><span class="t-tag">Multi-step</span></div>
+    </div>
+   </div>
   </div>
   <div class="sec-cta rv">
     <button type="button" data-book class="btn btn-black" style="background:#32b46f;color:#04110a">Discuss Technical Requirements</button>
@@ -1392,7 +1497,12 @@ renderDash(0);
  let overflow = 0;
 
  function measure(){
- stickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
+ // pin the heading + cards + CTA block centred in the screen below the fixed nav
+ const nav = document.querySelector('nav');
+ const navH = nav ? nav.offsetHeight : 0;
+ const top = navH + Math.max(0, (window.innerHeight - navH - sticky.offsetHeight) / 2);
+ outer.style.setProperty('--cf-top', top + 'px');
+ stickyTop = top;
  overflow = Math.max(0, row.scrollWidth - sticky.clientWidth);
  outer.style.height = (sticky.offsetHeight + overflow) + 'px';
  }
@@ -1408,6 +1518,7 @@ renderDash(0);
  onScroll();
  window.addEventListener('resize', ()=>{ measure(); onScroll(); });
  window.addEventListener('scroll', onScroll, { passive: true });
+ window.addEventListener('load', ()=>{ measure(); onScroll(); });
 })();
 
 // Platform Dashboards: one row of cards. While the row is pinned, vertical scroll

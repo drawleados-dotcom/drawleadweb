@@ -1331,10 +1331,12 @@ renderDash(0);
  let overflow = 0;
 
  function measure(){
- // the pinned box fills the viewport below the fixed nav (see .cf-scroll-sticky)
+ // pin the heading + cards + CTA block centred in the screen below the fixed nav
  const nav = document.querySelector('nav');
- outer.style.setProperty('--cf-top', (nav ? nav.offsetHeight : 0) + 'px');
- stickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
+ const navH = nav ? nav.offsetHeight : 0;
+ const top = navH + Math.max(0, (window.innerHeight - navH - sticky.offsetHeight) / 2);
+ outer.style.setProperty('--cf-top', top + 'px');
+ stickyTop = top;
  overflow = Math.max(0, row.scrollWidth - sticky.clientWidth);
  outer.style.height = (sticky.offsetHeight + overflow) + 'px';
  }
@@ -1350,6 +1352,7 @@ renderDash(0);
  onScroll();
  window.addEventListener('resize', ()=>{ measure(); onScroll(); });
  window.addEventListener('scroll', onScroll, { passive: true });
+ window.addEventListener('load', ()=>{ measure(); onScroll(); });
 })();
 
 // Tech Stack: same sticky horizontal run as Core Functions. Here only the card row

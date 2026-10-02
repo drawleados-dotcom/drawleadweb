@@ -727,11 +727,13 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
    JS reads the same offset back off the element, so the horizontal progress stays in
    step with it. */
 .cf-scroll-sticky{position:sticky;top:calc((100vh - var(--cf-pin-h)) / 2);height:var(--cf-pin-h);width:100%;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
-/* The heading now pins with the row, so the pinned box is the whole screen below the
-   fixed nav (JS writes the nav height to --cf-top) and heading, cards and CTA sit
-   centred in it as one block, with tight steps between them. */
-.cf-scroll-sticky{top:var(--cf-top,0px);height:calc(100vh - var(--cf-top,0px))}
-.cf-pin-head{flex:none;margin-bottom:1.6rem}
+/* The heading pins with the row. The pinned box is only as tall as heading + cards +
+   CTA; JS writes --cf-top so that block sits centred in the screen below the fixed
+   nav, with no empty band above or below it. */
+.cf-scroll-sticky{top:var(--cf-top,0px);height:auto}
+/* Bottom padding halved: the pinned block already carries its own breathing room. */
+#functions{padding-bottom:calc(var(--sp-section) / 2)}
+.cf-pin-head{flex:none;margin-bottom:1.25rem}
 .cf-pin-head .sec-h{margin-bottom:.6rem}
 #functions .cf-pin-head .sec-sub{margin-bottom:0}
 @media(max-height:760px){
@@ -2837,4 +2839,29 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  #cta.cta-framed .cta-p{margin-bottom:1.75rem}
  #cta.cta-framed .cta-btn-w,
  #cta.cta-framed .cta-btn-g{max-width:320px}
+}
+
+/* ── #tech marquee (Home 8): the six cards in the Core Functions card style, four
+   across, drifting left in an endless loop. The track holds the cards twice; it
+   slides by exactly one set (its padding-right supplies the gap after card 6), so
+   the jump back to 0 lands on an identical frame. Pauses on hover and focus.
+   Reduced motion: no animation, the copy set is hidden, and the row swipes. */
+#tech .tech-marquee{
+ --tc-gap:20px;
+ --tc-w:max(270px, calc((min(100vw, 1440px) - 2 * var(--sp-gutter) - 3 * var(--tc-gap)) / 4));
+ margin:2.5rem calc(50% - 50vw) 0;width:100vw;overflow:hidden;
+ -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+         mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+}
+#tech .tech-track{
+ display:flex;gap:var(--tc-gap);width:max-content;padding:16px var(--tc-gap) 28px 0;
+ animation:techLoop 45s linear infinite;
+}
+#tech .tech-marquee:hover .tech-track,#tech .tech-marquee:focus-within .tech-track{animation-play-state:paused}
+#tech .tech-marquee .tech-card{flex:0 0 var(--tc-w);width:var(--tc-w);min-height:280px}
+@keyframes techLoop{to{transform:translate3d(-50%,0,0)}}
+@media(prefers-reduced-motion:reduce){
+ #tech .tech-marquee{-webkit-mask-image:none;mask-image:none}
+ #tech .tech-track{animation:none;overflow-x:auto;width:auto;padding-left:var(--sp-gutter);scroll-snap-type:x proximity}
+ #tech .tech-track [aria-hidden="true"]{display:none}
 }
