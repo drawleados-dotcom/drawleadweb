@@ -399,7 +399,7 @@ include __DIR__ . '/partials/nav.php';
 <svg class="ts-svg" viewBox="0 0 2000 1000" role="img" aria-label="Fifteen business modules, from Lead Management to Smart Alerts &amp; Reminders, all flowing into one centralized platform" xmlns="http://www.w3.org/2000/svg">
 <defs>
 <filter id="tsGlow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-<filter id="tsHubGlow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="22" flood-color="#32b46f" flood-opacity=".55"/></filter>
+<filter id="tsHubGlow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="32" flood-color="#32b46f" flood-opacity=".6"/></filter>
 <linearGradient id="tsHubFill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3cc47c"/><stop offset="1" stop-color="#17945f"/></linearGradient>
 <path id="tsPath-0" d="M200 105C200 242.5 920 242.5 920 380"/>
 <path id="tsPath-1" d="M600 105C600 242.5 960 242.5 960 380"/>
@@ -416,16 +416,16 @@ include __DIR__ . '/partials/nav.php';
 <path id="tsPath-12" d="M392 340C636 340 636 440 880 440"/>
 <path id="tsPath-13" d="M392 500C636 500 636 500 880 500"/>
 <path id="tsPath-14" d="M392 660C636 660 636 560 880 560"/>
-<path id="tsRing-0" d="M1000 340H1112A48 48 0 0 1 1160 388V612A48 48 0 0 1 1112 660H888A48 48 0 0 1 840 612V388A48 48 0 0 1 888 340Z"/>
-<path id="tsRing-1" d="M1000 300H1140A60 60 0 0 1 1200 360V640A60 60 0 0 1 1140 700H860A60 60 0 0 1 800 640V360A60 60 0 0 1 860 300Z"/>
-<path id="tsRing-2" d="M1000 260H1168A72 72 0 0 1 1240 332V668A72 72 0 0 1 1168 740H832A72 72 0 0 1 760 668V332A72 72 0 0 1 832 260Z"/>
+<path id="tsRing-0" d="M1000 340A160 160 0 1 1 1000 660A160 160 0 1 1 1000 340Z"/>
+<path id="tsRing-1" d="M1000 300A200 200 0 1 1 1000 700A200 200 0 1 1 1000 300Z"/>
+<path id="tsRing-2" d="M1000 260A240 240 0 1 1 1000 740A240 240 0 1 1 1000 260Z"/>
 </defs>
 <g fill="none" stroke="#34a87c" stroke-width="2.5">
 <use href="#tsRing-0" opacity=".6"><animate attributeName="opacity" values=".2;.8;.2" dur="3s" begin="0.8s" repeatCount="indefinite"/></use>
 <use href="#tsRing-1" opacity=".6"><animate attributeName="opacity" values=".2;.8;.2" dur="3s" begin="0.4s" repeatCount="indefinite"/></use>
 <use href="#tsRing-2" opacity=".6"><animate attributeName="opacity" values=".2;.8;.2" dur="3s" begin="0.0s" repeatCount="indefinite"/></use>
 </g>
-<g fill="none" stroke="#3fb57a" stroke-opacity=".5" stroke-width="2.5" stroke-linecap="round">
+<g fill="none" stroke="#3fb57a" stroke-opacity=".42" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="9 13">
 <use href="#tsPath-0"/>
 <use href="#tsPath-1"/>
 <use href="#tsPath-2"/>
