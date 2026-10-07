@@ -1200,9 +1200,18 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
    const W = stack.clientWidth;
    if(W <= 0) return;
 
-   const COL = Math.min(96, Math.max(58, Math.round(W * 0.062)));
-   const EXP = W + (n - 1) * (OVERLAP - COL);
+   // GUT keeps the stack off the container's edges; the panels lay out inside
+   // it, so the outermost ones can never touch or overflow the edge.
+   const GUT = Math.min(40, Math.max(12, Math.round(W * 0.032)));
+   const IW  = W - GUT * 2;
+   const COL = Math.min(96, Math.max(58, Math.round(IW * 0.062)));
+   // Solved against the inner width, then capped: past ~880px the open panel is
+   // wider than its content needs and the copy strands in the middle of it.
+   // Under the cap the run is narrower than IW, and the stack centres the slack
+   // evenly, which is what balances the composition left to right.
+   const EXP = Math.min(IW + (n - 1) * (OVERLAP - COL), 880);
    if(EXP <= COL){ teardown(); return; }      // too cramped to open a panel
+   stack.style.setProperty('--gut', GUT + 'px');
    stack.style.setProperty('--exp', EXP.toFixed(2) + 'px');
    stack.style.setProperty('--col', COL + 'px');
 
@@ -1214,8 +1223,16 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
     const w = ss(clamp01(1 - Math.abs(p - i)));
     panel.style.setProperty('--w', (COL + w * (EXP - COL)).toFixed(2) + 'px');
     panel.style.setProperty('--k', w.toFixed(4));     // CSS reads this for fade and scale
-    const z = Math.round(w * 100) + 1;
+    // The stack has to fan OUTWARD from whichever panel is open, or the one
+    // directly after it gets covered on its left by the open panel and on its
+    // right by its own neighbour, leaving a 24px sliver instead of a readable
+    // spine. Ramping z down with distance means a panel is only ever covered on
+    // the side facing the open one.
+    const z = Math.max(1, Math.round(100 - Math.abs(p - i) * 14));
     panel.style.zIndex = z;
+    // and the spine centres on the half that is actually showing
+    const dir = i < p ? -1 : i > p ? 1 : 0;
+    panel.style.setProperty('--sh', (dir * (OVERLAP / 2) * (1 - w)).toFixed(2) + 'px');
     if(z > topZ){ topZ = z; top = i; }
    });
    panels.forEach((panel, i) => panel.classList.toggle('is-on', i === top));

@@ -325,7 +325,10 @@ nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
 #industries .is-head{text-align:center;margin-bottom:2.75rem}
 
 /* ── the stack ── */
-#industries .is-stack{display:flex;align-items:stretch;max-width:1240px;margin:0 auto}
+#industries .is-stack{
+ display:flex;align-items:stretch;justify-content:center;
+ max-width:1240px;margin:0 auto;padding-inline:var(--gut,0px);
+}
 #industries .is-panel{
  position:relative;min-width:0;
  border-radius:26px;overflow:hidden;isolation:isolate;
@@ -368,9 +371,10 @@ nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
  pointer-events:none;white-space:nowrap;
 }
 #industries .is-live .is-spine{opacity:calc(1 - max(0, var(--k,0) - .55) / .45)}
-/* every panel but the last has its right-hand 24px covered by the next one,
-   so the spine centres on the strip that is actually visible */
-#industries .is-live .is-panel:not(:last-child) .is-spine{margin-left:-12px}
+/* A collapsed panel is covered on the side facing the open one, so the spine
+   centres on the half still showing. The driver sets --sh, and eases it to 0
+   as the panel opens and stops being covered at all. */
+#industries .is-live .is-spine{margin-left:var(--sh,0px)}
 #industries .is-num{
  font-family:var(--font);font-style:normal;font-size:12px;font-weight:700;
  letter-spacing:.14em;color:#5FD394;
@@ -384,8 +388,9 @@ nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
    .is-body is the fixed-width canvas the copy is laid out on, so the text never
    reflows while the panel is moving — it is revealed, not re-wrapped. */
 #industries .is-body{
- position:absolute;left:var(--col,96px);top:0;bottom:0;
- width:calc(var(--exp,880px) - var(--col,96px));
+ --bl:calc(var(--col,96px) - var(--k,0) * (var(--col,96px) - 34px));
+ position:absolute;left:var(--bl);top:0;bottom:0;
+ width:calc(var(--exp,880px) - var(--bl));
  display:flex;align-items:center;
  opacity:0;pointer-events:none;
 }
