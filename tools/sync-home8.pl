@@ -194,15 +194,13 @@ rep(\$s, 'style="background:#fff;color:#0a1310"', 'style="background:#32b46f;col
 #     Styles live in assets/home8.css, which only this page loads.
 {
  my $from = qq{ <div class="ind-hscroll" id="indHOuter">\n};
- # through the CTA as well: it is re-emitted inside the pinned block
- my $to   = qq{ </div>\n</section>\n};
+ my $to   = qq{ </div><!-- /ind-hscroll -->\n};
 
  my $a = index($s, $from);   die "sync-home8: industries row not found\n"     if $a < 0;
  my $b = index($s, $to, $a); die "sync-home8: industries row end not found\n" if $b < 0;
  my $old = substr($s, $a, $b + length($to) - $a);
  die "sync-home8: the industries block to replace looks wrong\n"
-   unless $old =~ /\$indStackOrder/ && $old =~ /ind-scard/ && $old =~ /Built for/
-       && $old =~ /Find Your Industry Solution/;
+   unless $old =~ /\$indStackOrder/ && $old =~ /ind-scard/ && $old =~ /Built for/;
 
  my $new = slurp('tools/home8-industries.html') . slurp('tools/home8-industries.js');
  $new =~ s/\r\n/\n/g;
@@ -211,9 +209,6 @@ rep(\$s, 'style="background:#fff;color:#0a1310"', 'style="background:#32b46f;col
  die "sync-home8: the stack did not land\n"
    unless $s =~ /id="isStack"/ && $s =~ /indStackOrder/;
  die "sync-home8: the old row survived\n" if $s =~ /id="indRow"/;
- # the CTA must survive the swap exactly once, inside the pin
- my $cta = 0; $cta++ while $s =~ /Find Your Industry Solution/g;
- die "sync-home8: industries CTA count is $cta, expected 1\n" unless $cta == 1;
  $n++;
 }
 $s =~ s/\n/\r\n/g if $crlf;

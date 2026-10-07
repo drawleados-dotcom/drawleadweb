@@ -327,14 +327,7 @@ nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
 #industries{overflow-x:clip}
 #industries .is-outer{position:relative}
 #industries .is-sticky{width:100%}
-/* Explicit rhythm: eyebrow -> heading -> description -> cards, each step
-   smaller than the gap that follows the block. The description's own bottom
-   margin is zeroed because it was collapsing through .is-head and leaving the
-   spacing dependent on which of the two happened to be larger. */
-#industries .is-head{flex:none;text-align:center;margin-bottom:2.25rem}
-#industries .is-head .eyebrow{margin-bottom:1.1rem}
-#industries .is-head .sec-h{margin-bottom:.9rem}
-#industries .is-head .sec-sub{margin-bottom:0}
+#industries .is-head{text-align:center;margin-bottom:2.75rem}
 
 /* ── the stack ── */
 /* The run keeps its left inset but bleeds off the right edge, so the last tab
@@ -464,20 +457,8 @@ nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
 #industries .is-cta:hover{opacity:.88}
 
 /* ── pinned, once the driver is running ── */
-/* The pinned block is exactly the space under the nav, laid out as a column:
-   heading and CTA take what they need and the stack takes the rest. That is
-   what keeps the CTA on screen for the whole run — with a fixed stack height
-   the three together overran the viewport and the buttons fell below it. The
-   card height follows the window instead of a magic number, and is bounded so
-   it stays sane on very short and very tall screens. */
-#industries .is-live .is-sticky{
- position:sticky;top:var(--is-top,90px);
- height:calc(100vh - var(--is-nav,76px) - 2.5rem);
- max-height:860px;
- display:flex;flex-direction:column;justify-content:center;
-}
-#industries .is-live .is-stack{flex:1 1 0%;min-height:0;max-height:600px}
-#industries .is-live .sec-cta{flex:none;margin-top:2rem}
+#industries .is-live .is-sticky{position:sticky;top:var(--is-top,90px)}
+#industries .is-live .is-stack{height:clamp(430px,62vh,600px)}
 
 /* ── no JS, phone, or reduced motion: a plain stacked list ──
    The panels are already full-width blocks at this point; the spine goes and the
