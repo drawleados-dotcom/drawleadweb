@@ -366,7 +366,8 @@ nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
    panel opens, so the two never overlap. */
 #industries .is-spine{
  position:absolute;left:0;top:0;bottom:0;width:var(--col,96px);
- display:flex;align-items:center;justify-content:center;gap:1.1rem;
+ display:flex;align-items:center;justify-content:flex-start;gap:1.1rem;
+ padding-top:30px;
  writing-mode:vertical-rl;transform:rotate(180deg);
  pointer-events:none;white-space:nowrap;
 }
