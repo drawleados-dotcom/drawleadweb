@@ -320,14 +320,28 @@ nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
    .is-live class is never set and the rules below fall back to a plain stacked
    list, which is what the markup is on its own. */
 
+/* The run deliberately overhangs the right boundary, so the section has to
+   clip it or the page gains a horizontal scrollbar. clip, not hidden: hidden
+   would make this a scroll container and silently kill the sticky pin inside
+   it, which is the whole animation. */
+#industries{overflow-x:clip}
 #industries .is-outer{position:relative}
 #industries .is-sticky{width:100%}
 #industries .is-head{text-align:center;margin-bottom:2.75rem}
 
 /* ── the stack ── */
+/* The run keeps its left inset but bleeds off the right edge, so the last tab
+   is cropped by the boundary instead of stopping short of it. The left margin
+   reproduces what centring a 1240px box used to give, and the negative right
+   margin cancels the section's own gutter — exact, and unlike 50vw it does not
+   drift when a scrollbar is present. flex-start, because with the widths now
+   solved to fill there is no slack left to distribute. */
 #industries .is-stack{
- display:flex;align-items:stretch;justify-content:center;
- max-width:1240px;margin:0 auto;padding-inline:var(--gut,0px);
+ display:flex;align-items:stretch;justify-content:flex-start;
+ max-width:none;
+ margin-left:max(0px,calc((100% - 1240px) / 2));
+ margin-right:calc(-1 * var(--sp-gutter));
+ padding-inline:var(--gut,0px) 0;
 }
 #industries .is-panel{
  position:relative;min-width:0;

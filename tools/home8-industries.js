@@ -56,16 +56,18 @@
    const W = stack.clientWidth;
    if(W <= 0) return;
 
-   // GUT keeps the stack off the container's edges; the panels lay out inside
-   // it, so the outermost ones can never touch or overflow the edge.
-   const GUT = Math.min(40, Math.max(12, Math.round(W * 0.032)));
-   const IW  = W - GUT * 2;
-   const COL = Math.min(96, Math.max(58, Math.round(IW * 0.062)));
-   // Solved against the inner width, then capped: past ~880px the open panel is
-   // wider than its content needs and the copy strands in the middle of it.
-   // Under the cap the run is narrower than IW, and the stack centres the slack
-   // evenly, which is what balances the composition left to right.
-   const EXP = Math.min(IW + (n - 1) * (OVERLAP - COL), 880);
+   // One gutter, on the left only: the stack bleeds off the right edge, so the
+   // run fills from its left inset all the way to the boundary and the last tab
+   // is cropped by it rather than stopping short.
+   const GUT = Math.min(60, Math.max(12, Math.round(W * 0.047)));
+   const IW  = W - GUT;
+   // The open panel's size is the fixed quantity — the tabs absorb whatever is
+   // left over. Deriving COL from it this way means the run spans exactly IW at
+   // every width, so there is never slack to leave a gap on the right.
+   const WANT = 880;
+   const COL  = Math.min(150, Math.max(58,
+                 Math.round((IW - WANT + (n - 1) * OVERLAP) / (n - 1))));
+   const EXP  = IW + (n - 1) * (OVERLAP - COL);
    if(EXP <= COL){ teardown(); return; }      // too cramped to open a panel
    stack.style.setProperty('--gut', GUT + 'px');
    stack.style.setProperty('--exp', EXP.toFixed(2) + 'px');
