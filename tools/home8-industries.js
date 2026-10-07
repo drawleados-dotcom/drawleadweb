@@ -43,12 +43,12 @@
 
    const nav  = document.querySelector('nav');
    const navH = nav ? nav.offsetHeight : 0;
-   // Pin as high as the nav allows rather than centring the block. A larger top
-   // offset is reached EARLIER on the way down, so the section locks as soon as
-   // it arrives instead of after it has travelled most of a viewport first.
-   // Centring is kept only as the floor, for viewports taller than the block.
+   // The block is sized to the space under the nav (see home8.css), so it comes
+   // to rest exactly there. Pinning at that same offset means progress starts
+   // the moment it settles, never while it is still travelling into view.
+   outer.style.setProperty('--is-nav', navH + 'px');
    const slack = Math.max(0, window.innerHeight - navH - sticky.offsetHeight);
-   stickyTop  = navH + Math.min(slack, 20);
+   stickyTop  = navH + slack / 2;
    outer.style.setProperty('--is-top', stickyTop + 'px');
 
    // Scroll spent per handover. At 0.62 of a viewport each, six panels wanted

@@ -1140,6 +1140,14 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
     </article>
 <?php endforeach; ?>
    </div><!-- /is-stack -->
+
+   <!-- The CTA rides inside the pinned block, as the Core Functions pin does
+        with its own, so it stays on screen for the whole run instead of
+        waiting below the fold until the stack lets go. -->
+   <div class="sec-cta rv">
+    <button type="button" data-book class="btn btn-black">Find Your Industry Solution</button>
+    <a href="#cases" class="btn btn-outline2">See Case Studies</a>
+   </div>
   </div>
  </div><!-- /is-outer -->
  <script>
@@ -1187,12 +1195,12 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
 
    const nav  = document.querySelector('nav');
    const navH = nav ? nav.offsetHeight : 0;
-   // Pin as high as the nav allows rather than centring the block. A larger top
-   // offset is reached EARLIER on the way down, so the section locks as soon as
-   // it arrives instead of after it has travelled most of a viewport first.
-   // Centring is kept only as the floor, for viewports taller than the block.
+   // The block is sized to the space under the nav (see home8.css), so it comes
+   // to rest exactly there. Pinning at that same offset means progress starts
+   // the moment it settles, never while it is still travelling into view.
+   outer.style.setProperty('--is-nav', navH + 'px');
    const slack = Math.max(0, window.innerHeight - navH - sticky.offsetHeight);
-   stickyTop  = navH + Math.min(slack, 20);
+   stickyTop  = navH + slack / 2;
    outer.style.setProperty('--is-top', stickyTop + 'px');
 
    // Scroll spent per handover. At 0.62 of a viewport each, six panels wanted
@@ -1266,12 +1274,6 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   if(still.addEventListener)  still.addEventListener('change', reset);
  })();
  </script>
-
- <div class="sec-cta rv" style="margin-top:3rem">
- <button type="button" data-book class="btn btn-black">Find Your Industry Solution</button>
- <a href="#cases" class="btn btn-outline2">See Case Studies</a>
- </div>
-</section>
 
 <!-- WHY Drawlead -->
 <section id="why">
