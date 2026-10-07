@@ -1187,11 +1187,19 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
 
    const nav  = document.querySelector('nav');
    const navH = nav ? nav.offsetHeight : 0;
-   stickyTop  = navH + Math.max(0, (window.innerHeight - navH - sticky.offsetHeight) / 2);
+   // Pin as high as the nav allows rather than centring the block. A larger top
+   // offset is reached EARLIER on the way down, so the section locks as soon as
+   // it arrives instead of after it has travelled most of a viewport first.
+   // Centring is kept only as the floor, for viewports taller than the block.
+   const slack = Math.max(0, window.innerHeight - navH - sticky.offsetHeight);
+   stickyTop  = navH + Math.min(slack, 20);
    outer.style.setProperty('--is-top', stickyTop + 'px');
 
-   // one viewport-ish of scroll per handover
-   runway = (n - 1) * Math.max(320, Math.round(window.innerHeight * 0.62));
+   // Scroll spent per handover. At 0.62 of a viewport each, six panels wanted
+   // ~2500px and the first card sat there for half a screen before anything
+   // moved; 0.40 keeps every transition legible while cutting that by a third,
+   // so a normal scroll gesture advances the stack instead of idling in it.
+   runway = (n - 1) * Math.max(260, Math.round(window.innerHeight * 0.40));
    outer.style.height = (sticky.offsetHeight + runway) + 'px';
   }
 

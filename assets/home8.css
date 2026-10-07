@@ -357,16 +357,19 @@ nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
  #industries .is-live .is-panel{
   background:
     linear-gradient(162deg,
-      color-mix(in srgb,#14301f calc(var(--k,0) * 100%),#0B100E) 0%,
-      color-mix(in srgb,#0A1A12 calc(var(--k,0) * 100%),#090D0B) 100%);
-  border-color:color-mix(in srgb,rgba(50,180,111,.42) calc(var(--k,0) * 100%),#1A221E);
+      color-mix(in srgb,#101A15 calc(var(--k,0) * 100%),#0B100E) 0%,
+      color-mix(in srgb,#0B120F calc(var(--k,0) * 100%),#090D0B) 100%);
+  border-color:color-mix(in srgb,rgba(50,180,111,.26) calc(var(--k,0) * 100%),#1A221E);
  }
 }
 #industries .is-live .is-panel{
  flex:0 0 var(--w,96px);
+ /* The depth is carried by the black drop shadow; the green is only a hint at
+    the edge. 70px of spread at .55 read as neon bloom and washed the ground
+    around the card — this is a quarter of it. */
  box-shadow:
    0 26px 60px -24px rgba(0,0,0,.85),
-   0 0 calc(var(--k,0) * 70px) calc(var(--k,0) * -18px) rgba(50,180,111,.55);
+   0 0 calc(var(--k,0) * 18px) calc(var(--k,0) * -8px) rgba(50,180,111,.18);
  /* collapsed panels sit a little shorter, which is the depth cue. Doing this
     with margin rather than transform:scale keeps the measured width exact —
     a scaled box reports its scaled size, and the stack came out ~20px narrow. */
