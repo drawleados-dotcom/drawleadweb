@@ -9,7 +9,7 @@ use strict; use warnings;
 #
 #     perl tools/sync-home8.pl
 #
-# It applies exactly five deltas and fails loudly if any of them no longer
+# It applies exactly six deltas and fails loudly if any of them no longer
 # matches, which is the signal that the change needs looking at by hand rather
 # than being copied across blind.
 #
@@ -144,6 +144,41 @@ INS
 #     rest of the buttons instead.
 rep(\$s, 'style="background:#fff;color:#0a1310"', 'style="background:#32b46f;color:#04110a"', 2);
 
+
+# 6 · Platform Dashboards moves up to sit directly after the hero.
+#
+#     The section cannot travel on its own: the <?php ?> block above it defines
+#     the $dIco / $dKpi / $dSec / $dHead helpers that build every card, so the
+#     comment, that block and the section move as one piece. Moving them EARLIER
+#     is always safe for PHP scope — anything later that wanted the helpers
+#     still finds them defined.
+#
+#     It lands before the 7 Functions section rather than hard against the
+#     hero's </section>, because the marquee strip in between is the hero's own
+#     base rather than a section of its own, and splitting the two would strand
+#     it as an introduction to the wrong block.
+{
+ my $from = "<!-- DASHBOARDS -->\n";
+ my $to   = "<?php\n// CTA INTRO: continuous letter train\n";
+ my $at   = "<!-- 7 FUNCTIONS -->\n";
+
+ my $a = index($s, $from);  die "sync-home8: dashboards block not found\n"      if $a < 0;
+ my $b = index($s, $to, $a); die "sync-home8: cta-intro marker not found\n"      if $b < 0;
+ my $chunk = substr($s, $a, $b - $a);
+ die "sync-home8: the block to move looks wrong\n"
+   unless $chunk =~ /<section id="dashboards"/ && $chunk =~ /Every Module/ && $chunk =~ /\$dHead = function/;
+
+ substr($s, $a, length($chunk)) = '';
+
+ my $k = index($s, $at);                     die "sync-home8: functions marker not found\n" if $k < 0;
+ die "sync-home8: functions marker is not unique\n" if index($s, $at, $k + 1) >= 0;
+ substr($s, $k, 0) = $chunk;
+
+ # the whole point of the delta: prove the order actually changed
+ die "sync-home8: dashboards did not end up before functions\n"
+   unless index($s, '<section id="dashboards"') < index($s, '<section id="functions">');
+ $n++;
+}
 $s =~ s/\n/\r\n/g if $crlf;
 spew($dst, $s);
 print "sync-home8: $n deltas applied, $dst regenerated (", length($s), " bytes)\n";
