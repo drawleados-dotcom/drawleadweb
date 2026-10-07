@@ -1,0 +1,59 @@
+ <!-- Industries as an overlapping stack of tall panels (Home 8 only; Home 7 keeps
+      the sliding row). Collapsed panels show only a vertical spine; the active one
+      opens to hold the same content the row cards carried. Page scroll drives which
+      panel is open — see the driver below. Phones and reduced motion get a plain
+      stacked list instead, which is what this markup is without the JS. -->
+ <div class="is-outer" id="isOuter">
+  <div class="is-sticky" id="isSticky">
+   <div class="is-head">
+    <div class="eyebrow rv"><span class="eyebrow-text">Industries</span></div>
+    <h2 class="sec-h rv">Built for <span>Your Industry</span></h2>
+    <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements, out of the box.</p>
+   </div>
+
+   <div class="is-stack" id="isStack">
+<?php $isN = 0; foreach ($indStackOrder as $key):
+  if (!isset($indByKey[$key])) { continue; }
+  $ind = $indByKey[$key];
+  $isN++;
+?>
+    <article class="is-panel<?= $isN === 1 ? ' is-on' : '' ?>" style="--i:<?= $isN - 1 ?>">
+     <!-- the spine is what a collapsed panel shows: number and name, reading up -->
+     <span class="is-spine" aria-hidden="true">
+      <i class="is-num"><?= str_pad((string) $isN, 2, '0', STR_PAD_LEFT) ?></i>
+      <b class="is-name"><?= h($ind['name']) ?></b>
+     </span>
+
+     <div class="is-body">
+      <div class="is-body-in">
+       <div class="is-top">
+        <span class="is-ico"><?= $ind['icon'] ?></span>
+        <div>
+         <h3 class="is-title"><?= h($ind['name']) ?></h3>
+         <div class="is-tag"><?= h($ind['tag']) ?></div>
+        </div>
+       </div>
+
+       <div class="is-cols">
+        <div class="is-col">
+         <div class="is-col-h"><span class="is-rule is-rule-p"></span>Common Problems</div>
+<?php foreach ($ind['problems'] as $problem): ?>
+         <div class="is-line"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg><?= h($problem) ?></div>
+<?php endforeach; ?>
+        </div>
+        <div class="is-col">
+         <div class="is-col-h"><span class="is-rule is-rule-s"></span>Drawlead Solution</div>
+<?php foreach ($ind['solutions'] as $solution): ?>
+         <div class="is-line"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><?= h($solution) ?></div>
+<?php endforeach; ?>
+        </div>
+       </div>
+
+       <a href="/industry-<?= h($key) ?>" class="is-cta">Explore <?= h($ind['name']) ?> OS</a>
+      </div>
+     </div>
+    </article>
+<?php endforeach; ?>
+   </div><!-- /is-stack -->
+  </div>
+ </div><!-- /is-outer -->

@@ -9,7 +9,7 @@ use strict; use warnings;
 #
 #     perl tools/sync-home8.pl
 #
-# It applies exactly six deltas and fails loudly if any of them no longer
+# It applies exactly seven deltas and fails loudly if any of them no longer
 # matches, which is the signal that the change needs looking at by hand rather
 # than being copied across blind.
 #
@@ -177,6 +177,38 @@ rep(\$s, 'style="background:#fff;color:#0a1310"', 'style="background:#32b46f;col
  # the whole point of the delta: prove the order actually changed
  die "sync-home8: dashboards did not end up before functions\n"
    unless index($s, '<section id="dashboards"') < index($s, '<section id="functions">');
+ $n++;
+}
+
+# 7 · Industries becomes an overlapping stack of tall panels.
+#
+#     Home 7 keeps its sliding row. The whole .ind-hscroll block is swapped for
+#     the stack markup and its own driver; the PHP loop over $indStackOrder /
+#     $indByKey is rebuilt inside it, so the same six industries render with the
+#     same content and nothing is renamed or dropped.
+#
+#     The ids change too (isOuter/isSticky/isStack), which is what retires the
+#     old row driver: it opens with a guard on indHOuter/indHSticky/indRow and
+#     returns when they are absent, so it simply does nothing on this page.
+#
+#     Styles live in assets/home8.css, which only this page loads.
+{
+ my $from = qq{ <div class="ind-hscroll" id="indHOuter">\n};
+ my $to   = qq{ </div><!-- /ind-hscroll -->\n};
+
+ my $a = index($s, $from);   die "sync-home8: industries row not found\n"     if $a < 0;
+ my $b = index($s, $to, $a); die "sync-home8: industries row end not found\n" if $b < 0;
+ my $old = substr($s, $a, $b + length($to) - $a);
+ die "sync-home8: the industries block to replace looks wrong\n"
+   unless $old =~ /\$indStackOrder/ && $old =~ /ind-scard/ && $old =~ /Built for/;
+
+ my $new = slurp('tools/home8-industries.html') . slurp('tools/home8-industries.js');
+ $new =~ s/\r\n/\n/g;
+ substr($s, $a, length($old)) = $new;
+
+ die "sync-home8: the stack did not land\n"
+   unless $s =~ /id="isStack"/ && $s =~ /indStackOrder/;
+ die "sync-home8: the old row survived\n" if $s =~ /id="indRow"/;
  $n++;
 }
 $s =~ s/\n/\r\n/g if $crlf;

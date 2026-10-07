@@ -1083,53 +1083,162 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
  <!-- Solid wide cards in a pinned horizontal run, like the 7 Functions row: while the
       row is pinned, page scroll slides it left one card after another (JS below).
       Phones and reduced motion swipe instead. -->
- <div class="ind-hscroll" id="indHOuter">
-  <div class="ind-hsticky" id="indHSticky">
-   <!-- heading is pinned with the row so it stays on screen while the cards slide -->
-   <div class="ind-pin-head">
+ <!-- Industries as an overlapping stack of tall panels (Home 8 only; Home 7 keeps
+      the sliding row). Collapsed panels show only a vertical spine; the active one
+      opens to hold the same content the row cards carried. Page scroll drives which
+      panel is open — see the driver below. Phones and reduced motion get a plain
+      stacked list instead, which is what this markup is without the JS. -->
+ <div class="is-outer" id="isOuter">
+  <div class="is-sticky" id="isSticky">
+   <div class="is-head">
     <div class="eyebrow rv"><span class="eyebrow-text">Industries</span></div>
     <h2 class="sec-h rv">Built for <span>Your Industry</span></h2>
     <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements, out of the box.</p>
    </div>
- <div class="ind-row" id="indRow">
-  <?php $n = 0; foreach ($indStackOrder as $key):
-   if (!isset($indByKey[$key])) { continue; }
-   $ind = $indByKey[$key];
-   $n++;
-  ?>
-  <article class="ind-scard">
-   <div class="ind-scard-inner">
 
-    <div class="ind-intro">
-     <div class="ind-visual"><?= $ind['icon'] ?></div>
-     <h3 class="ind-scard-title"><?= h($ind['name']) ?></h3>
-     <div class="ind-scard-tag"><?= h($ind['tag']) ?></div>
-     <a href="/industry-<?= h($key) ?>" class="ind-scard-cta">Explore <?= h($ind['name']) ?> OS</a>
-    </div>
+   <div class="is-stack" id="isStack">
+<?php $isN = 0; foreach ($indStackOrder as $key):
+  if (!isset($indByKey[$key])) { continue; }
+  $ind = $indByKey[$key];
+  $isN++;
+?>
+    <article class="is-panel<?= $isN === 1 ? ' is-on' : '' ?>" style="--i:<?= $isN - 1 ?>">
+     <!-- the spine is what a collapsed panel shows: number and name, reading up -->
+     <span class="is-spine" aria-hidden="true">
+      <i class="is-num"><?= str_pad((string) $isN, 2, '0', STR_PAD_LEFT) ?></i>
+      <b class="is-name"><?= h($ind['name']) ?></b>
+     </span>
 
-    <div class="ind-detail">
+     <div class="is-body">
+      <div class="is-body-in">
+       <div class="is-top">
+        <span class="is-ico"><?= $ind['icon'] ?></span>
+        <div>
+         <h3 class="is-title"><?= h($ind['name']) ?></h3>
+         <div class="is-tag"><?= h($ind['tag']) ?></div>
+        </div>
+       </div>
 
-    <div class="ind-block">
-     <div class="ind-block-label"><span class="ind-rule ind-rule-p"></span>Common Problems</div>
-     <?php foreach ($ind['problems'] as $problem): ?>
-     <div class="ind-line"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg><?= h($problem) ?></div>
-     <?php endforeach; ?>
-    </div>
+       <div class="is-cols">
+        <div class="is-col">
+         <div class="is-col-h"><span class="is-rule is-rule-p"></span>Common Problems</div>
+<?php foreach ($ind['problems'] as $problem): ?>
+         <div class="is-line"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg><?= h($problem) ?></div>
+<?php endforeach; ?>
+        </div>
+        <div class="is-col">
+         <div class="is-col-h"><span class="is-rule is-rule-s"></span>Drawlead Solution</div>
+<?php foreach ($ind['solutions'] as $solution): ?>
+         <div class="is-line"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><?= h($solution) ?></div>
+<?php endforeach; ?>
+        </div>
+       </div>
 
-    <div class="ind-block">
-     <div class="ind-block-label"><span class="ind-rule ind-rule-s"></span>Drawlead Solution</div>
-     <?php foreach ($ind['solutions'] as $solution): ?>
-     <div class="ind-line"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><?= h($solution) ?></div>
-     <?php endforeach; ?>
-    </div>
-
-    </div>
-   </div>
-  </article>
-  <?php endforeach; ?>
- </div><!-- /ind-row -->
+       <a href="/industry-<?= h($key) ?>" class="is-cta">Explore <?= h($ind['name']) ?> OS</a>
+      </div>
+     </div>
+    </article>
+<?php endforeach; ?>
+   </div><!-- /is-stack -->
   </div>
- </div><!-- /ind-hscroll -->
+ </div><!-- /is-outer -->
+ <script>
+ // Industries stack: vertical page scroll drives which panel is open.
+ //
+ // Widths are continuous, not stepped. Progress p runs 0..n-1 across the runway and
+ // every panel gets a weight w = smoothstep(1 - |p - i|), so at any point between
+ // panel i and i+1 exactly two panels are part-open. smoothstep has the property
+ // ss(x) + ss(1-x) === 1, so those two weights always sum to one and the stack's
+ // total width never changes — no reflow of the row as it animates, and no jump
+ // when one panel finishes handing over to the next.
+ //
+ // EXP is solved from the container rather than guessed, so the open panel always
+ // lands exactly flush: sum(widths) - (n-1)*OVERLAP === container width.
+ (function(){
+  const outer  = document.getElementById('isOuter');
+  const sticky = document.getElementById('isSticky');
+  const stack  = document.getElementById('isStack');
+  if(!outer || !sticky || !stack) return;
+
+  const panels = Array.from(stack.children);
+  const n = panels.length;
+  if(n < 2) return;
+
+  const narrow = window.matchMedia('(max-width:900px)');
+  const still  = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const OVERLAP = 24;
+  let runway = 0, stickyTop = 0, live = false;
+
+  const ss = x => x * x * (3 - 2 * x);                 // smoothstep
+  const clamp01 = x => x < 0 ? 0 : x > 1 ? 1 : x;
+
+  function teardown(){
+   live = false;
+   outer.style.height = '';
+   outer.classList.remove('is-live');
+   panels.forEach(p => { p.style.removeProperty('--w'); p.style.removeProperty('--k'); p.style.zIndex = ''; });
+  }
+
+  function measure(){
+   if(narrow.matches || still.matches){ teardown(); return; }
+   live = true;
+   outer.classList.add('is-live');
+
+   const nav  = document.querySelector('nav');
+   const navH = nav ? nav.offsetHeight : 0;
+   stickyTop  = navH + Math.max(0, (window.innerHeight - navH - sticky.offsetHeight) / 2);
+   outer.style.setProperty('--is-top', stickyTop + 'px');
+
+   // one viewport-ish of scroll per handover
+   runway = (n - 1) * Math.max(320, Math.round(window.innerHeight * 0.62));
+   outer.style.height = (sticky.offsetHeight + runway) + 'px';
+  }
+
+  function paint(){
+   if(!live) return;
+   const W = stack.clientWidth;
+   if(W <= 0) return;
+
+   const COL = Math.min(96, Math.max(58, Math.round(W * 0.062)));
+   const EXP = W + (n - 1) * (OVERLAP - COL);
+   if(EXP <= COL){ teardown(); return; }      // too cramped to open a panel
+   stack.style.setProperty('--exp', EXP.toFixed(2) + 'px');
+   stack.style.setProperty('--col', COL + 'px');
+
+   const rect = outer.getBoundingClientRect();
+   const p = clamp01((stickyTop - rect.top) / runway) * (n - 1);
+
+   let top = 0, topZ = 0;
+   panels.forEach((panel, i) => {
+    const w = ss(clamp01(1 - Math.abs(p - i)));
+    panel.style.setProperty('--w', (COL + w * (EXP - COL)).toFixed(2) + 'px');
+    panel.style.setProperty('--k', w.toFixed(4));     // CSS reads this for fade and scale
+    const z = Math.round(w * 100) + 1;
+    panel.style.zIndex = z;
+    if(z > topZ){ topZ = z; top = i; }
+   });
+   panels.forEach((panel, i) => panel.classList.toggle('is-on', i === top));
+  }
+
+  let ticking = false;
+  function onScroll(){
+   if(ticking) return;
+   ticking = true;
+   requestAnimationFrame(() => { ticking = false; paint(); });
+  }
+
+  function reset(){ measure(); paint(); }
+
+  reset();
+  window.addEventListener('resize', reset);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('load', reset);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(reset);
+  if(narrow.addEventListener) narrow.addEventListener('change', reset);
+  if(still.addEventListener)  still.addEventListener('change', reset);
+ })();
+ </script>
 
  <div class="sec-cta rv" style="margin-top:3rem">
  <button type="button" data-book class="btn btn-black">Find Your Industry Solution</button>
