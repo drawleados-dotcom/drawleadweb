@@ -369,13 +369,15 @@ nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
     around the card — this is a quarter of it. */
  box-shadow:
    0 26px 60px -24px rgba(0,0,0,.85),
+   -16px 0 24px -16px rgba(0,0,0,.9),
+   16px 0 24px -16px rgba(0,0,0,.9),
    0 0 calc(var(--k,0) * 18px) calc(var(--k,0) * -8px) rgba(50,180,111,.18);
  /* collapsed panels sit a little shorter, which is the depth cue. Doing this
     with margin rather than transform:scale keeps the measured width exact —
     a scaled box reports its scaled size, and the stack came out ~20px narrow. */
  margin-block:calc((1 - var(--k,0)) * 15px);
 }
-#industries .is-live .is-panel + .is-panel{margin-left:-24px}
+#industries .is-live .is-panel + .is-panel{margin-left:calc(-1 * var(--ov,24px))}
 
 /* ── the spine: all a collapsed panel shows ──
    vertical-rl plus the half-turn gives bottom-to-top, which is the only vertical

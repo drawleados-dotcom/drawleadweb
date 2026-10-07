@@ -1167,7 +1167,13 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   const narrow = window.matchMedia('(max-width:900px)');
   const still  = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  const OVERLAP = 24;
+  // How far each panel tucks behind the next. Raising it does not change how
+  // much of a tab you can see — the visible strip is (IW - EXP) / (n - 1), and
+  // COL is derived from the same EXP, so the two move together. What it does
+  // change is how much of each panel is hidden: at 44 the 26px corner radius
+  // and the border on the covered side disappear behind the neighbour, so the
+  // tabs read as one deck rather than as separate cards standing in a row.
+  const OVERLAP = 44;
   let runway = 0, stickyTop = 0, live = false;
 
   const ss = x => x * x * (3 - 2 * x);                 // smoothstep
@@ -1217,11 +1223,17 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
    // left over. Deriving COL from it this way means the run spans exactly IW at
    // every width, so there is never slack to leave a gap on the right.
    const WANT = 880;
-   const COL  = Math.min(150, Math.max(58,
+   // The ceiling has to clear (IW - WANT) / (n - 1) + OVERLAP, or it binds first
+   // and the open panel grows past WANT to take up the slack — which it did at
+   // 1920 once OVERLAP went to 44.
+   const COL  = Math.min(200, Math.max(58,
                  Math.round((IW - WANT + (n - 1) * OVERLAP) / (n - 1))));
    const EXP  = IW + (n - 1) * (OVERLAP - COL);
    if(EXP <= COL){ teardown(); return; }      // too cramped to open a panel
    stack.style.setProperty('--gut', GUT + 'px');
+   // CSS needs the same number for the negative margin; publishing it from here
+   // is what stops the two definitions drifting apart.
+   stack.style.setProperty('--ov', OVERLAP + 'px');
    stack.style.setProperty('--exp', EXP.toFixed(2) + 'px');
    stack.style.setProperty('--col', COL + 'px');
 
