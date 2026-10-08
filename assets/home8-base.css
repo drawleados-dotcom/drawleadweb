@@ -295,3 +295,26 @@ html[data-theme="light"] #industries .is-col:last-child .is-line svg{color:#157A
 .theme-toggle .tt-moon{display:none}
 html[data-theme="light"] .theme-toggle .tt-sun{display:none}
 html[data-theme="light"] .theme-toggle .tt-moon{display:block}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   23 · HERO DASHBOARD TILT
+   The hero dashboard starts as a floating screen seen from slightly above, its
+   lower edge leaning toward the viewer, and straightens to face front as the
+   page scrolls. templates/home8-body.php writes the progress into --dw-p (0 =
+   tilted, 1 = flat) and adds .dw-tilt only when it runs, so without JS, or
+   under reduced motion, the window simply sits flat. Only the transform moves:
+   the tabs, the frame and everything inside it are untouched. */
+#dashWindow.dw-tilt{
+ --dw-tilt:16deg;
+ transform:perspective(1600px)
+  translateY(calc(-14px * (1 - var(--dw-p, 0))))
+  rotateX(calc(var(--dw-tilt) * (1 - var(--dw-p, 0))))
+  scale(calc(.95 + .05 * var(--dw-p, 0)));
+ transform-origin:50% 35%;
+ will-change:transform;
+ backface-visibility:hidden;
+}
+/* fully straightened: drop the layer so the text renders crisp */
+#dashWindow.dw-tilt.dw-flat{transform:none;will-change:auto}
+@media (max-width:768px){#dashWindow.dw-tilt{--dw-tilt:10deg}}
+@media (prefers-reduced-motion:reduce){#dashWindow.dw-tilt{transform:none;will-change:auto}}
