@@ -52,20 +52,43 @@ OLD
  * the result, or the two pages drift apart.
  *
  * Only the theme differs. This page loads /assets/home7.css for the layout,
- * type, spacing and animation, then /assets/home8.css on top of it, which
- * carries nothing but colour. That is deliberate: a layout fix to Home 7
- * reaches Home 8 as well, and the dark theme stays readable as its own file
- * instead of being diffused through a 165KB copy.
+ * type, spacing and animation, then /assets/home8-base.css for what Home 8
+ * changes in both themes, then /assets/home8.css, which carries nothing but
+ * the dark theme's colour. That is deliberate: a layout fix to Home 7 reaches
+ * Home 8 as well, and the dark theme stays readable as its own file instead
+ * of being diffused through a 165KB copy. It also makes the light theme free:
+ * the header toggle switches home8.css off and Home 7's colours show through.
  */
 $activePage = 'home8';
 NEW
 
-# 2 · the theme sheet, after Home 7's
+# 2 · the theme sheets, after Home 7's, and the theme switch.
+#
+#     The script runs during parse, right after the dark sheet's <link>, so a
+#     saved "light" choice turns the sheet off before the first paint and the
+#     page never flashes dark. Dark is the default: Home 8 is the dark page,
+#     and only an explicit choice on the header toggle (partials/nav.php)
+#     changes it. localStorage can throw (private mode, blocked storage); the
+#     page then simply stays dark.
 rep(\$s,
   '<link rel="stylesheet" href="<?= asset_url(\'/assets/home7.css\') ?>">',
   '<link rel="stylesheet" href="<?= asset_url(\'/assets/home7.css\') ?>">' . "\n"
-  . '<!-- colour only; everything structural comes from home7.css above -->' . "\n"
-  . '<link rel="stylesheet" href="<?= asset_url(\'/assets/home8.css\') ?>">',
+  . '<!-- holds in both themes: heading weights, the industries stack, the toggle -->' . "\n"
+  . '<link rel="stylesheet" href="<?= asset_url(\'/assets/home8-base.css\') ?>">' . "\n"
+  . '<!-- the dark theme: colour only, switched off by the header toggle for light -->' . "\n"
+  . '<link rel="stylesheet" id="home8Dark" href="<?= asset_url(\'/assets/home8.css\') ?>">' . "\n"
+  . (<<'JS' =~ s/\n\z//r),
+<script>
+(function(){
+ var t = null;
+ try { t = localStorage.getItem('home8-theme'); } catch (e) {}
+ if (t === 'light') {
+  document.getElementById('home8Dark').media = 'not all';
+  document.documentElement.setAttribute('data-theme', 'light');
+ }
+})();
+</script>
+JS
   1);
 
 

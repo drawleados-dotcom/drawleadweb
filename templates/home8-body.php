@@ -9,18 +9,32 @@
  * the result, or the two pages drift apart.
  *
  * Only the theme differs. This page loads /assets/home7.css for the layout,
- * type, spacing and animation, then /assets/home8.css on top of it, which
- * carries nothing but colour. That is deliberate: a layout fix to Home 7
- * reaches Home 8 as well, and the dark theme stays readable as its own file
- * instead of being diffused through a 165KB copy.
+ * type, spacing and animation, then /assets/home8-base.css for what Home 8
+ * changes in both themes, then /assets/home8.css, which carries nothing but
+ * the dark theme's colour. That is deliberate: a layout fix to Home 7 reaches
+ * Home 8 as well, and the dark theme stays readable as its own file instead
+ * of being diffused through a 165KB copy. It also makes the light theme free:
+ * the header toggle switches home8.css off and Home 7's colours show through.
  */
 $activePage = 'home8';
 include __DIR__ . '/partials/nav.php';
 ?>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<?= asset_url('/assets/home7.css') ?>">
-<!-- colour only; everything structural comes from home7.css above -->
-<link rel="stylesheet" href="<?= asset_url('/assets/home8.css') ?>">
+<!-- holds in both themes: heading weights, the industries stack, the toggle -->
+<link rel="stylesheet" href="<?= asset_url('/assets/home8-base.css') ?>">
+<!-- the dark theme: colour only, switched off by the header toggle for light -->
+<link rel="stylesheet" id="home8Dark" href="<?= asset_url('/assets/home8.css') ?>">
+<script>
+(function(){
+ var t = null;
+ try { t = localStorage.getItem('home8-theme'); } catch (e) {}
+ if (t === 'light') {
+  document.getElementById('home8Dark').media = 'not all';
+  document.documentElement.setAttribute('data-theme', 'light');
+ }
+})();
+</script>
 
 <section id="hero">
 

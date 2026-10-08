@@ -204,8 +204,49 @@ try {
  <li><a href="/home-8"<?= $activePage === 'home8' ? ' style="color:var(--black)"' : '' ?>>Home Eight</a></li>
  <?php endif; ?>
  </ul>
+ <?php if ($activePage === 'home8'): ?>
+ <!-- Home 8 only: the dark/light switch. Its styles are in assets/home8-base.css
+      and the sheet it switches is assets/home8.css. -->
+ <div class="nav-end">
+  <button type="button" class="theme-toggle" id="themeToggle" aria-pressed="true" aria-label="Dark mode" title="Switch to light mode">
+   <svg class="tt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+   <svg class="tt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+  <button type="button" data-book class="nav-btn">Free Consultation Call →</button>
+ </div>
+ <?php else: ?>
  <button type="button" data-book class="nav-btn">Free Consultation Call →</button>
+ <?php endif; ?>
 </nav>
+<?php if ($activePage === 'home8'): ?>
+<script>
+(function(){
+ // Home 8's theme toggle. Dark is the page's own theme and the default; light
+ // switches the dark sheet (link#home8Dark) off so Home 7's colours show.
+ // The page applies a saved choice before first paint (see the script after
+ // that <link> in templates/home8-body.php); this only handles the clicks.
+ var btn = document.getElementById('themeToggle');
+ if (!btn) return;
+ function sync(light){
+  btn.setAttribute('aria-pressed', light ? 'false' : 'true');
+  btn.title = light ? 'Switch to dark mode' : 'Switch to light mode';
+ }
+ var saved = null;
+ try { saved = localStorage.getItem('home8-theme'); } catch (e) {}
+ sync(saved === 'light');
+ btn.addEventListener('click', function(){
+  var sheet = document.getElementById('home8Dark');
+  if (!sheet) return;
+  var light = document.documentElement.getAttribute('data-theme') !== 'light';
+  sheet.media = light ? 'not all' : 'all';
+  if (light) document.documentElement.setAttribute('data-theme', 'light');
+  else document.documentElement.removeAttribute('data-theme');
+  sync(light);
+  try { localStorage.setItem('home8-theme', light ? 'light' : 'dark'); } catch (e) {}
+ });
+})();
+</script>
+<?php endif; ?>
 <script>
 (function(){
  // Pure-CSS :hover closes the mega menu the instant the mouse leaves the

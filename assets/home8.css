@@ -1,11 +1,17 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    HOME 8 — dark theme
    ───────────────────────────────────────────────────────────────────────────
-   Loaded by templates/home8-body.php AFTER /assets/home7.css. It carries colour,
-   plus one typographic rule (section 18) that puts every heading on weight 700.
-   Nothing else: no layout, no spacing, no animation. Home 7 remains the single
-   source of truth for all of that, so a structural fix there reaches this page
-   too and the two cannot drift apart.
+   Loaded by templates/home8-body.php AFTER /assets/home7.css and
+   /assets/home8-base.css. It carries colour and nothing else: no layout, no
+   spacing, no animation. Home 7 remains the single source of truth for all of
+   that, so a structural fix there reaches this page too and the two cannot
+   drift apart.
+
+   This sheet IS the dark theme. The theme toggle in the header switches it off
+   (media="not all"), and what is left — Home 7's colours plus home8-base.css —
+   is the light theme. So nothing structural may live here: anything that has
+   to hold in both themes belongs in home8-base.css, which is why the heading
+   weights (18) and the industries stack (21) are there now.
 
    Everything here wins on source order, not on specificity: each selector is
    written to match the one in home7.css exactly, so a later edit over there is
@@ -223,71 +229,12 @@ nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
 .mega-inner{box-shadow:0 30px 70px rgba(0,0,0,.6)}
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   18 · HEADING WEIGHT
-   One weight for every heading on this page: 700.
-
-   Home 7 runs five weights across its headings — 600 on card titles, 650 on the
-   solutions standfirst, 700 on the section headings, 750 on the checklist
-   labels and 800 on the letter train, the method chips and the footer mark.
-   Here they all land on 700.
-
-   Each selector below is written to match the one in home7.css exactly, so it
-   wins on source order; where that file scopes a rule to a section (#solutions
-   .sol-tag, #method .mth-chip) the scope is repeated, or the override would
-   lose on specificity. The spans nested inside headings already inherit their
-   weight from home7.css, so .fade, .g, .gr, .grad-os and .ci-g follow.
-
-   This is a typographic change, not a colour one, so unlike everything above it
-   does move the layout: heavier and lighter glyphs are wider and narrower, so
-   wrap points can shift. It is deliberate and scoped to this page.
-
-   Two things are left alone:
-     · <strong> inside the solutions checklists (w750). That is inline emphasis
-       inside a sentence, not a heading.
-     · the hero application preview and the dashboard mock-ups. Their headings
-       belong to a simulated product UI that this page presents as a screenshot;
-       restyling their type would misrepresent the product rather than the page.
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* display headings */
-.hero-h,.sec-h,.why-h,.cta-h{font-weight:700}
-.ci-line{font-weight:700}
-#method .mth-chip{font-weight:700}
-
-/* block and card titles */
-.cf-name{font-weight:700}
-.fn-name{font-weight:700}
-.sol-name{font-weight:700}
-#solutions .sol-tag{font-weight:700}
-.case-title{font-weight:700}
-.tech-name{font-weight:700}
-.why-fname{font-weight:700}
-.ind-scard-title{font-weight:700}
-.ind-block-label{font-weight:700}
-#method .mth-panel-h{font-weight:700}
-
-/* figures and the footer mark */
-.hstat-n{font-weight:700}
-.sol-metric-v{font-weight:700}
-.ft-logo{font-weight:700}
-
-/* ═══════════════════════════════════════════════════════════════════════════
    19 · HERO CURSOR GLOW
    The About Us hero's effect, brought onto this hero.
 
    The .ah-fx / .ah-blob / .ah-lines rules live in partials/style.php, which is
-   inlined on every page, so they already apply here — only the stacking and the
-   dark-ground tuning are needed. The markup and the driver are added by
-   tools/sync-home8.pl, which keeps them through a regeneration.
-
-   #hero already has overflow:hidden and position:relative, so the layer is
-   clipped and positioned without touching the section.
-
-   Layering inside #hero: the inverted artwork band is z-index 0, .hero-stars is
-   1 and .hero-grid (the copy and the dashboard) is 2. The glow goes at 1,
-   inserted before the stars, so it washes over the artwork and the stars still
-   twinkle on top of it. Nothing can reach the copy. */
-#hero .ah-fx{z-index:1}
+   inlined on every page, so they already apply here. The stacking holds in both
+   themes, so it is in home8-base.css; only the dark-ground tuning is here. */
 
 /* On About Us this sits on a near-white page, where a 40%-alpha green reads as
    a strong light. On black the same values are barely there: an additive light
@@ -302,176 +249,6 @@ nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
  background-image:
   linear-gradient(rgba(80,235,155,.42) 1px,transparent 1px),
   linear-gradient(90deg,rgba(80,235,155,.42) 1px,transparent 1px);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   21 · INDUSTRIES — overlapping panel stack (Home 8 only)
-   Home 7 keeps its sliding row of wide cards. Here the six industries are tall
-   rounded panels standing side by side, each overlapping the next; page scroll
-   opens them one at a time.
-
-   Only colour and box live here — every width comes from the driver in the
-   markup, which solves them against the container so the open panel always
-   lands flush. CSS reads two custom properties per panel:
-     --w  the panel's width right now
-     --k  0..1, how open it is; drives fade, scale and the panel's own tone
-   Both are continuous, so there is nothing to transition and no transition to
-   fight the scrollbar. Without JS (or on a phone, or under reduced motion) the
-   .is-live class is never set and the rules below fall back to a plain stacked
-   list, which is what the markup is on its own. */
-
-/* The run deliberately overhangs the right boundary, so the section has to
-   clip it or the page gains a horizontal scrollbar. clip, not hidden: hidden
-   would make this a scroll container and silently kill the sticky pin inside
-   it, which is the whole animation. */
-#industries{overflow-x:clip}
-#industries .is-outer{position:relative}
-#industries .is-sticky{width:100%}
-#industries .is-head{text-align:center;margin-bottom:2.75rem}
-
-/* ── the stack ── */
-/* The run keeps its left inset but bleeds off the right edge, so the last tab
-   is cropped by the boundary instead of stopping short of it. The left margin
-   reproduces what centring a 1240px box used to give, and the negative right
-   margin cancels the section's own gutter — exact, and unlike 50vw it does not
-   drift when a scrollbar is present. flex-start, because with the widths now
-   solved to fill there is no slack left to distribute. */
-#industries .is-stack{
- display:flex;align-items:stretch;justify-content:flex-start;
- max-width:none;
- margin-left:max(0px,calc((100% - 1240px) / 2));
- margin-right:calc(-1 * var(--sp-gutter));
- padding-inline:var(--gut,0px) 0;
-}
-#industries .is-panel{
- position:relative;min-width:0;
- border-radius:26px;overflow:hidden;isolation:isolate;
- background:#0B100E;border:1px solid #1A221E;
-}
-
-/* ── open state ──
-   The panel's emphasis rides --k rather than a class, so it builds as the panel
-   opens instead of switching on at the end. color-mix gives the tone, the ring
-   and the glow one source of truth; a browser without it keeps the base above. */
-@supports (color: color-mix(in srgb, red, blue)){
- #industries .is-live .is-panel{
-  background:
-    linear-gradient(162deg,
-      color-mix(in srgb,#101A15 calc(var(--k,0) * 100%),#0B100E) 0%,
-      color-mix(in srgb,#0B120F calc(var(--k,0) * 100%),#090D0B) 100%);
-  border-color:color-mix(in srgb,rgba(50,180,111,.26) calc(var(--k,0) * 100%),#1A221E);
- }
-}
-#industries .is-live .is-panel{
- flex:0 0 var(--w,96px);
- /* The depth is carried by the black drop shadow; the green is only a hint at
-    the edge. 70px of spread at .55 read as neon bloom and washed the ground
-    around the card — this is a quarter of it. */
- box-shadow:
-   0 26px 60px -24px rgba(0,0,0,.85),
-   -16px 0 24px -16px rgba(0,0,0,.9),
-   16px 0 24px -16px rgba(0,0,0,.9),
-   0 0 calc(var(--k,0) * 18px) calc(var(--k,0) * -8px) rgba(50,180,111,.18);
- /* collapsed panels sit a little shorter, which is the depth cue. Doing this
-    with margin rather than transform:scale keeps the measured width exact —
-    a scaled box reports its scaled size, and the stack came out ~20px narrow. */
- margin-block:calc((1 - var(--k,0)) * 15px);
-}
-#industries .is-live .is-panel + .is-panel{margin-left:calc(-1 * var(--ov,24px))}
-
-/* ── the spine: all a collapsed panel shows ──
-   vertical-rl plus the half-turn gives bottom-to-top, which is the only vertical
-   setting that stays readable with the head tilted left. It fades out as the
-   panel opens, so the two never overlap. */
-#industries .is-spine{
- position:absolute;left:0;top:0;bottom:0;width:var(--col,96px);
- display:flex;align-items:center;justify-content:flex-start;gap:1.1rem;
- padding-top:30px;
- writing-mode:vertical-rl;transform:rotate(180deg);
- pointer-events:none;white-space:nowrap;
-}
-#industries .is-live .is-spine{opacity:calc(1 - max(0, var(--k,0) - .55) / .45)}
-/* A collapsed panel is covered on the side facing the open one, so the spine
-   centres on the half still showing. The driver sets --sh, and eases it to 0
-   as the panel opens and stops being covered at all. */
-#industries .is-live .is-spine{margin-left:var(--sh,0px)}
-#industries .is-num{
- font-family:var(--font);font-style:normal;font-size:12px;font-weight:700;
- letter-spacing:.14em;color:#5FD394;
-}
-#industries .is-name{
- font-family:var(--font);font-weight:700;font-size:clamp(15px,1.15vw,18px);
- letter-spacing:.02em;color:#D5DEDA;
-}
-
-/* ── the open panel's content ──
-   .is-body is the fixed-width canvas the copy is laid out on, so the text never
-   reflows while the panel is moving — it is revealed, not re-wrapped. */
-#industries .is-body{
- --bl:calc(var(--col,96px) - var(--k,0) * (var(--col,96px) - 34px));
- position:absolute;left:var(--bl);top:0;bottom:0;
- width:calc(var(--exp,880px) - var(--bl));
- display:flex;align-items:center;
- opacity:0;pointer-events:none;
-}
-#industries .is-live .is-body{
- opacity:calc(max(0, var(--k,0) - .62) / .38);
-}
-#industries .is-live .is-panel.is-on .is-body{pointer-events:auto}
-#industries .is-body-in{padding:2.6rem 2.8rem;width:100%;max-width:820px}
-
-#industries .is-top{display:flex;align-items:center;gap:1.1rem;margin-bottom:2rem}
-#industries .is-ico{
- flex:none;display:flex;align-items:center;justify-content:center;
- width:56px;height:56px;border-radius:16px;
- background:rgba(50,180,111,.12);border:1px solid rgba(50,180,111,.3);color:#5FD394;
-}
-#industries .is-ico svg{width:26px;height:26px;display:block}
-#industries .is-title{
- font-family:var(--font);font-size:clamp(22px,1.9vw,28px);font-weight:700;
- letter-spacing:-.02em;line-height:1.2;color:#fff;margin:0 0 .3rem;
-}
-#industries .is-tag{font-family:var(--font);font-size:14px;color:#8C9A93;line-height:1.5}
-
-#industries .is-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem 2.4rem;margin-bottom:2rem}
-#industries .is-col-h{
- display:flex;align-items:center;gap:9px;margin-bottom:.9rem;
- font-family:var(--font);font-size:12px;font-weight:700;
- text-transform:uppercase;letter-spacing:.1em;color:#C2CDC7;
-}
-#industries .is-rule{width:16px;height:2px;border-radius:2px;flex:none}
-#industries .is-rule-p{background:#FF6B6B}
-#industries .is-rule-s{background:#32b46f}
-#industries .is-line{
- display:flex;align-items:flex-start;gap:9px;margin-bottom:.6rem;
- font-family:var(--font);font-size:14px;line-height:1.55;color:#A7B5AD;
-}
-#industries .is-line svg{flex:none;margin-top:3px}
-#industries .is-col:first-child .is-line svg{color:#FF6B6B}
-#industries .is-col:last-child  .is-line svg{color:#5FD394}
-#industries .is-cta{
- display:inline-flex;align-items:center;gap:8px;
- font-family:var(--font);font-size:12.5px;font-weight:700;
- text-transform:uppercase;letter-spacing:.07em;text-decoration:none;
- padding:13px 24px;border-radius:9px;background:#32b46f;color:#04110a;
- transition:opacity .2s;
-}
-#industries .is-cta:hover{opacity:.88}
-
-/* ── pinned, once the driver is running ── */
-#industries .is-live .is-sticky{position:sticky;top:var(--is-top,90px)}
-#industries .is-live .is-stack{height:clamp(430px,62vh,600px)}
-
-/* ── no JS, phone, or reduced motion: a plain stacked list ──
-   The panels are already full-width blocks at this point; the spine goes and the
-   body stops being absolute, so each one simply reads top to bottom. */
-#industries .is-outer:not(.is-live) .is-stack{flex-direction:column;gap:16px;height:auto}
-#industries .is-outer:not(.is-live) .is-spine{display:none}
-#industries .is-outer:not(.is-live) .is-body{position:static;width:auto;opacity:1;pointer-events:auto}
-#industries .is-outer:not(.is-live) .is-body-in{padding:1.9rem 1.6rem;max-width:none}
-@media(max-width:640px){
- #industries .is-cols{grid-template-columns:1fr;gap:1.5rem}
- #industries .is-body-in{padding:1.6rem 1.3rem}
 }
 
 /* Tech card copy came in from upstream at rgba(255,255,255,.45), which is 4.4:1
