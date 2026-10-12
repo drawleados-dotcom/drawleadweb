@@ -318,3 +318,15 @@ html[data-theme="light"] .theme-toggle .tt-moon{display:block}
 #dashWindow.dw-tilt.dw-flat{transform:none;will-change:auto}
 @media (max-width:768px){#dashWindow.dw-tilt{--dw-tilt:10deg}}
 @media (prefers-reduced-motion:reduce){#dashWindow.dw-tilt{transform:none;will-change:auto}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   24 · TECH STACK MODULE MAP
+   The map itself is tools/home8-tech.svg, swapped in by tools/sync-home8.pl:
+   fifteen module cards wired to the Centralized hub by dashed, square-routed
+   connectors. Every connector is drawn from its card toward the hub, so moving
+   the dash offset down by one dash period makes the dashes travel inward.
+   The section is dark in both themes (inline background), so the colours live
+   in the SVG and nothing here changes with the toggle. */
+#tech .ts-hub .ts-links{animation:tsLinkFlow 1.1s linear infinite}
+@keyframes tsLinkFlow{from{stroke-dashoffset:10}to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){#tech .ts-hub .ts-links{animation:none}}

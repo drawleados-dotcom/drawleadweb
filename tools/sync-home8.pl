@@ -9,7 +9,7 @@ use strict; use warnings;
 #
 #     perl tools/sync-home8.pl
 #
-# It applies exactly seven deltas and fails loudly if any of them no longer
+# It applies exactly nine deltas and fails loudly if any of them no longer
 # matches, which is the signal that the change needs looking at by hand rather
 # than being copied across blind.
 #
@@ -234,6 +234,35 @@ rep(\$s, 'style="background:#fff;color:#0a1310"', 'style="background:#32b46f;col
  die "sync-home8: the old row survived\n" if $s =~ /id="indRow"/;
  $n++;
 }
+
+# 8 · Tech Stack's module map is redrawn: square-routed dashed connectors with
+#     rounded corners, flat module cards and a glowing Centralized hub, in place
+#     of Home 7's curved paths, pulsing rings and travelling dots.
+#
+#     Only the desktop <svg> is swapped; the .ts-mobile chip grid after it stays.
+#     The dash flow and its reduced-motion stop are in assets/home8-base.css (24).
+{
+ my $from = qq{<svg class="ts-svg" };
+ my $to   = qq{</svg>\n<ul class="ts-mobile">};
+
+ my $a = index($s, $from);   die "sync-home8: tech map not found\n"     if $a < 0;
+ my $b = index($s, $to, $a); die "sync-home8: tech map end not found\n" if $b < 0;
+ my $old = substr($s, $a, $b + length("</svg>\n") - $a);
+ die "sync-home8: the tech map to replace looks wrong\n"
+   unless $old =~ /Centralized/ && $old =~ /tsPath-14/ && $old !~ /<ul/;
+
+ my $new = slurp('tools/home8-tech.svg');
+ $new =~ s/\r\n/\n/g;
+ substr($s, $a, length($old)) = $new;
+
+ die "sync-home8: the new map did not land\n" unless $s =~ /class="ts-svg ts-hub"/ && $s !~ /tsPath-0/;
+ $n++;
+}
+
+# 9 · the hero dashboard tilt driver (styles in assets/home8-base.css, 23),
+#     placed right after the dashboard's first render.
+rep(\$s, "renderDash(0);\n\n// Core Functions: sticky horizontal scroll\n",
+  "renderDash(0);\n\n" . (slurp('tools/home8-hero-tilt.js') =~ s/\r\n/\n/gr) . "\n// Core Functions: sticky horizontal scroll\n", 1);
 $s =~ s/\n/\r\n/g if $crlf;
 spew($dst, $s);
 print "sync-home8: $n deltas applied, $dst regenerated (", length($s), " bytes)\n";
