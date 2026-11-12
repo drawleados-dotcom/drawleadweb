@@ -134,3 +134,13 @@
  #testimonials .tm-card{transition:none}
  #testimonials .tm-card:hover{transform:none}
 }
+
+/* ── 3 · HOW WE WORK — centred header ─────────────────────────────────────────
+   Home 7 sets this section's header flush left in the first of two columns
+   (the cards and the process panel share the row below). Here it spans both
+   columns and centres: eyebrow, the two-line heading and the description.
+   The cards and the panel are unchanged. */
+#method .mth-head{grid-column:1 / -1;text-align:center}
+#method .eyebrow{justify-content:center}
+#method .sec-h{text-align:center}
+#method .sec-sub{text-align:center;margin:0 auto 2.5rem}
