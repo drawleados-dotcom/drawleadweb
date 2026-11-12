@@ -1057,14 +1057,19 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
       opens to hold the same content the row cards carried. Page scroll drives which
       panel is open — see the driver below. Phones and reduced motion get a plain
       stacked list instead, which is what this markup is without the JS. -->
+ <!-- The heading sits outside the pin and scrolls away as the stack locks, so
+      what stays on screen for the whole run is the stack with its buttons under
+      it. Heading + stack + buttons together are taller than a laptop viewport;
+      pinned all at once, the cards were cut off at the bottom and the buttons
+      never showed until the stack let go. -->
+ <div class="is-head">
+  <div class="eyebrow rv"><span class="eyebrow-text">Industries</span></div>
+  <h2 class="sec-h rv">Built for <span>Your Industry</span></h2>
+  <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements, out of the box.</p>
+ </div>
+
  <div class="is-outer" id="isOuter">
   <div class="is-sticky" id="isSticky">
-   <div class="is-head">
-    <div class="eyebrow rv"><span class="eyebrow-text">Industries</span></div>
-    <h2 class="sec-h rv">Built for <span>Your Industry</span></h2>
-    <p class="sec-sub rv">Every industry has unique challenges. Drawlead adapts to your specific workflows, pain points, and compliance requirements, out of the box.</p>
-   </div>
-
    <div class="is-stack" id="isStack">
 <?php $isN = 0; foreach ($indStackOrder as $key):
   if (!isset($indByKey[$key])) { continue; }
@@ -1109,6 +1114,12 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
     </article>
 <?php endforeach; ?>
    </div><!-- /is-stack -->
+
+   <!-- the buttons ride in the pin, directly under the stack -->
+   <div class="sec-cta rv" style="margin-top:3rem">
+    <button type="button" data-book class="btn btn-black">Find Your Industry Solution</button>
+    <a href="#cases" class="btn btn-outline2">See Case Studies</a>
+   </div>
   </div>
  </div><!-- /is-outer -->
  <script>
@@ -1162,12 +1173,12 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
 
    const nav  = document.querySelector('nav');
    const navH = nav ? nav.offsetHeight : 0;
-   // Pin as high as the nav allows rather than centring the block. A larger top
-   // offset is reached EARLIER on the way down, so the section locks as soon as
-   // it arrives instead of after it has travelled most of a viewport first.
-   // Centring is kept only as the floor, for viewports taller than the block.
+   // The pinned block is the stack plus its buttons (the heading scrolls away
+   // above it), so it fits under the nav and is centred in that space: the
+   // stack and the buttons stay fully on screen for the whole run. When a
+   // window is too short to hold both, slack is 0 and it pins flush to the nav.
    const slack = Math.max(0, window.innerHeight - navH - sticky.offsetHeight);
-   stickyTop  = navH + Math.min(slack, 20);
+   stickyTop  = navH + Math.round(slack / 2);
    outer.style.setProperty('--is-top', stickyTop + 'px');
 
    // Scroll spent per handover. At 0.62 of a viewport each, six panels wanted
@@ -1247,11 +1258,6 @@ foreach (industries_ordered() as $entry) { $indByKey[$entry['key']] = $entry['in
   if(still.addEventListener)  still.addEventListener('change', reset);
  })();
  </script>
-
- <div class="sec-cta rv" style="margin-top:3rem">
- <button type="button" data-book class="btn btn-black">Find Your Industry Solution</button>
- <a href="#cases" class="btn btn-outline2">See Case Studies</a>
- </div>
 </section>
 
 <!-- WHY Drawlead -->

@@ -214,16 +214,21 @@ rep(\$s, 'style="background:#fff;color:#0a1310"', 'style="background:#32b46f;col
 #     old row driver: it opens with a guard on indHOuter/indHSticky/indRow and
 #     returns when they are absent, so it simply does nothing on this page.
 #
-#     Styles live in assets/home8.css, which only this page loads.
+#     The section's CTA is taken too: the stack pins together with its buttons,
+#     so tools/home8-industries.html re-emits them inside the pinned block. The
+#     swap runs up to the section's closing tag and leaves that tag in place.
+#
+#     Styles live in assets/home8-base.css, which only this page loads.
 {
  my $from = qq{ <div class="ind-hscroll" id="indHOuter">\n};
- my $to   = qq{ </div><!-- /ind-hscroll -->\n};
+ my $to   = qq{</section>\n};
 
  my $a = index($s, $from);   die "sync-home8: industries row not found\n"     if $a < 0;
- my $b = index($s, $to, $a); die "sync-home8: industries row end not found\n" if $b < 0;
- my $old = substr($s, $a, $b + length($to) - $a);
+ my $b = index($s, $to, $a); die "sync-home8: industries section end not found\n" if $b < 0;
+ my $old = substr($s, $a, $b - $a);
  die "sync-home8: the industries block to replace looks wrong\n"
-   unless $old =~ /\$indStackOrder/ && $old =~ /ind-scard/ && $old =~ /Built for/;
+   unless $old =~ /\$indStackOrder/ && $old =~ /ind-scard/ && $old =~ /Built for/
+       && $old =~ /Find Your Industry Solution/ && $old !~ /<section[\s>]/;
 
  my $new = slurp('tools/home8-industries.html') . slurp('tools/home8-industries.js');
  $new =~ s/\r\n/\n/g;
@@ -232,6 +237,13 @@ rep(\$s, 'style="background:#fff;color:#0a1310"', 'style="background:#32b46f;col
  die "sync-home8: the stack did not land\n"
    unless $s =~ /id="isStack"/ && $s =~ /indStackOrder/;
  die "sync-home8: the old row survived\n" if $s =~ /id="indRow"/;
+ # the CTA survives exactly once, and the section still closes before the next
+ my $cta = () = $s =~ /Find Your Industry Solution/g;
+ die "sync-home8: industries CTA count is $cta, expected 1\n" unless $cta == 1;
+ my $si = index($s, '<section id="industries">');
+ my $sn = index($s, '<section', $si + 1);
+ my $closes = () = substr($s, $si, $sn - $si) =~ m{</section>}g;
+ die "sync-home8: industries section closes $closes times, expected 1\n" unless $closes == 1;
  $n++;
 }
 
