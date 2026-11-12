@@ -165,12 +165,12 @@
  content:counter(mth-step,decimal-leading-zero);
  content:counter(mth-step,decimal-leading-zero) / "";
  position:absolute;top:1.9rem;right:1.75rem;
- font-family:var(--font-display);font-size:58px;font-weight:700;
+ font-family:var(--font-display);font-size:80px;font-weight:700;
  line-height:46px;letter-spacing:-.02em;
  color:#32b46f;opacity:.2;
  pointer-events:none;transition:opacity .25s ease;
 }
 #method .fn-card:hover::after{opacity:.34}
 @media(max-width:560px){
- #method .fn-card::after{top:1.5rem;right:1.5rem;font-size:48px}
+ #method .fn-card::after{top:1.5rem;right:1.5rem;font-size:64px}
 }
