@@ -22,7 +22,7 @@
    The card's surface, grid, glow and type come from Home 7's class rules
    (.cta-card, .cta-h, .cta-btn-w ...); what is here is layout, plus the
    sizes those rules set for a centred card that change for a split one.
-   Below 1100px the two columns stack. */
+   At 1200px and below the two columns stack. */
 #cta-mid{
  padding:4rem 50px;position:relative;text-align:left;
  background:var(--white);
@@ -31,21 +31,31 @@
 /* the glow sits behind the heading instead of the middle of the card */
 #cta-mid .cta-glow{left:28%;width:640px;height:520px}
 
+/* The right column is sized to its content — the two buttons side by side —
+   and the left column takes whatever is left. Splitting by fractions instead
+   left the buttons a few px short at laptop widths once a 17px scrollbar was
+   counted, and the second one wrapped under the first. */
 #cta-mid .ctam-row{
  position:relative;
- display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);
- gap:2.5rem 4.5rem;align-items:center;
+ display:grid;grid-template-columns:minmax(0,1fr) auto;
+ gap:2.5rem 4rem;align-items:center;
 }
+/* the heading is sized against its own column (cqi), so its two lines fit
+   however wide the buttons leave it */
+#cta-mid .ctam-lead{container-type:inline-size}
 #cta-mid .cta-eyebrow{margin-bottom:1.4rem;padding:7px 16px;font-size:12.5px}
-#cta-mid .cta-h{margin:0;font-size:clamp(34px,3.6vw,56px);line-height:1.1}
+#cta-mid .cta-h{margin:0;font-size:clamp(32px,3.4vw,56px);line-height:1.1}
+@supports (font-size:1cqi){
+ #cta-mid .cta-h{font-size:clamp(32px,9.2cqi,56px)}
+}
 #cta-mid .cta-p{
  margin:0 0 1.9rem;max-width:none;
  font-size:16px;line-height:1.65;
 }
-#cta-mid .cta-btns{justify-content:flex-start;gap:12px}
-#cta-mid .cta-btn-w{padding:14px 28px;font-size:13px}
+#cta-mid .cta-btns{justify-content:flex-start;gap:12px;flex-wrap:nowrap}
+#cta-mid .cta-btn-w{padding:14px 28px;font-size:13px;white-space:nowrap}
 /* one px less padding than the solid button, to absorb its border */
-#cta-mid .cta-btn-g{padding:13px 27px;font-size:13px}
+#cta-mid .cta-btn-g{padding:13px 27px;font-size:13px;white-space:nowrap}
 /* the strapline belongs to the whole card, so a rule sets it off from both
    columns rather than from either one */
 #cta-mid .cta-note{
@@ -53,7 +63,7 @@
  border-top:1px solid rgba(255,255,255,.08);
 }
 
-@media(max-width:1100px){
+@media(max-width:1200px){
  #cta-mid .ctam-row{grid-template-columns:1fr;gap:1.75rem}
  #cta-mid .cta-card{padding:3.25rem 3rem 2.25rem}
  #cta-mid .cta-h{font-size:clamp(32px,5vw,48px)}
@@ -63,6 +73,8 @@
  #cta-mid{padding:3rem 1.25rem}
  #cta-mid .cta-card{padding:2.75rem 1.75rem 2rem;border-radius:28px}
  #cta-mid .cta-glow{width:480px;height:420px}
+ /* too narrow for both buttons on one line: let the second wrap */
+ #cta-mid .cta-btns{flex-wrap:wrap}
  /* the forced breaks stop helping once the lines would wrap anyway */
  #cta-mid .cta-p br{display:none}
 }
