@@ -144,3 +144,27 @@
 #method .eyebrow{justify-content:center}
 #method .sec-h{text-align:center}
 #method .sec-sub{text-align:center;margin:0 auto 2.5rem}
+
+/* ── 4 · HOW WE WORK — step numbers ───────────────────────────────────────────
+   Each of the four cards carries its step number (01–04) in the top-right
+   corner, level with its icon tile: bold, in the brand green at low opacity
+   so it reads as texture rather than competing with the title. A CSS counter
+   numbers them, so the markup Home 9 copies from Home 8 is untouched. The
+   second `content` hides the number from screen readers (it repeats what the
+   card order already says); a browser without that syntax keeps the first.
+   #method is dark in both themes, so one colour serves both. */
+#method .fn-grid{counter-reset:mth-step}
+#method .fn-card{position:relative;counter-increment:mth-step}
+#method .fn-card::after{
+ content:counter(mth-step,decimal-leading-zero);
+ content:counter(mth-step,decimal-leading-zero) / "";
+ position:absolute;top:1.9rem;right:1.75rem;
+ font-family:var(--font-display);font-size:44px;font-weight:700;
+ line-height:46px;letter-spacing:-.02em;
+ color:#32b46f;opacity:.2;
+ pointer-events:none;transition:opacity .25s ease;
+}
+#method .fn-card:hover::after{opacity:.34}
+@media(max-width:560px){
+ #method .fn-card::after{top:1.5rem;right:1.5rem;font-size:38px}
+}
