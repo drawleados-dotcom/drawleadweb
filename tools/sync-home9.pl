@@ -138,10 +138,12 @@ sub edit_once {
   die "sync-home9: $what: expected 1 match, found $c\n" unless $c == 1;
   $s =~ s/\Q$from\E/$to/;
 }
-# How We Work: the heading breaks after its first sentence, so "We understand
-# first." starts the second line instead of "first." wrapping alone.
+# How We Work: a break between the heading's two sentences. assets/home9.css
+# hides it from 900px up, where the heading fits on one line; below that it
+# splits the heading at the sentence instead of leaving "first." alone on the
+# second line. The space before it separates the sentences while it is hidden.
 edit_once(q{<h2 class="sec-h rv">We don't build first. <span class="g">We understand first.</span></h2>},
-          q{<h2 class="sec-h rv">We don't build first.<br><span class="g">We understand first.</span></h2>},
+          q{<h2 class="sec-h rv">We don't build first. <br><span class="g">We understand first.</span></h2>},
           'How We Work heading');
 
 # ── 4 · the page's own stylesheet, after Home 8's base sheet ────────────────

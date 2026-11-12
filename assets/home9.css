@@ -138,12 +138,18 @@
 /* ── 3 · HOW WE WORK — centred header ─────────────────────────────────────────
    Home 7 sets this section's header flush left in the first of two columns
    (the cards and the process panel share the row below). Here it spans both
-   columns and centres: eyebrow, the two-line heading and the description.
-   The cards and the panel are unchanged. */
+   columns and centres: eyebrow, heading and description. The cards and the
+   panel are unchanged.
+   The heading runs on one line from 900px up (it needs ~945px at its 46px
+   cap and has 988px+ from 1100px, 852px at 900 where it is 780px); below
+   that, the break sync-home9.pl puts between its two sentences takes over.
+   The description is widened to sit on two lines (it runs ~1380px at 17px),
+   balanced so neither line is left short. */
 #method .mth-head{grid-column:1 / -1;text-align:center}
 #method .eyebrow{justify-content:center}
 #method .sec-h{text-align:center}
-#method .sec-sub{text-align:center;margin:0 auto 2.5rem}
+@media(min-width:900px){#method .sec-h br{display:none}}
+#method .sec-sub{text-align:center;margin:0 auto 2.5rem;max-width:780px;text-wrap:balance}
 
 /* ── 4 · HOW WE WORK — step numbers ───────────────────────────────────────────
    Each of the four cards carries its step number (01–04) in the top-right
@@ -159,12 +165,12 @@
  content:counter(mth-step,decimal-leading-zero);
  content:counter(mth-step,decimal-leading-zero) / "";
  position:absolute;top:1.9rem;right:1.75rem;
- font-family:var(--font-display);font-size:44px;font-weight:700;
+ font-family:var(--font-display);font-size:58px;font-weight:700;
  line-height:46px;letter-spacing:-.02em;
  color:#32b46f;opacity:.2;
  pointer-events:none;transition:opacity .25s ease;
 }
 #method .fn-card:hover::after{opacity:.34}
 @media(max-width:560px){
- #method .fn-card::after{top:1.5rem;right:1.5rem;font-size:38px}
+ #method .fn-card::after{top:1.5rem;right:1.5rem;font-size:48px}
 }
