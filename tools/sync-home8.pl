@@ -13,6 +13,9 @@ use strict; use warnings;
 # matches, which is the signal that the change needs looking at by hand rather
 # than being copied across blind.
 #
+# It then runs tools/sync-home9.pl, which builds templates/home9-body.php from
+# the Home 8 just written, so commit both pages together.
+#
 sub slurp { my $f=shift; open(my $h,'<:raw',$f) or die "$f: $!"; local $/; my $s=<$h>; close $h; $s }
 sub spew  { my ($f,$s)=@_; open(my $h,'>:raw',$f) or die "$f: $!"; print $h $s; close $h }
 
@@ -278,3 +281,6 @@ rep(\$s, "renderDash(0);\n\n// Core Functions: sticky horizontal scroll\n",
 $s =~ s/\n/\r\n/g if $crlf;
 spew($dst, $s);
 print "sync-home8: $n deltas applied, $dst regenerated (", length($s), " bytes)\n";
+
+# Home 9 is built from Home 8's output, so it is regenerated with it.
+system($^X, 'tools/sync-home9.pl') == 0 or die "sync-home8: tools/sync-home9.pl failed\n";

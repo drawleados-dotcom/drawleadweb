@@ -604,6 +604,21 @@ function migration_025_statements(): array
     ];
 }
 
+function migration_026_statements(): array
+{
+    // show_in_menu is switched on: "Home Eight" is already in the nav, so
+    // "Home Nine" sits beside it. Untick it in Admin -> Pages to hide it.
+    return [
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Home 9', '/home-9',
+           'Drawlead | Intelligent Business Operating System',
+           'Drawlead helps MSMEs and SMEs grow with websites, SEO, performance marketing and a unified business operating system.',
+           'home9')",
+
+        "UPDATE pages SET show_in_menu = 1 WHERE slug = '/home-9'",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -682,6 +697,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '025' || $which === 'all') {
         $toRun['025'] = migration_025_statements();
+    }
+    if ($which === '026' || $which === 'all') {
+        $toRun['026'] = migration_026_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -764,6 +782,9 @@ $migration024Done = (int) $stmt024->fetchColumn() >= 1;
 $stmt025 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
 $stmt025->execute(['/home-8']);
 $migration025Done = (int) $stmt025->fetchColumn() >= 1;
+$stmt026 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
+$stmt026->execute(['/home-9']);
+$migration026Done = (int) $stmt026->fetchColumn() >= 1;
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -1086,7 +1107,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done): ?>
+<div class="card">
+  <div class="card-title">026 — Home 9 page</div>
+  <div class="card-desc">Adds Home 9 as a real page (/home-9), rendered by templates/home9-body.php — Home 8's sections in a new order, with a placeholder Testimonials section and a second CTA. It loads Home 8's stylesheets plus /assets/home9.css. /home-8 is not affected. Shows "Home Nine" in the nav; untick "Show in Menu" in Admin → Pages to hide it.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration026Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration026Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration026Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="026">
+    <button type="submit" class="btn btn-primary">Run Migration 026</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>
