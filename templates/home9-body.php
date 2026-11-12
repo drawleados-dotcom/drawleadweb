@@ -218,10 +218,6 @@ include __DIR__ . '/partials/nav.php';
    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="6.5" ry="2.5"/><path d="M5.5 5.5v6c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5v-6"/><path d="M5.5 11.5v6c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5v-6"/></svg></span><span class="sol-benefit"><strong>Migration support</strong><small>From spreadsheets and legacy systems</small></span></li>
    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 8v-3m0 0H5m3 0h3M16 16v3m0 0h-3m3 0h3"/><path d="M8 5v7a4 4 0 004 4h7"/><path d="M16 19v-7a4 4 0 00-4-4H5"/></svg></span><span class="sol-benefit"><strong>Seamless integrations</strong><small>Tally, banking and GST filing connected</small></span></li>
   </ul>
-  <div class="sol-metrics">
-   <div><div class="sol-metric-v">100%</div><div class="sol-metric-l">Ownership</div></div>
-   <div><div class="sol-metric-v">1</div><div class="sol-metric-l">Source of truth</div></div>
-  </div>
   <a href="/custom-erp-solution" class="sol-arrow">Explore ERP</a>
  </div>
 
@@ -242,10 +238,6 @@ include __DIR__ . '/partials/nav.php';
    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="6" cy="18" r="2"/><path d="M8 6h4a4 4 0 014 4M8 18h4a4 4 0 004-4"/></svg></span><span class="sol-benefit"><strong>Automated workflows</strong><small>Orders, invoices and GST handled together</small></span></li>
    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h3l3 3v3h-6z"/><circle cx="7" cy="18" r="1.5"/><circle cx="17" cy="18" r="1.5"/></svg></span><span class="sol-benefit"><strong>End-to-end fulfilment</strong><small>Payments, logistics and returns connected</small></span></li>
   </ul>
-  <div class="sol-metrics">
-   <div><div class="sol-metric-v">3x</div><div class="sol-metric-l">Faster launch</div></div>
-   <div><div class="sol-metric-v">0</div><div class="sol-metric-l">Manual entry</div></div>
-  </div>
   <a href="/ecommerce-solutions" class="sol-arrow">Explore ecommerce</a>
  </div>
 
@@ -266,10 +258,6 @@ include __DIR__ . '/partials/nav.php';
    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-7"/><path d="M15 8h5v5"/><path d="M4 20h16"/></svg></span><span class="sol-benefit"><strong>Performance campaigns</strong><small>Google, Meta and LinkedIn activation</small></span></li>
    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8"/></svg></span><span class="sol-benefit"><strong>Instant follow-up</strong><small>WhatsApp and email on every lead</small></span></li>
   </ul>
-  <div class="sol-metrics">
-   <div><div class="sol-metric-v">4x</div><div class="sol-metric-l">Organic traffic</div></div>
-   <div><div class="sol-metric-v">&lt;5 min</div><div class="sol-metric-l">Response time</div></div>
-  </div>
   <a href="/marketing-solutions" class="sol-arrow">Explore marketing</a>
  </div>
 

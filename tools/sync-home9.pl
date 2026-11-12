@@ -127,6 +127,13 @@ my $tm  = block_file('tools/home9-testimonials.html', 'testimonials');
     unless $js =~ /\A\s*<script>/ && $js =~ m{</script>\n\z};
   $blk{solutions} =~ s{</section>\n}{</section>\n$js}
     or die "sync-home9: the Solutions section does not close\n";
+
+  # No metrics row (100% Ownership, 3x Faster launch, 4x Organic traffic) on
+  # Home 9's cards: the block goes from all three, exactly three.
+  my $gone = $blk{solutions} =~ s{\n  <div class="sol-metrics">\n(?:   <div>.*?</div></div>\n){2}  </div>(?=\n)}{}g;
+  die "sync-home9: expected to remove 3 Solutions metrics rows, removed " . ($gone || 0) . "\n"
+    unless $gone == 3;
+  die "sync-home9: a Solutions metrics row survived\n" if $blk{solutions} =~ /sol-metric/;
 }
 
 # ── 3 · Home 9's order ───────────────────────────────────────────────────────
