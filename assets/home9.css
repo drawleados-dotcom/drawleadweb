@@ -56,12 +56,9 @@
 #cta-mid .cta-btn-w{padding:14px 28px;font-size:13px;white-space:nowrap}
 /* one px less padding than the solid button, to absorb its border */
 #cta-mid .cta-btn-g{padding:13px 27px;font-size:13px;white-space:nowrap}
-/* the strapline belongs to the whole card, so a rule sets it off from both
-   columns rather than from either one */
-#cta-mid .cta-note{
- margin-top:2.75rem;padding-top:1.6rem;text-align:center;
- border-top:1px solid rgba(255,255,255,.08);
-}
+/* the strapline belongs to the whole card, so it sits centred under both
+   columns rather than under either one */
+#cta-mid .cta-note{margin-top:2.75rem;padding-top:1.6rem;text-align:center}
 
 @media(max-width:1200px){
  #cta-mid .ctam-row{grid-template-columns:1fr;gap:1.75rem}
