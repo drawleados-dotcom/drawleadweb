@@ -244,3 +244,19 @@
  #solutions .sol-acc .sol-card > *,
  #solutions .sol-acc .sol-spine{transition:none}
 }
+
+/* ── 6 · INDUSTRIES — the stack centred ───────────────────────────────────────
+   Home 8 starts the stack at a left inset and runs it off the right edge.
+   Here it is centred with equal space each side, and spans the same 1320px as
+   the Solutions row above so the two line up.
+   The driver (Home 8's, unchanged) fills a run of (stack width - --gut) from
+   the stack's left padding. With the padding dropped and the run centred, a
+   stack 60px wider than the run puts --gut/2 each side: so the box is 1380px,
+   centred, and below that it reaches 30px into the section's gutters so the run
+   still matches the content width (60px is --gut's cap, reached from 1277px).
+   Phones and reduced motion get Home 8's plain list, also without the bleed. */
+#industries .is-live .is-stack{
+ padding-inline:0;justify-content:center;
+ margin-inline:max(-30px, calc((100% - 1380px) / 2));
+}
+#industries .is-outer:not(.is-live) .is-stack{margin-inline:0;padding-inline:0}
