@@ -129,6 +129,21 @@ for (@order) {
 }
 $s = $head . $body . $tail;
 
+# ── 3b · Home 9's own edits to sections it copies ───────────────────────────
+# Each must match exactly once, or Home 8's markup has moved and the edit
+# needs looking at.
+sub edit_once {
+  my ($from, $to, $what) = @_;
+  my $c = () = $s =~ /\Q$from\E/g;
+  die "sync-home9: $what: expected 1 match, found $c\n" unless $c == 1;
+  $s =~ s/\Q$from\E/$to/;
+}
+# How We Work: the heading breaks after its first sentence, so "We understand
+# first." starts the second line instead of "first." wrapping alone.
+edit_once(q{<h2 class="sec-h rv">We don't build first. <span class="g">We understand first.</span></h2>},
+          q{<h2 class="sec-h rv">We don't build first.<br><span class="g">We understand first.</span></h2>},
+          'How We Work heading');
+
 # ── 4 · the page's own stylesheet, after Home 8's base sheet ────────────────
 my $css = $rendered ? '/assets/home9.css' : "<?= asset_url('/assets/home9.css') ?>";
 die "sync-home9: Home 8's base stylesheet link not found\n"

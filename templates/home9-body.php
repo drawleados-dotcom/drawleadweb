@@ -337,7 +337,7 @@ include __DIR__ . '/partials/nav.php';
  <div class="mth-wrap">
  <div class="mth-head">
  <div class="eyebrow rv"><span class="eyebrow-text">How We Work</span></div>
- <h2 class="sec-h rv">We don't build first. <span class="g">We understand first.</span></h2>
+ <h2 class="sec-h rv">We don't build first.<br><span class="g">We understand first.</span></h2>
  <p class="sec-sub rv">Before a single line of code or campaign goes live, we audit how your business actually runs, so every system we build is measurable, automated, and built to scale.</p>
  </div><!-- /mth-head -->
 
