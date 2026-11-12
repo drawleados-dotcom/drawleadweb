@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/admin.css">
+<link rel="stylesheet" href="<?= asset_url('/admin/assets/admin.css') ?>">
 </head>
 <body>
 <div class="auth-wrap">
@@ -72,5 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
   </div>
 </div>
+<script src="<?= asset_url('/admin/assets/password-toggle.js') ?>"></script>
 </body>
 </html>

@@ -32,6 +32,19 @@ a{color:inherit}
  transition:border-color .15s;
 }
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--blue)}
+/* password show/hide (assets/password-toggle.js) */
+.pw-wrap{position:relative;display:block}
+.pw-wrap input{padding-right:46px}
+.pw-wrap input::-ms-reveal,.pw-wrap input::-ms-clear{display:none}
+.pw-toggle{
+ position:absolute;top:50%;right:6px;transform:translateY(-50%);
+ width:34px;height:34px;padding:0;border:0;border-radius:6px;background:transparent;
+ display:flex;align-items:center;justify-content:center;
+ color:var(--g400);cursor:pointer;transition:color .15s,background-color .15s;
+}
+.pw-toggle:hover{color:var(--g600);background:rgba(17,17,18,.05)}
+.pw-toggle:focus-visible{outline:2px solid var(--blue);outline-offset:1px;color:var(--g600)}
+.pw-toggle svg{display:block}
 .field-hint{font-size:11px;color:var(--g400);margin-top:.35rem}
 .btn{
  display:inline-flex;align-items:center;justify-content:center;gap:8px;
