@@ -14,9 +14,11 @@ use strict; use warnings;
 # Core Platform (the 7 Functions) and Tech Stack are left out. Every section
 # but 5 and 8 is copied from Home 8 exactly as it stands, so any change to
 # Home 8 reaches Home 9 on the next run; 5 and 8 come from
-# tools/home9-cta-mid.html and tools/home9-testimonials.html. sync-home8.pl
-# runs this script at its end, so the usual workflow needs nothing extra; run
-# it by hand after editing either of those two files:
+# tools/home9-cta-mid.html and tools/home9-testimonials.html. A few copied
+# sections get Home 9's own edits (section 3b), and Solutions gains the hover
+# accordion driver in tools/home9-solutions.js. sync-home8.pl runs this
+# script at its end, so the usual workflow needs nothing extra; run it by hand
+# after editing any of those tools/home9-* files:
 #
 #     perl tools/sync-home9.pl
 #
@@ -115,6 +117,18 @@ sub block_file {
 my $mid = block_file('tools/home9-cta-mid.html', 'cta-mid');
 my $tm  = block_file('tools/home9-testimonials.html', 'testimonials');
 
+# Solutions: a horizontal hover accordion instead of Home 8's sticky stack.
+# Its driver follows the section; the stack's driver is removed in 3b.
+{
+  my $js = slurp('tools/home9-solutions.js');
+  $js =~ s/\r\n/\n/g;
+  $js =~ s/\n*\z/\n/;
+  die "sync-home9: tools/home9-solutions.js should be one <script> block\n"
+    unless $js =~ /\A\s*<script>/ && $js =~ m{</script>\n\z};
+  $blk{solutions} =~ s{</section>\n}{</section>\n$js}
+    or die "sync-home9: the Solutions section does not close\n";
+}
+
 # ── 3 · Home 9's order ───────────────────────────────────────────────────────
 my @dropped = qw(functions tech);
 my @order   = qw(hero solutions cases method MID unify dashboards TESTIMONIALS industries why ctaintro cta);
@@ -145,6 +159,11 @@ sub edit_once {
 edit_once(q{<h2 class="sec-h rv">We don't build first. <span class="g">We understand first.</span></h2>},
           q{<h2 class="sec-h rv">We don't build first. <br><span class="g">We understand first.</span></h2>},
           'How We Work heading');
+# Solutions: the cards are a hover accordion here (tools/home9-solutions.js),
+# so Home 8's sticky-stack driver must not dim and scale them on scroll.
+edit_once(qq{ initStickyStack('#solutions .sol-card', { dimTo: 0.30, shrink: 0.04 });\n},
+          qq{ // Home 9: Solutions is a hover accordion (the script after #solutions), not a sticky stack.\n},
+          'Solutions sticky-stack driver');
 
 # ── 4 · the page's own stylesheet, after Home 8's base sheet ────────────────
 my $css = $rendered ? '/assets/home9.css' : "<?= asset_url('/assets/home9.css') ?>";

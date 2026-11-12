@@ -174,3 +174,73 @@
 @media(max-width:560px){
  #method .fn-card::after{top:1.5rem;right:1.5rem;font-size:64px}
 }
+
+/* ── 5 · SOLUTIONS — horizontal hover accordion ───────────────────────────────
+   Home 8 stacks the three solution cards as a sticky deck. Here they stand in
+   a row from 1200px up: one open, the other two narrow spines with their
+   number and name; hovering a spine opens it and closes the open card. The
+   driver (tools/home9-solutions.js) marks .is-open, builds the spines and adds
+   .sol-acc at the breakpoint; sync-home9.pl removes the sticky-stack driver. */
+
+/* No sticky deck on this page at any width: below 1200px the cards stack in
+   normal flow. */
+#solutions .sol-grid{padding-bottom:0}
+/* > and the second class match the specificity of Home 7's per-card sticky
+   offsets (.sol-card:nth-child(n){top:...}), which would otherwise step the
+   cards down 30px each */
+#solutions .sol-grid > .sol-card{position:relative;top:auto;will-change:auto}
+#solutions .sol-spine{display:none}
+
+#solutions .sol-grid.sol-acc{
+ --sol-col:112px;           /* a closed card */
+ --sol-gap:16px;
+ flex-direction:row;gap:var(--sol-gap);align-items:stretch;
+ container-type:inline-size;
+}
+/* Every card's two columns are laid out at the OPEN width all the time, from
+   the row's own width (cqi), so the copy never re-wraps while a card grows or
+   shrinks: it is revealed and covered, not reflowed. The row's height is the
+   tallest card's content, and every card stretches to it.
+   The columns split evenly with a 3rem gap: at the 1320px row that gives
+   each 456px, enough for "Custom Operational" (419px at 42px) on one line
+   and the widest feature row on one line. */
+#solutions .sol-acc .sol-card{
+ --sol-open:calc(100cqi - 2 * (var(--sol-col) + var(--sol-gap)));
+ --sol-inner:calc(var(--sol-open) - 6.5rem - 3rem);   /* less padding and column gap */
+ flex:0 1 var(--sol-col);min-width:0;
+ overflow:hidden;cursor:pointer;border-radius:26px;
+ grid-template-columns:calc(var(--sol-inner) * .5) calc(var(--sol-inner) * .5);
+ column-gap:3rem;
+ transition:flex-basis .6s cubic-bezier(.22,.8,.24,1),border-color .35s ease,box-shadow .35s ease;
+}
+#solutions .sol-acc .sol-card.is-open{flex-basis:var(--sol-open);cursor:auto}
+
+/* the open card's content fades in once it has room; a closing card's goes at once */
+#solutions .sol-acc .sol-card > :not(.sol-spine){opacity:0;transition:opacity .18s ease}
+#solutions .sol-acc .sol-card.is-open > :not(.sol-spine){opacity:1;transition:opacity .35s ease .28s}
+/* the button keeps its own hover movement alongside the fade */
+#solutions .sol-acc .sol-card.is-open > .sol-arrow{transition:opacity .35s ease .28s,box-shadow .25s ease,transform .25s ease,gap .2s ease}
+
+/* the spine: number at the top, the name running down the card */
+#solutions .sol-acc .sol-spine{
+ position:absolute;top:0;bottom:0;left:0;width:var(--sol-col);
+ display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+ padding:2.25rem 0 2.5rem;
+ pointer-events:none;
+ opacity:1;transition:opacity .25s ease .22s;
+}
+#solutions .sol-acc .sol-card.is-open .sol-spine{opacity:0;transition:opacity .12s ease}
+#solutions .sol-spine i{
+ font-family:var(--font-display);font-style:normal;font-size:14px;font-weight:700;
+ letter-spacing:.12em;color:#32b46f;
+}
+#solutions .sol-spine b{
+ writing-mode:vertical-rl;white-space:nowrap;
+ font-family:var(--font-display);font-size:21px;font-weight:700;letter-spacing:-.01em;
+ color:var(--black);
+}
+@media(prefers-reduced-motion:reduce){
+ #solutions .sol-acc .sol-card,
+ #solutions .sol-acc .sol-card > *,
+ #solutions .sol-acc .sol-spine{transition:none}
+}
