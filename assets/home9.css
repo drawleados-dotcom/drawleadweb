@@ -14,38 +14,66 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ── 1 · MID-PAGE CTA ─────────────────────────────────────────────────────────
-   The closing CTA's card, repeated after How We Work. home7.css frames that
-   card through #cta.cta-framed, and an id cannot be shared — the closing
-   CTA's letter-train script also finds its card by #cta — so the copy is
-   #cta-mid and the section-level rules are restated here. They mirror
-   home7.css "#cta", "#cta.cta-framed" and "Final CTA — tighter frame"; keep
-   them in step if those change. The card's own look (.cta-card, .cta-h,
-   .cta-btn-w ...) is class-based and needs nothing here. */
+   The closing CTA's card laid out across the page, after How We Work
+   (markup: tools/home9-cta-mid.html). The card runs the full width with a
+   50px margin each side and holds two columns: eyebrow and a two-line
+   heading on the left, the two-line description and the buttons on the
+   right, then the strapline across the bottom under both.
+   The card's surface, grid, glow and type come from Home 7's class rules
+   (.cta-card, .cta-h, .cta-btn-w ...); what is here is layout, plus the
+   sizes those rules set for a centred card that change for a split one.
+   Below 1100px the two columns stack. */
 #cta-mid{
- padding:4.25rem 3.5rem;text-align:center;position:relative;
- background:var(--white);overflow:visible;
+ padding:4rem 50px;position:relative;text-align:left;
+ background:var(--white);
 }
-#cta-mid .cta-card{max-width:960px;padding:4.25rem 2.5rem 3.75rem;border-radius:36px}
-#cta-mid .cta-glow{width:620px;height:500px}
-#cta-mid .cta-eyebrow{margin-bottom:1.5rem;padding:7px 16px;font-size:12.5px}
-#cta-mid .cta-h{margin-bottom:1rem}
-#cta-mid .cta-p{margin-bottom:2rem}
-#cta-mid .cta-btns{gap:12px}
-#cta-mid .cta-btn-w{padding:13px 26px;font-size:13px}
-#cta-mid .cta-btn-g{padding:12px 25px;font-size:13px}
-#cta-mid .cta-note{margin-top:1.9rem}
+#cta-mid .cta-card{max-width:none;padding:3.75rem 4rem 2.25rem;border-radius:36px}
+/* the glow sits behind the heading instead of the middle of the card */
+#cta-mid .cta-glow{left:28%;width:640px;height:520px}
+
+#cta-mid .ctam-row{
+ position:relative;
+ display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);
+ gap:2.5rem 4.5rem;align-items:center;
+}
+#cta-mid .cta-eyebrow{margin-bottom:1.4rem;padding:7px 16px;font-size:12.5px}
+#cta-mid .cta-h{margin:0;font-size:clamp(34px,3.6vw,56px);line-height:1.1}
+#cta-mid .cta-p{
+ margin:0 0 1.9rem;max-width:none;
+ font-size:16px;line-height:1.65;
+}
+#cta-mid .cta-btns{justify-content:flex-start;gap:12px}
+#cta-mid .cta-btn-w{padding:14px 28px;font-size:13px}
+/* one px less padding than the solid button, to absorb its border */
+#cta-mid .cta-btn-g{padding:13px 27px;font-size:13px}
+/* the strapline belongs to the whole card, so a rule sets it off from both
+   columns rather than from either one */
+#cta-mid .cta-note{
+ margin-top:2.75rem;padding-top:1.6rem;text-align:center;
+ border-top:1px solid rgba(255,255,255,.08);
+}
+
+@media(max-width:1100px){
+ #cta-mid .ctam-row{grid-template-columns:1fr;gap:1.75rem}
+ #cta-mid .cta-card{padding:3.25rem 3rem 2.25rem}
+ #cta-mid .cta-h{font-size:clamp(32px,5vw,48px)}
+ #cta-mid .cta-glow{left:50%;top:30%}
+}
 @media(max-width:820px){
- #cta-mid{padding:2.75rem 1.25rem}
- #cta-mid .cta-card{padding:3.25rem 1.5rem 3rem;border-radius:28px}
+ #cta-mid{padding:3rem 1.25rem}
+ #cta-mid .cta-card{padding:2.75rem 1.75rem 2rem;border-radius:28px}
  #cta-mid .cta-glow{width:480px;height:420px}
+ /* the forced breaks stop helping once the lines would wrap anyway */
+ #cta-mid .cta-p br{display:none}
 }
 @media(max-width:560px){
  #cta-mid{padding:2.25rem 1rem}
- #cta-mid .cta-card{padding:2.75rem 1.25rem 2.5rem;border-radius:24px}
- #cta-mid .cta-eyebrow{margin-bottom:1.25rem}
- #cta-mid .cta-p{margin-bottom:1.75rem}
+ #cta-mid .cta-card{padding:2.25rem 1.25rem 1.75rem;border-radius:24px}
+ #cta-mid .cta-h{font-size:clamp(28px,8vw,36px)}
+ #cta-mid .cta-btns{flex-direction:column;align-items:stretch}
  #cta-mid .cta-btn-w,
- #cta-mid .cta-btn-g{max-width:320px}
+ #cta-mid .cta-btn-g{width:100%;max-width:none;justify-content:center}
+ #cta-mid .cta-note{margin-top:2rem;line-height:1.8}
 }
 
 /* ── 2 · TESTIMONIALS ─────────────────────────────────────────────────────────

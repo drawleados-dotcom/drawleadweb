@@ -6,9 +6,10 @@
  * GENERATED FILE — do not edit by hand. It is built from
  * templates/home8-body.php by tools/sync-home9.pl, which tools/sync-home8.pl
  * runs at its end, so a change to Home 7 or Home 8 reaches this page on the
- * next sync. The order, the two sections left out (Core Platform and Tech
- * Stack), the placeholder Testimonials section and the mid-page CTA are all
- * defined in that script.
+ * next sync. The order and the two sections left out (Core Platform and Tech
+ * Stack) are defined in that script; the horizontal mid-page CTA and the
+ * placeholder Testimonials come from tools/home9-cta-mid.html and
+ * tools/home9-testimonials.html.
  *
  * Styling is Home 8's: /assets/home7.css, /assets/home8-base.css and the dark
  * sheet /assets/home8.css, which the header toggle switches off for light.
@@ -394,20 +395,33 @@ include __DIR__ . '/partials/nav.php';
  </div><!-- /mth-wrap -->
 </section>
 
-<!-- CTA (mid-page: the closing CTA's card, repeated) -->
-<section id="cta-mid" class="cta-framed">
- <!-- dark rounded container, inset from the page so white space frames it on all sides -->
+<!-- CTA (mid-page) -->
+<!-- Home 9's CTA after How We Work: the closing CTA's card laid out across the
+     page. Eyebrow and heading on the left, description and buttons on the
+     right, the strapline under both. The copy matches the closing CTA but is
+     kept here rather than copied from it, because the layout and the line
+     breaks differ. Edit this file, then run `perl tools/sync-home9.pl`;
+     templates/home9-body.php is generated. Styles: #cta-mid in
+     assets/home9.css; the card's own look comes from Home 7's .cta-* rules. -->
+<section id="cta-mid">
  <div class="cta-card">
   <div class="cta-grid-bg"></div>
   <div class="cta-glow"></div>
 
-  <div class="cta-eyebrow rv">Start Your ERP Journey</div>
-  <h2 class="cta-h rv">Build your<br><span class="fade">business</span> <span class="gr">ERP</span><br><span class="gr2">OS</span> with <span class="gr3">AI</span></h2>
-  <p class="cta-p rv">Digitize, automate, and scale with Drawlead. Start with a free consultation, no commitment needed.</p>
-  <div class="cta-btns rv">
-  <button type="button" data-book class="cta-btn-w">Schedule Free Consultation</button>
-  <button type="button" data-book class="cta-btn-g">Book a Product Demo</button>
+  <div class="ctam-row">
+   <div class="ctam-lead">
+    <div class="cta-eyebrow rv">Start Your ERP Journey</div>
+    <h2 class="cta-h rv">Build your <span class="fade">business</span><br><span class="gr">ERP</span> <span class="gr2">OS</span> with <span class="gr3">AI</span></h2>
+   </div>
+   <div class="ctam-act">
+    <p class="cta-p rv">Digitize, automate, and scale with Drawlead. <br>Start with a free consultation, no commitment needed.</p>
+    <div class="cta-btns rv">
+     <button type="button" data-book class="cta-btn-w">Schedule Free Consultation</button>
+     <button type="button" data-book class="cta-btn-g">Book a Product Demo</button>
+    </div>
+   </div>
   </div>
+
   <div class="cta-note rv">செயலை மாற்றும் · Intelligent Operating System · Secure · Scalable · Future-Ready</div>
  </div>
 </section>

@@ -8,14 +8,15 @@ use strict; use warnings;
 #     2  Solutions                                  8  Testimonials  (new, placeholder)
 #     3  Case Studies                               9  Industries
 #     4  How We Work                               10  Why Drawlead
-#     5  CTA  (the closing CTA's card, repeated)   11  CTA  (letter train + card)
+#     5  CTA  (horizontal, Home 9's own)           11  CTA  (letter train + card)
 #     6  The Problem
 #
 # Core Platform (the 7 Functions) and Tech Stack are left out. Every section
-# is copied from Home 8 exactly as it stands, so any change to Home 8 reaches
-# Home 9 on the next run. sync-home8.pl runs this script at its end, so the
-# usual workflow needs nothing extra; run it by hand after editing
-# tools/home9-testimonials.html:
+# but 5 and 8 is copied from Home 8 exactly as it stands, so any change to
+# Home 8 reaches Home 9 on the next run; 5 and 8 come from
+# tools/home9-cta-mid.html and tools/home9-testimonials.html. sync-home8.pl
+# runs this script at its end, so the usual workflow needs nothing extra; run
+# it by hand after editing either of those two files:
 #
 #     perl tools/sync-home9.pl
 #
@@ -97,20 +98,22 @@ for my $k (0 .. $#home8) {
 die "sync-home9: unexpected markup before the hero\n" if $head =~ /<section[\s>]/;
 die "sync-home9: unexpected section after the closing CTA\n" if $tail =~ /<section[\s>]/;
 
-# ── 2 · the two new blocks ───────────────────────────────────────────────────
-# Mid-page CTA: the closing CTA's card under its own id. home7.css styles the
-# closing one through #cta.cta-framed and the letter train finds its card by
-# #cta, so the copy must not share that id; assets/home9.css frames #cta-mid.
-my $mid = $blk{cta};
-die "sync-home9: the CTA block's opening tag changed\n"
-  unless $mid =~ s{^<!-- CTA -->\n<section id="cta" class="cta-framed">}
-                  {<!-- CTA (mid-page: the closing CTA's card, repeated) -->\n<section id="cta-mid" class="cta-framed">};
-$mid .= "\n";
-
-my $tm = slurp('tools/home9-testimonials.html');
-$tm =~ s/\r\n/\n/g;
-$tm =~ s/\n*\z/\n\n/;
-die "sync-home9: testimonials file does not hold the section\n" unless $tm =~ /<section id="testimonials">/;
+# ── 2 · the two new blocks, from their own files ────────────────────────────
+# Mid-page CTA: a horizontal layout of the closing CTA's card, under its own
+# id (the closing CTA's letter train finds its card by #cta). Testimonials:
+# placeholder content.
+sub block_file {
+  my ($file, $id) = @_;
+  my $t = slurp($file);
+  $t =~ s/\r\n/\n/g;
+  $t =~ s/\n*\z/\n\n/;
+  my $opens = () = $t =~ /<section[\s>]/g;
+  die "sync-home9: $file should hold exactly one section, <section id=\"$id\">\n"
+    unless $opens == 1 && $t =~ /<section id="\Q$id\E"[\s>]/ && $t =~ m{</section>\n\n\z};
+  return $t;
+}
+my $mid = block_file('tools/home9-cta-mid.html', 'cta-mid');
+my $tm  = block_file('tools/home9-testimonials.html', 'testimonials');
 
 # ── 3 · Home 9's order ───────────────────────────────────────────────────────
 my @dropped = qw(functions tech);
@@ -146,9 +149,10 @@ unless ($rendered) {
  * GENERATED FILE — do not edit by hand. It is built from
  * templates/home8-body.php by tools/sync-home9.pl, which tools/sync-home8.pl
  * runs at its end, so a change to Home 7 or Home 8 reaches this page on the
- * next sync. The order, the two sections left out (Core Platform and Tech
- * Stack), the placeholder Testimonials section and the mid-page CTA are all
- * defined in that script.
+ * next sync. The order and the two sections left out (Core Platform and Tech
+ * Stack) are defined in that script; the horizontal mid-page CTA and the
+ * placeholder Testimonials come from tools/home9-cta-mid.html and
+ * tools/home9-testimonials.html.
  *
  * Styling is Home 8's: /assets/home7.css, /assets/home8-base.css and the dark
  * sheet /assets/home8.css, which the header toggle switches off for light.
