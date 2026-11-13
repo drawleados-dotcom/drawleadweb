@@ -637,11 +637,9 @@
 /* ── 11 · PLATFORM DASHBOARDS — the hub ───────────────────────────────────────
    Home 8 slides a row of six full dashboard cards past while pinned. Here
    (markup: tools/home9-dashboards.html) the six modules are wired to one
-   "Centralized" hub: three module widgets down each side and the hub between
+   "Centralized" hub: three compact cards down each side and the hub between
    them, on a dark circuit-board ground in both themes (so its colours are
-   its own, like #process). The widgets are drawn as the product draws them,
-   white with neutral greys, tinted KPI tiles and a small chart each, so
-   they read as real app screens lifted off the dark ground.
+   its own, like #process).
    From 1101px: three columns (cards | hub | cards) on a 1320px stage. The
    script draws the wires into .hub-wires from each card's port (.hub-port,
    on its inner edge) to the hub's side: a dim dashed line with a dot
@@ -733,125 +731,78 @@ section#dashboards::before{
 }
 @keyframes hub-blink{50%{opacity:.35}}
 
-/* a module card: a white product widget, drawn as the app draws it (Inter,
-   neutral greys, tinted KPI tiles), lifted off the dark ground by its shadow */
+/* a module card */
 #dashboards .hub-mod{
- position:relative;padding:16px 16px 14px;border-radius:14px;
- background:#fff;border:1px solid #E4E7EC;color:#101828;
- font-family:var(--font-body);
- box-shadow:0 1px 2px rgba(16,24,40,.06),0 18px 44px rgba(0,0,0,.38);
+ position:relative;padding:18px 20px 16px;border-radius:18px;
+ background:linear-gradient(180deg,#0F1A15 0%,#0A120F 100%);
+ border:1px solid rgba(50,180,111,.16);
+ box-shadow:0 16px 36px rgba(0,0,0,.35);
  transition:border-color .3s ease,box-shadow .3s ease,transform .45s cubic-bezier(.22,.8,.24,1),opacity .6s ease;
 }
 #dashboards .hub-col-l .hub-mod{--nudge:6px;--from:-40px}
 #dashboards .hub-col-r .hub-mod{--nudge:-6px;--from:40px}
-
-/* header: glyph, name and line, period picker, menu */
-#dashboards .hm-head{display:flex;align-items:center;gap:11px}
-#dashboards .hm-ico{
- flex:none;width:36px;height:36px;border-radius:10px;
+#dashboards .hub-mod-top{display:flex;align-items:center;gap:12px}
+#dashboards .hub-mod-ico{
+ flex:none;width:40px;height:40px;border-radius:11px;
  display:flex;align-items:center;justify-content:center;
- background:linear-gradient(160deg,#22A564 0%,#13804A 100%);
- box-shadow:0 4px 10px rgba(19,128,74,.28),inset 0 1px 0 rgba(255,255,255,.2);
+ background:linear-gradient(160deg,#27AA68 0%,#11804A 100%);
+ box-shadow:0 6px 16px rgba(17,128,74,.35);
 }
-#dashboards .hm-ico svg{width:20px;height:20px;display:block}
-#dashboards .hm-tt{flex:1;min-width:0}
-#dashboards .hm-tt h3{
- margin:0;font-family:var(--font-body);font-size:14.5px;font-weight:700;letter-spacing:-.01em;line-height:1.3;color:#101828;
+#dashboards .hub-mod-ico svg{width:22px;height:22px;display:block}
+#dashboards .hub-mod-tt{flex:1;min-width:0}
+/* name and period chip share the first line, so the line under them gets
+   the card's full width */
+#dashboards .hub-mod-name{display:flex;align-items:center;justify-content:space-between;gap:10px}
+#dashboards .hub-mod h3{
+ min-width:0;margin:0;font-family:var(--font-display);font-size:16px;font-weight:700;letter-spacing:-.01em;line-height:1.25;color:#fff;
  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-#dashboards .hm-tt p{
- margin:1px 0 0;font-size:12px;line-height:1.4;color:#667085;
+#dashboards .hub-mod-tt p{
+ margin:2px 0 0;font-family:var(--font-body);font-size:12.5px;line-height:1.4;color:rgba(255,255,255,.55);
  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-#dashboards .hm-sel{
- flex:none;display:inline-flex;align-items:center;gap:4px;
- padding:5px 7px 5px 10px;border-radius:8px;border:1px solid #E4E7EC;background:#fff;
- font-size:11.5px;font-weight:600;line-height:1.2;color:#344054;
- box-shadow:0 1px 2px rgba(16,24,40,.05);
+#dashboards .hub-mod-when{
+ flex:none;padding:3px 9px;border-radius:999px;
+ font-family:var(--font-body);font-size:10.5px;font-weight:600;line-height:1.4;color:rgba(255,255,255,.55);
+ border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);
 }
-#dashboards .hm-sel svg{width:12px;height:12px;color:#98A2B3}
-#dashboards .hm-more{flex:none;display:flex;color:#98A2B3}
-#dashboards .hm-more svg{width:15px;height:15px}
-
-/* the KPI tiles: label and glyph, figure, trend and comparison */
-#dashboards .hm-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:13px}
-#dashboards .hm-k{min-width:0;padding:9px 10px 9px;border-radius:10px;border:1px solid transparent}
-#dashboards .hm-k-g{background:#F0FBF4;border-color:#D7F2E2}
-#dashboards .hm-k-b{background:#F2F7FF;border-color:#DCE8FB}
-#dashboards .hm-k-o{background:#FFF7F0;border-color:#FBE5D3}
-#dashboards .hm-kl{display:flex;align-items:center;justify-content:space-between;gap:6px}
-#dashboards .hm-kl span{
- min-width:0;font-size:11px;font-weight:500;line-height:1.3;color:#475467;
+#dashboards .hub-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0 0}
+#dashboards .hub-kpis > div{
+ min-width:0;padding:9px 11px 10px;border-radius:11px;
+ background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);
+}
+#dashboards .hub-kpis dt{
+ font-family:var(--font-body);font-size:11px;line-height:1.3;color:rgba(255,255,255,.5);
  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-#dashboards .hm-kl i{
- flex:none;width:22px;height:22px;border-radius:50%;
- display:flex;align-items:center;justify-content:center;
+#dashboards .hub-kpis dd{
+ margin:4px 0 0;display:flex;align-items:baseline;flex-wrap:wrap;column-gap:6px;
+ font-family:var(--font-display);font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:1.2;color:#fff;
 }
-#dashboards .hm-kl i svg{width:12px;height:12px}
-#dashboards .hm-k-g .hm-kl i{background:#D1F5DF;color:#079455}
-#dashboards .hm-k-b .hm-kl i{background:#D6E6FD;color:#1570EF}
-#dashboards .hm-k-o .hm-kl i{background:#FDE3CF;color:#E04F16}
-#dashboards .hm-kv{
- margin-top:3px;font-size:18px;font-weight:700;letter-spacing:-.02em;line-height:1.2;color:#101828;
- white-space:nowrap;
+#dashboards .hub-kpis em{
+ font-style:normal;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0;color:#4ED38B;
 }
-#dashboards .hm-kd{
- margin-top:2px;font-size:10.5px;line-height:1.35;color:#667085;
- white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-#dashboards .hm-kd b{font-weight:700}
-#dashboards .hm-kd .up{color:#079455}
-#dashboards .hm-kd .down{color:#E04F16}
-
-/* the chart panel: title and link, then the chart */
-#dashboards .hm-viz{margin-top:13px;padding-top:12px;border-top:1px solid #F2F4F7}
-#dashboards .hm-vh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
-#dashboards .hm-vh > span:first-child{font-size:12.5px;font-weight:700;color:#101828}
-#dashboards .hm-link{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#12904F}
-#dashboards .hm-link svg{width:11px;height:11px}
-/* monthly (or module) bars, the highlighted one green */
-#dashboards .hm-bars{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:8px;height:58px}
-#dashboards .hm-bars span{display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;min-width:0}
-#dashboards .hm-bars i{display:block;height:calc((100% - 13px) * var(--h) / 100);border-radius:4px 4px 2px 2px;background:#E4E7EC}
-#dashboards .hm-bars .hi i{background:linear-gradient(180deg,#2BB572 0%,#16A05A 100%)}
-#dashboards .hm-bars em{
- margin-top:3px;font-style:normal;font-size:9.5px;line-height:10px;text-align:center;color:#98A2B3;
- white-space:nowrap;overflow:hidden;
-}
-/* a split bar and its legend */
-#dashboards .hm-stack{display:flex;gap:2px;height:9px;border-radius:999px;overflow:hidden;background:#F2F4F7}
-#dashboards .hm-stack i{display:block;height:100%}
-#dashboards .hm-legend{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:9px;min-height:40px;align-content:flex-start}
-#dashboards .hm-legend span{display:inline-flex;align-items:center;gap:5px;font-size:11px;line-height:1.3;color:#475467;white-space:nowrap}
-#dashboards .hm-legend span i{width:7px;height:7px;border-radius:2px}
-#dashboards .hm-legend b{font-weight:700;color:#101828}
-#dashboards .c-g{background:#22A564}
-#dashboards .c-b{background:#2E90FA}
-#dashboards .c-o{background:#F79009}
-#dashboards .c-a{background:#FDB022}
-#dashboards .c-r{background:#F04438}
-#dashboards .c-v{background:#7A5AF8}
-#dashboards .c-s{background:#98A2B3}
+#dashboards .hub-kpis em::before{content:"\2191\00a0"}
+#dashboards .hub-kpis em.down{color:#F0A35E}
+#dashboards .hub-kpis em.down::before{content:"\2193\00a0"}
 
 /* the port on each card's inner edge, where its wire starts */
 #dashboards .hub-port{
  position:absolute;top:50%;z-index:2;width:12px;height:12px;margin-top:-6px;border-radius:50%;
- background:#fff;border:2px solid #32b46f;
- box-shadow:0 0 0 3px rgba(4,9,7,.85);
+ background:#0A120F;border:2px solid rgba(50,180,111,.6);
  transition:background-color .3s ease,border-color .3s ease,box-shadow .3s ease;
 }
 #dashboards .hub-col-l .hub-port{right:-7px}
 #dashboards .hub-col-r .hub-port{left:-7px}
 
-/* active module: a green focus ring and glow, as a selected widget */
+/* active module */
 #dashboards .hub-col .hub-mod.is-active{
- border-color:#32b46f;transform:translateX(var(--nudge));
- box-shadow:0 0 0 2px rgba(50,180,111,.85),0 0 0 7px rgba(50,180,111,.16),0 18px 44px rgba(0,0,0,.38),0 0 56px rgba(50,180,111,.25);
+ border-color:rgba(50,180,111,.65);transform:translateX(var(--nudge));
+ box-shadow:0 16px 36px rgba(0,0,0,.35),0 0 0 1px rgba(50,180,111,.18),0 0 44px rgba(50,180,111,.16);
 }
 #dashboards .hub-mod.is-active .hub-port{
  background:#32b46f;border-color:#9BF3C4;
- box-shadow:0 0 0 3px rgba(4,9,7,.85),0 0 14px rgba(50,180,111,.9);
+ box-shadow:0 0 0 4px rgba(50,180,111,.2),0 0 14px rgba(50,180,111,.85);
 }
 
 /* the wires */
@@ -906,11 +857,8 @@ section#dashboards::before{
  #dashboards .hub-box{max-width:172px;border-radius:22px}
  #dashboards .hub-ico{width:54px;height:54px}
  #dashboards .hub-name{font-size:18px}
- #dashboards .hub-mod{padding:14px 13px 12px}
- #dashboards .hm-tt p{white-space:normal}
- #dashboards .hm-kd{font-size:0}            /* the trend stays, the "vs last month" goes */
- #dashboards .hm-kd b{font-size:10.5px}
- #dashboards .hm-kl i{display:none}        /* room for the label */
+ #dashboards .hub-mod{padding:16px 16px 14px}
+ #dashboards .hub-kpis dd{font-size:16px}
 }
 @media(prefers-reduced-motion:reduce){
  #dashboards .hub-box::before,
