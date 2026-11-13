@@ -899,3 +899,5 @@ section#dashboards::before{
    desktop and wraps evenly, without a stray last word, where it needs more. */
 #hero .hero-left{max-width:1080px}
 #hero .hero-h{text-wrap:balance}
+/* the description on three balanced lines (Home 7 holds it to 540px: four) */
+#hero .hero-p{max-width:700px;text-wrap:balance}
