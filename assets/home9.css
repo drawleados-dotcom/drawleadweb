@@ -398,10 +398,11 @@
    tools/home9-process.html). Like the first (#method) it is dark in both
    themes, so its colours are its own rather than the page tokens and the
    theme toggle leaves it alone.
-   Header: eyebrow, heading, description and button centred in one column,
-   straight on the section ground (no card). As in #method, the heading runs
-   on one line from 900px up and the description is held to two balanced
-   lines; below 900px the heading's break takes over.
+   Header: eyebrow, heading and description centred in one column, straight
+   on the section ground (no card). As in #method, the heading runs on one
+   line from 900px up and the description is held to two balanced lines;
+   below 900px the heading's break takes over. The button and its note sit
+   centred under the steps.
    Steps: from 1100px, four cards in a row, every other one set lower by
    --pr-drop, with a curved arrow in each gap running from the middle of one
    card to the middle of the next (down after a high card, the same curve
@@ -444,11 +445,11 @@
 @media(max-width:560px){#process .sec-h{font-size:clamp(23px,5.6vw,30px)}}
 @media(min-width:900px){#process .sec-h br{display:none}}
 #process .pr-head .sec-sub{
- text-align:center;max-width:780px;margin:0 auto 2.25rem;text-wrap:balance;
+ text-align:center;max-width:780px;margin:0 auto;text-wrap:balance;
  font-size:17px;line-height:1.7;color:rgba(255,255,255,.72);
 }
-/* the button at its own width, with the note centred under it */
-#process .pr-actions{display:flex;flex-direction:column;align-items:center}
+/* under the steps: the button at its own width, the note centred under it */
+#process .pr-actions{display:flex;flex-direction:column;align-items:center;margin-top:3.5rem}
 /* #0B8043 and darker: white on the brand green is under 4.5:1 */
 #process .pr-cta{
  justify-content:center;gap:10px;padding:.95rem 2rem;
@@ -538,7 +539,8 @@
 @media(max-width:600px){
  #process .pr-steps{grid-template-columns:minmax(0,1fr);gap:14px}
  #process .pr-step{padding:3.75rem 1.5rem 2rem}
- #process .pr-head .sec-sub{font-size:16px;margin-bottom:1.75rem}
+ #process .pr-head .sec-sub{font-size:16px}
+ #process .pr-actions{margin-top:2.5rem}
 }
 @media(prefers-reduced-motion:reduce){
  #process .pr-step{transition:none}
