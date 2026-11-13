@@ -135,46 +135,6 @@
  #testimonials .tm-card:hover{transform:none}
 }
 
-/* ── 3 · HOW WE WORK — centred header ─────────────────────────────────────────
-   Home 7 sets this section's header flush left in the first of two columns
-   (the cards and the process panel share the row below). Here it spans both
-   columns and centres: eyebrow, heading and description. The cards and the
-   panel are unchanged.
-   The heading runs on one line from 900px up (it needs ~945px at its 46px
-   cap and has 988px+ from 1100px, 852px at 900 where it is 780px); below
-   that, the break sync-home9.pl puts between its two sentences takes over.
-   The description is widened to sit on two lines (it runs ~1380px at 17px),
-   balanced so neither line is left short. */
-#method .mth-head{grid-column:1 / -1;text-align:center}
-#method .eyebrow{justify-content:center}
-#method .sec-h{text-align:center}
-@media(min-width:900px){#method .sec-h br{display:none}}
-#method .sec-sub{text-align:center;margin:0 auto 2.5rem;max-width:780px;text-wrap:balance}
-
-/* ── 4 · HOW WE WORK — step numbers ───────────────────────────────────────────
-   Each of the four cards carries its step number (01–04) in the top-right
-   corner, level with its icon tile: bold, in the brand green at low opacity
-   so it reads as texture rather than competing with the title. A CSS counter
-   numbers them, so the markup Home 9 copies from Home 8 is untouched. The
-   second `content` hides the number from screen readers (it repeats what the
-   card order already says); a browser without that syntax keeps the first.
-   #method is dark in both themes, so one colour serves both. */
-#method .fn-grid{counter-reset:mth-step}
-#method .fn-card{position:relative;counter-increment:mth-step}
-#method .fn-card::after{
- content:counter(mth-step,decimal-leading-zero);
- content:counter(mth-step,decimal-leading-zero) / "";
- position:absolute;top:1.9rem;right:1.75rem;
- font-family:var(--font-display);font-size:80px;font-weight:700;
- line-height:46px;letter-spacing:-.02em;
- color:#32b46f;opacity:.2;
- pointer-events:none;transition:opacity .25s ease;
-}
-#method .fn-card:hover::after{opacity:.34}
-@media(max-width:560px){
- #method .fn-card::after{top:1.5rem;right:1.5rem;font-size:64px}
-}
-
 /* ── 5 · SOLUTIONS — horizontal hover accordion ───────────────────────────────
    Home 8 stacks the three solution cards as a sticky deck. Here they stand in
    a row from 1200px up: one open, the other two narrow spines with their
@@ -394,13 +354,13 @@
 }
 
 /* ── 10 · HOW WE WORK — process row ───────────────────────────────────────────
-   A second How We Work straight after the first (markup:
-   tools/home9-process.html). Like the first (#method) it is dark in both
+   Home 9's How We Work, after Case Studies, in place of Home 8's card grid
+   and process panel (markup: tools/home9-process.html). It is dark in both
    themes, so its colours are its own rather than the page tokens and the
    theme toggle leaves it alone.
    Header: eyebrow, heading and description centred in one column, straight
-   on the section ground (no card). As in #method, the heading runs on one
-   line from 900px up and the description is held to two balanced lines;
+   on the section ground (no card). The heading runs on one line from 900px
+   up (~945px at its 46px cap) and the description is held to two balanced lines;
    below 900px the heading's break takes over. The button and its note sit
    centred under the steps.
    Steps: from 1100px, four cards in a row, every other one set lower by
@@ -438,8 +398,9 @@
 }
 #process .eyebrow{justify-content:center}
 #process .sec-h{text-align:center;color:#fff;margin:0 0 1.1rem}
-/* #method's heading sizes (home7.css gives them to the homepage section IDs
-   only); the bare .sec-h's 40px at 960px would not fit on one line at 900px */
+/* the homepage section headings' sizes (home7.css gives them to its own
+   section IDs only); the bare .sec-h's 40px at 960px would not fit on one
+   line at 900px */
 #process .sec-h{font-size:clamp(30px,4vw,46px);font-weight:700}
 @media(max-width:960px){#process .sec-h{font-size:clamp(26px,4.6vw,38px)}}
 @media(max-width:560px){#process .sec-h{font-size:clamp(23px,5.6vw,30px)}}

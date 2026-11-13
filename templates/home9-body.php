@@ -6,9 +6,10 @@
  * GENERATED FILE — do not edit by hand. It is built from
  * templates/home8-body.php by tools/sync-home9.pl, which tools/sync-home8.pl
  * runs at its end, so a change to Home 7 or Home 8 reaches this page on the
- * next sync. The order and the two sections left out (Core Platform and Tech
- * Stack) are defined in that script; the horizontal mid-page CTA and the
- * placeholder Testimonials come from tools/home9-cta-mid.html and
+ * next sync. The order and the sections left out (Core Platform, Tech Stack
+ * and Home 8's How We Work) are defined in that script; How We Work's process
+ * row, the horizontal mid-page CTA and the placeholder Testimonials come from
+ * tools/home9-process.html, tools/home9-cta-mid.html and
  * tools/home9-testimonials.html.
  *
  * Styling is Home 8's: /assets/home7.css, /assets/home8-base.css and the dark
@@ -383,78 +384,14 @@ include __DIR__ . '/partials/nav.php';
  </div><!-- /cases-scroll -->
 </section>
 
-<!-- METHODOLOGY -->
-<section id="method">
-
- <div class="mth-wrap">
- <div class="mth-head">
- <div class="eyebrow rv"><span class="eyebrow-text">How We Work</span></div>
- <h2 class="sec-h rv">We don't build first. <br><span class="g">We understand first.</span></h2>
- <p class="sec-sub rv">Before a single line of code or campaign goes live, we audit how your business actually runs, so every system we build is measurable, automated, and built to scale.</p>
- </div><!-- /mth-head -->
-
- <div class="fn-grid">
- <!-- Icons are single-weight 24px line glyphs inheriting currentColor, so the accent is
-      set once in CSS rather than per-card. No filled tiles: the brief asked for subtle,
-      not decorative. -->
- <div class="fn-card">
-  <div class="fn-icon">
-   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.2 4.1A2.1 2.1 0 0 1 6.3 2h7.05L18.4 7.05v3.4a6.6 6.6 0 0 0-2.3-.72V8.5h-3.25a1.5 1.5 0 0 1-1.5-1.5V4.3H6.5v15.4h3.24c.2.83.55 1.6 1.01 2.3H6.3a2.1 2.1 0 0 1-2.1-2.1z"/><path d="M13.65 4.75 16.7 7.8h-3.05z"/><rect x="7.5" y="8.9" width="4.4" height="2" rx="1"/><rect x="7.5" y="12.4" width="3.3" height="2" rx="1"/><circle cx="16.15" cy="15.75" r="4.15"/><path d="M18.95 18.55a1.2 1.2 0 0 1 1.7 0l1.9 1.9a1.2 1.2 0 0 1-1.7 1.7l-1.9-1.9a1.2 1.2 0 0 1 0-1.7"/></svg>
-  </div>
-  <div class="fn-name">Audit</div>
-  <div class="fn-desc">We map your current workflows, tools, and customer journey to find exactly what's slowing growth down.</div>
-  <div class="fn-tags"><span class="fn-tag">Workflows</span><span class="fn-tag">Bottlenecks</span></div>
- </div>
- <div class="fn-card">
-  <div class="fn-icon">
-   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="19.3" width="18" height="2.3" rx="1.15"/><rect x="4.6" y="12.4" width="4" height="5.6" rx="1.3"/><rect x="10" y="6.6" width="4" height="11.4" rx="1.3"/><rect x="15.4" y="9.6" width="4" height="8.4" rx="1.3"/></svg>
-  </div>
-  <div class="fn-name">Measure</div>
-  <div class="fn-desc">We set up KPIs, dashboards, and tracking so every decision from here on is backed by real data.</div>
-  <div class="fn-tags"><span class="fn-tag">KPIs</span><span class="fn-tag">Dashboards</span></div>
- </div>
- <div class="fn-card">
-  <div class="fn-icon">
-   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2.6" y="2.9" width="8.2" height="6.4" rx="2"/><rect x="13.2" y="14.7" width="8.2" height="6.4" rx="2"/><path d="M10.8 5h3.05a3.6 3.6 0 0 1 3.6 3.6v6.1h-2.3V8.6a1.3 1.3 0 0 0-1.3-1.3H10.8z"/><path d="M13.2 18.9h-3.05a3.6 3.6 0 0 1-3.6-3.6V9.2h2.3v6.1c0 .72.58 1.3 1.3 1.3h3.05z"/></svg>
-  </div>
-  <div class="fn-name">Automate</div>
-  <div class="fn-desc">We remove repetitive manual work (approvals, follow-ups, notifications) before we build anything new.</div>
-  <div class="fn-tags"><span class="fn-tag">Approvals</span><span class="fn-tag">Follow-ups</span></div>
- </div>
- <div class="fn-card">
-  <div class="fn-icon">
-   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="19.4" width="18" height="2.2" rx="1.1"/><path d="M20.9 4.5a1.15 1.15 0 0 0-.8-.33h-5.15a1.15 1.15 0 0 0 0 2.3h2.37l-4.62 4.62-2.83-2.83a1.15 1.15 0 0 0-1.63 0l-5.1 5.1a1.15 1.15 0 0 0 1.63 1.63l4.28-4.29 2.83 2.83a1.15 1.15 0 0 0 1.63 0l5.44-5.43v2.37a1.15 1.15 0 0 0 2.3 0V5.32a1.15 1.15 0 0 0-.35-.82"/></svg>
-  </div>
-  <div class="fn-name">Scale</div>
-  <div class="fn-desc">Only then do we build the ERP, CRM, website, or automation platform, designed to grow with you.</div>
-  <div class="fn-tags"><span class="fn-tag">Custom ERP</span><span class="fn-tag">Automation</span></div>
- </div>
- </div>
-
- <!-- Right panel. The four stages were a single arrow-separated line of text; here they
-      are one chip each so the sequence reads as a stack. Rotation and overlap are per
-      chip in CSS, so the markup stays plain text and remains selectable and readable. -->
- <aside class="mth-panel rv">
-  <h3 class="mth-panel-h">A Process Built Around Your Business</h3>
-  <div class="mth-stack">
-   <span class="mth-chip mth-chip-1">Understand</span>
-   <span class="mth-chip mth-chip-2">Measure</span>
-   <span class="mth-chip mth-chip-3">Automate</span>
-   <span class="mth-chip mth-chip-4">Scale</span>
-  </div>
-  <button type="button" data-book class="btn mth-cta">Start With an Audit</button>
- </aside>
- </div><!-- /mth-wrap -->
-</section>
-
 <!-- HOW WE WORK — process -->
-<!-- Home 9's second How We Work section, straight after the first: the same
-     eyebrow, heading and description, centred in one column over the steps
-     (heading on one line, description on two), and the button centred under
-     the steps. The four steps
-     (Audit / Measure / Automate / Scale) are set out as a staggered row of
-     cards joined by curved arrows; their titles, copy and icons are the first
-     section's four cards. No right-hand panel. Edit this file, then run
+<!-- Home 9's How We Work, in place of Home 8's (which sync-home9.pl leaves
+     out): Home 8's eyebrow, heading and description, centred in one column
+     over the steps (heading on one line, description on two), and the button
+     centred under the steps. The four steps (Audit / Measure / Automate /
+     Scale) are set out as a staggered row of cards joined by curved arrows;
+     their titles, copy and icons are Home 8's four cards. No right-hand
+     panel. Edit this file, then run
      `perl tools/sync-home9.pl`; templates/home9-body.php is generated.
      Styles: #process in assets/home9.css. -->
 <section id="process">

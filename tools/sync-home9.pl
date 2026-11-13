@@ -4,17 +4,18 @@ use strict; use warnings;
 #
 # Home 9 is Home 8's page with its sections in a different order:
 #
-#     1  Hero (with the marquee strip under it)     7  The Problem
-#     2  Solutions                                  8  Platform Dashboards
-#     3  Case Studies                               9  Testimonials  (new, placeholder)
-#     4  How We Work                               10  Industries
-#     5  How We Work  (process row, Home 9's own)  11  Why Drawlead
-#     6  CTA  (horizontal, Home 9's own)           12  CTA  (letter train + card)
+#     1  Hero (with the marquee strip under it)     7  Platform Dashboards
+#     2  Solutions                                  8  Testimonials  (new, placeholder)
+#     3  Case Studies                               9  Industries
+#     4  How We Work  (process row, Home 9's own)  10  Why Drawlead
+#     5  CTA  (horizontal, Home 9's own)           11  CTA  (letter train + card)
+#     6  The Problem
 #
-# Core Platform (the 7 Functions) and Tech Stack are left out. Every section
-# but 5, 6 and 9 is copied from Home 8 exactly as it stands, so any change to
-# Home 8 reaches Home 9 on the next run; 5, 6 and 9 come from
-# tools/home9-process.html, tools/home9-cta-mid.html and
+# Core Platform (the 7 Functions), Tech Stack and Home 8's How We Work (the
+# card grid and process panel; Home 9's process row replaces it) are left
+# out. Every section but 4, 5 and 8 is copied from Home 8 exactly as it
+# stands, so any change to Home 8 reaches Home 9 on the next run; 4, 5 and 8
+# come from tools/home9-process.html, tools/home9-cta-mid.html and
 # tools/home9-testimonials.html. A few copied
 # sections get Home 9's own edits (section 3b), and Solutions gains the hover
 # accordion driver in tools/home9-solutions.js. sync-home8.pl runs this
@@ -117,8 +118,8 @@ sub block_file {
 }
 my $mid = block_file('tools/home9-cta-mid.html', 'cta-mid');
 my $tm  = block_file('tools/home9-testimonials.html', 'testimonials');
-# How We Work, a second time: the same copy with a split header and the four
-# steps as a staggered card row instead of the card grid and panel.
+# How We Work: Home 8's copy with a centred header and the four steps as a
+# staggered card row, in place of Home 8's card grid and panel.
 my $proc = block_file('tools/home9-process.html', 'process');
 
 # Solutions: a horizontal hover accordion instead of Home 8's sticky stack.
@@ -166,8 +167,8 @@ my $proc = block_file('tools/home9-process.html', 'process');
 }
 
 # ── 3 · Home 9's order ───────────────────────────────────────────────────────
-my @dropped = qw(functions tech);
-my @order   = qw(hero solutions cases method PROCESS MID unify dashboards TESTIMONIALS industries why ctaintro cta);
+my @dropped = qw(functions tech method);
+my @order   = qw(hero solutions cases PROCESS MID unify dashboards TESTIMONIALS industries why ctaintro cta);
 my %used = map { $_ => 1 } @order, @dropped;
 for (map { $_->[0] } @home8) { die "sync-home9: Home 8 section '$_' is neither placed nor dropped\n" unless $used{$_} }
 
@@ -189,13 +190,6 @@ sub edit_once {
   die "sync-home9: $what: expected 1 match, found $c\n" unless $c == 1;
   $s =~ s/\Q$from\E/$to/;
 }
-# How We Work: a break between the heading's two sentences. assets/home9.css
-# hides it from 900px up, where the heading fits on one line; below that it
-# splits the heading at the sentence instead of leaving "first." alone on the
-# second line. The space before it separates the sentences while it is hidden.
-edit_once(q{<h2 class="sec-h rv">We don't build first. <span class="g">We understand first.</span></h2>},
-          q{<h2 class="sec-h rv">We don't build first. <br><span class="g">We understand first.</span></h2>},
-          'How We Work heading');
 # Solutions: the cards are a hover accordion here (tools/home9-solutions.js),
 # so Home 8's sticky-stack driver must not dim and scale them on scroll.
 edit_once(qq{ initStickyStack('#solutions .sol-card', { dimTo: 0.30, shrink: 0.04 });\n},
@@ -222,9 +216,10 @@ unless ($rendered) {
  * GENERATED FILE — do not edit by hand. It is built from
  * templates/home8-body.php by tools/sync-home9.pl, which tools/sync-home8.pl
  * runs at its end, so a change to Home 7 or Home 8 reaches this page on the
- * next sync. The order and the two sections left out (Core Platform and Tech
- * Stack) are defined in that script; the horizontal mid-page CTA and the
- * placeholder Testimonials come from tools/home9-cta-mid.html and
+ * next sync. The order and the sections left out (Core Platform, Tech Stack
+ * and Home 8's How We Work) are defined in that script; How We Work's process
+ * row, the horizontal mid-page CTA and the placeholder Testimonials come from
+ * tools/home9-process.html, tools/home9-cta-mid.html and
  * tools/home9-testimonials.html.
  *
  * Styling is Home 8's: /assets/home7.css, /assets/home8-base.css and the dark
@@ -237,7 +232,7 @@ PHP
 
 # ── 6 · checks on the result ─────────────────────────────────────────────────
 my @ids = $s =~ /<section id="([^"]+)"/g;
-my $want = 'hero solutions cases method process cta-mid unify dashboards testimonials industries why cta-intro cta';
+my $want = 'hero solutions cases process cta-mid unify dashboards testimonials industries why cta-intro cta';
 die "sync-home9: sections came out as '@ids', expected '$want'\n" unless "@ids" eq $want;
 my %seen; $seen{$_}++ for @ids;
 die "sync-home9: duplicate section id\n" if grep { $_ > 1 } values %seen;
