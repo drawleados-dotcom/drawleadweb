@@ -125,9 +125,11 @@ my $proc = block_file('tools/home9-process.html', 'process');
 # Solutions: a sidebar and a column of cards instead of Home 8's sticky stack.
 # The sidebar holds the section's eyebrow, heading and description, a nav with
 # one numbered entry per card (its name and tagline, taken from the card so
-# the copy lives in one place); it stays put beside the cards while they
-# scroll (assets/home9.css, section 5). Each card gets an
-# id for its nav entry, and its button moves above its features. The nav's
+# the copy lives in one place). On a laptop or desktop screen the sidebar and
+# ONE card are pinned together and scrolling swaps the card; the scroll
+# distance comes from .sol-scroll, a track wrapped round the layout that is
+# told the card count in --sol-n (assets/home9.css, section 5). Each card
+# gets an id for its nav entry, and its button moves above its features. The
 # driver, tools/home9-solutions.js, follows the section; the stack's driver
 # is removed in 3b.
 {
@@ -161,16 +163,19 @@ my $proc = block_file('tools/home9-process.html', 'process');
   }gse;
   die "sync-home9: expected 3 Solutions cards, found " . scalar(@nav) . "\n" unless @nav == 3;
 
-  $headblk =~ s/^(?=.)/  /mg;
+  $headblk =~ s/^(?=.)/   /mg;
   $headblk =~ s/\n+\z/\n/;
-  $grid =~ s/^(?=.)/ /mg;
+  s/^(?=.)/ /mg for @nav;
+  $grid =~ s/^(?=.)/  /mg;
   $blk{solutions} = $pre
-    . qq{ <div class="sol-layout">\n  <div class="sol-side">\n}
+    . sprintf(qq{ <div class="sol-scroll" style="--sol-n:%d">\n}, scalar @nav)
+    . qq{  <div class="sol-layout">\n   <div class="sol-side">\n}
     . $headblk
     # a <div>, not a <nav>: home7.css styles every <nav> as the fixed top bar
-    . qq{   <div class="sol-nav">\n} . join('', @nav) . qq{   </div>\n}
-    . qq{  </div>\n}
+    . qq{    <div class="sol-nav">\n} . join('', @nav) . qq{    </div>\n}
+    . qq{   </div>\n}
     . $grid
+    . qq{  </div>\n}
     . qq{ </div>\n}
     . $post;
 
