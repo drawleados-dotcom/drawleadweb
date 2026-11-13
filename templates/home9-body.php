@@ -464,7 +464,8 @@ include __DIR__ . '/partials/nav.php';
   </div>
   <div class="pr-aside rv">
    <p class="sec-sub">Before a single line of code or campaign goes live, we audit how your business actually runs, so every system we build is measurable, automated, and built to scale.</p>
-   <button type="button" data-book class="btn pr-cta">Start With an Audit</button>
+   <button type="button" data-book class="btn pr-cta">Start With an Audit <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+   <p class="pr-note"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6.25"/><path d="M8 4.75V8l2.25 1.5"/></svg>14-day turnaround &bull; Full architecture report included</p>
   </div>
  </div>
 
