@@ -6,10 +6,11 @@
  * GENERATED FILE — do not edit by hand. It is built from
  * templates/home8-body.php by tools/sync-home9.pl, which tools/sync-home8.pl
  * runs at its end, so a change to Home 7 or Home 8 reaches this page on the
- * next sync. The order and the sections left out (Core Platform, Tech Stack
- * and Home 8's How We Work and Platform Dashboards) are defined in that
- * script; How We Work's process row, the horizontal mid-page CTA, the
- * Platform Dashboards hub and the placeholder Testimonials come from
+ * next sync. The order and the sections left out (Tech Stack and Home 8's
+ * Core Platform, How We Work and Platform Dashboards) are defined in that
+ * script; Core Platform is the main Home page's (templates/home-body.php),
+ * and How We Work's process row, the horizontal mid-page CTA, the Platform
+ * Dashboards hub and the placeholder Testimonials come from
  * tools/home9-process.html, tools/home9-cta-mid.html,
  * tools/home9-dashboards.html and tools/home9-testimonials.html.
  *
@@ -362,6 +363,105 @@ include __DIR__ . '/partials/nav.php';
   mode();
  })();
  </script>
+
+<!-- ═══════════════════ 7 FUNCTIONS ═══════════════════ -->
+<section id="functions">
+ <div class="grid-bg" style="opacity:.45"></div>
+ <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Core Platform</span><div class="eyebrow-line"></div></div>
+ <h2 class="sec-h rv">The <span class="g">7 Functions</span> of Business <span class="fade">— Unified</span></h2>
+ <p class="sec-sub rv">Every core business function, streamlined and intelligently connected through one operating system.</p>
+
+ <div class="fn-grid">
+ <!-- 01 Management -->
+ <div class="fn-card rv d1">
+ <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+ <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="4" y="25" width="7" height="11" rx="1.5" fill="rgba(255,255,255,.5)"/><rect x="14" y="17" width="7" height="19" rx="1.5" fill="rgba(255,255,255,.75)"/><rect x="24" y="9" width="7" height="27" rx="1.5" fill="white"/><polyline points="6,21 17,13 27,5" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round"/><polygon points="27,2 33,8 21,8" fill="rgba(255,255,255,.7)"/></svg>
+ </div>
+ <div class="fn-num">01 — Management</div>
+ <div class="fn-name">Management</div>
+ <div class="fn-desc">Centralized dashboards and operational visibility for faster, smarter business decisions.</div>
+ <div class="fn-tags"><span class="fn-tag">KPI Tracking</span><span class="fn-tag">Analytics</span><span class="fn-tag">Approvals</span></div>
+ <button type="button" data-book class="fn-arrow">Explore module →</button>
+ </div>
+ <!-- 02 Sales -->
+ <div class="fn-card rv d2">
+ <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+ <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><polyline points="4,30 14,18 22,23 36,8" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><polyline points="4,35 14,23 22,28 36,13" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="13" r="4" fill="white"/></svg>
+ </div>
+ <div class="fn-num" style="color:#32b46f">02 — Sales</div>
+ <div class="fn-name">Sales</div>
+ <div class="fn-desc">Manage leads, pipelines, customers, and revenue operations from one unified platform.</div>
+ <div class="fn-tags"><span class="fn-tag">CRM</span><span class="fn-tag">Pipeline</span><span class="fn-tag">Invoicing</span></div>
+ <button type="button" data-book class="fn-arrow" style="color:#32b46f">Explore module →</button>
+ </div>
+ <!-- 03 Marketing -->
+ <div class="fn-card rv d3">
+ <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+ <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M5 14 L5 26 L11 26 L11 14 Z" fill="rgba(255,255,255,.6)"/><path d="M11 14 L30 6 L30 34 L11 26 Z" fill="white"/><path d="M11 18 L11 22 L8 28 L5 28 L5 22" fill="rgba(255,255,255,.4)"/><path d="M32 15 Q38 20 32 25" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2.5" stroke-linecap="round"/></svg>
+ </div>
+ <div class="fn-num">03 — Marketing</div>
+ <div class="fn-name">Marketing</div>
+ <div class="fn-desc">Track campaigns, automate WhatsApp &amp; email, and improve customer engagement at scale.</div>
+ <div class="fn-tags"><span class="fn-tag">Campaigns</span><span class="fn-tag">WhatsApp</span><span class="fn-tag">Nurturing</span></div>
+ <button type="button" data-book class="fn-arrow">Explore module →</button>
+ </div>
+ <!-- 04 Operations -->
+ <div class="fn-card rv d4">
+ <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+ <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="7" fill="white"/><circle cx="20" cy="20" r="3.5" fill="rgba(124,45,18,.85)"/><rect x="18" y="3" width="4" height="7" rx="2" fill="rgba(255,255,255,.85)"/><rect x="18" y="30" width="4" height="7" rx="2" fill="rgba(255,255,255,.85)"/><rect x="3" y="18" width="7" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="30" y="18" width="7" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="7.5" y="7.5" width="4" height="7" rx="2" transform="rotate(45 9.5 11)" fill="rgba(255,255,255,.55)"/><rect x="28.5" y="7.5" width="4" height="7" rx="2" transform="rotate(-45 30.5 11)" fill="rgba(255,255,255,.55)"/></svg>
+ </div>
+ <div class="fn-num" style="color:#14855a">04 — Operations</div>
+ <div class="fn-name">Operations</div>
+ <div class="fn-desc">Streamline activities, inventory, and vendor management with intelligent process automation.</div>
+ <div class="fn-tags"><span class="fn-tag">Workflows</span><span class="fn-tag">Inventory</span><span class="fn-tag">Vendors</span></div>
+ <button type="button" data-book class="fn-arrow" style="color:#14855a">Explore module →</button>
+ </div>
+ <!-- 05 Finance -->
+ <div class="fn-card rv d1">
+ <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+ <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="11" rx="13" ry="5" fill="white"/><path d="M7 11 Q7 18 20 18 Q33 18 33 11" fill="rgba(255,255,255,.75)"/><path d="M7 18 Q7 25 20 25 Q33 25 33 18" fill="rgba(255,255,255,.5)"/><path d="M7 25 Q7 32 20 32 Q33 32 33 25" fill="rgba(255,255,255,.3)"/></svg>
+ </div>
+ <div class="fn-num" style="color:#32b46f">05 — Finance</div>
+ <div class="fn-name">Finance</div>
+ <div class="fn-desc">Centralize billing, expenses, financial reporting, and accounting integrations seamlessly.</div>
+ <div class="fn-tags"><span class="fn-tag">Billing</span><span class="fn-tag">Expenses</span><span class="fn-tag">Reports</span></div>
+ <button type="button" data-book class="fn-arrow" style="color:#32b46f">Explore module →</button>
+ </div>
+ <!-- 06 HR -->
+ <div class="fn-card rv d2">
+ <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+ <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="14" cy="12" r="7" fill="white"/><circle cx="28" cy="14" r="5" fill="rgba(255,255,255,.6)"/><path d="M2 34 C2 25 8 22 14 22 C20 22 26 25 26 34 Z" fill="rgba(255,255,255,.8)"/><path d="M26 28 C26 24 29 22 32 22 C35 22 38 24 38 28 L38 34 L26 34 Z" fill="rgba(255,255,255,.4)"/></svg>
+ </div>
+ <div class="fn-num" style="color:#14855a">06 — Human Resources</div>
+ <div class="fn-name">HR</div>
+ <div class="fn-desc">Manage employees, attendance, payroll workflows, and leave management efficiently.</div>
+ <div class="fn-tags"><span class="fn-tag">Payroll</span><span class="fn-tag">Attendance</span><span class="fn-tag">Leave</span></div>
+ <button type="button" data-book class="fn-arrow" style="color:#14855a">Explore module →</button>
+ </div>
+ <!-- 07 Inventory Management -->
+ <div class="fn-card rv d3">
+ <div class="fn-icon" style="background:linear-gradient(135deg,#32b46f,#14855a);box-shadow:0 6px 20px rgba(0,0,0,.2)">
+ <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="5" y="18" width="13" height="14" rx="1.5" fill="rgba(255,255,255,.6)"/><rect x="21" y="18" width="14" height="14" rx="1.5" fill="white"/><rect x="12" y="6" width="16" height="13" rx="1.5" fill="rgba(255,255,255,.85)"/><path d="M12 12 L28 12" stroke="rgba(20,133,90,.55)" stroke-width="1.6"/><path d="M5 24 L18 24" stroke="rgba(20,133,90,.4)" stroke-width="1.6"/><path d="M21 24 L35 24" stroke="rgba(20,133,90,.4)" stroke-width="1.6"/></svg>
+ </div>
+ <div class="fn-num" style="color:#23a065">07 — Inventory</div>
+ <div class="fn-name">Inventory Management</div>
+ <div class="fn-desc">Track stock across every warehouse and channel, with alerts before you run out.</div>
+ <div class="fn-tags"><span class="fn-tag">Stock Levels</span><span class="fn-tag">Reorder Alerts</span><span class="fn-tag">Multi-warehouse</span></div>
+ <button type="button" data-book class="fn-arrow" style="color:#23a065">Explore module →</button>
+ </div>
+ <!-- 08 CTA Card -->
+ <div class="fn-card fn-cta-card rv d4">
+ <div style="font-size:26px;font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.02em">Ready to<br>unify all 7?</div>
+ <div style="font-size:12px;color:rgba(255,255,255,.44);line-height:1.65;font-weight:400">Get a personalised walkthrough of all modules working in sync.</div>
+ <button type="button" data-book style="background:#fff;color:var(--black);padding:11px 22px;border-radius:6px;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:opacity .2s" onmouseover="this.style.opacity='.84'" onmouseout="this.style.opacity='1'">Book Free Demo →</button>
+ </div>
+ </div>
+
+ <div class="sec-cta rv">
+ <button type="button" data-book class="btn btn-black">Schedule a Consultation →</button>
+ <a href="#dashboards" class="btn btn-outline2">View Live Dashboards</a>
+ </div>
+</section>
 
 <!-- CASE STUDIES -->
 <section id="cases">

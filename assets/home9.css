@@ -869,3 +869,23 @@ section#dashboards::before{
  #dashboards .hub-ico circle,
  #dashboards .hub-ico line{transition:none}
 }
+
+/* ── 12 · CORE PLATFORM — the main Home page's grid ───────────────────────────
+   Straight after Solutions, sync-home9.pl places the main Home page's "7
+   Functions of Business" section (templates/home-body.php) as it stands: a
+   four-column grid of the seven function cards and a "Ready to unify all 7?"
+   card, then two buttons. Its cards are the shared .fn-* rules (home7.css
+   and partials/style.php), which the dark sheet recolours through the page
+   tokens. What is here:
+   - the eyebrow centred over the centred heading (Home 7's sits left);
+   - "— Unified" in grey, as on Home (Home 7 sets every heading in one tone);
+   - square cells, so the hairline grid meets cleanly (Home 7 rounds each
+     card, which notched the corners where four cells meet);
+   - the full bottom padding (Home 7 halves it for its sliding row);
+   - the CTA card's white button keeps dark text in the dark theme (its
+     inline colour is var(--black), which the dark sheet turns near-white). */
+#functions{padding-bottom:var(--sp-section)}
+#functions .eyebrow{justify-content:center}
+#functions .sec-h .fade{color:var(--g400);-webkit-text-fill-color:currentColor}
+#functions .fn-card{border-radius:0}
+#functions .fn-cta-card button{color:#0B0F0D !important}

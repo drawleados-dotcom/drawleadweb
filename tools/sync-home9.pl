@@ -4,21 +4,23 @@ use strict; use warnings;
 #
 # Home 9 is Home 8's page with its sections in a different order:
 #
-#     1  Hero (with the marquee strip under it)     7  Platform Dashboards  (hub, Home 9's own)
-#     2  Solutions                                  8  Testimonials  (new, placeholder)
-#     3  Case Studies                               9  Industries
-#     4  How We Work  (process row, Home 9's own)  10  Why Drawlead
-#     5  CTA  (horizontal, Home 9's own)           11  CTA  (letter train + card)
-#     6  The Problem
+#     1  Hero (with the marquee strip under it)     8  Platform Dashboards  (hub, Home 9's own)
+#     2  Solutions                                  9  Testimonials  (new, placeholder)
+#     3  Core Platform  (the main Home page's)     10  Industries
+#     4  Case Studies                              11  Why Drawlead
+#     5  How We Work  (process row, Home 9's own)  12  CTA  (letter train + card)
+#     6  CTA  (horizontal, Home 9's own)
+#     7  The Problem
 #
-# Core Platform (the 7 Functions), Tech Stack, Home 8's How We Work (the
+# Home 8's Core Platform (the sliding row of the 7 Functions; the main Home
+# page's grid of them replaces it), Tech Stack, Home 8's How We Work (the
 # card grid and process panel; Home 9's process row replaces it) and Home 8's
 # Platform Dashboards (the sliding row of cards; Home 9's hub replaces it)
-# are left out. Every section but 4, 5, 7 and 8 is copied from Home 8
+# are left out. Every section but 3, 5, 6, 8 and 9 is copied from Home 8
 # exactly as it stands, so any change to Home 8 reaches Home 9 on the next
-# run; 4, 5, 7 and 8 come from tools/home9-process.html,
-# tools/home9-cta-mid.html, tools/home9-dashboards.html and
-# tools/home9-testimonials.html. A few copied
+# run; 3 comes from templates/home-body.php (the main Home page) and 5, 6, 8
+# and 9 from tools/home9-process.html, tools/home9-cta-mid.html,
+# tools/home9-dashboards.html and tools/home9-testimonials.html. A few copied
 # sections get Home 9's own edits (section 3b), and Solutions gains the
 # pinned one-card-at-a-time driver in tools/home9-solutions.js. sync-home8.pl runs this
 # script at its end, so the usual workflow needs nothing extra; run it by hand
@@ -126,6 +128,23 @@ my $proc = block_file('tools/home9-process.html', 'process');
 # Platform Dashboards: the six modules wired to a central hub, in place of
 # Home 8's row of full dashboard cards (whose PHP helpers go with its block).
 my $dash = block_file('tools/home9-dashboards.html', 'dashboards');
+# Core Platform: the main Home page's "7 Functions of Business" grid, taken
+# from templates/home-body.php on every run (so it stays Home's), in place
+# of Home 8's sliding row of function cards. It is plain markup; its look is
+# the shared .fn-* rules, plus Home 9's touches in assets/home9.css.
+my $fn;
+{
+  my $h = slurp('templates/home-body.php');
+  $h =~ s/\r\n/\n/g;
+  ($fn) = $h =~ m{(<!-- [^\n]*7 FUNCTIONS[^\n]* -->\n<section id="functions">\n.*?\n</section>\n)}s
+    or die "sync-home9: Home's Core Platform (<section id=\"functions\">) not found in templates/home-body.php\n";
+  my $opens = () = $fn =~ /<section[\s>]/g;
+  die "sync-home9: Home's Core Platform should be one section, found $opens\n" unless $opens == 1;
+  die "sync-home9: Home's Core Platform now holds PHP; it is copied as plain markup\n" if $fn =~ /<\?/;
+  die "sync-home9: Home's Core Platform grid not as expected\n"
+    unless $fn =~ /class="fn-grid"/ && (() = $fn =~ /class="fn-card[ "]/g) == 8;
+  $fn .= "\n";
+}
 
 # Solutions: a sidebar and a column of cards instead of Home 8's sticky stack.
 # The sidebar holds the section's eyebrow, heading and description, a nav with
@@ -220,13 +239,14 @@ my $dash = block_file('tools/home9-dashboards.html', 'dashboards');
 
 # ── 3 · Home 9's order ───────────────────────────────────────────────────────
 my @dropped = qw(functions tech method dashboards);
-my @order   = qw(hero solutions cases PROCESS MID unify DASHBOARDS TESTIMONIALS industries why ctaintro cta);
+my @order   = qw(hero solutions FUNCTIONS cases PROCESS MID unify DASHBOARDS TESTIMONIALS industries why ctaintro cta);
 my %used = map { $_ => 1 } @order, @dropped;
 for (map { $_->[0] } @home8) { die "sync-home9: Home 8 section '$_' is neither placed nor dropped\n" unless $used{$_} }
 
 my $body = '';
 for (@order) {
   $body .= $_ eq 'MID'          ? $mid
+         : $_ eq 'FUNCTIONS'    ? $fn
          : $_ eq 'PROCESS'      ? $proc
          : $_ eq 'DASHBOARDS'   ? $dash
          : $_ eq 'TESTIMONIALS' ? $tm
@@ -269,10 +289,11 @@ unless ($rendered) {
  * GENERATED FILE — do not edit by hand. It is built from
  * templates/home8-body.php by tools/sync-home9.pl, which tools/sync-home8.pl
  * runs at its end, so a change to Home 7 or Home 8 reaches this page on the
- * next sync. The order and the sections left out (Core Platform, Tech Stack
- * and Home 8's How We Work and Platform Dashboards) are defined in that
- * script; How We Work's process row, the horizontal mid-page CTA, the
- * Platform Dashboards hub and the placeholder Testimonials come from
+ * next sync. The order and the sections left out (Tech Stack and Home 8's
+ * Core Platform, How We Work and Platform Dashboards) are defined in that
+ * script; Core Platform is the main Home page's (templates/home-body.php),
+ * and How We Work's process row, the horizontal mid-page CTA, the Platform
+ * Dashboards hub and the placeholder Testimonials come from
  * tools/home9-process.html, tools/home9-cta-mid.html,
  * tools/home9-dashboards.html and tools/home9-testimonials.html.
  *
@@ -286,7 +307,7 @@ PHP
 
 # ── 6 · checks on the result ─────────────────────────────────────────────────
 my @ids = $s =~ /<section id="([^"]+)"/g;
-my $want = 'hero solutions cases process cta-mid unify dashboards testimonials industries why cta-intro cta';
+my $want = 'hero solutions functions cases process cta-mid unify dashboards testimonials industries why cta-intro cta';
 die "sync-home9: sections came out as '@ids', expected '$want'\n" unless "@ids" eq $want;
 my %seen; $seen{$_}++ for @ids;
 die "sync-home9: duplicate section id\n" if grep { $_ > 1 } values %seen;
