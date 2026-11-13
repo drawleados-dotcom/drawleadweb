@@ -196,134 +196,137 @@ include __DIR__ . '/partials/nav.php';
 
 <!-- SOLUTIONS -->
 <section id="solutions">
- <div class="eyebrow rv"><span class="eyebrow-text">Solutions</span></div>
- <h2 class="sec-h rv">Built for <span class="g">Growth</span> <span class="fade">in Three Ways</span></h2>
- <p class="sec-sub rv">Beyond the core platform, three focused solution tracks that plug straight into your operating system.</p>
+ <div class="sol-layout">
+  <div class="sol-side">
+   <div class="eyebrow rv"><span class="eyebrow-text">Solutions</span></div>
+   <h2 class="sec-h rv">Built for <span class="g">Growth</span> <span class="fade">in Three Ways</span></h2>
+   <p class="sec-sub rv">Beyond the core platform, three focused solution tracks that plug straight into your operating system.</p>
+   <div class="sol-nav">
+    <a class="sol-nav-item is-active" href="#sol-erp"><span class="sol-nav-num">01</span><span class="sol-nav-text"><strong>Custom Operational Solutions</strong><small>An ERP shaped around how you actually work.</small></span></a>
+    <a class="sol-nav-item" href="#sol-ecommerce"><span class="sol-nav-num">02</span><span class="sol-nav-text"><strong>Ecommerce Solutions</strong><small>From storefront to fulfilment, one connected stack.</small></span></a>
+    <a class="sol-nav-item" href="#sol-marketing"><span class="sol-nav-num">03</span><span class="sol-nav-text"><strong>Marketing Solutions</strong><small>Fix the leak between lead and conversion.</small></span></a>
+   </div>
+   <div class="sol-consult">
+    <span class="sol-consult-k">Free consultation</span>
+    <p class="sol-consult-h">Digitize, automate, and scale with Drawlead.</p>
+    <button type="button" data-book class="sol-consult-link">Schedule Free Consultation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+   </div>
+  </div>
+  <div class="sol-grid">
 
- <div class="sol-grid">
+  <!-- Custom Operational Solutions (ERP) -->
+  <div class="sol-card" id="sol-erp">
+   <div class="sol-head">
+    <div class="sol-icon">
+    <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><rect x="5" y="5" width="13" height="13" rx="2.5" fill="white"/><rect x="22" y="5" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.6)"/><rect x="5" y="22" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.6)"/><rect x="22" y="22" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.85)"/><path d="M18 11.5 L22 11.5 M11.5 18 L11.5 22 M28.5 18 L28.5 22 M18 28.5 L22 28.5" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round"/></svg>
+   </div>
+    <div class="sol-label">ERP</div>
+   </div>
+   <div class="sol-name">Custom Operational Solutions</div>
+   <div class="sol-tag">An ERP shaped around how you actually work.</div>
+   <p class="sol-desc">Off-the-shelf ERP forces your team to bend to the software. We build the opposite. Modules are mapped to your real workflows, your approval chains, your terminology, deployed as a system you own outright.</p>
+   <a href="/custom-erp-solution" class="sol-arrow">Explore ERP</a>
+   <ul class="sol-list">
+    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></span><span class="sol-benefit"><strong>Custom modules</strong><small>For your exact operating process</small></span></li>
+    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 20c.8-3.4 3.2-5 7-5s6.2 1.6 7 5"/><path d="M18.5 8.5h3m-1.5-1.5v3"/></svg></span><span class="sol-benefit"><strong>Role-based access</strong><small>Approvals and audit trails built in</small></span></li>
+    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="6.5" ry="2.5"/><path d="M5.5 5.5v6c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5v-6"/><path d="M5.5 11.5v6c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5v-6"/></svg></span><span class="sol-benefit"><strong>Migration support</strong><small>From spreadsheets and legacy systems</small></span></li>
+    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 8v-3m0 0H5m3 0h3M16 16v3m0 0h-3m3 0h3"/><path d="M8 5v7a4 4 0 004 4h7"/><path d="M16 19v-7a4 4 0 00-4-4H5"/></svg></span><span class="sol-benefit"><strong>Seamless integrations</strong><small>Tally, banking and GST filing connected</small></span></li>
+   </ul>
+  </div>
 
- <!-- Custom Operational Solutions (ERP) -->
- <div class="sol-card">
-  <div class="sol-head">
-   <div class="sol-icon">
-   <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><rect x="5" y="5" width="13" height="13" rx="2.5" fill="white"/><rect x="22" y="5" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.6)"/><rect x="5" y="22" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.6)"/><rect x="22" y="22" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.85)"/><path d="M18 11.5 L22 11.5 M11.5 18 L11.5 22 M28.5 18 L28.5 22 M18 28.5 L22 28.5" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round"/></svg>
+  <!-- Ecommerce Solutions -->
+  <div class="sol-card" id="sol-ecommerce">
+   <div class="sol-head">
+    <div class="sol-icon">
+    <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><path d="M4 10 L10 10 L14 27 L32 27" stroke="rgba(255,255,255,.55)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.5 14 L35 14 L32 24 L13.8 24 Z" fill="white"/><circle cx="16" cy="33" r="3" fill="rgba(255,255,255,.85)"/><circle cx="30" cy="33" r="3" fill="rgba(255,255,255,.85)"/></svg>
+   </div>
+    <div class="sol-label">Ecommerce</div>
+   </div>
+   <div class="sol-name">Ecommerce Solutions</div>
+   <div class="sol-tag">From storefront to fulfilment, one connected stack.</div>
+   <p class="sol-desc">Launch and scale an online store that talks directly to your inventory, billing, and delivery operations. No spreadsheets in between, no orders lost in the gap between platforms.</p>
+   <a href="/ecommerce-solutions" class="sol-arrow">Explore ecommerce</a>
+   <ul class="sol-list">
+    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 9h14l-1 11H6L5 9z"/><path d="M9 9V7a3 3 0 016 0v2"/></svg></span><span class="sol-benefit"><strong>Storefronts that convert</strong><small>Shopify, WooCommerce or custom built</small></span></li>
+    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 8a7 7 0 00-11.5-2L4 8.5"/><path d="M4 4v4.5h4.5"/><path d="M6 16a7 7 0 0011.5 2l2.5-2.5"/><path d="M20 20v-4.5h-4.5"/></svg></span><span class="sol-benefit"><strong>Live inventory sync</strong><small>Across every sales channel</small></span></li>
+    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="6" cy="18" r="2"/><path d="M8 6h4a4 4 0 014 4M8 18h4a4 4 0 004-4"/></svg></span><span class="sol-benefit"><strong>Automated workflows</strong><small>Orders, invoices and GST handled together</small></span></li>
+    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h3l3 3v3h-6z"/><circle cx="7" cy="18" r="1.5"/><circle cx="17" cy="18" r="1.5"/></svg></span><span class="sol-benefit"><strong>End-to-end fulfilment</strong><small>Payments, logistics and returns connected</small></span></li>
+   </ul>
   </div>
-   <div class="sol-label">ERP</div>
-  </div>
-  <div class="sol-name">Custom Operational Solutions</div>
-  <div class="sol-tag">An ERP shaped around how you actually work.</div>
-  <p class="sol-desc">Off-the-shelf ERP forces your team to bend to the software. We build the opposite. Modules are mapped to your real workflows, your approval chains, your terminology, deployed as a system you own outright.</p>
-  <ul class="sol-list">
-   <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></span><span class="sol-benefit"><strong>Custom modules</strong><small>For your exact operating process</small></span></li>
-   <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 20c.8-3.4 3.2-5 7-5s6.2 1.6 7 5"/><path d="M18.5 8.5h3m-1.5-1.5v3"/></svg></span><span class="sol-benefit"><strong>Role-based access</strong><small>Approvals and audit trails built in</small></span></li>
-   <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="6.5" ry="2.5"/><path d="M5.5 5.5v6c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5v-6"/><path d="M5.5 11.5v6c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5v-6"/></svg></span><span class="sol-benefit"><strong>Migration support</strong><small>From spreadsheets and legacy systems</small></span></li>
-   <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 8v-3m0 0H5m3 0h3M16 16v3m0 0h-3m3 0h3"/><path d="M8 5v7a4 4 0 004 4h7"/><path d="M16 19v-7a4 4 0 00-4-4H5"/></svg></span><span class="sol-benefit"><strong>Seamless integrations</strong><small>Tally, banking and GST filing connected</small></span></li>
-  </ul>
-  <a href="/custom-erp-solution" class="sol-arrow">Explore ERP</a>
- </div>
 
- <!-- Ecommerce Solutions -->
- <div class="sol-card">
-  <div class="sol-head">
-   <div class="sol-icon">
-   <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><path d="M4 10 L10 10 L14 27 L32 27" stroke="rgba(255,255,255,.55)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.5 14 L35 14 L32 24 L13.8 24 Z" fill="white"/><circle cx="16" cy="33" r="3" fill="rgba(255,255,255,.85)"/><circle cx="30" cy="33" r="3" fill="rgba(255,255,255,.85)"/></svg>
+  <!-- Marketing Solutions -->
+  <div class="sol-card" id="sol-marketing">
+   <div class="sol-head">
+    <div class="sol-icon">
+    <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><path d="M4 6 L36 6 L24 21 L24 34 L16 30 L16 21 Z" fill="white"/><path d="M16 21 L24 21 L24 27 L16 27 Z" fill="rgba(255,255,255,.55)"/><path d="M4 6 L36 6 L31 12 L9 12 Z" fill="rgba(255,255,255,.6)"/></svg>
+   </div>
+    <div class="sol-label">Marketing</div>
+   </div>
+   <div class="sol-name">Marketing Solutions</div>
+   <div class="sol-tag">Fix the leak between lead and conversion.</div>
+   <p class="sol-desc">Most businesses don't have a traffic problem. They have a follow-up problem. Two engines run the funnel. Organic search that compounds over time, and paid campaigns that buy demand on demand.</p>
+   <a href="/marketing-solutions" class="sol-arrow">Explore marketing</a>
+   <ul class="sol-list">
+    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l4 4"/><path d="M8 10.5h5M10.5 8v5"/></svg></span><span class="sol-benefit"><strong>Technical SEO</strong><small>Core Web Vitals and site architecture</small></span></li>
+    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="M15 3v4h4M9 12h6M9 16h6"/></svg></span><span class="sol-benefit"><strong>Content engine</strong><small>On-page optimisation at scale</small></span></li>
+    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-7"/><path d="M15 8h5v5"/><path d="M4 20h16"/></svg></span><span class="sol-benefit"><strong>Performance campaigns</strong><small>Google, Meta and LinkedIn activation</small></span></li>
+    <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8"/></svg></span><span class="sol-benefit"><strong>Instant follow-up</strong><small>WhatsApp and email on every lead</small></span></li>
+   </ul>
   </div>
-   <div class="sol-label">Ecommerce</div>
-  </div>
-  <div class="sol-name">Ecommerce Solutions</div>
-  <div class="sol-tag">From storefront to fulfilment, one connected stack.</div>
-  <p class="sol-desc">Launch and scale an online store that talks directly to your inventory, billing, and delivery operations. No spreadsheets in between, no orders lost in the gap between platforms.</p>
-  <ul class="sol-list">
-   <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 9h14l-1 11H6L5 9z"/><path d="M9 9V7a3 3 0 016 0v2"/></svg></span><span class="sol-benefit"><strong>Storefronts that convert</strong><small>Shopify, WooCommerce or custom built</small></span></li>
-   <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 8a7 7 0 00-11.5-2L4 8.5"/><path d="M4 4v4.5h4.5"/><path d="M6 16a7 7 0 0011.5 2l2.5-2.5"/><path d="M20 20v-4.5h-4.5"/></svg></span><span class="sol-benefit"><strong>Live inventory sync</strong><small>Across every sales channel</small></span></li>
-   <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="6" cy="18" r="2"/><path d="M8 6h4a4 4 0 014 4M8 18h4a4 4 0 004-4"/></svg></span><span class="sol-benefit"><strong>Automated workflows</strong><small>Orders, invoices and GST handled together</small></span></li>
-   <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h3l3 3v3h-6z"/><circle cx="7" cy="18" r="1.5"/><circle cx="17" cy="18" r="1.5"/></svg></span><span class="sol-benefit"><strong>End-to-end fulfilment</strong><small>Payments, logistics and returns connected</small></span></li>
-  </ul>
-  <a href="/ecommerce-solutions" class="sol-arrow">Explore ecommerce</a>
- </div>
 
- <!-- Marketing Solutions -->
- <div class="sol-card">
-  <div class="sol-head">
-   <div class="sol-icon">
-   <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><path d="M4 6 L36 6 L24 21 L24 34 L16 30 L16 21 Z" fill="white"/><path d="M16 21 L24 21 L24 27 L16 27 Z" fill="rgba(255,255,255,.55)"/><path d="M4 6 L36 6 L31 12 L9 12 Z" fill="rgba(255,255,255,.6)"/></svg>
   </div>
-   <div class="sol-label">Marketing</div>
-  </div>
-  <div class="sol-name">Marketing Solutions</div>
-  <div class="sol-tag">Fix the leak between lead and conversion.</div>
-  <p class="sol-desc">Most businesses don't have a traffic problem. They have a follow-up problem. Two engines run the funnel. Organic search that compounds over time, and paid campaigns that buy demand on demand.</p>
-  <ul class="sol-list">
-   <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l4 4"/><path d="M8 10.5h5M10.5 8v5"/></svg></span><span class="sol-benefit"><strong>Technical SEO</strong><small>Core Web Vitals and site architecture</small></span></li>
-   <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="M15 3v4h4M9 12h6M9 16h6"/></svg></span><span class="sol-benefit"><strong>Content engine</strong><small>On-page optimisation at scale</small></span></li>
-   <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-7"/><path d="M15 8h5v5"/><path d="M4 20h16"/></svg></span><span class="sol-benefit"><strong>Performance campaigns</strong><small>Google, Meta and LinkedIn activation</small></span></li>
-   <li><span class="sol-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8"/></svg></span><span class="sol-benefit"><strong>Instant follow-up</strong><small>WhatsApp and email on every lead</small></span></li>
-  </ul>
-  <a href="/marketing-solutions" class="sol-arrow">Explore marketing</a>
- </div>
-
  </div>
 </section>
  <script>
- // Home 9: Solutions as a horizontal accordion.
+ // Home 9: Solutions' sidebar nav.
  //
- // The three cards stand in a row; one is open and the other two are narrow
- // spines showing their number and name. Hovering a closed card opens it and
- // closes the open one; keyboard focus and a tap do the same, so every card is
- // reachable without a mouse. The last card opened stays open.
- //
- // Only from 1200px up: below that there is not room for one open card plus two
- // spines, and the cards simply stack. The layout is CSS (assets/home9.css,
- // .sol-acc); this script only marks the open card, builds the spines from each
- // card's own name, and switches .sol-acc on and off with the breakpoint.
+ // The sidebar (eyebrow, heading, description, one nav entry per card and a
+ // consultation card) stays put beside the column of cards while it scrolls;
+ // the layout is CSS (assets/home9.css, section 5) and sync-home9.pl builds
+ // the nav from the cards. This script marks the card being read, and its
+ // nav entry, as .is-active: the last card whose top has passed a line 40%
+ // down the screen, so the entry changes as each card takes over the middle
+ // of the view. A nav click scrolls its card into view without putting a
+ // hash in the address bar (the link's href still works without script).
  // sync-home9.pl removes Home 8's sticky-stack driver for these cards.
  (function(){
-  const grid = document.querySelector('#solutions .sol-grid');
-  if(!grid) return;
-  const cards = Array.from(grid.children).filter(el => el.classList.contains('sol-card'));
-  if(cards.length < 2) return;
+  const sec = document.getElementById('solutions');
+  if(!sec) return;
+  const links = Array.from(sec.querySelectorAll('.sol-nav-item'));
+  const cards = links.map(a => document.getElementById(a.getAttribute('href').slice(1)));
+  if(!links.length || cards.some(c => !c)) return;
 
-  const wide = window.matchMedia('(min-width:1200px)');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let active = -1, raf = 0;
 
-  // Spine: what a closed card shows. Taken from the card's own title so the
-  // copy lives in one place; hidden from screen readers, which read the card.
-  cards.forEach((card, i) => {
-   const name = card.querySelector('.sol-name');
-   const spine = document.createElement('span');
-   spine.className = 'sol-spine';
-   spine.setAttribute('aria-hidden', 'true');
-   const num = document.createElement('i');
-   num.textContent = String(i + 1).padStart(2, '0');
-   const label = document.createElement('b');
-   label.textContent = name ? name.textContent.trim() : '';
-   spine.append(num, label);
-   card.appendChild(spine);
-  });
-
-  let open = 0, pending = 0;
-  function show(i){
-   open = i;
-   cards.forEach((c, k) => c.classList.toggle('is-open', k === i));
-  }
-
-  cards.forEach((card, i) => {
-   // A short hover intent, so sweeping the pointer across the row on the way
-   // somewhere else does not flick every card open in turn.
-   card.addEventListener('mouseenter', () => {
-    if(!wide.matches || i === open) return;
-    clearTimeout(pending);
-    pending = setTimeout(() => show(i), 90);
+  function set(i){
+   if(i === active) return;
+   active = i;
+   links.forEach((a, k) => {
+    a.classList.toggle('is-active', k === i);
+    if(k === i) a.setAttribute('aria-current', 'true');
+    else a.removeAttribute('aria-current');
    });
-   card.addEventListener('mouseleave', () => clearTimeout(pending));
-   card.addEventListener('focusin', () => { if(wide.matches) show(i); });
-   card.addEventListener('click', () => { if(wide.matches && i !== open) show(i); });
-  });
+   cards.forEach((c, k) => c.classList.toggle('is-active', k === i));
+  }
+  function update(){
+   raf = 0;
+   const line = window.innerHeight * 0.4;
+   let i = 0;
+   cards.forEach((c, k) => { if(c.getBoundingClientRect().top <= line) i = k; });
+   set(i);
+  }
+  function queue(){ if(!raf) raf = requestAnimationFrame(update); }
 
-  function sync(){ grid.classList.toggle('sol-acc', wide.matches); }
-  show(0);
-  sync();
-  if(wide.addEventListener) wide.addEventListener('change', sync);
-  else if(wide.addListener) wide.addListener(sync);
+  links.forEach((a, k) => {
+   a.addEventListener('click', e => {
+    e.preventDefault();
+    cards[k].scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth', block: 'start' });
+   });
+  });
+  window.addEventListener('scroll', queue, { passive: true });
+  window.addEventListener('resize', queue);
+  update();
  })();
  </script>
 
@@ -1699,7 +1702,7 @@ renderDash(0);
 
  if(reduce) return;
 
- // Home 9: Solutions is a hover accordion (the script after #solutions), not a sticky stack.
+ // Home 9: Solutions is a sidebar and a card column (the script after #solutions), not a sticky stack.
 
 
 })();

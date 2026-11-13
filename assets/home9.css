@@ -135,95 +135,154 @@
  #testimonials .tm-card:hover{transform:none}
 }
 
-/* ── 5 · SOLUTIONS — horizontal hover accordion ───────────────────────────────
-   Home 8 stacks the three solution cards as a sticky deck. Here they stand in
-   a row from 1200px up: one open, the other two narrow spines with their
-   number and name; hovering a spine opens it and closes the open card. The
-   driver (tools/home9-solutions.js) marks .is-open, builds the spines and adds
-   .sol-acc at the breakpoint; sync-home9.pl removes the sticky-stack driver. */
-
-/* No sticky deck on this page at any width: below 1200px the cards stack in
-   normal flow. */
-#solutions .sol-grid{padding-bottom:0}
-/* Home 9's cards have no metrics row (sync-home9.pl removes it). The feature
-   list spans every row of the left column, and its extra height used to be
-   shared across those rows — with the metrics gone that opened a gap above
-   the button. A last 1fr row takes it instead, so the button sits right under
-   the description. Two-column layout only; below 900px the card is one
-   column and Home 7 places each row itself. */
-@media(min-width:901px){
- #solutions .sol-card{grid-template-rows:auto auto auto auto auto 1fr}
- #solutions .sol-arrow{align-self:start}
+/* ── 5 · SOLUTIONS — sidebar and a column of cards ────────────────────────────
+   Home 8 stacks the three solution cards as a sticky deck under a centred
+   heading. Here (markup rebuilt by sync-home9.pl) the section is two columns
+   on a 1320px row:
+   - left, the sidebar: eyebrow, heading and description flush left, a nav
+     with one numbered entry per card (name and tagline), and a dark green
+     consultation card. From 1025px wide and 720px tall it is sticky, so it
+     holds still beside the cards while they scroll; the entry for the card
+     being read is .is-active (tools/home9-solutions.js).
+   - right, the cards one under another: pill, name, tagline, description,
+     button, then a rule and the four features as a 2×2 grid of tiles.
+   At 1024px and below it is one column: the heading centred over the cards,
+   and the nav and consultation card left out (the cards follow straight on,
+   so there is nothing to jump to).
+   Colour rules keep the specificity of home8.css's #solutions rules, which
+   load after this file, so the dark sheet still recolours the tiles, icons
+   and button; only layout is set more specifically. */
+#solutions .sol-layout{
+ max-width:1320px;margin-inline:auto;
+ display:grid;grid-template-columns:minmax(0,min(380px,32%)) minmax(0,1fr);
+ column-gap:clamp(2.5rem,4.5vw,5rem);align-items:start;
 }
-/* > and the second class match the specificity of Home 7's per-card sticky
-   offsets (.sol-card:nth-child(n){top:...}), which would otherwise step the
-   cards down 30px each */
-#solutions .sol-grid > .sol-card{position:relative;top:auto;will-change:auto}
-#solutions .sol-spine{display:none}
-
-#solutions .sol-grid.sol-acc{
- --sol-col:112px;           /* a closed card */
- --sol-gap:16px;
- flex-direction:row;gap:var(--sol-gap);align-items:stretch;
- container-type:inline-size;
+#solutions .sol-side{display:flex;flex-direction:column;min-width:0}
+@media(min-width:1025px) and (min-height:720px){
+ #solutions .sol-side{position:sticky;top:104px}
 }
-/* Every card's two columns are laid out at the OPEN width all the time, from
-   the row's own width (cqi), so the copy never re-wraps while a card grows or
-   shrinks: it is revealed and covered, not reflowed. The row's height is the
-   tallest card's content, and every card stretches to it.
-   The columns split evenly with a 3rem gap: at the 1320px row that gives
-   each 456px, enough for "Custom Operational" (419px at 42px) on one line
-   and the widest feature row on one line. */
-#solutions .sol-acc .sol-card{
- --sol-open:calc(100cqi - 2 * (var(--sol-col) + var(--sol-gap)));
- --sol-inner:calc(var(--sol-open) - 6.5rem - 3rem);   /* less padding and column gap */
- flex:0 1 var(--sol-col);min-width:0;
- overflow:hidden;cursor:pointer;border-radius:26px;
- grid-template-columns:calc(var(--sol-inner) * .5) calc(var(--sol-inner) * .5);
- column-gap:3rem;
- transition:flex-basis .6s cubic-bezier(.22,.8,.24,1),border-color .35s ease,box-shadow .35s ease;
+#solutions .sol-side .eyebrow{justify-content:flex-start}
+#solutions .sol-side .sec-h{
+ text-align:left;font-size:clamp(32px,3vw,42px);line-height:1.1;margin-bottom:1rem;
 }
-#solutions .sol-acc .sol-card.is-open{flex-basis:var(--sol-open);cursor:auto}
+#solutions .sol-side .sec-sub{
+ text-align:left;max-width:none;margin:0;font-size:15.5px;line-height:1.65;
+}
 
-/* the open card's content fades in once it has room; a closing card's goes at once */
-#solutions .sol-acc .sol-card > :not(.sol-spine){opacity:0;transition:opacity .18s ease}
-#solutions .sol-acc .sol-card.is-open > :not(.sol-spine){opacity:1;transition:opacity .35s ease .28s}
-/* the button keeps its own hover movement alongside the fade */
-#solutions .sol-acc .sol-card.is-open > .sol-arrow{transition:opacity .35s ease .28s,box-shadow .25s ease,transform .25s ease,gap .2s ease}
+/* the nav: one entry per card, the active one outlined in green */
+#solutions .sol-nav{
+ display:flex;flex-direction:column;gap:6px;
+ margin-top:1.75rem;padding-top:1.75rem;border-top:1px solid var(--border);
+}
+#solutions .sol-nav-item{
+ display:flex;align-items:flex-start;gap:14px;
+ padding:13px 16px;border-radius:12px;border:1px solid transparent;
+ text-decoration:none;color:var(--black);
+ transition:background-color .2s ease,border-color .2s ease;
+}
+#solutions .sol-nav-item:hover{background:rgba(50,180,111,.05)}
+#solutions .sol-nav-item.is-active{background:rgba(50,180,111,.08);border-color:rgba(50,180,111,.6)}
+#solutions .sol-nav-item:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+#solutions .sol-nav-num{
+ min-width:18px;padding-top:3px;
+ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+ font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--g400);
+}
+#solutions .sol-nav-item.is-active .sol-nav-num{color:var(--blue)}
+#solutions .sol-nav-text{display:flex;flex-direction:column;gap:3px;min-width:0}
+#solutions .sol-nav-text strong{
+ font-family:var(--font);font-size:14.5px;font-weight:700;letter-spacing:-.01em;line-height:1.3;
+ color:var(--black);
+}
+#solutions .sol-nav-text small{font-family:var(--font-body);font-size:12.5px;line-height:1.45;color:var(--g500)}
 
-/* The spine: a closed card is black with green, in both themes: a deep
-   green-black surface, the number at the top and the name running down the
-   card in green. It is a layer over the WHOLE card, so as a card opens the
-   black fades to reveal the card's own surface (white in the light theme)
-   rather than switching, and as one closes it fades back in. The number and
-   name sit in the first --sol-col of it (the padding-right keeps them there
-   while the card is wider mid-transition). */
-#solutions .sol-acc .sol-spine{
- position:absolute;inset:0;z-index:2;
- display:flex;flex-direction:column;align-items:center;justify-content:space-between;
- padding:2.25rem calc(100% - var(--sol-col)) 2.5rem 0;
+/* the consultation card: dark green in both themes */
+#solutions .sol-consult{
+ margin-top:2rem;padding:1.35rem 1.4rem 1.3rem;border-radius:16px;
  background:
-  radial-gradient(130% 55% at 50% 100%,rgba(50,180,111,.24) 0%,rgba(50,180,111,.07) 45%,transparent 75%),
-  linear-gradient(180deg,#0B1712 0%,#050A08 100%);
- pointer-events:none;
- opacity:1;transition:opacity .3s ease .18s;
+  radial-gradient(120% 140% at 0% 0%,#11583B 0%,#0B2D21 48%,#09161A 100%);
+ box-shadow:0 18px 40px rgba(6,40,26,.22),inset 0 1px 0 rgba(255,255,255,.06);
+ color:#fff;
 }
-#solutions .sol-acc .sol-card.is-open .sol-spine{opacity:0;transition:opacity .2s ease}
-#solutions .sol-acc .sol-card:not(.is-open){border-color:rgba(50,180,111,.3)}
-#solutions .sol-acc .sol-card:not(.is-open):hover{border-color:rgba(50,180,111,.6)}
-#solutions .sol-spine i{
- font-family:var(--font-display);font-style:normal;font-size:14px;font-weight:700;
- letter-spacing:.12em;color:#32b46f;
+#solutions .sol-consult-k{
+ display:block;margin-bottom:6px;
+ font-family:var(--font-body);font-size:12px;font-weight:600;color:#5FD394;
 }
-#solutions .sol-spine b{
- writing-mode:vertical-rl;white-space:nowrap;
- font-family:var(--font-display);font-size:21px;font-weight:700;letter-spacing:-.01em;
- color:#5FD394;
+#solutions .sol-consult-h{
+ margin:0 0 .95rem;
+ font-family:var(--font);font-size:15.5px;font-weight:700;line-height:1.35;letter-spacing:-.01em;color:#fff;
+}
+#solutions .sol-consult-link{
+ display:inline-flex;align-items:center;gap:6px;padding:0;border:0;background:none;cursor:pointer;
+ font-family:var(--font);font-size:13px;font-weight:700;color:#fff;
+ text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(255,255,255,.4);
+}
+#solutions .sol-consult-link svg{width:14px;height:14px;flex:none;transition:transform .2s ease}
+#solutions .sol-consult-link:hover svg{transform:translateX(3px)}
+#solutions .sol-consult-link:focus-visible{outline:2px solid #5FD394;outline-offset:3px;border-radius:4px}
+
+/* the cards: one column in normal flow, no sticky deck, no per-card offsets */
+#solutions .sol-layout .sol-grid{
+ max-width:none;width:auto;margin:0;padding-bottom:0;gap:2rem;min-width:0;
+}
+#solutions .sol-layout .sol-card{
+ position:relative;top:auto;will-change:auto;
+ display:flex;flex-direction:column;align-items:flex-start;
+ padding:2.5rem 2.6rem 2.6rem;border-radius:24px;
+ scroll-margin-top:104px;
+ border-color:var(--border);   /* Home 7's #DFE3E0 is a bright line on the dark card */
+}
+#solutions .sol-layout .sol-card:hover{border-color:rgba(50,180,111,.45)}
+#solutions .sol-layout .sol-card.is-active{border-color:rgba(50,180,111,.5)}
+#solutions .sol-layout .sol-head{margin:0 0 1.4rem;padding:6px 14px 6px 11px;gap:8px}
+#solutions .sol-layout .sol-icon,
+#solutions .sol-layout .sol-icon svg{width:16px;height:16px;min-width:16px}
+#solutions .sol-layout .sol-label{font-size:12.5px;font-weight:600}
+#solutions .sol-layout .sol-name{font-size:clamp(28px,2.6vw,38px);margin-bottom:.75rem}
+#solutions .sol-layout .sol-tag{font-size:16.5px;margin-bottom:1rem}
+#solutions .sol-layout .sol-desc{max-width:68ch;margin-bottom:1.75rem}
+#solutions .sol-layout .sol-arrow{align-self:flex-start}
+
+/* the features: under a rule, a 2×2 grid of tiles, icon over the copy */
+#solutions .sol-layout .sol-list{
+ align-self:stretch;flex:none;
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;
+ margin:2.25rem 0 0;padding-top:2.25rem;border-top:1px solid var(--border);
+}
+#solutions .sol-layout .sol-list li{
+ flex:none;flex-direction:column;align-items:flex-start;justify-content:flex-start;
+ gap:14px;min-height:0;padding:18px 18px 20px;border-radius:16px;
+}
+#solutions .sol-list li{background:#F8FAF9;border-color:#E8ECEA;box-shadow:none}
+#solutions .sol-layout .sol-check{width:38px;height:38px;min-width:38px;border-radius:10px}
+#solutions .sol-layout .sol-check svg{width:18px;height:18px}
+#solutions .sol-check{background:var(--white);border:1px solid var(--border)}
+#solutions .sol-layout .sol-benefit{gap:4px;padding-left:0;border-left:none}
+#solutions .sol-layout .sol-benefit strong{font-size:14.5px;line-height:1.3;text-wrap:balance}
+#solutions .sol-layout .sol-benefit small{font-size:12.5px;line-height:1.45}
+
+@media(max-width:1024px){
+ #solutions .sol-layout{grid-template-columns:minmax(0,1fr);row-gap:2.75rem;max-width:860px}
+ #solutions .sol-side{align-items:center;text-align:center}
+ #solutions .sol-side .eyebrow{justify-content:center}
+ #solutions .sol-side .sec-h,
+ #solutions .sol-side .sec-sub{text-align:center}
+ #solutions .sol-side .sec-sub{max-width:600px}
+ #solutions .sol-nav,
+ #solutions .sol-consult{display:none}
+}
+@media(max-width:640px){
+ #solutions .sol-layout .sol-card{padding:1.9rem 1.4rem 2rem;border-radius:20px}
+ #solutions .sol-layout .sol-arrow{align-self:stretch;justify-content:center}
+ #solutions .sol-layout .sol-list{margin-top:1.75rem;padding-top:1.75rem}
+}
+@media(max-width:520px){
+ #solutions .sol-layout .sol-list{grid-template-columns:minmax(0,1fr)}
+ #solutions .sol-layout .sol-list li{flex-direction:row;align-items:center;padding:14px 16px}
 }
 @media(prefers-reduced-motion:reduce){
- #solutions .sol-acc .sol-card,
- #solutions .sol-acc .sol-card > *,
- #solutions .sol-acc .sol-spine{transition:none}
+ #solutions .sol-nav-item,
+ #solutions .sol-consult-link svg{transition:none}
 }
 
 /* ── 6 · INDUSTRIES — the stack centred ───────────────────────────────────────
@@ -241,45 +300,6 @@
  margin-inline:max(-30px, calc((100% - 1380px) / 2));
 }
 #industries .is-outer:not(.is-live) .is-stack{margin-inline:0;padding-inline:0}
-
-/* ── 7 · SOLUTIONS — feature tiles in a 2×2 grid ──────────────────────────────
-   Home 8 runs each card's four features down the right column as full-width
-   rows: a 50px icon, a divider, an 18.5px title and its line. Here they are
-   four tiles in a 2×2 grid at smaller type, the icon above the copy (a tile is
-   ~160–220px wide in the accordion, too narrow for icon and text side by
-   side). The two rows share the list's height, so the grid still fills the
-   column beside the description. Below 520px a tile would be ~140px, so the
-   list goes back to one column with the icon beside the text.
-   Surfaces and colours stay Home 7's and the dark sheet's, so both themes
-   follow; only layout and type sizes are set here. */
-#solutions .sol-list{
- display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;
- gap:12px;
-}
-#solutions .sol-list li{
- flex-direction:column;align-items:flex-start;justify-content:flex-start;
- gap:14px;min-height:0;padding:18px 18px 20px;border-radius:18px;
-}
-#solutions .sol-check{width:40px;height:40px;min-width:40px}
-#solutions .sol-check svg{width:20px;height:20px}
-#solutions .sol-benefit{gap:4px;padding-left:0;border-left:none}
-#solutions .sol-benefit strong{font-size:15px;line-height:1.25;text-wrap:balance}
-#solutions .sol-benefit small{font-size:12.5px;line-height:1.45}
-@media(max-width:520px){
- #solutions .sol-list{grid-template-columns:minmax(0,1fr);grid-auto-rows:auto}
- #solutions .sol-list li{flex-direction:row;align-items:center;padding:14px 16px}
-}
-
-/* ── 8 · SOLUTIONS — eyebrow above the heading ────────────────────────────────
-   Home 8 centres each card's pill (ERP / Ecommerce / Marketing) across both
-   columns above the split. Here it is the left column's eyebrow, flush left
-   over the heading, and in two-column layout the feature grid starts on the
-   pill's row so the tiles' top lines up with it. Below 900px the card is one
-   column and the pill simply sits left-aligned above the heading. */
-#solutions .sol-head{grid-column:1;grid-row:1;justify-self:start;margin-bottom:1.4rem}
-@media(min-width:901px){
- #solutions .sol-list{grid-row:1 / -1}
-}
 
 /* ── 9 · CASE STUDIES — the whole section on one pinned screen ───────────────
    Home 8 pins only the card track, in a full-height box with the cards

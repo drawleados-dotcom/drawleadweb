@@ -122,9 +122,65 @@ my $tm  = block_file('tools/home9-testimonials.html', 'testimonials');
 # staggered card row, in place of Home 8's card grid and panel.
 my $proc = block_file('tools/home9-process.html', 'process');
 
-# Solutions: a horizontal hover accordion instead of Home 8's sticky stack.
-# Its driver follows the section; the stack's driver is removed in 3b.
+# Solutions: a sidebar and a column of cards instead of Home 8's sticky stack.
+# The sidebar holds the section's eyebrow, heading and description, a nav with
+# one numbered entry per card (its name and tagline, taken from the card so
+# the copy lives in one place) and a consultation card; it stays put beside
+# the cards while they scroll (assets/home9.css, section 5). Each card gets an
+# id for its nav entry, and its button moves above its features. The nav's
+# driver, tools/home9-solutions.js, follows the section; the stack's driver
+# is removed in 3b.
 {
+  # No metrics row (100% Ownership, 3x Faster launch, 4x Organic traffic) on
+  # Home 9's cards: the block goes from all three, exactly three.
+  my $gone = $blk{solutions} =~ s{\n  <div class="sol-metrics">\n(?:   <div>.*?</div></div>\n){2}  </div>(?=\n)}{}g;
+  die "sync-home9: expected to remove 3 Solutions metrics rows, removed " . ($gone || 0) . "\n"
+    unless $gone == 3;
+  die "sync-home9: a Solutions metrics row survived\n" if $blk{solutions} =~ /sol-metric/;
+
+  my ($pre, $headblk, $grid, $post) = $blk{solutions} =~
+    m{\A(.*?<section id="solutions">\n)(.*?)( <div class="sol-grid">\n.*?\n </div>\n)(</section>\n.*)\z}s
+    or die "sync-home9: Solutions markup not as expected (heading, then the card grid)\n";
+  die "sync-home9: Solutions heading not as expected\n"
+    unless $headblk =~ /class="eyebrow rv"/ && $headblk =~ /class="sec-h rv"/ && $headblk =~ /class="sec-sub rv"/;
+
+  my @nav;
+  $grid =~ s{( <div class="sol-card">\n)(.*?\n)( </div>\n)}{
+    my ($open, $in, $close) = ($1, $2, $3);
+    my ($label) = $in =~ m{<div class="sol-label">([^<]+)</div>};
+    my ($name)  = $in =~ m{<div class="sol-name">([^<]+)</div>};
+    my ($tag)   = $in =~ m{<div class="sol-tag">([^<]+)</div>};
+    die "sync-home9: a Solutions card lacks its label, name or tagline\n"
+      unless defined $label && defined $name && defined $tag;
+    (my $id = lc "sol-$label") =~ s/[^a-z0-9]+/-/g;
+    $in =~ s{(  <ul class="sol-list">\n.*?\n  </ul>\n)(  <a [^\n]*class="sol-arrow"[^\n]*</a>\n)}{$2$1}s
+      or die "sync-home9: Solutions card '$name': button does not follow its feature list\n";
+    push @nav, sprintf(qq{    <a class="sol-nav-item%s" href="#%s"><span class="sol-nav-num">%02d</span><span class="sol-nav-text"><strong>%s</strong><small>%s</small></span></a>\n},
+                       @nav ? '' : ' is-active', $id, @nav + 1, $name, $tag);
+    qq{ <div class="sol-card" id="$id">\n$in$close};
+  }gse;
+  die "sync-home9: expected 3 Solutions cards, found " . scalar(@nav) . "\n" unless @nav == 3;
+
+  $headblk =~ s/^(?=.)/  /mg;
+  $headblk =~ s/\n+\z/\n/;
+  $grid =~ s/^(?=.)/ /mg;
+  $blk{solutions} = $pre
+    . qq{ <div class="sol-layout">\n  <div class="sol-side">\n}
+    . $headblk
+    # a <div>, not a <nav>: home7.css styles every <nav> as the fixed top bar
+    . qq{   <div class="sol-nav">\n} . join('', @nav) . qq{   </div>\n}
+    . <<'HTML'
+   <div class="sol-consult">
+    <span class="sol-consult-k">Free consultation</span>
+    <p class="sol-consult-h">Digitize, automate, and scale with Drawlead.</p>
+    <button type="button" data-book class="sol-consult-link">Schedule Free Consultation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+   </div>
+  </div>
+HTML
+    . $grid
+    . qq{ </div>\n}
+    . $post;
+
   my $js = slurp('tools/home9-solutions.js');
   $js =~ s/\r\n/\n/g;
   $js =~ s/\n*\z/\n/;
@@ -132,13 +188,6 @@ my $proc = block_file('tools/home9-process.html', 'process');
     unless $js =~ /\A\s*<script>/ && $js =~ m{</script>\n\z};
   $blk{solutions} =~ s{</section>\n}{</section>\n$js}
     or die "sync-home9: the Solutions section does not close\n";
-
-  # No metrics row (100% Ownership, 3x Faster launch, 4x Organic traffic) on
-  # Home 9's cards: the block goes from all three, exactly three.
-  my $gone = $blk{solutions} =~ s{\n  <div class="sol-metrics">\n(?:   <div>.*?</div></div>\n){2}  </div>(?=\n)}{}g;
-  die "sync-home9: expected to remove 3 Solutions metrics rows, removed " . ($gone || 0) . "\n"
-    unless $gone == 3;
-  die "sync-home9: a Solutions metrics row survived\n" if $blk{solutions} =~ /sol-metric/;
 }
 
 # Case Studies: the heading (eyebrow, heading, subline) and the CTA move
@@ -190,10 +239,10 @@ sub edit_once {
   die "sync-home9: $what: expected 1 match, found $c\n" unless $c == 1;
   $s =~ s/\Q$from\E/$to/;
 }
-# Solutions: the cards are a hover accordion here (tools/home9-solutions.js),
-# so Home 8's sticky-stack driver must not dim and scale them on scroll.
+# Solutions: the cards scroll in a column beside a sidebar here, so Home 8's
+# sticky-stack driver must not dim and scale them on scroll.
 edit_once(qq{ initStickyStack('#solutions .sol-card', { dimTo: 0.30, shrink: 0.04 });\n},
-          qq{ // Home 9: Solutions is a hover accordion (the script after #solutions), not a sticky stack.\n},
+          qq{ // Home 9: Solutions is a sidebar and a card column (the script after #solutions), not a sticky stack.\n},
           'Solutions sticky-stack driver');
 
 # ── 4 · the page's own stylesheet, after Home 8's base sheet ────────────────
