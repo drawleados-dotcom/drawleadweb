@@ -1326,40 +1326,50 @@ $ciTrainGreen = ['ERP', 'AI?'];
 </section>
 
 <script>
-// Home 9: keep GSAP ScrollTrigger's pin positions true to the page.
+// Home 9: keep GSAP ScrollTrigger's pin (the closing CTA's letter train,
+// #cta-intro) where it belongs.
 //
-// ScrollTrigger works out where each pin (the closing CTA's letter train,
-// #cta-intro) starts and ends when it refreshes: on load and, debounced, on
-// resize. This page also has scripts that change section heights themselves
-// when the window changes (Solutions switching its pinned mode at 640px tall,
-// Case Studies' and Industries' runways, which follow the window size). When
-// one of those settles after ScrollTrigger has refreshed, the pin keeps the
-// old positions and fires early, laying the white letter train over the
-// sections above it (seen at 125% display scaling when DevTools opened and
-// took the window under 640px tall).
-//
-// So: watch the page's height, and whenever it differs from what it was at
-// ScrollTrigger's last refresh, refresh again (debounced). A refresh that
-// changes nothing leaves the height as it was, so this cannot loop.
+// 1. Refresh without smooth scrolling. To measure, ScrollTrigger.refresh()
+//    moves the page's scroll position and puts it back; html has
+//    scroll-behavior:smooth (home7.css), which turns those jumps into
+//    animations, so a refresh run while scrolled down the page measured
+//    mid-animation and set the pin's start thousands of pixels early (seen
+//    at 6723 and 2523 against a real 16300), laying the train over How We
+//    Work and Platform Dashboards. Smooth scrolling is switched off for the
+//    length of each refresh (refreshInit .. refresh) and back on after, so
+//    in-page links still glide. Registered as soon as the page has parsed,
+//    before the train's ScrollTrigger exists, so every refresh is covered.
+// 2. Refresh when the page's height changes. This page's own scripts change
+//    section heights after ScrollTrigger has measured (Solutions switching
+//    its pinned mode at 640px tall, Case Studies' and Industries' runways
+//    following the window, the hero's headline rotating between one height
+//    and another), which would leave the pin's positions stale. So the
+//    page's height is watched, and when it differs from the height at the
+//    last refresh, ScrollTrigger refreshes (debounced). A refresh that
+//    changes nothing leaves the height as it was, so this cannot loop.
 // tools/sync-home9.pl places this after the last section.
 (function(){
- if(!('ResizeObserver' in window)) return;
- const doc = document.documentElement;
+ const html = document.documentElement;
  let lastH = -1, timer = 0, started = false;
  function start(){
   const ST = window.ScrollTrigger;
   if(started || !ST) return;
   started = true;
-  lastH = doc.scrollHeight;
-  ST.addEventListener('refresh', function(){ lastH = doc.scrollHeight; });
+  lastH = html.scrollHeight;
+  ST.addEventListener('refreshInit', function(){ html.style.scrollBehavior = 'auto'; });
+  ST.addEventListener('refresh', function(){ html.style.scrollBehavior = ''; lastH = html.scrollHeight; });
+  if(!('ResizeObserver' in window)) return;
   new ResizeObserver(function(){
-   if(doc.scrollHeight === lastH) return;
+   if(html.scrollHeight === lastH) return;
    clearTimeout(timer);
-   timer = setTimeout(function(){ if(doc.scrollHeight !== lastH) ST.refresh(); }, 250);
+   timer = setTimeout(function(){ if(html.scrollHeight !== lastH) ST.refresh(); }, 250);
   }).observe(document.body);
  }
- if(document.readyState === 'complete') start();
- else window.addEventListener('load', start);
+ // GSAP loads further down the page as ordinary scripts, so it is there by
+ // DOMContentLoaded; load is the fallback.
+ if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+ else start();
+ window.addEventListener('load', start);
 })();
 </script>
 
