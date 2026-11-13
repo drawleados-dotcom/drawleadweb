@@ -328,11 +328,13 @@ include __DIR__ . '/partials/nav.php';
 
 <!-- CASE STUDIES -->
 <section id="cases">
+ <div class="cases-scroll" id="casesScroll">
+  <div class="cases-pin">
+   <div class="cases-head">
  <div class="eyebrow rv"><span class="eyebrow-text">Case Studies</span></div>
  <h2 class="sec-h rv"><span>Real Results</span> for <span class="fade">Real Businesses</span></h2>
  <p class="sec-sub rv">How Drawlead transforms operations across industries with measurable outcomes.</p>
- <div class="cases-scroll" id="casesScroll">
-  <div class="cases-pin">
+   </div>
    <div class="cases-track" id="casesTrack">
  <div class="case-card" style="--acc:#38B976;--acc2:#9BE3C0;--atm:rgba(56,185,118,.18)">
   <div class="case-screen"><img class="case-img" src="<?= asset_url('/assets/img/case-construction-erp.webp') ?>" alt="Site engineer reviewing drawings on a multi-storey construction site" decoding="async" fetchpriority="low"></div>
@@ -374,11 +376,11 @@ include __DIR__ . '/partials/nav.php';
   </div>
  </div>
    </div><!-- /cases-track -->
-  </div>
- </div><!-- /cases-scroll -->
  <div class="sec-cta rv">
  <button type="button" data-book class="btn btn-black">Start Your Success Story</button>
  </div>
+  </div>
+ </div><!-- /cases-scroll -->
 </section>
 
 <!-- METHODOLOGY -->

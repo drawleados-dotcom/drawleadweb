@@ -136,6 +136,31 @@ my $tm  = block_file('tools/home9-testimonials.html', 'testimonials');
   die "sync-home9: a Solutions metrics row survived\n" if $blk{solutions} =~ /sol-metric/;
 }
 
+# Case Studies: the heading (eyebrow, heading, subline) and the CTA move
+# inside the pinned box, so the whole section holds still on one screen while
+# the cards travel sideways (assets/home9.css, section 9). Home 8 pins only
+# the card track, and its heading scrolls away above it. The ids the scroll
+# driver looks up (casesScroll, casesTrack) and the .cases-pin it measures are
+# unchanged.
+{
+  my $n = $blk{cases} =~ s{
+      (<section\ id="cases">\n)
+      (.*?)                                              # the heading block
+      (\ <div\ class="cases-scroll"\ id="casesScroll">\n
+       \ \ <div\ class="cases-pin">\n)
+      (.*?\ \ \ </div><!--\ /cases-track\ -->\n)         # the track and its cards
+      (\ \ </div>\n
+       \ </div><!--\ /cases-scroll\ -->\n)
+      (.*?)                                              # the CTA
+      (</section>\n)
+    }{$1$3   <div class="cases-head">\n$2   </div>\n$4$6$5$7}sx;
+  die "sync-home9: Case Studies markup not as expected (heading / pin / CTA)\n" unless $n;
+  die "sync-home9: Case Studies heading did not move into the pin\n"
+    unless $blk{cases} =~ m{<div class="cases-pin">\n   <div class="cases-head">\n <div class="eyebrow rv">.*?class="sec-h rv".*?class="sec-sub rv".*?\n   </div>\n   <div class="cases-track"}s;
+  die "sync-home9: Case Studies CTA did not move into the pin\n"
+    unless $blk{cases} =~ m{</div><!-- /cases-track -->\n <div class="sec-cta rv">.*?</div>\n  </div>\n </div><!-- /cases-scroll -->\n</section>\n}s;
+}
+
 # ── 3 · Home 9's order ───────────────────────────────────────────────────────
 my @dropped = qw(functions tech);
 my @order   = qw(hero solutions cases method MID unify dashboards TESTIMONIALS industries why ctaintro cta);
