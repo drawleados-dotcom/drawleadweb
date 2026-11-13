@@ -633,3 +633,239 @@
  0%,16%,34%,100%{filter:none}
  25%{filter:drop-shadow(0 0 5px rgba(50,180,111,.9))}
 }
+
+/* ── 11 · PLATFORM DASHBOARDS — the hub ───────────────────────────────────────
+   Home 8 slides a row of six full dashboard cards past while pinned. Here
+   (markup: tools/home9-dashboards.html) the six modules are wired to one
+   "Centralized" hub: three compact cards down each side and the hub between
+   them, on a dark circuit-board ground in both themes (so its colours are
+   its own, like #process).
+   From 1101px: three columns (cards | hub | cards) on a 1320px stage. The
+   script draws the wires into .hub-wires from each card's port (.hub-port,
+   on its inner edge) to the hub's side: a dim dashed line with a dot
+   travelling in along it, and a bright flowing copy (.hub-flow) shown only
+   on the active module's wire. The active module (.is-active: card, wire,
+   wire end, hub spoke) follows the pointer and otherwise walks round the
+   six; the hub's caption names it.
+   Below 1101px the hub sits on top and the cards follow in two columns (one
+   below 700px), with no wires. Entrance (.hub-anim, then .is-in): the cards
+   slide in from their sides, the hub scales up, the wires fade in last.
+   "section#dashboards" outranks home8.css's #dashboards ground, which loads
+   after this file. */
+section#dashboards{
+ position:relative;color:#fff;overflow:hidden;
+ background:
+  radial-gradient(34% 48% at 50% 64%,rgba(50,180,111,.17) 0%,transparent 70%),
+  radial-gradient(70% 45% at 50% 0%,rgba(50,180,111,.06) 0%,transparent 70%),
+  #040907;
+}
+section#dashboards::before{
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background-image:
+  linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+ background-size:68px 68px;background-position:center top;
+ -webkit-mask-image:radial-gradient(ellipse 75% 70% at 50% 55%,#000 25%,transparent 85%);
+ mask-image:radial-gradient(ellipse 75% 70% at 50% 55%,#000 25%,transparent 85%);
+}
+#dashboards > *{position:relative;z-index:1}
+#dashboards .hub-head{max-width:1320px;margin:0 auto 3.75rem;text-align:center}
+#dashboards .hub-head .eyebrow{justify-content:center}
+#dashboards .hub-head .sec-h{color:#fff}
+#dashboards .hub-head .sec-sub{color:rgba(255,255,255,.62);margin:0 auto;max-width:640px}
+
+#dashboards .hub-stage{
+ position:relative;max-width:1440px;margin-inline:auto;
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,240px) minmax(0,1fr);
+ column-gap:clamp(48px,5vw,96px);align-items:center;
+}
+#dashboards .hub-wires{
+ position:absolute;inset:0;width:100%;height:100%;overflow:visible;
+ pointer-events:none;z-index:0;
+}
+#dashboards .hub-col{position:relative;z-index:1;display:flex;flex-direction:column;gap:20px}
+#dashboards .hub-core{position:relative;z-index:1;display:flex;justify-content:center}
+
+/* the hub: a glowing green tile, two rings pulsing out of it */
+#dashboards .hub-box{
+ position:relative;width:100%;max-width:240px;aspect-ratio:1 / .94;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+ border-radius:30px;
+ background:linear-gradient(160deg,#2DB872 0%,#169B58 46%,#0C7A43 100%);
+ border:1.5px solid rgba(130,235,180,.55);
+ box-shadow:
+  0 0 0 7px rgba(50,180,111,.07),
+  0 0 70px rgba(50,180,111,.42),
+  0 30px 60px rgba(0,0,0,.45),
+  inset 0 1px 0 rgba(255,255,255,.28);
+}
+#dashboards .hub-box::before,
+#dashboards .hub-box::after{
+ content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;
+ border:1.5px solid rgba(50,180,111,.55);
+ animation:hub-ring 3.2s cubic-bezier(.2,.6,.3,1) infinite;
+}
+#dashboards .hub-box::after{animation-delay:1.6s}
+@keyframes hub-ring{
+ 0%{transform:scale(1);opacity:.75}
+ 100%{transform:scale(1.32);opacity:0}
+}
+#dashboards .hub-ico{width:78px;height:78px;display:block;overflow:visible}
+#dashboards .hub-ico line{stroke:#fff;stroke-width:4;stroke-linecap:round;opacity:.92;transition:opacity .3s ease,stroke .3s ease}
+#dashboards .hub-ico circle{fill:#fff;transform-box:fill-box;transform-origin:center;transition:transform .4s cubic-bezier(.34,1.56,.64,1),fill .3s ease}
+#dashboards .hub-ico .hub-ico-core{fill:none;stroke:#fff;stroke-width:4}
+#dashboards .hub-ico .hub-node.is-active circle{transform:scale(1.35);fill:#DFFFEC}
+#dashboards .hub-ico .hub-node.is-active line{stroke:#DFFFEC;opacity:1}
+#dashboards .hub-name{
+ font-family:var(--font-display);font-size:25px;font-weight:700;letter-spacing:-.01em;line-height:1;color:#fff;
+}
+#dashboards .hub-cap{
+ display:flex;align-items:center;gap:7px;min-height:16px;max-width:92%;
+ font-family:var(--font-body);font-size:12px;font-weight:600;line-height:1.3;color:rgba(255,255,255,.86);
+ white-space:nowrap;
+}
+#dashboards .hub-cap span{overflow:hidden;text-overflow:ellipsis}
+#dashboards .hub-cap i{
+ flex:none;width:7px;height:7px;border-radius:50%;background:#D9FFE9;
+ box-shadow:0 0 0 3px rgba(255,255,255,.18);animation:hub-blink 1.6s ease-in-out infinite;
+}
+@keyframes hub-blink{50%{opacity:.35}}
+
+/* a module card */
+#dashboards .hub-mod{
+ position:relative;padding:18px 20px 16px;border-radius:18px;
+ background:linear-gradient(180deg,#0F1A15 0%,#0A120F 100%);
+ border:1px solid rgba(50,180,111,.16);
+ box-shadow:0 16px 36px rgba(0,0,0,.35);
+ transition:border-color .3s ease,box-shadow .3s ease,transform .45s cubic-bezier(.22,.8,.24,1),opacity .6s ease;
+}
+#dashboards .hub-col-l .hub-mod{--nudge:6px;--from:-40px}
+#dashboards .hub-col-r .hub-mod{--nudge:-6px;--from:40px}
+#dashboards .hub-mod-top{display:flex;align-items:center;gap:12px}
+#dashboards .hub-mod-ico{
+ flex:none;width:40px;height:40px;border-radius:11px;
+ display:flex;align-items:center;justify-content:center;
+ background:linear-gradient(160deg,#27AA68 0%,#11804A 100%);
+ box-shadow:0 6px 16px rgba(17,128,74,.35);
+}
+#dashboards .hub-mod-ico svg{width:22px;height:22px;display:block}
+#dashboards .hub-mod-tt{flex:1;min-width:0}
+/* name and period chip share the first line, so the line under them gets
+   the card's full width */
+#dashboards .hub-mod-name{display:flex;align-items:center;justify-content:space-between;gap:10px}
+#dashboards .hub-mod h3{
+ min-width:0;margin:0;font-family:var(--font-display);font-size:16px;font-weight:700;letter-spacing:-.01em;line-height:1.25;color:#fff;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#dashboards .hub-mod-tt p{
+ margin:2px 0 0;font-family:var(--font-body);font-size:12.5px;line-height:1.4;color:rgba(255,255,255,.55);
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#dashboards .hub-mod-when{
+ flex:none;padding:3px 9px;border-radius:999px;
+ font-family:var(--font-body);font-size:10.5px;font-weight:600;line-height:1.4;color:rgba(255,255,255,.55);
+ border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);
+}
+#dashboards .hub-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0 0}
+#dashboards .hub-kpis > div{
+ min-width:0;padding:9px 11px 10px;border-radius:11px;
+ background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);
+}
+#dashboards .hub-kpis dt{
+ font-family:var(--font-body);font-size:11px;line-height:1.3;color:rgba(255,255,255,.5);
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#dashboards .hub-kpis dd{
+ margin:4px 0 0;display:flex;align-items:baseline;flex-wrap:wrap;column-gap:6px;
+ font-family:var(--font-display);font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:1.2;color:#fff;
+}
+#dashboards .hub-kpis em{
+ font-style:normal;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0;color:#4ED38B;
+}
+#dashboards .hub-kpis em::before{content:"\2191\00a0"}
+#dashboards .hub-kpis em.down{color:#F0A35E}
+#dashboards .hub-kpis em.down::before{content:"\2193\00a0"}
+
+/* the port on each card's inner edge, where its wire starts */
+#dashboards .hub-port{
+ position:absolute;top:50%;z-index:2;width:12px;height:12px;margin-top:-6px;border-radius:50%;
+ background:#0A120F;border:2px solid rgba(50,180,111,.6);
+ transition:background-color .3s ease,border-color .3s ease,box-shadow .3s ease;
+}
+#dashboards .hub-col-l .hub-port{right:-7px}
+#dashboards .hub-col-r .hub-port{left:-7px}
+
+/* active module */
+#dashboards .hub-col .hub-mod.is-active{
+ border-color:rgba(50,180,111,.65);transform:translateX(var(--nudge));
+ box-shadow:0 16px 36px rgba(0,0,0,.35),0 0 0 1px rgba(50,180,111,.18),0 0 44px rgba(50,180,111,.16);
+}
+#dashboards .hub-mod.is-active .hub-port{
+ background:#32b46f;border-color:#9BF3C4;
+ box-shadow:0 0 0 4px rgba(50,180,111,.2),0 0 14px rgba(50,180,111,.85);
+}
+
+/* the wires */
+#dashboards .hub-wire{
+ fill:none;stroke:rgba(50,180,111,.34);stroke-width:1.5;stroke-dasharray:5 6;stroke-linecap:round;
+}
+#dashboards .hub-stub{stroke:rgba(50,180,111,.22)}
+#dashboards .hub-flow{
+ fill:none;stroke:#3FD083;stroke-width:2.2;stroke-dasharray:12 16;stroke-linecap:round;
+ opacity:0;transition:opacity .35s ease;
+ animation:hub-flow 1.1s linear infinite;
+ filter:drop-shadow(0 0 4px rgba(50,180,111,.9));
+}
+#dashboards .hub-flow.is-active{opacity:1}
+@keyframes hub-flow{to{stroke-dashoffset:-28}}
+#dashboards .hub-dot{fill:#9BF3C4;filter:drop-shadow(0 0 4px rgba(80,220,140,.95))}
+#dashboards .hub-end{fill:#0C7A43;stroke:#9BF3C4;stroke-width:1.5;transition:fill .3s ease}
+#dashboards .hub-end.is-active{fill:#9BF3C4}
+
+/* entrance */
+#dashboards .hub-anim .hub-mod{opacity:0;transform:translateX(var(--from))}
+#dashboards .hub-anim .hub-box{opacity:0;transform:scale(.82)}
+#dashboards .hub-anim .hub-wires{opacity:0}
+#dashboards .hub-anim .hub-box{transition:opacity .6s ease .1s,transform .8s cubic-bezier(.34,1.4,.64,1) .1s}
+#dashboards .hub-anim .hub-wires{transition:opacity .8s ease .9s}
+#dashboards .hub-anim .hub-mod:nth-child(2){transition-delay:.12s}
+#dashboards .hub-anim .hub-mod:nth-child(3){transition-delay:.24s}
+#dashboards .hub-anim.is-in .hub-mod{opacity:1;transform:none}
+#dashboards .hub-anim.is-in .hub-box{opacity:1;transform:none}
+#dashboards .hub-anim.is-in .hub-wires{opacity:1}
+#dashboards .hub-anim.is-in .hub-col .hub-mod.is-active{transform:translateX(var(--nudge))}
+
+@media(max-width:1100px){
+ #dashboards .hub-stage{
+  grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px;row-gap:20px;
+  max-width:920px;
+ }
+ #dashboards .hub-core{grid-column:1 / -1;grid-row:1;margin-bottom:1.5rem}
+ #dashboards .hub-box{max-width:220px}
+ #dashboards .hub-col-l{grid-column:1;grid-row:2}
+ #dashboards .hub-col-r{grid-column:2;grid-row:2}
+ #dashboards .hub-port{display:none}
+ #dashboards .hub-col .hub-mod.is-active,
+ #dashboards .hub-anim.is-in .hub-col .hub-mod.is-active{transform:none}
+}
+@media(max-width:700px){
+ #dashboards .hub-stage{grid-template-columns:minmax(0,1fr)}
+ #dashboards .hub-col-l,
+ #dashboards .hub-col-r{grid-column:1}
+ #dashboards .hub-col-r{grid-row:3}
+ #dashboards .hub-head{margin-bottom:2.5rem}
+ #dashboards .hub-box{max-width:200px;border-radius:26px}
+ #dashboards .hub-ico{width:66px;height:66px}
+ #dashboards .hub-name{font-size:22px}
+ #dashboards .hub-mod{padding:16px 16px 14px}
+ #dashboards .hub-kpis dd{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){
+ #dashboards .hub-box::before,
+ #dashboards .hub-box::after,
+ #dashboards .hub-cap i,
+ #dashboards .hub-flow{animation:none}
+ #dashboards .hub-mod,
+ #dashboards .hub-ico circle,
+ #dashboards .hub-ico line{transition:none}
+}

@@ -1,0 +1,267 @@
+<!-- PLATFORM DASHBOARDS — hub -->
+<!-- Home 9's Platform Dashboards, in place of Home 8's horizontal row of full
+     dashboard cards (which sync-home9.pl leaves out). The six modules are
+     wired to one central hub: three down each side as compact cards (icon,
+     name, line, period and the module's three headline figures, all Home 8's
+     copy) and the "Centralized" hub between them, whose network icon has one
+     spoke per module. The wires are drawn by the script at the foot of the
+     section from where the cards and hub actually sit, with data dots
+     travelling in along each; hovering or tapping a module lights its card,
+     wire, spoke and the hub's caption, and when nobody is pointing the
+     highlight walks round the six on its own. Edit this file, then run
+     `perl tools/sync-home9.pl`; templates/home9-body.php is generated.
+     Styles: #dashboards in assets/home9.css (section 11). -->
+<section id="dashboards">
+ <div class="hub-head">
+  <div class="eyebrow rv"><span class="eyebrow-text">Platform Dashboards</span></div>
+  <h2 class="sec-h rv">Every Module. <span class="fade">One Screen.</span></h2>
+  <p class="sec-sub rv">Live ERP dashboards for every function. See exactly what Drawlead looks like in action.</p>
+ </div>
+
+ <div class="hub-stage" id="hubStage">
+  <svg class="hub-wires" aria-hidden="true" focusable="false"></svg>
+
+  <div class="hub-col hub-col-l">
+   <article class="hub-mod" data-i="0">
+    <div class="hub-mod-top">
+     <span class="hub-mod-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><rect x="3" y="22" width="6" height="10" rx="1" fill="rgba(255,255,255,.5)"/><rect x="12" y="14" width="6" height="18" rx="1" fill="rgba(255,255,255,.75)"/><rect x="21" y="6" width="6" height="26" rx="1" fill="white"/><polyline points="6,18 15,10 24,3" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="3" r="3" fill="white"/></svg></span>
+     <div class="hub-mod-tt"><div class="hub-mod-name"><h3>Sales Pipeline</h3><span class="hub-mod-when">This Year</span></div><p>Track your revenue and deal progress</p></div>
+    </div>
+    <dl class="hub-kpis">
+     <div><dt>Total Revenue</dt><dd>&#8377;2.4 Cr<em class="up">18%</em></dd></div>
+     <div><dt>Growth</dt><dd>+28%<em class="up">6%</em></dd></div>
+     <div><dt>Leads</dt><dd>247<em class="up">12%</em></dd></div>
+    </dl>
+    <span class="hub-port" aria-hidden="true"></span>
+   </article>
+   <article class="hub-mod" data-i="1">
+    <div class="hub-mod-top">
+     <span class="hub-mod-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><ellipse cx="18" cy="10" rx="12" ry="4.5" fill="white"/><path d="M6 10 Q6 17 18 17 Q30 17 30 10" fill="rgba(255,255,255,.7)"/><path d="M6 17 Q6 24 18 24 Q30 24 30 17" fill="rgba(255,255,255,.45)"/><path d="M6 24 Q6 31 18 31 Q30 31 30 24" fill="rgba(255,255,255,.25)"/></svg></span>
+     <div class="hub-mod-tt"><div class="hub-mod-name"><h3>Finance &amp; Billing</h3><span class="hub-mod-when">This Quarter</span></div><p>Monitor invoices, collections and cash flow</p></div>
+    </div>
+    <dl class="hub-kpis">
+     <div><dt>Invoiced</dt><dd>&#8377;86L<em class="up">12%</em></dd></div>
+     <div><dt>Collected</dt><dd>&#8377;72L<em class="up">9%</em></dd></div>
+     <div><dt>Outstanding</dt><dd>&#8377;14L<em class="down">4%</em></dd></div>
+    </dl>
+    <span class="hub-port" aria-hidden="true"></span>
+   </article>
+   <article class="hub-mod" data-i="2">
+    <div class="hub-mod-top">
+     <span class="hub-mod-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="6.5" fill="white"/><circle cx="18" cy="18" r="3" fill="rgba(50,180,111,.7)"/><rect x="16" y="2" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="16" y="28" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="2" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="28" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/></svg></span>
+     <div class="hub-mod-tt"><div class="hub-mod-name"><h3>Operations</h3><span class="hub-mod-when">This Month</span></div><p>Track tasks, vendors and delivery timelines</p></div>
+    </div>
+    <dl class="hub-kpis">
+     <div><dt>Total Tasks</dt><dd>1,248<em class="up">6%</em></dd></div>
+     <div><dt>On-Time Rate</dt><dd>94%<em class="up">3%</em></dd></div>
+     <div><dt>Vendors</dt><dd>38<em class="up">2</em></dd></div>
+    </dl>
+    <span class="hub-port" aria-hidden="true"></span>
+   </article>
+  </div>
+
+  <div class="hub-core">
+   <div class="hub-box">
+    <svg class="hub-ico" viewBox="0 0 80 80" fill="none" aria-hidden="true" focusable="false">
+     <!-- one spoke per module, on the side its card stands: 0-2 left (top,
+          middle, bottom), 3-5 right -->
+     <g class="hub-node" data-i="0"><line x1="35.5" y1="32.2" x2="28" y2="19.2"/><circle cx="25" cy="14" r="6"/></g>
+     <g class="hub-node" data-i="1"><line x1="31" y1="40" x2="16" y2="40"/><circle cx="10" cy="40" r="6"/></g>
+     <g class="hub-node" data-i="2"><line x1="35.5" y1="47.8" x2="28" y2="60.8"/><circle cx="25" cy="66" r="6"/></g>
+     <g class="hub-node" data-i="3"><line x1="44.5" y1="32.2" x2="52" y2="19.2"/><circle cx="55" cy="14" r="6"/></g>
+     <g class="hub-node" data-i="4"><line x1="49" y1="40" x2="64" y2="40"/><circle cx="70" cy="40" r="6"/></g>
+     <g class="hub-node" data-i="5"><line x1="44.5" y1="47.8" x2="52" y2="60.8"/><circle cx="55" cy="66" r="6"/></g>
+     <circle class="hub-ico-core" cx="40" cy="40" r="8.5"/>
+    </svg>
+    <span class="hub-name">Centralized</span>
+    <span class="hub-cap"><i aria-hidden="true"></i><span>6 modules &middot; live sync</span></span>
+   </div>
+  </div>
+
+  <div class="hub-col hub-col-r">
+   <article class="hub-mod" data-i="3">
+    <div class="hub-mod-top">
+     <span class="hub-mod-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><circle cx="13" cy="11" r="6" fill="white"/><circle cx="25" cy="13" r="4.5" fill="rgba(255,255,255,.6)"/><path d="M1 32 C1 23 7 20 13 20 C19 20 25 23 25 32 Z" fill="rgba(255,255,255,.8)"/><path d="M25 26 C25 23 28 21 31 21 C34 21 36 23 36 26 L36 32 L25 32 Z" fill="rgba(255,255,255,.4)"/></svg></span>
+     <div class="hub-mod-tt"><div class="hub-mod-name"><h3>HR &amp; Payroll</h3><span class="hub-mod-when">This Month</span></div><p>Manage headcount, attendance and payroll</p></div>
+    </div>
+    <dl class="hub-kpis">
+     <div><dt>Total Staff</dt><dd>248<em class="up">8</em></dd></div>
+     <div><dt>Attendance</dt><dd>97.4%<em class="up">1.2%</em></dd></div>
+     <div><dt>Payroll Run</dt><dd>&#8377;34L<em class="up">5%</em></dd></div>
+    </dl>
+    <span class="hub-port" aria-hidden="true"></span>
+   </article>
+   <article class="hub-mod" data-i="4">
+    <div class="hub-mod-top">
+     <span class="hub-mod-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><path d="M4 13 L4 23 L10 23 L10 13 Z" fill="rgba(255,255,255,.6)"/><path d="M10 13 L28 5 L28 31 L10 23 Z" fill="white"/><path d="M30 14 Q36 18 30 22" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2.5" stroke-linecap="round"/></svg></span>
+     <div class="hub-mod-tt"><div class="hub-mod-name"><h3>Marketing</h3><span class="hub-mod-when">Last 30 Days</span></div><p>Measure campaigns, reach and engagement</p></div>
+    </div>
+    <dl class="hub-kpis">
+     <div><dt>Campaigns</dt><dd>14<em class="up">3</em></dd></div>
+     <div><dt>Engagement</dt><dd>+44%<em class="up">12%</em></dd></div>
+     <div><dt>Total Reach</dt><dd>8.2K<em class="up">18%</em></dd></div>
+    </dl>
+    <span class="hub-port" aria-hidden="true"></span>
+   </article>
+   <article class="hub-mod" data-i="5">
+    <div class="hub-mod-top">
+     <span class="hub-mod-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><rect x="3" y="3" width="13" height="13" rx="2" fill="white" opacity=".9"/><rect x="20" y="3" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="3" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="20" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.75)"/><line x1="16" y1="9.5" x2="20" y2="9.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="9.5" y1="16" x2="9.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="26.5" y1="16" x2="26.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="16" y1="26.5" x2="20" y2="26.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/></svg></span>
+     <div class="hub-mod-tt"><div class="hub-mod-name"><h3>Management Overview</h3><span class="hub-mod-when">This Year</span></div><p>Company-wide health across every module</p></div>
+    </div>
+    <dl class="hub-kpis">
+     <div><dt>KPI Score</dt><dd>92<em class="up">6</em></dd></div>
+     <div><dt>Efficiency</dt><dd>+18%<em class="up">4%</em></dd></div>
+     <div><dt>Modules Live</dt><dd>7/7<em class="up">2</em></dd></div>
+    </dl>
+    <span class="hub-port" aria-hidden="true"></span>
+   </article>
+  </div>
+ </div>
+
+ <script>
+ // Platform Dashboards hub (styles: assets/home9.css, section 11).
+ // Draws the six wires from each card's port to the hub, from where the two
+ // actually sit (redrawn whenever the stage changes size), each a dim dashed
+ // line with a dot travelling in along it, plus a bright flowing copy shown
+ // on the active module's wire. The active module (card, wire, hub spoke and
+ // the hub's caption) follows the pointer; when nobody is pointing it walks
+ // round the six clockwise every 2.4s, only while the section is on screen.
+ // From 1101px only: narrower, the cards stack under the hub and there are
+ // no wires, but the highlight still walks. Reduced motion: no dots, no
+ // flow, no walking, no entrance; hover still highlights.
+ (function(){
+  const stage = document.getElementById('hubStage');
+  if(!stage) return;
+  const svg = stage.querySelector('.hub-wires');
+  const box = stage.querySelector('.hub-box');
+  const mods = Array.from(stage.querySelectorAll('.hub-mod'));
+  const nodes = Array.from(stage.querySelectorAll('.hub-node'));
+  const cap = stage.querySelector('.hub-cap span');
+  if(!svg || !box || mods.length !== 6) return;
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wide = window.matchMedia('(min-width:1101px)');
+  const names = mods.map(m => (m.querySelector('h3') || {}).textContent || '');
+  const idle = cap ? cap.textContent : '';
+  const order = [0, 3, 4, 5, 2, 1];            // clockwise round the hub
+  const el = (tag, attrs) => {
+   const n = document.createElementNS(NS, tag);
+   for(const k in attrs) n.setAttribute(k, attrs[k]);
+   return n;
+  };
+
+  // the wires: base (dashed), flow (bright, active only), travelling dot, hub end
+  const stubs = [el('path', { class: 'hub-wire hub-stub' }), el('path', { class: 'hub-wire hub-stub' })];
+  stubs.forEach(s => svg.appendChild(s));
+  const wires = mods.map((m, i) => {
+   const base = el('path', { class: 'hub-wire', id: 'hubWire' + i });
+   const flow = el('path', { class: 'hub-flow' });
+   const end = el('circle', { class: 'hub-end', r: 4 });
+   svg.append(base, flow);
+   if(!reduce){
+    const dot = el('circle', { class: 'hub-dot', r: 3 });
+    const move = el('animateMotion', { dur: '2.8s', repeatCount: 'indefinite', begin: (-i * 0.47).toFixed(2) + 's' });
+    const mp = el('mpath', {});
+    mp.setAttribute('href', '#hubWire' + i);
+    mp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#hubWire' + i);
+    move.appendChild(mp);
+    dot.appendChild(move);
+    svg.appendChild(dot);
+   }
+   svg.appendChild(end);
+   return { base, flow, end };
+  });
+
+  // a right-angled route with rounded corners: across to xm, up or down, across
+  function route(x1, y1, x2, y2, xm, r){
+   const dy = y2 - y1;
+   if(Math.abs(dy) < 2) return `M${x1} ${y1}H${x2}`;
+   const s = Math.sign(dy), a = Math.sign(xm - x1), b = Math.sign(x2 - xm);
+   r = Math.min(r, Math.abs(dy) / 2, Math.abs(xm - x1), Math.abs(x2 - xm));
+   return `M${x1} ${y1}H${xm - a * r}Q${xm} ${y1} ${xm} ${y1 + s * r}V${y2 - s * r}Q${xm} ${y2} ${xm + b * r} ${y2}H${x2}`;
+  }
+  // positions from offsets, which ignore transforms, so the wires land where
+  // the cards and hub rest, not where the entrance or a highlight moves them
+  function pos(n){
+   let x = 0, y = 0;
+   while(n && n !== stage){ x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; }
+   return { x, y };
+  }
+  function layout(){
+   if(!wide.matches){ svg.style.display = 'none'; return; }
+   svg.style.display = '';
+   const W = stage.clientWidth, H = stage.clientHeight;
+   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+   const bp = pos(box), bw = box.offsetWidth, bh = box.offsetHeight;
+   const hy = bp.y + bh / 2;
+   const offs = [-0.27, 0, 0.27];              // where each wire meets the hub's side
+   mods.forEach((m, i) => {
+    const left = i < 3;
+    const port = m.querySelector('.hub-port');
+    const pp = pos(port);
+    const x1 = pp.x + port.offsetWidth / 2, y1 = pp.y + port.offsetHeight / 2;
+    const x2 = left ? bp.x : bp.x + bw, y2 = hy + offs[i % 3] * bh;
+    const xm = x1 + (x2 - x1) * 0.55;
+    const d = route(x1, y1, x2, y2, xm, 18);
+    wires[i].base.setAttribute('d', d);
+    wires[i].flow.setAttribute('d', d);
+    wires[i].end.setAttribute('cx', x2);
+    wires[i].end.setAttribute('cy', y2);
+   });
+   // two faint stubs out of the hub's top and bottom, as on a circuit board
+   const hx = bp.x + bw / 2;
+   stubs[0].setAttribute('d', `M${hx} ${bp.y}V${Math.max(0, bp.y - 90)}`);
+   stubs[1].setAttribute('d', `M${hx} ${bp.y + bh}V${Math.min(H, bp.y + bh + 90)}`);
+  }
+
+  let active = -1;
+  function set(i){
+   if(i === active) return;
+   active = i;
+   mods.forEach((m, k) => m.classList.toggle('is-active', k === i));
+   wires.forEach((w, k) => { w.flow.classList.toggle('is-active', k === i); w.end.classList.toggle('is-active', k === i); });
+   nodes.forEach(n => n.classList.toggle('is-active', +n.getAttribute('data-i') === i));
+   if(cap) cap.textContent = i < 0 ? idle : 'Syncing ' + names[i];
+  }
+
+  // the walk: paused while pointing, off screen, or under reduced motion
+  let step = 0, timer = 0, pointing = false, onScreen = false;
+  function tick(){ step = (step + 1) % order.length; set(order[step]); }
+  function run(){
+   clearInterval(timer); timer = 0;
+   if(!reduce && onScreen && !pointing) timer = setInterval(tick, 2400);
+  }
+  mods.forEach((m, i) => {
+   m.addEventListener('mouseenter', () => { pointing = true; set(i); step = order.indexOf(i); run(); });
+   m.addEventListener('mouseleave', () => { pointing = false; run(); });
+   m.addEventListener('click', () => { set(i); step = order.indexOf(i); run(); });
+  });
+
+  // the entrance: cards slide in from their sides, the hub scales up, wires fade in
+  const anim = !reduce && 'IntersectionObserver' in window;
+  if(anim) stage.classList.add('hub-anim');
+  if('IntersectionObserver' in window){
+   const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+     onScreen = e.isIntersecting;
+     if(onScreen && anim && !stage.classList.contains('is-in')){
+      stage.classList.add('is-in');
+      setTimeout(() => stage.classList.remove('hub-anim'), 1800);
+     }
+     run();
+    });
+   }, { threshold: 0.25 });
+   io.observe(stage);
+  } else { onScreen = true; run(); }
+
+  set(order[0]);
+  layout();
+  if('ResizeObserver' in window) new ResizeObserver(layout).observe(stage);
+  else window.addEventListener('resize', layout);
+  window.addEventListener('load', layout);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+  if(wide.addEventListener) wide.addEventListener('change', layout);
+ })();
+ </script>
+</section>
