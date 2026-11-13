@@ -121,19 +121,19 @@ include __DIR__ . '/partials/nav.php';
   <div class="hero-left">
    <div class="hero-eyebrow">
     <span class="hero-eicon"></span>
-    <span class="hero-etxt">One Platform. Every Business.</span>
+    <span class="hero-etxt">AI-Powered Custom ERP Software</span>
    </div>
 
    <!-- MAIN HEADLINE, content fixed, browser wraps naturally -->
-   <h1 class="hero-h">One <span class="grad-os">OS</span> with <span class="grad-ai">AI</span> to every function of your <span class="grad-os">business</span></h1>
+   <h1 class="hero-h">One Custom <span class="grad-os">OS</span> with <span class="grad-ai">AI</span> for Every Function of Your <span class="grad-os">Business</span></h1>
 
-   <p class="hero-p">Drawlead is the operating system for modern business. Unify ERP, AI automation, analytics, and cloud workflows into one intelligent platform built for India's growing businesses.</p>
+   <p class="hero-p">Drawlead is one of the leading ERP software companies in Chennai, building custom ERP solutions that connect your sales, finance, inventory, operations, HR, and customer management in one cloud-based platform.</p>
 
    <div class="hero-btns">
-    <button type="button" data-book class="btn btn-primary">Get Started</button>
+    <button type="button" data-book class="btn btn-primary">Book a Free Consultation</button>
     <a href="#functions" class="btn btn-ghost">
      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor"/></svg>
-     Explore Platform
+     Watch 2-Min Demo
     </a>
    </div>
 

@@ -889,3 +889,13 @@ section#dashboards::before{
 #functions .sec-h .fade{color:var(--g400);-webkit-text-fill-color:currentColor}
 #functions .fn-card{border-radius:0}
 #functions .fn-cta-card button{color:#0B0F0D !important}
+
+/* ── 13 · HERO — Home 9's copy on two lines ───────────────────────────────────
+   Home 9's headline ("One Custom OS with AI for Every Function of Your
+   Business", set in sync-home9.pl) is longer than Home 8's and wrapped to
+   three lines in Home 7's 860px column, leaving "Business" alone on the last.
+   The column is widened for the headline only (the description keeps its own
+   540px measure) and the lines are balanced, so it sits on two even lines on
+   desktop and wraps evenly, without a stray last word, where it needs more. */
+#hero .hero-left{max-width:1080px}
+#hero .hero-h{text-wrap:balance}

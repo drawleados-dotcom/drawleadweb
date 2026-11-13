@@ -279,6 +279,25 @@ sub edit_once {
 edit_once(qq{ initStickyStack('#solutions .sol-card', { dimTo: 0.30, shrink: 0.04 });\n},
           qq{ // Home 9: Solutions is a sidebar and a card column (the script after #solutions), not a sticky stack.\n},
           'Solutions sticky-stack driver');
+# Hero: Home 9's own copy (eyebrow, headline, description, both buttons).
+# The layout, styles and the buttons' actions stay Home 8's: the first opens
+# the booking popup, the second still scrolls to Core Platform (#functions);
+# there is no demo video on the site yet to point it at.
+edit_once(q{<span class="hero-etxt">One Platform. Every Business.</span>},
+          q{<span class="hero-etxt">AI-Powered Custom ERP Software</span>},
+          'hero eyebrow');
+edit_once(q{<h1 class="hero-h">One <span class="grad-os">OS</span> with <span class="grad-ai">AI</span> to every function of your <span class="grad-os">business</span></h1>},
+          q{<h1 class="hero-h">One Custom <span class="grad-os">OS</span> with <span class="grad-ai">AI</span> for Every Function of Your <span class="grad-os">Business</span></h1>},
+          'hero headline');
+edit_once(q{<p class="hero-p">Drawlead is the operating system for modern business. Unify ERP, AI automation, analytics, and cloud workflows into one intelligent platform built for India's growing businesses.</p>},
+          q{<p class="hero-p">Drawlead is one of the leading ERP software companies in Chennai, building custom ERP solutions that connect your sales, finance, inventory, operations, HR, and customer management in one cloud-based platform.</p>},
+          'hero description');
+edit_once(q{<button type="button" data-book class="btn btn-primary">Get Started</button>},
+          q{<button type="button" data-book class="btn btn-primary">Book a Free Consultation</button>},
+          'hero primary button');
+edit_once(qq{\n     Explore Platform\n},
+          qq{\n     Watch 2-Min Demo\n},
+          'hero secondary button');
 
 # ── 4 · the page's own stylesheet, after Home 8's base sheet ────────────────
 my $css = $rendered ? '/assets/home9.css' : "<?= asset_url('/assets/home9.css') ?>";
