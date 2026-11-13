@@ -499,67 +499,6 @@ include __DIR__ . '/partials/nav.php';
  </div>
 </section>
 
-<!-- HOW WE WORK — phases -->
-<!-- Home 9's third How We Work, after the process row: the same eyebrow,
-     heading, description and button, laid out as two columns. Left: eyebrow
-     and a large heading, with the button and a short note at the column's
-     foot. Right: the description, then the four steps (Audit / Measure /
-     Automate / Scale, copy from the first section's cards) as stacked cards
-     (number, title, line, phase label). Edit this file, then run
-     `perl tools/sync-home9.pl`; templates/home9-body.php is generated.
-     Styles: #phases in assets/home9.css. -->
-<section id="phases">
- <div class="ph-wrap">
-  <div class="ph-lead">
-   <div class="eyebrow rv"><span class="eyebrow-text">How We Work</span></div>
-   <h2 class="sec-h rv">We don't build first. <br><span class="g">We understand first.</span></h2>
-  </div>
-
-  <div class="ph-side">
-   <p class="ph-desc rv">Before a single line of code or campaign goes live, we audit how your business actually runs, so every system we build is measurable, automated, and built to scale.</p>
-   <ol class="ph-list">
-    <li class="ph-card rv">
-     <span class="ph-num" aria-hidden="true">01</span>
-     <div class="ph-body">
-      <h3 class="ph-name">Audit</h3>
-      <p class="ph-text">We map your current workflows, tools, and customer journey to find exactly what's slowing growth down.</p>
-     </div>
-     <span class="ph-phase">Phase I</span>
-    </li>
-    <li class="ph-card rv">
-     <span class="ph-num" aria-hidden="true">02</span>
-     <div class="ph-body">
-      <h3 class="ph-name">Measure</h3>
-      <p class="ph-text">We set up KPIs, dashboards, and tracking so every decision from here on is backed by real data.</p>
-     </div>
-     <span class="ph-phase">Phase II</span>
-    </li>
-    <li class="ph-card rv">
-     <span class="ph-num" aria-hidden="true">03</span>
-     <div class="ph-body">
-      <h3 class="ph-name">Automate</h3>
-      <p class="ph-text">We remove repetitive manual work (approvals, follow-ups, notifications) before we build anything new.</p>
-     </div>
-     <span class="ph-phase">Phase III</span>
-    </li>
-    <li class="ph-card rv">
-     <span class="ph-num" aria-hidden="true">04</span>
-     <div class="ph-body">
-      <h3 class="ph-name">Scale</h3>
-      <p class="ph-text">Only then do we build the ERP, CRM, website, or automation platform, designed to grow with you.</p>
-     </div>
-     <span class="ph-phase">Phase IV</span>
-    </li>
-   </ol>
-  </div>
-
-  <div class="ph-cta rv">
-   <button type="button" data-book class="btn ph-btn">Start With an Audit <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-   <p class="ph-note"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6.25"/><path d="M8 4.75V8l2.25 1.5"/></svg><span>Takes 15 mins</span><span class="ph-dot" aria-hidden="true"></span><span>No commitment</span></p>
-  </div>
- </div>
-</section>
-
 <!-- CTA (mid-page) -->
 <!-- Home 9's CTA after How We Work: the closing CTA's card laid out across the
      page. Eyebrow and heading on the left, description and buttons on the
