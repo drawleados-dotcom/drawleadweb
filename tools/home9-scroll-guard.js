@@ -10,7 +10,9 @@
 //    at 6723 and 2523 against a real 16300), laying the train over How We
 //    Work and Platform Dashboards. Smooth scrolling is switched off for the
 //    length of each refresh (refreshInit .. refresh) and back on after, so
-//    in-page links still glide. Registered as soon as the page has parsed,
+//    in-page links still glide. The
+//    switch is read back at once (getComputedStyle), or Chrome keeps the old
+//    smooth value for the jumps that follow. Registered as soon as the page has parsed,
 //    before the train's ScrollTrigger exists, so every refresh is covered.
 // 2. Refresh when the page's height changes. This page's own scripts change
 //    section heights after ScrollTrigger has measured (Solutions switching
@@ -29,7 +31,9 @@
   if(started || !ST) return;
   started = true;
   lastH = html.scrollHeight;
-  ST.addEventListener('refreshInit', function(){ html.style.scrollBehavior = 'auto'; });
+  // Reading the computed value makes the browser apply it at once: without
+  // that, Chrome still scrolled smoothly for the jumps that follow.
+  ST.addEventListener('refreshInit', function(){ html.style.scrollBehavior = 'auto'; void getComputedStyle(html).scrollBehavior; });
   ST.addEventListener('refresh', function(){ html.style.scrollBehavior = ''; lastH = html.scrollHeight; });
   if(!('ResizeObserver' in window)) return;
   new ResizeObserver(function(){
