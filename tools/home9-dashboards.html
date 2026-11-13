@@ -222,7 +222,7 @@
    mods.forEach((m, k) => m.classList.toggle('is-active', k === i));
    wires.forEach((w, k) => { w.flow.classList.toggle('is-active', k === i); w.end.classList.toggle('is-active', k === i); });
    nodes.forEach(n => n.classList.toggle('is-active', +n.getAttribute('data-i') === i));
-   if(cap) cap.textContent = i < 0 ? idle : 'Syncing ' + names[i];
+   if(cap) cap.textContent = i < 0 ? idle : names[i];   // just the name: the hub is small
   }
 
   // the walk: paused while pointing, off screen, or under reduced motion

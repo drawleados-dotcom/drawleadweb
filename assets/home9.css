@@ -676,7 +676,7 @@ section#dashboards::before{
 
 #dashboards .hub-stage{
  position:relative;max-width:1440px;margin-inline:auto;
- display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,240px) minmax(0,1fr);
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(170px,196px) minmax(0,1fr);
  column-gap:clamp(48px,5vw,96px);align-items:center;
 }
 #dashboards .hub-wires{
@@ -688,9 +688,9 @@ section#dashboards::before{
 
 /* the hub: a glowing green tile, two rings pulsing out of it */
 #dashboards .hub-box{
- position:relative;width:100%;max-width:240px;aspect-ratio:1 / .94;
- display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
- border-radius:30px;
+ position:relative;width:100%;max-width:196px;aspect-ratio:1 / .94;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;
+ border-radius:24px;
  background:linear-gradient(160deg,#2DB872 0%,#169B58 46%,#0C7A43 100%);
  border:1.5px solid rgba(130,235,180,.55);
  box-shadow:
@@ -710,18 +710,18 @@ section#dashboards::before{
  0%{transform:scale(1);opacity:.75}
  100%{transform:scale(1.32);opacity:0}
 }
-#dashboards .hub-ico{width:78px;height:78px;display:block;overflow:visible}
+#dashboards .hub-ico{width:60px;height:60px;display:block;overflow:visible}
 #dashboards .hub-ico line{stroke:#fff;stroke-width:4;stroke-linecap:round;opacity:.92;transition:opacity .3s ease,stroke .3s ease}
 #dashboards .hub-ico circle{fill:#fff;transform-box:fill-box;transform-origin:center;transition:transform .4s cubic-bezier(.34,1.56,.64,1),fill .3s ease}
 #dashboards .hub-ico .hub-ico-core{fill:none;stroke:#fff;stroke-width:4}
 #dashboards .hub-ico .hub-node.is-active circle{transform:scale(1.35);fill:#DFFFEC}
 #dashboards .hub-ico .hub-node.is-active line{stroke:#DFFFEC;opacity:1}
 #dashboards .hub-name{
- font-family:var(--font-display);font-size:25px;font-weight:700;letter-spacing:-.01em;line-height:1;color:#fff;
+ font-family:var(--font-display);font-size:20px;font-weight:700;letter-spacing:-.01em;line-height:1;color:#fff;
 }
 #dashboards .hub-cap{
  display:flex;align-items:center;gap:7px;min-height:16px;max-width:92%;
- font-family:var(--font-body);font-size:12px;font-weight:600;line-height:1.3;color:rgba(255,255,255,.86);
+ font-family:var(--font-body);font-size:11px;font-weight:600;line-height:1.3;color:rgba(255,255,255,.86);
  white-space:nowrap;
 }
 #dashboards .hub-cap span{overflow:hidden;text-overflow:ellipsis}
@@ -841,7 +841,7 @@ section#dashboards::before{
   max-width:920px;
  }
  #dashboards .hub-core{grid-column:1 / -1;grid-row:1;margin-bottom:1.5rem}
- #dashboards .hub-box{max-width:220px}
+ #dashboards .hub-box{max-width:186px}
  #dashboards .hub-col-l{grid-column:1;grid-row:2}
  #dashboards .hub-col-r{grid-column:2;grid-row:2}
  #dashboards .hub-port{display:none}
@@ -854,9 +854,9 @@ section#dashboards::before{
  #dashboards .hub-col-r{grid-column:1}
  #dashboards .hub-col-r{grid-row:3}
  #dashboards .hub-head{margin-bottom:2.5rem}
- #dashboards .hub-box{max-width:200px;border-radius:26px}
- #dashboards .hub-ico{width:66px;height:66px}
- #dashboards .hub-name{font-size:22px}
+ #dashboards .hub-box{max-width:172px;border-radius:22px}
+ #dashboards .hub-ico{width:54px;height:54px}
+ #dashboards .hub-name{font-size:18px}
  #dashboards .hub-mod{padding:16px 16px 14px}
  #dashboards .hub-kpis dd{font-size:16px}
 }
