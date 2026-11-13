@@ -252,6 +252,17 @@ for (@order) {
          : $_ eq 'TESTIMONIALS' ? $tm
          :                        $blk{$_};
 }
+# After the last section: keeps ScrollTrigger's pin positions (the closing
+# CTA's letter train) in step when this page's own scripts change section
+# heights after it has measured (tools/home9-scroll-guard.js says why).
+{
+  my $guard = slurp('tools/home9-scroll-guard.js');
+  $guard =~ s/\r\n/\n/g;
+  $guard =~ s/\n*\z/\n/;
+  die "sync-home9: tools/home9-scroll-guard.js should be one <script> block\n"
+    unless $guard =~ /\A\s*<script>/ && $guard =~ m{</script>\n\z} && (() = $guard =~ /<script>/g) == 1;
+  $body .= "\n" . $guard;
+}
 $s = $head . $body . $tail;
 
 # ── 3b · Home 9's own edits to sections it copies ───────────────────────────
