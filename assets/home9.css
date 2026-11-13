@@ -309,3 +309,14 @@
  #solutions .sol-list{grid-template-columns:minmax(0,1fr);grid-auto-rows:auto}
  #solutions .sol-list li{flex-direction:row;align-items:center;padding:14px 16px}
 }
+
+/* ── 8 · SOLUTIONS — eyebrow above the heading ────────────────────────────────
+   Home 8 centres each card's pill (ERP / Ecommerce / Marketing) across both
+   columns above the split. Here it is the left column's eyebrow, flush left
+   over the heading, and in two-column layout the feature grid starts on the
+   pill's row so the tiles' top lines up with it. Below 900px the card is one
+   column and the pill simply sits left-aligned above the heading. */
+#solutions .sol-head{grid-column:1;grid-row:1;justify-self:start;margin-bottom:1.4rem}
+@media(min-width:901px){
+ #solutions .sol-list{grid-row:1 / -1}
+}
