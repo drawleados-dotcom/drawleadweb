@@ -4,17 +4,18 @@ use strict; use warnings;
 #
 # Home 9 is Home 8's page with its sections in a different order:
 #
-#     1  Hero (with the marquee strip under it)     7  Platform Dashboards
-#     2  Solutions                                  8  Testimonials  (new, placeholder)
-#     3  Case Studies                               9  Industries
-#     4  How We Work                               10  Why Drawlead
-#     5  CTA  (horizontal, Home 9's own)           11  CTA  (letter train + card)
-#     6  The Problem
+#     1  Hero (with the marquee strip under it)     7  The Problem
+#     2  Solutions                                  8  Platform Dashboards
+#     3  Case Studies                               9  Testimonials  (new, placeholder)
+#     4  How We Work                               10  Industries
+#     5  How We Work  (process row, Home 9's own)  11  Why Drawlead
+#     6  CTA  (horizontal, Home 9's own)           12  CTA  (letter train + card)
 #
 # Core Platform (the 7 Functions) and Tech Stack are left out. Every section
-# but 5 and 8 is copied from Home 8 exactly as it stands, so any change to
-# Home 8 reaches Home 9 on the next run; 5 and 8 come from
-# tools/home9-cta-mid.html and tools/home9-testimonials.html. A few copied
+# but 5, 6 and 9 is copied from Home 8 exactly as it stands, so any change to
+# Home 8 reaches Home 9 on the next run; 5, 6 and 9 come from
+# tools/home9-process.html, tools/home9-cta-mid.html and
+# tools/home9-testimonials.html. A few copied
 # sections get Home 9's own edits (section 3b), and Solutions gains the hover
 # accordion driver in tools/home9-solutions.js. sync-home8.pl runs this
 # script at its end, so the usual workflow needs nothing extra; run it by hand
@@ -116,6 +117,9 @@ sub block_file {
 }
 my $mid = block_file('tools/home9-cta-mid.html', 'cta-mid');
 my $tm  = block_file('tools/home9-testimonials.html', 'testimonials');
+# How We Work, a second time: the same copy with a split header and the four
+# steps as a staggered card row instead of the card grid and panel.
+my $proc = block_file('tools/home9-process.html', 'process');
 
 # Solutions: a horizontal hover accordion instead of Home 8's sticky stack.
 # Its driver follows the section; the stack's driver is removed in 3b.
@@ -163,13 +167,14 @@ my $tm  = block_file('tools/home9-testimonials.html', 'testimonials');
 
 # ── 3 · Home 9's order ───────────────────────────────────────────────────────
 my @dropped = qw(functions tech);
-my @order   = qw(hero solutions cases method MID unify dashboards TESTIMONIALS industries why ctaintro cta);
+my @order   = qw(hero solutions cases method PROCESS MID unify dashboards TESTIMONIALS industries why ctaintro cta);
 my %used = map { $_ => 1 } @order, @dropped;
 for (map { $_->[0] } @home8) { die "sync-home9: Home 8 section '$_' is neither placed nor dropped\n" unless $used{$_} }
 
 my $body = '';
 for (@order) {
   $body .= $_ eq 'MID'          ? $mid
+         : $_ eq 'PROCESS'      ? $proc
          : $_ eq 'TESTIMONIALS' ? $tm
          :                        $blk{$_};
 }
@@ -232,7 +237,7 @@ PHP
 
 # ── 6 · checks on the result ─────────────────────────────────────────────────
 my @ids = $s =~ /<section id="([^"]+)"/g;
-my $want = 'hero solutions cases method cta-mid unify dashboards testimonials industries why cta-intro cta';
+my $want = 'hero solutions cases method process cta-mid unify dashboards testimonials industries why cta-intro cta';
 die "sync-home9: sections came out as '@ids', expected '$want'\n" unless "@ids" eq $want;
 my %seen; $seen{$_}++ for @ids;
 die "sync-home9: duplicate section id\n" if grep { $_ > 1 } values %seen;

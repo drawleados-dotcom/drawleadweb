@@ -447,6 +447,58 @@ include __DIR__ . '/partials/nav.php';
  </div><!-- /mth-wrap -->
 </section>
 
+<!-- HOW WE WORK — process -->
+<!-- Home 9's second How We Work section, straight after the first: the same
+     eyebrow, heading, description and button, with the eyebrow and heading on
+     the left and the description and button on the right. The four steps are
+     the first section's Understand / Measure / Automate / Scale stack, set out
+     as a staggered row of cards joined by curved arrows; their copy and icons
+     come from the first section's four cards (its "Audit" is the Understand
+     step). No right-hand panel. Edit this file, then run
+     `perl tools/sync-home9.pl`; templates/home9-body.php is generated.
+     Styles: #process in assets/home9.css. -->
+<section id="process">
+ <div class="pr-head">
+  <div class="pr-lead">
+   <div class="eyebrow rv"><span class="eyebrow-text">How We Work</span></div>
+   <h2 class="sec-h rv">We don't build first. <br><span class="g">We understand first.</span></h2>
+  </div>
+  <div class="pr-aside rv">
+   <p class="sec-sub">Before a single line of code or campaign goes live, we audit how your business actually runs, so every system we build is measurable, automated, and built to scale.</p>
+   <button type="button" data-book class="btn pr-cta">Start With an Audit</button>
+  </div>
+ </div>
+
+ <!-- The arrows between the cards are drawn by CSS (each card's ::after), so
+      the list holds only the four steps. -->
+ <ol class="pr-steps">
+  <li class="pr-step rv">
+   <span class="pr-num">01</span>
+   <span class="pr-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.2 4.1A2.1 2.1 0 0 1 6.3 2h7.05L18.4 7.05v3.4a6.6 6.6 0 0 0-2.3-.72V8.5h-3.25a1.5 1.5 0 0 1-1.5-1.5V4.3H6.5v15.4h3.24c.2.83.55 1.6 1.01 2.3H6.3a2.1 2.1 0 0 1-2.1-2.1z"/><path d="M13.65 4.75 16.7 7.8h-3.05z"/><rect x="7.5" y="8.9" width="4.4" height="2" rx="1"/><rect x="7.5" y="12.4" width="3.3" height="2" rx="1"/><circle cx="16.15" cy="15.75" r="4.15"/><path d="M18.95 18.55a1.2 1.2 0 0 1 1.7 0l1.9 1.9a1.2 1.2 0 0 1-1.7 1.7l-1.9-1.9a1.2 1.2 0 0 1 0-1.7"/></svg></span>
+   <h3 class="pr-name">Understand</h3>
+   <p class="pr-desc">We map your current workflows, tools, and customer journey to find exactly what's slowing growth down.</p>
+  </li>
+  <li class="pr-step rv">
+   <span class="pr-num">02</span>
+   <span class="pr-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="19.3" width="18" height="2.3" rx="1.15"/><rect x="4.6" y="12.4" width="4" height="5.6" rx="1.3"/><rect x="10" y="6.6" width="4" height="11.4" rx="1.3"/><rect x="15.4" y="9.6" width="4" height="8.4" rx="1.3"/></svg></span>
+   <h3 class="pr-name">Measure</h3>
+   <p class="pr-desc">We set up KPIs, dashboards, and tracking so every decision from here on is backed by real data.</p>
+  </li>
+  <li class="pr-step rv">
+   <span class="pr-num">03</span>
+   <span class="pr-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2.6" y="2.9" width="8.2" height="6.4" rx="2"/><rect x="13.2" y="14.7" width="8.2" height="6.4" rx="2"/><path d="M10.8 5h3.05a3.6 3.6 0 0 1 3.6 3.6v6.1h-2.3V8.6a1.3 1.3 0 0 0-1.3-1.3H10.8z"/><path d="M13.2 18.9h-3.05a3.6 3.6 0 0 1-3.6-3.6V9.2h2.3v6.1c0 .72.58 1.3 1.3 1.3h3.05z"/></svg></span>
+   <h3 class="pr-name">Automate</h3>
+   <p class="pr-desc">We remove repetitive manual work (approvals, follow-ups, notifications) before we build anything new.</p>
+  </li>
+  <li class="pr-step rv">
+   <span class="pr-num">04</span>
+   <span class="pr-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="19.4" width="18" height="2.2" rx="1.1"/><path d="M20.9 4.5a1.15 1.15 0 0 0-.8-.33h-5.15a1.15 1.15 0 0 0 0 2.3h2.37l-4.62 4.62-2.83-2.83a1.15 1.15 0 0 0-1.63 0l-5.1 5.1a1.15 1.15 0 0 0 1.63 1.63l4.28-4.29 2.83 2.83a1.15 1.15 0 0 0 1.63 0l5.44-5.43v2.37a1.15 1.15 0 0 0 2.3 0V5.32a1.15 1.15 0 0 0-.35-.82"/></svg></span>
+   <h3 class="pr-name">Scale</h3>
+   <p class="pr-desc">Only then do we build the ERP, CRM, website, or automation platform, designed to grow with you.</p>
+  </li>
+ </ol>
+</section>
+
 <!-- CTA (mid-page) -->
 <!-- Home 9's CTA after How We Work: the closing CTA's card laid out across the
      page. Eyebrow and heading on the left, description and buttons on the
