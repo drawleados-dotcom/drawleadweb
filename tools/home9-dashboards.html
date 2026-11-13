@@ -1,10 +1,12 @@
 <!-- PLATFORM DASHBOARDS — hub -->
 <!-- Home 9's Platform Dashboards, in place of Home 8's horizontal row of full
      dashboard cards (which sync-home9.pl leaves out). The six modules are
-     wired to one central hub: three down each side as compact cards (icon,
-     name, line, period and the module's three headline figures, all Home 8's
-     copy) and the "Centralized" hub between them, whose network icon has one
-     spoke per module. The wires are drawn by the script at the foot of the
+     wired to one central hub: three down each side and the "Centralized"
+     hub between them, whose network icon has one spoke per module. Each
+     module is a white product widget, as the app draws it: header (glyph,
+     name, line, period picker, menu), three tinted KPI tiles (figure, trend
+     and comparison) and one small chart (monthly bars, a split bar with its
+     legend, or module scores), all with Home 8's figures. The wires are drawn by the script at the foot of the
      section from where the cards and hub actually sit, with data dots
      travelling in along each; hovering or tapping a module lights its card,
      wire, spoke and the hub's caption, and when nobody is pointing the
@@ -23,39 +25,59 @@
 
   <div class="hub-col hub-col-l">
    <article class="hub-mod" data-i="0">
-    <div class="hub-mod-top">
-     <span class="hub-mod-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><rect x="3" y="22" width="6" height="10" rx="1" fill="rgba(255,255,255,.5)"/><rect x="12" y="14" width="6" height="18" rx="1" fill="rgba(255,255,255,.75)"/><rect x="21" y="6" width="6" height="26" rx="1" fill="white"/><polyline points="6,18 15,10 24,3" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="3" r="3" fill="white"/></svg></span>
-     <div class="hub-mod-tt"><div class="hub-mod-name"><h3>Sales Pipeline</h3><span class="hub-mod-when">This Year</span></div><p>Track your revenue and deal progress</p></div>
+    <div class="hm-head">
+     <span class="hm-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><rect x="3" y="22" width="6" height="10" rx="1" fill="rgba(255,255,255,.5)"/><rect x="12" y="14" width="6" height="18" rx="1" fill="rgba(255,255,255,.75)"/><rect x="21" y="6" width="6" height="26" rx="1" fill="white"/><polyline points="6,18 15,10 24,3" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="3" r="3" fill="white"/></svg></span>
+     <div class="hm-tt"><h3>Sales Pipeline</h3><p>Track your revenue and deal progress</p></div>
+     <span class="hm-sel">This Year<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6.5 8 10.5 12 6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+     <span class="hm-more" aria-hidden="true"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg></span>
     </div>
-    <dl class="hub-kpis">
-     <div><dt>Total Revenue</dt><dd>&#8377;2.4 Cr<em class="up">18%</em></dd></div>
-     <div><dt>Growth</dt><dd>+28%<em class="up">6%</em></dd></div>
-     <div><dt>Leads</dt><dd>247<em class="up">12%</em></dd></div>
-    </dl>
+    <div class="hm-kpis">
+     <div class="hm-k hm-k-g"><div class="hm-kl"><span>Total Revenue</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="13" width="4.6" height="8" rx="1.3"/><rect x="9.7" y="8" width="4.6" height="13" rx="1.3"/><rect x="16.4" y="3" width="4.6" height="18" rx="1.3"/></svg></i></div><div class="hm-kv">&#8377;2.4 Cr</div><div class="hm-kd"><b class="up">&uarr; 18%</b> vs last year</div></div>
+     <div class="hm-k hm-k-b"><div class="hm-kl"><span>Growth</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5l5.5-5.5 3.5 3.5L21 5.5"/><path d="M15 5.5h6v6"/></svg></i></div><div class="hm-kv">+28%</div><div class="hm-kd"><b class="up">&uarr; 6%</b> vs last month</div></div>
+     <div class="hm-k hm-k-o"><div class="hm-kl"><span>Leads</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9.2" cy="7.6" r="4.1"/><path d="M1.4 20.8c0-4.3 3.5-6.9 7.8-6.9s7.8 2.6 7.8 6.9z"/><circle cx="18.3" cy="9" r="3"/><path d="M17.2 20.8h5.4v-1c0-2.7-1.9-4.4-4.3-4.4-.8 0-1.6.2-2.2.5.7 1.4 1.1 3 1.1 4.9z"/></svg></i></div><div class="hm-kv">247</div><div class="hm-kd"><b class="up">&uarr; 12%</b> vs last month</div></div>
+    </div>
+    <div class="hm-viz">
+     <div class="hm-vh"><span>Monthly Revenue</span><span class="hm-link">View Report<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+     <div class="hm-bars"><span style="--h:36"><i></i><em>Jan</em></span><span style="--h:40"><i></i><em>Feb</em></span><span style="--h:43"><i></i><em>Mar</em></span><span style="--h:70"><i></i><em>Apr</em></span><span style="--h:62"><i></i><em>May</em></span><span class="hi" style="--h:78"><i></i><em>Jun</em></span></div>
+    </div>
     <span class="hub-port" aria-hidden="true"></span>
    </article>
    <article class="hub-mod" data-i="1">
-    <div class="hub-mod-top">
-     <span class="hub-mod-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><ellipse cx="18" cy="10" rx="12" ry="4.5" fill="white"/><path d="M6 10 Q6 17 18 17 Q30 17 30 10" fill="rgba(255,255,255,.7)"/><path d="M6 17 Q6 24 18 24 Q30 24 30 17" fill="rgba(255,255,255,.45)"/><path d="M6 24 Q6 31 18 31 Q30 31 30 24" fill="rgba(255,255,255,.25)"/></svg></span>
-     <div class="hub-mod-tt"><div class="hub-mod-name"><h3>Finance &amp; Billing</h3><span class="hub-mod-when">This Quarter</span></div><p>Monitor invoices, collections and cash flow</p></div>
+    <div class="hm-head">
+     <span class="hm-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><ellipse cx="18" cy="10" rx="12" ry="4.5" fill="white"/><path d="M6 10 Q6 17 18 17 Q30 17 30 10" fill="rgba(255,255,255,.7)"/><path d="M6 17 Q6 24 18 24 Q30 24 30 17" fill="rgba(255,255,255,.45)"/><path d="M6 24 Q6 31 18 31 Q30 31 30 24" fill="rgba(255,255,255,.25)"/></svg></span>
+     <div class="hm-tt"><h3>Finance &amp; Billing</h3><p>Monitor invoices, collections and cash flow</p></div>
+     <span class="hm-sel">This Quarter<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6.5 8 10.5 12 6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+     <span class="hm-more" aria-hidden="true"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg></span>
     </div>
-    <dl class="hub-kpis">
-     <div><dt>Invoiced</dt><dd>&#8377;86L<em class="up">12%</em></dd></div>
-     <div><dt>Collected</dt><dd>&#8377;72L<em class="up">9%</em></dd></div>
-     <div><dt>Outstanding</dt><dd>&#8377;14L<em class="down">4%</em></dd></div>
-    </dl>
+    <div class="hm-kpis">
+     <div class="hm-k hm-k-g"><div class="hm-kl"><span>Invoiced</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="M4.5 3.5h12a1.4 1.4 0 0 1 0 2.8h-12a1.4 1.4 0 0 1 0-2.8z"/><path d="M3.6 5.4h16.8A2.6 2.6 0 0 1 23 8v10.4a2.6 2.6 0 0 1-2.6 2.6H3.6A2.6 2.6 0 0 1 1 18.4V8a2.6 2.6 0 0 1 2.6-2.6zm14.6 9.5a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4z"/></svg></i></div><div class="hm-kv">&#8377;86L</div><div class="hm-kd"><b class="up">&uarr; 12%</b> vs last quarter</div></div>
+     <div class="hm-k hm-k-b"><div class="hm-kl"><span>Collected</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="M12 1.6a10.4 10.4 0 1 0 0 20.8 10.4 10.4 0 0 0 0-20.8zm5.3 7.7-6.4 6.4a1.3 1.3 0 0 1-1.8 0l-3.1-3.1a1.3 1.3 0 0 1 1.8-1.8l2.2 2.2 5.5-5.5a1.3 1.3 0 0 1 1.8 1.8z"/></svg></i></div><div class="hm-kv">&#8377;72L</div><div class="hm-kd"><b class="up">&uarr; 9%</b> vs last quarter</div></div>
+     <div class="hm-k hm-k-o"><div class="hm-kl"><span>Outstanding</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="M12 1.6a10.4 10.4 0 1 0 0 20.8 10.4 10.4 0 0 0 0-20.8zm1.3 5.6v4.9l3.4 2a1.3 1.3 0 1 1-1.3 2.2l-4-2.4a1.3 1.3 0 0 1-.6-1.1V7.2a1.3 1.3 0 0 1 2.5 0z"/></svg></i></div><div class="hm-kv">&#8377;14L</div><div class="hm-kd"><b class="down">&darr; 4%</b> vs last quarter</div></div>
+    </div>
+    <div class="hm-viz">
+     <div class="hm-vh"><span>Collection Rate</span><span class="hm-link">View Ledger<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+     <div class="hm-stack"><i class="c-g" style="width:84%"></i><i class="c-o" style="width:16%"></i></div>
+     <div class="hm-legend"><span><i class="c-g"></i>Collected <b>&#8377;72L</b></span><span><i class="c-o"></i>Outstanding <b>&#8377;14L</b></span></div>
+    </div>
     <span class="hub-port" aria-hidden="true"></span>
    </article>
    <article class="hub-mod" data-i="2">
-    <div class="hub-mod-top">
-     <span class="hub-mod-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="6.5" fill="white"/><circle cx="18" cy="18" r="3" fill="rgba(50,180,111,.7)"/><rect x="16" y="2" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="16" y="28" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="2" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="28" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/></svg></span>
-     <div class="hub-mod-tt"><div class="hub-mod-name"><h3>Operations</h3><span class="hub-mod-when">This Month</span></div><p>Track tasks, vendors and delivery timelines</p></div>
+    <div class="hm-head">
+     <span class="hm-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="6.5" fill="white"/><circle cx="18" cy="18" r="3" fill="rgba(50,180,111,.7)"/><rect x="16" y="2" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="16" y="28" width="4" height="6" rx="2" fill="rgba(255,255,255,.85)"/><rect x="2" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/><rect x="28" y="16" width="6" height="4" rx="2" fill="rgba(255,255,255,.85)"/></svg></span>
+     <div class="hm-tt"><h3>Operations</h3><p>Track tasks, vendors and delivery timelines</p></div>
+     <span class="hm-sel">This Month<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6.5 8 10.5 12 6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+     <span class="hm-more" aria-hidden="true"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg></span>
     </div>
-    <dl class="hub-kpis">
-     <div><dt>Total Tasks</dt><dd>1,248<em class="up">6%</em></dd></div>
-     <div><dt>On-Time Rate</dt><dd>94%<em class="up">3%</em></dd></div>
-     <div><dt>Vendors</dt><dd>38<em class="up">2</em></dd></div>
-    </dl>
+    <div class="hm-kpis">
+     <div class="hm-k hm-k-g"><div class="hm-kl"><span>Total Tasks</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.8 22.6 7 12 12.2 1.4 7z"/><path d="M2.6 11.1 12 15.7l9.4-4.6 1.2.6a1 1 0 0 1 0 1.8L12 18.7 1.4 13.5a1 1 0 0 1 0-1.8z" opacity=".72"/><path d="M2.6 16.2 12 20.8l9.4-4.6 1.2.6a1 1 0 0 1 0 1.8L12 23.8 1.4 18.6a1 1 0 0 1 0-1.8z" opacity=".45"/></svg></i></div><div class="hm-kv">1,248</div><div class="hm-kd"><b class="up">&uarr; 6%</b> vs last month</div></div>
+     <div class="hm-k hm-k-b"><div class="hm-kl"><span>On-Time Rate</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="M12 1.6a10.4 10.4 0 1 0 0 20.8 10.4 10.4 0 0 0 0-20.8zm1.3 5.6v4.9l3.4 2a1.3 1.3 0 1 1-1.3 2.2l-4-2.4a1.3 1.3 0 0 1-.6-1.1V7.2a1.3 1.3 0 0 1 2.5 0z"/></svg></i></div><div class="hm-kv">94%</div><div class="hm-kd"><b class="up">&uarr; 3%</b> vs last month</div></div>
+     <div class="hm-k hm-k-o"><div class="hm-kl"><span>Vendors</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.9 21.8 6 12 10.1 2.2 6z"/><path d="M1.4 7.6 11 11.6v10.6L1.4 18.1z" opacity=".72"/><path d="M22.6 7.6 13 11.6v10.6l9.6-4.1z" opacity=".45"/></svg></i></div><div class="hm-kv">38</div><div class="hm-kd"><b class="up">&uarr; 2</b> vs last month</div></div>
+    </div>
+    <div class="hm-viz">
+     <div class="hm-vh"><span>Task Status</span><span class="hm-link">View Board<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+     <div class="hm-stack"><i class="c-g" style="width:67.5%"></i><i class="c-b" style="width:22.8%"></i><i class="c-a" style="width:8.3%"></i><i class="c-r" style="width:1.4%"></i></div>
+     <div class="hm-legend"><span><i class="c-g"></i>Done <b>842</b></span><span><i class="c-b"></i>Active <b>284</b></span><span><i class="c-a"></i>In Review <b>104</b></span><span><i class="c-r"></i>Overdue <b>18</b></span></div>
+    </div>
     <span class="hub-port" aria-hidden="true"></span>
    </article>
   </div>
@@ -80,39 +102,59 @@
 
   <div class="hub-col hub-col-r">
    <article class="hub-mod" data-i="3">
-    <div class="hub-mod-top">
-     <span class="hub-mod-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><circle cx="13" cy="11" r="6" fill="white"/><circle cx="25" cy="13" r="4.5" fill="rgba(255,255,255,.6)"/><path d="M1 32 C1 23 7 20 13 20 C19 20 25 23 25 32 Z" fill="rgba(255,255,255,.8)"/><path d="M25 26 C25 23 28 21 31 21 C34 21 36 23 36 26 L36 32 L25 32 Z" fill="rgba(255,255,255,.4)"/></svg></span>
-     <div class="hub-mod-tt"><div class="hub-mod-name"><h3>HR &amp; Payroll</h3><span class="hub-mod-when">This Month</span></div><p>Manage headcount, attendance and payroll</p></div>
+    <div class="hm-head">
+     <span class="hm-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><circle cx="13" cy="11" r="6" fill="white"/><circle cx="25" cy="13" r="4.5" fill="rgba(255,255,255,.6)"/><path d="M1 32 C1 23 7 20 13 20 C19 20 25 23 25 32 Z" fill="rgba(255,255,255,.8)"/><path d="M25 26 C25 23 28 21 31 21 C34 21 36 23 36 26 L36 32 L25 32 Z" fill="rgba(255,255,255,.4)"/></svg></span>
+     <div class="hm-tt"><h3>HR &amp; Payroll</h3><p>Manage headcount, attendance and payroll</p></div>
+     <span class="hm-sel">This Month<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6.5 8 10.5 12 6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+     <span class="hm-more" aria-hidden="true"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg></span>
     </div>
-    <dl class="hub-kpis">
-     <div><dt>Total Staff</dt><dd>248<em class="up">8</em></dd></div>
-     <div><dt>Attendance</dt><dd>97.4%<em class="up">1.2%</em></dd></div>
-     <div><dt>Payroll Run</dt><dd>&#8377;34L<em class="up">5%</em></dd></div>
-    </dl>
+    <div class="hm-kpis">
+     <div class="hm-k hm-k-g"><div class="hm-kl"><span>Total Staff</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9.2" cy="7.6" r="4.1"/><path d="M1.4 20.8c0-4.3 3.5-6.9 7.8-6.9s7.8 2.6 7.8 6.9z"/><circle cx="18.3" cy="9" r="3"/><path d="M17.2 20.8h5.4v-1c0-2.7-1.9-4.4-4.3-4.4-.8 0-1.6.2-2.2.5.7 1.4 1.1 3 1.1 4.9z"/></svg></i></div><div class="hm-kv">248</div><div class="hm-kd"><b class="up">&uarr; 8</b> vs last month</div></div>
+     <div class="hm-k hm-k-b"><div class="hm-kl"><span>Attendance</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="M12 1.6a10.4 10.4 0 1 0 0 20.8 10.4 10.4 0 0 0 0-20.8zm5.3 7.7-6.4 6.4a1.3 1.3 0 0 1-1.8 0l-3.1-3.1a1.3 1.3 0 0 1 1.8-1.8l2.2 2.2 5.5-5.5a1.3 1.3 0 0 1 1.8 1.8z"/></svg></i></div><div class="hm-kv">97.4%</div><div class="hm-kd"><b class="up">&uarr; 1.2%</b> vs last month</div></div>
+     <div class="hm-k hm-k-o"><div class="hm-kl"><span>Payroll Run</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="M4.5 3.5h12a1.4 1.4 0 0 1 0 2.8h-12a1.4 1.4 0 0 1 0-2.8z"/><path d="M3.6 5.4h16.8A2.6 2.6 0 0 1 23 8v10.4a2.6 2.6 0 0 1-2.6 2.6H3.6A2.6 2.6 0 0 1 1 18.4V8a2.6 2.6 0 0 1 2.6-2.6zm14.6 9.5a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4z"/></svg></i></div><div class="hm-kv">&#8377;34L</div><div class="hm-kd"><b class="up">&uarr; 5%</b> vs last month</div></div>
+    </div>
+    <div class="hm-viz">
+     <div class="hm-vh"><span>Department Headcount</span><span class="hm-link">View Directory<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+     <div class="hm-stack"><i class="c-g" style="width:32.3%"></i><i class="c-b" style="width:24.2%"></i><i class="c-v" style="width:21%"></i><i class="c-a" style="width:14.5%"></i><i class="c-s" style="width:8%"></i></div>
+     <div class="hm-legend"><span><i class="c-g"></i>Eng <b>80</b></span><span><i class="c-b"></i>Sales <b>60</b></span><span><i class="c-v"></i>Ops <b>52</b></span><span><i class="c-a"></i>Finance <b>36</b></span><span><i class="c-s"></i>HR <b>20</b></span></div>
+    </div>
     <span class="hub-port" aria-hidden="true"></span>
    </article>
    <article class="hub-mod" data-i="4">
-    <div class="hub-mod-top">
-     <span class="hub-mod-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><path d="M4 13 L4 23 L10 23 L10 13 Z" fill="rgba(255,255,255,.6)"/><path d="M10 13 L28 5 L28 31 L10 23 Z" fill="white"/><path d="M30 14 Q36 18 30 22" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2.5" stroke-linecap="round"/></svg></span>
-     <div class="hub-mod-tt"><div class="hub-mod-name"><h3>Marketing</h3><span class="hub-mod-when">Last 30 Days</span></div><p>Measure campaigns, reach and engagement</p></div>
+    <div class="hm-head">
+     <span class="hm-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><path d="M4 13 L4 23 L10 23 L10 13 Z" fill="rgba(255,255,255,.6)"/><path d="M10 13 L28 5 L28 31 L10 23 Z" fill="white"/><path d="M30 14 Q36 18 30 22" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2.5" stroke-linecap="round"/></svg></span>
+     <div class="hm-tt"><h3>Marketing</h3><p>Measure campaigns, reach and engagement</p></div>
+     <span class="hm-sel">Last 30 Days<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6.5 8 10.5 12 6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+     <span class="hm-more" aria-hidden="true"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg></span>
     </div>
-    <dl class="hub-kpis">
-     <div><dt>Campaigns</dt><dd>14<em class="up">3</em></dd></div>
-     <div><dt>Engagement</dt><dd>+44%<em class="up">12%</em></dd></div>
-     <div><dt>Total Reach</dt><dd>8.2K<em class="up">18%</em></dd></div>
-    </dl>
+    <div class="hm-kpis">
+     <div class="hm-k hm-k-g"><div class="hm-kl"><span>Campaigns</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.6 2.4a1.3 1.3 0 0 1 2.1 1v17.2a1.3 1.3 0 0 1-2.1 1L11 15.6V8.4z"/><path d="M2.2 9.3A1.9 1.9 0 0 1 4.1 7.4h5.2v9.2H4.1a1.9 1.9 0 0 1-1.9-1.9z" opacity=".72"/><path d="M5.2 18h3.4l.9 3.7a1.1 1.1 0 0 1-1 1.4H7a1.1 1.1 0 0 1-1.1-.9z" opacity=".72"/></svg></i></div><div class="hm-kv">14</div><div class="hm-kd"><b class="up">&uarr; 3</b> vs last month</div></div>
+     <div class="hm-k hm-k-b"><div class="hm-kl"><span>Engagement</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5l5.5-5.5 3.5 3.5L21 5.5"/><path d="M15 5.5h6v6"/></svg></i></div><div class="hm-kv">+44%</div><div class="hm-kd"><b class="up">&uarr; 12%</b> vs last month</div></div>
+     <div class="hm-k hm-k-o"><div class="hm-kl"><span>Total Reach</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="M12 1.7a10.3 10.3 0 1 0 0 20.6 10.3 10.3 0 0 0 0-20.6zm0 2.6a7.7 7.7 0 1 1 0 15.4 7.7 7.7 0 0 1 0-15.4z"/><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2.6a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8z"/></svg></i></div><div class="hm-kv">8.2K</div><div class="hm-kd"><b class="up">&uarr; 18%</b> vs last month</div></div>
+    </div>
+    <div class="hm-viz">
+     <div class="hm-vh"><span>Channel Performance</span><span class="hm-link">View Report<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+     <div class="hm-stack"><i class="c-g" style="width:42%"></i><i class="c-b" style="width:31%"></i><i class="c-v" style="width:27%"></i></div>
+     <div class="hm-legend"><span><i class="c-g"></i>Email <b>42%</b></span><span><i class="c-b"></i>WhatsApp <b>31%</b></span><span><i class="c-v"></i>Social <b>27%</b></span></div>
+    </div>
     <span class="hub-port" aria-hidden="true"></span>
    </article>
    <article class="hub-mod" data-i="5">
-    <div class="hub-mod-top">
-     <span class="hub-mod-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><rect x="3" y="3" width="13" height="13" rx="2" fill="white" opacity=".9"/><rect x="20" y="3" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="3" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="20" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.75)"/><line x1="16" y1="9.5" x2="20" y2="9.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="9.5" y1="16" x2="9.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="26.5" y1="16" x2="26.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="16" y1="26.5" x2="20" y2="26.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/></svg></span>
-     <div class="hub-mod-tt"><div class="hub-mod-name"><h3>Management Overview</h3><span class="hub-mod-when">This Year</span></div><p>Company-wide health across every module</p></div>
+    <div class="hm-head">
+     <span class="hm-ico" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><rect x="3" y="3" width="13" height="13" rx="2" fill="white" opacity=".9"/><rect x="20" y="3" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="3" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.55)"/><rect x="20" y="20" width="13" height="13" rx="2" fill="rgba(255,255,255,.75)"/><line x1="16" y1="9.5" x2="20" y2="9.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="9.5" y1="16" x2="9.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="26.5" y1="16" x2="26.5" y2="20" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="16" y1="26.5" x2="20" y2="26.5" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/></svg></span>
+     <div class="hm-tt"><h3>Management Overview</h3><p>Company-wide health across every module</p></div>
+     <span class="hm-sel">This Year<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6.5 8 10.5 12 6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+     <span class="hm-more" aria-hidden="true"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg></span>
     </div>
-    <dl class="hub-kpis">
-     <div><dt>KPI Score</dt><dd>92<em class="up">6</em></dd></div>
-     <div><dt>Efficiency</dt><dd>+18%<em class="up">4%</em></dd></div>
-     <div><dt>Modules Live</dt><dd>7/7<em class="up">2</em></dd></div>
-    </dl>
+    <div class="hm-kpis">
+     <div class="hm-k hm-k-g"><div class="hm-kl"><span>KPI Score</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3.6A10.4 10.4 0 0 0 2.6 18.4a1.6 1.6 0 0 0 1.4.8h16a1.6 1.6 0 0 0 1.4-.8A10.4 10.4 0 0 0 12 3.6zm0 2.8a7.6 7.6 0 0 1 6.9 10.6H5.1A7.6 7.6 0 0 1 12 6.4z" opacity=".55"/><path d="M16.4 9.1a1.3 1.3 0 0 1 .3 1.9l-3.3 3.9a1.9 1.9 0 1 1-2.5-2.1l3.7-3.5a1.3 1.3 0 0 1 1.8-.2z"/></svg></i></div><div class="hm-kv">92</div><div class="hm-kd"><b class="up">&uarr; 6</b> vs last year</div></div>
+     <div class="hm-k hm-k-b"><div class="hm-kl"><span>Efficiency</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5l5.5-5.5 3.5 3.5L21 5.5"/><path d="M15 5.5h6v6"/></svg></i></div><div class="hm-kv">+18%</div><div class="hm-kd"><b class="up">&uarr; 4%</b> vs last year</div></div>
+     <div class="hm-k hm-k-o"><div class="hm-kl"><span>Modules Live</span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.8 22.6 7 12 12.2 1.4 7z"/><path d="M2.6 11.1 12 15.7l9.4-4.6 1.2.6a1 1 0 0 1 0 1.8L12 18.7 1.4 13.5a1 1 0 0 1 0-1.8z" opacity=".72"/><path d="M2.6 16.2 12 20.8l9.4-4.6 1.2.6a1 1 0 0 1 0 1.8L12 23.8 1.4 18.6a1 1 0 0 1 0-1.8z" opacity=".45"/></svg></i></div><div class="hm-kv">7/7</div><div class="hm-kd"><b class="up">&uarr; 2</b> vs last year</div></div>
+    </div>
+    <div class="hm-viz">
+     <div class="hm-vh"><span>Business Health</span><span class="hm-link">View Report<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+     <div class="hm-bars"><span style="--h:80"><i></i><em>Sales</em></span><span class="hi" style="--h:83"><i></i><em>Finance</em></span><span style="--h:70"><i></i><em>Ops</em></span><span style="--h:63"><i></i><em>HR</em></span><span style="--h:60"><i></i><em>Mktg</em></span><span style="--h:77"><i></i><em>Inv</em></span></div>
+    </div>
     <span class="hub-port" aria-hidden="true"></span>
    </article>
   </div>
