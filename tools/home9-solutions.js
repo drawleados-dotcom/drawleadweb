@@ -1,8 +1,8 @@
  <script>
  // Home 9: Solutions' sidebar nav.
  //
- // The sidebar (eyebrow, heading, description, one nav entry per card and a
- // consultation card) stays put beside the column of cards while it scrolls;
+ // The sidebar (eyebrow, heading, description and one nav entry per card)
+ // stays put beside the column of cards while it scrolls;
  // the layout is CSS (assets/home9.css, section 5) and sync-home9.pl builds
  // the nav from the cards. This script marks the card being read, and its
  // nav entry, as .is-active: the last card whose top has passed a line 40%

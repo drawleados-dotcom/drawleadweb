@@ -206,11 +206,6 @@ include __DIR__ . '/partials/nav.php';
     <a class="sol-nav-item" href="#sol-ecommerce"><span class="sol-nav-num">02</span><span class="sol-nav-text"><strong>Ecommerce Solutions</strong><small>From storefront to fulfilment, one connected stack.</small></span></a>
     <a class="sol-nav-item" href="#sol-marketing"><span class="sol-nav-num">03</span><span class="sol-nav-text"><strong>Marketing Solutions</strong><small>Fix the leak between lead and conversion.</small></span></a>
    </div>
-   <div class="sol-consult">
-    <span class="sol-consult-k">Free consultation</span>
-    <p class="sol-consult-h">Digitize, automate, and scale with Drawlead.</p>
-    <button type="button" data-book class="sol-consult-link">Schedule Free Consultation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-   </div>
   </div>
   <div class="sol-grid">
 
@@ -280,8 +275,8 @@ include __DIR__ . '/partials/nav.php';
  <script>
  // Home 9: Solutions' sidebar nav.
  //
- // The sidebar (eyebrow, heading, description, one nav entry per card and a
- // consultation card) stays put beside the column of cards while it scrolls;
+ // The sidebar (eyebrow, heading, description and one nav entry per card)
+ // stays put beside the column of cards while it scrolls;
  // the layout is CSS (assets/home9.css, section 5) and sync-home9.pl builds
  // the nav from the cards. This script marks the card being read, and its
  // nav entry, as .is-active: the last card whose top has passed a line 40%

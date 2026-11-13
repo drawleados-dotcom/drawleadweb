@@ -125,8 +125,8 @@ my $proc = block_file('tools/home9-process.html', 'process');
 # Solutions: a sidebar and a column of cards instead of Home 8's sticky stack.
 # The sidebar holds the section's eyebrow, heading and description, a nav with
 # one numbered entry per card (its name and tagline, taken from the card so
-# the copy lives in one place) and a consultation card; it stays put beside
-# the cards while they scroll (assets/home9.css, section 5). Each card gets an
+# the copy lives in one place); it stays put beside the cards while they
+# scroll (assets/home9.css, section 5). Each card gets an
 # id for its nav entry, and its button moves above its features. The nav's
 # driver, tools/home9-solutions.js, follows the section; the stack's driver
 # is removed in 3b.
@@ -169,14 +169,7 @@ my $proc = block_file('tools/home9-process.html', 'process');
     . $headblk
     # a <div>, not a <nav>: home7.css styles every <nav> as the fixed top bar
     . qq{   <div class="sol-nav">\n} . join('', @nav) . qq{   </div>\n}
-    . <<'HTML'
-   <div class="sol-consult">
-    <span class="sol-consult-k">Free consultation</span>
-    <p class="sol-consult-h">Digitize, automate, and scale with Drawlead.</p>
-    <button type="button" data-book class="sol-consult-link">Schedule Free Consultation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-   </div>
-  </div>
-HTML
+    . qq{  </div>\n}
     . $grid
     . qq{ </div>\n}
     . $post;
