@@ -298,6 +298,14 @@ edit_once(q{<button type="button" data-book class="btn btn-primary">Get Started<
 edit_once(qq{\n     Explore Platform\n},
           qq{\n     Watch 2-Min Demo\n},
           'hero secondary button');
+# Solutions: Home 9's own heading and description (the sidebar's, section 1
+# above). Home 8's cards and their copy are unchanged.
+edit_once(q{<h2 class="sec-h rv">Built for <span class="g">Growth</span> <span class="fade">in Three Ways</span></h2>},
+          q{<h2 class="sec-h rv">Built for <span class="g">Growth</span> &mdash; Three Connected Solutions</h2>},
+          'Solutions heading');
+edit_once(q{<p class="sec-sub rv">Beyond the core platform, three focused solution tracks that plug straight into your operating system.</p>},
+          q{<p class="sec-sub rv">From managing core business operations to running ecommerce and generating qualified leads, Drawlead delivers connected digital solutions built around your goals. Our ERP, ecommerce &amp; marketing capabilities reduce manual effort, improve coordination, simplify daily work &amp; create a stronger foundation for sustainable growth.</p>},
+          'Solutions description');
 
 # ── 4 · the page's own stylesheet, after Home 8's base sheet ────────────────
 my $css = $rendered ? '/assets/home9.css' : "<?= asset_url('/assets/home9.css') ?>";

@@ -202,8 +202,8 @@ include __DIR__ . '/partials/nav.php';
   <div class="sol-layout">
    <div class="sol-side">
     <div class="eyebrow rv"><span class="eyebrow-text">Solutions</span></div>
-    <h2 class="sec-h rv">Built for <span class="g">Growth</span> <span class="fade">in Three Ways</span></h2>
-    <p class="sec-sub rv">Beyond the core platform, three focused solution tracks that plug straight into your operating system.</p>
+    <h2 class="sec-h rv">Built for <span class="g">Growth</span> &mdash; Three Connected Solutions</h2>
+    <p class="sec-sub rv">From managing core business operations to running ecommerce and generating qualified leads, Drawlead delivers connected digital solutions built around your goals. Our ERP, ecommerce &amp; marketing capabilities reduce manual effort, improve coordination, simplify daily work &amp; create a stronger foundation for sustainable growth.</p>
     <div class="sol-nav">
      <a class="sol-nav-item is-active" href="#sol-erp"><span class="sol-nav-num">01</span><span class="sol-nav-text"><strong>Custom Operational Solutions</strong><small>An ERP shaped around how you actually work.</small></span></a>
      <a class="sol-nav-item" href="#sol-ecommerce"><span class="sol-nav-num">02</span><span class="sol-nav-text"><strong>Ecommerce Solutions</strong><small>From storefront to fulfilment, one connected stack.</small></span></a>
