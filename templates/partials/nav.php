@@ -15,10 +15,10 @@
 $activePage = $activePage ?? '';
 
 // Home 9's address is admin-managed (Admin → Pages, slug: it has been
-// /home-9 and /home-1), so it is looked up by template rather than written
-// in; /home-9 if there is no published Home 9 row or the query fails. nav.php
-// loads on every public page, so this must never throw.
-$homeUrl = '/home-9';
+// /home-9, /home-1 and now /, the site root), so it is looked up by template
+// rather than written in; / if there is no published Home 9 row or the query
+// fails. nav.php loads on every public page, so this must never throw.
+$homeUrl = '/';
 try {
     $homeSlug = $pdo->query(
         "SELECT slug FROM pages WHERE template = 'home9' AND COALESCE(status, 'published') <> 'draft' ORDER BY id LIMIT 1"
@@ -27,7 +27,7 @@ try {
         $homeUrl = $homeSlug;
     }
 } catch (PDOException $e) {
-    // e.g. no status column yet: keep /home-9
+    // e.g. no status column yet: keep /
 }
 ?>
 <nav>
