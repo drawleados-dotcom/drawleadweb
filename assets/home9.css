@@ -976,3 +976,17 @@ html:not([data-theme="light"]) #functions .fn-cta-card:hover{background:#F2F5F3 
 html:not([data-theme="light"]) #functions .fn-cta-card > div:first-child{color:#0B0F0D !important}
 html:not([data-theme="light"]) #functions .fn-cta-card > div:nth-child(2){color:#5A6660 !important}
 html:not([data-theme="light"]) #functions .fn-cta-card button{background:#0B0F0D !important;color:#FFFFFF !important}
+
+/* Solutions tabs sit above the selected card; make the intro copy easier to read. */
+#solutions .sol-side .sec-sub{font-size:17px;line-height:1.7}
+#solutions .sol-layout .sol-grid{display:flex;flex-direction:column;gap:18px;min-width:0}
+#solutions .sol-nav{display:flex;flex-direction:row;gap:8px;margin:0 0 0 auto;padding:6px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.82);width:100%;max-width:100%;overflow-x:auto}
+#solutions .sol-nav-item{flex:1 0 0;display:flex;align-items:center;justify-content:center;gap:10px;padding:11px 14px;border:1px solid transparent;border-radius:10px;text-decoration:none;white-space:nowrap}
+#solutions .sol-nav-item.is-active{background:linear-gradient(135deg,#20ad67,#13834e);border-color:transparent;color:#fff;box-shadow:0 5px 15px rgba(24,151,87,.2)}
+#solutions .sol-nav-item.is-active .sol-nav-num,#solutions .sol-nav-item.is-active .sol-nav-text strong{color:#fff}
+#solutions .sol-nav-item.is-active .sol-nav-text small{display:none}
+#solutions .sol-layout .sol-card{display:none}
+#solutions .sol-layout .sol-card.is-active{display:flex}
+#solutions .sol-layout .sol-card[hidden]{display:none!important}
+@media(max-width:1024px){#solutions .sol-grid{width:100%}#solutions .sol-nav{margin:0 auto}}
+@media(max-width:640px){#solutions .sol-nav{justify-content:flex-start}#solutions .sol-nav-item{flex:0 0 auto;padding:10px 13px}#solutions .sol-nav-num{display:none}}

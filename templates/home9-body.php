@@ -220,16 +220,17 @@ include __DIR__ . '/partials/nav.php';
     <div class="eyebrow rv"><span class="eyebrow-text">Solutions</span></div>
     <h2 class="sec-h rv">Built for <span class="g">Growth</span> &mdash; Three Connected Solutions</h2>
     <p class="sec-sub rv">From managing core business operations to running ecommerce and generating qualified leads, Drawlead delivers connected digital solutions built around your goals. Our ERP, ecommerce &amp; marketing capabilities reduce manual effort, improve coordination, simplify daily work &amp; create a stronger foundation for sustainable growth.</p>
+    
+   </div>
+   <div class="sol-grid">
     <div class="sol-nav">
      <a class="sol-nav-item is-active" href="#sol-erp"><span class="sol-nav-num">01</span><span class="sol-nav-text"><strong>Custom Operational Solutions</strong><small>An ERP shaped around how you actually work.</small></span></a>
      <a class="sol-nav-item" href="#sol-ecommerce"><span class="sol-nav-num">02</span><span class="sol-nav-text"><strong>Ecommerce Solutions</strong><small>From storefront to fulfilment, one connected stack.</small></span></a>
      <a class="sol-nav-item" href="#sol-marketing"><span class="sol-nav-num">03</span><span class="sol-nav-text"><strong>Marketing Solutions</strong><small>Fix the leak between lead and conversion.</small></span></a>
     </div>
-   </div>
-   <div class="sol-grid">
 
    <!-- Custom Operational Solutions (ERP) -->
-   <div class="sol-card" id="sol-erp">
+   <div class="sol-card is-active" id="sol-erp">
     <div class="sol-head">
      <div class="sol-icon">
      <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><rect x="5" y="5" width="13" height="13" rx="2.5" fill="white"/><rect x="22" y="5" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.6)"/><rect x="5" y="22" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.6)"/><rect x="22" y="22" width="13" height="13" rx="2.5" fill="rgba(255,255,255,.85)"/><path d="M18 11.5 L22 11.5 M11.5 18 L11.5 22 M28.5 18 L28.5 22 M18 28.5 L22 28.5" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round"/></svg>
@@ -293,92 +294,16 @@ include __DIR__ . '/partials/nav.php';
  </div>
 </section>
  <script>
- // Home 9: Solutions, one card at a time.
- //
- // On a laptop or desktop screen (1025px wide, 640px tall and up) the
- // section's layout (sidebar + cards) is pinned for a stretch of scrolling
- // and only one card shows: the stretch is split evenly between the cards,
- // and scrolling through it swaps each in turn, with the sidebar's entry for
- // it outlined. The pin is CSS (assets/home9.css, section 5, under
- // .sol-pinned): .sol-scroll is the track, as tall as the screen plus one
- // step per card, and .sol-layout sticks to the top of it. This script
- // switches .sol-pinned on with that media query, works out which card the
- // scroll position belongs to, and marks it .is-active (the cards before it
- // .is-past, so a card leaves upward going down the page and downward going
- // back up). Elsewhere (phones, short windows) the cards stand in a column
- // and the active one is the last whose top has passed 40% down the screen.
- // A sidebar click scrolls to its card (pinned: into that card's stretch)
- // without putting a hash in the address bar; the href works without script.
- // sync-home9.pl removes Home 8's sticky-stack driver for these cards.
- (function(){
-  const sec = document.getElementById('solutions');
-  if(!sec) return;
-  const track = sec.querySelector('.sol-scroll');
-  const stage = sec.querySelector('.sol-layout');
-  const links = Array.from(sec.querySelectorAll('.sol-nav-item'));
-  const cards = links.map(a => document.getElementById(a.getAttribute('href').slice(1)));
-  if(!track || !stage || !links.length || cards.some(c => !c)) return;
-
-  const wide = window.matchMedia('(min-width:1025px) and (min-height:640px)');
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const n = cards.length;
-  let active = -1, raf = 0;
-
-  const pinned = () => sec.classList.contains('sol-pinned');
-  // scroll distance given to each card while pinned
-  const step = () => Math.max(1, (track.offsetHeight - stage.offsetHeight) / n);
-
-  function set(i){
-   if(i === active) return;
-   active = i;
-   links.forEach((a, k) => {
-    a.classList.toggle('is-active', k === i);
-    if(k === i) a.setAttribute('aria-current', 'true');
-    else a.removeAttribute('aria-current');
-   });
-   cards.forEach((c, k) => {
-    c.classList.toggle('is-active', k === i);
-    c.classList.toggle('is-past', k < i);
-   });
-  }
-  function update(){
-   raf = 0;
-   let i = 0;
-   if(pinned()){
-    const p = -track.getBoundingClientRect().top;     // how far into the pin
-    i = Math.floor(p / step());
-   } else {
-    const line = window.innerHeight * 0.4;
-    cards.forEach((c, k) => { if(c.getBoundingClientRect().top <= line) i = k; });
-   }
-   set(Math.max(0, Math.min(n - 1, i)));
-  }
-  function queue(){ if(!raf) raf = requestAnimationFrame(update); }
-  function mode(){
-   sec.classList.toggle('sol-pinned', wide.matches);
-   active = -1;
-   update();
-  }
-
-  links.forEach((a, k) => {
-   a.addEventListener('click', e => {
-    e.preventDefault();
-    const behavior = reduce.matches ? 'auto' : 'smooth';
-    if(pinned()){
-     const top = window.scrollY + track.getBoundingClientRect().top + (k + 0.3) * step();
-     window.scrollTo({ top: Math.round(top), behavior });
-    } else {
-     cards[k].scrollIntoView({ behavior, block: 'start' });
-    }
-   });
-  });
-  window.addEventListener('scroll', queue, { passive: true });
-  window.addEventListener('resize', queue);
-  if(wide.addEventListener) wide.addEventListener('change', mode);
-  else if(wide.addListener) wide.addListener(mode);
-  mode();
- })();
- </script>
+(function(){
+ const sec=document.getElementById('solutions');if(!sec)return;
+ const tabs=Array.from(sec.querySelectorAll('.sol-nav-item'));
+ const cards=tabs.map(tab=>sec.querySelector(tab.getAttribute('href')));
+ if(!tabs.length||cards.some(card=>!card))return;
+ function activate(index){tabs.forEach((tab,i)=>{const active=i===index;tab.classList.toggle('is-active',active);tab.setAttribute('role','tab');tab.setAttribute('aria-selected',active?'true':'false');tab.setAttribute('tabindex',active?'0':'-1');cards[i].classList.toggle('is-active',active);cards[i].hidden=!active;});}
+ tabs.forEach((tab,i)=>{tab.setAttribute('role','tab');tab.addEventListener('click',event=>{event.preventDefault();activate(i)});tab.addEventListener('keydown',event=>{if(event.key!=='ArrowRight'&&event.key!=='ArrowLeft')return;event.preventDefault();const next=(i+(event.key==='ArrowRight'?1:tabs.length-1))%tabs.length;activate(next);tabs[next].focus();});});
+ const list=sec.querySelector('.sol-nav');list.setAttribute('role','tablist');list.setAttribute('aria-label','Solutions');activate(0);
+})();
+</script>
 
 <!-- ═══════════════════ 7 FUNCTIONS ═══════════════════ -->
 <section id="functions">
