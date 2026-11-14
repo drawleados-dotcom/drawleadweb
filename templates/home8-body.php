@@ -676,6 +676,22 @@ $dHead = function ($glyph, $name, $sub, $period) use ($dIco) {
  </div><!-- /mth-wrap -->
 </section>
 
+<!-- ABOUT DRAWLEAD -->
+<section id="about-drawlead" aria-labelledby="about-drawlead-title">
+ <div class="about-drawlead-grid">
+  <div class="about-drawlead-visual">
+   <img class="about-drawlead-main" src="<?= asset_url('/assets/img/case-agency-os.webp') ?>" alt="A team reviewing business performance dashboards together" loading="lazy">
+   <div class="about-drawlead-trust"><strong>10+</strong><span>Industries<br>served</span></div>
+   <div class="about-drawlead-founder"><img src="<?= asset_url('/assets/img/founder.webp') ?>" alt="Drawlead founder" loading="lazy"></div>
+  </div>
+  <div class="about-drawlead-copy">
+   <div class="eyebrow"><span class="eyebrow-text">About Drawlead</span></div>
+   <h2 id="about-drawlead-title" class="sec-h">Technology built around <span class="g">your business</span></h2>
+   <p class="sec-sub">We help growing businesses bring their operations together with custom ERP, ecommerce and digital solutions shaped around the way their teams work.</p>
+   <a class="btn btn-primary" href="/about-us">Get to know us</a>
+  </div>
+ </div>
+</section>
 <!-- SOLUTIONS -->
 <section id="solutions">
  <div class="eyebrow rv"><span class="eyebrow-text">Solutions</span></div>
