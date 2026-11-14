@@ -1413,7 +1413,6 @@ function buildDashBody(d) {
     '</div>' +
     buildKpis(d) +
     buildChart(d) +
-    buildAi(d) +
    '</div>' +
   '</div>';
 }
