@@ -136,8 +136,24 @@ include __DIR__ . '/partials/nav.php';
      Watch 2-Min Demo
     </a>
    </div>
+  </div>
+  <!-- RIGHT, live industry dashboard, auto-rotating -->
+  <div class="hero-right">
+   <div class="ind-tabs" id="indTabs">
+    <button class="ind-tab active" data-idx="0" onclick="switchDash(0)">Ecommerce</button>
+    <button class="ind-tab" data-idx="1" onclick="switchDash(1)">Hospital</button>
+    <button class="ind-tab" data-idx="2" onclick="switchDash(2)">Jewellery</button>
+    <button class="ind-tab" data-idx="3" onclick="switchDash(3)">Manufacturing</button>
+    <button class="ind-tab" data-idx="4" onclick="switchDash(4)">Construction</button>
+   </div>
 
-   <div class="hero-stats">
+   <div class="dash-window" id="dashWindow">
+    <div class="ap-shell" id="dwBody"></div>
+   </div>
+  </div>
+ </div>
+
+ <div class="hero-stats">
     <div class="hstat">
      <div class="hstat-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg></div>
      <div class="hstat-txt"><div class="hstat-n gr">7</div><div class="hstat-l">Core functions</div></div>
@@ -154,22 +170,6 @@ include __DIR__ . '/partials/nav.php';
      <div class="hstat-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.739-8-4.585 0-4.585 8 0 8 5.606 0 7.644-8 12.74-8z"/></svg></div>
      <div class="hstat-txt"><div class="hstat-n">∞</div><div class="hstat-l">Scalable</div></div>
     </div>
-   </div>
-  </div>
-  <!-- RIGHT, live industry dashboard, auto-rotating -->
-  <div class="hero-right">
-   <div class="ind-tabs" id="indTabs">
-    <button class="ind-tab active" data-idx="0" onclick="switchDash(0)">Ecommerce</button>
-    <button class="ind-tab" data-idx="1" onclick="switchDash(1)">Hospital</button>
-    <button class="ind-tab" data-idx="2" onclick="switchDash(2)">Jewellery</button>
-    <button class="ind-tab" data-idx="3" onclick="switchDash(3)">Manufacturing</button>
-    <button class="ind-tab" data-idx="4" onclick="switchDash(4)">Construction</button>
-   </div>
-
-   <div class="dash-window" id="dashWindow">
-    <div class="ap-shell" id="dwBody"></div>
-   </div>
-  </div>
  </div>
 </section>
 
