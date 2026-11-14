@@ -961,3 +961,18 @@ html:not([data-theme="light"]) #functions{
   --bg:var(--fn-green-tag);--border:var(--fn-green-line);--g400:var(--fn-green-tag-ink);
  }
 }
+
+/* ── 15 · CORE PLATFORM — the "Ready to unify all 7?" card white in dark ──────
+   In the dark theme the closing card of the 7 Functions grid is white, the
+   inverse of the light theme's black card, so it stands out from the dark and
+   deep-green cards around it. Its heading, line and button take their colours
+   from inline styles (white ink, a white button) in templates/home9-body.php,
+   which sync-home9.pl regenerates, so they are overridden here instead: dark
+   ink, a grey line (5.9:1 on white) and a near-black button with white text.
+   home8.css paints the card #101A15 !important; this selector is more specific,
+   so it wins. The light theme is untouched. */
+html:not([data-theme="light"]) #functions .fn-cta-card{background:#FFFFFF !important}
+html:not([data-theme="light"]) #functions .fn-cta-card:hover{background:#F2F5F3 !important}
+html:not([data-theme="light"]) #functions .fn-cta-card > div:first-child{color:#0B0F0D !important}
+html:not([data-theme="light"]) #functions .fn-cta-card > div:nth-child(2){color:#5A6660 !important}
+html:not([data-theme="light"]) #functions .fn-cta-card button{background:#0B0F0D !important;color:#FFFFFF !important}
