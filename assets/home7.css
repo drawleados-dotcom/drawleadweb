@@ -27,7 +27,7 @@ html{scroll-behavior:smooth}
  --rh-head:1rem;         /* heading  -> subline  */
  --rh-sub:3.5rem;        /* subline  -> content  */
  --rh-cta:3rem;          /* content  -> CTA      */
- --font:'Montserrat',sans-serif;
+ --font:'Inter',sans-serif;
  --font-display:'Montserrat',sans-serif;
  --font-body:'Inter',sans-serif;
 }
@@ -2853,3 +2853,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
  #cta.cta-framed .cta-btn-g{max-width:320px}
 }
 
+
+/* Site typography: Inter for UI and copy; Montserrat for headings. */
+h1,h2,h3,h4,h5,h6,.hero-h,.sec-h,.why-h,.cta-h,.fn-name,.sol-name,.cf-name,.tech-name,.case-title,.ind-scard-title,.hub-mod h3{font-family:var(--font-display)}
+.ap-shell h1,.ap-shell h2,.ap-shell h3,.ap-shell h4,.ap-shell h5,.ap-shell h6{font-family:var(--font-body)}
