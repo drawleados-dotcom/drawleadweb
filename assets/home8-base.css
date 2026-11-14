@@ -356,7 +356,7 @@ html[data-theme="light"] .theme-toggle .tt-moon{display:block}
 .about-drawlead-trust{position:absolute;left:-18px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:12px;padding:16px 20px;border:1px solid rgba(255,255,255,.88);border-radius:16px;background:rgba(255,255,255,.94);box-shadow:0 8px 22px rgba(16,32,48,.1);color:#101613}
 .about-drawlead-trust strong{font-size:32px;line-height:1;color:#20a765;font-weight:750}
 .about-drawlead-trust span{font-size:12px;line-height:1.25;font-weight:650;letter-spacing:.04em;text-transform:uppercase}
-.about-drawlead-copy{text-align:left}#about-drawlead .about-drawlead-copy .eyebrow{color:#8df0b2;background:rgba(91,224,145,.1);border-color:rgba(141,240,178,.3)}
+.about-drawlead-copy{text-align:left}#about-drawlead .about-drawlead-copy .eyebrow{display:inline-flex;width:fit-content;align-self:flex-start;background:transparent;border:0}#about-drawlead .about-drawlead-copy .eyebrow-text{color:#9af0b9;background:rgba(91,224,145,.1);border-color:rgba(141,240,178,.3)}
 #about-drawlead .about-drawlead-copy .sec-h{color:#f5fff8}
 #about-drawlead .about-drawlead-copy .sec-sub{color:rgba(240,255,246,.78)}
 #about-drawlead .about-drawlead-copy .sec-h .g{background:linear-gradient(95deg,#8df0b2,#39d581);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
