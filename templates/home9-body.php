@@ -206,8 +206,8 @@ include __DIR__ . '/partials/nav.php';
   </div>
   <div class="about-drawlead-copy">
    <div class="eyebrow"><span class="eyebrow-text">About Drawlead</span></div>
-   <h2 id="about-drawlead-title" class="sec-h">Technology built around <span class="g">your business</span></h2>
-   <p class="sec-sub">We help growing businesses bring their operations together with custom ERP, ecommerce and digital solutions shaped around the way their teams work.</p>
+   <h2 id="about-drawlead-title" class="sec-h">Building <span class="g">Smarter Systems</span> for Growing Businesses</h2>
+   <p class="sec-sub">Drawlead is an ERP software development company helping MSMEs and growing businesses simplify operations, connect departments, and make better decisions. We create custom ERP software, websites, ecommerce solutions, and digital growth systems built around real business needs.</p>
    <a class="btn btn-primary" href="/about-us">Get to know us</a>
   </div>
  </div>
