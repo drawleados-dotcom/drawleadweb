@@ -323,19 +323,10 @@ html[data-theme="light"] .theme-toggle .tt-moon{display:block}
 #hero .hero-btns{justify-content:flex-start}
 #hero .hero-right{width:100%;max-width:none;margin:0}
 #hero .hero-stats{
- position:relative;isolation:isolate;overflow:hidden;
  width:fit-content;max-width:100%;margin:3rem auto;padding:40px;border-radius:16px;
  background:linear-gradient(112deg,#080b09 0%,#0c1711 45%,#12633a 100%);
  border-block:1px solid rgba(110,232,161,.2);
 }
-#hero .hero-stats::before{
- content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
- background-image:linear-gradient(rgba(135,236,174,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(135,236,174,.12) 1px,transparent 1px);
- background-size:38px 38px;
- -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 14%,#000 86%,transparent 100%);
- mask-image:linear-gradient(90deg,transparent 0%,#000 14%,#000 86%,transparent 100%);
-}
-#hero .hero-stats .hstat{position:relative;z-index:1}
 #hero .hero-stats .hstat-n{color:#fff}
 #hero .hero-stats .hstat-l{color:rgba(255,255,255,.68)}
 #hero .hero-stats .hstat-ico{background:rgba(122,235,169,.14);color:#69e6a0}
