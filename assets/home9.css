@@ -901,3 +901,63 @@ section#dashboards::before{
 #hero .hero-h{text-wrap:balance}
 /* the description on three balanced lines (Home 7 holds it to 540px: four) */
 #hero .hero-p{max-width:700px;text-wrap:balance}
+
+/* ── 14 · CORE PLATFORM — cards alternate white and green ─────────────────────
+   The seven function cards alternate white and a green shade; the "Ready to
+   unify all 7?" card keeps its own black (.fn-cta-card, !important).
+
+   It is a checkerboard, so the green steps along each row and down each
+   column. Which cards are green depends on how many columns the grid has
+   (home7.css: 4, then 2 at 960px and below, then 1 at 560px and below), so
+   each width has its own list; a plain odd/even would line the green up in
+   columns at 4 and 2 across.
+     4 across: 2 4 5 7      2 across: 2 3 6 7      1 across: 2 4 6
+
+   A green card re-points the tokens the shared .fn-* rules read (--white for
+   the card, --bg/--border/--g400 for the tags, --g500 for the description) at
+   the green set below, so nothing inside it needs a rule of its own. Light
+   values first, then the dark theme, which is the default (html carries
+   data-theme="light" only while light is on).
+
+   The hover is set here too: the shared one is #fafafa in both themes, which
+   would bleach a green card, and in dark turned a card near-white under its
+   near-white text. */
+#functions{
+ --fn-hover:#FAFAFA;          /* white card, hovered (unchanged) */
+ --fn-green:#E4F4EA;          /* green card */
+ --fn-green-hover:#D8EEE1;
+ --fn-green-ink:#525E57;      /* its description: 5.9:1 on the green */
+ --fn-green-tag:#F4FBF7;      /* its tags: fill, outline, text */
+ --fn-green-line:#C6E3D2;
+ --fn-green-tag-ink:#4C7A60;
+}
+html:not([data-theme="light"]) #functions{
+ --fn-hover:#111816;
+ --fn-green:#10241A;
+ --fn-green-hover:#153022;
+ --fn-green-ink:#A7B5AD;
+ --fn-green-tag:#0C1C14;
+ --fn-green-line:#224433;
+ --fn-green-tag-ink:#8FB09E;
+}
+#functions .fn-card{--fn-card-hover:var(--fn-hover)}
+#functions .fn-card:hover{background:var(--fn-card-hover)}
+
+@media(min-width:961px){
+ #functions .fn-card:is(:nth-child(2),:nth-child(4),:nth-child(5),:nth-child(7)){
+  --white:var(--fn-green);--fn-card-hover:var(--fn-green-hover);--g500:var(--fn-green-ink);
+  --bg:var(--fn-green-tag);--border:var(--fn-green-line);--g400:var(--fn-green-tag-ink);
+ }
+}
+@media(min-width:561px) and (max-width:960px){
+ #functions .fn-card:is(:nth-child(2),:nth-child(3),:nth-child(6),:nth-child(7)){
+  --white:var(--fn-green);--fn-card-hover:var(--fn-green-hover);--g500:var(--fn-green-ink);
+  --bg:var(--fn-green-tag);--border:var(--fn-green-line);--g400:var(--fn-green-tag-ink);
+ }
+}
+@media(max-width:560px){
+ #functions .fn-card:is(:nth-child(2),:nth-child(4),:nth-child(6)){
+  --white:var(--fn-green);--fn-card-hover:var(--fn-green-hover);--g500:var(--fn-green-ink);
+  --bg:var(--fn-green-tag);--border:var(--fn-green-line);--g400:var(--fn-green-tag-ink);
+ }
+}
