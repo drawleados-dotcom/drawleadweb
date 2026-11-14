@@ -369,3 +369,22 @@ html[data-theme="light"] .theme-toggle .tt-moon{display:block}
 @media(max-width:960px){.about-drawlead-grid{grid-template-columns:1fr;gap:3rem;max-width:720px}.about-drawlead-visual{min-height:420px}.about-drawlead-main{height:380px}}
 @media(max-width:960px){#about-drawlead{margin:24px;border-radius:26px}}
 @media(max-width:560px){#about-drawlead{margin:16px;padding:4rem 1.25rem;border-radius:22px}.about-drawlead-visual{min-height:310px;padding:0 30px 32px 0}.about-drawlead-main{height:280px;border-radius:18px}.about-drawlead-founder{width:43%;height:150px;padding:6px;border-radius:15px}.about-drawlead-founder img{border-radius:10px}.about-drawlead-trust{left:-8px;padding:12px 14px;gap:9px}.about-drawlead-trust strong{font-size:25px}.about-drawlead-trust span{font-size:10px}}
+
+/* Industries: dark green gradient panels in the light theme, with high-contrast icons. */
+html[data-theme="light"] #industries .is-panel,
+html[data-theme="light"] #industries .is-live .is-panel{
+ background:linear-gradient(145deg,#050907 0%,#0a1b11 48%,#0d6036 100%);
+ border-color:rgba(77,218,136,.55);
+}
+html[data-theme="light"] #industries .is-live .is-panel{box-shadow:0 24px 54px -24px rgba(3,37,20,.48),0 0 calc(var(--k,0) * 20px) calc(var(--k,0) * -8px) rgba(50,180,111,.28)}
+html[data-theme="light"] #industries .is-num{color:#6ce7a0}
+html[data-theme="light"] #industries .is-name{color:#f2fff6}
+html[data-theme="light"] #industries .is-ico{background:linear-gradient(135deg,#31d17b,#08733e);border-color:rgba(153,255,194,.62);color:#fff;box-shadow:0 5px 18px rgba(33,185,101,.28)}
+html[data-theme="light"] #industries .is-ico svg{filter:drop-shadow(0 1px 2px rgba(0,0,0,.22))}
+html[data-theme="light"] #industries .is-title{color:#fff}
+html[data-theme="light"] #industries .is-tag{color:rgba(233,255,241,.72)}
+html[data-theme="light"] #industries .is-col-h{color:rgba(240,255,246,.9)}
+html[data-theme="light"] #industries .is-line{color:rgba(238,255,244,.76)}
+html[data-theme="light"] #industries .is-col:first-child .is-line svg{color:#ff8a8a}
+html[data-theme="light"] #industries .is-col:last-child .is-line svg{color:#70efaa}
+html[data-theme="light"] #industries .is-cta{background:linear-gradient(110deg,#36dc83,#159352);color:#04150b;box-shadow:0 7px 20px rgba(26,189,101,.2)}
