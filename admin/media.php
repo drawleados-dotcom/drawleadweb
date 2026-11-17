@@ -15,12 +15,11 @@ require_login();
  *
  * The library also lists every image uploaded earlier through Blogs, Case
  * Studies, Page Content, Popup, and Sidebar (stored loose in uploads/), each
- * labelled with where it's used. Those are read-only here: they're owned by
- * the record that uploaded them, so they're replaced or removed from there.
+ * labelled with where it's used.
  *
  * Any logged-in user can upload (editors need image URLs for the pages and
- * posts they manage); only admins can delete, and only images uploaded
- * here, since deleting breaks every page still using that URL.
+ * posts they manage); only admins can delete, since deleting breaks every
+ * page still using that URL — the confirm prompt names where it's used.
  */
 
 $u = current_user();
@@ -40,6 +39,9 @@ $allowedTypes = [
 // Every file this page writes matches this, so it doubles as the guard that
 // keeps delete requests from reaching outside uploads/media/.
 $mediaNamePattern = '/^[a-z0-9][a-z0-9-]*\.(jpg|png|webp|gif|avif)$/';
+// Earlier uploads sitting loose in uploads/ (Blogs, Case Studies, Pages,
+// Popup, Sidebar): any image file name without a path or leading dot.
+$looseNamePattern = '/^[^.\/\\\\][^\/\\\\]*\.(jpe?g|png|webp|gif|avif)$/i';
 
 /** Converts a php.ini size like "64M" to bytes (0 = no limit). */
 function media_ini_bytes(string $value): int
@@ -252,9 +254,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die('Only admins can delete images from the media library.');
         }
         $file = (string) ($_POST['file'] ?? '');
-        if (!preg_match($mediaNamePattern, $file) || !is_file($mediaDir . $file)) {
+        $managed = ($_POST['dir'] ?? 'media') === 'media';
+        $dir = $managed ? $mediaDir : UPLOAD_DIR;
+        // Name patterns keep the delete inside its folder: no slashes, no
+        // dotfiles (.htaccess), image extensions only.
+        $validName = $managed
+            ? preg_match($mediaNamePattern, $file)
+            : preg_match($looseNamePattern, $file);
+        if (!$validName || !is_file($dir . $file)) {
             $flash['errors'][] = 'That image no longer exists.';
-        } elseif (!@unlink($mediaDir . $file)) {
+        } elseif (!@unlink($dir . $file)) {
             $flash['errors'][] = 'Could not delete ' . $file . '. Please try again.';
         } else {
             $flash['success'] = 'Deleted ' . $file . '.';
@@ -286,7 +295,7 @@ foreach (['' => UPLOAD_DIR, 'media/' => $mediaDir] as $sub => $dir) {
     foreach (scandir($dir) ?: [] as $f) {
         $isImage = $managed
             ? preg_match($mediaNamePattern, $f)
-            : preg_match('/^[^.][^\/\\\\]*\.(jpe?g|png|webp|gif|avif)$/i', $f);
+            : preg_match($looseNamePattern, $f);
         if (!$isImage || !is_file($dir . $f)) {
             continue;
         }
@@ -411,11 +420,12 @@ include __DIR__ . '/includes/header.php';
             <button type="button" class="link-btn" data-copy="<?= h($path) ?>" title="Copies <?= h($path) ?> — keeps working if the site's domain changes">Copy path</button>
             <span aria-hidden="true">·</span>
             <a class="link-btn" href="<?= h($path) ?>" target="_blank" rel="noopener">Open ↗</a>
-            <?php if ($isAdmin && $it['managed']): ?>
+            <?php if ($isAdmin): ?>
               <span aria-hidden="true">·</span>
               <form method="post" onsubmit="return confirm(<?= h(json_encode($deleteMsg, JSON_UNESCAPED_UNICODE)) ?>);">
                 <?= csrf_field() ?>
                 <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="dir" value="<?= $it['managed'] ? 'media' : 'root' ?>">
                 <input type="hidden" name="file" value="<?= h($it['file']) ?>">
                 <button type="submit" class="link-btn link-danger">Delete</button>
               </form>
