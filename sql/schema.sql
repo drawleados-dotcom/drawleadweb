@@ -247,6 +247,20 @@ CREATE TABLE IF NOT EXISTS whatsapp_leads (
   created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Section-wise text/image edits from Admin → Pages → Edit → Page Content.
+-- Only edited items get a row; see includes/page-content.php.
+CREATE TABLE IF NOT EXISTS page_content (
+  page_id      INT NOT NULL,
+  item_key     VARCHAR(40)  NOT NULL,
+  section_key  VARCHAR(190) NOT NULL DEFAULT '',
+  kind         ENUM('text','img_src','img_alt') NOT NULL DEFAULT 'text',
+  original     TEXT,
+  value        TEXT NOT NULL,
+  updated_at   DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (page_id, item_key),
+  FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- ── Seed data ──
 
 INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES

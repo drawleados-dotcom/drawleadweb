@@ -6,7 +6,7 @@ $u = current_user();
 $pages = $pdo->query('SELECT * FROM pages ORDER BY id')->fetchAll();
 
 $pageTitle = 'Pages';
-$pageSub = 'Edit the meta title, meta description, URL, and name for each page. Changes go live instantly.';
+$pageSub = 'Edit each page\'s content section by section, plus its URL, name, and SEO. Changes go live instantly.';
 $activeNav = 'pages';
 include __DIR__ . '/includes/header.php';
 ?>

@@ -71,8 +71,12 @@ further users must be created by an admin from **Users** inside the panel.
 
 ## 7. Using the admin panel
 
-- **Pages** — click a page name to edit its Name, URL, Meta Title, and
-  Meta Description. Saving updates the live site immediately.
+- **Pages** — click a page name to edit it. The **Page Content** tab lists
+  the page section by section (Hero, About, Solutions, …); open a section to
+  change its text and replace or re-describe its images, then save that
+  section. Clearing a field restores the original text. The **Settings & SEO**
+  tab holds the Name, URL, status, Meta Title, and Meta Description. Saving
+  updates the live site immediately. (Content editing needs migration 027.)
 - **Blogs** — write posts with a built-in rich text editor, upload a
   featured image, set SEO fields, and mark Draft/Published.
 - **Users** — create additional admin/editor accounts. Editors only see

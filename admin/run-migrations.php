@@ -619,6 +619,23 @@ function migration_026_statements(): array
     ];
 }
 
+function migration_027_statements(): array
+{
+    return [
+        "CREATE TABLE IF NOT EXISTS page_content (
+            page_id INT NOT NULL,
+            item_key VARCHAR(40) NOT NULL,
+            section_key VARCHAR(190) NOT NULL DEFAULT '',
+            kind ENUM('text','img_src','img_alt') NOT NULL DEFAULT 'text',
+            original TEXT,
+            value TEXT NOT NULL,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY (page_id, item_key),
+            FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -700,6 +717,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($which === '026' || $which === 'all') {
         $toRun['026'] = migration_026_statements();
+    }
+    if ($which === '027' || $which === 'all') {
+        $toRun['027'] = migration_027_statements();
     }
 
     foreach ($toRun as $name => $statements) {
@@ -785,6 +805,7 @@ $migration025Done = (int) $stmt025->fetchColumn() >= 1;
 $stmt026 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
 $stmt026->execute(['/home-9']);
 $migration026Done = (int) $stmt026->fetchColumn() >= 1;
+$migration027Done = migration_table_exists($pdo, 'page_content');
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -1120,7 +1141,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done): ?>
+<div class="card">
+  <div class="card-title">027 — Section-wise page content editing</div>
+  <div class="card-desc">Creates page_content, which stores the text and image edits made in Admin → Pages → Edit → Page Content. Pages render exactly as before until something is edited there.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration027Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration027Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration027Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="027">
+    <button type="submit" class="btn btn-primary">Run Migration 027</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done || !$migration027Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

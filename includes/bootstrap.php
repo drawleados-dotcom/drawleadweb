@@ -27,6 +27,7 @@ define('UPLOAD_URL', '/uploads/');
 require_once __DIR__ . '/platform-modules.php';
 require_once __DIR__ . '/industries.php';
 require_once __DIR__ . '/analyze.php';
+require_once __DIR__ . '/page-content.php';
 
 try {
     $pdo = new PDO(
@@ -320,6 +321,9 @@ function pending_migrations_exist(PDO $pdo): bool
     }
     $stmt9 = $pdo->query("SELECT COUNT(*) FROM pages WHERE slug = '/crm-solution'");
     if ((int) $stmt9->fetchColumn() < 1) {
+        return true;
+    }
+    if (!migration_table_exists($pdo, 'page_content')) {
         return true;
     }
     return false;

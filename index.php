@@ -333,5 +333,9 @@ if (!is_file($templateFile)) {
 }
 
 include __DIR__ . '/templates/layout-start.php';
+// Section-wise text/image edits from Admin → Pages → Edit → Page Content are
+// spliced into the template's output; with none saved it passes through as is.
+ob_start();
 include $templateFile;
+echo page_content_apply($pdo, (int) $page['id'], (string) ob_get_clean());
 include __DIR__ . '/templates/layout-end.php';
