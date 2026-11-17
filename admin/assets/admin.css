@@ -75,7 +75,11 @@ a{color:inherit}
 }
 .sidebar-logo{font-size:18px;font-weight:800;letter-spacing:-.01em;padding:.4rem .6rem 1.4rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .sidebar-logo span{display:block;font-size:9.5px;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.35);-webkit-text-fill-color:rgba(255,255,255,.35);font-weight:700;margin-top:.2rem}
-.side-nav{display:flex;flex-direction:column;gap:2px;flex:1}
+.sidebar-logo,.side-user{flex-shrink:0}
+.side-nav{display:flex;flex-direction:column;gap:2px;flex:1;min-height:0;overflow-y:auto;margin:0 -.4rem;padding:0 .4rem;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.15) transparent}
+.side-nav::-webkit-scrollbar{width:6px}
+.side-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:3px}
+.side-nav::-webkit-scrollbar-track{background:transparent}
 .side-link{
  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;
  color:rgba(255,255,255,.55);text-decoration:none;font-size:13px;font-weight:600;
