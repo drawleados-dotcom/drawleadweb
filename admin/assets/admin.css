@@ -230,6 +230,39 @@ tr:last-child td{border-bottom:none}
 .btn.is-copied{border-color:var(--blue);color:var(--violet)}
 .media-actions{display:flex;align-items:center;flex-wrap:wrap;gap:.45rem;font-size:11.5px;color:var(--g300)}
 .media-actions form{display:inline}
+/* Media: image details popup (rename = new URL) */
+button.media-name{display:block;width:100%;text-align:left;background:none;border:0;padding:0;font-family:var(--font);color:var(--black);cursor:pointer}
+button.media-name:hover{color:var(--violet)}
+button.media-name:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:3px}
+.media-thumb-hint{position:absolute;left:50%;bottom:10px;transform:translate(-50%,6px);padding:5px 11px;border-radius:20px;background:rgba(10,19,16,.82);color:#fff;font-size:11px;font-weight:700;white-space:nowrap;opacity:0;transition:opacity .15s,transform .15s;pointer-events:none}
+.media-thumb:hover .media-thumb-hint,.media-thumb:focus-visible .media-thumb-hint{opacity:1;transform:translate(-50%,0)}
+.media-dialog{margin:auto;width:min(860px,calc(100vw - 32px));max-height:calc(100vh - 48px);padding:0;border:0;border-radius:14px;background:var(--white);color:var(--black);box-shadow:0 30px 80px rgba(0,0,0,.3)}
+.media-dialog::backdrop{background:rgba(10,19,16,.55)}
+.media-dialog-form{display:flex;flex-direction:column;max-height:calc(100vh - 48px)}
+.media-dialog-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--border)}
+.media-dialog-head h2{font-size:15px;font-weight:800}
+.media-dialog-x{width:32px;height:32px;border:0;border-radius:8px;background:none;font-size:22px;line-height:1;color:var(--g500);cursor:pointer}
+.media-dialog-x:hover{background:var(--bg);color:var(--black)}
+.media-dialog-body{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:1.25rem;padding:1.25rem;overflow-y:auto}
+.media-dialog-preview{display:flex;align-items:center;justify-content:center;min-height:220px;max-height:420px;border-radius:10px;overflow:hidden;background-color:#f3f3f1;background-image:conic-gradient(#e7e7e4 25%,transparent 0 50%,#e7e7e4 0 75%,transparent 0);background-size:16px 16px}
+.media-dialog-preview img{max-width:100%;max-height:420px;object-fit:contain;display:block}
+.media-dialog-info{display:flex;flex-direction:column;gap:.45rem;min-width:0}
+.media-dialog-info .media-meta{margin-top:0}
+.media-dialog-info .media-source{white-space:normal;margin-top:0}
+.media-dialog-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--g500);margin-top:.7rem}
+.media-name-field{display:flex;align-items:stretch;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;background:var(--white)}
+.media-name-field:focus-within{border-color:var(--blue)}
+.media-name-field input{flex:1;min-width:0;border:0;padding:10px 12px;font-family:var(--font);font-size:13.5px;color:var(--black);background:none}
+.media-name-field input:focus{outline:none}
+.media-ext{display:flex;align-items:center;padding:0 12px;background:var(--bg);border-left:1px solid var(--border);font-size:12.5px;font-weight:700;color:var(--g500)}
+.media-dialog-info .media-url input{font-size:11.5px;padding:9px 10px;color:var(--black);background:var(--white)}
+.media-dialog-info .media-url input[readonly]{background:var(--bg);color:var(--g600)}
+.media-dialog-info .btn[disabled]{opacity:.45;cursor:not-allowed}
+.media-dialog-note{font-size:12px;line-height:1.5;color:#8a5a14;background:#fdf6e8;border:1px solid #f1dcb2;border-radius:8px;padding:9px 11px;margin-top:.5rem}
+.media-dialog-note[hidden]{display:none}
+.media-dialog-foot{display:flex;justify-content:flex-end;gap:8px;padding:.9rem 1.25rem;border-top:1px solid var(--border);background:#fafaf9}
+.media-dialog-foot .btn[disabled]{opacity:.45;cursor:not-allowed}
+@media(max-width:700px){.media-dialog-body{grid-template-columns:1fr}.media-dialog-preview{min-height:160px}}
 .link-btn{background:none;border:none;padding:0;font:inherit;font-weight:700;color:var(--g600);cursor:pointer;text-decoration:none}
 .link-btn:hover,.link-btn.is-copied{color:var(--blue)}
 .link-danger{color:var(--danger)}

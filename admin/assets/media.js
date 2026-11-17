@@ -139,4 +139,107 @@
       if (none) none.hidden = shown !== 0;
     });
   }
+
+  // ── Image details popup: rename the file (which changes its URL) ──
+  var dialog = document.getElementById('mediaDialog');
+  if (dialog && typeof dialog.showModal === 'function') {
+    var dForm = dialog.querySelector('[data-media-rename]');
+    var baseUrl = dForm.getAttribute('data-base-url') || '';
+    var q = function (sel) { return dialog.querySelector(sel); };
+    var nameIn = q('[data-d-name]'), urlIn = q('[data-d-url]'), ext = q('[data-d-ext]');
+    var saveBtn = q('[data-d-save]'), copyBtn = q('[data-d-copy]'), note = q('[data-d-note]');
+    var current = null; // { base, ext, folder, url, used }
+
+    // Same rules as media_slug() in admin/media.php.
+    var slug = function (s) {
+      return String(s).trim().replace(/\.(jpe?g|png|webp|gif|avif)$/i, '').toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80).replace(/-+$/, '');
+    };
+    var urlFor = function (base) { return baseUrl + current.folder + base + current.ext; };
+
+    var sync = function (from) {
+      if (!current) return;
+      var base;
+      if (from === 'url') {
+        var last = urlIn.value.split('?')[0].split('#')[0].replace(/\/+$/, '').split('/').pop() || '';
+        base = slug(decodeURIComponent(last.replace(/%(?![0-9a-f]{2})/gi, '%25')));
+        nameIn.value = base;
+      } else {
+        base = slug(nameIn.value);
+        urlIn.value = urlFor(base || '…');
+      }
+      var changed = base !== '' && base !== current.base;
+      if (saveBtn) saveBtn.disabled = !changed;
+      copyBtn.disabled = changed;
+      copyBtn.title = changed ? 'Save the new name first' : '';
+      if (changed) {
+        note.hidden = false;
+        note.textContent = 'Saving gives this image a new URL: ' + urlFor(base) + '. '
+          + (current.used ? 'Everywhere it’s used on the site (' + current.used + ') is updated automatically. ' : '')
+          + 'Copies of the old URL pasted outside this site (emails, social posts) will stop working.';
+      } else {
+        note.hidden = true;
+      }
+    };
+
+    var open = function (item) {
+      var file = item.getAttribute('data-file');
+      var dot = file.lastIndexOf('.');
+      var path = item.getAttribute('data-path');
+      current = {
+        base: file.slice(0, dot),
+        ext: file.slice(dot).toLowerCase(),
+        folder: path.slice(0, path.lastIndexOf('/') + 1),
+        url: item.getAttribute('data-url'),
+        used: item.getAttribute('data-used') || ''
+      };
+      q('[data-d-file]').value = file;
+      q('[data-d-dir]').value = item.getAttribute('data-dir');
+      q('[data-d-img]').src = path;
+      q('[data-d-open]').href = path;
+      q('[data-d-meta]').textContent = item.getAttribute('data-meta');
+      var used = q('[data-d-used]');
+      used.textContent = current.used ? 'Used in ' + current.used : 'Not used on any page yet';
+      used.classList.toggle('is-plain', !current.used);
+      ext.textContent = current.ext;
+      nameIn.value = current.base;
+      urlIn.value = current.url;
+      copyBtn.setAttribute('data-copy', current.url);
+      sync('name');
+      dialog.showModal();
+      if (!nameIn.readOnly) { nameIn.focus(); nameIn.select(); }
+    };
+
+    document.addEventListener('click', function (e) {
+      var trigger = e.target.closest('[data-media-open]');
+      if (!trigger) return;
+      var item = trigger.closest('[data-media-item]');
+      if (!item) return;
+      e.preventDefault();
+      open(item);
+    });
+    nameIn.addEventListener('input', function () { sync('name'); });
+    // Show the name as it will be saved ("Team Photo" → "team-photo").
+    nameIn.addEventListener('blur', function () { if (slug(nameIn.value)) nameIn.value = slug(nameIn.value); sync('name'); });
+    urlIn.addEventListener('input', function () { sync('url'); });
+    urlIn.addEventListener('blur', function () { sync('name'); }); // tidy the URL back to its fixed folder
+    dialog.querySelectorAll('[data-media-close]').forEach(function (b) {
+      b.addEventListener('click', function () { dialog.close(); });
+    });
+    // A click on the dimmed backdrop (the dialog element itself) closes it.
+    dialog.addEventListener('click', function (e) { if (e.target === dialog) dialog.close(); });
+    dForm.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && saveBtn && saveBtn.disabled) e.preventDefault();
+    });
+    dForm.addEventListener('submit', function (e) {
+      sync('name');
+      if (!saveBtn || saveBtn.disabled) { e.preventDefault(); return; }
+      nameIn.value = slug(nameIn.value);
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Renaming…';
+    });
+
+    var renamed = document.querySelector('[data-media-renamed]');
+    if (renamed) renamed.scrollIntoView({ block: 'center' });
+  }
 })();

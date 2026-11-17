@@ -151,6 +151,73 @@ function media_usage_map(PDO $pdo): array
     return $map;
 }
 
+/**
+ * A typed image name as a URL-safe file name base: lowercase letters, numbers
+ * and hyphens ("Team Photo 2026.jpg" → "team-photo-2026"). '' if nothing usable.
+ */
+function media_slug(string $name): string
+{
+    $name = (string) preg_replace('/\.(jpe?g|png|webp|gif|avif)$/i', '', trim($name));
+    $slug = trim((string) preg_replace('/[^a-z0-9]+/', '-', strtolower($name)), '-');
+    return rtrim(substr($slug, 0, 80), '-');
+}
+
+/**
+ * After a rename, point every stored reference at the new file so nothing on
+ * the site shows a broken image. Covers each column media_usage_map() reads,
+ * plus blog/case study body text and Page Content history, whether they hold
+ * a bare filename, a /uploads/... path, or a full URL (which contains the
+ * path). Tables that don't exist yet are skipped. Returns rows updated.
+ */
+function media_update_references(PDO $pdo, string $sub, string $oldFile, string $newFile): int
+{
+    $newPath = UPLOAD_URL . $sub . $newFile;
+    $oldPaths = array_unique([UPLOAD_URL . $sub . $oldFile, UPLOAD_URL . $sub . rawurlencode($oldFile)]);
+    $columns = [
+        'blogs' => ['featured_image', 'og_image', 'content'],
+        'case_studies' => ['desktop_image', 'mobile_image', 'result_image', 'og_image', 'problem', 'solution', 'process', 'result', 'outcome'],
+        'pages' => ['og_image'],
+        'page_content' => ['value'],
+        'page_content_versions' => ['snapshot'],
+        'site_popup' => ['image'],
+        'site_sidebar' => ['image'],
+    ];
+    $n = 0;
+    foreach ($columns as $table => $cols) {
+        foreach ($cols as $col) {
+            foreach ($oldPaths as $old) {
+                try {
+                    $st = $pdo->prepare("UPDATE `$table` SET `$col` = REPLACE(`$col`, ?, ?) WHERE INSTR(`$col`, ?) > 0");
+                    $st->execute([$old, $newPath, $old]);
+                    $n += $st->rowCount();
+                } catch (PDOException $e) {
+                    // table or column not there (migration not run) — nothing to update
+                }
+            }
+        }
+    }
+    // Blog, case study, popup and sidebar uploads store a bare filename.
+    if ($sub === '') {
+        $bare = [
+            'blogs' => ['featured_image'],
+            'case_studies' => ['desktop_image', 'mobile_image', 'result_image'],
+            'site_popup' => ['image'],
+            'site_sidebar' => ['image'],
+        ];
+        foreach ($bare as $table => $cols) {
+            foreach ($cols as $col) {
+                try {
+                    $st = $pdo->prepare("UPDATE `$table` SET `$col` = ? WHERE `$col` = ?");
+                    $st->execute([$newFile, $oldFile]);
+                    $n += $st->rowCount();
+                } catch (PDOException $e) {
+                }
+            }
+        }
+    }
+    return $n;
+}
+
 // Per-image cap is 10MB, or lower if the server's own upload limit is lower.
 $maxFileBytes = 10 * 1024 * 1024;
 $serverFileLimit = media_ini_bytes((string) ini_get('upload_max_filesize'));
@@ -268,6 +335,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $flash['success'] = 'Deleted ' . $file . '.';
         }
+    } elseif ($action === 'rename') {
+        // Renaming changes the image's URL, so — like delete — admins only.
+        if (!$isAdmin) {
+            http_response_code(403);
+            die('Only admins can rename images in the media library.');
+        }
+        $file = (string) ($_POST['file'] ?? '');
+        $managed = ($_POST['dir'] ?? 'media') === 'media';
+        $dir = $managed ? $mediaDir : UPLOAD_DIR;
+        $sub = $managed ? 'media/' : '';
+        $validName = $managed
+            ? preg_match($mediaNamePattern, $file)
+            : preg_match($looseNamePattern, $file);
+        $base = media_slug((string) ($_POST['new_name'] ?? ''));
+
+        if (!$validName || !is_file($dir . $file)) {
+            $flash['errors'][] = 'That image no longer exists.';
+        } elseif ($base === '') {
+            $flash['errors'][] = 'Enter a name using letters or numbers.';
+        } else {
+            // The extension stays as it is: it reflects the real file type.
+            $newFile = $base . '.' . strtolower(pathinfo($file, PATHINFO_EXTENSION));
+            if ($newFile === $file) {
+                $flash['success'] = 'Nothing changed — the image is already called ' . $file . '.';
+            } elseif (file_exists($dir . $newFile)) {
+                $flash['errors'][] = 'Another image is already called ' . $newFile . '. Choose a different name.';
+            } elseif (!@rename($dir . $file, $dir . $newFile)) {
+                $flash['errors'][] = 'Could not rename ' . $file . '. Please try again.';
+            } else {
+                $updated = media_update_references($pdo, $sub, $file, $newFile);
+                $flash['success'] = 'Renamed to ' . $newFile . '. '
+                    . ($updated > 0
+                        ? 'Its URL changed, and the ' . $updated . ' place' . ($updated === 1 ? '' : 's') . ' on the site that used it now use the new URL.'
+                        : 'Its URL changed — paste the new one wherever you need it.');
+                $flash['highlight'] = $sub . $newFile;
+            }
+        }
     }
 
     // Post/Redirect/Get, so refreshing the page never re-uploads anything.
@@ -279,6 +383,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $flash = $_SESSION['media_flash'] ?? ['errors' => [], 'uploaded' => [], 'success' => ''];
 unset($_SESSION['media_flash']);
 $newFiles = array_flip($flash['uploaded'] ?? []);
+$highlight = (string) ($flash['highlight'] ?? '');
 
 $usage = media_usage_map($pdo);
 
@@ -390,23 +495,27 @@ include __DIR__ . '/includes/header.php';
           $path = $it['path'];
           $url = $baseUrl . $path;
           $isNew = $it['managed'] && isset($newFiles[$it['file']]);
+          $isRenamed = $highlight !== '' && ($it['managed'] ? 'media/' : '') . $it['file'] === $highlight;
           $usedIn = implode(', ', $it['usage']);
+          $meta = ($it['w'] ? (int) $it['w'] . ' × ' . (int) $it['h'] . ' · ' : '') . media_human_size($it['size']) . ' · ' . date('M j, Y', $it['mtime']);
           $searchText = mb_strtolower($it['file'] . ' ' . $usedIn . ($it['managed'] ? '' : ' earlier upload'));
           $deleteMsg = 'Delete this image permanently?'
               . ($usedIn !== '' ? ' It is used in: ' . $usedIn . ' — that will show a broken image.' : ' Any page or post still using its URL will show a broken image.');
       ?>
-      <div class="media-item<?= $isNew ? ' is-new' : '' ?>" data-media-item data-search="<?= h($searchText) ?>">
-        <a class="media-thumb" href="<?= h($path) ?>" target="_blank" rel="noopener" title="Open full size">
+      <div class="media-item<?= $isNew || $isRenamed ? ' is-new' : '' ?>" data-media-item data-search="<?= h($searchText) ?>"
+           data-file="<?= h($it['file']) ?>" data-dir="<?= $it['managed'] ? 'media' : 'root' ?>" data-path="<?= h($path) ?>"
+           data-url="<?= h($url) ?>" data-meta="<?= h($meta) ?>" data-used="<?= h($usedIn) ?>"<?= $isRenamed ? ' data-media-renamed' : '' ?>>
+        <a class="media-thumb" href="<?= h($path) ?>" target="_blank" rel="noopener" title="Edit name and URL" data-media-open>
           <img src="<?= h($path) ?>" alt="" loading="lazy">
+          <span class="media-thumb-hint" aria-hidden="true">Edit name &amp; URL</span>
         </a>
         <div class="media-body">
-          <div class="media-name" title="<?= h($it['file']) ?>">
+          <button type="button" class="media-name" title="<?= h($it['file']) ?> — click to rename" data-media-open>
             <?php if ($isNew): ?><span class="badge badge-published">New</span><?php endif; ?>
+            <?php if ($isRenamed): ?><span class="badge badge-published">Renamed</span><?php endif; ?>
             <?= h($it['file']) ?>
-          </div>
-          <div class="media-meta">
-            <?= $it['w'] ? (int) $it['w'] . ' × ' . (int) $it['h'] . ' · ' : '' ?><?= h(media_human_size($it['size'])) ?> · <?= h(date('M j, Y', $it['mtime'])) ?>
-          </div>
+          </button>
+          <div class="media-meta"><?= h($meta) ?></div>
           <?php if ($usedIn !== ''): ?>
             <div class="media-source" title="Used in <?= h($usedIn) ?>">Used in <?= h($usedIn) ?></div>
           <?php elseif (!$it['managed']): ?>
@@ -438,6 +547,51 @@ include __DIR__ . '/includes/header.php';
     <div class="empty-state" data-media-noresults hidden><p>No images match that search.</p></div>
   <?php endif; ?>
 </div>
+
+<?php if ($items): ?>
+<dialog class="media-dialog" id="mediaDialog" aria-labelledby="mediaDialogTitle">
+  <form method="post" class="media-dialog-form" data-media-rename data-base-url="<?= h($baseUrl) ?>">
+    <?= csrf_field() ?>
+    <input type="hidden" name="action" value="rename">
+    <input type="hidden" name="dir" value="" data-d-dir>
+    <input type="hidden" name="file" value="" data-d-file>
+    <div class="media-dialog-head">
+      <h2 id="mediaDialogTitle">Image details</h2>
+      <button type="button" class="media-dialog-x" data-media-close aria-label="Close">×</button>
+    </div>
+    <div class="media-dialog-body">
+      <a class="media-dialog-preview" href="#" target="_blank" rel="noopener" title="Open full size" data-d-open>
+        <img src="" alt="" data-d-img>
+      </a>
+      <div class="media-dialog-info">
+        <div class="media-meta" data-d-meta></div>
+        <div class="media-source" data-d-used></div>
+
+        <label class="media-dialog-label" for="mediaNewName">Image name</label>
+        <div class="media-name-field">
+          <input type="text" id="mediaNewName" name="new_name" maxlength="80" autocomplete="off" spellcheck="false" required data-d-name<?= $isAdmin ? '' : ' readonly' ?>>
+          <span class="media-ext" data-d-ext></span>
+        </div>
+        <div class="field-hint">Lowercase letters, numbers and hyphens. A descriptive name (e.g. <code>chennai-erp-dashboard</code>) helps the image rank in search.</div>
+
+        <label class="media-dialog-label" for="mediaUrl">Image URL</label>
+        <div class="media-url">
+          <input type="text" id="mediaUrl" spellcheck="false" data-d-url<?= $isAdmin ? '' : ' readonly' ?>>
+          <button type="button" class="btn btn-ghost btn-sm" data-copy="" data-d-copy>Copy URL</button>
+        </div>
+        <div class="field-hint" data-d-url-hint>Editing the URL changes the image name too — they always match.</div>
+
+        <div class="media-dialog-note" data-d-note hidden></div>
+        <?php if (!$isAdmin): ?><p class="media-dialog-note">Only admins can rename images.</p><?php endif; ?>
+      </div>
+    </div>
+    <div class="media-dialog-foot">
+      <button type="button" class="btn btn-ghost" data-media-close>Cancel</button>
+      <?php if ($isAdmin): ?><button type="submit" class="btn btn-primary" data-d-save disabled>Save new name</button><?php endif; ?>
+    </div>
+  </form>
+</dialog>
+<?php endif; ?>
 
 <script src="<?= asset_url('/admin/assets/media.js') ?>" defer></script>
 
