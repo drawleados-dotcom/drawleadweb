@@ -24,7 +24,8 @@ if ($gscTag !== '') {
 }
 
 $gaId = get_setting($pdo, 'ga_measurement_id', '');
-if ($gaId !== ''):
+// The admin's live page preview ($pcPreview, index.php) isn't a real visit.
+if ($gaId !== '' && empty($pcPreview)):
 ?>
 <script async src="https://www.googletagmanager.com/gtag/js?id=<?= h($gaId) ?>"></script>
 <script>

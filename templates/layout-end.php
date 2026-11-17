@@ -26,10 +26,12 @@ document.querySelectorAll('.rv, .ind-card').forEach(el=>obs.observe(el));
 <?php include __DIR__ . '/partials/booking-modal.php'; ?>
 <script src="<?= asset_url('/assets/booking.js') ?>"></script>
 
+<?php if (empty($pcPreview)): // not in the admin's live page preview (index.php) ?>
 <?php include __DIR__ . '/partials/whatsapp-widget.php'; ?>
 <script src="<?= asset_url('/assets/whatsapp.js') ?>"></script>
 
 <?php include __DIR__ . '/partials/site-popup.php'; ?>
 <script src="<?= asset_url('/assets/site-popup.js') ?>"></script>
+<?php endif; ?>
 </body>
 </html>

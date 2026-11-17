@@ -23,7 +23,6 @@ $tab = ($_GET['tab'] ?? 'content') === 'settings' ? 'settings' : 'content';
 $error = '';
 $success = '';
 $contentError = '';
-$contentErrorSection = '';
 $contentReady = migration_table_exists($pdo, 'page_content');
 $rendered = null;
 
@@ -33,34 +32,30 @@ $isPost = $_SERVER['REQUEST_METHOD'] === 'POST';
 // say so instead of failing the CSRF check with a confusing message.
 if ($isPost && empty($_POST) && (int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 0) {
     $tab = 'content';
-    $contentError = 'That upload is larger than the server accepts. Use an image under 5MB.';
+    $contentError = 'That upload is larger than the server accepts. Use images under 5MB and publish again.';
     $isPost = false;
 }
 
-// ── Page Content tab: save one section ──
+// ── Page Content tab: publish ──
 if ($isPost && ($_POST['form'] ?? '') === 'content') {
     csrf_verify();
     $tab = 'content';
-    $sectionKey = (string) ($_POST['section'] ?? '');
-    $contentErrorSection = $sectionKey;
 
     if (!$contentReady) {
         $contentError = 'Page content editing needs migration 027. Run it from Migrations first.';
     } else {
         $rendered = pc_render_template($pdo, $page);
-        $sectionsForSave = $rendered === null ? [] : pc_sections(pc_scan($rendered));
-        if (!isset($sectionsForSave[$sectionKey])) {
-            $contentError = 'That section is no longer on this page. Reload and try again.';
+        if ($rendered === null) {
+            $contentError = 'This page\'s template couldn\'t be loaded, so nothing was published.';
         } else {
-            $result = pc_save_section($pdo, $id, $sectionsForSave[$sectionKey], $_POST, $_FILES);
+            $result = pc_save_page($pdo, $id, pc_sections(pc_scan($rendered)), $_POST, $_FILES);
             if ($result['error'] !== '') {
-                $contentError = $result['error'];
+                $contentError = $result['error'] . ' Nothing was published.';
             } else {
                 if ($result['changed'] > 0) {
                     $pdo->prepare('UPDATE pages SET updated_at = NOW() WHERE id = ?')->execute([$id]);
                 }
-                header('Location: page-edit.php?id=' . $id . '&tab=content&saved=' . rawurlencode($sectionKey)
-                    . '&n=' . (int) $result['changed'] . '#' . pc_dom_id($sectionKey));
+                header('Location: page-edit.php?id=' . $id . '&tab=content&published=' . (int) $result['changed']);
                 exit;
             }
         }
@@ -138,11 +133,14 @@ if ($isPost && ($_POST['form'] ?? '') === 'content') {
     }
 }
 
-// ── Page Content tab: build the section list ──
+// ── Page Content tab: build the editor ──
 $contentStatus = 'ok';
 $contentSections = [];
 $contentOverrides = [];
-$savedSection = (string) ($_GET['saved'] ?? '');
+$sectionRows = [];
+$looseRows = [];
+$hiddenSections = [];
+$editorData = ['blocks' => []];
 if ($tab === 'content') {
     if (pc_template_file($page) === null) {
         $contentStatus = 'no-template';
@@ -155,6 +153,23 @@ if ($tab === 'content') {
         } else {
             $contentSections = pc_sections(pc_scan($rendered));
             $contentOverrides = page_content_overrides($pdo, $id);
+            $sectionKeys = array_keys(array_filter($contentSections, fn ($s) => $s['type'] === 'section'));
+            $layout = pc_layout($contentOverrides, $sectionKeys);
+            $hiddenSections = $layout['hidden'];
+            foreach ($layout['order'] as $k) {
+                $sectionRows[] = $contentSections[$k];
+            }
+            $looseRows = array_values(array_filter($contentSections, fn ($s) => $s['type'] !== 'section'));
+            foreach ($contentSections as $s) {
+                foreach ($s['texts'] as $key => $t) {
+                    if ($t['type'] === 'block' && !isset($editorData['blocks'][$key])) {
+                        $editorData['blocks'][(string) $key] = [
+                            'c' => array_map(fn ($c) => [$c['open'], $c['close']], $t['children']),
+                            'br' => $t['br'],
+                        ];
+                    }
+                }
+            }
             if (!$contentSections) {
                 $contentStatus = 'empty';
             }
@@ -174,6 +189,122 @@ function pc_admin_edited_count(array $section, array $overrides): int
         $n += array_key_exists('a' . $hash, $overrides) ? 1 : 0;
     }
     return $n;
+}
+
+/** One section row in the editor's list, with its fields. */
+function pc_admin_row(array $section, array $overrides, bool $sortable, bool $hidden, string $pageSlug): void
+{
+    $edited = pc_admin_edited_count($section, $overrides);
+    $textCount = count($section['texts']);
+    $imageCount = count($section['images']);
+    $sub = $section['title'] !== ''
+        ? $section['title']
+        : ($textCount || $imageCount
+            ? $textCount . ' text' . ($textCount === 1 ? '' : 's') . ($imageCount ? ' · ' . $imageCount . ' image' . ($imageCount === 1 ? '' : 's') : '')
+            : 'Nothing to edit here');
+    ?>
+    <li class="pc-row<?= $hidden ? ' is-off' : '' ?>" data-key="<?= h($section['key']) ?>"<?= $sortable ? '' : ' data-fixed' ?>>
+      <div class="pc-row-head">
+        <?php if ($sortable): ?>
+          <button type="button" class="pc-drag" aria-label="Move “<?= h($section['label']) ?>”: drag, or use the up and down arrow keys" title="Drag to reorder">
+            <svg viewBox="0 0 12 18" aria-hidden="true"><circle cx="3" cy="3" r="1.6"/><circle cx="9" cy="3" r="1.6"/><circle cx="3" cy="9" r="1.6"/><circle cx="9" cy="9" r="1.6"/><circle cx="3" cy="15" r="1.6"/><circle cx="9" cy="15" r="1.6"/></svg>
+          </button>
+        <?php else: ?>
+          <span class="pc-lock" title="Sits between sections, so it can't be moved or hidden">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          </span>
+        <?php endif; ?>
+        <button type="button" class="pc-row-toggle" aria-expanded="false">
+          <span class="pc-row-name"><?= h($section['label']) ?><?php if ($edited): ?> <span class="pc-edited"><?= $edited ?> edited</span><?php endif; ?><span class="pc-changed-dot" title="Unpublished changes"></span></span>
+          <span class="pc-row-sub"><?= h(mb_strimwidth($sub, 0, 80, '…', 'UTF-8')) ?></span>
+        </button>
+        <?php if ($sortable): ?>
+          <label class="pc-switch" title="Show this section on the live page">
+            <input type="checkbox" data-pc-visible<?= $hidden ? '' : ' checked' ?> aria-label="Show “<?= h($section['label']) ?>” on the live page">
+            <span aria-hidden="true"></span>
+          </label>
+        <?php endif; ?>
+      </div>
+
+      <div class="pc-row-body" hidden>
+        <?php if (!$textCount && !$imageCount): ?>
+          <p class="pc-empty">This section has no text or images to edit here<?= $sortable ? ', but you can still move or hide it' : '' ?>.</p>
+        <?php endif; ?>
+
+        <?php $imgNo = 0; foreach ($section['images'] as $hash => $img):
+          $imgNo++;
+          $hash = (string) $hash;
+          $srcEdited = array_key_exists('i' . $hash, $overrides);
+          $altEdited = array_key_exists('a' . $hash, $overrides);
+          $currentSrc = $srcEdited ? $overrides['i' . $hash] : $img['src'];
+          $currentAlt = $altEdited ? $overrides['a' . $hash] : $img['alt'];
+          $fileName = str_starts_with($img['src'], 'data:') ? 'Embedded image' : basename(pc_image_path($img['src']));
+        ?>
+        <div class="pc-image" data-pc-item="img:<?= h($hash) ?>" data-pc-search="<?= h(mb_strtolower($img['alt'] . ' ' . $currentAlt . ' ' . $fileName, 'UTF-8')) ?>">
+          <div class="pc-image-preview">
+            <img src="<?= h($currentSrc) ?>" alt="" data-pc-thumb data-pc-src-saved="<?= h($currentSrc) ?>" data-pc-src-original="<?= h($img['src']) ?>">
+          </div>
+          <div class="pc-image-meta">
+            <b>Image <?= $imgNo ?></b>
+            <?php if ($srcEdited): ?><span class="pc-edited">Replaced</span><?php endif; ?>
+            <?php if ($img['count'] > 1): ?><span class="pc-count">used <?= (int) $img['count'] ?>×</span><?php endif; ?>
+            <span class="pc-file-name" data-pc-file-name><?= h($fileName) ?></span>
+          </div>
+          <label class="btn btn-ghost btn-sm pc-upload">
+            Replace image
+            <input type="file" name="pc_img[<?= h($hash) ?>]" accept="image/jpeg,image/png,image/webp,image/gif" data-pc-input data-pc-type="img-file" data-pc-key="<?= h($hash) ?>">
+          </label>
+          <input type="text" class="pc-input" name="pc_img_url[<?= h($hash) ?>]" value="" placeholder="…or paste an image URL from Admin → Media" aria-label="Image URL" data-pc-input data-pc-type="img-url" data-pc-key="<?= h($hash) ?>">
+          <label class="pc-label" for="pca-<?= h($hash) ?>">Alt text <?php if ($altEdited): ?><span class="pc-edited">Edited</span><?php endif; ?></label>
+          <input type="text" class="pc-input" id="pca-<?= h($hash) ?>" name="pc_alt[<?= h($hash) ?>]" maxlength="300" value="<?= h($currentAlt) ?>" placeholder="Describe the image" data-pc-input data-pc-type="img-alt" data-pc-key="<?= h($hash) ?>" data-pc-original="<?= h($img['alt']) ?>">
+          <?php if ($srcEdited): ?>
+            <label class="pc-check">
+              <input type="checkbox" name="pc_img_reset[<?= h($hash) ?>]" value="1" data-pc-input data-pc-type="img-reset" data-pc-key="<?= h($hash) ?>">
+              Restore the original image
+            </label>
+          <?php endif; ?>
+        </div>
+        <?php endforeach; ?>
+
+        <?php foreach ($section['texts'] as $key => $item):
+          $key = (string) $key;
+          $isBlock = $item['type'] === 'block';
+          $isEdited = array_key_exists($key, $overrides);
+          $value = $isEdited ? $overrides[$key] : $item['text'];
+          $long = $isBlock && $item['br'] !== null
+              || mb_strlen($value, 'UTF-8') > 60 || mb_strlen($item['text'], 'UTF-8') > 60;
+          $rows = max(2, min(8, substr_count($value, "\n") + (int) ceil(mb_strlen($value, 'UTF-8') / 42)));
+        ?>
+        <div class="pc-field<?= $isEdited ? ' is-edited' : '' ?>" data-pc-item="text:<?= h($key) ?>" data-pc-search="<?= h(mb_strtolower($item['text'] . ' ' . $value, 'UTF-8')) ?>">
+          <label class="pc-label" for="pcf-<?= h($key) ?>">
+            <?= h($item['kind']) ?><?php if (!$isBlock && $item['parts'] > 1): ?> · part <?= (int) $item['part'] ?> of <?= (int) $item['parts'] ?><?php endif; ?>
+            <?php if ($item['hint'] !== ''): ?><code class="pc-hint"><?= h($item['hint']) ?></code><?php endif; ?>
+            <?php if ($isEdited): ?><span class="pc-edited">Edited</span><?php endif; ?>
+            <?php if ($item['count'] > 1): ?><span class="pc-count">appears <?= (int) $item['count'] ?>×</span><?php endif; ?>
+          </label>
+          <?php if ($long): ?>
+            <textarea class="pc-input" id="pcf-<?= h($key) ?>" name="pc_text[<?= h($key) ?>]" rows="<?= $rows ?>" placeholder="<?= h($item['text']) ?>" data-pc-input data-pc-type="<?= $isBlock ? 'block' : 'text' ?>" data-pc-key="<?= h($key) ?>" data-pc-original="<?= h($item['text']) ?>"><?= h($value) ?></textarea>
+          <?php else: ?>
+            <input type="text" class="pc-input" id="pcf-<?= h($key) ?>" name="pc_text[<?= h($key) ?>]" value="<?= h($value) ?>" placeholder="<?= h($item['text']) ?>" data-pc-input data-pc-type="<?= $isBlock ? 'block' : 'text' ?>" data-pc-key="<?= h($key) ?>" data-pc-original="<?= h($item['text']) ?>">
+          <?php endif; ?>
+          <?php if ($isBlock && ($item['children'] || $item['br'] !== null)): ?>
+            <div class="pc-help">
+              <?php if ($item['children']): ?>Words in <b>[brackets]</b> keep the highlight style.<?php endif; ?>
+              <?php if ($item['br'] !== null): ?>A new line is a line break.<?php endif; ?>
+            </div>
+          <?php endif; ?>
+          <?php if ($isEdited): ?>
+            <div class="pc-help">Original: “<?= h($item['text']) ?>”. Clear the field to restore it.</div>
+          <?php endif; ?>
+        </div>
+        <?php endforeach; ?>
+
+        <?php if ($section['anchor'] !== ''): ?>
+          <a class="pc-row-link" href="<?= h(($pageSlug === '/' ? '/' : $pageSlug) . '#' . $section['anchor']) ?>" target="_blank" rel="noopener">View this section on the live site ↗</a>
+        <?php endif; ?>
+      </div>
+    </li>
+    <?php
 }
 
 $seoRow = [
@@ -198,19 +329,13 @@ include __DIR__ . '/includes/header.php';
 <div class="page-tabs">
   <a class="page-tab<?= $tab === 'content' ? ' active' : '' ?>" href="page-edit.php?id=<?= (int) $id ?>&amp;tab=content">Page Content</a>
   <a class="page-tab<?= $tab === 'settings' ? ' active' : '' ?>" href="page-edit.php?id=<?= (int) $id ?>&amp;tab=settings">Settings &amp; SEO</a>
-  <a class="page-tab-view" href="<?= h($page['slug']) ?>" target="_blank" rel="noopener">View this page ↗</a>
 </div>
 
 <?php if ($tab === 'content'): ?>
 
   <?php if ($contentError): ?><div class="alert alert-error"><?= h($contentError) ?></div><?php endif; ?>
-  <?php if ($savedSection !== '' && isset($contentSections[$savedSection])):
-    $savedN = (int) ($_GET['n'] ?? 0); ?>
-    <div class="alert alert-success">
-      <?= $savedN > 0
-        ? 'Saved “' . h($contentSections[$savedSection]['label']) . '” — the live page now shows your changes.'
-        : 'No changes to save in “' . h($contentSections[$savedSection]['label']) . '”.' ?>
-    </div>
+  <?php if (isset($_GET['published'])): $publishedN = (int) $_GET['published']; ?>
+    <div class="alert alert-success" data-pc-flash><?= $publishedN > 0 ? 'Published — the live page now shows your changes.' : 'Nothing had changed, so there was nothing to publish.' ?></div>
   <?php endif; ?>
 
   <?php if ($contentStatus === 'no-template'): ?>
@@ -221,7 +346,7 @@ include __DIR__ . '/includes/header.php';
   <?php elseif ($contentStatus === 'migration'): ?>
     <div class="card">
       <div class="card-title">One-time setup needed</div>
-      <div class="card-desc">Section-wise content editing needs migration 027, which adds the table that stores your edits.</div>
+      <div class="card-desc">Page content editing needs migration 027, which adds the table that stores your edits.</div>
       <?php if ($u['role'] === 'admin'): ?>
         <a class="btn btn-primary" href="run-migrations.php">Go to Migrations</a>
       <?php else: ?>
@@ -233,129 +358,70 @@ include __DIR__ . '/includes/header.php';
   <?php elseif ($contentStatus === 'empty'): ?>
     <div class="card">
       <div class="card-title">No editable content found</div>
-      <div class="card-desc" style="margin-bottom:0">This page's template has no section text or images to edit.</div>
+      <div class="card-desc" style="margin-bottom:0">This page's template has no sections, text or images to edit.</div>
     </div>
-  <?php else: ?>
+  <?php else:
+    $previewUrl = ($page['slug'] === '/' ? '/' : $page['slug']) . '?pc_preview=1';
+    $liveLabel = (($page['status'] ?? 'published') === 'draft' ? 'Draft' : 'Live')
+        . ' · last updated ' . date('M j, g:i A', strtotime((string) $page['updated_at']));
+    $layoutJson = json_encode([
+        'order' => array_column($sectionRows, 'key'),
+        'hidden' => array_keys($hiddenSections),
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  ?>
+  <form id="pcEditor" class="pc-editor" method="post" enctype="multipart/form-data" action="page-edit.php?id=<?= (int) $id ?>&amp;tab=content" autocomplete="off" novalidate>
+    <?= csrf_field() ?>
+    <input type="hidden" name="form" value="content">
+    <input type="hidden" name="pc_layout" id="pcLayout" value="<?= h($layoutJson) ?>">
 
-    <div class="card pc-intro">
-      <div class="pc-intro-row">
-        <div>
-          <div class="card-title">Edit content section by section</div>
-          <div class="card-desc" style="margin-bottom:0">Open a section, change its text or images, then save that section. Clear a field to restore its original text. The site's menu and footer are shared by every page and aren't edited here.</div>
-        </div>
-        <div class="pc-intro-tools">
-          <input type="search" id="pcSearch" class="pc-search" placeholder="Find text on this page…" aria-label="Find text on this page">
-          <button type="button" class="btn btn-ghost btn-sm" data-pc-toggle-all>Expand all</button>
+    <div class="pc-bar">
+      <div class="pc-devices" role="group" aria-label="Preview size">
+        <button type="button" class="pc-device is-active" data-pc-device="desktop" aria-pressed="true">Desktop</button>
+        <button type="button" class="pc-device" data-pc-device="tablet" aria-pressed="false">Tablet</button>
+        <button type="button" class="pc-device" data-pc-device="phone" aria-pressed="false">Phone</button>
+      </div>
+      <div class="pc-status<?= ($page['status'] ?? 'published') === 'draft' ? ' is-draft' : '' ?>" id="pcStatus">
+        <span class="pc-dot" aria-hidden="true"></span><span data-pc-status-text><?= h($liveLabel) ?></span>
+      </div>
+      <div class="pc-bar-actions">
+        <a class="btn btn-ghost btn-sm" href="<?= h($page['slug']) ?>" target="_blank" rel="noopener">View live ↗</a>
+        <button type="button" class="btn btn-ghost btn-sm" id="pcDiscard" disabled>Discard changes</button>
+        <button type="submit" class="btn btn-primary btn-sm" id="pcPublish" disabled>Publish</button>
+      </div>
+    </div>
+
+    <div class="pc-split">
+      <aside class="pc-panel" id="pcPanel" aria-label="Page sections">
+        <p class="pc-panel-help">Click any text or image in the preview to edit it. Drag <b>⠿</b> to change the order (or focus it and use the arrow keys). Switch a section off to hide it on the live page. Nothing goes live until you <b>Publish</b>.</p>
+        <input type="search" class="pc-search" id="pcSearch" placeholder="Find text on this page…" aria-label="Find text on this page">
+        <p class="pc-search-empty" id="pcSearchEmpty" hidden>No text on this page matches that search.</p>
+
+        <ol class="pc-list" id="pcList">
+          <?php foreach ($sectionRows as $s) {
+              pc_admin_row($s, $contentOverrides, true, isset($hiddenSections[$s['key']]), $page['slug']);
+          } ?>
+        </ol>
+
+        <?php if ($looseRows): ?>
+          <div class="pc-list-title">Between sections <span>fixed in place</span></div>
+          <ol class="pc-list pc-list-fixed">
+            <?php foreach ($looseRows as $s) {
+                pc_admin_row($s, $contentOverrides, false, false, $page['slug']);
+            } ?>
+          </ol>
+        <?php endif; ?>
+      </aside>
+
+      <div class="pc-stage" id="pcStage">
+        <div class="pc-frame-wrap" id="pcFrameWrap">
+          <iframe id="pcFrame" src="<?= h($previewUrl) ?>" title="Live preview of <?= h($page['name']) ?>"></iframe>
+          <div class="pc-frame-loading" id="pcLoading">Loading preview…</div>
         </div>
       </div>
-      <div class="pc-search-empty" id="pcSearchEmpty" hidden>No text on this page matches that search.</div>
     </div>
-
-    <?php $sectionNo = 0; foreach ($contentSections as $sectionKey => $section):
-      $sectionNo++;
-      $domId = pc_dom_id($sectionKey);
-      $edited = pc_admin_edited_count($section, $contentOverrides);
-      $isOpen = $savedSection === $sectionKey || ($contentError && $contentErrorSection === $sectionKey) || count($contentSections) === 1;
-      $textCount = count($section['texts']);
-      $imageCount = count($section['images']);
-    ?>
-    <details class="pc-section" id="<?= h($domId) ?>"<?= $isOpen ? ' open' : '' ?>>
-      <summary>
-        <span class="pc-sec-num"><?= $sectionNo ?></span>
-        <span class="pc-sec-head">
-          <span class="pc-sec-name"><?= h($section['label']) ?></span>
-          <?php if ($section['title'] !== ''): ?><span class="pc-sec-title"><?= h(mb_strimwidth($section['title'], 0, 90, '…', 'UTF-8')) ?></span><?php endif; ?>
-        </span>
-        <span class="pc-sec-meta">
-          <?= $textCount ?> text<?= $textCount === 1 ? '' : 's' ?><?php if ($imageCount): ?> · <?= $imageCount ?> image<?= $imageCount === 1 ? '' : 's' ?><?php endif; ?>
-          <?php if ($edited): ?><span class="badge badge-published"><?= $edited ?> edited</span><?php endif; ?>
-        </span>
-        <span class="pc-sec-chevron" aria-hidden="true"></span>
-      </summary>
-
-      <form method="post" enctype="multipart/form-data" action="page-edit.php?id=<?= (int) $id ?>&amp;tab=content" class="pc-form">
-        <?= csrf_field() ?>
-        <input type="hidden" name="form" value="content">
-        <input type="hidden" name="section" value="<?= h($sectionKey) ?>">
-
-        <?php if ($section['images']): ?>
-        <div class="pc-group-label">Images</div>
-        <div class="pc-images">
-          <?php $imgNo = 0; foreach ($section['images'] as $hash => $img):
-            $imgNo++;
-            $srcEdited = array_key_exists('i' . $hash, $contentOverrides);
-            $altEdited = array_key_exists('a' . $hash, $contentOverrides);
-            $currentSrc = $srcEdited ? $contentOverrides['i' . $hash] : $img['src'];
-            $currentAlt = $altEdited ? $contentOverrides['a' . $hash] : $img['alt'];
-            $fileName = basename(pc_image_path($img['src']));
-            $imgId = 'pci-' . $hash;
-          ?>
-          <div class="field pc-image pc-item" data-pc-text="<?= h($img['alt'] . ' ' . $currentAlt . ' ' . $fileName) ?>">
-            <div class="pc-image-preview">
-              <img data-image-preview src="<?= h($currentSrc) ?>" alt="">
-            </div>
-            <label for="<?= h($imgId) ?>">
-              Image <?= $imgNo ?>
-              <?php if ($srcEdited): ?><span class="pc-edited">Replaced</span><?php endif; ?>
-              <?php if ($img['count'] > 1): ?><span class="pc-count">used <?= (int) $img['count'] ?>×</span><?php endif; ?>
-            </label>
-            <div class="pc-file-name"><?= h(str_starts_with($img['src'], 'data:') ? 'Embedded image' : $fileName) ?></div>
-            <input type="file" id="<?= h($imgId) ?>" name="pc_img[<?= h($hash) ?>]" accept="image/jpeg,image/png,image/webp,image/gif" data-image-input>
-            <div class="field-hint">JPG, PNG, WEBP or GIF, under 5MB. Use the same shape as the current image so the layout holds.</div>
-            <label for="<?= h($imgId) ?>-url" class="pc-sub-label">Or image URL</label>
-            <input type="text" id="<?= h($imgId) ?>-url" name="pc_img_url[<?= h($hash) ?>]" value="" placeholder="Paste a URL from Admin → Media" data-pc-img-url>
-            <div class="field-hint">Leave the URL empty to keep the current image.</div>
-            <label for="<?= h($imgId) ?>-alt" class="pc-sub-label">Alt text <?php if ($altEdited): ?><span class="pc-edited">Edited</span><?php endif; ?></label>
-            <input type="text" id="<?= h($imgId) ?>-alt" name="pc_alt[<?= h($hash) ?>]" maxlength="300" value="<?= h($currentAlt) ?>" placeholder="Describe the image for screen readers and search engines">
-            <?php if ($srcEdited): ?>
-              <label class="checkbox-row pc-reset">
-                <input type="checkbox" name="pc_img_reset[<?= h($hash) ?>]" value="1">
-                Restore the original image
-              </label>
-            <?php endif; ?>
-          </div>
-          <?php endforeach; ?>
-        </div>
-        <?php endif; ?>
-
-        <?php if ($section['texts']): ?>
-        <div class="pc-group-label">Text</div>
-        <?php foreach ($section['texts'] as $key => $item):
-          $key = (string) $key;
-          $isEdited = array_key_exists($key, $contentOverrides);
-          $value = $isEdited ? $contentOverrides[$key] : $item['text'];
-          $fieldId = 'pcf-' . $key;
-          $long = mb_strlen($value, 'UTF-8') > 90 || mb_strlen($item['text'], 'UTF-8') > 90;
-        ?>
-        <div class="field pc-field pc-item<?= $isEdited ? ' is-edited' : '' ?>" data-pc-text="<?= h($item['text'] . ' ' . $value) ?>">
-          <label for="<?= h($fieldId) ?>">
-            <?= h($item['kind']) ?><?php if ($item['parts'] > 1): ?> · part <?= (int) $item['part'] ?> of <?= (int) $item['parts'] ?><?php endif; ?>
-            <?php if ($item['hint'] !== ''): ?><code class="pc-hint"><?= h($item['hint']) ?></code><?php endif; ?>
-            <?php if ($isEdited): ?><span class="pc-edited">Edited</span><?php endif; ?>
-            <?php if ($item['count'] > 1): ?><span class="pc-count">appears <?= (int) $item['count'] ?>×</span><?php endif; ?>
-          </label>
-          <?php if ($long): ?>
-            <textarea id="<?= h($fieldId) ?>" name="pc_text[<?= h($key) ?>]" rows="<?= min(8, (int) ceil(mb_strlen($value, 'UTF-8') / 95) + 1) ?>" placeholder="<?= h($item['text']) ?>"><?= h($value) ?></textarea>
-          <?php else: ?>
-            <input type="text" id="<?= h($fieldId) ?>" name="pc_text[<?= h($key) ?>]" value="<?= h($value) ?>" placeholder="<?= h($item['text']) ?>">
-          <?php endif; ?>
-          <?php if ($isEdited): ?>
-            <div class="field-hint">Original: “<?= h($item['text']) ?>”. Clear the field and save to restore it.</div>
-          <?php endif; ?>
-        </div>
-        <?php endforeach; ?>
-        <?php endif; ?>
-
-        <div class="pc-actions">
-          <button type="submit" class="btn btn-primary">Save “<?= h($section['label']) ?>”</button>
-          <?php if ($section['anchor'] !== ''): ?>
-            <a class="btn btn-ghost btn-sm" href="<?= h($page['slug'] . '#' . $section['anchor']) ?>" target="_blank" rel="noopener">View section on site ↗</a>
-          <?php endif; ?>
-        </div>
-      </form>
-    </details>
-    <?php endforeach; ?>
-
+  </form>
+  <script type="application/json" id="pcData"><?= json_encode($editorData, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
+  <script src="<?= asset_url('/admin/assets/page-editor.js') ?>"></script>
   <?php endif; ?>
 
 <?php else: ?>

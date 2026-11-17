@@ -308,7 +308,17 @@ $stmt = $pdo->prepare('SELECT * FROM pages WHERE slug = ?');
 $stmt->execute([$uri]);
 $page = $stmt->fetch();
 
-if ($page && ($page['status'] ?? 'published') === 'draft') {
+// The live preview in Admin → Pages → Edit → Page Content loads the page with
+// ?pc_preview=1. For a logged-in editor of this page only, it tags editable
+// items for the editor's script and shows the page even while it's a draft.
+$pcPreview = false;
+if ($page && isset($_GET['pc_preview'])) {
+    $pcUser = current_user();
+    $pcPreview = $pcUser !== null
+        && user_has_page_access($pdo, (int) $pcUser['id'], (string) $pcUser['role'], (int) $page['id']);
+}
+
+if ($page && !$pcPreview && ($page['status'] ?? 'published') === 'draft') {
     $page = false;
 }
 
@@ -332,10 +342,16 @@ if (!is_file($templateFile)) {
     die('This page has no template configured.');
 }
 
+if ($pcPreview) {
+    $seo['robots_index'] = 'noindex';
+    header('X-Robots-Tag: noindex, nofollow');
+    header('Cache-Control: no-store, private');
+}
+
 include __DIR__ . '/templates/layout-start.php';
-// Section-wise text/image edits from Admin → Pages → Edit → Page Content are
-// spliced into the template's output; with none saved it passes through as is.
+// Text/image edits and section layout from Admin → Pages → Edit → Page Content
+// are spliced into the template's output; with none saved it passes through as is.
 ob_start();
 include $templateFile;
-echo page_content_apply($pdo, (int) $page['id'], (string) ob_get_clean());
+echo page_content_apply($pdo, (int) $page['id'], (string) ob_get_clean(), $pcPreview);
 include __DIR__ . '/templates/layout-end.php';
