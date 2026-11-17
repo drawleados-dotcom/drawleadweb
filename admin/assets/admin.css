@@ -242,7 +242,7 @@ tr:last-child td{border-bottom:none}
 .page-tab.active{color:var(--black);border-bottom-color:var(--blue)}
 
 .content:has(.pc-editor){padding-bottom:1.25rem}
-.pc-editor{display:flex;flex-direction:column;height:calc(100vh - 205px);min-height:600px}
+.pc-editor{display:flex;flex-direction:column;height:calc(100vh - 300px);min-height:460px}
 .pc-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px}
 .pc-devices{display:inline-flex;background:var(--white);border:1.5px solid var(--border);border-radius:10px;padding:3px;gap:2px}
 .pc-device{font-family:var(--font);font-size:12px;font-weight:700;color:var(--g500);background:none;border:0;border-radius:7px;padding:7px 13px;cursor:pointer;transition:color .15s,background-color .15s}

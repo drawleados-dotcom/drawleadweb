@@ -93,7 +93,16 @@
   }
 
   // ── Preview sizing ──────────────────────────────────────────────────────
+  // The editor fills exactly the window height left below its own top edge,
+  // whatever the header, tabs and alerts above it add up to.
+  function sizeEditor() {
+    if (window.innerWidth <= 1100) { form.style.height = ''; return; }
+    var top = form.getBoundingClientRect().top + window.pageYOffset;
+    form.style.height = Math.max(460, Math.floor(window.innerHeight - top - 24)) + 'px';
+  }
+
   function fit() {
+    sizeEditor();
     var w = WIDTHS[device];
     var availW = Math.max(240, stage.clientWidth - 24);
     var availH = Math.max(240, stage.clientHeight - 24);
