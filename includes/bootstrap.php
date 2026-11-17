@@ -326,6 +326,9 @@ function pending_migrations_exist(PDO $pdo): bool
     if (!migration_table_exists($pdo, 'page_content')) {
         return true;
     }
+    if (!migration_table_exists($pdo, 'page_content_versions')) {
+        return true;
+    }
     return false;
 }
 

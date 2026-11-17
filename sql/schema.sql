@@ -261,6 +261,22 @@ CREATE TABLE IF NOT EXISTS page_content (
   FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Version history for Page Content: a snapshot per Publish / Restore.
+CREATE TABLE IF NOT EXISTS page_content_versions (
+  id          INT AUTO_INCREMENT PRIMARY KEY,
+  page_id     INT NOT NULL,
+  user_id     INT NULL,
+  user_name   VARCHAR(120) NOT NULL DEFAULT '',
+  action      VARCHAR(20)  NOT NULL DEFAULT 'publish',
+  summary     VARCHAR(500) NOT NULL DEFAULT '',
+  details     TEXT,
+  changed     INT NOT NULL DEFAULT 0,
+  snapshot    MEDIUMTEXT NOT NULL,
+  created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+  KEY idx_page_versions (page_id, id),
+  FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- ── Seed data ──
 
 INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES

@@ -619,6 +619,13 @@ function migration_026_statements(): array
     ];
 }
 
+function migration_028_statements(): array
+{
+    return [
+        "CREATE TABLE IF NOT EXISTS page_content_versions ( id          INT AUTO_INCREMENT PRIMARY KEY, page_id     INT NOT NULL, user_id     INT NULL, user_name   VARCHAR(120) NOT NULL DEFAULT '', action      VARCHAR(20)  NOT NULL DEFAULT 'publish', summary     VARCHAR(500) NOT NULL DEFAULT '', details     TEXT, changed     INT NOT NULL DEFAULT 0, snapshot    MEDIUMTEXT NOT NULL, created_at  DATETIME DEFAULT CURRENT_TIMESTAMP, KEY idx_page_versions (page_id, id), FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+    ];
+}
+
 function migration_027_statements(): array
 {
     return [
@@ -721,6 +728,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($which === '027' || $which === 'all') {
         $toRun['027'] = migration_027_statements();
     }
+    if ($which === '028' || $which === 'all') {
+        $toRun['028'] = migration_028_statements();
+    }
 
     foreach ($toRun as $name => $statements) {
         try {
@@ -806,6 +816,7 @@ $stmt026 = $pdo->prepare('SELECT COUNT(*) FROM pages WHERE slug = ?');
 $stmt026->execute(['/home-9']);
 $migration026Done = (int) $stmt026->fetchColumn() >= 1;
 $migration027Done = migration_table_exists($pdo, 'page_content');
+$migration028Done = migration_table_exists($pdo, 'page_content_versions');
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -1154,7 +1165,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done || !$migration027Done): ?>
+<div class="card">
+  <div class="card-title">028 — Page Content version history</div>
+  <div class="card-desc">Creates page_content_versions: every Publish and Restore in Admin → Pages → Edit → Page Content saves a snapshot with who, when and what changed, so earlier versions can be previewed and restored from the editor's History. Needs migration 027.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration028Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration028Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration028Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="028">
+    <button type="submit" class="btn btn-primary">Run Migration 028</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done || !$migration027Done || !$migration028Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

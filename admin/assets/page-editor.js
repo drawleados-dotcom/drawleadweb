@@ -568,6 +568,80 @@
   }
   if (search) search.addEventListener('input', applySearch);
 
+  // ── History: preview and restore earlier versions ───────────────────────
+  var historyBtn = document.getElementById('pcHistoryBtn');
+  var historyView = document.getElementById('pcHistoryView');
+  var sectionsView = document.getElementById('pcSectionsView');
+  var banner = document.getElementById('pcVersionBanner');
+  var bannerText = banner ? banner.querySelector('[data-pc-version-text]') : null;
+  var bannerRestore = document.getElementById('pcBannerRestore');
+  var restoreForm = document.getElementById('pcRestoreForm');
+  var baseSrc = frame.getAttribute('src');
+  var viewing = null;
+
+  function markViewing() {
+    each(form.querySelectorAll('.pc-tl-item'), function (li) {
+      li.classList.toggle('is-viewing', viewing !== null && li.getAttribute('data-pc-version') === String(viewing));
+    });
+  }
+  function loadFrame(src) {
+    if (loading) loading.hidden = false;
+    hoverEl = null;
+    selEl = null;
+    frame.src = src;
+  }
+  // Show a version in the preview, exactly as it looked live (read-only).
+  function viewVersion(id) {
+    var li = form.querySelector('.pc-tl-item[data-pc-version="' + id + '"]');
+    var label = li ? li.getAttribute('data-pc-version-label') : '';
+    viewing = id;
+    loadFrame(baseSrc + (baseSrc.indexOf('?') === -1 ? '?' : '&') + 'pc_version=' + encodeURIComponent(id));
+    if (banner) {
+      banner.hidden = false;
+      bannerText.textContent = label;
+      bannerRestore.hidden = !li || li.classList.contains('is-current');
+      bannerRestore.value = id;
+      bannerRestore.setAttribute('data-pc-restore', String(id) === '0' ? 'the original design' : 'the version from ' + label);
+    }
+    markViewing();
+  }
+  function exitVersion() {
+    if (viewing === null) return;
+    viewing = null;
+    if (banner) banner.hidden = true;
+    loadFrame(baseSrc);
+    markViewing();
+  }
+  function showHistory(on) {
+    if (!historyView) return;
+    historyView.hidden = !on;
+    sectionsView.hidden = on;
+    historyBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    historyBtn.classList.toggle('is-active', on);
+    if (panel) panel.scrollTop = 0;
+    if (!on) exitVersion();
+  }
+  if (historyBtn && historyView) {
+    historyBtn.addEventListener('click', function () { showHistory(historyView.hidden); });
+    each(form.querySelectorAll('[data-pc-history-close]'), function (b) {
+      b.addEventListener('click', function () { showHistory(false); });
+    });
+    each(form.querySelectorAll('[data-pc-view-version]'), function (b) {
+      b.addEventListener('click', function () { viewVersion(b.getAttribute('data-pc-view-version')); });
+    });
+  }
+  if (banner) banner.querySelector('[data-pc-version-exit]').addEventListener('click', exitVersion);
+  if (restoreForm) {
+    restoreForm.addEventListener('submit', function (e) {
+      var btn = e.submitter;
+      var what = (btn && btn.getAttribute('data-pc-restore')) || 'this version';
+      var msg = 'Restore ' + what + '? It goes live right away. The version it replaces stays in History, so you can undo this.';
+      if (isDirty()) msg = 'You have unpublished changes. Restoring will discard them.\n\n' + msg;
+      if (!window.confirm(msg)) { e.preventDefault(); return; }
+      submitting = true;
+    });
+  }
+
   // ── Publish / discard ───────────────────────────────────────────────────
   form.addEventListener('submit', function (e) {
     if (submitting || !isDirty()) { e.preventDefault(); return; }

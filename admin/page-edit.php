@@ -48,16 +48,33 @@ if ($isPost && ($_POST['form'] ?? '') === 'content') {
         if ($rendered === null) {
             $contentError = 'This page\'s template couldn\'t be loaded, so nothing was published.';
         } else {
+            $beforeRows = pc_snapshot_rows($pdo, $id);
             $result = pc_save_page($pdo, $id, pc_sections(pc_scan($rendered)), $_POST, $_FILES);
             if ($result['error'] !== '') {
                 $contentError = $result['error'] . ' Nothing was published.';
             } else {
                 if ($result['changed'] > 0) {
                     $pdo->prepare('UPDATE pages SET updated_at = NOW() WHERE id = ?')->execute([$id]);
+                    pc_record_publish($pdo, $id, $u, $beforeRows, $result['changes']);
                 }
                 header('Location: page-edit.php?id=' . $id . '&tab=content&published=' . (int) $result['changed']);
                 exit;
             }
+        }
+    }
+} elseif ($isPost && ($_POST['form'] ?? '') === 'restore') {
+    // ── Page Content tab: History → Restore ──
+    csrf_verify();
+    $tab = 'content';
+    if (!$contentReady) {
+        $contentError = 'Page content editing needs migration 027. Run it from Migrations first.';
+    } else {
+        $restoreError = pc_restore_version($pdo, $id, (int) ($_POST['version_id'] ?? -1), $u);
+        if ($restoreError !== '') {
+            $contentError = $restoreError;
+        } else {
+            header('Location: page-edit.php?id=' . $id . '&tab=content&restored=1');
+            exit;
         }
     }
 } elseif ($isPost) {
@@ -141,6 +158,8 @@ $sectionRows = [];
 $looseRows = [];
 $hiddenSections = [];
 $editorData = ['blocks' => []];
+$versionsReady = false;
+$versions = [];
 if ($tab === 'content') {
     if (pc_template_file($page) === null) {
         $contentStatus = 'no-template';
@@ -173,6 +192,8 @@ if ($tab === 'content') {
             if (!$contentSections) {
                 $contentStatus = 'empty';
             }
+            $versionsReady = pc_versions_ready($pdo);
+            $versions = $versionsReady ? pc_list_versions($pdo, $id) : [];
         }
     }
 }
@@ -335,7 +356,10 @@ include __DIR__ . '/includes/header.php';
 
   <?php if ($contentError): ?><div class="alert alert-error"><?= h($contentError) ?></div><?php endif; ?>
   <?php if (isset($_GET['published'])): $publishedN = (int) $_GET['published']; ?>
-    <div class="alert alert-success" data-pc-flash><?= $publishedN > 0 ? 'Published — the live page now shows your changes.' : 'Nothing had changed, so there was nothing to publish.' ?></div>
+    <div class="alert alert-success" data-pc-flash><?= $publishedN > 0 ? 'Published — the live page now shows your changes. It\'s saved in History, so you can always go back.' : 'Nothing had changed, so there was nothing to publish.' ?></div>
+  <?php endif; ?>
+  <?php if (isset($_GET['restored'])): ?>
+    <div class="alert alert-success" data-pc-flash>Restored — the live page now shows that version. The version it replaced is still in History if you want it back.</div>
   <?php endif; ?>
 
   <?php if ($contentStatus === 'no-template'): ?>
@@ -384,6 +408,10 @@ include __DIR__ . '/includes/header.php';
         <span class="pc-dot" aria-hidden="true"></span><span data-pc-status-text><?= h($liveLabel) ?></span>
       </div>
       <div class="pc-bar-actions">
+        <button type="button" class="btn btn-ghost btn-sm pc-history-btn" id="pcHistoryBtn" aria-pressed="false" aria-controls="pcHistoryView">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg>
+          History<?php if ($versions): ?> <span class="pc-count-badge"><?= count($versions) ?></span><?php endif; ?>
+        </button>
         <a class="btn btn-ghost btn-sm" href="<?= h($page['slug']) ?>" target="_blank" rel="noopener">View live ↗</a>
         <button type="button" class="btn btn-ghost btn-sm" id="pcDiscard" disabled>Discard changes</button>
         <button type="submit" class="btn btn-primary btn-sm" id="pcPublish" disabled>Publish</button>
@@ -392,6 +420,81 @@ include __DIR__ . '/includes/header.php';
 
     <div class="pc-split">
       <aside class="pc-panel" id="pcPanel" aria-label="Page sections">
+        <div id="pcHistoryView" class="pc-history" hidden>
+          <div class="pc-history-head">
+            <div>
+              <div class="pc-history-title">Version history</div>
+              <div class="pc-history-sub">Every Publish is saved here. Preview any version, then restore it if you want it back.</div>
+            </div>
+            <button type="button" class="btn btn-ghost btn-sm" data-pc-history-close>Back to sections</button>
+          </div>
+
+          <?php if (!$versionsReady): ?>
+            <div class="pc-history-setup">
+              <b>Turn on version history</b>
+              <p>It needs migration 028, which adds the table that keeps each published version.</p>
+              <?php if ($u['role'] === 'admin'): ?>
+                <a class="btn btn-primary btn-sm" href="run-migrations.php">Go to Migrations</a>
+              <?php else: ?>
+                <p>Ask an admin to run migration 028 from Admin → Migrations.</p>
+              <?php endif; ?>
+            </div>
+          <?php else: ?>
+            <ol class="pc-timeline">
+              <?php foreach ($versions as $vi => $v):
+                $vLabel = date('M j, Y · g:i A', strtotime((string) $v['created_at']));
+                $vDetails = json_decode((string) ($v['details'] ?? ''), true) ?: [];
+                $vAction = ['publish' => 'Published', 'restore' => 'Restored', 'baseline' => 'Earlier edits'][$v['action']] ?? 'Saved';
+              ?>
+              <li class="pc-tl-item<?= $vi === 0 ? ' is-current' : '' ?>" data-pc-version="<?= (int) $v['id'] ?>" data-pc-version-label="<?= h($vLabel) ?>">
+                <span class="pc-tl-dot" aria-hidden="true"></span>
+                <div class="pc-tl-body">
+                  <div class="pc-tl-top">
+                    <span class="pc-tl-when"><?= h($vLabel) ?></span>
+                    <?php if ($vi === 0): ?><span class="badge badge-published">Live now</span><?php endif; ?>
+                  </div>
+                  <div class="pc-tl-who"><?= h($vAction) ?><?= $v['user_name'] !== '' ? ' by ' . h($v['user_name']) : '' ?><?= (int) $v['changed'] > 0 ? ' · ' . (int) $v['changed'] . ' change' . ((int) $v['changed'] === 1 ? '' : 's') : '' ?></div>
+                  <div class="pc-tl-summary"><?= h($v['summary']) ?></div>
+                  <?php if (count($vDetails) > 3): ?>
+                    <details class="pc-tl-details">
+                      <summary>Show all <?= count($vDetails) ?> changes</summary>
+                      <ul><?php foreach ($vDetails as $d): ?><li><?= h((string) $d) ?></li><?php endforeach; ?></ul>
+                    </details>
+                  <?php endif; ?>
+                  <div class="pc-tl-actions">
+                    <button type="button" class="btn btn-ghost btn-sm" data-pc-view-version="<?= (int) $v['id'] ?>">Preview</button>
+                    <?php if ($vi > 0): ?>
+                      <button type="submit" form="pcRestoreForm" name="version_id" value="<?= (int) $v['id'] ?>" class="btn btn-ghost btn-sm" data-pc-restore="the version from <?= h($vLabel) ?>">Restore</button>
+                    <?php endif; ?>
+                  </div>
+                </div>
+              </li>
+              <?php endforeach; ?>
+
+              <li class="pc-tl-item is-origin<?= !$versions && !$contentOverrides ? ' is-current' : '' ?>" data-pc-version="0" data-pc-version-label="Original design">
+                <span class="pc-tl-dot" aria-hidden="true"></span>
+                <div class="pc-tl-body">
+                  <div class="pc-tl-top">
+                    <span class="pc-tl-when">Original design</span>
+                    <?php if (!$versions && !$contentOverrides): ?><span class="badge badge-published">Live now</span><?php endif; ?>
+                  </div>
+                  <div class="pc-tl-summary">The page as it was built, with none of the edits made here.</div>
+                  <div class="pc-tl-actions">
+                    <button type="button" class="btn btn-ghost btn-sm" data-pc-view-version="0">Preview</button>
+                    <?php if ($contentOverrides): ?>
+                      <button type="submit" form="pcRestoreForm" name="version_id" value="0" class="btn btn-ghost btn-sm" data-pc-restore="the original design">Restore</button>
+                    <?php endif; ?>
+                  </div>
+                </div>
+              </li>
+            </ol>
+            <?php if (!$versions): ?>
+              <p class="pc-history-empty">No versions yet. Each time you Publish, a version is added here.</p>
+            <?php endif; ?>
+          <?php endif; ?>
+        </div>
+
+        <div id="pcSectionsView">
         <p class="pc-panel-help">Click any text or image in the preview to edit it. Drag <b>⠿</b> to change the order (or focus it and use the arrow keys). Switch a section off to hide it on the live page. Nothing goes live until you <b>Publish</b>.</p>
         <input type="search" class="pc-search" id="pcSearch" placeholder="Find text on this page…" aria-label="Find text on this page">
         <p class="pc-search-empty" id="pcSearchEmpty" hidden>No text on this page matches that search.</p>
@@ -410,15 +513,27 @@ include __DIR__ . '/includes/header.php';
             } ?>
           </ol>
         <?php endif; ?>
+        </div>
       </aside>
 
       <div class="pc-stage" id="pcStage">
+        <div class="pc-version-banner" id="pcVersionBanner" hidden>
+          <span class="pc-version-text"><b>Previewing:</b> <span data-pc-version-text></span> <span class="pc-version-ro">· read-only</span></span>
+          <span class="pc-version-actions">
+            <button type="submit" form="pcRestoreForm" name="version_id" value="" class="btn btn-primary btn-sm" id="pcBannerRestore" data-pc-restore="">Restore this version</button>
+            <button type="button" class="btn btn-ghost btn-sm" data-pc-version-exit>Back to current</button>
+          </span>
+        </div>
         <div class="pc-frame-wrap" id="pcFrameWrap">
           <iframe id="pcFrame" src="<?= h($previewUrl) ?>" title="Live preview of <?= h($page['name']) ?>"></iframe>
           <div class="pc-frame-loading" id="pcLoading">Loading preview…</div>
         </div>
       </div>
     </div>
+  </form>
+  <form id="pcRestoreForm" method="post" action="page-edit.php?id=<?= (int) $id ?>&amp;tab=content">
+    <?= csrf_field() ?>
+    <input type="hidden" name="form" value="restore">
   </form>
   <script type="application/json" id="pcData"><?= json_encode($editorData, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
   <script src="<?= asset_url('/admin/assets/page-editor.js') ?>"></script>

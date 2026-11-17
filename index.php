@@ -351,7 +351,14 @@ if ($pcPreview) {
 include __DIR__ . '/templates/layout-start.php';
 // Text/image edits and section layout from Admin → Pages → Edit → Page Content
 // are spliced into the template's output; with none saved it passes through as is.
+// &pc_version=ID (with pc_preview): the editor's History shows that earlier
+// version exactly as it looked live — read-only, so no editing markers.
+$pcVersionOverrides = null;
+if ($pcPreview && isset($_GET['pc_version'])) {
+    $pcVersion = pc_version_rows($pdo, (int) $page['id'], (int) $_GET['pc_version']);
+    $pcVersionOverrides = $pcVersion ? pc_rows_to_overrides($pcVersion['rows']) : [];
+}
 ob_start();
 include $templateFile;
-echo page_content_apply($pdo, (int) $page['id'], (string) ob_get_clean(), $pcPreview);
+echo page_content_apply($pdo, (int) $page['id'], (string) ob_get_clean(), $pcPreview && $pcVersionOverrides === null, $pcVersionOverrides);
 include __DIR__ . '/templates/layout-end.php';

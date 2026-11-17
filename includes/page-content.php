@@ -719,9 +719,10 @@ function pc_splice_range(string $html, array $edits, int $from, int $to): string
  * editable item with data-pc-* attributes / <!--pc:key--> markers for the
  * editor's script, and leaves hiding and reordering to that script.
  */
-function page_content_apply(PDO $pdo, int $pageId, string $html, bool $preview = false): string
+function page_content_apply(PDO $pdo, int $pageId, string $html, bool $preview = false, ?array $overrides = null): string
 {
-    $overrides = page_content_overrides($pdo, $pageId);
+    // $overrides: a version from the history to show instead of what's live.
+    $overrides = $overrides ?? page_content_overrides($pdo, $pageId);
     if (!$overrides && !$preview) {
         return $html;
     }
@@ -945,16 +946,19 @@ function pc_save_page(PDO $pdo, int $pageId, array $sections, array $post, array
     );
     $delete = $pdo->prepare('DELETE FROM page_content WHERE page_id = ? AND item_key = ?');
     $changed = 0;
+    $changes = []; // human-readable, for the version history
 
-    $set = function (string $key, string $sectionKey, string $kind, string $original, ?string $value) use ($pageId, $current, $upsert, $delete, &$changed): void {
+    $set = function (string $key, string $sectionKey, string $kind, string $original, ?string $value, string $label) use ($pageId, $current, $upsert, $delete, &$changed, &$changes): void {
         if ($value === null) {
             if (array_key_exists($key, $current)) {
                 $delete->execute([$pageId, $key]);
                 $changed++;
+                $changes[] = $label;
             }
         } elseif (($current[$key] ?? null) !== $value) {
             $upsert->execute([$pageId, $key, $sectionKey, $kind, $original, $value]);
             $changed++;
+            $changes[] = $label;
         }
     };
 
@@ -967,18 +971,20 @@ function pc_save_page(PDO $pdo, int $pageId, array $sections, array $post, array
             $value = $item['type'] === 'block'
                 ? pc_normalize_block((string) $postedTexts[$key])
                 : pc_normalize((string) $postedTexts[$key]);
-            $set($key, $section['key'], 'text', $item['text'], ($value === '' || $value === $item['text']) ? null : $value);
+            $new = ($value === '' || $value === $item['text']) ? null : $value;
+            $set($key, $section['key'], 'text', $item['text'], $new, $section['label'] . ' · ' . $item['kind']
+                . ($new === null ? ' (back to original)' : ': “' . mb_strimwidth(str_replace("\n", ' ', $new), 0, 60, '…', 'UTF-8') . '”'));
         }
 
         foreach ($section['images'] as $hash => $img) {
             if (!empty($resets[$hash])) {
-                $set('i' . $hash, $section['key'], 'img_src', $img['src'], null);
+                $set('i' . $hash, $section['key'], 'img_src', $img['src'], null, $section['label'] . ' · image restored to original');
             } elseif (isset($uploads[$hash])) {
-                $set('i' . $hash, $section['key'], 'img_src', $img['src'], $uploads[$hash]);
+                $set('i' . $hash, $section['key'], 'img_src', $img['src'], $uploads[$hash], $section['label'] . ' · image replaced');
             }
             if (array_key_exists($hash, $postedAlts)) {
                 $alt = pc_normalize((string) $postedAlts[$hash]);
-                $set('a' . $hash, $section['key'], 'img_alt', $img['alt'], ($alt === '' || $alt === $img['alt']) ? null : $alt);
+                $set('a' . $hash, $section['key'], 'img_alt', $img['alt'], ($alt === '' || $alt === $img['alt']) ? null : $alt, $section['label'] . ' · image alt text');
             }
         }
     }
@@ -990,8 +996,200 @@ function pc_save_page(PDO $pdo, int $pageId, array $sections, array $post, array
         $set('layout', '', 'text', '', $isDefault ? null : json_encode(
             ['order' => $layout['order'], 'hidden' => array_keys($layout['hidden'])],
             JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
-        ));
+        ), pc_layout_change_label(pc_layout($current, $sectionKeys), $layout, $sections));
     }
 
-    return ['error' => '', 'changed' => $changed];
+    return ['error' => '', 'changed' => $changed, 'changes' => $changes];
+}
+
+/** What a section layout change did, for the history ("Hid Testimonials; Reordered sections"). */
+function pc_layout_change_label(array $before, array $after, array $sections): string
+{
+    $name = fn ($k) => $sections[$k]['label'] ?? (string) $k;
+    $parts = [];
+    $hid = array_diff(array_keys($after['hidden']), array_keys($before['hidden']));
+    $shown = array_diff(array_keys($before['hidden']), array_keys($after['hidden']));
+    if ($hid) {
+        $parts[] = 'Hid ' . implode(', ', array_map($name, $hid));
+    }
+    if ($shown) {
+        $parts[] = 'Showed ' . implode(', ', array_map($name, $shown));
+    }
+    if ($before['order'] !== $after['order']) {
+        $parts[] = 'Reordered sections';
+    }
+    return $parts ? implode('; ', $parts) : 'Section layout';
+}
+
+// ── Version history (page_content_versions, migration 028) ──────────────────
+// Every Publish and Restore stores a full snapshot of the page's saved rows, so
+// any earlier version can be previewed and restored. Restoring is itself a new
+// version, so it can be undone the same way.
+
+function pc_versions_ready(PDO $pdo): bool
+{
+    return migration_table_exists($pdo, 'page_content_versions');
+}
+
+/** A page's saved rows as [item_key, section_key, kind, original, value] lists: a version snapshot. */
+function pc_snapshot_rows(PDO $pdo, int $pageId): array
+{
+    $stmt = $pdo->prepare('SELECT item_key, section_key, kind, original, value FROM page_content WHERE page_id = ? ORDER BY item_key');
+    $stmt->execute([$pageId]);
+    return array_map(
+        fn ($r) => [(string) $r['item_key'], (string) $r['section_key'], (string) $r['kind'], (string) $r['original'], (string) $r['value']],
+        $stmt->fetchAll()
+    );
+}
+
+function pc_rows_to_overrides(array $rows): array
+{
+    $out = [];
+    foreach ($rows as $r) {
+        if (is_array($r) && isset($r[0], $r[4])) {
+            $out[(string) $r[0]] = (string) $r[4];
+        }
+    }
+    return $out;
+}
+
+function pc_record_version(PDO $pdo, int $pageId, ?array $user, string $action, string $summary, array $details, int $changed, array $rows): void
+{
+    $json = JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
+    try {
+        $pdo->prepare(
+            'INSERT INTO page_content_versions (page_id, user_id, user_name, action, summary, details, changed, snapshot)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+        )->execute([
+            $pageId,
+            isset($user['id']) ? (int) $user['id'] : null,
+            mb_substr((string) ($user['name'] ?? ''), 0, 120, 'UTF-8'),
+            $action,
+            mb_strimwidth($summary, 0, 500, '…', 'UTF-8'),
+            json_encode(array_values($details), $json),
+            $changed,
+            json_encode($rows, $json),
+        ]);
+    } catch (PDOException $e) {
+        error_log('pc_record_version(page ' . $pageId . '): ' . $e->getMessage());
+    }
+}
+
+/**
+ * The first time a page with edits made before version history existed gets
+ * a new version, keep its earlier state too so it can still be restored.
+ */
+function pc_ensure_baseline(PDO $pdo, int $pageId, array $beforeRows): void
+{
+    if (!$beforeRows) {
+        return;
+    }
+    try {
+        $has = $pdo->prepare('SELECT 1 FROM page_content_versions WHERE page_id = ? LIMIT 1');
+        $has->execute([$pageId]);
+        if (!$has->fetchColumn()) {
+            pc_record_version($pdo, $pageId, null, 'baseline', 'Edits made before version history was turned on', [], count($beforeRows), $beforeRows);
+        }
+    } catch (PDOException $e) {
+        error_log('pc_ensure_baseline(page ' . $pageId . '): ' . $e->getMessage());
+    }
+}
+
+/** Record a Publish: a short summary, the full list of changes, and the resulting snapshot. */
+function pc_record_publish(PDO $pdo, int $pageId, ?array $user, array $beforeRows, array $changes): void
+{
+    if (!pc_versions_ready($pdo)) {
+        return;
+    }
+    pc_ensure_baseline($pdo, $pageId, $beforeRows);
+    $first = array_slice($changes, 0, 3);
+    $more = count($changes) - count($first);
+    $summary = $first ? implode('; ', $first) . ($more > 0 ? ' and ' . $more . ' more' : '') : 'Published';
+    pc_record_version($pdo, $pageId, $user, 'publish', $summary, $changes, count($changes), pc_snapshot_rows($pdo, $pageId));
+}
+
+/** Newest first, without the snapshots. Empty if migration 028 hasn't run. */
+function pc_list_versions(PDO $pdo, int $pageId, int $limit = 60): array
+{
+    try {
+        $stmt = $pdo->prepare(
+            'SELECT id, user_name, action, summary, details, changed, created_at
+             FROM page_content_versions WHERE page_id = ? ORDER BY id DESC LIMIT ' . max(1, $limit)
+        );
+        $stmt->execute([$pageId]);
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        return [];
+    }
+}
+
+/**
+ * A version's snapshot. Version 0 is the original design (the template with
+ * no edits). Null if the version doesn't exist for this page.
+ *
+ * @return array{rows: array, created_at: ?string}|null
+ */
+function pc_version_rows(PDO $pdo, int $pageId, int $versionId): ?array
+{
+    if ($versionId === 0) {
+        return ['rows' => [], 'created_at' => null];
+    }
+    try {
+        $stmt = $pdo->prepare('SELECT snapshot, created_at FROM page_content_versions WHERE id = ? AND page_id = ?');
+        $stmt->execute([$versionId, $pageId]);
+        $row = $stmt->fetch();
+    } catch (PDOException $e) {
+        return null;
+    }
+    if (!$row) {
+        return null;
+    }
+    $rows = json_decode((string) $row['snapshot'], true);
+    return is_array($rows) ? ['rows' => $rows, 'created_at' => $row['created_at']] : null;
+}
+
+/** Make a version live again. Returns an error message, or '' on success. */
+function pc_restore_version(PDO $pdo, int $pageId, int $versionId, ?array $user): string
+{
+    $version = pc_version_rows($pdo, $pageId, $versionId);
+    if ($version === null) {
+        return 'That version no longer exists.';
+    }
+    $label = $versionId === 0
+        ? 'the original design'
+        : 'the version from ' . date('M j, g:i A', strtotime((string) $version['created_at']));
+
+    $beforeRows = pc_snapshot_rows($pdo, $pageId);
+    $before = pc_rows_to_overrides($beforeRows);
+    $after = pc_rows_to_overrides($version['rows']);
+    $changed = 0;
+    foreach (array_unique(array_merge(array_keys($before), array_keys($after))) as $k) {
+        $changed += (($before[$k] ?? null) !== ($after[$k] ?? null)) ? 1 : 0;
+    }
+    if ($changed === 0) {
+        return 'The live page already matches that version.';
+    }
+
+    $pdo->beginTransaction();
+    try {
+        $pdo->prepare('DELETE FROM page_content WHERE page_id = ?')->execute([$pageId]);
+        $insert = $pdo->prepare('INSERT INTO page_content (page_id, item_key, section_key, kind, original, value) VALUES (?, ?, ?, ?, ?, ?)');
+        foreach ($version['rows'] as $r) {
+            if (is_array($r) && count($r) >= 5) {
+                $insert->execute([$pageId, (string) $r[0], (string) $r[1], (string) $r[2], (string) $r[3], (string) $r[4]]);
+            }
+        }
+        $pdo->commit();
+    } catch (Throwable $e) {
+        $pdo->rollBack();
+        error_log('pc_restore_version(page ' . $pageId . ', version ' . $versionId . '): ' . $e->getMessage());
+        return 'Could not restore that version, so nothing was changed. Please try again.';
+    }
+
+    if (pc_versions_ready($pdo)) {
+        pc_ensure_baseline($pdo, $pageId, $beforeRows);
+        pc_record_version($pdo, $pageId, $user, 'restore', 'Restored ' . $label, [], $changed, pc_snapshot_rows($pdo, $pageId));
+    }
+    $pdo->prepare('UPDATE pages SET updated_at = NOW() WHERE id = ?')->execute([$pageId]);
+    return '';
 }
