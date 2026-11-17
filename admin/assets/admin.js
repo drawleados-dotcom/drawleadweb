@@ -29,7 +29,7 @@
           var url = window.prompt('Link URL:', 'https://');
           if (url) document.execCommand('createLink', false, url);
         } else if (cmd === 'insertImage') {
-          var imgUrl = window.prompt('Image URL (upload the image first, then paste its URL):', 'https://');
+          var imgUrl = window.prompt('Image URL (upload it under Admin → Media first, then paste its URL):', 'https://');
           if (imgUrl) document.execCommand('insertImage', false, imgUrl);
         } else if (cmd === 'formatBlock') {
           document.execCommand('formatBlock', false, btn.getAttribute('data-value'));

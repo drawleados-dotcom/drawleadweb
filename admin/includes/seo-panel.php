@@ -85,7 +85,7 @@
   </div>
   <div class="field">
     <label for="og_image">Social Image URL</label>
-    <input type="text" id="og_image" name="og_image" maxlength="255" value="<?= h($seoRow['og_image']) ?>" placeholder="Paste an already-uploaded image URL, e.g. /uploads/xyz.jpg">
+    <input type="text" id="og_image" name="og_image" maxlength="255" value="<?= h($seoRow['og_image']) ?>" placeholder="Paste an image URL from Admin → Media, e.g. /uploads/media/xyz.jpg">
   </div>
   <div class="social-preview">
     <div class="social-preview-img" id="social-preview-img" style="display:none"><img alt=""></div>
