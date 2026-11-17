@@ -8,6 +8,10 @@
 $u = current_user();
 $activeNav = $activeNav ?? '';
 $hasPendingMigrationsNav = $u && $u['role'] === 'admin' && pending_migrations_exist($pdo);
+// A page can start with the sidebar closed (e.g. the visual page editor, which
+// needs the width) by setting $sidebarCollapsed = true. The ☰ button in the
+// top bar opens and closes it on any page.
+$sidebarCollapsed = !empty($sidebarCollapsed);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,9 +25,9 @@ $hasPendingMigrationsNav = $u && $u['role'] === 'admin' && pending_migrations_ex
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<?= asset_url('/admin/assets/admin.css') ?>">
 </head>
-<body>
+<body<?= $sidebarCollapsed ? ' class="sidebar-collapsed"' : '' ?>>
 <div class="shell">
-  <aside class="sidebar">
+  <aside class="sidebar" id="adminSidebar">
     <div class="sidebar-logo">Drawlead<span>Admin Panel</span></div>
     <nav class="side-nav">
       <a class="side-link<?= $activeNav === 'dashboard' ? ' active' : '' ?>" href="index.php">
@@ -91,9 +95,16 @@ $hasPendingMigrationsNav = $u && $u['role'] === 'admin' && pending_migrations_ex
 
   <div class="main">
     <div class="topbar">
-      <div>
-        <h1><?= h($pageTitle ?? '') ?></h1>
-        <?php if (!empty($pageSub)): ?><div class="topbar-sub"><?= h($pageSub) ?></div><?php endif; ?>
+      <div class="topbar-title">
+        <button type="button" class="side-toggle" data-side-toggle aria-controls="adminSidebar"
+                aria-expanded="<?= $sidebarCollapsed ? 'false' : 'true' ?>" title="<?= $sidebarCollapsed ? 'Show menu' : 'Hide menu' ?>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <span class="sr-only">Show or hide the menu</span>
+        </button>
+        <div>
+          <h1><?= h($pageTitle ?? '') ?></h1>
+          <?php if (!empty($pageSub)): ?><div class="topbar-sub"><?= h($pageSub) ?></div><?php endif; ?>
+        </div>
       </div>
       <a class="btn btn-ghost btn-sm" href="/" target="_blank">View Site ↗</a>
     </div>

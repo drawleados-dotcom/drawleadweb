@@ -82,4 +82,47 @@
     });
   });
 
+  // ☰ in the top bar: hide/show the sidebar on desktop; on narrow screens
+  // (where it's normally hidden) slide it over the page instead.
+  var sideToggle = document.querySelector('[data-side-toggle]');
+  var sidebar = document.getElementById('adminSidebar');
+  if (sideToggle && sidebar) {
+    var narrow = function () { return window.matchMedia('(max-width: 900px)').matches; };
+    var isOpen = function () {
+      return narrow() ? document.body.classList.contains('sidebar-mobile-open')
+                      : !document.body.classList.contains('sidebar-collapsed');
+    };
+    var sync = function () {
+      var open = isOpen();
+      sideToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      sideToggle.title = open ? 'Hide menu' : 'Show menu';
+    };
+    var setOpen = function (open) {
+      if (narrow()) document.body.classList.toggle('sidebar-mobile-open', open);
+      else document.body.classList.toggle('sidebar-collapsed', !open);
+      sync();
+      // Let width-dependent layouts (the page editor's preview) refit once the slide ends.
+      setTimeout(function () { window.dispatchEvent(new Event('resize')); }, 240);
+    };
+    sideToggle.addEventListener('click', function () { setOpen(!isOpen()); });
+    // …and again when the slide really finishes (a scrollbar can flash mid-way).
+    var mainEl = document.querySelector('.main');
+    if (mainEl) {
+      mainEl.addEventListener('transitionend', function (e) {
+        if (e.target === mainEl && e.propertyName === 'margin-left') window.dispatchEvent(new Event('resize'));
+      });
+    }
+    document.addEventListener('click', function (e) {
+      if (narrow() && document.body.classList.contains('sidebar-mobile-open')
+          && !sidebar.contains(e.target) && !sideToggle.contains(e.target)) {
+        setOpen(false);
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && narrow() && document.body.classList.contains('sidebar-mobile-open')) setOpen(false);
+    });
+    window.addEventListener('resize', sync);
+    sync();
+  }
+
 })();

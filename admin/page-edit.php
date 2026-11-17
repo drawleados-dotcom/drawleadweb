@@ -344,6 +344,8 @@ $seoPathPrefix = '';
 $pageTitle = 'Edit Page';
 $pageSub = $page['name'];
 $activeNav = 'pages';
+// The visual editor needs the width: start with the admin menu closed (☰ opens it).
+$sidebarCollapsed = $tab === 'content' && $contentStatus === 'ok';
 include __DIR__ . '/includes/header.php';
 ?>
 
