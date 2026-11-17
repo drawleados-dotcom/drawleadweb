@@ -120,24 +120,73 @@
     el.addEventListener('mouseup', function (e) { e.preventDefault(); });
   });
 
-  // ── Search (file name, or where it's used, e.g. "blog", "popup") ──
+  // ── Filters: Show (Blogs / Pages / …) → one blog or page → search ──
+  // Each card's data-refs lists tokens like "blog blog:12 page page:3" or
+  // "unused"; the dropdown values are those same tokens. The choice is kept
+  // in the URL hash, so it survives the reload after a delete or rename.
   var search = document.querySelector('[data-media-search]');
-  if (search) {
+  var typeSel = document.querySelector('[data-media-type]');
+  if (search && typeSel) {
     var items = document.querySelectorAll('[data-media-item]');
     var none = document.querySelector('[data-media-noresults]');
-    search.addEventListener('input', function () {
+    var count = document.querySelector('[data-media-count]');
+    var recordSels = {};
+    document.querySelectorAll('[data-media-record]').forEach(function (s) {
+      recordSels[s.getAttribute('data-media-record')] = s;
+    });
+
+    var apply = function () {
+      var type = typeSel.value;
+      Object.keys(recordSels).forEach(function (k) { recordSels[k].hidden = k !== type; });
+      var rec = recordSels[type] ? recordSels[type].value : '';
+      var token = rec || type;
+
       var q = search.value.trim().toLowerCase().replace(/\s+/g, ' ');
       // File names are slugs, so "team photo" should also find team-photo.jpg.
       var slugQ = q.replace(/ /g, '-');
       var shown = 0;
       items.forEach(function (it) {
+        var refs = ' ' + (it.getAttribute('data-refs') || '') + ' ';
         var hay = it.getAttribute('data-search') || '';
-        var hit = !q || hay.indexOf(q) !== -1 || hay.indexOf(slugQ) !== -1;
+        var hit = (!token || refs.indexOf(' ' + token + ' ') !== -1)
+          && (!q || hay.indexOf(q) !== -1 || hay.indexOf(slugQ) !== -1);
         it.hidden = !hit;
         if (hit) shown++;
       });
       if (none) none.hidden = shown !== 0;
+      if (count) {
+        var filtered = token || q;
+        count.hidden = !filtered;
+        count.textContent = 'Showing ' + shown + ' of ' + items.length + ' images';
+      }
+      var hash = token ? '#show=' + encodeURIComponent(token) : '';
+      try { history.replaceState(null, '', location.pathname + location.search + hash); } catch (err) {}
+      // A form post drops the hash; giving the forms it means the redirect
+      // back here (which has no hash of its own) lands on the same filter.
+      document.querySelectorAll('form[method="post"]').forEach(function (f) {
+        f.setAttribute('action', 'media.php' + hash);
+      });
+    };
+
+    // Restore a filter from the URL hash (#show=blog:12).
+    var m = /[#&]show=([^&]+)/.exec(location.hash);
+    if (m) {
+      var saved = decodeURIComponent(m[1]);
+      var savedType = saved.split(':')[0];
+      if (typeSel.querySelector('option[value="' + savedType + '"]')) {
+        typeSel.value = savedType;
+        var rs = recordSels[savedType];
+        if (rs && saved !== savedType && rs.querySelector('option[value="' + saved + '"]')) rs.value = saved;
+      }
+    }
+
+    typeSel.addEventListener('change', function () {
+      if (recordSels[typeSel.value]) recordSels[typeSel.value].value = '';
+      apply();
     });
+    Object.keys(recordSels).forEach(function (k) { recordSels[k].addEventListener('change', apply); });
+    search.addEventListener('input', apply);
+    apply();
   }
 
   // ── Image details popup: rename the file (which changes its URL) ──

@@ -152,6 +152,67 @@ function media_usage_map(PDO $pdo): array
 }
 
 /**
+ * Data for the library's filter dropdowns. Reads the same columns as
+ * media_usage_map(), but records which record uses each image:
+ *   'refs'   => [image key => ['blog:12', 'page:3', 'other:popup', ...]]
+ *   'groups' => ['blog' => [id => title], 'page' => [...], 'case' => [...]]
+ * Groups list every blog, page and case study — even ones without images —
+ * so each one can be picked from the dropdown.
+ */
+function media_filter_index(PDO $pdo): array
+{
+    $refs = [];
+    $groups = ['blog' => [], 'page' => [], 'case' => []];
+    $add = function ($ref, string $tag) use (&$refs) {
+        $key = media_ref_key((string) $ref);
+        if ($key !== '' && !in_array($tag, $refs[$key] ?? [], true)) {
+            $refs[$key][] = $tag;
+        }
+    };
+
+    try {
+        foreach ($pdo->query('SELECT id, title, featured_image, og_image FROM blogs ORDER BY id DESC') as $r) {
+            $groups['blog'][(int) $r['id']] = (string) $r['title'];
+            $add($r['featured_image'], 'blog:' . $r['id']);
+            $add($r['og_image'], 'blog:' . $r['id']);
+        }
+    } catch (PDOException $e) {
+    }
+    try {
+        foreach ($pdo->query('SELECT id, name, og_image FROM pages ORDER BY name') as $r) {
+            $groups['page'][(int) $r['id']] = (string) $r['name'];
+            $add($r['og_image'], 'page:' . $r['id']);
+        }
+    } catch (PDOException $e) {
+    }
+    try {
+        foreach ($pdo->query("SELECT page_id, value FROM page_content WHERE kind = 'img_src'") as $r) {
+            $add($r['value'], 'page:' . $r['page_id']);
+        }
+    } catch (PDOException $e) {
+    }
+    try {
+        foreach ($pdo->query('SELECT id, title, desktop_image, mobile_image, result_image, og_image FROM case_studies ORDER BY id DESC') as $r) {
+            $groups['case'][(int) $r['id']] = (string) $r['title'];
+            foreach (['desktop_image', 'mobile_image', 'result_image', 'og_image'] as $col) {
+                $add($r[$col], 'case:' . $r['id']);
+            }
+        }
+    } catch (PDOException $e) {
+    }
+    try {
+        $add($pdo->query('SELECT image FROM site_popup WHERE id = 1')->fetchColumn(), 'other:popup');
+    } catch (PDOException $e) {
+    }
+    try {
+        $add($pdo->query('SELECT image FROM site_sidebar WHERE id = 1')->fetchColumn(), 'other:sidebar');
+    } catch (PDOException $e) {
+    }
+
+    return ['refs' => $refs, 'groups' => $groups];
+}
+
+/**
  * A typed image name as a URL-safe file name base: lowercase letters, numbers
  * and hyphens ("Team Photo 2026.jpg" → "team-photo-2026"). '' if nothing usable.
  */
@@ -386,6 +447,8 @@ $newFiles = array_flip($flash['uploaded'] ?? []);
 $highlight = (string) ($flash['highlight'] ?? '');
 
 $usage = media_usage_map($pdo);
+$filterIndex = media_filter_index($pdo);
+$refCounts = []; // 'blog:12' / 'blog' / 'unused' => number of images
 
 // Images uploaded here (uploads/media/) plus every earlier upload sitting
 // loose in uploads/ from Blogs, Case Studies, Page Content, Popup, Sidebar.
@@ -410,11 +473,25 @@ foreach (['' => UPLOAD_DIR, 'media/' => $mediaDir] as $sub => $dir) {
         if (!$managed) {
             $earlierCount++;
         }
+        // Filter tokens: each record ("blog:12") plus its type ("blog"), or
+        // "unused" — what the Show / Blog dropdowns match against.
+        $tokens = [];
+        foreach ($filterIndex['refs'][$sub . $f] ?? [] as $ref) {
+            $tokens[$ref] = true;
+            $tokens[strtok($ref, ':')] = true;
+        }
+        if (!$tokens) {
+            $tokens['unused'] = true;
+        }
+        foreach ($tokens as $t => $_) {
+            $refCounts[$t] = ($refCounts[$t] ?? 0) + 1;
+        }
         $items[] = [
             'file'    => $f,
             'managed' => $managed,
             'path'    => UPLOAD_URL . $sub . rawurlencode($f),
             'usage'   => $usage[$sub . $f] ?? [],
+            'tokens'  => implode(' ', array_keys($tokens)),
             'size'    => $size,
             'mtime'   => (int) filemtime($dir . $f),
             'w'       => $dims ? (int) $dims[0] : 0,
@@ -479,10 +556,32 @@ include __DIR__ . '/includes/header.php';
         <?php endif; ?>
       </div>
     </div>
-    <?php if ($items): ?>
-      <input type="search" class="media-search" placeholder="Search by name, blog, page…" aria-label="Search images by file name or where they're used" data-media-search>
+    <?php if ($items):
+        $typeNames = ['blog' => ['Blogs', 'All blogs', 'Blog'], 'page' => ['Pages', 'All pages', 'Page'], 'case' => ['Case Studies', 'All case studies', 'Case study']];
+    ?>
+      <div class="media-filters">
+        <select class="media-filter" aria-label="Show images from" data-media-type>
+          <option value="">All images (<?= count($items) ?>)</option>
+          <?php foreach ($typeNames as $type => $names): ?>
+            <option value="<?= $type ?>"><?= h($names[0]) ?> (<?= (int) ($refCounts[$type] ?? 0) ?>)</option>
+          <?php endforeach; ?>
+          <option value="other">Popup &amp; Sidebar (<?= (int) ($refCounts['other'] ?? 0) ?>)</option>
+          <option value="unused">Not used anywhere (<?= (int) ($refCounts['unused'] ?? 0) ?>)</option>
+        </select>
+        <?php foreach ($typeNames as $type => $names): ?>
+          <select class="media-filter media-filter-item" aria-label="Pick one <?= h(strtolower($names[2])) ?>" data-media-record="<?= $type ?>" hidden>
+            <option value=""><?= h($names[1]) ?> (<?= (int) ($refCounts[$type] ?? 0) ?>)</option>
+            <?php foreach ($filterIndex['groups'][$type] as $id => $title):
+                $key = $type . ':' . $id; ?>
+              <option value="<?= h($key) ?>"><?= h(mb_strimwidth($title, 0, 70, '…')) ?> (<?= (int) ($refCounts[$key] ?? 0) ?>)</option>
+            <?php endforeach; ?>
+          </select>
+        <?php endforeach; ?>
+        <input type="search" class="media-search" placeholder="Search by name, blog, page…" aria-label="Search images by file name or where they're used" data-media-search>
+      </div>
     <?php endif; ?>
   </div>
+  <?php if ($items): ?><div class="media-count" data-media-count hidden></div><?php endif; ?>
 
   <?php if (!$items): ?>
     <div class="empty-state">
@@ -502,7 +601,7 @@ include __DIR__ . '/includes/header.php';
           $deleteMsg = 'Delete this image permanently?'
               . ($usedIn !== '' ? ' It is used in: ' . $usedIn . ' — that will show a broken image.' : ' Any page or post still using its URL will show a broken image.');
       ?>
-      <div class="media-item<?= $isNew || $isRenamed ? ' is-new' : '' ?>" data-media-item data-search="<?= h($searchText) ?>"
+      <div class="media-item<?= $isNew || $isRenamed ? ' is-new' : '' ?>" data-media-item data-search="<?= h($searchText) ?>" data-refs="<?= h($it['tokens']) ?>"
            data-file="<?= h($it['file']) ?>" data-dir="<?= $it['managed'] ? 'media' : 'root' ?>" data-path="<?= h($path) ?>"
            data-url="<?= h($url) ?>" data-meta="<?= h($meta) ?>" data-used="<?= h($usedIn) ?>"<?= $isRenamed ? ' data-media-renamed' : '' ?>>
         <a class="media-thumb" href="<?= h($path) ?>" target="_blank" rel="noopener" title="Edit name and URL" data-media-open>
@@ -544,7 +643,7 @@ include __DIR__ . '/includes/header.php';
       </div>
       <?php endforeach; ?>
     </div>
-    <div class="empty-state" data-media-noresults hidden><p>No images match that search.</p></div>
+    <div class="empty-state" data-media-noresults hidden><p>No images match these filters.</p></div>
   <?php endif; ?>
 </div>
 
