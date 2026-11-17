@@ -6,23 +6,27 @@ require_login();
  * Media library — upload images once, get a permanent URL to paste anywhere
  * (page content, blog posts, OG image fields, emails).
  *
- * Files live in uploads/media/ on the server's disk. uploads/ is git-ignored
- * and the deploy workflow only syncs tracked files, so deploys never touch
- * or remove them. The folder itself IS the library — there's no DB table,
- * so there's nothing to migrate and nothing that can fall out of sync.
- * uploads/.htaccess also covers this subfolder, so nothing stored here can
- * ever execute as a script.
+ * Files uploaded here live in uploads/media/ on the server's disk. uploads/
+ * is git-ignored and the deploy workflow only syncs tracked files, so deploys
+ * never touch or remove them. The folders themselves ARE the library — there's
+ * no DB table, so there's nothing to migrate and nothing that can fall out of
+ * sync. uploads/.htaccess also covers this subfolder, so nothing stored here
+ * can ever execute as a script.
+ *
+ * The library also lists every image uploaded earlier through Blogs, Case
+ * Studies, Page Content, Popup, and Sidebar (stored loose in uploads/), each
+ * labelled with where it's used. Those are read-only here: they're owned by
+ * the record that uploaded them, so they're replaced or removed from there.
  *
  * Any logged-in user can upload (editors need image URLs for the pages and
- * posts they manage); only admins can delete, since deleting breaks every
- * page still using that URL.
+ * posts they manage); only admins can delete, and only images uploaded
+ * here, since deleting breaks every page still using that URL.
  */
 
 $u = current_user();
 $isAdmin = $u['role'] === 'admin';
 
 $mediaDir = UPLOAD_DIR . 'media/';
-$mediaPath = UPLOAD_URL . 'media/';
 
 // SVG is deliberately not accepted: it can carry script, and these files are
 // served from the same origin as the admin panel.
@@ -67,6 +71,82 @@ function media_human_size(int $bytes): string
         return round($bytes / 1024) . ' KB';
     }
     return $bytes . ' B';
+}
+
+/**
+ * Normalizes a stored image reference to its path under uploads/ ("x.jpg" or
+ * "media/x.jpg"), or '' if it isn't an uploaded file. Blog, case study, popup
+ * and sidebar columns hold a bare filename; social image and Page Content
+ * fields hold a /uploads/... path or a full URL.
+ */
+function media_ref_key(string $ref): string
+{
+    $ref = trim($ref);
+    if ($ref === '' || str_starts_with($ref, 'data:')) {
+        return '';
+    }
+    if (preg_match('#^https?://#i', $ref)) {
+        $ref = (string) parse_url($ref, PHP_URL_PATH);
+    }
+    if (str_starts_with($ref, UPLOAD_URL)) {
+        return rawurldecode(substr($ref, strlen(UPLOAD_URL)));
+    }
+    return str_contains($ref, '/') ? '' : $ref;
+}
+
+/**
+ * Where each uploaded image is used, keyed like media_ref_key(): every column
+ * the admin stores an image in. Images pasted into blog body HTML aren't
+ * tracked. Each lookup is skipped quietly if its table doesn't exist yet
+ * (e.g. a migration that hasn't been run), so the page always loads.
+ */
+function media_usage_map(PDO $pdo): array
+{
+    $map = [];
+    $add = function ($ref, string $label) use (&$map) {
+        $key = media_ref_key((string) $ref);
+        if ($key !== '' && !in_array($label, $map[$key] ?? [], true)) {
+            $map[$key][] = $label;
+        }
+    };
+
+    try {
+        foreach ($pdo->query('SELECT title, featured_image, og_image FROM blogs') as $r) {
+            $add($r['featured_image'], 'Blog: ' . $r['title']);
+            $add($r['og_image'], 'Blog: ' . $r['title']);
+        }
+    } catch (PDOException $e) {
+    }
+    try {
+        foreach ($pdo->query('SELECT title, desktop_image, mobile_image, result_image, og_image FROM case_studies') as $r) {
+            foreach (['desktop_image', 'mobile_image', 'result_image', 'og_image'] as $col) {
+                $add($r[$col], 'Case study: ' . $r['title']);
+            }
+        }
+    } catch (PDOException $e) {
+    }
+    try {
+        foreach ($pdo->query('SELECT name, og_image FROM pages') as $r) {
+            $add($r['og_image'], 'Page: ' . $r['name']);
+        }
+    } catch (PDOException $e) {
+    }
+    try {
+        foreach ($pdo->query("SELECT p.name, pc.value FROM page_content pc JOIN pages p ON p.id = pc.page_id WHERE pc.kind = 'img_src'") as $r) {
+            $add($r['value'], 'Page: ' . $r['name']);
+        }
+    } catch (PDOException $e) {
+    }
+    try {
+        $add($pdo->query('SELECT image FROM site_popup WHERE id = 1')->fetchColumn(), 'Popup');
+    } catch (PDOException $e) {
+    }
+    try {
+        $add($pdo->query('SELECT image FROM site_sidebar WHERE id = 1')->fetchColumn(), 'Sidebar');
+    } catch (PDOException $e) {
+    }
+
+    return $map;
 }
 
 // Per-image cap is 10MB, or lower if the server's own upload limit is lower.
@@ -191,28 +271,46 @@ $flash = $_SESSION['media_flash'] ?? ['errors' => [], 'uploaded' => [], 'success
 unset($_SESSION['media_flash']);
 $newFiles = array_flip($flash['uploaded'] ?? []);
 
+$usage = media_usage_map($pdo);
+
+// Images uploaded here (uploads/media/) plus every earlier upload sitting
+// loose in uploads/ from Blogs, Case Studies, Page Content, Popup, Sidebar.
 $items = [];
 $totalBytes = 0;
-if (is_dir($mediaDir)) {
-    foreach (scandir($mediaDir) ?: [] as $f) {
-        if (!preg_match($mediaNamePattern, $f) || !is_file($mediaDir . $f)) {
+$earlierCount = 0;
+foreach (['' => UPLOAD_DIR, 'media/' => $mediaDir] as $sub => $dir) {
+    if (!is_dir($dir)) {
+        continue;
+    }
+    $managed = $sub === 'media/';
+    foreach (scandir($dir) ?: [] as $f) {
+        $isImage = $managed
+            ? preg_match($mediaNamePattern, $f)
+            : preg_match('/^[^.][^\/\\\\]*\.(jpe?g|png|webp|gif|avif)$/i', $f);
+        if (!$isImage || !is_file($dir . $f)) {
             continue;
         }
-        $dims = @getimagesize($mediaDir . $f);
-        $size = (int) filesize($mediaDir . $f);
+        $dims = @getimagesize($dir . $f);
+        $size = (int) filesize($dir . $f);
         $totalBytes += $size;
+        if (!$managed) {
+            $earlierCount++;
+        }
         $items[] = [
-            'file'  => $f,
-            'size'  => $size,
-            'mtime' => (int) filemtime($mediaDir . $f),
-            'w'     => $dims ? (int) $dims[0] : 0,
-            'h'     => $dims ? (int) $dims[1] : 0,
+            'file'    => $f,
+            'managed' => $managed,
+            'path'    => UPLOAD_URL . $sub . rawurlencode($f),
+            'usage'   => $usage[$sub . $f] ?? [],
+            'size'    => $size,
+            'mtime'   => (int) filemtime($dir . $f),
+            'w'       => $dims ? (int) $dims[0] : 0,
+            'h'       => $dims ? (int) $dims[1] : 0,
         ];
     }
-    usort($items, function ($a, $b) {
-        return [$b['mtime'], $a['file']] <=> [$a['mtime'], $b['file']];
-    });
 }
+usort($items, function ($a, $b) {
+    return [$b['mtime'], $a['file']] <=> [$a['mtime'], $b['file']];
+});
 
 $baseUrl = site_base_url();
 
@@ -260,10 +358,15 @@ include __DIR__ . '/includes/header.php';
   <div class="media-head">
     <div>
       <div class="card-title">Library</div>
-      <div class="card-desc"><?= count($items) ?> image<?= count($items) === 1 ? '' : 's' ?><?= $items ? ' · ' . h(media_human_size($totalBytes)) . ' total' : '' ?></div>
+      <div class="card-desc">
+        <?= count($items) ?> image<?= count($items) === 1 ? '' : 's' ?><?= $items ? ' · ' . h(media_human_size($totalBytes)) . ' total' : '' ?>
+        <?php if ($earlierCount): ?>
+          · includes <?= $earlierCount ?> uploaded earlier from Blogs, Case Studies, Pages, Popup, and Sidebar
+        <?php endif; ?>
+      </div>
     </div>
     <?php if ($items): ?>
-      <input type="search" class="media-search" placeholder="Search by file name" aria-label="Search images by file name" data-media-search>
+      <input type="search" class="media-search" placeholder="Search by name, blog, page…" aria-label="Search images by file name or where they're used" data-media-search>
     <?php endif; ?>
   </div>
 
@@ -275,11 +378,15 @@ include __DIR__ . '/includes/header.php';
   <?php else: ?>
     <div class="media-grid">
       <?php foreach ($items as $it):
-          $path = $mediaPath . $it['file'];
+          $path = $it['path'];
           $url = $baseUrl . $path;
-          $isNew = isset($newFiles[$it['file']]);
+          $isNew = $it['managed'] && isset($newFiles[$it['file']]);
+          $usedIn = implode(', ', $it['usage']);
+          $searchText = mb_strtolower($it['file'] . ' ' . $usedIn . ($it['managed'] ? '' : ' earlier upload'));
+          $deleteMsg = 'Delete this image permanently?'
+              . ($usedIn !== '' ? ' It is used in: ' . $usedIn . ' — that will show a broken image.' : ' Any page or post still using its URL will show a broken image.');
       ?>
-      <div class="media-item<?= $isNew ? ' is-new' : '' ?>" data-media-item data-name="<?= h($it['file']) ?>">
+      <div class="media-item<?= $isNew ? ' is-new' : '' ?>" data-media-item data-search="<?= h($searchText) ?>">
         <a class="media-thumb" href="<?= h($path) ?>" target="_blank" rel="noopener" title="Open full size">
           <img src="<?= h($path) ?>" alt="" loading="lazy">
         </a>
@@ -291,6 +398,11 @@ include __DIR__ . '/includes/header.php';
           <div class="media-meta">
             <?= $it['w'] ? (int) $it['w'] . ' × ' . (int) $it['h'] . ' · ' : '' ?><?= h(media_human_size($it['size'])) ?> · <?= h(date('M j, Y', $it['mtime'])) ?>
           </div>
+          <?php if ($usedIn !== ''): ?>
+            <div class="media-source" title="Used in <?= h($usedIn) ?>">Used in <?= h($usedIn) ?></div>
+          <?php elseif (!$it['managed']): ?>
+            <div class="media-source is-plain" title="Uploaded before the Media library, from Blogs, Case Studies, Pages, Popup, or Sidebar">Earlier upload</div>
+          <?php endif; ?>
           <div class="media-url">
             <input type="text" readonly value="<?= h($url) ?>" aria-label="Image URL" data-copy-source>
             <button type="button" class="btn btn-ghost btn-sm" data-copy="<?= h($url) ?>">Copy URL</button>
@@ -299,9 +411,9 @@ include __DIR__ . '/includes/header.php';
             <button type="button" class="link-btn" data-copy="<?= h($path) ?>" title="Copies <?= h($path) ?> — keeps working if the site's domain changes">Copy path</button>
             <span aria-hidden="true">·</span>
             <a class="link-btn" href="<?= h($path) ?>" target="_blank" rel="noopener">Open ↗</a>
-            <?php if ($isAdmin): ?>
+            <?php if ($isAdmin && $it['managed']): ?>
               <span aria-hidden="true">·</span>
-              <form method="post" onsubmit="return confirm('Delete this image permanently? Any page or post still using its URL will show a broken image.');">
+              <form method="post" onsubmit="return confirm(<?= h(json_encode($deleteMsg, JSON_UNESCAPED_UNICODE)) ?>);">
                 <?= csrf_field() ?>
                 <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="file" value="<?= h($it['file']) ?>">

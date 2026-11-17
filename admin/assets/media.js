@@ -120,16 +120,19 @@
     el.addEventListener('mouseup', function (e) { e.preventDefault(); });
   });
 
-  // ── Search ──
+  // ── Search (file name, or where it's used, e.g. "blog", "popup") ──
   var search = document.querySelector('[data-media-search]');
   if (search) {
     var items = document.querySelectorAll('[data-media-item]');
     var none = document.querySelector('[data-media-noresults]');
     search.addEventListener('input', function () {
-      var q = search.value.trim().toLowerCase().replace(/\s+/g, '-');
+      var q = search.value.trim().toLowerCase().replace(/\s+/g, ' ');
+      // File names are slugs, so "team photo" should also find team-photo.jpg.
+      var slugQ = q.replace(/ /g, '-');
       var shown = 0;
       items.forEach(function (it) {
-        var hit = !q || it.getAttribute('data-name').indexOf(q) !== -1;
+        var hay = it.getAttribute('data-search') || '';
+        var hit = !q || hay.indexOf(q) !== -1 || hay.indexOf(slugQ) !== -1;
         it.hidden = !hit;
         if (hit) shown++;
       });

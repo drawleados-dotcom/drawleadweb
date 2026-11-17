@@ -217,6 +217,8 @@ tr:last-child td{border-bottom:none}
 .media-name{font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .media-name .badge{margin-right:4px;vertical-align:1px}
 .media-meta{font-size:11px;color:var(--g400);font-weight:500;margin-top:-.3rem}
+.media-source{font-size:11px;font-weight:700;color:var(--violet);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:-.25rem}
+.media-source.is-plain{color:var(--g500);font-weight:600}
 .media-url{display:flex;gap:6px}
 .media-url input{flex:1;min-width:0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;padding:7px 8px;border:1.5px solid var(--border);border-radius:6px;background:var(--bg);color:var(--g600)}
 .media-url input:focus{outline:none;border-color:var(--blue)}
