@@ -302,6 +302,9 @@ include __DIR__ . '/includes/header.php';
             <div class="pc-file-name"><?= h(str_starts_with($img['src'], 'data:') ? 'Embedded image' : $fileName) ?></div>
             <input type="file" id="<?= h($imgId) ?>" name="pc_img[<?= h($hash) ?>]" accept="image/jpeg,image/png,image/webp,image/gif" data-image-input>
             <div class="field-hint">JPG, PNG, WEBP or GIF, under 5MB. Use the same shape as the current image so the layout holds.</div>
+            <label for="<?= h($imgId) ?>-url" class="pc-sub-label">Or image URL</label>
+            <input type="text" id="<?= h($imgId) ?>-url" name="pc_img_url[<?= h($hash) ?>]" value="" placeholder="Paste a URL from Admin → Media" data-pc-img-url>
+            <div class="field-hint">Leave the URL empty to keep the current image.</div>
             <label for="<?= h($imgId) ?>-alt" class="pc-sub-label">Alt text <?php if ($altEdited): ?><span class="pc-edited">Edited</span><?php endif; ?></label>
             <input type="text" id="<?= h($imgId) ?>-alt" name="pc_alt[<?= h($hash) ?>]" maxlength="300" value="<?= h($currentAlt) ?>" placeholder="Describe the image for screen readers and search engines">
             <?php if ($srcEdited): ?>

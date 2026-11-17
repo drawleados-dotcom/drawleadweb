@@ -642,7 +642,10 @@ function pc_save_section(PDO $pdo, int $pageId, array $section, array $post, arr
     $postedTexts = is_array($post['pc_text'] ?? null) ? $post['pc_text'] : [];
     $postedAlts = is_array($post['pc_alt'] ?? null) ? $post['pc_alt'] : [];
     $resets = is_array($post['pc_img_reset'] ?? null) ? $post['pc_img_reset'] : [];
+    $postedUrls = is_array($post['pc_img_url'] ?? null) ? $post['pc_img_url'] : [];
 
+    // New image per slot: an uploaded file wins over a pasted URL (e.g. one
+    // copied from Admin → Media).
     $uploads = [];
     $n = 0;
     foreach ($section['images'] as $hash => $img) {
@@ -656,6 +659,14 @@ function pc_save_section(PDO $pdo, int $pageId, array $section, array $post, arr
         }
         if ($up['path'] !== '') {
             $uploads[$hash] = $up['path'];
+            continue;
+        }
+        $url = trim((string) ($postedUrls[$hash] ?? ''));
+        if ($url !== '') {
+            if (!preg_match('#^(https?://|/)\S+$#i', $url)) {
+                return ['error' => 'Image ' . $n . ' URL must start with https:// or / (copy it from Admin → Media).', 'changed' => 0];
+            }
+            $uploads[$hash] = $url;
         }
     }
 

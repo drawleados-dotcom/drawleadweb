@@ -143,6 +143,17 @@
       pcSections.forEach(function (s) { s.addEventListener('toggle', syncToggleLabel); });
     }
 
+    // Preview a pasted image URL in its card, like a picked file.
+    document.querySelectorAll('[data-pc-img-url]').forEach(function (urlInput) {
+      var preview = (urlInput.closest('.field') || document).querySelector('[data-image-preview]');
+      if (!preview) return;
+      var original = preview.getAttribute('src');
+      urlInput.addEventListener('change', function () {
+        var v = urlInput.value.trim();
+        preview.src = /^(https?:\/\/|\/)\S+$/i.test(v) ? v : original;
+      });
+    });
+
     var dirty = false;
     var submitting = false;
     document.querySelectorAll('.pc-form').forEach(function (form) {
