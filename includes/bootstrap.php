@@ -28,6 +28,7 @@ require_once __DIR__ . '/platform-modules.php';
 require_once __DIR__ . '/industries.php';
 require_once __DIR__ . '/analyze.php';
 require_once __DIR__ . '/page-content.php';
+require_once __DIR__ . '/lead-source.php';
 
 try {
     $pdo = new PDO(
@@ -330,6 +331,9 @@ function pending_migrations_exist(PDO $pdo): bool
         return true;
     }
     if (!migration_table_exists($pdo, 'popups')) {
+        return true;
+    }
+    if (!migration_table_exists($pdo, 'lead_sources')) {
         return true;
     }
     return false;

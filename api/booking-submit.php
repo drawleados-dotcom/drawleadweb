@@ -119,6 +119,7 @@ try {
         'INSERT INTO bookings (booking_date, booking_time, form_data, name, email) VALUES (?, ?, ?, ?, ?)'
     );
     $stmt->execute([$date, $time . ':00', json_encode($cleanData), $name, $email]);
+    lead_source_save($pdo, 'booking', (int) $pdo->lastInsertId(), $input['source'] ?? null);
 } catch (PDOException $e) {
     if ($e->getCode() === '23000') {
         echo json_encode(['success' => false, 'error' => 'That time slot was just booked by someone else. Please pick another.']);

@@ -55,5 +55,6 @@ foreach ($rawAnswers as $a) {
 
 $stmt = $pdo->prepare('INSERT INTO whatsapp_leads (answers, phone) VALUES (?, ?)');
 $stmt->execute([json_encode($answers), $phone]);
+lead_source_save($pdo, 'whatsapp', (int) $pdo->lastInsertId(), $input['source'] ?? null);
 
 echo json_encode(['success' => true]);

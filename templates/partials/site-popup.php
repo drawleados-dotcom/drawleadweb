@@ -20,6 +20,7 @@ if ($popup):
 ?>
 <div id="site-popup" class="site-popup site-popup--<?= h($popupLayout) ?>" aria-hidden="true"
      data-popup-id="<?= (int) $popup['id'] ?>"
+     data-popup-name="<?= h($popup['name'] ?? '') ?>"
      data-layout="<?= h($popupLayout) ?>"
      data-trigger-delay="<?= $popup['trigger_delay'] ? '1' : '0' ?>"
      data-trigger-new-page="<?= $popup['trigger_new_page'] ? '1' : '0' ?>"

@@ -32,7 +32,22 @@
     viewMonth: null, // 0-11
     selectedDate: null, // 'YYYY-MM-DD'
     selectedTime: null, // 'HH:MM'
+    trigger: '', // what opened the form — saved with the lead (Lead Source)
   };
+
+  // A short label for the [data-book] element that opened the form, e.g.
+  // "Popup: Consultation Popup" or "Menu: Free Consultation Call →".
+  function describeTrigger(el) {
+    if (el.id === 'auto-book-trigger') return 'Booking page link (/book)';
+    var text = (el.textContent || el.getAttribute('aria-label') || '').replace(/\s+/g, ' ').trim().slice(0, 120);
+    var popup = el.closest('#site-popup');
+    if (popup) return 'Popup: ' + (popup.dataset.popupName || 'Popup') + (text ? ' (' + text + ')' : '');
+    var where = el.closest('nav, header') ? 'Menu'
+      : el.closest('footer') ? 'Footer'
+      : el.closest('.post-sidebar') ? 'Blog sidebar'
+      : 'Button';
+    return where + (text ? ': ' + text : '');
+  }
 
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
   function isoDate(y, m, d) { return y + '-' + pad(m + 1) + '-' + pad(d); }
@@ -290,6 +305,7 @@
     errorBox.hidden = true;
 
     var payload = { date: state.selectedDate, time: state.selectedTime, csrf_token: csrfToken, fields: {}, website: document.getElementById('booking-honeypot').value };
+    if (window.DLLeadSource) payload.source = window.DLLeadSource.get(state.trigger);
     (state.fields || []).forEach(function (f) {
       payload.fields[f.key] = getFieldValue(f.key);
     });
@@ -346,6 +362,7 @@
     var trigger = e.target.closest('[data-book]');
     if (trigger) {
       e.preventDefault();
+      state.trigger = describeTrigger(trigger);
       openModal();
       return;
     }

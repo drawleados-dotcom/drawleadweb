@@ -685,6 +685,13 @@ function migration_029_statements(PDO $pdo): array
     return $statements;
 }
 
+/** Lead Source: one row per booking / WhatsApp lead saying where it came from. */
+function migration_030_statements(): array
+{
+    // Same SQL as sql/migrations/030_lead_sources.sql (sql/ isn't deployed).
+    return [lead_source_table_sql()];
+}
+
 $log = [];
 $error = '';
 
@@ -776,6 +783,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($which === '029' || $which === 'all') {
         $toRun['029'] = migration_029_statements($pdo);
     }
+    if ($which === '030' || $which === 'all') {
+        $toRun['030'] = migration_030_statements();
+    }
 
     foreach ($toRun as $name => $statements) {
         try {
@@ -863,6 +873,7 @@ $migration026Done = (int) $stmt026->fetchColumn() >= 1;
 $migration027Done = migration_table_exists($pdo, 'page_content');
 $migration028Done = migration_table_exists($pdo, 'page_content_versions');
 $migration029Done = migration_table_exists($pdo, 'popups');
+$migration030Done = migration_table_exists($pdo, 'lead_sources');
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -1237,7 +1248,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done || !$migration027Done || !$migration028Done || !$migration029Done): ?>
+<div class="card">
+  <div class="card-title">030 — Lead Source tracking</div>
+  <div class="card-desc">Creates lead_sources, which records where every calendar booking and WhatsApp lead came from (Google, Facebook, an ad campaign, direct…), the page it was sent from and what opened the form. Shown in Admin → Lead Source. Leads saved before this runs show as "Not recorded".</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration030Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration030Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration030Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="030">
+    <button type="submit" class="btn btn-primary">Run Migration 030</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done || !$migration027Done || !$migration028Done || !$migration029Done || !$migration030Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>
