@@ -1,7 +1,8 @@
 // Drawlead — site-wide "on open" consultation popup.
 // When it's allowed to show (frequency) and what makes it show (moment)
-// are both admin-configurable from admin/popup.php — see the data-trigger-*
-// attributes on #site-popup.
+// are both admin-configurable per popup in Admin → Popups — see the
+// data-trigger-* attributes on #site-popup. The "corner" layout is a small
+// slide-in card with no overlay, so it leaves page scrolling alone.
 (function () {
   var popup = document.getElementById('site-popup');
   if (!popup) return;
@@ -11,7 +12,11 @@
   var triggerRefresh = popup.dataset.triggerRefresh === '1';
   var triggerScrollSection = popup.dataset.triggerScrollSection === '1';
 
-  var SESSION_KEY = 'drawleadPopupShown';
+  var isCorner = popup.dataset.layout === 'corner';
+  // One key per popup, so a different popup on another page still gets
+  // its own once-per-session showing. id 0 = the pre-migration popup.
+  var popupId = popup.dataset.popupId || '0';
+  var SESSION_KEY = popupId === '0' ? 'drawleadPopupShown' : 'drawleadPopupShown-' + popupId;
   var shown = false;
   var delayTimer = null;
   var scrollObserver = null;
@@ -23,13 +28,13 @@
     if (scrollObserver) scrollObserver.disconnect();
     popup.classList.add('open');
     popup.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    if (!isCorner) document.body.style.overflow = 'hidden';
   }
 
   function closePopup() {
     popup.classList.remove('open');
     popup.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    if (!isCorner) document.body.style.overflow = '';
   }
 
   // ── Frequency: is this particular page load allowed to show the popup? ──

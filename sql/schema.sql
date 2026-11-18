@@ -194,6 +194,31 @@ CREATE TABLE IF NOT EXISTS site_popup (
   updated_at       DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Popups (Admin → Popups): any number, each with a layout and its pages.
+-- Replaces site_popup above, which is kept only as the seed for the first popup.
+CREATE TABLE IF NOT EXISTS popups (
+  id                     INT AUTO_INCREMENT PRIMARY KEY,
+  name                   VARCHAR(120) NOT NULL DEFAULT '',            -- admin-only label
+  layout                 VARCHAR(20)  NOT NULL DEFAULT 'split',       -- split | stacked | corner
+  enabled                TINYINT(1)   NOT NULL DEFAULT 0,
+  show_on                VARCHAR(10)  NOT NULL DEFAULT 'selected',    -- all | selected
+  targets                TEXT,                                        -- comma-separated: page:ID, blog, case-studies
+  image                  TEXT,
+  image_alt              VARCHAR(190) NOT NULL DEFAULT '',
+  title                  VARCHAR(190) NOT NULL DEFAULT '',
+  description            VARCHAR(400) NOT NULL DEFAULT '',
+  points                 TEXT,
+  cta_text               VARCHAR(100) NOT NULL DEFAULT 'Book a Free Consultation',
+  cta_use_booking        TINYINT(1)   NOT NULL DEFAULT 1,
+  cta_link               VARCHAR(255) NOT NULL DEFAULT '',
+  trigger_delay          TINYINT(1)   NOT NULL DEFAULT 1,
+  trigger_new_page       TINYINT(1)   NOT NULL DEFAULT 0,
+  trigger_refresh        TINYINT(1)   NOT NULL DEFAULT 0,
+  trigger_scroll_section TINYINT(1)   NOT NULL DEFAULT 0,
+  created_at             DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at             DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- Admin-manageable sidebar CTA block (Text / Image / CTA), shown below
 -- the always-dynamic "Recent Posts" list on blog post and case study pages.
 CREATE TABLE IF NOT EXISTS site_sidebar (
@@ -468,6 +493,16 @@ INSERT IGNORE INTO site_popup (id, image, image_alt, title, description, points)
 Ecommerce and marketing systems that connect
 AI automation for repetitive work
 Free, no-obligation consultation');
+
+-- The default popup above becomes the first entry in popups, on all pages.
+INSERT INTO popups (name, layout, enabled, show_on, targets, image, image_alt, title, description, points,
+                    cta_text, cta_use_booking, cta_link,
+                    trigger_delay, trigger_new_page, trigger_refresh, trigger_scroll_section)
+SELECT 'Consultation Popup', 'split', enabled, 'all', '', image, image_alt, title, description, points,
+       cta_text, cta_use_booking, cta_link,
+       trigger_delay, trigger_new_page, trigger_refresh, trigger_scroll_section
+FROM site_popup
+WHERE id = 1 AND NOT EXISTS (SELECT 1 FROM popups);
 
 INSERT IGNORE INTO site_sidebar (id, title, text) VALUES
 (1, 'Book a Consultation', 'Ready to take your business to the next level?');

@@ -1010,6 +1010,52 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
   .site-popup-body h2{font-size:21px}
 }
 
+/* Popup layouts (Admin → Popups). "split" is the base style above.
+   Selectors carry two classes so they still win over the copy of the base
+   rules in assets/home7.css, which loads after this stylesheet. */
+.site-popup .site-popup-dialog.no-image{grid-template-columns:1fr;max-width:540px}
+.site-popup.open .site-popup-dialog{animation:sitePopupIn .28s ease-out}
+@keyframes sitePopupIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+
+/* Centered: image across the top, content centered below */
+.site-popup--stacked .site-popup-dialog{max-width:480px;grid-template-columns:1fr;grid-template-rows:auto auto}
+.site-popup--stacked .site-popup-image img{min-height:0;height:210px}
+.site-popup--stacked .site-popup-body{padding:2rem 2.25rem 2.25rem;text-align:center;align-items:center}
+.site-popup--stacked .site-popup-body h2{font-size:23px}
+.site-popup--stacked .site-popup-points{align-self:stretch;text-align:left;background:var(--bg);border-radius:12px;padding:1rem 1.1rem;margin-bottom:1.5rem}
+.site-popup--stacked .site-popup-cta{align-self:stretch;justify-content:center}
+.site-popup--stacked .site-popup-close{background:rgba(255,255,255,.92)}
+
+/* Corner slide-in: small card bottom-left (clear of the WhatsApp button
+   bottom-right), no overlay, page stays scrollable */
+.site-popup.site-popup--corner{
+ inset:auto auto 22px 22px;padding:0;width:360px;max-width:calc(100vw - 44px);
+ display:block;visibility:hidden;opacity:0;transform:translateY(30px);pointer-events:none;
+ transition:opacity .3s ease,transform .3s ease,visibility 0s linear .3s;
+}
+.site-popup.site-popup--corner.open{display:block;visibility:visible;opacity:1;transform:none;pointer-events:auto;transition:opacity .3s ease,transform .3s ease}
+.site-popup--corner .site-popup-overlay{display:none}
+.site-popup.site-popup--corner.open .site-popup-dialog{animation:none}
+.site-popup--corner .site-popup-dialog{max-width:none;max-height:calc(100vh - 44px);grid-template-columns:1fr;grid-template-rows:auto auto;border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.28)}
+.site-popup--corner .site-popup-dialog.no-image{max-width:none}
+.site-popup--corner .site-popup-image img{min-height:0;height:140px}
+.site-popup--corner .site-popup-body{padding:1.35rem 1.5rem 1.5rem}
+.site-popup--corner .site-popup-body h2{font-size:18px;margin-bottom:.5rem;padding-right:1.75rem}
+.site-popup--corner .site-popup-desc{font-size:12.5px;margin-bottom:1rem}
+.site-popup--corner .site-popup-points{gap:.5rem;margin-bottom:1.1rem}
+.site-popup--corner .site-popup-points li{font-size:12.5px}
+.site-popup--corner .site-popup-points li:nth-child(n+4){display:none}
+.site-popup--corner .site-popup-tick{width:18px;height:18px;font-size:10px}
+.site-popup--corner .site-popup-cta{align-self:stretch;justify-content:center}
+.site-popup--corner .site-popup-close{top:10px;right:10px;width:30px;height:30px;font-size:18px;background:rgba(255,255,255,.92)}
+
+@media(max-width:800px){
+  .site-popup--stacked .site-popup-image img{height:170px}
+  .site-popup--stacked .site-popup-body{padding:1.6rem 1.4rem 1.75rem}
+  .site-popup.site-popup--corner{inset:auto 12px 12px 12px;width:auto;max-width:none}
+  .site-popup--corner .site-popup-image img{height:120px}
+}
+
 /* ══════════════════ WHATSAPP WIDGET ══════════════════ */
 .wa-fab{
  position:fixed;right:22px;bottom:22px;z-index:900;

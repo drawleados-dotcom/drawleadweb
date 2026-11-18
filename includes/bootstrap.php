@@ -329,6 +329,9 @@ function pending_migrations_exist(PDO $pdo): bool
     if (!migration_table_exists($pdo, 'page_content_versions')) {
         return true;
     }
+    if (!migration_table_exists($pdo, 'popups')) {
+        return true;
+    }
     return false;
 }
 
@@ -380,6 +383,143 @@ function get_site_popup(PDO $pdo): array
     ];
     $row = $pdo->query('SELECT * FROM site_popup WHERE id = 1')->fetch();
     return $row ? array_merge($defaults, $row) : $defaults;
+}
+
+// ── Popups (Admin → Popups; migration 029) ──
+// Any number of popups, each with a layout and either every page or a list
+// of pages. Before migration 029 runs, the single site_popup row above is
+// still used, as a split-layout popup on every page.
+
+/** The three popup layouts: key => [label, description]. */
+function popup_layouts(): array
+{
+    return [
+        'split' => ['Split', 'Large popup: image on the left, content on the right.'],
+        'stacked' => ['Centered', 'Compact popup: image across the top, content centered below.'],
+        'corner' => ['Corner slide-in', 'Small card that slides up in the bottom-left corner. No dark overlay, so visitors can keep reading.'],
+    ];
+}
+
+function popup_defaults(): array
+{
+    return [
+        'id' => 0, 'name' => '', 'layout' => 'split', 'enabled' => 0, 'show_on' => 'selected', 'targets' => '',
+        'image' => '', 'image_alt' => '', 'title' => '', 'description' => '', 'points' => '',
+        'cta_text' => 'Book a Free Consultation', 'cta_use_booking' => 1, 'cta_link' => '',
+        'trigger_delay' => 1, 'trigger_new_page' => 0, 'trigger_refresh' => 0, 'trigger_scroll_section' => 0,
+    ];
+}
+
+function popups_ready(PDO $pdo): bool
+{
+    static $ready = null;
+    return $ready ??= migration_table_exists($pdo, 'popups');
+}
+
+/** Every popup, newest first. */
+function get_popups(PDO $pdo): array
+{
+    if (!popups_ready($pdo)) {
+        return [];
+    }
+    return array_map(
+        fn ($r) => array_merge(popup_defaults(), array_map(fn ($v) => $v ?? '', $r)),
+        $pdo->query('SELECT * FROM popups ORDER BY id DESC')->fetchAll()
+    );
+}
+
+function get_popup(PDO $pdo, int $id): ?array
+{
+    if (!popups_ready($pdo) || $id <= 0) {
+        return null;
+    }
+    $stmt = $pdo->prepare('SELECT * FROM popups WHERE id = ?');
+    $stmt->execute([$id]);
+    $row = $stmt->fetch();
+    return $row ? array_merge(popup_defaults(), array_map(fn ($v) => $v ?? '', $row)) : null;
+}
+
+/** A popup's stored targets ("page:3,blog") as a list. */
+function popup_target_keys($targets): array
+{
+    return array_values(array_unique(array_filter(array_map('trim', explode(',', (string) $targets)))));
+}
+
+/**
+ * Everything a popup can be assigned to: key => label. Pages come from the
+ * pages table; Blog and Case Studies cover their list and detail pages.
+ */
+function popup_target_options(PDO $pdo): array
+{
+    $options = [];
+    foreach ($pdo->query('SELECT id, name, slug, status FROM pages ORDER BY name') as $p) {
+        $options['page:' . $p['id']] = [
+            'label' => (string) $p['name'],
+            'sub' => (string) $p['slug'] . (($p['status'] ?? 'published') === 'draft' ? ' · draft' : ''),
+        ];
+    }
+    $options['blog'] = ['label' => 'Blog', 'sub' => '/blog and every blog post'];
+    $options['case-studies'] = ['label' => 'Case Studies', 'sub' => '/case-studies and every case study'];
+    return $options;
+}
+
+/** The target key for a request path: 'page:ID', 'blog', 'case-studies', or ''. */
+function popup_target_for_uri(PDO $pdo, string $uri): string
+{
+    if ($uri === '/blog' || str_starts_with($uri, '/blog/')) {
+        return 'blog';
+    }
+    if ($uri === '/case-studies' || str_starts_with($uri, '/case-studies/')) {
+        return 'case-studies';
+    }
+    if (str_starts_with($uri, '/analyze/')) {
+        $uri = '/analyze';
+    }
+    $stmt = $pdo->prepare('SELECT id FROM pages WHERE slug = ?');
+    $stmt->execute([$uri]);
+    $id = (int) $stmt->fetchColumn();
+    return $id ? 'page:' . $id : '';
+}
+
+/**
+ * The one popup to show on a page. A popup picked for this page wins over
+ * an "all pages" popup; if several still match, the newest one wins.
+ * Only enabled popups with a title count. null = no popup on this page.
+ */
+function popup_for_target(PDO $pdo, string $target): ?array
+{
+    if (!popups_ready($pdo)) {
+        $legacy = get_site_popup($pdo);
+        if (empty($legacy['enabled']) || (string) $legacy['title'] === '') {
+            return null;
+        }
+        return array_merge(popup_defaults(), $legacy, ['id' => 0, 'layout' => 'split', 'show_on' => 'all']);
+    }
+    $forAll = null;
+    foreach (get_popups($pdo) as $p) {
+        if (empty($p['enabled']) || (string) $p['title'] === '') {
+            continue;
+        }
+        if ($p['show_on'] === 'all') {
+            $forAll ??= $p;
+        } elseif ($target !== '' && in_array($target, popup_target_keys($p['targets']), true)) {
+            return $p;
+        }
+    }
+    return $forAll;
+}
+
+/** Image for the standalone /book page's side panel: the first popup image set. */
+function popup_booking_image(PDO $pdo): array
+{
+    if (!popups_ready($pdo)) {
+        $legacy = get_site_popup($pdo);
+        return ['image' => (string) $legacy['image'], 'image_alt' => (string) $legacy['image_alt']];
+    }
+    $row = $pdo->query(
+        "SELECT image, image_alt FROM popups WHERE image IS NOT NULL AND image <> '' ORDER BY enabled DESC, id ASC LIMIT 1"
+    )->fetch();
+    return ['image' => (string) ($row['image'] ?? ''), 'image_alt' => (string) ($row['image_alt'] ?? '')];
 }
 
 /**

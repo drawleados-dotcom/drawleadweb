@@ -144,6 +144,12 @@ function media_usage_map(PDO $pdo): array
     } catch (PDOException $e) {
     }
     try {
+        foreach ($pdo->query('SELECT name, title, image FROM popups') as $r) {
+            $add($r['image'], 'Popup: ' . ($r['name'] ?: $r['title']));
+        }
+    } catch (PDOException $e) {
+    }
+    try {
         $add($pdo->query('SELECT image FROM site_sidebar WHERE id = 1')->fetchColumn(), 'Sidebar');
     } catch (PDOException $e) {
     }
@@ -205,6 +211,12 @@ function media_filter_index(PDO $pdo): array
     } catch (PDOException $e) {
     }
     try {
+        foreach ($pdo->query('SELECT image FROM popups') as $r) {
+            $add($r['image'], 'other:popup');
+        }
+    } catch (PDOException $e) {
+    }
+    try {
         $add($pdo->query('SELECT image FROM site_sidebar WHERE id = 1')->fetchColumn(), 'other:sidebar');
     } catch (PDOException $e) {
     }
@@ -241,6 +253,7 @@ function media_update_references(PDO $pdo, string $sub, string $oldFile, string 
         'page_content' => ['value'],
         'page_content_versions' => ['snapshot'],
         'site_popup' => ['image'],
+        'popups' => ['image'],
         'site_sidebar' => ['image'],
     ];
     $n = 0;
@@ -263,6 +276,7 @@ function media_update_references(PDO $pdo, string $sub, string $oldFile, string 
             'blogs' => ['featured_image'],
             'case_studies' => ['desktop_image', 'mobile_image', 'result_image'],
             'site_popup' => ['image'],
+            'popups' => ['image'],
             'site_sidebar' => ['image'],
         ];
         foreach ($bare as $table => $cols) {

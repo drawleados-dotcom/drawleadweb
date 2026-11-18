@@ -10,14 +10,14 @@
  * is still what populates the calendar, so those pages auto-click a
  * hidden [data-book] trigger on load instead of duplicating that logic.
  * On standalone pages, the image already configured for the site-wide
- * consultation popup (Admin → Popup) is reused as a side panel — same
+ * consultation popup (Admin → Popups, the first one with an image) is reused as a side panel — same
  * image, no separate upload needed. Renders without it if none is set.
  */
 $bookingStandalone = !empty($bookingPageMinimal);
 $bookingStandaloneImage = '';
 $bookingStandaloneImageAlt = '';
 if ($bookingStandalone) {
-    $popupForImage = get_site_popup($pdo);
+    $popupForImage = popup_booking_image($pdo);
     if (!empty($popupForImage['image'])) {
         $bookingStandaloneImage = popup_image_src($popupForImage['image']);
         $bookingStandaloneImageAlt = $popupForImage['image_alt'] ?: 'Book a free consultation with Drawlead';

@@ -643,6 +643,48 @@ function migration_027_statements(): array
     ];
 }
 
+/**
+ * Multiple popups: creates popups and copies the single site_popup row in
+ * as the first popup (all pages, split layout) — only while popups is
+ * still empty, so re-running never duplicates it or undoes later edits.
+ */
+function migration_029_statements(PDO $pdo): array
+{
+    // Same SQL as sql/migrations/029_multiple_popups.sql (sql/ isn't deployed).
+    $statements = [
+        "CREATE TABLE IF NOT EXISTS popups (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(120) NOT NULL DEFAULT '',
+            layout VARCHAR(20) NOT NULL DEFAULT 'split',
+            enabled TINYINT(1) NOT NULL DEFAULT 0,
+            show_on VARCHAR(10) NOT NULL DEFAULT 'selected',
+            targets TEXT,
+            image TEXT,
+            image_alt VARCHAR(190) NOT NULL DEFAULT '',
+            title VARCHAR(190) NOT NULL DEFAULT '',
+            description VARCHAR(400) NOT NULL DEFAULT '',
+            points TEXT,
+            cta_text VARCHAR(100) NOT NULL DEFAULT 'Book a Free Consultation',
+            cta_use_booking TINYINT(1) NOT NULL DEFAULT 1,
+            cta_link VARCHAR(255) NOT NULL DEFAULT '',
+            trigger_delay TINYINT(1) NOT NULL DEFAULT 1,
+            trigger_new_page TINYINT(1) NOT NULL DEFAULT 0,
+            trigger_refresh TINYINT(1) NOT NULL DEFAULT 0,
+            trigger_scroll_section TINYINT(1) NOT NULL DEFAULT 0,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+    ];
+    if (migration_table_exists($pdo, 'site_popup')) {
+        $statements[] = "INSERT INTO popups (name, layout, enabled, show_on, targets, image, image_alt, title, description, points,
+                cta_text, cta_use_booking, cta_link, trigger_delay, trigger_new_page, trigger_refresh, trigger_scroll_section)
+            SELECT 'Consultation Popup', 'split', enabled, 'all', '', image, image_alt, title, description, points,
+                cta_text, cta_use_booking, cta_link, trigger_delay, trigger_new_page, trigger_refresh, trigger_scroll_section
+            FROM site_popup WHERE id = 1 AND NOT EXISTS (SELECT 1 FROM popups)";
+    }
+    return $statements;
+}
+
 $log = [];
 $error = '';
 
@@ -731,6 +773,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($which === '028' || $which === 'all') {
         $toRun['028'] = migration_028_statements();
     }
+    if ($which === '029' || $which === 'all') {
+        $toRun['029'] = migration_029_statements($pdo);
+    }
 
     foreach ($toRun as $name => $statements) {
         try {
@@ -817,6 +862,7 @@ $stmt026->execute(['/home-9']);
 $migration026Done = (int) $stmt026->fetchColumn() >= 1;
 $migration027Done = migration_table_exists($pdo, 'page_content');
 $migration028Done = migration_table_exists($pdo, 'page_content_versions');
+$migration029Done = migration_table_exists($pdo, 'popups');
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -1178,7 +1224,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done || !$migration027Done || !$migration028Done): ?>
+<div class="card">
+  <div class="card-title">029 — Multiple popups with layouts and page selection</div>
+  <div class="card-desc">Creates popups, so Admin → Popups can hold several popups, each with one of three layouts (Split, Centered, Corner slide-in) and its own list of pages. Your current popup is copied in as the first one, set to show on all pages, so the live site doesn't change until you edit it.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration029Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration029Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration029Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="029">
+    <button type="submit" class="btn btn-primary">Run Migration 029</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done || !$migration027Done || !$migration028Done || !$migration029Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

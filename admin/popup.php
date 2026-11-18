@@ -2,177 +2,89 @@
 require_once __DIR__ . '/../includes/bootstrap.php';
 require_admin();
 
-$popup = get_site_popup($pdo);
+$ready = popups_ready($pdo);
+$popups = $ready ? get_popups($pdo) : [];
+$layouts = popup_layouts();
+$targetOptions = $ready ? popup_target_options($pdo) : [];
 
-$error = '';
-$success = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    csrf_verify();
-
-    $enabled = isset($_POST['enabled']) ? 1 : 0;
-    $imageAlt = trim($_POST['image_alt'] ?? '');
-    $title = trim($_POST['title'] ?? '');
-    $description = trim($_POST['description'] ?? '');
-    $points = trim($_POST['points'] ?? '');
-    $ctaText = trim($_POST['cta_text'] ?? '') ?: 'Book a Free Consultation';
-    $ctaUseBooking = isset($_POST['cta_use_booking']) ? 1 : 0;
-    $ctaLink = trim($_POST['cta_link'] ?? '');
-    $triggerDelay = isset($_POST['trigger_delay']) ? 1 : 0;
-    $triggerNewPage = isset($_POST['trigger_new_page']) ? 1 : 0;
-    $triggerRefresh = isset($_POST['trigger_refresh']) ? 1 : 0;
-    $triggerScrollSection = isset($_POST['trigger_scroll_section']) ? 1 : 0;
-
-    if ($enabled && $title === '') {
-        $error = 'Add a title before enabling the popup.';
-    }
-
-    $image = $popup['image'];
-    if (!$error && !empty($_FILES['image']['tmp_name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $allowed = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp', 'image/gif' => 'gif'];
-        $tmp = $_FILES['image']['tmp_name'];
-        $mime = @mime_content_type($tmp);
-        $size = (int) $_FILES['image']['size'];
-
-        if (!isset($allowed[$mime])) {
-            $error = 'Image must be a JPG, PNG, WEBP, or GIF file.';
-        } elseif ($size > 5 * 1024 * 1024) {
-            $error = 'Image must be smaller than 5MB.';
-        } else {
-            if (!is_dir(UPLOAD_DIR)) {
-                mkdir(UPLOAD_DIR, 0755, true);
-            }
-            $ext = $allowed[$mime];
-            $filename = 'site-popup-' . bin2hex(random_bytes(4)) . '.' . $ext;
-            if (!move_uploaded_file($tmp, UPLOAD_DIR . $filename)) {
-                $error = 'Could not save the uploaded image. Please try again.';
-            } else {
-                $image = $filename;
-            }
-        }
-    }
-
-    if (!$error) {
-        $pdo->prepare(
-            'UPDATE site_popup SET enabled=?, image=?, image_alt=?, title=?, description=?, points=?,
-             cta_text=?, cta_use_booking=?, cta_link=?,
-             trigger_delay=?, trigger_new_page=?, trigger_refresh=?, trigger_scroll_section=? WHERE id=1'
-        )->execute([
-            $enabled, $image, $imageAlt, $title, $description, $points,
-            $ctaText, $ctaUseBooking, $ctaLink,
-            $triggerDelay, $triggerNewPage, $triggerRefresh, $triggerScrollSection,
-        ]);
-
-        $success = 'Saved.';
-        $popup = [
-            'enabled' => $enabled, 'image' => $image, 'image_alt' => $imageAlt, 'title' => $title,
-            'description' => $description, 'points' => $points, 'cta_text' => $ctaText,
-            'cta_use_booking' => $ctaUseBooking, 'cta_link' => $ctaLink,
-            'trigger_delay' => $triggerDelay, 'trigger_new_page' => $triggerNewPage,
-            'trigger_refresh' => $triggerRefresh, 'trigger_scroll_section' => $triggerScrollSection,
-        ];
-    }
-}
-
-$pageTitle = 'Consultation Popup';
-$pageSub = 'The popup shown to visitors when they open the site.';
+$pageTitle = 'Popups';
+$pageSub = 'Popups shown to visitors. Give each one a layout and choose the pages it appears on.';
 $activeNav = 'popup';
 include __DIR__ . '/includes/header.php';
 ?>
 
-<?php if ($error): ?><div class="alert alert-error"><?= h($error) ?></div><?php endif; ?>
-<?php if ($success): ?><div class="alert alert-success"><?= h($success) ?></div><?php endif; ?>
+<?php if (!$ready): ?>
+<div class="alert alert-error">
+  Run <b>Migration 029</b> first, in <a href="run-migrations.php">Run Migrations</a>. It sets up multiple popups and copies your current popup in, so nothing changes on the live site.
+</div>
+<?php else: ?>
 
-<form method="post" enctype="multipart/form-data">
-  <?= csrf_field() ?>
+<?php if (isset($_GET['deleted'])): ?><div class="alert alert-success">Popup deleted.</div><?php endif; ?>
 
-  <div class="card">
-    <label class="checkbox-row" style="max-width:320px">
-      <input type="checkbox" name="enabled" <?= $popup['enabled'] ? 'checked' : '' ?>>
-      Show this popup on the live site
-    </label>
-    <div class="field-hint">Shows once per visitor session, a moment after the page loads. Turn this off to hide it without losing your content below.</div>
-  </div>
+<div class="toolbar">
+  <div class="topbar-sub"><?= count($popups) ?> popup<?= count($popups) === 1 ? '' : 's' ?></div>
+  <a href="popup-edit.php" class="btn btn-primary">+ New Popup</a>
+</div>
 
-  <div class="card">
-    <div class="card-title">Image</div>
-    <div class="card-desc">Fills the left half of the popup.</div>
-    <div class="field">
-      <label>Image File</label>
-      <input type="file" name="image" accept="image/jpeg,image/png,image/webp,image/gif" data-image-input>
-      <div class="upload-preview">
-        <img data-image-preview src="<?= h($popup['image'] ? popup_image_src($popup['image']) : '') ?>" style="<?= $popup['image'] ? '' : 'display:none' ?>">
-      </div>
+<div class="card">
+  <?php if (empty($popups)): ?>
+    <div class="empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg>
+      <p>No popups yet.</p>
+      <a class="row-link" href="popup-edit.php">Create your first popup →</a>
     </div>
-    <div class="field">
-      <label for="image_alt">Image Alt Text</label>
-      <input type="text" id="image_alt" name="image_alt" maxlength="190" value="<?= h($popup['image_alt']) ?>">
-    </div>
-  </div>
+  <?php else: ?>
+  <table>
+    <thead><tr><th></th><th>Popup</th><th>Layout</th><th>Shows On</th><th>Status</th><th>Updated</th><th></th></tr></thead>
+    <tbody>
+      <?php foreach ($popups as $p):
+        $keys = popup_target_keys($p['targets']);
+        $labels = array_map(fn ($k) => $targetOptions[$k]['label'] ?? null, $keys);
+        $labels = array_values(array_filter($labels));
+      ?>
+      <tr>
+        <td>
+          <?php if ((string) $p['image'] !== ''): ?>
+            <img class="thumb" src="<?= h(popup_image_src((string) $p['image'])) ?>" alt="">
+          <?php else: ?>
+            <div class="thumb"></div>
+          <?php endif; ?>
+        </td>
+        <td>
+          <a class="row-link" href="popup-edit.php?id=<?= (int) $p['id'] ?>"><?= h($p['name'] ?: ($p['title'] ?: 'Untitled popup')) ?></a>
+          <?php if ($p['name'] !== '' && $p['title'] !== ''): ?><div class="t-sub"><?= h($p['title']) ?></div><?php endif; ?>
+        </td>
+        <td><?= h($layouts[$p['layout']][0] ?? 'Split') ?></td>
+        <td class="t-sub">
+          <?php if ($p['show_on'] === 'all'): ?>
+            All pages
+          <?php elseif (!$labels): ?>
+            <span style="color:#a8631a">No pages picked</span>
+          <?php else: ?>
+            <?= h(implode(', ', array_slice($labels, 0, 3))) ?><?= count($labels) > 3 ? ' +' . (count($labels) - 3) . ' more' : '' ?>
+          <?php endif; ?>
+        </td>
+        <td>
+          <span class="badge <?= $p['enabled'] ? 'badge-published' : 'badge-draft' ?>"><?= $p['enabled'] ? 'On' : 'Off' ?></span>
+        </td>
+        <td><?= $p['updated_at'] ? h(date('M j, Y', strtotime($p['updated_at']))) : '' ?></td>
+        <td style="white-space:nowrap">
+          <a class="row-link" href="popup-edit.php?id=<?= (int) $p['id'] ?>">Edit</a>
+          &nbsp;·&nbsp;
+          <form method="post" action="popup-delete.php" style="display:inline" onsubmit="return confirm('Delete this popup permanently?');">
+            <?= csrf_field() ?>
+            <input type="hidden" name="id" value="<?= (int) $p['id'] ?>">
+            <button type="submit" class="row-link" style="background:none;border:none;color:#e11d48;cursor:pointer;font:inherit;padding:0">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
+  <?php endif; ?>
+</div>
 
-  <div class="card">
-    <div class="card-title">Content</div>
-    <div class="field">
-      <label for="title">Title</label>
-      <input type="text" id="title" name="title" maxlength="190" value="<?= h($popup['title']) ?>" placeholder="e.g. Let's Build Your Growth Engine">
-    </div>
-    <div class="field">
-      <label for="description">Description</label>
-      <textarea id="description" name="description" rows="2" maxlength="400"><?= h($popup['description']) ?></textarea>
-    </div>
-    <div class="field">
-      <label for="points">Points (one per line — first 4 shown with a checkmark)</label>
-      <textarea id="points" name="points" rows="4" placeholder="Custom ERP built around your process&#10;Live inventory &amp; order sync&#10;SEO and performance marketing that compounds&#10;Dedicated support, not a ticket queue"><?= h($popup['points']) ?></textarea>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">When Should It Appear?</div>
-    <div class="card-desc">Check the trigger(s) that should show the popup. A trigger left unchecked never fires — leave at least one checked or the popup will never appear even when enabled.</div>
-    <div class="checkbox-grid">
-      <label class="checkbox-row">
-        <input type="checkbox" name="trigger_delay" <?= $popup['trigger_delay'] ? 'checked' : '' ?>>
-        First 3 Seconds
-      </label>
-      <label class="checkbox-row">
-        <input type="checkbox" name="trigger_scroll_section" <?= $popup['trigger_scroll_section'] ? 'checked' : '' ?>>
-        4th Section of the Page
-      </label>
-      <label class="checkbox-row">
-        <input type="checkbox" name="trigger_new_page" <?= $popup['trigger_new_page'] ? 'checked' : '' ?>>
-        Every New Page
-      </label>
-      <label class="checkbox-row">
-        <input type="checkbox" name="trigger_refresh" <?= $popup['trigger_refresh'] ? 'checked' : '' ?>>
-        Every Refresh
-      </label>
-    </div>
-    <div class="field-hint" style="margin-top:.9rem">
-      "First 3 Seconds" and "4th Section" control <b>when</b> on the page it appears. "Every New Page" and "Every Refresh" control <b>how often</b> — leave both off to show it just once per visitor session (the default).
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Call to Action</div>
-    <div class="field">
-      <label for="cta_text">Button Text</label>
-      <input type="text" id="cta_text" name="cta_text" maxlength="100" value="<?= h($popup['cta_text']) ?>">
-    </div>
-    <label class="checkbox-row" style="max-width:340px;margin-bottom:1.1rem">
-      <input type="checkbox" name="cta_use_booking" id="cta_use_booking" <?= $popup['cta_use_booking'] ? 'checked' : '' ?>>
-      Open the booking popup (recommended)
-    </label>
-    <div class="field">
-      <label for="cta_link">Or a Custom Link</label>
-      <input type="text" id="cta_link" name="cta_link" maxlength="255" value="<?= h($popup['cta_link']) ?>" placeholder="https://... or /case-studies">
-      <div class="field-hint">Only used when "Open the booking popup" above is unchecked.</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <button type="submit" class="btn btn-primary">Save Popup</button>
-    <a href="/" target="_blank" class="btn btn-ghost">View Site ↗</a>
-  </div>
-</form>
+<div class="access-note">Each page shows at most one popup. A popup picked for a specific page beats an "All pages" popup; if two popups pick the same page, the newer one is shown.</div>
+<?php endif; ?>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
