@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/bootstrap.php';
+require_once __DIR__ . '/../includes/media-lib.php';
 require_login();
 
 /**
@@ -27,53 +28,13 @@ $isAdmin = $u['role'] === 'admin';
 
 $mediaDir = UPLOAD_DIR . 'media/';
 
-// SVG is deliberately not accepted: it can carry script, and these files are
-// served from the same origin as the admin panel.
-$allowedTypes = [
-    'image/jpeg' => 'jpg',
-    'image/png'  => 'png',
-    'image/webp' => 'webp',
-    'image/gif'  => 'gif',
-    'image/avif' => 'avif',
-];
-// Every file this page writes matches this, so it doubles as the guard that
-// keeps delete requests from reaching outside uploads/media/.
-$mediaNamePattern = '/^[a-z0-9][a-z0-9-]*\.(jpg|png|webp|gif|avif)$/';
-// Earlier uploads sitting loose in uploads/ (Blogs, Case Studies, Pages,
-// Popup, Sidebar): any image file name without a path or leading dot.
-$looseNamePattern = '/^[^.\/\\\\][^\/\\\\]*\.(jpe?g|png|webp|gif|avif)$/i';
-
-/** Converts a php.ini size like "64M" to bytes (0 = no limit). */
-function media_ini_bytes(string $value): int
-{
-    $value = trim($value);
-    if ($value === '') {
-        return 0;
-    }
-    $bytes = (int) $value;
-    switch (strtolower(substr($value, -1))) {
-        case 'g':
-            $bytes *= 1024;
-            // no break
-        case 'm':
-            $bytes *= 1024;
-            // no break
-        case 'k':
-            $bytes *= 1024;
-    }
-    return $bytes;
-}
-
-function media_human_size(int $bytes): string
-{
-    if ($bytes >= 1048576) {
-        return rtrim(rtrim(number_format($bytes / 1048576, 1), '0'), '.') . ' MB';
-    }
-    if ($bytes >= 1024) {
-        return round($bytes / 1024) . ' KB';
-    }
-    return $bytes . ' B';
-}
+// Allowed types, size limits and the upload itself live in
+// includes/media-lib.php, shared with the picker (admin/media-api.php).
+// Every file this page writes matches MEDIA_NAME_PATTERN, so it doubles as
+// the guard that keeps delete requests from reaching outside uploads/media/;
+// earlier uploads loose in uploads/ match MEDIA_LOOSE_NAME_PATTERN.
+$mediaNamePattern = MEDIA_NAME_PATTERN;
+$looseNamePattern = MEDIA_LOOSE_NAME_PATTERN;
 
 /**
  * Normalizes a stored image reference to its path under uploads/ ("x.jpg" or
@@ -293,12 +254,7 @@ function media_update_references(PDO $pdo, string $sub, string $oldFile, string 
     return $n;
 }
 
-// Per-image cap is 10MB, or lower if the server's own upload limit is lower.
-$maxFileBytes = 10 * 1024 * 1024;
-$serverFileLimit = media_ini_bytes((string) ini_get('upload_max_filesize'));
-if ($serverFileLimit > 0) {
-    $maxFileBytes = min($maxFileBytes, $serverFileLimit);
-}
+$maxFileBytes = media_max_file_bytes();
 $postLimit = media_ini_bytes((string) ini_get('post_max_size'));
 $maxFiles = (int) ini_get('max_file_uploads') ?: 20;
 
@@ -331,54 +287,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $flash['errors'][] = 'Could not create the uploads/media folder on the server. Check that uploads/ is writable.';
         } else {
             for ($i = 0; $i < $count; $i++) {
-                $originalName = (string) $files['name'][$i];
-                $err = (int) $files['error'][$i];
-
-                if ($err === UPLOAD_ERR_NO_FILE) {
-                    continue;
+                $saved = media_save_upload(
+                    (string) $files['tmp_name'][$i],
+                    (string) $files['name'][$i],
+                    (int) $files['size'][$i],
+                    (int) $files['error'][$i]
+                );
+                if (isset($saved['error'])) {
+                    $flash['errors'][] = $saved['error'];
+                } elseif (isset($saved['file'])) {
+                    $flash['uploaded'][] = $saved['file'];
                 }
-                if ($err === UPLOAD_ERR_INI_SIZE || $err === UPLOAD_ERR_FORM_SIZE) {
-                    $flash['errors'][] = $originalName . ': larger than the ' . media_human_size($maxFileBytes) . ' limit.';
-                    continue;
-                }
-                if ($err !== UPLOAD_ERR_OK) {
-                    $flash['errors'][] = $originalName . ': upload failed (error ' . $err . '). Please try again.';
-                    continue;
-                }
-
-                $tmp = $files['tmp_name'][$i];
-                $size = (int) $files['size'][$i];
-                $mime = @mime_content_type($tmp);
-
-                if (!is_string($mime) || !isset($allowedTypes[$mime])) {
-                    $flash['errors'][] = $originalName . ': not a supported image. Use JPG, PNG, WEBP, GIF, or AVIF.';
-                    continue;
-                }
-                if ($size > $maxFileBytes) {
-                    $flash['errors'][] = $originalName . ': larger than the ' . media_human_size($maxFileBytes) . ' limit.';
-                    continue;
-                }
-
-                // Keep the original name (good for SEO), cleaned to a URL-safe
-                // slug. The extension always comes from the detected file type,
-                // never from what the file claimed to be, and a short random
-                // suffix means an upload never overwrites an existing image.
-                $base = strtolower(pathinfo($originalName, PATHINFO_FILENAME));
-                $base = trim((string) preg_replace('/[^a-z0-9]+/', '-', $base), '-');
-                $base = rtrim(substr($base, 0, 60), '-');
-                if ($base === '') {
-                    $base = 'image';
-                }
-                do {
-                    $filename = $base . '-' . bin2hex(random_bytes(3)) . '.' . $allowedTypes[$mime];
-                } while (is_file($mediaDir . $filename));
-
-                if (!move_uploaded_file($tmp, $mediaDir . $filename)) {
-                    $flash['errors'][] = $originalName . ': could not be saved on the server. Please try again.';
-                    continue;
-                }
-                @chmod($mediaDir . $filename, 0644);
-                $flash['uploaded'][] = $filename;
             }
 
             $n = count($flash['uploaded']);

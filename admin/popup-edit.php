@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/bootstrap.php';
+require_once __DIR__ . '/../includes/media-lib.php';
 require_admin();
 
 if (!popups_ready($pdo)) {
@@ -23,6 +24,7 @@ $success = isset($_GET['saved']) ? 'Saved.' : '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_verify();
 
+    $savedImage = $popup['image'];
     $layout = (string) ($_POST['layout'] ?? 'split');
     $showOn = ($_POST['show_on'] ?? '') === 'all' ? 'all' : 'selected';
     $targets = array_values(array_intersect((array) ($_POST['targets'] ?? []), array_keys($targetOptions)));
@@ -52,31 +54,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Pick at least one page, or choose "All pages", before turning the popup on.';
     }
 
-    if (!$error && !empty($_POST['remove_image'])) {
-        $popup['image'] = '';
-    }
-
-    if (!$error && !empty($_FILES['image']['tmp_name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $allowed = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp', 'image/gif' => 'gif'];
-        $tmp = $_FILES['image']['tmp_name'];
-        $mime = @mime_content_type($tmp);
-        $size = (int) $_FILES['image']['size'];
-
-        if (!isset($allowed[$mime])) {
-            $error = 'Image must be a JPG, PNG, WEBP, or GIF file.';
-        } elseif ($size > 5 * 1024 * 1024) {
-            $error = 'Image must be smaller than 5MB.';
-        } else {
-            if (!is_dir(UPLOAD_DIR)) {
-                mkdir(UPLOAD_DIR, 0755, true);
-            }
-            $filename = 'site-popup-' . bin2hex(random_bytes(4)) . '.' . $allowed[$mime];
-            if (!move_uploaded_file($tmp, UPLOAD_DIR . $filename)) {
-                $error = 'Could not save the uploaded image. Please try again.';
-            } else {
-                $popup['image'] = $filename;
-            }
-        }
+    // The image comes from the Media picker: empty (no image), the value
+    // already saved (which may be a built-in data: graphic), or a path to
+    // an image that exists in the library.
+    $imageIn = trim((string) ($_POST['image'] ?? ''));
+    if ($imageIn === '' || $imageIn === (string) $savedImage) {
+        $popup['image'] = $imageIn;
+    } elseif (media_is_library_path($imageIn)) {
+        $popup['image'] = $imageIn;
+    } elseif (!$error) {
+        $error = 'That image is no longer in the Media library. Choose another one.';
     }
 
     if (!$error) {
@@ -129,7 +116,7 @@ include __DIR__ . '/includes/header.php';
   <a href="popup.php" class="row-link">← All popups</a>
 </div>
 
-<form method="post" enctype="multipart/form-data">
+<form method="post">
   <?= csrf_field() ?>
 
   <div class="card">
@@ -209,13 +196,18 @@ include __DIR__ . '/includes/header.php';
     <div class="card-title">Image</div>
     <div class="card-desc">Split: fills the left half. Centered and Corner: runs across the top.</div>
     <div class="field">
-      <label>Image File</label>
-      <input type="file" name="image" accept="image/jpeg,image/png,image/webp,image/gif" data-image-input>
-      <div class="upload-preview">
-        <img data-image-preview src="<?= h($popup['image'] ? popup_image_src((string) $popup['image']) : '') ?>" style="<?= $popup['image'] ? '' : 'display:none' ?>">
-        <?php if ($popup['image']): ?>
-        <label class="popup-remove-image"><input type="checkbox" name="remove_image" value="1"> Remove image</label>
-        <?php endif; ?>
+      <label>Image</label>
+      <div class="mp-field<?= $popup['image'] ? ' has-image' : '' ?>" data-media-picker data-csrf="<?= h(csrf_token()) ?>">
+        <input type="hidden" name="image" value="<?= h((string) $popup['image']) ?>" data-mp-value>
+        <button type="button" class="mp-preview" data-mp-open aria-label="Choose image">
+          <img data-mp-img alt=""<?= $popup['image'] ? ' src="' . h(popup_image_src((string) $popup['image'])) . '"' : '' ?>>
+          <span class="mp-placeholder">No image selected</span>
+        </button>
+        <div class="mp-field-actions">
+          <button type="button" class="btn btn-ghost" data-mp-open>Choose from Media</button>
+          <button type="button" class="link-btn link-danger mp-remove" data-mp-clear>Remove image</button>
+          <div class="field-hint">Pick an image from the Media library, or upload a new one there.</div>
+        </div>
       </div>
     </div>
     <div class="field">
@@ -324,5 +316,6 @@ include __DIR__ . '/includes/header.php';
   updateCount();
 })();
 </script>
+<script src="<?= asset_url('/admin/assets/media-picker.js') ?>"></script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
