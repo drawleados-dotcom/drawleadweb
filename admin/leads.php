@@ -222,7 +222,6 @@ $presets = [
     'All time'     => ['', ''],
 ];
 $allCount = array_sum($byChannel);
-$maxChannel = $byChannel ? max($byChannel) : 0;
 $pages = max(1, (int) ceil($total / $perPage));
 $channelOptions = array_unique(array_merge(LEAD_SOURCE_CHANNELS, [LEAD_SOURCE_NOT_RECORDED], array_keys($byChannel)));
 $topChannel = '';
@@ -307,24 +306,6 @@ include __DIR__ . '/includes/header.php';
       <a class="ls-chip<?= $on ? ' on' : '' ?>" href="<?= h(leads_url(['from' => $from, 'to' => $to, 'page' => null])) ?>"><?= h($label) ?></a>
     <?php endforeach; ?>
   </div>
-</div>
-
-<div class="card">
-  <div class="card-title">Leads by source</div>
-  <div class="card-desc">Click a source to see only its leads.<?= $fChannel ? ' Showing: <strong>' . h($fChannel) . '</strong> · <a href="' . h(leads_url(['source' => null, 'page' => null])) . '">show all</a>' : '' ?></div>
-  <?php if (!$byChannel): ?>
-    <div class="empty-state"><p>No leads for these filters.</p></div>
-  <?php else: ?>
-  <div class="ls-bars">
-    <?php foreach ($byChannel as $c => $n): $c = (string) $c; ?>
-    <a class="ls-bar-row<?= $fChannel === $c ? ' on' : '' ?>" href="<?= h(leads_url(['source' => $fChannel === $c ? null : $c, 'page' => null])) ?>">
-      <span class="ls-bar-name"><span class="ls-dot" style="background:<?= lead_channel_color($c) ?>"></span><?= h($c) ?></span>
-      <span class="ls-bar-track"><span class="ls-bar-fill" style="width:<?= $maxChannel ? round($n / $maxChannel * 100, 1) : 0 ?>%;background:<?= lead_channel_color($c) ?>"></span></span>
-      <span class="ls-bar-n"><?= $n ?> <span class="ls-bar-pct"><?= $allCount ? round($n / $allCount * 100) : 0 ?>%</span></span>
-    </a>
-    <?php endforeach; ?>
-  </div>
-  <?php endif; ?>
 </div>
 
 <div class="card">
@@ -450,15 +431,6 @@ include __DIR__ . '/includes/header.php';
 .ls-chip{font-size:11.5px;font-weight:700;color:var(--g500);text-decoration:none;padding:6px 12px;border:1.5px solid var(--border);border-radius:20px}
 .ls-chip:hover{border-color:var(--g400);color:var(--black)}
 .ls-chip.on{background:var(--black);border-color:var(--black);color:#fff}
-.ls-bars{display:flex;flex-direction:column;gap:2px}
-.ls-bar-row{display:grid;grid-template-columns:200px 1fr 90px;align-items:center;gap:14px;padding:8px 10px;border-radius:8px;text-decoration:none;color:var(--black)}
-.ls-bar-row:hover{background:var(--bg)}
-.ls-bar-row.on{background:#e9f9f0}
-.ls-bar-name{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700}
-.ls-bar-track{height:10px;background:var(--bg);border-radius:6px;overflow:hidden}
-.ls-bar-fill{display:block;height:100%;border-radius:6px;min-width:3px}
-.ls-bar-n{font-size:13px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
-.ls-bar-pct{font-weight:600;color:var(--g400);font-size:11.5px;margin-left:4px}
 .ls-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;display:inline-block}
 .ls-pill{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;padding:4px 10px;border:1.5px solid var(--border);border-radius:20px;text-decoration:none;color:var(--black);white-space:nowrap}
 .ls-pill:hover{border-color:var(--g400)}
@@ -487,8 +459,6 @@ tr.ls-detail > td{background:var(--bg);padding:1.1rem 1.25rem}
   .stat-grid{grid-template-columns:1fr 1fr}
   .ls-filters{grid-template-columns:1fr 1fr}
   .ls-filters .field:first-child{grid-column:1/-1}
-  .ls-bar-row{grid-template-columns:1fr 70px;gap:4px 10px}
-  .ls-bar-track{grid-column:1/-1;grid-row:2}
   .ls-detail-grid{grid-template-columns:1fr}
   .ls-dl{grid-template-columns:100px 1fr}
 }
