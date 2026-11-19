@@ -32,37 +32,46 @@ $join = fn (string $type, string $alias) => $hasSources
     ? "LEFT JOIN lead_sources ls ON ls.lead_type = '$type' AND ls.lead_id = $alias.id"
     : '';
 
+// The form and date filters go inside each half of the UNION, on the real
+// tables' columns: filtering the UNION's constant lead_type column from outside
+// made MySQL fail with a 500.
+$dateWhere = function (string $alias) use ($fFrom, $fTo): array {
+    $w = [];
+    $p = [];
+    if ($fFrom !== '') {
+        $w[] = "$alias.created_at >= ?";
+        $p[] = $fFrom . ' 00:00:00';
+    }
+    if ($fTo !== '') {
+        $w[] = "$alias.created_at < ?";
+        $p[] = date('Y-m-d', strtotime($fTo . ' +1 day')) . ' 00:00:00';
+    }
+    return [$w ? ' WHERE ' . implode(' AND ', $w) : '', $p];
+};
 $parts = [];
-if ($hasBookings) {
+$unionParams = [];
+if ($hasBookings && $fForm !== 'whatsapp') {
+    [$w, $p] = $dateWhere('b');
     $parts[] = "SELECT 'booking' AS lead_type, b.id AS lead_id, b.created_at, b.name, b.email, '' AS phone,
                        b.form_data AS payload, b.booking_date, b.booking_time, b.status, $lsCols
-                FROM bookings b " . $join('booking', 'b');
+                FROM bookings b " . $join('booking', 'b') . $w;
+    array_push($unionParams, ...$p);
 }
-if ($hasWhatsapp) {
+if ($hasWhatsapp && $fForm !== 'booking') {
+    [$w, $p] = $dateWhere('w');
     $parts[] = "SELECT 'whatsapp' AS lead_type, w.id AS lead_id, w.created_at, '' AS name, '' AS email, w.phone,
                        w.answers AS payload, NULL AS booking_date, NULL AS booking_time, NULL AS status, $lsCols
-                FROM whatsapp_leads w " . $join('whatsapp', 'w');
+                FROM whatsapp_leads w " . $join('whatsapp', 'w') . $w;
+    array_push($unionParams, ...$p);
 }
 
 /** WHERE clause + params for the current filters; $withChannel = false leaves the source filter out (for the per-source counts). */
-$buildWhere = function (bool $withChannel) use ($fChannel, $fForm, $fQuery, $fFrom, $fTo): array {
+$buildWhere = function (bool $withChannel) use ($fChannel, $fQuery, $unionParams): array {
     $where = [];
-    $params = [];
+    $params = $unionParams; // the UNION's own placeholders come first in the SQL
     if ($withChannel && $fChannel !== '') {
         $where[] = 'l.channel = ?';
         $params[] = $fChannel;
-    }
-    if ($fForm !== '') {
-        $where[] = 'l.lead_type = ?';
-        $params[] = $fForm;
-    }
-    if ($fFrom !== '') {
-        $where[] = 'l.created_at >= ?';
-        $params[] = $fFrom . ' 00:00:00';
-    }
-    if ($fTo !== '') {
-        $where[] = 'l.created_at < ?';
-        $params[] = date('Y-m-d', strtotime($fTo . ' +1 day')) . ' 00:00:00';
     }
     if ($fQuery !== '') {
         $like = '%' . addcslashes($fQuery, '%_\\') . '%';
@@ -77,8 +86,9 @@ $total = 0;
 $byChannel = [];
 $byForm = ['booking' => 0, 'whatsapp' => 0];
 $isExport = ($_GET['export'] ?? '') === 'csv';
+$queryError = '';
 
-if ($parts) {
+if ($parts) try {
     $union = '(' . implode(' UNION ALL ', $parts) . ') l';
 
     [$whereAll, $paramsAll] = $buildWhere(false);
@@ -101,6 +111,13 @@ if ($parts) {
     $stmt = $pdo->prepare("SELECT l.* FROM $union $where ORDER BY l.created_at DESC, l.lead_id DESC" . $limit);
     $stmt->execute($params);
     $leads = $stmt->fetchAll();
+} catch (Throwable $e) {
+    error_log('admin/leads.php: ' . $e->getMessage());
+    $queryError = $e->getMessage();
+    $leads = [];
+    $total = 0;
+    $byChannel = [];
+    $byForm = ['booking' => 0, 'whatsapp' => 0];
 }
 
 // Booking form labels, and which booking fields hold a phone number.
@@ -242,6 +259,13 @@ include __DIR__ . '/includes/header.php';
 <div class="alert alert-error">
   Lead sources aren't being recorded yet. Run <strong>Migration 030</strong> on the
   <a href="run-migrations.php">Migrations</a> page — until then every lead shows as "Not recorded".
+</div>
+<?php endif; ?>
+
+<?php if ($queryError): ?>
+<div class="alert alert-error">
+  The leads couldn't be loaded for these filters. <a href="leads.php">Clear filters</a>.
+  <div class="t-sub" style="margin-top:.4rem">Database error: <?= h($queryError) ?></div>
 </div>
 <?php endif; ?>
 
