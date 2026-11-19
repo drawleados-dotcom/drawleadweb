@@ -786,6 +786,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($which === '030' || $which === 'all') {
         $toRun['030'] = migration_030_statements();
     }
+    if ($which === '031' || $which === 'all') {
+        $toRun['031'] = seo_migration_031_statements();
+    }
 
     foreach ($toRun as $name => $statements) {
         try {
@@ -874,6 +877,9 @@ $migration027Done = migration_table_exists($pdo, 'page_content');
 $migration028Done = migration_table_exists($pdo, 'page_content_versions');
 $migration029Done = migration_table_exists($pdo, 'popups');
 $migration030Done = migration_table_exists($pdo, 'lead_sources');
+$migration031Done = migration_table_exists($pdo, 'seo_redirects')
+    && migration_table_exists($pdo, 'seo_404_log')
+    && migration_table_exists($pdo, 'seo_schemas');
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -1261,7 +1267,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration002Done || !$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done || !$migration027Done || !$migration028Done || !$migration029Done || !$migration030Done): ?>
+<div class="card">
+  <div class="card-title">031 — SEO module: redirects, 404 log &amp; custom schema</div>
+  <div class="card-desc">Creates seo_redirects, seo_404_log and seo_schemas for Admin → SEO → Redirects, 404 Logs and Schema. Only adds tables — nothing on the live site changes until you add a redirect or schema block. Missing URLs start being logged as soon as it runs.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration031Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration031Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration031Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="031">
+    <button type="submit" class="btn btn-primary">Run Migration 031</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration031Done || !$migration002Done ||!$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done || !$migration027Done || !$migration028Done || !$migration029Done || !$migration030Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

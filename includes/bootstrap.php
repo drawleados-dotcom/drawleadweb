@@ -29,6 +29,7 @@ require_once __DIR__ . '/industries.php';
 require_once __DIR__ . '/analyze.php';
 require_once __DIR__ . '/page-content.php';
 require_once __DIR__ . '/lead-source.php';
+require_once __DIR__ . '/seo.php';
 
 try {
     $pdo = new PDO(
@@ -334,6 +335,9 @@ function pending_migrations_exist(PDO $pdo): bool
         return true;
     }
     if (!migration_table_exists($pdo, 'lead_sources')) {
+        return true;
+    }
+    if (!migration_table_exists($pdo, 'seo_redirects') || !migration_table_exists($pdo, 'seo_404_log') || !migration_table_exists($pdo, 'seo_schemas')) {
         return true;
     }
     return false;

@@ -20,50 +20,51 @@ if ($uri === '') {
     $uri = '/';
 }
 
-// ── XML sitemap — every published page, blog post, and case study,
-// excluding anything marked noindex in its SEO panel. ──
-if ($uri === '/sitemap.xml') {
-    header('Content-Type: application/xml; charset=UTF-8');
-
-    $entries = [['loc' => site_base_url() . '/', 'lastmod' => null]];
-
-    foreach ($pdo->query('SELECT * FROM pages')->fetchAll() as $p) {
-        if (($p['robots_index'] ?? 'index') === 'noindex' || $p['slug'] === '/') {
-            continue;
-        }
-        if (($p['status'] ?? 'published') === 'draft') {
-            continue;
-        }
-        $entries[] = ['loc' => site_base_url() . $p['slug'], 'lastmod' => $p['updated_at'] ?? null];
+// ── Admin → SEO → Redirects: applied before any route, so an old URL can
+// point anywhere — even over a page that still exists. 410 = "gone". ──
+$seoRedirect = seo_find_redirect($pdo, $uri, true);
+$seoGone = false;
+if ($seoRedirect) {
+    if ((int) $seoRedirect['code'] === 410) {
+        $seoGone = true;
+    } else {
+        header('Location: ' . $seoRedirect['location'], true, (int) $seoRedirect['code']);
+        exit;
     }
+}
 
-    $entries[] = ['loc' => site_base_url() . '/blog', 'lastmod' => null];
-    foreach ($pdo->query("SELECT * FROM blogs WHERE status = 'published'")->fetchAll() as $b) {
-        if (($b['robots_index'] ?? 'index') === 'noindex') {
-            continue;
-        }
-        $entries[] = ['loc' => site_base_url() . '/blog/' . $b['slug'], 'lastmod' => $b['updated_at'] ?? null];
+// ── Admin → SEO → 404 Logs: whatever route ends in a 404, record it. ──
+register_shutdown_function(function () use ($pdo, $uri) {
+    if (http_response_code() === 404 && !isset($_GET['pc_preview'])) {
+        seo_log_404($pdo, $uri);
     }
+});
 
-    $entries[] = ['loc' => site_base_url() . '/case-studies', 'lastmod' => null];
-    foreach ($pdo->query("SELECT * FROM case_studies WHERE status = 'published'")->fetchAll() as $c) {
-        if (($c['robots_index'] ?? 'index') === 'noindex') {
-            continue;
-        }
-        $entries[] = ['loc' => site_base_url() . '/case-studies/' . $c['slug'], 'lastmod' => $c['updated_at'] ?? null];
-    }
-
-    echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-    echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
-    foreach ($entries as $e) {
-        echo "  <url>\n    <loc>" . h($e['loc']) . "</loc>\n";
-        if (!empty($e['lastmod'])) {
-            echo '    <lastmod>' . date('Y-m-d', strtotime($e['lastmod'])) . "</lastmod>\n";
-        }
-        echo "  </url>\n";
-    }
-    echo '</urlset>' . "\n";
+// ── robots.txt — edited in Admin → SEO → Robots (.htaccess routes it here). ──
+if ($uri === '/robots.txt') {
+    header('Content-Type: text/plain; charset=UTF-8');
+    echo seo_robots_txt($pdo);
     exit;
+}
+
+// ── XML sitemap — every published page, blog post, and case study, excluding
+// anything marked noindex in its SEO panel or excluded in Admin → SEO → Sitemap. ──
+if ($uri === '/sitemap.xml') {
+    if (!seo_sitemap_settings($pdo)['enabled']) {
+        http_response_code(404);
+        header('Content-Type: text/plain; charset=UTF-8');
+        echo "The sitemap is switched off.\n";
+        exit;
+    }
+    header('Content-Type: application/xml; charset=UTF-8');
+    echo seo_sitemap_xml($pdo);
+    exit;
+}
+
+// Admin → SEO → Image SEO: give <img> tags with no alt text one from the file
+// name. Not in the page editor's live preview, which needs the exact markup.
+if (!isset($_GET['pc_preview']) && seo_image_settings($pdo)['auto_alt']) {
+    ob_start('seo_auto_alt_filter');
 }
 
 // Shared by any route that hits a 404 — never index a missing page.
@@ -72,6 +73,16 @@ $notFoundSeo = [
     'canonical' => '', 'robots_index' => 'noindex', 'robots_follow' => 'nofollow',
     'og_title' => '', 'og_description' => '', 'og_image' => '', 'og_type' => 'website', 'schema' => null,
 ];
+
+// A 410 redirect: the content was removed on purpose.
+if ($seoGone) {
+    http_response_code(410);
+    $seo = $notFoundSeo;
+    include __DIR__ . '/templates/layout-start.php';
+    include __DIR__ . '/templates/404.php';
+    include __DIR__ . '/templates/layout-end.php';
+    exit;
+}
 
 // ── Blog routes ──
 if ($uri === '/blog') {

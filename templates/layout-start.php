@@ -12,7 +12,12 @@ $seo = $seo ?? [
     'canonical' => '', 'robots_index' => 'index', 'robots_follow' => 'follow',
     'og_title' => '', 'og_description' => '', 'og_image' => '', 'og_type' => 'website', 'schema' => null,
 ];
+// Admin → SEO → Global Settings / Schema fill in defaults, site-wide tags and JSON-LD.
+$seoUri = $uri ?? rtrim((string) parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH), '/');
+$seoUri = $seoUri === '' ? '/' : $seoUri;
+$seo = seo_apply_globals($pdo, $seo, $seoUri);
 echo seo_head_tags($seo);
+echo seo_extra_head_tags($pdo, $seo, $seoUri);
 ?>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

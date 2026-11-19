@@ -4,6 +4,10 @@ Options -Indexes
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # robots.txt is edited in Admin → SEO → Robots, so it's always served by
+  # index.php — even if an old static robots.txt is still on the server.
+  RewriteRule ^robots\.txt$ index.php [L]
+
   # Real files and directories (admin/, uploads/, templates/, css, images...)
   # are served as-is and never routed through the front controller.
   RewriteCond %{REQUEST_FILENAME} -f [OR]
