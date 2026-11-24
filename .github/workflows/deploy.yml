@@ -51,4 +51,5 @@ jobs:
             **/.git*
             **/.git*/**
             **/sql/**
+            **/drawlead-website/**
             **/*.md

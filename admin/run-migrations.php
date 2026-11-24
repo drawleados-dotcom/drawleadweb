@@ -692,6 +692,61 @@ function migration_030_statements(): array
     return [lead_source_table_sql()];
 }
 
+/**
+ * Home 10: adds the page and makes it the homepage. The page that was at /
+ * moves to /home-previous as a draft, with its edits and history, so the
+ * change can be undone in Admin → Pages by swapping the two URLs back.
+ */
+function migration_032_statements(PDO $pdo): array
+{
+    // This moves the homepage, so it only ever runs once: "Run All" re-runs
+    // every migration, and must not undo a URL changed in admin since.
+    if ((int) $pdo->query("SELECT COUNT(*) FROM pages WHERE template = 'home10'")->fetchColumn() > 0) {
+        return [];
+    }
+
+    // Same SQL as sql/migrations/032_home10_page.sql (sql/ isn't deployed). In
+    // one transaction, so a failure part-way leaves the homepage as it was.
+    $statements = [
+        "START TRANSACTION",
+
+        // SEO fields carry over from the current homepage.
+        "INSERT INTO pages (name, slug, status, show_in_menu, meta_title, meta_description, focus_keyword, canonical_url,
+                robots_index, robots_follow, og_title, og_description, og_image, template)
+            SELECT 'Home 10', '/home-10', 'published', show_in_menu, meta_title, meta_description, focus_keyword, canonical_url,
+                robots_index, robots_follow, og_title, og_description, og_image, 'home10'
+            FROM pages WHERE slug = '/'",
+
+        // Testimonials holds placeholder copy: hidden until it is filled in.
+        "INSERT INTO page_content (page_id, item_key, section_key, kind, original, value)
+            SELECT id, 'layout', '', 'text', '', '{\"order\":[],\"hidden\":[\"section:testimonials\"]}'
+            FROM pages WHERE template = 'home10'",
+
+        // Editors of the current homepage can edit the new one.
+        "INSERT IGNORE INTO user_access (user_id, item_type, item_id)
+            SELECT a.user_id, 'page', n.id FROM user_access a
+            JOIN pages o ON o.slug = '/' AND a.item_type = 'page' AND a.item_id = o.id
+            JOIN pages n ON n.template = 'home10'",
+    ];
+    if (migration_table_exists($pdo, 'popups')) {
+        // Popups shown on the current homepage show on the new one.
+        $statements[] = "UPDATE popups p
+            JOIN pages o ON o.slug = '/'
+            JOIN pages n ON n.template = 'home10'
+            SET p.targets = CONCAT(p.targets, ',page:', n.id)
+            WHERE FIND_IN_SET(CONCAT('page:', o.id), p.targets)";
+    }
+    // The old page has to give up / before the new one can take it, hence the
+    // order; status is set first because it reads the slug being replaced.
+    $statements[] = "UPDATE pages
+        SET status = IF(slug = '/', 'draft', 'published'),
+            slug = IF(slug = '/', '/home-previous', '/')
+        WHERE slug = '/' OR template = 'home10'
+        ORDER BY slug = '/' DESC";
+    $statements[] = "COMMIT";
+    return $statements;
+}
+
 $log = [];
 $error = '';
 
@@ -789,6 +844,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($which === '031' || $which === 'all') {
         $toRun['031'] = seo_migration_031_statements();
     }
+    if ($which === '032' || $which === 'all') {
+        $toRun['032'] = migration_032_statements($pdo);
+    }
 
     foreach ($toRun as $name => $statements) {
         try {
@@ -803,6 +861,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $error = "Migration $name failed: " . $e->getMessage();
                 error_log('run-migrations: ' . $e->getMessage());
+                $pdo->exec('ROLLBACK'); // 032 runs in a transaction; a no-op for the rest
                 break;
             }
         }
@@ -880,6 +939,7 @@ $migration030Done = migration_table_exists($pdo, 'lead_sources');
 $migration031Done = migration_table_exists($pdo, 'seo_redirects')
     && migration_table_exists($pdo, 'seo_404_log')
     && migration_table_exists($pdo, 'seo_schemas');
+$migration032Done = (int) $pdo->query("SELECT COUNT(*) FROM pages WHERE template = 'home10'")->fetchColumn() >= 1;
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -1280,7 +1340,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration031Done || !$migration002Done ||!$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done || !$migration027Done || !$migration028Done || !$migration029Done || !$migration030Done): ?>
+<div class="card">
+  <div class="card-title">032 — Home 10 page, set as the homepage</div>
+  <div class="card-desc">Adds Home 10 (templates/home10-body.php, /assets/home10.css) and puts it at / as the live homepage, keeping the current homepage's SEO settings, editors and popups. The current homepage moves to /home-previous as a draft; to go back, give Home 10 another URL in Admin → Pages, then set the old page's URL to / and publish it. Its Testimonials section is placeholder text, so it starts hidden: fill it in and show it from Page Content. Needs migration 027.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration032Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration032Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration032Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="032">
+    <button type="submit" class="btn btn-primary">Run Migration 032</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration032Done || !$migration031Done || !$migration002Done ||!$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done || !$migration027Done || !$migration028Done || !$migration029Done || !$migration030Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

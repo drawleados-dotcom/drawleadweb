@@ -340,6 +340,10 @@ function pending_migrations_exist(PDO $pdo): bool
     if (!migration_table_exists($pdo, 'seo_redirects') || !migration_table_exists($pdo, 'seo_404_log') || !migration_table_exists($pdo, 'seo_schemas')) {
         return true;
     }
+    $stmt10 = $pdo->query("SELECT COUNT(*) FROM pages WHERE template = 'home10'");
+    if ((int) $stmt10->fetchColumn() < 1) {
+        return true;
+    }
     return false;
 }
 

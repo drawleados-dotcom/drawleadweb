@@ -4,8 +4,8 @@
  <div class="ft-sub">Secure · Intelligent<br>Scalable · Future-Ready</div>
  </div>
  <div class="ft-links">
- <a href="/#functions">Platform</a>
- <a href="/#tech">Technology</a>
+ <a href="/#solutions">Solutions</a>
+ <a href="/#program">8-Week Program</a>
  <a href="/case-studies">Case Studies</a>
  <a href="/#industries">Industries</a>
  <a href="/blog">Blog</a>
