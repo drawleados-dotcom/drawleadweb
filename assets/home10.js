@@ -80,22 +80,28 @@
     document.addEventListener('click', (e) => { if (!drawer.hidden && !nav.contains(e.target)) setDrawer(false); });
   }
 
-  /* ---------- capability summary → card ---------- */
-  $$('.capsum').forEach((b) => b.addEventListener('click', () => {
-    const t = document.getElementById(b.dataset.target);
-    if (!t) return;
-    t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
-    t.classList.remove('is-flash'); void t.offsetWidth; t.classList.add('is-flash');
-    t.focus({ preventScroll: true });
-  }));
-  if (hasIO) {
-    const sums = $$('.capsum');
-    const cio = new IntersectionObserver((es) => es.forEach((e) => {
-      const i = +e.target.id.replace('cap-', '') - 1;
-      sums[i] && sums[i].classList.toggle('is-active', e.isIntersecting);
-    }), { rootMargin: '-35% 0px -35% 0px' });
-    $$('.cap').forEach((c) => cio.observe(c));
-  }
+  /* ---------- capability tabs ---------- */
+  const cxTabs = $$('.cx-tab');
+  const cxSelect = (tab, focus) => {
+    cxTabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      const p = document.getElementById(t.getAttribute('aria-controls'));
+      if (p) p.hidden = !on;
+    });
+    if (focus) tab.focus();
+  };
+  cxTabs.forEach((t, i) => {
+    t.addEventListener('click', () => cxSelect(t, false));
+    t.addEventListener('keydown', (e) => {
+      const k = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+      let n = k !== undefined ? (i + k + cxTabs.length) % cxTabs.length : e.key === 'Home' ? 0 : e.key === 'End' ? cxTabs.length - 1 : -1;
+      if (n < 0) return;
+      e.preventDefault();
+      cxSelect(cxTabs[n], true);
+    });
+  });
 
   /* ---------- problem → solution ---------- */
   const pairs = $$('.pair');
