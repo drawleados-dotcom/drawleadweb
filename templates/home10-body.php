@@ -544,74 +544,157 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
     </div>
   </div>
 </section>
-<section class="indsel" id="industries">
+<?php
+// Industries. Same layout and parts as Selected Work above ($swProjects): one
+// entry per row, in page order, with the mockup on the left for 01, 03 and 05.
+// 'title' is the question in two parts; the second part is underlined. An
+// industry that also appears in Selected Work keeps the same accent here.
+$indRows = [
+    [
+        'accent' => 'indigo',
+        'category' => 'Construction & Real Estate',
+        'title' => ['Are your projects, site teams and materials', 'difficult to manage?'],
+        'text' => 'Connect project management, site operations, procurement, materials, contractors and financial workflows through integrated construction business systems.',
+        'chips' => ['Construction ERP', 'Project Management', 'Procurement Management', 'Site Operations', 'Business Automation'],
+        'cta' => 'Stop Profit Leakage in Your Projects',
+        'mock' => 'sites',
+        'mockLabel' => 'Sample dashboard: progress, crew and materials across four construction sites',
+    ],
+    [
+        'accent' => 'rose',
+        'category' => 'Healthcare',
+        'title' => ['Are disconnected systems making patient and clinic', 'management harder?'],
+        'text' => 'Simplify clinic and hospital operations with digital systems that connect patients, appointments, branches, teams and business workflows.',
+        'chips' => ['Healthcare Management Systems', 'Clinic Management', 'Patient Workflows', 'Appointment Management', 'Automation'],
+        'cta' => 'Stop Losing Revenue Through Operational Gaps',
+        'mock' => 'appointments',
+        'mockLabel' => 'Sample dashboard: appointments for the day across clinic branches',
+    ],
+    [
+        'accent' => 'green',
+        'category' => 'Ecommerce & D2C',
+        'title' => ['Are you struggling to turn website visitors', 'into paying customers?'],
+        'text' => 'Build high-performing ecommerce platforms that connect storefronts, products, orders, inventory, customer experiences and marketing.',
+        'chips' => ['Shopify Development', 'Custom Ecommerce', 'Conversion Optimization', 'Ecommerce Integrations', 'Performance Marketing'],
+        'cta' => 'Turn More Visitors into Paying Customers',
+        'mock' => 'funnel',
+        'mockLabel' => 'Sample dashboard: conversion funnel from store visit to purchase',
+    ],
+    [
+        'accent' => 'amber',
+        'category' => 'Jewellery & Retail',
+        'title' => ['Are inventory, customer data and sales spread across', 'different systems?'],
+        'text' => 'Improve retail operations through connected digital commerce, inventory visibility, customer management and business automation.',
+        'chips' => ['Retail Management', 'Inventory Systems', 'Shopify', 'Customer Management', 'Automation'],
+        'cta' => 'Stop Losing Sales Through Inventory Gaps',
+        'mock' => 'stock',
+        'mockLabel' => 'Sample dashboard: showroom and online stock beside a customer profile',
+    ],
+    [
+        'accent' => 'cyan',
+        'category' => 'Manufacturing & Distribution',
+        'title' => ['Are production, inventory and supply chain operations', 'difficult to coordinate?'],
+        'text' => 'Improve operational visibility by connecting inventory, purchasing, production workflows, vendors and business processes.',
+        'chips' => ['Manufacturing ERP', 'Inventory Management', 'Procurement', 'Vendor Management', 'Operations Automation'],
+        'cta' => 'Reduce Production Waste. Protect Your Profits',
+        'mock' => 'plant',
+        'mockLabel' => 'Sample dashboard: weekly production output and orders at each stage',
+    ],
+];
+?>
+<section class="sw sw--ind" id="industries">
   <div class="wrap">
-    <div class="indsel__head">
-      <div>
-        <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Same Industry ≠ Same Business Challenges</span>
-        <h2 class="h2 reveal" style="--d:.06s">We Don't Build for Industries.<br>We Build for Businesses.</h2>
+    <header class="sw-head">
+      <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Same Industry ≠ Same Business Challenges</span>
+      <h2 class="sw-h2 reveal" style="--d:.06s">We Don't Build for Industries.<br>We Build for Businesses.</h2>
+      <div class="sw-lead reveal" style="--d:.12s">
+        <p class="sw-sub">Every business operates differently. Even two companies in the same industry can have completely different business models, workflows, team structures and operational challenges.</p>
+        <p class="sw-sub">A construction company managing multiple sites may need an entirely different system from another construction company focused on property sales and customer management.</p>
+        <p class="sw-sub sw-sub--strong">That's why we don't believe in one-size-fits-all software.</p>
+        <p class="sw-sub">We understand your industry, study how your business operates and engineer technology around your specific processes, people and business requirements.</p>
       </div>
-      <div class="indsel__text reveal" style="--d:.1s">
-        <p class="lede">Every business operates differently. Even two companies in the same industry can have completely different business models, workflows, team structures and operational challenges.</p>
-        <p class="lede">A construction company managing multiple sites may need an entirely different system from another construction company focused on property sales and customer management.</p>
-        <p class="lede lede--strong">That's why we don't believe in one-size-fits-all software.</p>
-        <p class="lede">We understand your industry, study how your business operates and engineer technology around your specific processes, people and business requirements.</p>
-      </div>
+    </header>
+    <div class="sw-rows">
+<?php foreach ($indRows as $i => $p): $n = sprintf('%02d', $i + 1); ?>
+      <article class="sw-row<?= $i % 2 === 0 ? ' sw-row--media-first' : '' ?>" data-accent="<?= h($p['accent']) ?>">
+        <div class="sw-text reveal">
+          <span class="sw-cat"><b><?= $n ?></b><?= h($p['category']) ?></span>
+          <h3 class="sw-h3"><?= h($p['title'][0]) ?> <span class="sw-u"><?= h($p['title'][1]) ?></span></h3>
+          <p class="sw-p"><?= h($p['text']) ?></p>
+          <b class="sw-chips__l">Solutions:</b>
+          <ul class="sw-chips" role="list"><?php foreach ($p['chips'] as $c): ?><li><?= h($c) ?></li><?php endforeach; ?></ul>
+          <a class="sw-cta" href="/book" data-book><span><?= h($p['cta']) ?></span><span class="sw-cta__ic"><?= $swIc('i-arrow') ?></span></a>
+        </div>
+        <div class="sw-media reveal" style="--d:.08s" role="img" aria-label="<?= h($p['mockLabel']) ?>">
+<?php if ($p['mock'] === 'sites'): ?>
+          <div class="sw-card" aria-hidden="true">
+            <div class="sw-card__hd"><div><b>Site operations</b><small>4 active sites · today</small></div><span class="sw-tabs"><i class="is-on">Sites</i><i>Materials</i><i>Crew</i></span></div>
+            <div class="sw-kpis sw-kpis--3"><div class="sw-kpi"><small>Active sites</small><b>4</b></div><div class="sw-kpi"><small>Crew on site</small><b>86</b></div><div class="sw-kpi"><small>Deliveries</small><b class="sw-acc">5</b></div></div>
+            <ul class="sw-list">
+              <li><span class="sw-tile sw-tile--sm"><?= $swIc('i-building') ?></span><div><b>Residential Site A</b><small>Slab work · 28 on site</small></div><span class="sw-bar"><i style="--w:.72"></i></span><em>72%</em></li>
+              <li><span class="sw-tile sw-tile--sm"><?= $swIc('i-building') ?></span><div><b>Villa Site B</b><small>Finishing · 22 on site</small></div><span class="sw-bar"><i style="--w:.88"></i></span><em>88%</em></li>
+              <li><span class="sw-tile sw-tile--sm"><?= $swIc('i-building') ?></span><div><b>Commercial Site C</b><small>Foundation · 24 on site</small></div><span class="sw-bar"><i style="--w:.35"></i></span><em>35%</em></li>
+              <li><span class="sw-tile sw-tile--sm"><?= $swIc('i-building') ?></span><div><b>Interior Site D</b><small>Fit-out · 12 on site</small></div><span class="sw-bar"><i style="--w:.54"></i></span><em>54%</em></li>
+            </ul>
+            <div class="sw-alert"><span><b>Cement running low</b> at Site C</span><span class="sw-alert__btn">Reorder</span></div>
+          </div>
+          <div class="sw-evt" aria-hidden="true"><span class="sw-tile"><?= $swIc('i-check') ?></span><div><b>Material received</b><small>Villa Site B · 200 bags</small></div></div>
+<?php elseif ($p['mock'] === 'appointments'): ?>
+          <div class="sw-card" aria-hidden="true">
+            <div class="sw-card__hd"><div><b>Appointments</b><small>All branches · today</small></div><span class="sw-tabs"><i class="is-on">Day</i><i>Week</i></span></div>
+            <div class="sw-days"><i><small>Mon</small>12</i><i><small>Tue</small>13</i><i class="is-on"><small>Wed</small>14</i><i><small>Thu</small>15</i><i><small>Fri</small>16</i><i><small>Sat</small>17</i></div>
+            <div class="sw-kpis sw-kpis--3"><div class="sw-kpi"><small>Booked</small><b>64</b></div><div class="sw-kpi"><small>Checked in</small><b class="sw-acc">41</b></div><div class="sw-kpi"><small>Waiting</small><b>9</b></div></div>
+            <ul class="sw-list">
+              <li><span class="sw-time">09:30</span><div><b>General consultation</b><small>Branch 01 · Room 2</small></div><span class="sw-st sw-st--ok">Checked in</span></li>
+              <li><span class="sw-time">10:15</span><div><b>Follow-up visit</b><small>Branch 03 · Room 1</small></div><span class="sw-st sw-st--wait">Waiting</span></li>
+              <li><span class="sw-time">11:00</span><div><b>Physiotherapy session</b><small>Branch 02 · Room 4</small></div><span class="sw-st">Confirmed</span></li>
+            </ul>
+          </div>
+          <div class="sw-evt" aria-hidden="true"><span class="sw-tile"><?= $swIc('i-calendar') ?></span><div><b>Reminder sent</b><small>Branch 02 · 5:30 PM visit</small></div></div>
+<?php elseif ($p['mock'] === 'funnel'): ?>
+          <div class="sw-card" aria-hidden="true">
+            <div class="sw-card__hd"><div><b>Conversion funnel</b><small>Last 30 days</small></div><span class="sw-tabs"><i class="is-on">Funnel</i><i>Orders</i></span></div>
+            <div class="sw-kpis sw-kpis--2"><div class="sw-kpi"><small>Orders</small><b>967 <span class="sw-up">+18%</span></b></div><div class="sw-kpi"><small>Conversion</small><b class="sw-acc">3.9%</b></div></div>
+            <ul class="sw-fun">
+              <li><span>Visited store</span><span class="sw-fun__t"><i style="--w:1"></i></span><em>24,800</em></li>
+              <li><span>Viewed product</span><span class="sw-fun__t"><i style="--w:.55"></i></span><em>13,640</em></li>
+              <li><span>Added to cart</span><span class="sw-fun__t"><i style="--w:.17"></i></span><em>4,216</em></li>
+              <li><span>Checkout</span><span class="sw-fun__t"><i style="--w:.09"></i></span><em>2,232</em></li>
+              <li class="is-end"><span>Purchased</span><span class="sw-fun__t"><i style="--w:.039"></i></span><em>967</em></li>
+            </ul>
+            <div class="sw-sync"><b>In sync</b><span><?= $swIc('i-check') ?>Storefront</span><span><?= $swIc('i-check') ?>Inventory</span><span><?= $swIc('i-check') ?>Marketing</span></div>
+          </div>
+          <div class="sw-evt" aria-hidden="true"><span class="sw-tile"><?= $swIc('i-cart') ?></span><div><b>Cart recovered</b><small>Order 1048 · ₹2,450</small></div></div>
+<?php elseif ($p['mock'] === 'stock'): ?>
+          <div class="sw-card" aria-hidden="true">
+            <div class="sw-card__hd"><div><b>Stock &amp; sales</b><small>Showroom and online</small></div><span class="sw-tabs"><i class="is-on">Stock</i><i>Customers</i></span></div>
+            <div class="sw-kpis sw-kpis--2"><div class="sw-kpi"><small>Pieces in stock</small><b>1,284</b></div><div class="sw-kpi"><small>Sold this week</small><b class="sw-acc">96</b></div></div>
+            <div class="sw-list__hd"><span class="sw-key"><i style="--c:var(--accent-700)">Showroom</i><i style="--c:var(--accent-500)">Online</i></span><span>Pieces</span></div>
+            <ul class="sw-list">
+              <li><div><b>Rings</b></div><span class="sw-mix"><i style="--w:.65"></i><i style="--w:.35"></i></span><em>412</em></li>
+              <li><div><b>Bangles</b></div><span class="sw-mix"><i style="--w:.58"></i><i style="--w:.24"></i></span><em>338</em></li>
+              <li><div><b>Necklaces</b></div><span class="sw-mix"><i style="--w:.46"></i><i style="--w:.26"></i></span><em>296</em></li>
+              <li><div><b>Earrings</b></div><span class="sw-mix"><i style="--w:.29"></i><i style="--w:.29"></i></span><em>238</em></li>
+            </ul>
+            <div class="sw-cust"><span class="sw-tile sw-tile--sm"><?= $swIc('i-users') ?></span><div><b>Returning customer</b><small>4 purchases · anniversary in 9 days</small></div><span class="sw-alert__btn">Remind</span></div>
+          </div>
+          <div class="sw-evt" aria-hidden="true"><span class="sw-tile"><?= $swIc('i-gem') ?></span><div><b>Low stock alert</b><small>Gold bangles · 3 left</small></div></div>
+<?php else: ?>
+          <div class="sw-card" aria-hidden="true">
+            <div class="sw-card__hd"><div><b>Production overview</b><small>Plant 1 · this week</small></div><span class="sw-tabs"><i class="is-on">Output</i><i>Stock</i></span></div>
+            <div class="sw-kpis sw-kpis--3"><div class="sw-kpi"><small>Units made</small><b>6,970</b></div><div class="sw-kpi"><small>On time</small><b class="sw-acc">94%</b></div><div class="sw-kpi"><small>Vendors</small><b>14</b></div></div>
+            <div class="sw-list__hd"><span>Units per day</span></div>
+            <div class="sw-cols"><span style="--h:.67"><i></i><small>Mon</small></span><span style="--h:.85"><i></i><small>Tue</small></span><span style="--h:.59"><i></i><small>Wed</small></span><span style="--h:.9"><i></i><small>Thu</small></span><span style="--h:.77"><i></i><small>Fri</small></span><span class="is-top" style="--h:1"><b>1,460</b><i></i><small>Sat</small></span></div>
+            <div class="sw-list__hd"><span>Open orders by stage</span></div>
+            <ol class="sw-pipe"><li><b>12</b><small>Purchase</small></li><li><b>18</b><small>Production</small></li><li><b>5</b><small>Quality</small></li><li><b>9</b><small>Dispatch</small></li></ol>
+          </div>
+          <div class="sw-evt" aria-hidden="true"><span class="sw-tile"><?= $swIc('i-factory') ?></span><div><b>Raw material received</b><small>Vendor 04 · 2.4 tonnes</small></div></div>
+<?php endif; ?>
+        </div>
+      </article>
+<?php endforeach; ?>
     </div>
-    <div class="itabs reveal" data-itabs>
-      <div class="itablist" role="tablist" aria-label="Industry challenges" aria-orientation="vertical"><button type="button" role="tab" class="itab" id="it-1" aria-controls="ip-1" aria-selected="true" tabindex="0"><span class="itab__n">01</span><span class="itab__t">Construction & Real Estate</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button><button type="button" role="tab" class="itab" id="it-2" aria-controls="ip-2" aria-selected="false" tabindex="-1"><span class="itab__n">02</span><span class="itab__t">Healthcare</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button><button type="button" role="tab" class="itab" id="it-3" aria-controls="ip-3" aria-selected="false" tabindex="-1"><span class="itab__n">03</span><span class="itab__t">Ecommerce & D2C</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button><button type="button" role="tab" class="itab" id="it-4" aria-controls="ip-4" aria-selected="false" tabindex="-1"><span class="itab__n">04</span><span class="itab__t">Jewellery & Retail</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button><button type="button" role="tab" class="itab" id="it-5" aria-controls="ip-5" aria-selected="false" tabindex="-1"><span class="itab__n">05</span><span class="itab__t">Manufacturing & Distribution</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button></div>
-      <div class="ipanels">
-      <div class="ipanel" role="tabpanel" id="ip-1" aria-labelledby="it-1"  tabindex="0">
-        <div class="ipanel__art il"><svg class="il-svg" viewBox="0 0 480 300" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="in-construction" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern><linearGradient id="in-constructiong" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#46cf8a"/><stop offset="1" stop-color="#239a5c"/></linearGradient></defs><rect class="pn" width="480" height="300"/><rect width="480" height="300" fill="url(#in-construction)"/><path class="ln" d="M40 262 H300" stroke-width="2"/><rect class="c" x="70" y="230" width="120" height="34" rx="6" /><rect class="k" x="82" y="238" width="22" height="16" rx="3" /><rect class="gs" x="116" y="238" width="22" height="16" rx="3" /><rect class="k" x="150" y="238" width="22" height="16" rx="3" /><rect class="c" x="70" y="192" width="120" height="34" rx="6" /><rect class="gs" x="82" y="200" width="22" height="16" rx="3" /><rect class="k" x="116" y="200" width="22" height="16" rx="3" /><rect class="gs" x="150" y="200" width="22" height="16" rx="3" /><rect class="c" x="70" y="154" width="120" height="34" rx="6" /><rect class="k" x="82" y="162" width="22" height="16" rx="3" /><rect class="gs" x="116" y="162" width="22" height="16" rx="3" /><rect class="k" x="150" y="162" width="22" height="16" rx="3" /><rect class="c" x="70" y="116" width="120" height="34" rx="6" /><rect class="gs" x="82" y="124" width="22" height="16" rx="3" /><rect class="k" x="116" y="124" width="22" height="16" rx="3" /><rect class="gs" x="150" y="124" width="22" height="16" rx="3" /><rect class="gs2" x="70" y="78" width="120" height="34" rx="6" style="stroke-dasharray:4 4"/><path class="ln crane" d="M232 262 V54 M232 54 H330 M232 54 L204 78 M300 54 V96" stroke-width="4"/><rect class="g" x="222" y="40" width="20" height="14" rx="3" /><rect class="g" x="292" y="96" width="18" height="14" rx="3" /><g class="swing"><path class="ln" d="M300 54 V110" stroke-width="1.6"/><rect class="g" x="284" y="104" width="32" height="18" rx="3" /></g><g class="float hovlift" style="--d:0.2s"><rect class="c" x="330" y="120" width="130" height="74" rx="14" /><text class="lbl" x="344" y="144" text-anchor="start" >Site</text><rect class="k" x="344" y="156" width="84" height="6" rx="3.0" /><rect class="k2" x="344" y="170" width="56" height="6" rx="3.0" /><rect class="g" x="420" y="160" width="26" height="14" rx="7" /></g><g class="float hovlift" style="--d:0.7s"><rect class="c" x="330" y="206" width="130" height="64" rx="14" /><text class="lbl sm" x="344" y="230" text-anchor="start" >Profit / project</text><rect class="gs2" x="344" y="242" width="100" height="8" rx="4.0" /><rect class="g" x="344" y="242" width="70" height="8" rx="4.0" /></g><g class="float" style="--d:0.4s"><rect class="c" x="330" y="28" width="130" height="76" rx="14" /><rect class="g rise" x="346" y="76" width="12" height="16" rx="3" style="--d:0.0s;opacity:0.4"/><rect class="g rise" x="366" y="64" width="12" height="28" rx="3" style="--d:0.12s;opacity:0.5"/><rect class="g rise" x="386" y="70" width="12" height="22" rx="3" style="--d:0.24s;opacity:0.6000000000000001"/><rect class="g rise" x="406" y="52" width="12" height="40" rx="3" style="--d:0.36s;opacity:0.7000000000000001"/><rect class="g rise" x="426" y="40" width="12" height="52" rx="3" style="--d:0.48s;opacity:0.8"/></g></svg></div>
-        <div class="ipanel__body">
-          <span class="ipanel__k">01 — Construction & Real Estate</span>
-          <h3>Are your projects, site teams and materials difficult to manage?</h3>
-          <p>Connect project management, site operations, procurement, materials, contractors and financial workflows through integrated construction business systems.</p>
-          <div class="sol"><b>Solutions:</b><ul class="tags"><li>Construction ERP</li><li>Project Management</li><li>Procurement Management</li><li>Site Operations</li><li>Business Automation</li></ul></div>
-          <a class="h10-btn h10-btn--dark" href="/book" data-book><span>Stop Profit Leakage in Your Projects</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
-        </div>
-      </div>
-      <div class="ipanel" role="tabpanel" id="ip-2" aria-labelledby="it-2" hidden tabindex="0">
-        <div class="ipanel__art il"><svg class="il-svg" viewBox="0 0 480 300" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="in-healthcare" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern><linearGradient id="in-healthcareg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#46cf8a"/><stop offset="1" stop-color="#239a5c"/></linearGradient></defs><rect class="pn" width="480" height="300"/><rect width="480" height="300" fill="url(#in-healthcare)"/><rect class="c" x="40" y="84" width="150" height="180" rx="16" /><rect class="g" x="96" y="48" width="38" height="38" rx="10" /><path class="tick" d="M115 56v22M104 67h22" stroke-width="4"/><rect class="gs" x="58" y="112" width="50" height="30" rx="7" /><rect class="k" x="124" y="112" width="50" height="30" rx="7" /><rect class="k" x="58" y="156" width="50" height="30" rx="7" /><rect class="gs" x="124" y="156" width="50" height="30" rx="7" /><rect class="gs" x="58" y="200" width="50" height="30" rx="7" /><rect class="k" x="124" y="200" width="50" height="30" rx="7" /><rect class="g2" x="105" y="232" width="30" height="32" rx="6" /><g class="float" style="--d:0.1s"><rect class="c" x="220" y="34" width="240" height="96" rx="16" /><path class="gl heartline" d="M236 96 H282 L296 66 L318 110 L336 78 L350 96 H440" pathLength="1"/><text class="lbl" x="236" y="56" text-anchor="start" >Patients</text><rect class="gs" x="398" y="42" width="46" height="18" rx="9" /></g><g class="float hovlift" style="--d:0.5s"><rect class="c" x="220" y="146" width="116" height="120" rx="16" /><text class="lbl sm" x="236" y="170" text-anchor="start" >Appointments</text><rect class="k" x="236" y="184" width="22" height="20" rx="6" /><rect class="g" x="264" y="184" width="22" height="20" rx="6" /><rect class="k" x="292" y="184" width="22" height="20" rx="6" /><rect class="k" x="236" y="210" width="22" height="20" rx="6" /><rect class="g" x="264" y="210" width="22" height="20" rx="6" /><rect class="k" x="292" y="210" width="22" height="20" rx="6" /><rect class="k2" x="236" y="244" width="70" height="6" rx="3.0" /></g><g class="float hovlift" style="--d:0.9s"><rect class="c" x="350" y="146" width="110" height="120" rx="16" /><text class="lbl sm" x="364" y="170" text-anchor="start" >Branches</text><circle class="g" cx="380" cy="210" r="6" /><circle class="g" cx="430" cy="196" r="6" /><circle class="g" cx="412" cy="240" r="6" /><path class="ln" d="M380 210 L430 196 L412 240 Z" /><circle class="k2" cx="412" cy="214" r="3.5" /></g></svg></div>
-        <div class="ipanel__body">
-          <span class="ipanel__k">02 — Healthcare</span>
-          <h3>Are disconnected systems making patient and clinic management harder?</h3>
-          <p>Simplify clinic and hospital operations with digital systems that connect patients, appointments, branches, teams and business workflows.</p>
-          <div class="sol"><b>Solutions:</b><ul class="tags"><li>Healthcare Management Systems</li><li>Clinic Management</li><li>Patient Workflows</li><li>Appointment Management</li><li>Automation</li></ul></div>
-          <a class="h10-btn h10-btn--dark" href="/book" data-book><span>Stop Losing Revenue Through Operational Gaps</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
-        </div>
-      </div>
-      <div class="ipanel" role="tabpanel" id="ip-3" aria-labelledby="it-3" hidden tabindex="0">
-        <div class="ipanel__art il"><svg class="il-svg" viewBox="0 0 480 300" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="in-ecommerce" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern><linearGradient id="in-ecommerceg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#46cf8a"/><stop offset="1" stop-color="#239a5c"/></linearGradient></defs><rect class="pn" width="480" height="300"/><rect width="480" height="300" fill="url(#in-ecommerce)"/><rect class="c" x="40" y="40" width="250" height="224" rx="18" /><circle class="k2" cx="60" cy="58" r="4" /><circle class="k2" cx="73" cy="58" r="4" /><circle class="k2" cx="86" cy="58" r="4" /><rect class="k" x="106" y="51" width="130" height="14" rx="7" /><rect x="56" y="78" width="218" height="54" rx="10" fill="#d9f5e6" class="mintfill"/><rect class="g" x="70" y="92" width="90" height="8" rx="4.0" /><rect class="k2" x="70" y="108" width="60" height="6" rx="3.0" /><g class="float hovlift" style="--d:0.0s"><rect class="c2" x="56" y="144" width="66" height="106" rx="10" /><rect class="gs" x="62" y="150" width="54" height="46" rx="7" /><rect class="k" x="62" y="204" width="40" height="6" rx="3.0" /><rect class="g" x="62" y="222" width="28" height="14" rx="7" /></g><g class="float hovlift" style="--d:0.4s"><rect class="c2" x="130" y="144" width="66" height="106" rx="10" /><rect class="gs" x="136" y="150" width="54" height="46" rx="7" /><rect class="k" x="136" y="204" width="40" height="6" rx="3.0" /><rect class="g" x="136" y="222" width="28" height="14" rx="7" /></g><g class="float hovlift" style="--d:0.8s"><rect class="c2" x="204" y="144" width="66" height="106" rx="10" /><rect class="gs" x="210" y="150" width="54" height="46" rx="7" /><rect class="k" x="210" y="204" width="40" height="6" rx="3.0" /><rect class="g" x="210" y="222" width="28" height="14" rx="7" /></g><g class="float" style="--d:0.3s"><rect class="c" x="310" y="40" width="150" height="100" rx="16" /><text class="lbl" x="326" y="66" text-anchor="start" >Orders</text><rect class="g" x="326" y="78" width="96" height="6" rx="3.0" /><rect class="k2" x="326" y="94" width="86" height="6" rx="3.0" /><rect class="k2" x="326" y="110" width="76" height="6" rx="3.0" /></g><g class="float" style="--d:0.8s"><rect class="c" x="310" y="156" width="150" height="108" rx="16" /><text class="lbl" x="326" y="182" text-anchor="start" >Conversion</text><path d="M326 238 L360 222 L394 228 L430 200 L444 192" class="gl draw" pathLength="1"/><circle class="g" cx="444" cy="192" r="4" /></g></svg></div>
-        <div class="ipanel__body">
-          <span class="ipanel__k">03 — Ecommerce & D2C</span>
-          <h3>Are you struggling to turn website visitors into paying customers?</h3>
-          <p>Build high-performing ecommerce platforms that connect storefronts, products, orders, inventory, customer experiences and marketing.</p>
-          <div class="sol"><b>Solutions:</b><ul class="tags"><li>Shopify Development</li><li>Custom Ecommerce</li><li>Conversion Optimization</li><li>Ecommerce Integrations</li><li>Performance Marketing</li></ul></div>
-          <a class="h10-btn h10-btn--dark" href="/book" data-book><span>Turn More Visitors into Paying Customers</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
-        </div>
-      </div>
-      <div class="ipanel" role="tabpanel" id="ip-4" aria-labelledby="it-4" hidden tabindex="0">
-        <div class="ipanel__art il"><svg class="il-svg" viewBox="0 0 480 300" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="in-jewellery" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern><linearGradient id="in-jewelleryg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#46cf8a"/><stop offset="1" stop-color="#239a5c"/></linearGradient></defs><rect class="pn" width="480" height="300"/><rect width="480" height="300" fill="url(#in-jewellery)"/><g class="float" style="--d:0s"><path d="M110 70 H210 L250 118 L160 220 L70 118 Z" class="gem"/><path d="M70 118 H250 M110 70 L128 118 L160 220 M210 70 L192 118 L160 220 M128 118 L160 70 L192 118" class="ln gemln"/><path d="M110 70 H210 L250 118 H70Z" class="g" opacity=".75"/></g><g class="sparkle"><path d="M258 62 l4 12 l12 4 l-12 4 l-4 12 l-4 -12 l-12 -4 l12 -4z" class="g"/></g><g class="float hovlift" style="--d:0.3s"><rect class="c" x="300" y="34" width="160" height="96" rx="16" /><text class="lbl" x="316" y="60" text-anchor="start" >Inventory</text><rect class="gs" x="316" y="74" width="28" height="40" rx="6" /><rect class="gs" x="352" y="74" width="28" height="40" rx="6" /><rect class="g" x="388" y="74" width="28" height="40" rx="6" /><rect class="gs" x="424" y="74" width="28" height="40" rx="6" /></g><g class="float hovlift" style="--d:0.6s"><rect class="c" x="300" y="146" width="160" height="56" rx="16" /><circle class="gs" cx="326" cy="174" r="13" /><svg x="318" y="166" width="16" height="16" style="color:var(--green)" ><use href="#i-users"/></svg><rect class="k" x="348" y="166" width="80" height="6" rx="3.0" /><rect class="k2" x="348" y="180" width="54" height="6" rx="3.0" /></g><g class="float" style="--d:0.9s"><rect class="c" x="300" y="214" width="160" height="56" rx="16" /><path d="M316 252 L346 238 L376 246 L410 226 L444 230" class="gl draw" pathLength="1"/></g><g class="float" style="--d:0.5s"><rect class="c" x="40" y="238" width="150" height="36" rx="12" /><rect class="k2" x="54" y="252" width="100" height="8" rx="4.0" /><rect class="g" x="160" y="246" width="22" height="20" rx="6" /></g></svg></div>
-        <div class="ipanel__body">
-          <span class="ipanel__k">04 — Jewellery & Retail</span>
-          <h3>Are inventory, customer data and sales spread across different systems?</h3>
-          <p>Improve retail operations through connected digital commerce, inventory visibility, customer management and business automation.</p>
-          <div class="sol"><b>Solutions:</b><ul class="tags"><li>Retail Management</li><li>Inventory Systems</li><li>Shopify</li><li>Customer Management</li><li>Automation</li></ul></div>
-          <a class="h10-btn h10-btn--dark" href="/book" data-book><span>Stop Losing Sales Through Inventory Gaps</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
-        </div>
-      </div>
-      <div class="ipanel" role="tabpanel" id="ip-5" aria-labelledby="it-5" hidden tabindex="0">
-        <div class="ipanel__art il"><svg class="il-svg" viewBox="0 0 480 300" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="in-manufacturing" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern><linearGradient id="in-manufacturingg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#46cf8a"/><stop offset="1" stop-color="#239a5c"/></linearGradient></defs><rect class="pn" width="480" height="300"/><rect width="480" height="300" fill="url(#in-manufacturing)"/><path class="ln" d="M30 244 H450" stroke-width="2"/><rect class="c" x="40" y="108" width="160" height="136" rx="8" /><path class="c" d="M40 108 l40 -26 v26 l40 -26 v26 l40 -26 v26"/><rect class="k2" x="160" y="54" width="26" height="54" rx="4" /><rect class="k2" x="120" y="76" width="22" height="32" rx="4" /><rect class="k" x="58" y="138" width="22" height="26" rx="5" /><rect class="gs" x="92" y="138" width="22" height="26" rx="5" /><rect class="k" x="126" y="138" width="22" height="26" rx="5" /><rect class="gs" x="160" y="138" width="22" height="26" rx="5" /><rect class="g2" x="90" y="196" width="36" height="48" rx="4" /><circle class="smoke" cx="173" cy="40" r="8"/><circle class="smoke" cx="182" cy="26" r="6" style="--d:1s"/><rect class="c" x="222" y="206" width="238" height="22" rx="11" /><rect class="g belt" x="236" y="176" width="30" height="26" rx="5" style="--d:0.0s"/><rect class="g belt" x="286" y="176" width="30" height="26" rx="5" style="--d:0.5s"/><rect class="g belt" x="336" y="176" width="30" height="26" rx="5" style="--d:1.0s"/><rect class="g belt" x="386" y="176" width="30" height="26" rx="5" style="--d:1.5s"/><circle class="k2" cx="240" cy="217" r="6" /><circle class="k2" cx="330" cy="217" r="6" /><circle class="k2" cx="420" cy="217" r="6" /><g class="float hovlift" style="--d:0.2s"><rect class="c" x="222" y="44" width="114" height="110" rx="16" /><text class="lbl sm" x="238" y="70" text-anchor="start" >Inventory</text><rect class="g rise" x="238" y="120" width="12" height="20" rx="3" style="--d:0.0s;opacity:0.4"/><rect class="g rise" x="256" y="104" width="12" height="36" rx="3" style="--d:0.12s;opacity:0.5"/><rect class="g rise" x="274" y="112" width="12" height="28" rx="3" style="--d:0.24s;opacity:0.6000000000000001"/><rect class="g rise" x="292" y="92" width="12" height="48" rx="3" style="--d:0.36s;opacity:0.7000000000000001"/><rect class="g rise" x="310" y="106" width="12" height="34" rx="3" style="--d:0.48s;opacity:0.8"/></g><g class="float hovlift" style="--d:0.7s"><rect class="c" x="350" y="44" width="110" height="110" rx="16" /><text class="lbl sm" x="366" y="70" text-anchor="start" >Vendors</text><circle class="gs" cx="380" cy="112" r="8" /><circle class="gs" cx="424" cy="96" r="8" /><circle class="gs" cx="424" cy="130" r="8" /><path class="ln" d="M388 112 L416 98 M388 112 L416 128" /><circle class="g" cx="380" cy="112" r="4" /></g></svg></div>
-        <div class="ipanel__body">
-          <span class="ipanel__k">05 — Manufacturing & Distribution</span>
-          <h3>Are production, inventory and supply chain operations difficult to coordinate?</h3>
-          <p>Improve operational visibility by connecting inventory, purchasing, production workflows, vendors and business processes.</p>
-          <div class="sol"><b>Solutions:</b><ul class="tags"><li>Manufacturing ERP</li><li>Inventory Management</li><li>Procurement</li><li>Vendor Management</li><li>Operations Automation</li></ul></div>
-          <a class="h10-btn h10-btn--dark" href="/book" data-book><span>Reduce Production Waste. Protect Your Profits</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
-        </div>
-      </div></div>
-    </div>
+    <p class="sw-foot">Product screens use sample data.</p>
   </div>
 </section>
 <section class="indf" id="industry-focus">

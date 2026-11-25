@@ -200,10 +200,6 @@
     return { select, count: tabEls.length, tabEls };
   }
 
-  /* industries */
-  const itl = $('.itablist');
-  if (itl) tabs(itl, 'vertical');
-
   /* ---------- 8-week timeline ---------- */
   const tl = $('[data-timeline]');
   if (tl) {

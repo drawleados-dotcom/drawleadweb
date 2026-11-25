@@ -166,15 +166,9 @@ body>.h10:not(.ab) .dcard:nth-child(3) .dcard__ic{background:var(--t-lilac);colo
 body>.h10:not(.ab) .dcard:nth-child(4) .dcard__ic{background:var(--t-lime);color:var(--ink)}
 body>.h10:not(.ab) .dcard:is(:hover,.is-on) .dcard__ic{background:var(--green);color:#fff}
 
-/* industries */
-body>.h10:not(.ab) #industries{background:var(--t-peri)}
-body>.h10:not(.ab) #industries .lede:not(.lede--strong),body>.h10:not(.ab) .appr .lede{color:var(--t-ink)}
-body>.h10:not(.ab) #industries .itab__n{color:var(--t-green)}
-body>.h10:not(.ab) .ipanel:nth-of-type(5n+1) .ipanel__art.il{--il-bg:var(--t-mint)}
-body>.h10:not(.ab) .ipanel:nth-of-type(5n+2) .ipanel__art.il{--il-bg:var(--t-rose)}
-body>.h10:not(.ab) .ipanel:nth-of-type(5n+3) .ipanel__art.il{--il-bg:var(--t-peach)}
-body>.h10:not(.ab) .ipanel:nth-of-type(5n+4) .ipanel__art.il{--il-bg:var(--t-lilac)}
-body>.h10:not(.ab) .ipanel:nth-of-type(5n+5) .ipanel__art.il{--il-bg:var(--t-aqua)}
+/* industries: the Selected Work layout, so the tint is the ground behind its heading */
+body>.h10:not(.ab) #industries{background:linear-gradient(180deg,var(--t-peri),#fff 46rem)}
+body>.h10:not(.ab) .appr .lede{color:var(--t-ink)}
 
 /* industry focus */
 body>.h10:not(.ab) .icard:nth-child(6n+1) .icard__art.il{--il-bg:var(--t-mint)}
