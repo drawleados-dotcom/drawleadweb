@@ -43,6 +43,7 @@ gtag('config', '<?= h($gaId) ?>');
 <style>
 <?php include __DIR__ . '/partials/style.php'; ?>
 </style>
+<link rel="stylesheet" href="<?= asset_url('/assets/palette.css') ?>">
 <link rel="stylesheet" href="<?= asset_url('/assets/site-header.css') ?>">
 </head>
 <body>

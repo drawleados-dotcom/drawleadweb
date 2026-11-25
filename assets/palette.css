@@ -1,0 +1,195 @@
+/* ==========================================================================
+   Brand tints: the eight pastel colours, on every public page.
+   Linked from templates/layout-start.php, after the base styles.
+
+   Green (#32B46F) and near-black stay the primary colours. The tints are for
+   backgrounds only (section grounds, cards, icon plates, illustration panels);
+   text on them is always ink, so every pairing clears WCAG AA.
+
+   Change a colour in section 1 and the whole site follows. To take the tints
+   off one area, delete its section below.
+
+     1  tokens          2  header menus        3  inner pages
+     4  home page       5  construction page
+
+   Not tinted on purpose: Ulagai (its own dark look) and the retired home
+   pages (Home 2, 5, 7, 8, 9 and Final Home).
+   ========================================================================== */
+
+/* ---------- 1. tokens ---------- */
+:root{
+  --t-mint:#DAF1E5;
+  --t-sky:#DFEAF9;
+  --t-lilac:#E8E2F5;
+  --t-aqua:#DCEFF0;
+  --t-peach:#F8E6D6;
+  --t-peri:#E3E5F6;
+  --t-rose:#F5E1E9;
+  --t-lime:#EDF0D7;
+  --t-ink:#3f4a46;      /* body copy on a tint */
+  --t-green:#14613a;    /* small green labels on a tint */
+}
+
+/* ---------- 2. header menus ---------- */
+body>nav .mega-ind-col:nth-child(8n+1):hover{background:var(--t-mint)}
+body>nav .mega-ind-col:nth-child(8n+2):hover{background:var(--t-sky)}
+body>nav .mega-ind-col:nth-child(8n+3):hover{background:var(--t-lilac)}
+body>nav .mega-ind-col:nth-child(8n+4):hover{background:var(--t-aqua)}
+body>nav .mega-ind-col:nth-child(8n+5):hover{background:var(--t-peach)}
+body>nav .mega-ind-col:nth-child(8n+6):hover{background:var(--t-peri)}
+body>nav .mega-ind-col:nth-child(8n+7):hover{background:var(--t-rose)}
+body>nav .mega-ind-col:nth-child(8n+8):hover{background:var(--t-lime)}
+
+/* ---------- 3. inner pages ----------
+   Solutions, industries, platform modules, case studies, blog and Analyze.
+   The grey grounds give way to white, with a tint at the top of each page. */
+body:has(>#svc-hero,>#blog-hero,>#post-hero,>#az-hero,>#az-report-hero){background:#fff}
+body:has(>#svc-hero,>#blog-hero,>#post-hero,>#az-hero,>#az-report-hero)>section{--bg:#f7faf8;--bg2:#f2f7f4;--border:#e3e9e5;border-bottom:0}
+body>#svc-hero{background:linear-gradient(180deg,var(--t-mint),#fff)}
+body>#blog-hero{background:linear-gradient(180deg,var(--t-sky),#fff)}
+body>#post-hero{background:linear-gradient(180deg,var(--t-peri),#fff)}
+body>#az-hero,body>#az-report-hero{background:linear-gradient(180deg,var(--t-lilac),#fff)}
+body>:is(#svc-hero,#blog-hero,#post-hero,#az-hero)>.grid-bg{opacity:.35 !important}
+body>:is(#svc-hero,#blog-hero,#post-hero,#az-hero,#az-report-hero) .eyebrow-text{background:rgba(255,255,255,.72)}
+body>:is(#svc-hero,#blog-hero,#post-hero,#az-hero,.pboard-section) .sec-sub,body>#svc-hero~section[style*="--bg2"] .sec-sub{color:var(--t-ink)}
+body>#post-hero .post-meta{color:var(--t-ink)}
+
+/* alternate sections: the two illustrated boards, then the solution band */
+body>section.pboard-section{background:var(--t-sky)}
+body>section.pboard-section~section.pboard-section{background:var(--t-lilac)}
+body>#svc-hero~section[style*="--bg2"]{background:var(--t-aqua) !important}
+body>section.pboard-section .eyebrow-text,body>#svc-hero~section[style*="--bg2"] .eyebrow-text{background:rgba(255,255,255,.7)}
+body>section .pboard,body>section .pboard-list{border-color:transparent;box-shadow:0 24px 60px -30px rgba(15,58,36,.28)}
+body>section .pboard .d-k:nth-child(3n+1){background:var(--t-mint)}
+body>section .pboard .d-k:nth-child(3n+2){background:var(--t-peach)}
+body>section .pboard .d-k:nth-child(3n+3){background:var(--t-lilac)}
+body>section .pboard .d-k{border-color:transparent}
+body>section .pboard .d-kl{color:var(--t-ink)}
+
+/* benefit, connection and outcome cards */
+body>section .svc-benefit,body>section .svc-track,body>section .pain-item,body>#industry-outcome .d-k{border-color:transparent}
+body>section .svc-benefit:nth-child(4n+1){background:var(--t-mint)}
+body>section .svc-benefit:nth-child(4n+2){background:var(--t-sky)}
+body>section .svc-benefit:nth-child(4n+3){background:var(--t-lilac)}
+body>section .svc-benefit:nth-child(4n+4){background:var(--t-peach)}
+body>#svc-hero~section[style*="--bg2"] .svc-benefit{background:#fff}
+body>section .svc-benefit:not([style]) .svc-benefit-check{background:rgba(255,255,255,.8) !important}
+body>section .svc-benefit-text{color:var(--black)}
+body>section .pain-item:nth-child(3n+1){background:var(--t-rose)}
+body>section .pain-item:nth-child(3n+2){background:var(--t-peach)}
+body>section .pain-item:nth-child(3n+3){background:var(--t-lime)}
+body>section .pain-icon{background:rgba(255,255,255,.8)}
+body>section .pain-text{color:var(--black)}
+body>section .svc-track:nth-child(3n+1){background:var(--t-aqua)}
+body>section .svc-track:nth-child(3n+2){background:var(--t-rose)}
+body>section .svc-track:nth-child(3n+3){background:var(--t-lime)}
+body>section .svc-track .connect-text{color:var(--t-ink)}
+body>section .svc-track .mega-know{color:var(--t-green)}
+body>#industry-outcome .d-k:nth-child(3n+1){background:var(--t-mint)}
+body>#industry-outcome .d-k:nth-child(3n+2){background:var(--t-lilac)}
+body>#industry-outcome .d-k:nth-child(3n+3){background:var(--t-peach)}
+body>#industry-outcome .d-kv{color:var(--t-green) !important}
+
+/* case study and blog cards: a tint behind each picture */
+body>section .blog-card{border-color:var(--border)}
+body>section .blog-card-img{border-bottom-color:transparent}
+body>section .blog-card:nth-child(8n+1) .blog-card-img{background:var(--t-mint)}
+body>section .blog-card:nth-child(8n+2) .blog-card-img{background:var(--t-sky)}
+body>section .blog-card:nth-child(8n+3) .blog-card-img{background:var(--t-peach)}
+body>section .blog-card:nth-child(8n+4) .blog-card-img{background:var(--t-lilac)}
+body>section .blog-card:nth-child(8n+5) .blog-card-img{background:var(--t-aqua)}
+body>section .blog-card:nth-child(8n+6) .blog-card-img{background:var(--t-rose)}
+body>section .blog-card:nth-child(8n+7) .blog-card-img{background:var(--t-lime)}
+body>section .blog-card:nth-child(8n+8) .blog-card-img{background:var(--t-peri)}
+body>section .blog-card:hover{border-color:rgba(50,180,111,.45)}
+body>section .cs-filter-tab:not(.active):hover{background:var(--t-mint);border-color:transparent}
+
+/* a single post or case study */
+body>section .cs-testimonial{background:var(--t-lime)}
+body>section .cs-team-list li{border-color:transparent;color:var(--black)}
+body>section .cs-team-list li:nth-child(4n+1){background:var(--t-mint)}
+body>section .cs-team-list li:nth-child(4n+2){background:var(--t-sky)}
+body>section .cs-team-list li:nth-child(4n+3){background:var(--t-peach)}
+body>section .cs-team-list li:nth-child(4n+4){background:var(--t-lilac)}
+body>section .sidebar-cta{background:var(--t-mint)}
+body>section .sidebar-cta-text{color:var(--t-ink)}
+body>section .post-content blockquote{padding:1.1rem 1.4rem;border-radius:0 12px 12px 0;background:var(--t-mint)}
+
+/* Analyze */
+body>#az-how .h2-step{padding:1.6rem 1.2rem;border-radius:18px}
+body>#az-how .h2-steps::before{display:none}
+body>#az-how .h2-step:nth-child(3n+1){background:var(--t-peach)}
+body>#az-how .h2-step:nth-child(3n+2){background:var(--t-sky)}
+body>#az-how .h2-step:nth-child(3n+3){background:var(--t-lime)}
+body>#az-how .h2-step-desc{color:var(--t-ink)}
+
+/* ---------- 4. home page ----------
+   Scoped to .h10 but not .ab (About Us, which has a stylesheet of its own).
+   Capabilities (.cx) and Selected Work (.sw) carry their own accents and are
+   left as designed. */
+body>.h10:not(.ab) .hero{background:linear-gradient(180deg,var(--t-mint) 0%,#eef8f3 58%,#fff 100%)}
+body>.h10:not(.ab) .pillars li:nth-child(1) .pillar__ic{background:#fff}
+body>.h10:not(.ab) .pillars li:nth-child(2) .pillar__ic{background:var(--t-sky)}
+body>.h10:not(.ab) .pillars li:nth-child(3) .pillar__ic{background:var(--t-lilac)}
+body>.h10:not(.ab) .pillars li:nth-child(4) .pillar__ic{background:var(--t-peach)}
+body>.h10:not(.ab) .pillars li:hover .pillar__ic{background:var(--green)}
+body>.h10:not(.ab) .stat:nth-child(1) .stat__ic{background:var(--t-sky);color:var(--ink)}
+body>.h10:not(.ab) .stat:nth-child(2) .stat__ic{background:var(--t-peach);color:var(--ink)}
+body>.h10:not(.ab) .stat:nth-child(3) .stat__ic{background:var(--t-lilac);color:var(--ink)}
+body>.h10:not(.ab) .stat:hover .stat__ic{background:var(--green);color:#fff}
+
+/* illustration panels on dark sections: on a tint, the drawing uses its light inks */
+body>.h10:not(.ab) :is(.wkp__art,.icard__art).il{--il-card:#fff;--il-card2:#f7faf8;--il-line:rgba(15,58,36,.16);--il-ink:#0b0d0c;--il-mut:#6b7872}
+
+/* how we work */
+body>.h10:not(.ab) .appr{background:linear-gradient(180deg,var(--t-aqua),#f3fafa 60%,#fff)}
+body>.h10:not(.ab) .step:nth-child(1) .step__art.il{--il-bg:var(--t-peach)}
+body>.h10:not(.ab) .step:nth-child(2) .step__art.il{--il-bg:var(--t-sky)}
+body>.h10:not(.ab) .step:nth-child(3) .step__art.il{--il-bg:var(--t-lilac)}
+body>.h10:not(.ab) .step:nth-child(4) .step__art.il{--il-bg:var(--t-lime)}
+
+/* eight weeks, eight tints */
+body>.h10:not(.ab) .wkp:nth-child(8n+1) .wkp__art.il{--il-bg:var(--t-mint)}
+body>.h10:not(.ab) .wkp:nth-child(8n+2) .wkp__art.il{--il-bg:var(--t-sky)}
+body>.h10:not(.ab) .wkp:nth-child(8n+3) .wkp__art.il{--il-bg:var(--t-lilac)}
+body>.h10:not(.ab) .wkp:nth-child(8n+4) .wkp__art.il{--il-bg:var(--t-aqua)}
+body>.h10:not(.ab) .wkp:nth-child(8n+5) .wkp__art.il{--il-bg:var(--t-peach)}
+body>.h10:not(.ab) .wkp:nth-child(8n+6) .wkp__art.il{--il-bg:var(--t-peri)}
+body>.h10:not(.ab) .wkp:nth-child(8n+7) .wkp__art.il{--il-bg:var(--t-rose)}
+body>.h10:not(.ab) .wkp:nth-child(8n+8) .wkp__art.il{--il-bg:var(--t-lime)}
+
+/* data intelligence */
+body>.h10:not(.ab) .data__viz.il{--il-bg:var(--t-peri)}
+body>.h10:not(.ab) .dcard:nth-child(1) .dcard__ic{background:var(--t-sky);color:var(--ink)}
+body>.h10:not(.ab) .dcard:nth-child(2) .dcard__ic{background:var(--t-peach);color:var(--ink)}
+body>.h10:not(.ab) .dcard:nth-child(3) .dcard__ic{background:var(--t-lilac);color:var(--ink)}
+body>.h10:not(.ab) .dcard:nth-child(4) .dcard__ic{background:var(--t-lime);color:var(--ink)}
+body>.h10:not(.ab) .dcard:is(:hover,.is-on) .dcard__ic{background:var(--green);color:#fff}
+
+/* industries */
+body>.h10:not(.ab) #industries{background:var(--t-peri)}
+body>.h10:not(.ab) #industries .lede:not(.lede--strong),body>.h10:not(.ab) .appr .lede{color:var(--t-ink)}
+body>.h10:not(.ab) #industries .itab__n{color:var(--t-green)}
+body>.h10:not(.ab) .ipanel:nth-of-type(5n+1) .ipanel__art.il{--il-bg:var(--t-mint)}
+body>.h10:not(.ab) .ipanel:nth-of-type(5n+2) .ipanel__art.il{--il-bg:var(--t-rose)}
+body>.h10:not(.ab) .ipanel:nth-of-type(5n+3) .ipanel__art.il{--il-bg:var(--t-peach)}
+body>.h10:not(.ab) .ipanel:nth-of-type(5n+4) .ipanel__art.il{--il-bg:var(--t-lilac)}
+body>.h10:not(.ab) .ipanel:nth-of-type(5n+5) .ipanel__art.il{--il-bg:var(--t-aqua)}
+
+/* industry focus */
+body>.h10:not(.ab) .icard:nth-child(6n+1) .icard__art.il{--il-bg:var(--t-mint)}
+body>.h10:not(.ab) .icard:nth-child(6n+2) .icard__art.il{--il-bg:var(--t-rose)}
+body>.h10:not(.ab) .icard:nth-child(6n+3) .icard__art.il{--il-bg:var(--t-peach)}
+body>.h10:not(.ab) .icard:nth-child(6n+4) .icard__art.il{--il-bg:var(--t-lilac)}
+body>.h10:not(.ab) .icard:nth-child(6n+5) .icard__art.il{--il-bg:var(--t-aqua)}
+body>.h10:not(.ab) .icard:nth-child(6n+6) .icard__art.il{--il-bg:var(--t-sky)}
+
+/* testimonials (hidden until real quotes are in) */
+body>.h10:not(.ab) .tcard:nth-child(3n+1) .tcard__q{background:var(--t-sky);color:var(--ink)}
+body>.h10:not(.ab) .tcard:nth-child(3n+2) .tcard__q{background:var(--t-peach);color:var(--ink)}
+body>.h10:not(.ab) .tcard:nth-child(3n+3) .tcard__q{background:var(--t-lilac);color:var(--ink)}
+
+/* ---------- 5. construction page ---------- */
+body:has(>#cx-hero){background:#fff}
+body>#cx-hero{background:linear-gradient(180deg,var(--t-mint),#fff)}
+body>#cx-hero .eyebrow-text{background:rgba(255,255,255,.72)}
