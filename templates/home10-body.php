@@ -149,53 +149,45 @@ $h10Case = function (string $slug, string $fallback) use ($pdo): string {
 </section>
 <section class="prob" id="problems">
   <div class="wrap">
-    <div class="center">
-      <h2 class="h2 reveal">More Tools. More Complexity.<br>Less Control.</h2>
-      <p class="lede reveal" style="--d:.08s">As your business grows, disconnected software, scattered data and manual processes make operations harder to manage. We help connect your teams, systems and workflows into one streamlined business ecosystem.</p>
+    <div class="pb-head">
+      <h2 class="pb-h2 reveal">More <span class="pb-tool">Tools</span> Less Control.</h2>
+      <p class="pb-sub reveal" style="--d:.08s">We connect your teams, systems &amp; workflows into one streamlined ecosystem, simplifying operations &amp; driving business growth</p>
     </div>
-    <div class="scene">
-      <div class="morph" data-morph><svg viewBox="0 0 960 170" class="morph__svg" aria-hidden="true" focusable="false"><path class="bus" d="M70 85 H890" pathLength="1"/><path class="stub" data-a="0" data-b="3" d="M0 0"/><path class="stub" data-a="2" data-b="5" d="M0 0"/><path class="stub" data-a="1" data-b="6" d="M0 0"/><path class="stub" data-a="4" data-b="2" d="M0 0"/><g class="mt" data-sx="60" data-sy="6" data-sr="-12" data-ex="20" data-ey="57" transform="translate(20 57)"><rect class="mt__r" width="112" height="56" rx="16"/><g class="mt__i"><svg x="14" y="16" width="24" height="24" style="color:currentColor" ><use href="#i-layers"/></svg></g><text x="48" y="33" class="mt__t">Software</text></g><g class="mt" data-sx="430" data-sy="104" data-sr="9" data-ex="152" data-ey="57" transform="translate(152 57)"><rect class="mt__r" width="112" height="56" rx="16"/><g class="mt__i"><svg x="14" y="16" width="24" height="24" style="color:currentColor" ><use href="#i-db"/></svg></g><text x="48" y="33" class="mt__t">Data</text></g><g class="mt" data-sx="250" data-sy="18" data-sr="7" data-ex="284" data-ey="57" transform="translate(284 57)"><rect class="mt__r" width="112" height="56" rx="16"/><g class="mt__i"><svg x="14" y="16" width="24" height="24" style="color:currentColor" ><use href="#i-workflow"/></svg></g><text x="48" y="33" class="mt__t">Tasks</text></g><g class="mt" data-sx="700" data-sy="4" data-sr="-8" data-ex="416" data-ey="57" transform="translate(416 57)"><rect class="mt__r" width="112" height="56" rx="16"/><g class="mt__i"><svg x="14" y="16" width="24" height="24" style="color:currentColor" ><use href="#i-chart"/></svg></g><text x="48" y="33" class="mt__t">Visibility</text></g><g class="mt" data-sx="150" data-sy="106" data-sr="11" data-ex="548" data-ey="57" transform="translate(548 57)"><rect class="mt__r" width="112" height="56" rx="16"/><g class="mt__i"><svg x="14" y="16" width="24" height="24" style="color:currentColor" ><use href="#i-users"/></svg></g><text x="48" y="33" class="mt__t">Teams</text></g><g class="mt" data-sx="560" data-sy="84" data-sr="-10" data-ex="680" data-ey="57" transform="translate(680 57)"><rect class="mt__r" width="112" height="56" rx="16"/><g class="mt__i"><svg x="14" y="16" width="24" height="24" style="color:currentColor" ><use href="#i-rocket"/></svg></g><text x="48" y="33" class="mt__t">Scale</text></g><g class="mt" data-sx="820" data-sy="98" data-sr="6" data-ex="812" data-ey="57" transform="translate(812 57)"><rect class="mt__r" width="112" height="56" rx="16"/><g class="mt__i"><svg x="14" y="16" width="24" height="24" style="color:currentColor" ><use href="#i-megaphone"/></svg></g><text x="48" y="33" class="mt__t">Leads</text></g></svg></div>
-      <div class="panels">
-        <div class="panels__head"><span class="plabel plabel--p"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x"/></svg>The Problems</span><span class="plabel plabel--s"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>The Solutions</span></div>
-        <ol class="pairs" role="list">
-      <li class="pair" data-pair="0">
-        <div class="pcard pcard--p" tabindex="0"><span class="pcard__n">01.</span><div><h3>Disconnected Software</h3><p>Your business tools operate in silos without sharing information.</p></div><span class="pcard__x"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x"/></svg></span></div>
-        <span class="pair__link" aria-hidden="true"><i></i></span>
-        <div class="pcard pcard--s" tabindex="0"><span class="pcard__n">01.</span><div><h3>Connected Business Systems</h3><p>Connect your applications, departments and workflows in one ecosystem.</p></div><span class="pcard__x"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span></div>
-      </li>
-      <li class="pair" data-pair="1">
-        <div class="pcard pcard--p" tabindex="0"><span class="pcard__n">02.</span><div><h3>Scattered Business Data</h3><p>Important information is spread across spreadsheets and multiple platforms.</p></div><span class="pcard__x"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x"/></svg></span></div>
-        <span class="pair__link" aria-hidden="true"><i></i></span>
-        <div class="pcard pcard--s" tabindex="0"><span class="pcard__n">02.</span><div><h3>Centralized Business Data</h3><p>Bring business information together for better access and decisions.</p></div><span class="pcard__x"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span></div>
-      </li>
-      <li class="pair" data-pair="2">
-        <div class="pcard pcard--p" tabindex="0"><span class="pcard__n">03.</span><div><h3>Manual & Repetitive Work</h3><p>Teams waste valuable time on repetitive tasks and manual updates.</p></div><span class="pcard__x"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x"/></svg></span></div>
-        <span class="pair__link" aria-hidden="true"><i></i></span>
-        <div class="pcard pcard--s" tabindex="0"><span class="pcard__n">03.</span><div><h3>Intelligent Workflow Automation</h3><p>Automate repetitive tasks and simplify everyday business operations.</p></div><span class="pcard__x"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span></div>
-      </li>
-      <li class="pair" data-pair="3">
-        <div class="pcard pcard--p" tabindex="0"><span class="pcard__n">04.</span><div><h3>Lack of Real-Time Visibility</h3><p>You lack a clear view of business performance and progress.</p></div><span class="pcard__x"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x"/></svg></span></div>
-        <span class="pair__link" aria-hidden="true"><i></i></span>
-        <div class="pcard pcard--s" tabindex="0"><span class="pcard__n">04.</span><div><h3>Real-Time Business Intelligence</h3><p>Monitor business performance through centralized dashboards and reports.</p></div><span class="pcard__x"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span></div>
-      </li>
-      <li class="pair" data-pair="4">
-        <div class="pcard pcard--p" tabindex="0"><span class="pcard__n">05.</span><div><h3>Disconnected Teams & Processes</h3><p>Departments struggle with communication gaps and uncoordinated workflows.</p></div><span class="pcard__x"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x"/></svg></span></div>
-        <span class="pair__link" aria-hidden="true"><i></i></span>
-        <div class="pcard pcard--s" tabindex="0"><span class="pcard__n">05.</span><div><h3>Unified Business Operations</h3><p>Align teams, responsibilities and processes through connected workflows.</p></div><span class="pcard__x"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span></div>
-      </li>
-      <li class="pair" data-pair="5">
-        <div class="pcard pcard--p" tabindex="0"><span class="pcard__n">06.</span><div><h3>Difficult to Scale</h3><p>Existing systems cannot keep up with your growing business.</p></div><span class="pcard__x"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x"/></svg></span></div>
-        <span class="pair__link" aria-hidden="true"><i></i></span>
-        <div class="pcard pcard--s" tabindex="0"><span class="pcard__n">06.</span><div><h3>Scalable Technology Solutions</h3><p>Build flexible systems that adapt as your business grows.</p></div><span class="pcard__x"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span></div>
-      </li>
-      <li class="pair" data-pair="6">
-        <div class="pcard pcard--p" tabindex="0"><span class="pcard__n">07.</span><div><h3>Scattered Marketing & Lead Sources</h3><p>Leads arrive from multiple channels but remain scattered across platforms.</p></div><span class="pcard__x"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x"/></svg></span></div>
-        <span class="pair__link" aria-hidden="true"><i></i></span>
-        <div class="pcard pcard--s" tabindex="0"><span class="pcard__n">07.</span><div><h3>Unified Lead Management</h3><p>Capture, organize and track leads from every marketing channel in one place.</p></div><span class="pcard__x"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span></div>
-      </li></ol>
+    <div class="pb-notes">
+      <div class="pb-col reveal"><div class="pb-note pb-note--p">
+        <span class="pb-pin" aria-hidden="true"></span>
+        <div class="pb-note__in">
+          <h3 class="pb-label"><span class="pb-label__dot" aria-hidden="true"></span>The Problems</h3>
+          <ol class="pb-list" role="list">
+            <li><span class="pb-badge">01</span><div><h4>Disconnected Software</h4><p>Your business tools operate in silos without sharing information.</p></div></li>
+            <li><span class="pb-badge">02</span><div><h4>Scattered Business Data</h4><p>Important information is spread across spreadsheets and multiple platforms.</p></div></li>
+            <li><span class="pb-badge">03</span><div><h4>Manual &amp; Repetitive Work</h4><p>Teams waste valuable time on repetitive tasks and manual updates.</p></div></li>
+            <li><span class="pb-badge">04</span><div><h4>Lack of Real-Time Visibility</h4><p>You lack a clear view of business performance and progress.</p></div></li>
+            <li><span class="pb-badge">05</span><div><h4>Disconnected Teams &amp; Processes</h4><p>Departments struggle with communication gaps and uncoordinated workflows.</p></div></li>
+            <li><span class="pb-badge">06</span><div><h4>Difficult to Scale</h4><p>Existing systems cannot keep up with your growing business.</p></div></li>
+            <li><span class="pb-badge">07</span><div><h4>Scattered Marketing &amp; Lead Sources</h4><p>Leads arrive from multiple channels but remain scattered across platforms.</p></div></li>
+          </ol>
+        </div>
+      </div>
+      </div>
+      <div class="pb-col reveal" style="--d:.1s"><div class="pb-note pb-note--s">
+        <span class="pb-pin" aria-hidden="true"></span>
+        <div class="pb-note__in">
+          <h3 class="pb-label"><span class="pb-label__dot" aria-hidden="true"></span>The Solutions</h3>
+          <ul class="pb-list" role="list">
+            <li><span class="pb-badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h4>Connected Business Systems</h4><p>Connect your applications, departments and workflows in one ecosystem.</p></div></li>
+            <li><span class="pb-badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h4>Centralized Business Data</h4><p>Bring business information together for better access and decisions.</p></div></li>
+            <li><span class="pb-badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h4>Intelligent Workflow Automation</h4><p>Automate repetitive tasks and simplify everyday business operations.</p></div></li>
+            <li><span class="pb-badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h4>Real-Time Business Intelligence</h4><p>Monitor business performance through centralized dashboards and reports.</p></div></li>
+            <li><span class="pb-badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h4>Unified Business Operations</h4><p>Align teams, responsibilities and processes through connected workflows.</p></div></li>
+            <li><span class="pb-badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h4>Scalable Technology Solutions</h4><p>Build flexible systems that adapt as your business grows.</p></div></li>
+            <li><span class="pb-badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h4>Unified Lead Management</h4><p>Capture, organize and track leads from every marketing channel in one place.</p></div></li>
+          </ul>
+        </div>
+      </div>
       </div>
     </div>
-    <div class="center reveal"><a class="h10-btn h10-btn--green" href="/book" data-book><span>Let’s Build What Your Business Needs</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a></div>
+    <div class="pb-cta reveal"><a class="pb-btn" href="/book" data-book><span>Streamline Your Business</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a></div>
   </div>
 </section>
 <section class="appr" id="approach">

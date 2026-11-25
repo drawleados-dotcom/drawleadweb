@@ -103,37 +103,6 @@
     });
   });
 
-  /* ---------- problem → solution ---------- */
-  const pairs = $$('.pair');
-  if (hasIO) {
-    const pio = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('is-resolved', e.isIntersecting || e.boundingClientRect.top < 0)),
-      { rootMargin: '-8% 0px -42% 0px' });
-    pairs.forEach((p) => pio.observe(p));
-  } else pairs.forEach((p) => p.classList.add('is-resolved'));
-  pairs.forEach((p) => {  // hover/focus pairing
-    $$('.pcard', p).forEach((c) => c.addEventListener('focus', () => p.classList.add('is-resolved')));
-  });
-
-  /* morph stage: scattered tools snap into one connected system */
-  const morph = $('[data-morph]');
-  const tiles = morph ? $$('.mt', morph) : [];
-  const stubs = morph ? $$('.stub', morph) : [];
-  const ease = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  const setMorph = (p) => {
-    morph.style.setProperty('--p', p.toFixed(3));
-    const pts = tiles.map((t, i) => {
-      const local = ease(clamp(p * 1.35 - i * 0.05));
-      const x = lerp(+t.dataset.sx, +t.dataset.ex, local), y = lerp(+t.dataset.sy, +t.dataset.ey, local);
-      t.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${lerp(+t.dataset.sr, 0, local).toFixed(2)} 56 28)`);
-      return [x + 56, y + 28];
-    });
-    stubs.forEach((s) => {
-      const a = pts[+s.dataset.a], b = pts[+s.dataset.b];
-      s.setAttribute('d', `M${a[0].toFixed(0)} ${a[1].toFixed(0)} L${b[0].toFixed(0)} ${b[1].toFixed(0)}`);
-    });
-  };
-  if (morph) setMorph(reduce ? 1 : 0);
-
   /* ---------- connected workflow (how we work) ---------- */
   const flow = $('[data-flow]');
   const steps = flow ? $$('.step', flow) : [];
@@ -148,7 +117,6 @@
 
   /* ---------- scroll-linked state (one rAF-throttled handler) ---------- */
   const bar = $('.progress');
-  const pairsEl = $('.pairs');
   let ticking = false;
   const onScroll = () => {
     ticking = false;
@@ -156,10 +124,6 @@
     const max = document.documentElement.scrollHeight - vh;
     bar.style.setProperty('--sp', max > 0 ? (y / max).toFixed(4) : 0);
     if (nav) nav.classList.toggle('is-scrolled', y > 24);
-    if (morph && !reduce && pairsEl) {
-      const r = pairsEl.getBoundingClientRect();
-      setMorph(clamp((vh * 0.72 - r.top) / (r.height * 0.8)));
-    }
     if (flow) {
       const r = flow.getBoundingClientRect();
       const p = clamp((vh * 0.72 - r.top) / (r.height * 0.75));
