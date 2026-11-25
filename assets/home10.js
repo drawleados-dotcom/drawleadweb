@@ -97,40 +97,62 @@
     });
   }
 
-  /* ---------- capability tabs ---------- */
-  const cxTabs = $$('.cx-tab');
-  const cxSelect = (tab, focus) => {
-    cxTabs.forEach((t) => {
-      const on = t === tab;
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
-      t.tabIndex = on ? 0 : -1;
-      const p = document.getElementById(t.getAttribute('aria-controls'));
-      if (p) p.hidden = !on;
-    });
-    if (focus) tab.focus();
-  };
-  cxTabs.forEach((t, i) => {
-    t.addEventListener('click', () => cxSelect(t, false));
-    t.addEventListener('keydown', (e) => {
-      const k = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
-      let n = k !== undefined ? (i + k + cxTabs.length) % cxTabs.length : e.key === 'Home' ? 0 : e.key === 'End' ? cxTabs.length - 1 : -1;
-      if (n < 0) return;
-      e.preventDefault();
-      cxSelect(cxTabs[n], true);
-    });
-  });
+  /* ---------- capabilities: sticky list + stacking cards ---------- */
   const cxWrap = $('.cx-panels');
-  if (cxWrap && !reduce && matchMedia('(hover:hover) and (pointer:fine)').matches) {
-    const tilt = (x, y) => $$('.cx-panel', cxWrap).forEach((p) => {
-      p.style.setProperty('--ry', (x * 5).toFixed(2) + 'deg');
-      p.style.setProperty('--rx', (-y * 4).toFixed(2) + 'deg');
-      p.style.setProperty('--gx', (50 + x * 60).toFixed(1) + '%');
-    });
-    cxWrap.addEventListener('pointermove', (e) => {
-      const r = cxWrap.getBoundingClientRect();
-      tilt((e.clientX - r.left) / r.width - .5, (e.clientY - r.top) / r.height - .5);
-    });
-    cxWrap.addEventListener('pointerleave', () => tilt(0, 0));
+  const cxTabs = $$('.cx-tab');
+  const cxPanels = cxWrap ? $$('.cx-panel', cxWrap) : [];
+  if (cxWrap && cxPanels.length) {
+    const desk = matchMedia('(min-width:961px)');
+    const cxTop = () => parseFloat(getComputedStyle(cxWrap.parentElement).getPropertyValue('--cx-top')) || 112;
+    const stuckAt = (i) => desk.matches ? Math.min(cxTop() + i * 16, innerHeight - cxPanels[i].offsetHeight - 16) : cxTop();
+    cxPanels.forEach((p, i) => p.style.setProperty('--i', i));
+    // where panel i sits before it sticks, in page coordinates
+    const naturalTop = (i) => {
+      const gap = parseFloat(getComputedStyle(cxWrap).rowGap) || 0;
+      let y = cxWrap.getBoundingClientRect().top + scrollY;
+      for (let k = 0; k < i; k++) y += cxPanels[k].offsetHeight + gap;
+      return y;
+    };
+    cxTabs.forEach((t, i) => t.addEventListener('click', () => {
+      scrollTo({ top: naturalTop(i) - stuckAt(i) + 1, behavior: reduce ? 'auto' : 'smooth' });
+    }));
+    let cxRaf = 0;
+    const cxUpdate = () => {
+      cxRaf = 0;
+      let act = 0;
+      cxPanels.forEach((p, i) => {
+        const r = p.getBoundingClientRect();
+        if (r.top <= stuckAt(i) + 80) act = i;
+        let prog = 0;
+        const next = cxPanels[i + 1];
+        if (next && desk.matches && !reduce) {
+          prog = clamp(1 - (next.getBoundingClientRect().top - stuckAt(i + 1)) / r.height);
+        }
+        p.style.setProperty('--sc', (1 - prog * .05).toFixed(4));
+        p.style.setProperty('--br', (1 - prog * .06).toFixed(4));
+        p.style.top = desk.matches ? stuckAt(i) + 'px' : '';
+      });
+      cxTabs.forEach((t, i) => t.setAttribute('aria-current', i === act ? 'true' : 'false'));
+    };
+    const cxQueue = () => { if (!cxRaf) cxRaf = requestAnimationFrame(cxUpdate); };
+    addEventListener('scroll', cxQueue, { passive: true });
+    addEventListener('resize', cxQueue);
+    cxUpdate();
+
+    if (!reduce && matchMedia('(hover:hover) and (pointer:fine)').matches) {
+      const tilt = (p, x, y) => {
+        p.style.setProperty('--ry', (x * 5).toFixed(2) + 'deg');
+        p.style.setProperty('--rx', (-y * 4).toFixed(2) + 'deg');
+        p.style.setProperty('--gx', (50 + x * 60).toFixed(1) + '%');
+      };
+      cxPanels.forEach((p) => {
+        p.addEventListener('pointermove', (e) => {
+          const r = p.getBoundingClientRect();
+          tilt(p, (e.clientX - r.left) / r.width - .5, (e.clientY - r.top) / r.height - .5);
+        });
+        p.addEventListener('pointerleave', () => tilt(p, 0, 0));
+      });
+    }
   }
 
   /* ---------- connected workflow (how we work) ---------- */
