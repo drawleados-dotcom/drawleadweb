@@ -119,6 +119,19 @@
       cxSelect(cxTabs[n], true);
     });
   });
+  const cxWrap = $('.cx-panels');
+  if (cxWrap && !reduce && matchMedia('(hover:hover) and (pointer:fine)').matches) {
+    const tilt = (x, y) => $$('.cx-panel', cxWrap).forEach((p) => {
+      p.style.setProperty('--ry', (x * 5).toFixed(2) + 'deg');
+      p.style.setProperty('--rx', (-y * 4).toFixed(2) + 'deg');
+      p.style.setProperty('--gx', (50 + x * 60).toFixed(1) + '%');
+    });
+    cxWrap.addEventListener('pointermove', (e) => {
+      const r = cxWrap.getBoundingClientRect();
+      tilt((e.clientX - r.left) / r.width - .5, (e.clientY - r.top) / r.height - .5);
+    });
+    cxWrap.addEventListener('pointerleave', () => tilt(0, 0));
+  }
 
   /* ---------- connected workflow (how we work) ---------- */
   const flow = $('[data-flow]');
