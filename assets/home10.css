@@ -166,7 +166,7 @@ html:not(.js) .h10 .strike s{text-decoration:line-through}
 /* ---------- capabilities ---------- */
 .h10 .caps{position:relative;z-index:2;margin-top:-44px;padding:clamp(56px,7vw,96px) 0;background:#fff;border-radius:var(--r-xl) var(--r-xl) 0 0;color:var(--ink);overflow:clip}
 .h10 .caps .wrap{position:relative}
-.h10 .cx-shell{position:relative;padding:clamp(28px,4.4vw,56px) clamp(20px,4vw,48px) clamp(32px,5vw,72px);border-radius:clamp(24px,3vw,40px);background:linear-gradient(180deg,#fff 0%,#f8fbfa 100%);box-shadow:inset 0 1px 0 #fff,0 0 0 1px rgba(15,40,30,.05),0 2px 6px rgba(16,24,40,.04),0 30px 60px -34px rgba(16,40,30,.28)}
+.h10 .cx-shell{position:relative}
 .h10 .cx-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:#DAF1E5;border:1px solid #bfe5cf;color:#0f4a2c;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.02em;line-height:1.2;margin-bottom:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
 .h10 .cx-pill__dot{width:6px;height:6px;border-radius:50%;background:#138a4f;box-shadow:0 0 0 3px rgba(19,138,79,.16)}
 .h10 .cx-h2{font-family:var(--f-head);font-weight:800;font-size:clamp(1.75rem,3.2vw,2.6rem);line-height:1.16;letter-spacing:-.025em;color:#111827;text-wrap:balance}
@@ -215,7 +215,6 @@ html.js .h10 .cx-panel:not(.is-in){opacity:0;translate:0 60px;scale:.96}
   .h10 .cx-tabs{position:relative;top:auto}
 }
 @media (max-width:560px){
-  .h10 .cx-shell{padding:24px 16px 28px}
   .h10 .cx-tab{flex-direction:column;align-items:flex-start;gap:8px;padding:12px}
   .h10 .cx-tab b{font-size:.9rem}
   .h10 .cx-tab__t span{font-size:.74rem}
