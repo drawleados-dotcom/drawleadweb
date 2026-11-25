@@ -150,7 +150,7 @@ $h10Case = function (string $slug, string $fallback) use ($pdo): string {
 <section class="prob" id="problems">
   <div class="wrap">
     <div class="pb-head">
-      <h2 class="pb-h2 reveal">More <span class="pb-tool">Tools</span> Less Control.</h2>
+      <h2 class="pb-h2 reveal"><span class="pb-sr">More Tools. More Complexity. Less Control.</span><span aria-hidden="true">More <span class="pb-tool"><span class="pb-tool__w">Tools</span><span class="pb-tool__w">Complexity</span><span class="pb-tool__w">Software</span><span class="pb-tool__w">Dashboards</span><span class="pb-tool__w">Silos</span><span class="pb-flip"><span>Tools</span><span>Complexity</span><span>Software</span><span>Dashboards</span><span>Silos</span><span>Tools</span></span></span> Less Control.</span></h2>
       <p class="pb-sub reveal" style="--d:.08s">We connect your teams, systems &amp; workflows into one streamlined ecosystem, simplifying operations &amp; driving business growth</p>
     </div>
     <div class="pb-notes">
