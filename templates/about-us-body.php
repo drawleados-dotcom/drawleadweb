@@ -1,618 +1,428 @@
-<?php $activePage = 'about-us'; include __DIR__ . '/partials/nav.php'; ?>
-
-<!-- About Us sits on a slightly cooler page ground than the rest of the site.
-     This rewrites the --bg token for this page only: partials/style.php is
-     inlined in <head>, so a later :root block outranks it without touching
-     the shared value every other page uses. -->
-<style>:root{--bg:#f8f9fa}</style>
-
-<!-- ═══════════════════ ABOUT HERO ═══════════════════ -->
-<section id="about-hero">
- <!-- Cursor glow: hidden until the pointer enters the hero, then a soft green
-      light trails it and the grid lights up beneath. Decorative only. -->
- <div class="ah-fx" id="ahFx" aria-hidden="true">
-  <span class="ah-blob"></span>
-  <span class="ah-lines"></span>
- </div>
- <div class="grid-bg" style="opacity:.45"></div>
- <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">About Drawlead</span><div class="eyebrow-line"></div></div>
- <h1 class="sec-h rv" style="font-size:clamp(38px,6vw,68px);max-width:920px">Turning MSME dreams into <span class="g">digital growth systems</span></h1>
- <p class="sec-sub rv" style="max-width:640px">Drawlead is a Chennai-based digital transformation company helping MSMEs and SMEs grow through websites, performance marketing, SEO, and intelligent business systems — creating lasting online impressions that connect brands with the audiences that matter most.</p>
- <div class="sec-cta rv">
- <button type="button" data-book class="btn btn-black">Book a Free Consultation →</button>
- <a href="/#cases" class="btn btn-outline2">See Our Work</a>
- </div>
-</section>
-
-<script>
-// Hero cursor glow. Writes the pointer position into two custom properties and
-// lets CSS place the light and the grid mask; the element itself is never
-// re-laid-out, only composited.
-//
-// The light eases toward the pointer instead of snapping to it — that trailing is
-// what makes it read as a soft light rather than a cursor attachment. The rAF loop
-// only runs while the pointer is inside and stops once the light has caught up.
-(function(){
- const fx = document.getElementById('ahFx');
- if(!fx) return;
- const hero = fx.closest('section');
- if(!hero) return;
- // hover-capable, fine pointers only: on touch there is no hover to fade out of
- if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
-
- const snap = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- let tx = 0, ty = 0, x = 0, y = 0, raf = 0, seeded = false;
-
- function paint(){
-  fx.style.setProperty('--ah-x', x.toFixed(1) + 'px');
-  fx.style.setProperty('--ah-y', y.toFixed(1) + 'px');
- }
- function step(){
-  raf = 0;
-  const dx = tx - x, dy = ty - y;
-  if(Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5){ x = tx; y = ty; paint(); return; }
-  x += dx * 0.12;            // ease factor: lower trails further behind
-  y += dy * 0.12;
-  paint();
-  raf = requestAnimationFrame(step);
- }
- function queue(){ if(!raf) raf = requestAnimationFrame(step); }
-
- hero.addEventListener('pointermove', function(e){
-  const r = hero.getBoundingClientRect();
-  tx = e.clientX - r.left;
-  ty = e.clientY - r.top;
-  if(!seeded){ seeded = true; x = tx; y = ty; paint(); fx.classList.add('is-on'); return; }
-  if(snap){ x = tx; y = ty; paint(); return; }
-  queue();
- }, { passive: true });
-
- hero.addEventListener('pointerenter', function(){ if(seeded) fx.classList.add('is-on'); }, { passive: true });
- hero.addEventListener('pointerleave', function(){
-  fx.classList.remove('is-on');
-  if(raf){ cancelAnimationFrame(raf); raf = 0; }
- }, { passive: true });
-})();
-</script>
-
-<!-- ═══════════════════ STORY ═══════════════════ -->
-<section id="story">
- <div class="story-grid">
-  <div class="story-copy rv">
-   <div class="eyebrow" style="justify-content:flex-start"><div class="eyebrow-line"></div><span class="eyebrow-text">Our Story</span></div>
-   <h2 style="font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-.02em;line-height:1.18;margin:1.1rem 0 1.25rem">Built for MSMEs who deserve enterprise-grade digital firepower</h2>
-   <p style="font-size:14.5px;color:var(--g500);line-height:1.75;margin-bottom:1.1rem">Drawlead started with a simple belief: MSMEs and SMEs deserve the same digital firepower as large enterprises — without the enterprise price tag or complexity. What began as a focused website and marketing studio has grown into a full digital transformation partner spanning web development, performance marketing, SEO, and custom ERP systems.</p>
-   <p style="font-size:14.5px;color:var(--g500);line-height:1.75;margin-bottom:1.1rem">Today, Drawlead works with founders, doctors, chefs, hospitality brands, and D2C companies across India — including collaborations with names like Dr. Velumani, Chef Koushik, and hospitality group V Hospitals — turning ambitious ideas into lasting online impressions that connect businesses with the audiences that matter most.</p>
-   <p style="font-size:14.5px;color:var(--g500);line-height:1.75">Every engagement follows the same disciplined path: a free consultation to understand the business, a customized growth strategy built around real data, and a hands-on partnership to execute it — not a one-off project handoff.</p>
-  </div>
-  <!-- right column: two headline stats over a detail card. Styles are .ss-* in
-       partials/style.php, scoped to #story. -->
-  <div class="ss-side rv d2">
-   <div class="ss-stats">
-    <div class="ss-stat">
-     <div class="ss-stat-label">Core Services</div>
-     <div class="ss-stat-num">8</div>
-     <div class="ss-stat-sub">Growth Disciplines</div>
-    </div>
-    <div class="ss-stat">
-     <div class="ss-stat-label">Industries Served</div>
-     <div class="ss-stat-num ss-green">8+</div>
-     <div class="ss-stat-sub">Sectors</div>
-    </div>
-   </div>
-   <div class="ss-glance">
-    <div class="ss-head">
-     <span class="ss-title">At a Glance</span>
-     <span class="ss-verified"><i aria-hidden="true"></i>Verified Profile</span>
-    </div>
-    <dl class="ss-rows">
-     <div class="ss-row"><dt>Headquarters</dt><dd>Chennai, Tamil&nbsp;Nadu, India</dd></div>
-     <div class="ss-row"><dt>Founded &amp; Led By</dt><dd>Vinothkumar Babu</dd></div>
-     <div class="ss-row"><dt>Focus</dt><dd class="ss-green">MSMEs &amp; SMEs</dd></div>
-     <div class="ss-row"><dt>Approach</dt><dd>Consult &rarr; Strategize &rarr; Grow</dd></div>
-     <div class="ss-row ss-spec"><dt>System Spec</dt><dd><code>DRAWLEAD-OS</code></dd></div>
-    </dl>
-   </div>
-  </div>
- </div>
-</section>
-
-<!-- ═══════════════════ FOUNDER ═══════════════════ -->
-<section id="founder">
 <?php
-/*
- * Leadership. Two bands: a full-bleed grey masthead carrying the name, the role
- * and the portrait flush to the right edge, then a white block split into the
- * bio/quote column and the competencies/socials column.
+/**
+ * About Us: the story page, in the home page's design language.
  *
- * The portrait is optional on purpose. Until assets/img/founder.webp exists the
- * monogram plate renders instead, so the section never shows a broken image; drop
- * the file in and it swaps itself over with no template change.
+ * Loads the home page's stylesheet and script (/assets/home10.css, .js) and
+ * wraps everything in .h10, so buttons, pills, headings, reveals and the close
+ * are the same components. What is particular to this page is /assets/about.css
+ * (scoped under .ab) and /assets/about.js. The eight tints come from
+ * /assets/palette.css.
+ *
+ * Copy and images are editable in Admin → Pages → About Us → Page Content.
+ * Images live in /assets/about/. The illustrations are original renders made
+ * for this page. The six photographs under "people" are stand-ins that show no
+ * faces: replace them with real team photographs from Page Content.
+ *
+ * Motion is small on purpose: things ease in once, the story illustration
+ * changes with the chapter being read, and the AI illustration joins up when
+ * the belief is reached. All of it stands down under prefers-reduced-motion,
+ * and the page reads in full with JavaScript off.
  */
-$fdrPhoto = __DIR__ . '/../assets/img/founder.webp';
-$fdrHasPhoto = is_file($fdrPhoto);
+$activePage = 'about-us';
+include __DIR__ . '/partials/nav.php';
 
-/* A blank URL still renders its icon, but as a plain span: shown for balance,
-   not clickable, and out of the tab order until a real profile URL exists. */
-$fdrSocials = [
- 'linkedin'  => 'https://www.linkedin.com/in/vinothkumarbabu7/',
- 'instagram' => '',
- 'x'         => '',
- 'facebook'  => '',
+$abIcon = fn (string $name, string $class = ''): string =>
+    '<svg class="ic' . ($class !== '' ? ' ' . $class : '') . '" aria-hidden="true" focusable="false"><use href="#i-' . $name . '"/></svg>';
+
+$abImg = fn (string $file, string $alt, int $w, int $h, string $attrs = 'loading="lazy"'): string =>
+    '<img src="' . asset_url('/assets/about/' . $file) . '" alt="' . h($alt) . '" width="' . $w . '" height="' . $h . '" decoding="async" ' . $attrs . '>';
+
+$abDelay = fn (int $i, float $step = .06): string => 'style="--d:' . round($i * $step, 2) . 's"';
+
+// The gap we see: [tint, icon, first clause, rest]
+$abGaps = [
+    ['peach', 'sparkle',  'AI tools everywhere,', 'but no clear implementation strategy.'],
+    ['sky',   'users',    'Employees using AI individually,', 'without connected business workflows.'],
+    ['lilac', 'plug',     'Multiple AI subscriptions,', 'but no integration with existing systems.'],
+    ['rose',  'rocket',   'Exciting AI experiments,', 'but limited impact on everyday operations.'],
+    ['lime',  'db',       'Business data scattered across platforms,', 'inaccessible to intelligent systems.'],
 ];
-$fdrIcons = [
- 'linkedin'  => '<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="8" fill="#0A66C2"/><path fill="#fff" d="M17.6 19.4h-5.1V37h5.1V19.4zm.34-5.2a2.9 2.9 0 1 0-5.8 0 2.9 2.9 0 0 0 5.8 0zM37 27.3c0-4.9-2.6-7.2-6.1-7.2-2.8 0-4.1 1.55-4.8 2.64V19.4h-5.1c.07 1.44 0 17.6 0 17.6h5.1v-9.8c0-.46.03-.92.17-1.25.37-.92 1.2-1.86 2.62-1.86 1.85 0 2.59 1.4 2.59 3.47V37H37v-9.7z"/></svg>',
- 'instagram' => '<svg viewBox="0 0 48 48" aria-hidden="true"><defs><radialGradient id="fdrIg" cx=".3" cy="1.1" r="1.3"><stop offset="0" stop-color="#FDD05C"/><stop offset=".3" stop-color="#F25F4C"/><stop offset=".6" stop-color="#D92E7F"/><stop offset="1" stop-color="#8A3AB9"/></radialGradient></defs><rect width="48" height="48" rx="11" fill="url(#fdrIg)"/><rect x="12" y="12" width="24" height="24" rx="7" fill="none" stroke="#fff" stroke-width="2.6"/><circle cx="24" cy="24" r="5.6" fill="none" stroke="#fff" stroke-width="2.6"/><circle cx="31.4" cy="16.6" r="1.8" fill="#fff"/></svg>',
- 'x'         => '<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="8" fill="#000"/><path fill="#fff" d="M27.6 21.9 36.4 12h-2.6l-7.6 8.6L20.1 12h-7l9.2 13.1L13.1 36h2.6l8-9.1 6.4 9.1h7l-9.5-14.1zm-2.9 3.2-.93-1.3-7.4-10.4h3.1l6 8.4.93 1.3 7.8 10.9h-3.1l-6.4-8.9z"/></svg>',
- 'facebook'  => '<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21" fill="#1877F2"/><path fill="#fff" d="M31.5 30.2l.93-6.1h-5.85v-3.95c0-1.67.82-3.3 3.44-3.3h2.66v-5.2s-2.42-.41-4.72-.41c-4.82 0-7.97 2.92-7.97 8.21v4.65h-5.36v6.1h5.36V45a21.3 21.3 0 0 0 6.59 0V30.2h4.92z"/></svg>',
+
+// Operating rhythms: [label, tint, path]
+$abRhythms = [
+    ['Construction',  'peach', 'M2 60H34V46H70V60H84V30H126V60H140V16H190V60H204V38H238V60H278'],
+    ['Hospital',      'rose',  'M2 40H48l9-9 9 9H82l6 7 9-37 11 52 9-22H150l9-9 9 9H184l6 7 9-37 11 52 9-22H278'],
+    ['Ecommerce',     'sky',   'M2 50C24 50 28 18 52 18S84 62 112 62 148 24 172 24 204 52 228 52 258 12 278 12'],
+    ['Manufacturing', 'aqua',  'M2 58H20V26H42V58H60V26H82V58H100V26H122V58H140V26H162V58H180V26H202V58H220V26H242V58H278'],
+];
+
+// Capabilities: [tint, image, alt, title, text]
+$abCaps = [
+    ['sky',   'cap-systems.webp',  'Department blocks stacked into one building and joined by a single green line', 'Business Systems', 'We engineer custom software, ERP and Business Operating Systems that connect departments, teams, projects and everyday operations.'],
+    ['peach', 'cap-commerce.webp', 'A small shop with a green awning, a shopping bag and parcels ready to go', 'Digital Commerce', 'We create digital shopping experiences that bring brands closer to their customers and support better online commerce.'],
+    ['lilac', 'cap-ai.webp',       'A robot turning mixed-up boxes on a conveyor into neat, checked ones', 'AI & Automation', 'We use intelligent technology to simplify repetitive work, connect workflows and help businesses operate more efficiently.'],
+    ['lime',  'cap-growth.webp',   'Rising bars with an arrow above them and a magnet drawing an audience in', 'Marketing & Growth', 'We help businesses improve digital visibility, attract customers, generate opportunities and optimize their growth.'],
+];
+
+// Culture: [tint, image, title, text]
+$abCulture = [
+    ['sky',   'cul-curiosity.webp',  'Curiosity Over Assumptions', 'We ask questions before jumping to conclusions. We explore how things work, challenge existing approaches and stay curious about better possibilities.'],
+    ['peach', 'cul-beyond.webp',     'Think Beyond the Task', 'We encourage our team to understand the bigger picture, not just complete the assigned requirement. Every detail contributes to the larger solution.'],
+    ['lilac', 'cul-ownership.webp',  'Ownership Over Excuses', 'We believe in taking responsibility, communicating openly and finding ways forward when challenges arise.'],
+    ['aqua',  'cul-collab.webp',     'Collaboration Over Silos', 'Good solutions don\'t come from one person working in isolation. We share ideas, exchange perspectives and work together across disciplines.'],
+    ['lime',  'cul-experiment.webp', 'Experiment, Learn & Improve', 'Technology keeps changing. We encourage continuous learning, experimentation and the confidence to try better approaches.'],
+    ['rose',  'cul-purpose.webp',    'Build With Purpose', 'We care about what we build and why we build it. The objective is not just to finish a project, but to create something useful.'],
+];
+
+// Photographs: [image, alt, tint, width, height]
+$abPhotos = [
+    ['people-desk.webp',    'Laptops, notebooks and phones around a shared work table, seen from above', 'peach', 1400, 933],
+    ['people-sketch.webp',  'A hand sketching screen layouts on paper', 'sky', 1200, 800],
+    ['people-code.webp',    'A laptop with code on screen on a bright desk', 'lilac', 1200, 800],
+    ['people-board.webp',   'A planning board covered in notes about problems to solve', 'lime', 1200, 800],
+    ['people-talk.webp',    'People taking notes around a table during a project discussion', 'aqua', 1200, 800],
+    ['people-hands.webp',   'A team stacking their hands together', 'rose', 1200, 800],
+];
+
+// Way of working: [tint, title, text, illustration]
+$abSteps = [
+    ['peach', 'Listen & Understand', 'We spend time understanding the business, its people, challenges and expectations.',
+        '<rect class="c" x="22" y="30" width="92" height="52" rx="16"/><path class="c" d="M40 80l-6 18 22-17z" style="stroke:none"/><rect class="k2" x="38" y="46" width="60" height="6" rx="3"/><rect class="k" x="38" y="59" width="40" height="6" rx="3"/><g class="float"><rect class="g" x="96" y="62" width="82" height="46" rx="15"/><path class="g" d="M158 106l8 16-24-15z"/><circle class="wh typing" cx="120" cy="85" r="4"/><circle class="wh typing" cx="137" cy="85" r="4" style="--d:.15s"/><circle class="wh typing" cx="154" cy="85" r="4" style="--d:.3s"/></g>'],
+    ['sky', 'Question & Explore', 'We challenge assumptions, explore possibilities and identify the right approach.',
+        '<path class="ln flow" d="M34 106C64 106 62 40 98 40"/><path class="ln flow" d="M34 106C80 106 84 74 120 74" style="--d:.2s"/><path class="ln flow" d="M34 106C84 106 96 112 140 112" style="--d:.4s"/><circle class="c" cx="34" cy="106" r="12"/><circle class="g" cx="34" cy="106" r="5"/><circle class="c" cx="104" cy="38" r="9"/><circle class="c" cx="148" cy="112" r="9"/><g class="scan"><circle class="lens" cx="132" cy="70" r="24"/><path class="gl" d="M150 88l17 17" style="stroke-width:6"/></g><circle class="g pulse" cx="132" cy="70" r="6"/><circle class="g" cx="132" cy="70" r="6"/>'],
+    ['lilac', 'Design & Engineer', 'We translate business requirements into practical technology solutions.',
+        '<rect class="c" x="26" y="24" width="148" height="94" rx="14"/><path class="ln faint" d="M26 48H174M76 48V118M124 48V118M26 83H174"/><rect class="gs2" x="33" y="55" width="36" height="22" rx="6"/><rect class="g tile" x="83" y="55" width="36" height="22" rx="6"/><rect class="gs2" x="131" y="90" width="36" height="22" rx="6"/><path class="ln flow" d="M69 66H83M119 66C136 66 149 72 149 90"/><circle class="k2" cx="40" cy="36" r="3.5"/><circle class="k2" cx="52" cy="36" r="3.5"/><circle class="k2" cx="64" cy="36" r="3.5"/>'],
+    ['aqua', 'Build & Implement', 'We develop, integrate, test and implement the solution alongside the people who will use it.',
+        '<rect class="c" x="36" y="84" width="46" height="32" rx="8"/><rect class="c" x="86" y="84" width="46" height="32" rx="8"/><rect class="g" x="61" y="48" width="46" height="32" rx="8"/><path class="tick" d="M77 64l5 5 10-10"/><g class="float"><rect class="gs2" x="112" y="34" width="46" height="32" rx="8" transform="rotate(9 135 50)"/></g><circle class="c" cx="164" cy="80" r="10"/><path class="c" d="M146 116c0-12 8-19 18-19s18 7 18 19z"/><circle class="g pulse" cx="109" cy="100" r="4"/><circle class="gs2" cx="109" cy="100" r="4"/><path class="ln" d="M24 118H182"/>'],
+    ['lime', 'Learn & Evolve', 'We gather feedback, improve what we\'ve built and adapt as the business grows.',
+        '<path class="ln flow" d="M58 70a42 42 0 0 1 72-29"/><path class="ln flow" d="M142 70a42 42 0 0 1-72 29" style="--d:.3s"/><path class="gl" d="M128.4 31.1L130 41L120.2 39.1"/><path class="gl" d="M71.6 108.9L70 99L79.8 100.9"/><rect class="c" x="72" y="48" width="56" height="46" rx="13"/><rect class="gs2 rise" x="82" y="72" width="8" height="14" rx="2.5"/><rect class="gs2 rise" x="96" y="66" width="8" height="20" rx="2.5" style="--d:.2s"/><rect class="g rise" x="110" y="57" width="8" height="29" rx="2.5" style="--d:.4s"/>'],
 ];
 ?>
- <div class="fdr-band">
-  <div class="fdr-id">
-   <h2 class="fdr-name rv">Vinothkumar Babu</h2>
-   <div class="fdr-role rv">Founder &amp; CEO</div>
-  </div>
-  <div class="fdr-photo">
-<?php if ($fdrHasPhoto): ?>
-   <img src="<?= asset_url('/assets/img/founder.webp') ?>" alt="Vinothkumar Babu, founder and CEO of Drawlead" decoding="async" fetchpriority="low">
-<?php else: ?>
-   <div class="fdr-mono" aria-hidden="true">VB</div>
-<?php endif; ?>
-  </div>
- </div>
+<link rel="stylesheet" href="<?= asset_url('/assets/home10.css') ?>">
+<link rel="stylesheet" href="<?= asset_url('/assets/about.css') ?>">
+<script>document.documentElement.classList.add('js')</script>
 
- <div class="fdr-lower">
-  <div class="fdr-main">
-   <p class="fdr-bio rv">Vinothkumar founded Drawlead after studying Computer Science (B.E., St. Joseph College of Engineering, 2018–2022), pairing an engineer's systems thinking with hands-on expertise in web design, WordPress and Shopify development, SEO, and performance marketing. He stays close to the work — personally shaping strategy on Drawlead's website, SEO, and Shopify growth engagements — and shares what he learns with a growing community of 7,000+ followers on LinkedIn.</p>
-   <blockquote class="fdr-quote rv">
-    <span class="fdr-qmark" aria-hidden="true">&ldquo;</span>
-    <p>"Most Shopify stores don't fail because of traffic. They fail because the store…"</p>
-    <cite>— Vinothkumar Babu, on LinkedIn</cite>
-   </blockquote>
-  </div>
+<div class="h10 ab">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol><symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z" fill="currentColor" stroke="none"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" fill="currentColor" stroke="none"/></symbol><symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.8 0 5 2.2 5 5"/></symbol><symbol id="i-plug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 01-12 0zM12 17v4"/></symbol><symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 2 5 5 5 9l-2.5 3h-5L7 12c0-4 2-7 5-9z"/><circle cx="12" cy="10" r="1.6"/><path d="M9.5 15L7 19M14.5 15L17 19M12 15v5"/></symbol><symbol id="i-db" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></symbol></defs></svg>
+<a class="skip" href="#about-top">Skip to content</a>
+<div class="progress" aria-hidden="true"><i></i></div><main>
 
-  <div class="fdr-aside">
-   <div class="fdr-label rv">Core Competencies</div>
-   <div class="fdr-skills rv">
-    <span class="fdr-tag">Web Design</span><span class="fdr-tag">Web Development</span><span class="fdr-tag">WordPress</span><span class="fdr-tag fdr-tag-on">Shopify</span><span class="fdr-tag">SEO</span><span class="fdr-tag">Social Media Marketing</span><span class="fdr-tag">Lead Generation</span><span class="fdr-tag">Graphic Design</span><span class="fdr-tag">SEM</span>
-   </div>
-   <div class="fdr-socials rv">
-<?php foreach ($fdrSocials as $net => $url): ?>
-<?php if ($url !== ''): ?>
-    <a href="<?= htmlspecialchars($url, ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener" class="fdr-social" aria-label="<?= ucfirst($net) ?>"><?= $fdrIcons[$net] ?></a>
-<?php else: ?>
-    <span class="fdr-social fdr-social-idle" aria-hidden="true"><?= $fdrIcons[$net] ?></span>
-<?php endif; ?>
-<?php endforeach; ?>
-   </div>
-  </div>
- </div>
-</section>
-
-<!-- ═══════════════════ SERVICES ═══════════════════ -->
-<section id="services">
- <div class="grid-bg" style="opacity:.45"></div>
- <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">What We Do</span><div class="eyebrow-line"></div></div>
- <h2 class="sec-h rv">Everything a growing business needs, <span class="g">under one roof</span></h2>
- <p class="sec-sub rv">From the first line of code to the last rupee of ad spend — Drawlead runs it end-to-end.</p>
-
- <!-- Sticky horizontal scroll, mirroring Home 7's Core Platform. The wrapper is
-      sized by JS to the row's own overflow, so the pinned run consumes exactly
-      the scroll distance the cards need. Styles: .svc-* in partials/style.php. -->
- <div class="svc-scroll-outer" id="svcScrollOuter">
-  <div class="svc-scroll-sticky" id="svcScrollSticky">
-   <div class="fn-grid" id="svcRow">
-<?php
-/*
- * What We Do — eight service cards, styled to match Home 7's Core Platform card
- * (.cf-card): white plate, 1px #F0F0F0 border, 12px radius, soft shadow, a 28px
- * black line icon, then name / description / tags / action.
- *
- * Driven by a data array rather than eight hand-written blocks so the copy and the
- * markup stay separable. Icons use the same idiom as .cf-icon — 24x24, no fill,
- * currentColor stroke at 1.75 with round caps and joins — so they sit at the same
- * visual weight as the ones on Home 7.
- *
- * Card styling is .svc-* in partials/style.php, scoped to #services: .fn-card is
- * shared with four other templates and must not shift under them.
- */
-$svcCards = [
- [
-  'icon' => '<path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 9h18"/><path d="M9 13l-1.6 1.6L9 16.2"/><path d="M15 13l1.6 1.6L15 16.2"/>',
-  'name' => 'Website Development',
-  'desc' => 'Custom websites, WordPress builds, Shopify stores, ecommerce platforms, and high-converting landing pages.',
-  'tags' => ['Custom Builds', 'WordPress', 'Shopify'],
- ],
- [
-  'icon' => '<circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8 15.8 6.7"/><path d="M8.2 13.2 15.8 17.3"/>',
-  'name' => 'Social Media Marketing',
-  'desc' => 'Strategy, content creation, video production, and analytics across Instagram, Facebook, YouTube &amp; LinkedIn.',
-  'tags' => ['Content', 'Video', 'Analytics'],
- ],
- [
-  'icon' => '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/><path d="M7.5 12.1 9.6 9.4l1.9 1.6 2.4-3"/>',
-  'name' => 'Search Engine Optimization',
-  'desc' => 'On-page, off-page, local, and technical SEO backed by keyword research and authoritative link building.',
-  'tags' => ['On-Page', 'Technical', 'Local SEO'],
- ],
- [
-  'icon' => '<path d="M12 3 21 7.5 12 12 3 7.5z"/><path d="M3 12.2 12 16.7l9-4.5"/><path d="M3 16.7 12 21.2l9-4.5"/>',
-  'name' => 'ERP Software Solutions',
-  'desc' => 'Custom ERP systems that digitize operations, automate workflows, and give founders real-time visibility.',
-  'tags' => ['Automation', 'Workflows', 'Reporting'],
- ],
- [
-  'icon' => '<path d="M3 4.5h18l-7 8.2v6.6l-4 2.2v-8.8z"/>',
-  'name' => 'Lead Generation',
-  'desc' => 'Full-funnel systems that turn strangers into qualified leads, and leads into paying customers.',
-  'tags' => ['Funnels', 'CRM', 'Nurturing'],
- ],
- [
-  'icon' => '<path d="M12 3.2 13.9 9 19.8 10.9 13.9 12.8 12 18.6 10.1 12.8 4.2 10.9 10.1 9z"/><path d="M18.4 16.4 19.2 18.6 21.4 19.4 19.2 20.2 18.4 22.4 17.6 20.2 15.4 19.4 17.6 18.6z"/>',
-  'name' => 'AI Website Solutions',
-  'desc' => 'AI-assisted websites and tools that personalize experiences and automate routine business tasks.',
-  'tags' => ['AI Automation', 'Personalization'],
- ],
- [
-  'icon' => '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/>',
-  'name' => 'Google Ads',
-  'desc' => 'Performance-driven search and display campaigns engineered for measurable return on ad spend.',
-  'tags' => ['Search Ads', 'Display', 'ROAS'],
- ],
- [
-  'icon' => '<path d="M3 10.2v3.6a1 1 0 0 0 1 1h2.2l6.3 4.2V5l-6.3 4.2H4a1 1 0 0 0-1 1z"/><path d="M17 9.4a4 4 0 0 1 0 5.2"/><path d="M19.8 6.8a8 8 0 0 1 0 10.4"/>',
-  'name' => 'Meta Ads',
-  'desc' => 'High-performing Instagram and Facebook campaigns tuned for reach, engagement, and conversions.',
-  'tags' => ['Instagram', 'Facebook', 'Conversions'],
- ],
-];
-?>
-<?php foreach ($svcCards as $c): ?>
-    <div class="fn-card">
-     <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><?= $c['icon'] ?></svg></div>
-     <div class="svc-name"><?= $c['name'] ?></div>
-     <div class="svc-desc"><?= $c['desc'] ?></div>
-     <div class="svc-tags"><?php foreach ($c['tags'] as $t): ?><span class="svc-tag"><?= $t ?></span><?php endforeach; ?></div>
-     <button type="button" data-book class="svc-go">Explore service</button>
+<!-- 01 · The opening story -->
+<section class="ahero" id="about-top">
+  <div class="hero__bg" aria-hidden="true"><i class="blob b1"></i><i class="blob b2"></i><i class="grid"></i></div>
+  <div class="wrap">
+    <div class="ahero__head">
+      <span class="pill pill--outline reveal"><?= $abIcon('sparkle') ?>We are Drawlead · Business Systems &amp; Technology</span>
+      <h1 class="ahero__title"><span class="reveal" style="--d:.06s">Businesses Are Built by People.</span> <em class="reveal" style="--d:.16s">We Believe Technology Should Work for Them.</em></h1>
+      <p class="lede ahero__lede reveal" style="--d:.26s">Behind every growing business are people making decisions, solving problems, managing teams and keeping things moving.</p>
     </div>
-<?php endforeach; ?>
-   </div><!-- /fn-grid -->
-   <div class="sec-cta rv">
- <button type="button" data-book class="btn btn-black">Book Free Consultation →</button>
- <a href="/#solutions" class="btn btn-outline2">Explore Solutions</a>
-   </div>
-  </div><!-- /svc-scroll-sticky -->
- </div><!-- /svc-scroll-outer -->
-</section>
+    <figure class="ahero__stage reveal" style="--d:.34s">
+      <?= $abImg('hero.webp', 'People standing together under a green magnet arch, with scattered software on one side and the same tools lined up and connected on the other', 2000, 940, 'fetchpriority="high" data-drift') ?>
 
-<script>
-// "What We Do": sticky horizontal scroll.
-// A verbatim copy of Home 7's Core Platform driver (templates/home7-body.php),
-// with only the three element ids changed. The row is pinned via CSS
-// position:sticky; as the user scrolls down through the wrapper this maps that
-// scroll distance 1:1 to translateX so the row reveals left -> right, then
-// releases back to normal vertical scroll once done. The sticky box is sized to
-// its own natural content height, so the scroll distance consumed matches only
-// the actual horizontal overflow and not an inflated viewport-sized box.
-(function(){
- const outer = document.getElementById('svcScrollOuter');
- const sticky = document.getElementById('svcScrollSticky');
- const row = document.getElementById('svcRow');
- if(!outer || !sticky || !row) return;
-
- const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- const skipHijack = reduceMotion || window.matchMedia('(max-width:768px)').matches;
- if(skipHijack) return;
-
- // Read back off the element instead of being duplicated here: the box pins
- // centred in the viewport, and a hard-coded 0 would put the horizontal progress
- // out of step with where it actually sticks.
- let stickyTop = 0;
- let overflow = 0;
-
- function measure(){
-  stickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
-  overflow = Math.max(0, row.scrollWidth - sticky.clientWidth);
-  outer.style.height = (sticky.offsetHeight + overflow) + 'px';
- }
-
- function onScroll(){
-  if(overflow <= 0){ row.style.transform = 'translateX(0)'; return; }
-  const rect = outer.getBoundingClientRect();
-  const progress = Math.min(1, Math.max(0, (stickyTop - rect.top) / overflow));
-  row.style.transform = `translateX(${-progress * overflow}px)`;
- }
-
- measure();
- onScroll();
- window.addEventListener('resize', ()=>{ measure(); onScroll(); });
- window.addEventListener('scroll', onScroll, { passive: true });
-})();
-</script>
-
-<!-- ═══════════════════ INDUSTRIES ═══════════════════ -->
-<section id="industries-about" style="background:var(--white)">
- <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">Who We Work With</span><div class="eyebrow-line"></div></div>
- <h2 class="sec-h rv">Industries we help <span class="g">grow</span></h2>
- <p class="sec-sub rv">Across sectors, the goal stays the same: measurable growth, without the guesswork.</p>
-<?php
-/*
- * Eight industries shown one at a time in a pinned stage: rounded image left,
- * numbered content right. The slides are stacked on top of each other and
- * crossfaded by scroll position, so each replaces the last inside one layout;
- * after the eighth the pin releases and the page scrolls on.
- *
- * Each image is optional. Until assets/img/ind-<slug>.webp exists the slide
- * renders a numbered plate in its place, so nothing breaks and the stage keeps
- * its height; dropping the files in swaps them over with no template change.
- *
- * Styles are .iw-* in partials/style.php. The pinned state is opt-in — the JS
- * adds .iw-on — so with no JS, a thrown error, reduced motion or a narrow
- * viewport the eight slides simply stack and scroll as an ordinary list.
- */
-$industries = [
- ['slug' => 'ecommerce',        'name' => 'E-commerce',          'desc' => 'Shopify and WooCommerce stores built to convert, backed by the SEO, ads and automation that keep repeat orders coming in.'],
- ['slug' => 'healthcare',       'name' => 'Healthcare',          'desc' => 'Clinic and hospital systems that handle appointments, records and billing, behind a site patients actually trust.'],
- ['slug' => 'education',        'name' => 'Education',           'desc' => 'Institutions and edtech brands get admissions funnels, course platforms and the reporting to see what really enrols students.'],
- ['slug' => 'saas',             'name' => 'SaaS',                'desc' => 'Product sites, onboarding flows and lifecycle campaigns that turn free trials into paying, long-retained subscribers.'],
- ['slug' => 'hospitality',      'name' => 'Hospitality',         'desc' => 'Hotels, restaurants and venues get direct-booking sites and local SEO that cut the commission paid to aggregators.'],
- ['slug' => 'fashion',          'name' => 'Fashion',             'desc' => 'Lookbook-grade storefronts and campaign creative, wired to inventory so every drop goes live without the scramble.'],
- ['slug' => 'food-beverage',    'name' => 'Food &amp; Beverage',     'desc' => 'Ordering, delivery and multi-outlet operations brought into one system, with marketing that keeps the kitchen busy.'],
- ['slug' => 'trainers-coaches', 'name' => 'Trainers &amp; Coaches',  'desc' => 'Personal brands get booking, payments and content engines, so the hours go into coaching instead of chasing admin.'],
-];
-$iwTotal = str_pad((string) count($industries), 2, '0', STR_PAD_LEFT);
-?>
- <div class="iw-outer" id="iwOuter" style="--iw-count:<?= count($industries) ?>">
-  <div class="iw-pin" id="iwPin">
-   <div class="iw-stage" id="iwStage">
-<?php foreach ($industries as $n => $ind):
-  $num = str_pad((string) ($n + 1), 2, '0', STR_PAD_LEFT);
-  $rel = '/assets/img/ind-' . $ind['slug'] . '.webp';
-  $has = is_file(__DIR__ . '/..' . $rel);
-?>
-    <article class="iw-slide<?= $n === 0 ? ' is-active' : '' ?>">
-     <div class="iw-media<?= $has ? '' : ' iw-media-empty' ?>">
-<?php if ($has): ?>
-      <img src="<?= asset_url($rel) ?>" alt="<?= strip_tags($ind['name']) ?> businesses Drawlead works with" loading="lazy" decoding="async" fetchpriority="<?= $n === 0 ? 'high' : 'low' ?>">
-<?php else: ?>
-      <span class="iw-plate" aria-hidden="true"><?= $num ?></span>
-<?php endif; ?>
-     </div>
-     <div class="iw-body">
-      <div class="iw-count"><b><?= $num ?></b>/<?= $iwTotal ?></div>
-      <h3 class="iw-name"><?= $ind['name'] ?></h3>
-      <p class="iw-desc"><?= $ind['desc'] ?></p>
-      <button type="button" data-book class="btn btn-black iw-cta">Learn more</button>
-     </div>
-    </article>
-<?php endforeach; ?>
-   </div>
+      <figcaption class="ahero__noise">
+        <p>But somewhere along the way, technology can make things more complicated.</p>
+        <ul role="list"><li>More software.</li><li>More spreadsheets.</li><li>More manual work.</li><li>More disconnected processes.</li></ul>
+      </figcaption>
+    </figure>
+    <div class="ahero__q">
+      <p class="ahero__lead reveal">We started Drawlead with a simple thought:</p>
+      <div>
+        <p class="ahero__big reveal" style="--d:.08s">What if technology actually <span class="hl">worked around the way businesses work?</span></p>
+        <div class="ahero__end reveal" style="--d:.16s">
+          <p>Today, that's the thinking behind everything we build.</p>
+          <a class="h10-btn h10-btn--dark" href="#our-story"><span>Get to Know Us</span><?= $abIcon('arrow', 'h10-btn__arr') ?></a>
+        </div>
+      </div>
+    </div>
   </div>
- </div>
 </section>
 
-<script>
-// "Who We Work With": pinned crossfade sequence.
-//
-// The stage is held by CSS position:sticky. This maps the distance scrolled through
-// the taller wrapper onto a float position along the slides, then crossfades between
-// the two slides either side of it. Nothing is on a timer — every value is read from
-// scroll position, so the sequence tracks the scrollbar exactly and reverses cleanly.
-//
-// Two slides are ever non-zero at once, and smoothstep(x) + smoothstep(1-x) === 1, so
-// the pair always sums to full opacity: no dip to grey at the midpoint, no flash.
-(function(){
- const outer = document.getElementById('iwOuter');
- const pin   = document.getElementById('iwPin');
- const stage = document.getElementById('iwStage');
- if(!outer || !pin || !stage) return;
+<!-- 02 · The AI reality -->
+<section class="aireal" id="ai-reality">
+  <div class="wrap">
+    <div class="ahead ahead--top">
+      <div>
+        <span class="pill pill--sky reveal"><span class="pill__dot" aria-hidden="true"></span>The world is adopting AI. But what are businesses actually solving?</span>
+        <h2 class="h2 reveal" style="--d:.06s">AI Is in Every Hand.<br>But Where Are the Real Solutions?</h2>
+      </div>
+      <div class="ahead__txt reveal" style="--d:.12s">
+        <p class="lede">Today, almost everyone has access to AI. Employees use it. Business owners experiment with it. Teams explore different tools, generate content, automate small tasks and discover new possibilities.</p>
+        <p class="lede lede--strong">But having access to AI and implementing AI into a business are two very different things.</p>
+        <p class="lede">Businesses are still struggling with disconnected systems, manual workflows, scattered information and operational challenges.</p>
+        <p class="lede">Using AI to generate an answer is easy. Making AI understand your business, work with your existing systems and solve an actual operational problem is a different challenge.</p>
+      </div>
+    </div>
 
- const slides = Array.from(stage.querySelectorAll('.iw-slide'));
- if(slides.length < 2) return;
+    <div class="aiflow" data-aiflow>
+      <div class="aiflow__fig">
+        <div class="aiflow__stage reveal">
+          <?= $abImg('ai-before.webp', 'Five people on separate islands, each holding their own AI tool, with cables that connect to nothing', 1500, 1200) ?>
 
- const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
- const narrow = window.matchMedia('(max-width:900px)');
+          <?= $abImg('ai-after.webp', 'The same five people with green bridges joining every island to one shared hub', 1500, 1200, 'loading="lazy" class="aiflow__after"') ?>
 
- const media = slides.map(s => s.querySelector('.iw-media img, .iw-plate'));
- const bodies = slides.map(s => s.querySelector('.iw-body'));
-
- let stickyTop = 0, runway = 0, last = -1, ticking = false, on = false;
-
- // smoothstep: eases the crossfade without breaking the pair summing to 1
- function ss(x){ return x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x); }
-
- function enable(){
-  if(on) return;
-  on = true;
-  outer.classList.add('iw-on');
- }
- function disable(){
-  if(!on) return;
-  on = false;
-  outer.classList.remove('iw-on');
-  slides.forEach(function(s, i){
-   s.style.opacity = ''; s.classList.toggle('is-active', i === 0);
-   s.removeAttribute('inert'); s.removeAttribute('aria-hidden');
-   if(media[i]) media[i].style.transform = '';
-   if(bodies[i]) bodies[i].style.transform = '';
-  });
- }
-
- function measure(){
-  if(reduce.matches || narrow.matches){ disable(); return; }
-  enable();
-  stickyTop = parseFloat(getComputedStyle(pin).top) || 0;
-  // .iw-on sizes the wrapper in CSS (pin height + one --iw-step per transition),
-  // so the runway is just whatever is left once the pin is accounted for.
-  runway = Math.max(0, outer.offsetHeight - pin.offsetHeight);
- }
-
- function render(){
-  ticking = false;
-  if(!on || runway <= 0) return;
-
-  const rect = outer.getBoundingClientRect();
-  let p = (stickyTop - rect.top) / runway;
-  p = p < 0 ? 0 : p > 1 ? 1 : p;
-
-  const pos = p * (slides.length - 1);
-  const active = Math.round(pos);
-
-  for(let i = 0; i < slides.length; i++){
-   const d = pos - i;                      // <0 upcoming, 0 active, >0 already passed
-   const a = Math.abs(d);
-   const o = a >= 1 ? 0 : ss(1 - a);
-   slides[i].style.opacity = o.toFixed(4);
-   if(media[i]){
-    // incoming eases down from slightly larger; outgoing settles slightly smaller
-    const sc = 1 - Math.max(-1, Math.min(1, d)) * 0.06;
-    media[i].style.transform = 'scale(' + sc.toFixed(4) + ')';
-   }
-   if(bodies[i]){
-    // clamped like the scale: a slide seven places away would otherwise be pushed
-    // 210px, which is invisible at opacity 0 but still costs layout on every frame
-    const dy = Math.max(-1, Math.min(1, d)) * -30;
-    bodies[i].style.transform = 'translateY(' + dy.toFixed(2) + 'px)';
-   }
-  }
-
-  if(active !== last){
-   last = active;
-   for(let i = 0; i < slides.length; i++){
-    const isActive = i === active;
-    slides[i].classList.toggle('is-active', isActive);
-    // keeps the eight hidden buttons out of the tab order and off screen readers
-    if(isActive){ slides[i].removeAttribute('inert'); slides[i].removeAttribute('aria-hidden'); }
-    else { slides[i].setAttribute('inert', ''); slides[i].setAttribute('aria-hidden', 'true'); }
-   }
-  }
- }
-
- function request(){
-  if(ticking) return;
-  ticking = true;
-  window.requestAnimationFrame(render);
- }
-
- measure();
- render();
- window.addEventListener('scroll', request, { passive: true });
- window.addEventListener('resize', function(){ measure(); last = -1; render(); });
- if(reduce.addEventListener) reduce.addEventListener('change', function(){ measure(); last = -1; render(); });
- if(narrow.addEventListener) narrow.addEventListener('change', function(){ measure(); last = -1; render(); });
-})();
-</script>
-
-<!-- ═══════════════════ HOW WE WORK ═══════════════════ -->
-<section id="values" style="background:#0a1310;color:#fff">
- <div class="grid-bg" style="opacity:.45"></div>
- <div class="eyebrow rv"><div class="eyebrow-line"></div><span class="eyebrow-text">How We Work</span><div class="eyebrow-line"></div></div>
- <h2 class="sec-h rv" style="color:#fff">The principles behind every <br class="hw-br">engagement</h2>
- <p class="sec-sub rv" style="color:rgba(255,255,255,.5)">Four commitments that shape how Drawlead partners with <br class="hw-br">every business we work with.</p>
-<?php
-/*
- * How We Work — four principles as a connected, staggered journey.
- *
- * Desktop: one row, cards alternating high/low, a thin curved arrow in each gap.
- * Tablet: 2x2, with a return arrow carrying 02 down to 03 across the row gap.
- * Mobile: a single column with a short vertical arrow between each card.
- * Each step carries all three arrow variants; CSS shows the one for the width.
- *
- * The reveal is opt-in: the JS adds .hw-anim (hidden start) and then .hw-in when
- * the row scrolls into view, so with no JS or reduced motion everything is simply
- * visible. Styles are .hw-* in partials/style.php, scoped to #values.
- */
-$hwSteps = [
- [
-  'title' => 'MSME-First',
-  'desc'  => 'Every strategy is built around what actually moves the needle for a small or growing business — not vanity metrics.',
-  'icon'  => '<path class="ks" paint-order="stroke" stroke-width="2.6" stroke-linejoin="round" fill="currentColor" d="M21.5 28.6s-6.2-3.7-7.6-7.5c-.9-2.6.6-5.3 3.5-5.3 1.7 0 3 1 4.1 2.5 1.1-1.5 2.4-2.5 4.1-2.5 2.9 0 4.4 2.7 3.5 5.3-1.4 3.8-7.6 7.5-7.6 7.5z"/>',
- ],
- [
-  'title' => 'Data Before Design',
-  'desc'  => 'We start with keyword research, funnel data, and market reality — then design and build around it.',
-  'icon'  => '<rect class="ks" paint-order="stroke" stroke-width="2.6" stroke-linejoin="round" fill="currentColor" x="13.6" y="21" width="3.8" height="7.6" rx="1"/><rect class="ks" paint-order="stroke" stroke-width="2.6" stroke-linejoin="round" fill="currentColor" x="19.1" y="16.6" width="3.8" height="12" rx="1"/><rect class="ks" paint-order="stroke" stroke-width="2.6" stroke-linejoin="round" fill="currentColor" x="24.6" y="12.4" width="3.8" height="16.2" rx="1"/>',
- ],
- [
-  'title' => '<span class="hw-nb">End-to-End</span> Ownership',
-  'desc'  => 'From strategy to code to ad spend — one team owns the outcome. No handoffs, no finger-pointing.',
-  'icon'  => '<path class="ks" paint-order="stroke" stroke-width="2.6" stroke-linejoin="round" fill="currentColor" d="M21.5 12.4l7.2 2.8v5.3c0 4.6-3.1 8.4-7.2 9.8-4.1-1.4-7.2-5.2-7.2-9.8v-5.3z"/><path class="ks" fill="none" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" d="M18.2 21.2l2.3 2.3 4.4-4.6"/>',
- ],
- [
-  'title' => 'Founder-Led Execution',
-  'desc'  => 'Vinothkumar and the core team stay hands-on with strategy and execution on every single engagement.',
-  'icon'  => '<circle class="ks" paint-order="stroke" stroke-width="2.6" stroke-linejoin="round" fill="currentColor" cx="21.5" cy="17" r="4"/><path class="ks" paint-order="stroke" stroke-width="2.6" stroke-linejoin="round" fill="currentColor" d="M13.8 29.6c0-4.2 3.4-6.8 7.7-6.8s7.7 2.6 7.7 6.8z"/>',
- ],
-];
-$hwLast = count($hwSteps) - 1;
-?>
- <div class="hw-flow" id="hwFlow">
-<?php foreach ($hwSteps as $i => $st): $num = str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT); ?>
-  <div class="hw-step" style="--i:<?= $i ?>">
-   <article class="hw-card">
-    <span class="hw-num"><?= $num ?></span>
-    <div class="hw-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="4" width="19" height="14.5" rx="2" fill="currentColor"/><rect class="k" x="3" y="7.6" width="19" height="1"/><circle class="k" cx="5.8" cy="5.9" r=".75"/><circle class="k" cx="8" cy="5.9" r=".75"/><circle class="k" cx="10.2" cy="5.9" r=".75"/><?= $st['icon'] ?></svg></div>
-    <h3 class="hw-title"><?= $st['title'] ?></h3>
-    <p class="hw-desc"><?= $st['desc'] ?></p>
-   </article>
-<?php if ($i < $hwLast): $up = ($i % 2 === 1); ?>
-   <svg class="hw-link hw-link-h <?= $up ? 'hw-up' : 'hw-down' ?>" viewBox="0 0 76 100" aria-hidden="true">
-<?php if ($up): ?>
-    <path class="hw-line" pathLength="1" d="M6 78C36 78 34 22 64 22"/><path class="hw-head" d="M62 16.5 69 22l-7 5.5"/>
-<?php else: ?>
-    <path class="hw-line" pathLength="1" d="M6 22C36 22 34 78 64 78"/><path class="hw-head" d="M62 72.5 69 78l-7 5.5"/>
-<?php endif; ?>
-   </svg>
-<?php if ($i === 1): ?>
-   <svg class="hw-link hw-link-r" viewBox="0 0 236 90" aria-hidden="true">
-    <path class="hw-line" pathLength="1" d="M190 6C190 52 46 38 46 80"/><path class="hw-head" d="M40.5 75 46 82.5l5.5-7.5"/>
-   </svg>
-<?php endif; ?>
-   <svg class="hw-link hw-link-v" viewBox="0 0 24 56" aria-hidden="true">
-    <path class="hw-line" pathLength="1" d="M12 5C4 19 20 31 12 46"/><path class="hw-head" d="M6.5 42 12 49.5l5.5-7.5"/>
-   </svg>
-<?php endif; ?>
-  </div>
+        </div>
+      </div>
+      <div class="aiflow__txt">
+        <div class="gap">
+          <h3 class="kick reveal">The gap we see</h3>
+          <ul class="gaplist" role="list">
+<?php foreach ($abGaps as $i => [$tint, $icon, $lead, $rest]): ?>
+            <li class="reveal t-<?= $tint ?>" <?= $abDelay($i) ?>><span class="gaplist__ic"><?= $abIcon($icon) ?></span><p><b><?= $lead ?></b> <?= $rest ?></p></li>
 <?php endforeach; ?>
- </div>
+          </ul>
+        </div>
+        <?= $abImg('ai-after.webp', 'The same five people with green bridges joining every island to one shared hub', 1500, 1200, 'loading="lazy" class="aiflow__m"') ?>
+
+        <div class="belief reveal" data-belief>
+          <h3 class="kick">Our belief</h3>
+          <p class="belief__a">AI should not remain another tool your employees open separately.</p>
+          <p class="belief__b">It should become part of how your business works.</p>
+          <p class="belief__c">That's where business understanding, engineering and implementation matter.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="bigline" data-fill>We don't just bring AI into your business. We engineer ways to make it work for your business.</p>
+  </div>
 </section>
 
-<script>
-// How We Work: reveal the four steps left to right as the row scrolls into view,
-// drawing each connector after the card before it. Opt-in, so a failure or reduced
-// motion leaves the row fully visible.
-(function(){
- const flow = document.getElementById('hwFlow');
- if(!flow || !('IntersectionObserver' in window)) return;
- if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
- flow.classList.add('hw-anim');
- const io = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){
-   if(!e.isIntersecting) return;
-   flow.classList.add('hw-in');
-   io.disconnect();
-  });
- }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
- io.observe(flow);
-})();
-</script>
+<!-- 03 · Where our story began -->
+<section class="story" id="our-story" data-story data-at="0">
+  <div class="wrap">
+    <div class="story__head">
+      <span class="pill pill--white reveal"><span class="pill__dot" aria-hidden="true"></span>Our story · Since 2022</span>
+      <h2 class="h2 reveal" style="--d:.06s">It Started With Building Websites.<br>It Became Something Much Bigger.</h2>
+    </div>
+    <div class="story__grid">
+      <div class="story__fig" aria-hidden="true">
+        <div class="story__sticky">
+          <?= $abImg('story-1.webp', '', 1200, 1200, 'loading="lazy" data-pic') ?>
 
-<!-- ═══════════════════ CTA ═══════════════════ -->
-<section id="cta" class="cta-about">
- <!-- dark rounded card inset in white space, matching Home 7's final CTA;
-      styles are #cta.cta-about in partials/style.php -->
- <div class="cta-card">
- <div class="cta-grid-bg"></div>
- <div class="cta-glow"></div>
- <div class="cta-eyebrow rv">Let's Work Together</div>
- <h2 class="cta-h rv">Let's build your<br><span class="gr">growth</span> <span class="gr2">engine</span><br>together</h2>
- <p class="cta-p rv">Book a free consultation with Vinothkumar and the Drawlead team — no commitment needed.</p>
- <div class="cta-btns rv">
- <button type="button" data-book class="cta-btn-w">Schedule Free Consultation →</button>
- <a href="/" class="cta-btn-g">Back to Home</a>
- </div>
- <div class="cta-note rv">செயலை மாற்றும் · Intelligent Operating System · Secure · Scalable · Future-Ready</div>
- </div>
+          <?= $abImg('story-2.webp', '', 1200, 1200, 'loading="lazy" data-pic') ?>
+
+          <?= $abImg('story-3.webp', '', 1200, 1200, 'loading="lazy" data-pic') ?>
+
+          <?= $abImg('story-4.webp', '', 1200, 1200, 'loading="lazy" data-pic') ?>
+
+        </div>
+      </div>
+      <div class="story__chs">
+        <article class="ch t-peach" data-ch>
+          <?= $abImg('story-1.webp', 'One website on a small plinth with two people beside it', 1200, 1200, 'loading="lazy" class="ch__m"') ?>
+
+          <span class="ch__n" aria-hidden="true">01</span>
+          <p class="ch__lead">When we started Drawlead in 2022, our journey began with helping businesses build their digital presence.</p>
+          <ul class="tags" role="list"><li>Websites.</li><li>Digital experiences.</li><li>Online growth.</li></ul>
+        </article>
+        <article class="ch t-rose" data-ch>
+          <?= $abImg('story-2.webp', 'A website, an ERP, a CRM, spreadsheets and a phone, each on its own island with loose cables between them', 1200, 1200, 'loading="lazy" class="ch__m"') ?>
+
+          <span class="ch__n" aria-hidden="true">02</span>
+          <p class="ch__lead">But as we worked with more businesses, we started noticing something beyond the projects we were delivering.</p>
+          <p>Businesses were investing in technology, but their everyday challenges weren't disappearing.</p>
+          <p>A company could have a website, an ERP, a CRM, multiple spreadsheets and several other tools—and still struggle to manage its operations.</p>
+          <ul class="ch__pts" role="list"><li>Departments weren't connected.</li><li>Information was scattered.</li><li>Teams depended on manual coordination.</li><li>Business owners struggled to get a clear picture of what was happening.</li></ul>
+        </article>
+        <article class="ch t-peri" data-ch>
+          <?= $abImg('story-3.webp', 'People on one side, working systems on the other, and a bridge between them with the middle span missing', 1200, 1200, 'loading="lazy" class="ch__m"') ?>
+
+          <span class="ch__n" aria-hidden="true">03</span>
+          <p class="ch__lead">We realized the problem wasn't always the absence of technology.</p>
+          <p class="ch__lead ch__lead--g">Sometimes, the problem was how technology was being implemented.</p>
+        </article>
+        <article class="ch t-mint" data-ch>
+          <?= $abImg('story-4.webp', 'Website, charts, data and people on one shared platform, joined by a green line under a magnet arch', 1200, 1200, 'loading="lazy" class="ch__m"') ?>
+
+          <span class="ch__n" aria-hidden="true">04</span>
+          <p class="ch__lead">That changed the way we looked at our work.</p>
+          <p>We moved beyond building individual digital solutions and started looking at the bigger picture: the business itself, its people, its processes and how technology could bring everything together.</p>
+          <p class="ch__end">That became the direction of Drawlead.</p>
+        </article>
+      </div>
+    </div>
+  </div>
 </section>
 
-<?php include __DIR__ . '/partials/footer.php'; ?>
+<!-- 04 · The realization that shaped us -->
+<section class="realz" id="realization">
+  <div class="wrap">
+    <div class="realz__panel">
+      <div class="realz__head">
+        <span class="pill pill--white reveal"><span class="pill__dot" aria-hidden="true"></span>A different way of thinking</span>
+        <h2 class="realz__title">
+          <span class="strike reveal" style="--d:.08s"><s>Don't Ask What Software a Business Needs.</s></span>
+          <span class="realz__ask reveal" style="--d:.2s">Ask What the Business Is <em>Trying to Solve.</em></span>
+        </h2>
+        <p class="lede reveal" style="--d:.28s">We believe every business has its own operating rhythm.</p>
+      </div>
+      <ul class="rhythms" role="list">
+<?php foreach ($abRhythms as $i => [$label, $tint, $path]): ?>
+        <li class="rhythm reveal" <?= $abDelay($i, .1) ?>>
+          <svg viewBox="0 0 280 72" fill="none" aria-hidden="true" focusable="false" preserveAspectRatio="none"><path class="rhythm__bg" d="<?= $path ?>"/><path class="rhythm__ln" pathLength="1" d="<?= $path ?>"/></svg>
+          <span><?= $label ?></span>
+        </li>
+<?php endforeach; ?>
+      </ul>
+      <p class="realz__p reveal">The way a construction company manages projects is different from how a hospital manages patients. An ecommerce brand has different customer journeys from a manufacturing business.</p>
+      <figure class="realz__fig reveal"><?= $abImg('fit.webp', 'A board with four differently shaped openings, each filled by the piece made for it, with one green piece being lowered into place', 1800, 1000, 'loading="lazy" data-drift') ?></figure>
+      <div class="realz__cols">
+        <div class="reveal">
+          <p><b>Even two companies in the same industry may work completely differently.</b></p>
+          <p>Yet technology is often sold as a predefined product, expecting businesses to adjust their processes around it.</p>
+        </div>
+        <div class="reveal" style="--d:.08s">
+          <p><b>We question that approach.</b></p>
+          <p>We believe the starting point should always be the business challenge.</p>
+        </div>
+      </div>
+      <ol class="chain" role="list"><li class="reveal">Understand the people.</li><li class="reveal" style="--d:.1s">Understand the process.</li><li class="reveal" style="--d:.2s">Understand the problem.</li><li class="reveal" style="--d:.3s">Then engineer the technology.</li></ol>
+      <p class="realz__end reveal">That's the difference between simply delivering software and making technology work for a business.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · What we are building -->
+<section class="build" id="capabilities">
+  <div class="wrap">
+    <div class="ahead">
+      <div>
+        <span class="pill pill--lilac reveal"><span class="pill__dot" aria-hidden="true"></span>Our evolving capabilities</span>
+        <h2 class="h2 reveal" style="--d:.06s">Different Technologies.<br>One Purpose: Making Businesses Work Better.</h2>
+      </div>
+      <p class="lede reveal" style="--d:.12s">Our work brings four technology capabilities together.</p>
+    </div>
+    <div class="stackcards">
+<?php foreach ($abCaps as $i => [$tint, $file, $alt, $title, $text]): ?>
+      <article class="scard t-<?= $tint ?>" style="--i:<?= $i ?>">
+        <div class="scard__body">
+          <span class="scard__n"><?= sprintf('%02d', $i + 1) ?></span>
+          <div>
+            <h3><?= h($title) ?></h3>
+            <p><?= h($text) ?></p>
+          </div>
+        </div>
+        <div class="scard__art"><?= $abImg($file, $alt, 1400, 1100) ?></div>
+      </article>
+<?php endforeach; ?>
+    </div>
+    <p class="build__end reveal">These aren't isolated services. They are different ways of <span class="hl">solving business challenges</span> through technology.</p>
+  </div>
+</section>
+
+<!-- 06 · Our culture -->
+<section class="cult dark-ctx" id="culture">
+  <div class="wrap">
+    <div class="ahead ahead--top">
+      <div>
+        <span class="pill pill--mint reveal"><span class="pill__dot" aria-hidden="true"></span>Life at Drawlead · How we think · How we build</span>
+        <h2 class="h2 h2--light reveal" style="--d:.06s">We Are Curious by Nature.<br>We Build by Thinking.<br>We Grow by Doing.</h2>
+      </div>
+      <div class="ahead__txt reveal" style="--d:.12s">
+        <p class="lede lede--light">We don't want to be a workplace where people simply receive tasks, complete them and move on.</p>
+        <p class="lede lede--light">We want to build a culture where people understand why something is being built, question how it can be better and take ownership of making it happen.</p>
+        <p class="lede lede--light">Our culture is shaped by the way we approach problems, work with each other and learn through every project.</p>
+      </div>
+    </div>
+    <ul class="cugrid" role="list">
+<?php foreach ($abCulture as $i => [$tint, $file, $title, $text]): ?>
+      <li class="cu t-<?= $tint ?> reveal" <?= $abDelay($i % 3, .07) ?>>
+        <div class="cu__top"><span class="cu__n"><?= sprintf('%02d', $i + 1) ?></span><?= $abImg($file, '', 720, 720) ?></div>
+        <h3><?= h($title) ?></h3>
+        <p><?= h($text) ?></p>
+      </li>
+<?php endforeach; ?>
+    </ul>
+  </div>
+  <div class="oneline">
+    <p class="oneline__k">Our culture in one line</p>
+    <div class="marquee marquee--line"><ul class="marquee__track" role="list"><?php for ($r = 0; $r < 4; $r++): foreach (['Think independently.', 'Work collaboratively.', 'Take ownership.', 'Keep building.'] as $s): ?><li<?= $r ? ' aria-hidden="true"' : '' ?>><?= $s ?></li><?php endforeach; endfor; ?></ul></div>
+  </div>
+</section>
+
+<!-- 07 · The people behind the work -->
+<section class="people" id="people">
+  <div class="wrap">
+    <div class="ahead ahead--top">
+      <div>
+        <span class="pill pill--rose reveal"><span class="pill__dot" aria-hidden="true"></span>People make the technology.</span>
+        <h2 class="h2 reveal" style="--d:.06s">Different Minds.<br>Shared Ownership.<br>One Team.</h2>
+      </div>
+      <div class="ahead__txt reveal" style="--d:.12s">
+        <p class="lede">Every solution we build is shaped by people with different perspectives and skills.</p>
+        <p class="lede">From strategy and design to development, marketing, automation and implementation, our team brings different disciplines together to solve business challenges.</p>
+        <p class="lede">We believe great work happens when people can share ideas, ask questions, learn from mistakes and take ownership of the outcome.</p>
+      </div>
+    </div>
+    <div class="mosaic">
+<?php foreach ($abPhotos as $i => [$file, $alt, $tint, $w, $h]): ?>
+      <figure class="ph ph--<?= $i + 1 ?> t-<?= $tint ?> reveal" <?= $abDelay($i % 3, .08) ?>><span><?= $abImg($file, $alt, $w, $h, 'loading="lazy" data-drift') ?></span></figure>
+<?php endforeach; ?>
+    </div>
+    <p class="people__end reveal">At Drawlead, we are not just building technology projects. We are building a team that <span class="hl">enjoys solving meaningful problems.</span></p>
+  </div>
+</section>
+
+<!-- 08 · How we turn ideas into reality -->
+<section class="way" id="way-of-working">
+  <div class="wrap">
+    <div class="way__head">
+      <span class="pill pill--white reveal"><span class="pill__dot" aria-hidden="true"></span>Our way of working</span>
+      <h2 class="h2 reveal" style="--d:.06s">From Understanding a Challenge<br>to Making It Work.</h2>
+      <p class="lede reveal" style="--d:.12s">Our approach is simple in principle, but thoughtful in execution.</p>
+    </div>
+    <div class="flow flow--5" data-way>
+      <div class="flow__rail" aria-hidden="true"><i class="flow__fill"></i><i class="flow__dot"></i></div>
+      <ol class="steps steps--5" role="list">
+<?php foreach ($abSteps as $i => [$tint, $title, $text, $art]): ?>
+        <li class="step reveal" <?= $abDelay($i, .07) ?>>
+          <span class="step__node" aria-hidden="true"><?= sprintf('%02d', $i + 1) ?></span>
+          <div class="step__card">
+            <div class="step__art il t-<?= $tint ?>"><svg class="il-svg" viewBox="0 0 200 140" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><?= $art ?></svg></div>
+            <h3><?= h($title) ?></h3>
+            <p><?= h($text) ?></p>
+          </div>
+        </li>
+<?php endforeach; ?>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 09 · Our vision -->
+<section class="vis" id="vision">
+  <div class="wrap vis__head">
+    <span class="pill pill--white reveal"><span class="pill__dot" aria-hidden="true"></span>Where we are heading</span>
+    <h2 class="h2 reveal" style="--d:.06s">A Future Where Businesses Don't Have to Adapt to Technology. <span class="vis__g">Technology Adapts to Businesses.</span></h2>
+    <p class="lede reveal" style="--d:.12s">We see a future where businesses can operate with connected systems, intelligent workflows and technology designed around their unique requirements.</p>
+  </div>
+  <figure class="vis__fig"><?= $abImg('vision.webp', 'A landscape of differently shaped businesses joined by one green road that leads towards the sun', 2400, 1272, 'loading="lazy" data-drift') ?></figure>
+  <div class="wrap vis__foot">
+    <div class="vis__cards">
+      <p class="vcard reveal">Where employees spend less time managing disconnected tools and <b>more time doing meaningful work.</b></p>
+      <p class="vcard reveal" style="--d:.08s">Where business owners have better visibility, teams work together and <b>technology becomes an actual advantage.</b></p>
+    </div>
+    <p class="vis__a reveal">That's the future we want to help build.</p>
+    <p class="vis__b reveal" style="--d:.08s">And we're building towards it, one business challenge at a time.</p>
+  </div>
+</section>
+
+<!-- 10 · Let's build what's next -->
+<section class="final afinal" id="start">
+  <div class="final__bg" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><i class="grid"></i></div>
+  <div class="wrap final__in">
+    <span class="pill pill--mint reveal"><span class="pill__dot" aria-hidden="true"></span>Every great solution starts with a conversation.</span>
+    <h2 class="h1x reveal" style="--d:.06s">Have a Business Challenge? <span class="grn">We'd Love to Understand It.</span></h2>
+    <p class="lede lede--light reveal" style="--d:.1s">Maybe you need a system that connects your departments. Maybe you're building an ecommerce brand. Maybe you want to bring AI into your operations.</p>
+    <p class="final__line reveal" style="--d:.14s">Whatever the challenge, let's start by understanding it.</p>
+    <div class="final__ctas reveal" style="--d:.18s"><a class="h10-btn h10-btn--green" href="/book" data-book><span>Start a Conversation</span><?= $abIcon('arrow', 'h10-btn__arr') ?></a><a class="h10-btn h10-btn--ghost" href="/case-studies"><span>Explore Our Work</span><?= $abIcon('arrow', 'h10-btn__arr') ?></a></div>
+  </div>
+  <div class="wrap signoff reveal">
+    <p class="signoff__w">Drawlead</p>
+    <p class="signoff__l"><b>Business Systems &amp; Technology.</b> <span>Built around the way businesses work.</span></p>
+  </div>
+</section>
+</main><footer class="foot">
+  <div class="wrap foot__in">
+    <a href="#about-top" aria-label="Drawlead – back to top"><img src="/assets/home10/logos/drawlead-white.webp" alt="Drawlead" width="153" height="30" loading="lazy"></a>
+    <p>Business Systems. Digital Commerce. Intelligent Growth.</p>
+    <nav aria-label="Footer"><a href="<?= h($homeUrl) ?>#solutions">Solutions</a><a href="<?= h($homeUrl) ?>#program">8-Week Program</a><a href="/case-studies">Case Studies</a><a href="<?= h($homeUrl) ?>#industry-focus">Industries</a><a href="/about-us">About Us</a><a href="/blog">Blog</a></nav>
+  </div>
+  <div class="wrap foot__base">
+    <span>official@drawlead.co.in &nbsp;·&nbsp; www.drawlead.co.in &nbsp;·&nbsp; Chennai, Tamil Nadu, IN</span>
+    <span>© <?= date('Y') ?> Drawlead. All rights reserved.</span>
+  </div>
+</footer>
+</div>
+
+<script src="<?= asset_url('/assets/home10.js') ?>" defer></script>
+<script src="<?= asset_url('/assets/about.js') ?>" defer></script>
