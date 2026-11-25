@@ -155,7 +155,7 @@ $h10Case = function (string $slug, string $fallback) use ($pdo): string {
     </div>
     <div class="pb-notes">
       <div class="pb-col reveal"><div class="pb-note pb-note--p">
-        <span class="pb-pin" aria-hidden="true"></span>
+        <span class="pb-pin" aria-hidden="true"><i class="pb-pin__base"></i><i class="pb-pin__head"></i></span>
         <div class="pb-note__in">
           <h3 class="pb-label"><span class="pb-label__dot" aria-hidden="true"></span>The Problems</h3>
           <ol class="pb-list" role="list">
@@ -171,7 +171,7 @@ $h10Case = function (string $slug, string $fallback) use ($pdo): string {
       </div>
       </div>
       <div class="pb-col reveal" style="--d:.1s"><div class="pb-note pb-note--s">
-        <span class="pb-pin" aria-hidden="true"></span>
+        <span class="pb-pin" aria-hidden="true"><i class="pb-pin__base"></i><i class="pb-pin__head"></i></span>
         <div class="pb-note__in">
           <h3 class="pb-label"><span class="pb-label__dot" aria-hidden="true"></span>The Solutions</h3>
           <ul class="pb-list" role="list">
