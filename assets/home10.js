@@ -80,6 +80,37 @@
     document.addEventListener('click', (e) => { if (!drawer.hidden && !nav.contains(e.target)) setDrawer(false); });
   }
 
+  /* ---------- problems heading: Tools ⇄ Complexity flip ----------
+     The red box takes the width of the word showing, sized in em so it
+     scales with the heading. The last word repeats the first, so after
+     sliding onto it we snap back to the start without a visible jump. */
+  const flipBox = $('[data-flip]');
+  if (flipBox && !reduce) {
+    const col = $('.pb-flip', flipBox);
+    const words = $$('span', col);
+    let i = 0, widths = [];
+    const measure = () => {
+      const fs = parseFloat(getComputedStyle(flipBox).fontSize);
+      widths = words.map((w) => w.getBoundingClientRect().width / fs);
+      flipBox.style.width = widths[i] + 'em';
+    };
+    const show = (n, snap) => {
+      i = n;
+      col.classList.toggle('is-snap', snap); flipBox.classList.toggle('is-snap', snap);
+      col.style.transform = `translateY(${-1.14 * n}em)`;
+      flipBox.style.width = widths[n] + 'em';
+    };
+    const step = () => {
+      show(i + 1, false);
+      if (i === words.length - 1) setTimeout(() => { show(0, true); void col.offsetWidth; }, 750);
+    };
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
+      measure();
+      setInterval(() => { if (!document.hidden) step(); }, 2800);
+      addEventListener('resize', measure);
+    });
+  }
+
   /* ---------- capability tabs ---------- */
   const cxTabs = $$('.cx-tab');
   const cxSelect = (tab, focus) => {
