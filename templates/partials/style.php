@@ -38,7 +38,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--black);overflow-x:
  background-size:68px 68px;
 }
 
-/* ── NAV ── */
+/* ── NAV ──
+   The base only. The floating bar it is drawn as is /assets/site-header.css. */
 nav{
  position:fixed;top:0;left:0;right:0;z-index:200;
  display:flex;align-items:center;justify-content:space-between;

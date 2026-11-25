@@ -21,7 +21,7 @@ echo seo_extra_head_tags($pdo, $seo, $seoUri);
 ?>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <?php
 $gscTag = get_setting($pdo, 'gsc_verification_tag', '');
 if ($gscTag !== '') {
@@ -43,5 +43,6 @@ gtag('config', '<?= h($gaId) ?>');
 <style>
 <?php include __DIR__ . '/partials/style.php'; ?>
 </style>
+<link rel="stylesheet" href="<?= asset_url('/assets/site-header.css') ?>">
 </head>
 <body>

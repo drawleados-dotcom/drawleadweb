@@ -12,8 +12,7 @@
  * same reason. Behaviour is /assets/home10.js, images are in /assets/home10/.
  *
  * What differs from the static design:
- *  - The header is the site's own (partials/nav.php), drawn as this design's
- *    floating bar by home10.css, with a mobile menu.
+ *  - The header is the site's own (partials/nav.php), which every page shares.
  *  - Consultation buttons open the booking popup (data-book), or go to /book
  *    when JavaScript is off.
  *  - Case study cards link to the matching case study, or to the list when
@@ -40,7 +39,6 @@ $h10Case = function (string $slug, string $fallback) use ($pdo): string {
     }
 };
 ?>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<?= asset_url('/assets/home10.css') ?>">
 <script>document.documentElement.classList.add('js')</script>
 

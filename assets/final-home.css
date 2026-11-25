@@ -37,6 +37,9 @@
  --font-body:'Inter',sans-serif;
 }
 body{font-family:var(--font);background:var(--bg);color:var(--black)}
+/* the site's white bar (site-header.css); at its usual translucency it would turn
+   grey over this page's dark hero */
+body>nav{background:rgba(255,255,255,.96)}
 
 /* GRID TEXTURE */
 .grid-bg{

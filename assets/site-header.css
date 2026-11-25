@@ -1,0 +1,61 @@
+/* ==========================================================================
+   Site header: the floating bar, on every page that includes
+   templates/partials/nav.php. Linked from templates/layout-start.php.
+
+   It is layered over the base nav rules (fixed position, flex row, mega menu)
+   in templates/partials/style.php. home7.css, home8.css and final-home.css
+   carry their own copies of those rules and load later, so every selector
+   here starts at body>nav to outrank them and the header looks the same
+   everywhere.
+   ========================================================================== */
+
+/* Colour and font tokens the mega menu reads, held at their site-wide values
+   so that pages with a palette of their own (Home 7, 8 and 9, Final Home)
+   don't restyle it. */
+body>nav{--bg:#f0f0ee;--white:#fff;--black:#111112;--g400:#949490;--g500:#70706c;--g600:#4a4a48;--border:#dcdcda;--blue:#32b46f;--font:'Montserrat',sans-serif;color:var(--black)}
+
+/* ---------- the bar ---------- */
+body>nav{top:14px;width:min(1360px,100% - 2*clamp(20px,3.4vw,48px));margin-inline:auto;gap:20px;padding:12px 14px 12px 28px;background:rgba(255,255,255,.82);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);border:1px solid rgba(255,255,255,.7);border-radius:999px;box-shadow:0 10px 34px -16px rgba(15,58,36,.28);font-family:'Inter',sans-serif;transition:background .3s,box-shadow .3s}
+body>nav.is-scrolled{background:rgba(255,255,255,.94);box-shadow:0 14px 40px -14px rgba(15,58,36,.3)}
+body>nav .logo img{height:36px}
+body>nav .nav-links{gap:4px;margin-right:auto;margin-left:16px}
+body>nav .nav-links>li>a{display:block;padding:8px 15px;border-radius:999px;font-size:.95rem;font-weight:500;letter-spacing:0;white-space:nowrap;color:#2a2f2d;transition:background .25s,color .25s}
+body>nav .nav-links>li>a:hover{background:#e4f6ec;color:#0b0d0c}
+/* the link of the section this page belongs to (nav.php) */
+body>nav .nav-links>li>a[aria-current]{background:#e4f6ec;color:#1d7a49}
+body>nav .nav-end{display:flex;align-items:center;gap:10px}
+body>nav .nav-btn{min-height:46px;padding:0 24px;border-radius:999px;background:#101211;color:#fff;font-family:'Inter',sans-serif;font-size:.9rem;font-weight:600;letter-spacing:-.005em;text-transform:none;white-space:nowrap}
+body>nav .nav-btn:hover{background:#000;opacity:1}
+body>nav :focus-visible{outline:3px solid #32B46F;outline-offset:3px}
+/* ---------- mobile menu ---------- */
+body>nav .nav-burger{display:none;width:46px;height:46px;border:0;border-radius:50%;background:#101211;color:#fff;align-items:center;justify-content:center;cursor:pointer}
+body>nav .nav-burger svg{width:22px;height:22px}
+body>nav .nav-burger .nb-x,body>nav .nav-burger[aria-expanded="true"] .nb-menu{display:none}
+body>nav .nav-burger[aria-expanded="true"] .nb-x{display:block}
+body>nav .nav-drawer{display:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:1240px){
+  body>nav .nav-links{margin-left:4px;gap:0}
+  body>nav .nav-links>li>a{padding:8px 11px;font-size:.88rem}
+  body>nav .nav-btn{padding:0 18px;font-size:.85rem}
+}
+@media (max-width:1060px){
+  body>nav{gap:10px;padding-left:20px}
+  body>nav .logo img{height:32px}
+  body>nav .nav-links{margin-left:0}
+  body>nav .nav-links>li>a{padding:8px 9px;font-size:.84rem}
+  body>nav .nav-btn{padding:0 15px;font-size:.82rem}
+}
+@media (max-width:960px){
+  body>nav{padding:10px 10px 10px 22px}
+  body>nav .nav-burger{display:inline-flex}
+  body>nav .nav-drawer:not([hidden]){display:flex;flex-direction:column;gap:4px;position:absolute;top:calc(100% + 10px);left:0;right:0;max-height:calc(100vh - 120px);overflow-y:auto;padding:14px;background:#fff;border-radius:28px;box-shadow:0 20px 50px -16px rgba(0,0,0,.3)}
+  body>nav .nav-drawer a{padding:14px 16px;border-radius:14px;font-size:1rem;font-weight:600;color:#0b0d0c;text-decoration:none}
+  body>nav .nav-drawer a:hover{background:#e4f6ec}
+  body>nav .nav-drawer a[aria-current]{background:#e4f6ec;color:#1d7a49}
+  body>nav .nav-drawer .nav-drawer-cta{min-height:52px;margin-top:8px;border:0;border-radius:14px;background:#32B46F;color:#04130a;font-family:inherit;font-size:.95rem;font-weight:600;cursor:pointer}
+}
+@media (max-width:720px){
+  body>nav .nav-end .nav-btn{display:none}
+}

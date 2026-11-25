@@ -61,14 +61,14 @@ body{background:var(--bg);color:var(--black)}
 .grid-bg{
  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
 }
-nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
-.nav-btn{background:#32b46f;color:#04110a}
-.nav-btn:hover{opacity:.88}
+/* the header is the site's white bar (site-header.css) in both themes; at its
+   usual translucency it would turn grey over this ground */
+body>nav{background:rgba(255,255,255,.96)}
 
 /* ── 3 · THE SURFACES THAT WERE --black ─────────────────────────────────────
    These ten rules used --black as a dark surface rather than as text. Now that
    the token is ink they each have to name their own ground. */
-.btn-black,.nav-btn{color:#04110a}
+.btn-black{color:#04110a}
 .btn-black{background:#32b46f}
 .btn-black:hover{box-shadow:0 8px 24px rgba(50,180,111,.28)}
 .ind-tab.active{background:#32b46f;color:#04110a}
@@ -196,7 +196,7 @@ nav{background:rgba(5,8,7,.82);border-bottom:1px solid var(--border)}
    nothing in this file loads on it. */
 
 /* white on #32b46f is 2.7:1. Ink on the same green is 7.3:1, and it matches
-   .btn-black and .nav-btn, which already read this way on this page. */
+   .btn-black, which already reads this way on this page. */
 .hero-btns .btn-primary{color:#04110a}
 
 /* white on #1c9558 is 3.8:1. Deepening the pill rather than darkening the label

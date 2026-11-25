@@ -280,8 +280,9 @@ html[data-theme="light"] #industries .is-col:last-child .is-line svg{color:#157A
    22 · THEME TOGGLE
    A round icon button beside the header CTA, rendered by partials/nav.php on
    this page only. It shows where it would take you: a sun while the page is
-   dark, a moon while it is light. Colours come from the tokens, so it follows
-   whichever theme is on without rules of its own for each. */
+   dark, a moon while it is light. Colours come from the tokens, which
+   site-header.css holds at their light values in the header: the bar is white
+   in both themes. */
 .nav-end{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
 .theme-toggle{
  display:inline-flex;align-items:center;justify-content:center;

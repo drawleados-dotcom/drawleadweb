@@ -66,20 +66,6 @@
     }, { passive: true });
   });
 
-  /* ---------- mobile menu (markup in templates/partials/nav.php) ---------- */
-  const nav = $('body > nav'), burger = $('.nav-burger'), drawer = $('#navDrawer');
-  if (burger && drawer) {
-    const setDrawer = (open) => {
-      burger.setAttribute('aria-expanded', open);
-      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      drawer.hidden = !open;
-    };
-    burger.addEventListener('click', () => setDrawer(burger.getAttribute('aria-expanded') !== 'true'));
-    $$('a, button', drawer).forEach((el) => el.addEventListener('click', () => setDrawer(false)));
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setDrawer(false); });
-    document.addEventListener('click', (e) => { if (!drawer.hidden && !nav.contains(e.target)) setDrawer(false); });
-  }
-
   /* ---------- problems heading: Tools ⇄ Complexity flip ----------
      The red box takes the width of the word showing, sized in em so it
      scales with the heading. The last word repeats the first, so after
@@ -154,7 +140,6 @@
     const y = scrollY, vh = innerHeight;
     const max = document.documentElement.scrollHeight - vh;
     bar.style.setProperty('--sp', max > 0 ? (y / max).toFixed(4) : 0);
-    if (nav) nav.classList.toggle('is-scrolled', y > 24);
     if (flow) {
       const r = flow.getBoundingClientRect();
       const p = clamp((vh * 0.72 - r.top) / (r.height * 0.75));
