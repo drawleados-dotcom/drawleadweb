@@ -97,41 +97,28 @@
     });
   }
 
-  /* ---------- capabilities: sticky list + stacking cards ---------- */
+  /* ---------- capabilities: sticky list + cards scrolling in ---------- */
   const cxWrap = $('.cx-panels');
   const cxTabs = $$('.cx-tab');
   const cxPanels = cxWrap ? $$('.cx-panel', cxWrap) : [];
   if (cxWrap && cxPanels.length) {
-    const desk = matchMedia('(min-width:961px)');
     const cxTop = () => parseFloat(getComputedStyle(cxWrap.parentElement).getPropertyValue('--cx-top')) || 112;
-    const stuckAt = (i) => desk.matches ? Math.min(cxTop() + i * 16, innerHeight - cxPanels[i].offsetHeight - 16) : cxTop();
-    cxPanels.forEach((p, i) => p.style.setProperty('--i', i));
-    // where panel i sits before it sticks, in page coordinates
-    const naturalTop = (i) => {
-      const gap = parseFloat(getComputedStyle(cxWrap).rowGap) || 0;
-      let y = cxWrap.getBoundingClientRect().top + scrollY;
-      for (let k = 0; k < i; k++) y += cxPanels[k].offsetHeight + gap;
-      return y;
-    };
     cxTabs.forEach((t, i) => t.addEventListener('click', () => {
-      scrollTo({ top: naturalTop(i) - stuckAt(i) + 1, behavior: reduce ? 'auto' : 'smooth' });
+      const y = cxPanels[i].getBoundingClientRect().top + scrollY - cxTop();
+      scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
     }));
+    if (hasIO && !reduce) {
+      const pio = new IntersectionObserver((es) => es.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); pio.unobserve(e.target); }
+      }), { rootMargin: '0px 0px -12% 0px' });
+      cxPanels.forEach((p) => pio.observe(p));
+    } else cxPanels.forEach((p) => p.classList.add('is-in'));
     let cxRaf = 0;
     const cxUpdate = () => {
       cxRaf = 0;
+      const line = innerHeight * .45;
       let act = 0;
-      cxPanels.forEach((p, i) => {
-        const r = p.getBoundingClientRect();
-        if (r.top <= stuckAt(i) + 80) act = i;
-        let prog = 0;
-        const next = cxPanels[i + 1];
-        if (next && desk.matches && !reduce) {
-          prog = clamp(1 - (next.getBoundingClientRect().top - stuckAt(i + 1)) / r.height);
-        }
-        p.style.setProperty('--sc', (1 - prog * .05).toFixed(4));
-        p.style.setProperty('--br', (1 - prog * .06).toFixed(4));
-        p.style.top = desk.matches ? stuckAt(i) + 'px' : '';
-      });
+      cxPanels.forEach((p, i) => { if (p.getBoundingClientRect().top <= line) act = i; });
       cxTabs.forEach((t, i) => t.setAttribute('aria-current', i === act ? 'true' : 'false'));
     };
     const cxQueue = () => { if (!cxRaf) cxRaf = requestAnimationFrame(cxUpdate); };
