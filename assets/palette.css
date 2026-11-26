@@ -10,7 +10,7 @@
    off one area, delete its section below.
 
      1  tokens          2  header menus        3  inner pages
-     4  home page       5  construction page
+     4  home page       5  construction page   6  typography
 
    Not tinted on purpose: Ulagai (its own dark look) and the retired home
    pages (Home 2, 5, 7, 8, 9 and Final Home).
@@ -187,3 +187,11 @@ body>.h10:not(.ab) .tcard:nth-child(3n+3) .tcard__q{background:var(--t-lilac);co
 body:has(>#cx-hero){background:#fff}
 body>#cx-hero{background:linear-gradient(180deg,var(--t-mint),#fff)}
 body>#cx-hero .eyebrow-text{background:rgba(255,255,255,.72)}
+
+/* ---------- 6. typography ----------
+   Montserrat for every heading, Inter for every paragraph, on every page.
+   Element selectors, so they beat inherited fonts (the old base sets the whole
+   page in Montserrat, the home and About wrappers in Inter) while a component
+   that names its own font on a class still keeps it. */
+h1,h2,h3,h4,h5,h6{font-family:'Montserrat','Inter',ui-sans-serif,system-ui,sans-serif}
+p{font-family:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}

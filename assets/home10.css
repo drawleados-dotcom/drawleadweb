@@ -45,9 +45,9 @@ body{
 .h10 .progress i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#7be0a9);transform-origin:left;transform:scaleX(var(--sp,0))}
 
 /* ---------- type ---------- */
-.h10 .h2{font-size:clamp(2rem,3.9vw,3.5rem);line-height:1.08;font-weight:700;letter-spacing:-.035em;text-wrap:balance}
+.h10 .h2{font-size:clamp(2rem,3.9vw,3.5rem);line-height:1.08;font-weight:700;letter-spacing:-.03em;text-wrap:balance}
 .h10 .h2--light{color:#fff}
-.h10 .h1x{font-size:clamp(2.3rem,4.8vw,4.3rem);line-height:1.06;font-weight:800;letter-spacing:-.04em;color:#fff;text-wrap:balance;max-width:20ch}
+.h10 .h1x{font-size:clamp(2.3rem,4.8vw,4.3rem);line-height:1.06;font-weight:800;letter-spacing:-.03em;color:#fff;text-wrap:balance;max-width:20ch}
 .h10 .lede{font-size:clamp(1rem,1.25vw,1.15rem);line-height:1.65;color:var(--mut);max-width:62ch;text-wrap:pretty}
 .h10 .lede--light{color:#aeb8b3}
 .h10 .lede--strong{color:var(--ink);font-weight:600}
@@ -310,7 +310,7 @@ html.js .h10 .cx-panel:not(.is-in){opacity:0;translate:0 60px;scale:.96}
 .h10 .pb-pin__head::after{content:"";position:absolute;left:9px;top:4px;width:30px;height:20px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.28),transparent)}
 .h10 .pb-note--p .pb-pin{--pin-h1:#ff9a86;--pin-h2:#f86e57;--pin-h3:#f05b44;--pin-h4:#e24c36;--pin-b1:#f8735c;--pin-b2:#f0604a;--pin-b3:#e5523d;--pin-glow:rgba(245,96,72,.38);--pin-shadow:rgba(196,52,30,.45)}
 .h10 .pb-note--s .pb-pin{--pin-h1:#7fe6bf;--pin-h2:#45cf9b;--pin-h3:#33bd88;--pin-h4:#27a676;--pin-b1:#4ccf9d;--pin-b2:#36bb88;--pin-b3:#2aa877;--pin-glow:rgba(52,190,136,.34);--pin-shadow:rgba(20,120,80,.45)}
-.h10 .pb-label{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:999px;font-family:var(--f-body);font-size:.88rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;line-height:1.3;margin-bottom:22px}
+.h10 .pb-label{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:999px;font-family:var(--f-head);font-size:.88rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;line-height:1.3;margin-bottom:22px}
 .h10 .pb-label__dot{width:6px;height:6px;border-radius:50%;background:currentColor}
 .h10 .pb-note--p .pb-label{background:#fde0db;color:#e0392b;box-shadow:inset 0 0 0 1px rgba(239,59,45,.14)}
 .h10 .pb-note--s .pb-label{background:#cdf2dc;color:#0b5132;box-shadow:inset 0 0 0 1px rgba(50,180,111,.18)}
@@ -909,7 +909,7 @@ html.js .h10 .sw-media.is-in :is(.sw-fun,.sw-mix,.sw-cols) i{transform:none}
 .h10 .ts-card--lead .ts-q{width:64px;height:48px}
 .h10 .ts-card blockquote{flex:1;margin:0}
 .h10 .ts-card blockquote p{font-size:clamp(1rem,1.25vw,1.1rem);line-height:1.65;color:#1f2937}
-.h10 .ts-card--lead blockquote p{font-family:var(--f-head);font-size:clamp(1.25rem,2vw,1.65rem);font-weight:600;line-height:1.5;letter-spacing:-.01em;color:#111827}
+.h10 .ts-card--lead blockquote p{font-family:var(--f-body);font-size:clamp(1.25rem,2vw,1.65rem);font-weight:600;line-height:1.5;letter-spacing:-.01em;color:#111827}
 .h10 .ts-card mark{padding:0 .1em;color:inherit;background:linear-gradient(transparent 58%,color-mix(in srgb,var(--t),#1e293b 14%) 58%) no-repeat 0 0/0% 100%;-webkit-box-decoration-break:clone;box-decoration-break:clone;transition:background-size 1.1s var(--ease) .5s}
 .h10 .ts-card--lead mark{background-image:linear-gradient(transparent 58%,rgba(255,255,255,.85) 58%)}
 .h10 .ts-card.is-in mark,html:not(.js) .h10 .ts-card mark{background-size:100% 100%}
