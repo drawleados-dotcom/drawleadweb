@@ -3,8 +3,8 @@
  * The big "Drawlead" wordmark that opens every footer. Styles live in
  * assets/footer-signoff.css (linked from layout-start.php).
  *
- * Each letter is its own span so it can lift and turn green under the
- * pointer. The word is decorative (the footer logo already names the brand),
+ * Each letter is its own span so it can lift and brighten to pure white
+ * under the pointer. The word is decorative (the footer logo already names the brand),
  * so it is hidden from screen readers; the line under it is read normally.
  *
  * $signClass: extra classes from the including footer. The dark footers

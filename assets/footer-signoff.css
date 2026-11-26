@@ -5,17 +5,18 @@
    Dark by default (the Home 10, About and blog footers). `.dl-sign--light`
    is the version on the white footer in partials/footer.php.
 
-   Hover: the letter under the pointer grows a little and turns brand green.
-   Only on devices that really hover, and without the grow when the visitor
-   asks for reduced motion.
+   Hover: the letter under the pointer grows a little and turns pure white
+   (brand green on the light footer, where white would vanish). Only on
+   devices that really hover, and without the grow when the visitor asks
+   for reduced motion.
 
    The wordmark and tagline are divs, not p, so `.h10 .foot p` (home10.css)
    does not shrink them.
    ========================================================================== */
 .dl-sign{
-  --sign-top:rgba(123,224,169,.5);
-  --sign-bot:rgba(123,224,169,.04);
-  --sign-hover:#32b46f;
+  --sign-top:rgba(255,255,255,.5);
+  --sign-bot:rgba(255,255,255,.04);
+  --sign-hover:#fff;
   --sign-strong:#fff;
   --sign-text:#aeb8b3;
   --sign-dot:rgba(255,255,255,.1);
@@ -82,6 +83,7 @@
 .dl-sign--light{
   --sign-top:rgba(50,180,111,.34);
   --sign-bot:rgba(50,180,111,.03);
+  --sign-hover:#32b46f;
   --sign-strong:#111112;
   --sign-text:#70706c;
   --sign-dot:rgba(17,17,18,.08);
