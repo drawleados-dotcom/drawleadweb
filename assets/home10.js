@@ -210,6 +210,18 @@
     $$('[data-swx-step]', swx.parentElement).forEach((a) => a.addEventListener('click', () => select(step(+a.dataset.swxStep))));
   }
 
+  /* ---------- hero: the struck line is sized to the width of "Start Building" ---------- */
+  const fitS = $('[data-fit-strike]'), fitSb = $('.hero__sb');
+  if (fitS && fitSb) {
+    const fitStrike = () => {
+      fitS.style.fontSize = '';
+      const s = $('s', fitS), t = fitSb.getBoundingClientRect().width, w = s.getBoundingClientRect().width;
+      if (t && w) fitS.style.fontSize = (parseFloat(getComputedStyle(fitS).fontSize) * t / w).toFixed(2) + 'px';
+    };
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(fitStrike);
+    addEventListener('resize', fitStrike);
+  }
+
   /* ---------- 8-week program: week cards scroll, calendar pages tear off 1 → 8 ---------- */
   const pg = $('[data-pg]');
   if (pg) {

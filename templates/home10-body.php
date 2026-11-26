@@ -53,13 +53,13 @@ $h10Case = function (string $slug, string $fallback) use ($pdo): string {
       <div class="hero__copy">
         <span class="pill pill--outline reveal"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-sparkle"/></svg>Turning Business Data into Intelligent AI &amp; Automation Solutions</span>
         <h1 class="hero__title">
-          <span class="strike reveal" style="--d:.08s"><s>Stop Managing Business Complexity.</s></span>
-          <span class="hero__start reveal" style="--d:.2s">Start Building<br><em>Smarter Business Solutions.</em></span>
+          <span class="strike reveal" style="--d:.08s" data-fit-strike><s>Stop Managing Business Complexity.<svg class="strike__svg" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path pathLength="1" d="M3 14 C 50 9, 92 16, 140 12 S 236 9, 297 11"/><path pathLength="1" d="M8 16.5 C 70 13, 130 18, 190 14.5 S 262 13, 293 15"/></svg></s></span>
+          <span class="hero__start reveal" style="--d:.2s"><span class="hero__sb">Start Building</span><br><em class="hero__hl">Smarter Business Solutions.<svg class="hero__swoosh" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path pathLength="1" d="M6 20 C 140 8, 300 6, 440 12 S 560 22, 594 14"/></svg></em></span>
         </h1>
       </div>
     </div>
     <div class="hero__mid">
-      <p class="hero__lede reveal" style="--d:.18s">We work closely with your teams to understand your business, identify challenges and build technology around your needs. From custom business systems and software to AI, automation and digital commerce, we create connected solutions that simplify operations and drive growth.</p>
+      <p class="hero__lede reveal" style="--d:.18s">We work closely with your teams to understand your business and build technology around your needs, from custom systems and software to AI, automation and digital commerce that simplify operations and drive growth.</p>
     </div>
     <div class="hs reveal" style="--d:.24s">
       <span class="hs-label" aria-hidden="true">What we build</span>

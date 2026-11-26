@@ -103,12 +103,22 @@ body>.h10:not(.ab) section.hero{background:linear-gradient(180deg,#DAF1E5 0%,#ea
 .h10 .hero__bg .grid{position:absolute;inset:0;background-image:radial-gradient(rgba(15,58,36,.16) 1px,transparent 1.2px);background-size:26px 26px;mask-image:radial-gradient(ellipse 70% 60% at 70% 30%,#000,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 70% 30%,#000,transparent 75%)}
 .h10 .hero .wrap{position:relative}
 .h10 .hero__top{display:grid;grid-template-columns:minmax(0,1fr);align-items:center;gap:clamp(16px,3vw,48px)}
-.h10 .hero__title{display:flex;flex-direction:column;gap:clamp(6px,.8vw,12px);margin-top:clamp(14px,1.6vw,22px)}
-.h10 .strike{display:block;font-family:var(--f-head);font-size:clamp(1.4rem,2.6vw,2.4rem);font-weight:500;letter-spacing:-.01em;color:#1f2937}
+.h10 .hero__title{display:flex;flex-direction:column;gap:clamp(4px,.6vw,10px);margin-top:clamp(10px,1.2vw,16px)}
+.h10 .strike{display:block;font-family:var(--f-head);font-size:clamp(1.13rem,2.54vw,2.44rem);font-weight:500;letter-spacing:-.01em;color:#1f2937}
 .h10 .strike s{position:relative;text-decoration:none;display:inline-block}
 html:not(.js) .h10 .strike s{text-decoration:line-through}
-.h10 .strike s::after{content:"";position:absolute;left:-2%;top:56%;height:1px;width:104%;background:var(--ink);border-radius:1px;transform:scaleX(0);transform-origin:left;transition:transform 1.6s cubic-bezier(.65,0,.35,1) .7s}
-.h10 .strike.is-in s::after,html:not(.js) .h10 .strike s::after{transform:scaleX(1)}
+.h10 .strike s::after{content:none}
+.h10 .strike__svg{position:absolute;left:-2%;top:28%;width:104%;height:.55em;overflow:visible;pointer-events:none}
+.h10 .strike__svg path{fill:none;stroke:#E5484D;stroke-width:2.2;stroke-linecap:round;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1s cubic-bezier(.65,0,.35,1) .7s}
+.h10 .strike__svg path+path{stroke-width:1.3;opacity:.65;transition-delay:1.15s}
+.h10 .strike.is-in .strike__svg path,html:not(.js) .h10 .strike__svg path{stroke-dashoffset:0}
+.h10 .hero__start .hero__hl{position:relative;display:inline-block;padding:0 .06em;background:linear-gradient(90deg,#DAF1E5,#DFEAF9 34%,#E8E2F5 66%,#F5E1E9) no-repeat 0 84%/0% 36%;transition:background-size 1.2s cubic-bezier(.65,0,.35,1) .9s}
+.h10 .hero__start.is-in .hero__hl,html:not(.js) .h10 .hero__hl{background-size:100% 36%}
+.h10 .hero__swoosh{position:absolute;left:0;bottom:-.2em;width:100%;height:.28em;overflow:visible;pointer-events:none}
+.h10 .hero__swoosh path{fill:none;stroke:var(--green);stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.1s cubic-bezier(.65,0,.35,1) 1.8s}
+.h10 .hero__start.is-in .hero__swoosh path,html:not(.js) .h10 .hero__swoosh path{stroke-dashoffset:0}
+@media (max-width:760px){.h10 .hero__start .hero__hl{display:inline;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.h10 .hero__swoosh{display:none}}
 .h10 .hero__start{display:block;font-family:var(--f-head);font-size:clamp(2.4rem,5.4vw,5.2rem);line-height:1.08;font-weight:800;letter-spacing:-.03em;color:#0b0d0c}
 .h10 .hero__start em{font-style:normal;background:linear-gradient(100deg,var(--ink) 0%,var(--green-700) 55%,var(--green) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 .h10 .hero__start em{background:none;-webkit-text-fill-color:currentColor;color:inherit}.h10 .hero .pill--outline{padding:10px 20px;font-size:clamp(.88rem,1.1vw,1rem);font-weight:500}
@@ -117,11 +127,11 @@ html:not(.js) .h10 .strike s{text-decoration:line-through}
 .h10 .hero__art svg{overflow:visible}
 .h10 .hero__art-m{display:none}
 .h10 .hero__art-d,.h10 .hero__art-m{width:100%;height:100%}
-.h10 .hero__mid{margin-top:clamp(18px,2.4vw,28px)}
+.h10 .hero__mid{margin-top:clamp(14px,1.8vw,22px)}
 .h10 .hero__lede{font-size:clamp(1rem,1.35vw,1.2rem);line-height:1.62;color:var(--ink-2);max-width:min(100%,1180px)}
 /* hero services: one paper coupon strip, pastel service coupons torn along dotted
    perforations and a vertical "what we build" stub; the 8-week CTA is a ticket below it */
-.h10 .hs{--n:9px;display:flex;align-items:stretch;margin-top:clamp(44px,5.4vw,72px);filter:drop-shadow(0 1px 1px rgba(15,23,42,.07)) drop-shadow(0 4px 8px rgba(15,23,42,.05))}
+.h10 .hs{--n:9px;display:flex;align-items:stretch;margin-top:clamp(30px,3.6vw,44px);filter:drop-shadow(0 1px 1px rgba(15,23,42,.07)) drop-shadow(0 4px 8px rgba(15,23,42,.05))}
 .h10 .hs-label{flex:none;display:grid;place-items:center;width:46px;border-radius:16px 0 0 16px;background:#fff;writing-mode:vertical-rl;font-size:.64rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--green-700);border-right:2px dotted rgba(15,58,36,.2);
   -webkit-mask:radial-gradient(circle at 100% 0,#0000 var(--n),#000 calc(var(--n) + .5px)),radial-gradient(circle at 100% 100%,#0000 var(--n),#000 calc(var(--n) + .5px));-webkit-mask-composite:source-in;
   mask:radial-gradient(circle at 100% 0,#0000 var(--n),#000 calc(var(--n) + .5px)),radial-gradient(circle at 100% 100%,#0000 var(--n),#000 calc(var(--n) + .5px));mask-composite:intersect}
@@ -1089,6 +1099,7 @@ html.js .h10 .sw-media.is-in :is(.sw-fun,.sw-mix,.sw-cols) i{transform:none}
   .h10 .marquee{-webkit-mask-image:none;mask-image:none}
   .h10 .marquee__track li[aria-hidden]{display:none}
   .h10 .il .draw,.h10 .il .heartline{stroke-dashoffset:0}
-  .h10 .strike s::after{transform:scaleX(1)}
+  .h10 .strike__svg path,.h10 .hero__swoosh path{transition:none;stroke-dashoffset:0}
+  .h10 .hero__start .hero__hl{transition:none;background-size:100% 36%}
   .h10 .hl{background-size:100% 100%}
 }
