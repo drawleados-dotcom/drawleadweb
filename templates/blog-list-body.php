@@ -2,8 +2,7 @@
 /** @var array $posts set by index.php before including this template */
 $activePage = 'blog';
 include __DIR__ . '/partials/nav.php';
-$featuredPost = $posts[0] ?? null;
-$morePosts = array_slice($posts ?? [], $featuredPost ? 1 : 0);
+$posts = $posts ?? [];
 ?>
 <link rel="stylesheet" href="<?= asset_url('/assets/home10.css') ?>">
 <link rel="stylesheet" href="<?= asset_url('/assets/blog-modern.css') ?>">
@@ -24,19 +23,11 @@ $morePosts = array_slice($posts ?? [], $featuredPost ? 1 : 0);
 <section class="journal-content" id="latest-insights">
   <div class="wrap">
     <div class="journal-section-head"><div><span class="journal-kicker">From our team</span><h2>Latest insights</h2></div><span class="journal-count"><?= count($posts ?? []) ?> <?= count($posts ?? []) === 1 ? 'article' : 'articles' ?></span></div>
-    <?php if (!$featuredPost): ?>
+    <?php if (!$posts): ?>
       <div class="journal-empty"><span class="journal-empty__icon" aria-hidden="true">✳</span><h3>Fresh ideas are on the way.</h3><p>We’re preparing practical guides and perspectives for growing businesses. Check back soon.</p></div>
     <?php else: ?>
-      <a class="journal-feature" href="/blog/<?= h($featuredPost['slug']) ?>">
-        <div class="journal-feature__image">
-          <?php if (!empty($featuredPost['featured_image'])): ?><img src="<?= h(UPLOAD_URL . $featuredPost['featured_image']) ?>" alt="<?= h($featuredPost['featured_image_alt'] ?: $featuredPost['title']) ?>" loading="lazy">
-          <?php else: ?><div class="journal-image-placeholder"><span>Drawlead Journal</span></div><?php endif; ?>
-          <span class="journal-feature__badge">Featured insight</span>
-        </div>
-        <div class="journal-feature__body"><div class="journal-meta"><span><?= h(date('M j, Y', strtotime($featuredPost['created_at']))) ?></span><span class="journal-meta__dot"></span><span>Drawlead team</span></div><h3><?= h($featuredPost['title']) ?></h3><p><?= h($featuredPost['excerpt']) ?></p><span class="journal-read">Read the article <span aria-hidden="true">↗</span></span></div>
-      </a>
-      <?php if ($morePosts): ?><div class="journal-grid">
-        <?php foreach ($morePosts as $post): ?>
+      <div class="journal-grid">
+        <?php foreach ($posts as $post): ?>
         <a class="journal-card" href="/blog/<?= h($post['slug']) ?>">
           <div class="journal-card__image">
             <?php if (!empty($post['featured_image'])): ?><img src="<?= h(UPLOAD_URL . $post['featured_image']) ?>" alt="<?= h($post['featured_image_alt'] ?: $post['title']) ?>" loading="lazy">
@@ -45,7 +36,7 @@ $morePosts = array_slice($posts ?? [], $featuredPost ? 1 : 0);
           <div class="journal-card__body"><div class="journal-meta"><span><?= h(date('M j, Y', strtotime($post['created_at']))) ?></span></div><h3><?= h($post['title']) ?></h3><p><?= h($post['excerpt']) ?></p><span class="journal-read">Read the article <span aria-hidden="true">↗</span></span></div>
         </a>
         <?php endforeach; ?>
-      </div><?php endif; ?>
+      </div>
     <?php endif; ?>
   </div>
 </section>
