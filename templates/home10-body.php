@@ -379,7 +379,7 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
       <ol class="steps" role="list">
       <li class="step reveal" style="--d:0.0s">
         <div class="step__card tk">
-          <div class="tk-stub"><span class="tk-num"><small>Step</small><b>01</b></span><span class="tk-of"><small>Of 04</small><span class="tk-dots" aria-hidden="true"><i class="is-cur"></i><i></i><i></i><i></i></span></span></div>
+          <div class="tk-stub"><span class="tk-num"><small>Step</small><b>01</b></span><span class="tk-of">Of 04</span></div>
           <div class="tk-perf" aria-hidden="true"></div>
           <div class="tk-body">
             <div class="step__art il"><svg class="il-svg" viewBox="0 0 200 140" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="hw-discover" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern></defs><rect class="pn" width="200" height="140"/><rect width="200" height="140" fill="url(#hw-discover)"/><path class="ln" d="M100 40 V64 M100 64 H52 V84 M100 64 H148 V84" /><rect class="c" x="78" y="22" width="44" height="22" rx="8" /><rect class="g" x="88" y="30" width="24" height="6" rx="3.0" /><rect class="c" x="30" y="84" width="44" height="22" rx="8" /><rect class="k2" x="40" y="92" width="24" height="6" rx="3.0" /><rect class="c" x="126" y="84" width="44" height="22" rx="8" /><rect class="k2" x="136" y="92" width="24" height="6" rx="3.0" /><g class="scan"><circle cx="112" cy="84" r="26" class="lens"/><path class="gl" d="M131 103 L152 124" stroke-width="6"/></g></svg></div>
@@ -391,7 +391,7 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
       </li>
       <li class="step reveal" style="--d:0.1s">
         <div class="step__card tk">
-          <div class="tk-stub"><span class="tk-num"><small>Step</small><b>02</b></span><span class="tk-of"><small>Of 04</small><span class="tk-dots" aria-hidden="true"><i></i><i class="is-cur"></i><i></i><i></i></span></span></div>
+          <div class="tk-stub"><span class="tk-num"><small>Step</small><b>02</b></span><span class="tk-of">Of 04</span></div>
           <div class="tk-perf" aria-hidden="true"></div>
           <div class="tk-body">
             <div class="step__art il"><svg class="il-svg" viewBox="0 0 200 140" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="hw-engineer" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern></defs><rect class="pn" width="200" height="140"/><rect width="200" height="140" fill="url(#hw-engineer)"/><rect class="c" x="22" y="18" width="156" height="104" rx="14" /><path class="ln faint" d="M22 44 H178 M22 70 H178 M22 96 H178 M56 18 V122 M100 18 V122 M144 18 V122" /><rect class="gs2" x="36" y="28" width="34" height="22" rx="6" /><rect class="g" x="130" y="28" width="34" height="22" rx="6" /><rect class="gs2" x="84" y="84" width="34" height="22" rx="6" /><path class="gl flow" d="M70 39 H130 M147 50 V66 H101 V84" stroke-dasharray="4 5"/><circle class="g" cx="147" cy="66" r="4" /></svg></div>
@@ -403,7 +403,7 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
       </li>
       <li class="step reveal" style="--d:0.2s">
         <div class="step__card tk">
-          <div class="tk-stub"><span class="tk-num"><small>Step</small><b>03</b></span><span class="tk-of"><small>Of 04</small><span class="tk-dots" aria-hidden="true"><i></i><i></i><i class="is-cur"></i><i></i></span></span></div>
+          <div class="tk-stub"><span class="tk-num"><small>Step</small><b>03</b></span><span class="tk-of">Of 04</span></div>
           <div class="tk-perf" aria-hidden="true"></div>
           <div class="tk-body">
             <div class="step__art il"><svg class="il-svg" viewBox="0 0 200 140" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="hw-build" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern></defs><rect class="pn" width="200" height="140"/><rect width="200" height="140" fill="url(#hw-build)"/><rect class="c" x="26" y="18" width="120" height="96" rx="14" /><circle class="k2" cx="42" cy="32" r="3.5" /><circle class="k2" cx="54" cy="32" r="3.5" /><circle class="k2" cx="66" cy="32" r="3.5" /><rect class="g typeln" x="40" y="46" width="40" height="6" rx="3.0" style="--d:0.0s"/><rect class="k2 typeln" x="48" y="58" width="60" height="6" rx="3.0" style="--d:0.25s"/><rect class="k2 typeln" x="48" y="70" width="32" height="6" rx="3.0" style="--d:0.5s"/><rect class="g typeln" x="40" y="82" width="52" height="6" rx="3.0" style="--d:0.75s"/><rect class="k2 typeln" x="48" y="94" width="70" height="6" rx="3.0" style="--d:1.0s"/><g class="float" style="--d:0.3s"><rect class="c" x="128" y="66" width="54" height="40" rx="12" /><svg x="142" y="74" width="26" height="26" style="color:var(--green)" ><use href="#i-plug"/></svg></g></svg></div>
@@ -415,7 +415,7 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
       </li>
       <li class="step reveal" style="--d:0.30000000000000004s">
         <div class="step__card tk">
-          <div class="tk-stub"><span class="tk-num"><small>Step</small><b>04</b></span><span class="tk-of"><small>Of 04</small><span class="tk-dots" aria-hidden="true"><i></i><i></i><i></i><i class="is-cur"></i></span></span></div>
+          <div class="tk-stub"><span class="tk-num"><small>Step</small><b>04</b></span><span class="tk-of">Of 04</span></div>
           <div class="tk-perf" aria-hidden="true"></div>
           <div class="tk-body">
             <div class="step__art il"><svg class="il-svg" viewBox="0 0 200 140" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="hw-deploy" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern></defs><rect class="pn" width="200" height="140"/><rect width="200" height="140" fill="url(#hw-deploy)"/><circle cx="100" cy="70" r="42" class="ring spin" fill="none"/><circle cx="100" cy="70" r="30" class="g"/><svg x="84" y="54" width="32" height="32" style="color:#fff" ><use href="#i-rocket"/></svg><g class="float" style="--d:0.2s"><rect class="c" x="24" y="92" width="44" height="28" rx="8" /><rect class="g rise" x="32" y="106" width="6" height="6" rx="2" style="--d:0.0s"/><rect class="g rise" x="42" y="100" width="6" height="12" rx="2" style="--d:0.15s"/><rect class="g rise" x="52" y="94" width="6" height="18" rx="2" style="--d:0.3s"/></g><g class="float" style="--d:0.7s"><rect class="c" x="134" y="22" width="44" height="26" rx="13" /><circle class="g blink" cx="148" cy="35" r="4" /><rect class="k" x="156" y="32" width="16" height="6" rx="3.0" /></g></svg></div>
