@@ -385,7 +385,6 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
           </div>
           <div class="tk-b">
             <h3 class="tk-h">Discover the Business</h3>
-            <p class="tk-lead">Understand how your business actually operates.</p>
             <p>We study your existing processes, teams, tools, workflows and operational challenges to identify where technology can create meaningful value.</p>
           </div>
         </div>
@@ -398,7 +397,6 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
           </div>
           <div class="tk-b">
             <h3 class="tk-h">Engineer the Workflows</h3>
-            <p class="tk-lead">Design technology around real business requirements.</p>
             <p>We map processes, redesign workflows and architect the right combination of custom software, existing platforms and AI capabilities.</p>
           </div>
         </div>
@@ -411,7 +409,6 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
           </div>
           <div class="tk-b">
             <h3 class="tk-h">Build & Integrate</h3>
-            <p class="tk-lead">Develop and connect technology within your business environment.</p>
             <p>We build custom applications, integrate existing systems and implement AI-powered workflows that solve practical business problems.</p>
           </div>
         </div>
@@ -424,7 +421,6 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
           </div>
           <div class="tk-b">
             <h3 class="tk-h">Deploy & Evolve</h3>
-            <p class="tk-lead">Make technology work in everyday business operations.</p>
             <p>We deploy solutions, work with your teams, support adoption and continuously improve systems based on real operational feedback.</p>
           </div>
         </div>
