@@ -272,9 +272,12 @@ html.js .ab .rhythm.is-in .rhythm__ln{stroke-dashoffset:0}
 /* ---------- 05 capabilities ----------
    The home page's Industries layout (.sw-row in home10.css): number badge,
    title and text beside the capability's illustration on a tinted panel,
-   sides alternating. Each row takes one site tint for its panel; the badge
-   uses a deeper shade of the same tint. The section keeps the page's 1360px
-   wrap rather than .sw's 1200px, and on narrow screens the picture leads. */
+   sides alternating. Each row is sized by its content: the panel is the
+   illustration's shape at about the text's height (taller if the text is),
+   and text and picture sit together as one pair, left on odd rows and right
+   on even ones. Each row takes one site tint for its panel; the badge uses a deeper
+   shade of the same tint. The section keeps the page's 1360px wrap rather
+   than .sw's 1200px, and on narrow screens the picture leads at its own ratio. */
 .ab .build{padding:var(--pad) 0 clamp(110px,11vw,160px);background:#fff}
 .ab .build .wrap{--wrap:inherit}
 .ab .build [data-accent="sky"]{--accent-50:#F1F6FD;--accent-100:var(--t-sky);--accent-500:#3B7DD8;--accent-700:#1F4E8C;--accent-line:rgba(59,125,216,.4)}
@@ -285,8 +288,13 @@ html.js .ab .rhythm.is-in .rhythm__ln{stroke-dashoffset:0}
 .ab .build .sw-cat b{min-width:36px;height:28px;font-size:.78rem}
 .ab .build .sw-h3{margin-top:20px;font-size:clamp(1.9rem,3.2vw,2.9rem);line-height:1.08;font-weight:700;letter-spacing:-.035em}
 .ab .build .sw-p{max-width:44ch;font-size:clamp(1.02rem,1.25vw,1.16rem);line-height:1.65}
-.ab .build .sw-media{aspect-ratio:auto;padding:3% 4%}
-.ab .build .sw-media img{width:100%;height:auto}
+.ab .build .sw-rows{gap:clamp(48px,5.4vw,80px)}
+.ab .build{--ph:clamp(250px,22vw,330px)}
+.ab .build .sw-row{grid-template-columns:minmax(0,32rem) auto;justify-content:end;gap:clamp(32px,4vw,64px);align-items:stretch}
+.ab .build .sw-row--media-first{grid-template-columns:auto minmax(0,32rem);justify-content:start}
+.ab .build .sw-text{justify-content:center;padding-block:clamp(12px,1.6vw,28px)}
+.ab .build .sw-media{display:block;width:calc(var(--ph)*1.3);aspect-ratio:auto;min-height:var(--ph);padding:0}
+.ab .build .sw-media img{position:absolute;top:5%;left:5%;width:90%;height:90%;object-fit:contain}
 .ab .build__end{max-width:26em;margin:clamp(56px,6vw,96px) auto 0;text-align:center;font-size:clamp(1.5rem,2.8vw,2.5rem);line-height:1.22;font-weight:700;letter-spacing:-.034em;text-wrap:balance}
 
 /* ---------- 06 culture ---------- */
@@ -382,6 +390,10 @@ html.js .ab .rhythm.is-in .rhythm__ln{stroke-dashoffset:0}
   .ab .rhythms{grid-template-columns:1fr 1fr;gap:26px 20px}
   .ab .fit__top{grid-template-columns:1fr;gap:36px}
   .ab .build .sw-row .sw-media{order:-1}
+  .ab .build .sw-row,.ab .build .sw-row--media-first{grid-template-columns:minmax(0,1fr);gap:24px}
+  .ab .build .sw-text{padding-block:0}
+  .ab .build .sw-media{width:100%;min-height:0;aspect-ratio:1400/1100}
+  .ab .build .sw-media img{top:3%;left:4%;width:92%;height:94%}
   .ab .fsteps{grid-template-columns:1fr 1fr}
   .ab .fstep,.ab .fstep:first-child,.ab .fstep:last-child{padding:24px clamp(18px,3vw,32px)}
   .ab .fstep:nth-child(odd){padding-left:0;border-left:0}
