@@ -415,7 +415,7 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
     <div class="more reveal">
       <div><span class="pill pill--mint"><span class="pill__dot" aria-hidden="true"></span>Explore More</span><h3>Technology for Every Stage of Your Business.</h3>
       <p>From custom business systems and software engineering to digital commerce, AI implementation, automation and marketing, discover the complete range of solutions we build to help businesses move forward.</p></div>
-      <a class="h10-btn h10-btn--green" href="#solutions"><span>Explore Our Service Portfolio</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
+      <div class="cta-stub"><a class="h10-btn h10-btn--green" href="#solutions"><span>Explore Our Service Portfolio</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a></div>
     </div>
   </div>
 </section>
@@ -589,7 +589,7 @@ $pgPhases = [0 => ['Phase 01', 'Engineer & Build'], 4 => ['Phase 02', 'Implement
     </div>
     <div class="databanner reveal">
       <div><h3>Stop Looking at Scattered Reports.<br>Start Understanding Your Business.</h3><p>Connect your business data and turn information into actionable intelligence.</p></div>
-      <a class="h10-btn h10-btn--green" href="#contact"><span>Explore Data Intelligence</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
+      <div class="cta-stub"><a class="h10-btn h10-btn--green" href="#contact"><span>Explore Data Intelligence</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a></div>
     </div>
   </div>
 </section>
