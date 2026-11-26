@@ -189,13 +189,17 @@ $h10Case = function (string $slug, string $fallback) use ($pdo): string {
   </div>
 </section>
 <?php
-// Selected Work. Edit the copy here: one entry per row, in page order. Rows
-// alternate automatically (01 and 03 show the mockup on the left). 'mock'
-// picks the dashboard drawn beside the text; its sample numbers are in the
-// markup below. 'accent' is one of indigo, green, rose, cyan.
+// Selected Work. Edit the copy here: one entry per colour panel, in page order;
+// the first starts open. 'accent' is the panel's colour: sun, coral, orchid or
+// leaf. 'photo' is a greyscale picture the panel tints (the files in
+// assets/home10/work are Unsplash stock). 'mock' picks the dashboard drawn over
+// it; its sample numbers are in the markup below.
 $swProjects = [
     [
-        'accent' => 'indigo',
+        'accent' => 'sun',
+        'icon' => 'i-building',
+        'photo' => '/assets/home10/work/construction.webp',
+        'photoAlt' => 'Site crew working among steel reinforcement, seen from above',
         'category' => 'Construction & Real Estate',
         'title' => ['Multiple Construction Operations.', 'One Connected Business System'],
         'text' => 'A custom-engineered Construction Business OS connecting project management, site operations, procurement, materials, contractors and finance, bringing greater visibility and control across everyday construction workflows.',
@@ -205,7 +209,10 @@ $swProjects = [
         'mockLabel' => 'Sample dashboard: project profitability across four construction projects',
     ],
     [
-        'accent' => 'green',
+        'accent' => 'coral',
+        'icon' => 'i-cart',
+        'photo' => '/assets/home10/work/ecommerce.webp',
+        'photoAlt' => 'Rail of plain t-shirts on hangers',
         'category' => 'Ecommerce Solutions',
         'title' => ['Beyond Standard Shopify.', '100+ Custom Product Pages Built to Convert.'],
         'text' => 'A custom-developed Shopify ecommerce experience featuring 100+ uniquely designed product pages, intuitive navigation and tailored functionality. Engineered to simplify product discovery, create a seamless shopping journey and support higher conversion rates.',
@@ -215,7 +222,10 @@ $swProjects = [
         'mockLabel' => 'Sample dashboard: store revenue, conversion and top product pages',
     ],
     [
-        'accent' => 'rose',
+        'accent' => 'orchid',
+        'icon' => 'i-heart',
+        'photo' => '/assets/home10/work/healthcare.webp',
+        'photoAlt' => 'Clinician fitting a wrist brace for a patient',
         'category' => 'Healthcare',
         'title' => ['Connected Digital Solutions for', 'Multi-Branch Healthcare Operations'],
         'text' => 'Digital solutions supporting a multi-branch physiotherapy business through its online presence, digital marketing and operational technology initiatives. Bringing together patient-focused digital experiences and business growth solutions.',
@@ -225,7 +235,10 @@ $swProjects = [
         'mockLabel' => 'Sample dashboard: enquiries and bookings across four branches',
     ],
     [
-        'accent' => 'cyan',
+        'accent' => 'leaf',
+        'icon' => 'i-chat',
+        'photo' => '/assets/home10/work/automation.webp',
+        'photoAlt' => 'Paper speech bubble with three dots',
         'category' => 'AI & Business Automation',
         'title' => ['Smarter Customer Communication', 'Through WhatsApp Automation'],
         'text' => 'A business communication automation solution designed to streamline customer interactions and connect WhatsApp communication with structured business workflows, helping businesses manage conversations more efficiently.',
@@ -237,7 +250,7 @@ $swProjects = [
 ];
 $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable="false"><use href="#' . $id . '"/></svg>';
 ?>
-<section class="sw" id="case-studies">
+<section class="sw sw--work" id="case-studies">
   <div class="wrap">
     <header class="sw-head">
       <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Selected Work. Proven Implementation</span>
@@ -245,17 +258,27 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
       <p class="sw-sub reveal" style="--d:.12s">We work closely with businesses to understand their challenges, engineer tailored technology solutions and implement systems that make everyday operations more connected, efficient and scalable.</p>
       <p class="sw-nda reveal" style="--d:.16s"><?= $swIc('i-lock') ?>Client names and identities remain confidential, as every engagement is governed by a NDA.</p>
     </header>
-    <div class="sw-rows">
+  </div>
+  <div class="wrap swx-wrap">
+    <div class="swx reveal" data-swx style="--n:<?= count($swProjects) - 1 ?>">
 <?php foreach ($swProjects as $i => $p): $n = sprintf('%02d', $i + 1); ?>
-      <article class="sw-row<?= $i % 2 === 0 ? ' sw-row--media-first' : '' ?>" data-accent="<?= h($p['accent']) ?>">
-        <div class="sw-text reveal">
+      <article class="swx-p<?= $i === 0 ? ' is-open' : '' ?>" data-accent="<?= h($p['accent']) ?>">
+        <img class="swx-tex" src="<?= h($p['photo']) ?>" alt="" width="1000" height="1000" loading="lazy" decoding="async">
+        <button type="button" class="swx-tab" aria-expanded="<?= $i === 0 ? 'true' : 'false' ?>" aria-controls="swx-<?= $i + 1 ?>">
+          <span class="swx-ic" aria-hidden="true"><?= $swIc($p['icon']) ?></span>
           <span class="sw-cat"><b><?= $n ?></b><?= h($p['category']) ?></span>
+          <span class="swx-plus" aria-hidden="true"></span>
+        </button>
+        <div class="swx-in" id="swx-<?= $i + 1 ?>"><div class="swx-body">
+        <div class="swx-text">
           <h3 class="sw-h3"><?= h($p['title'][0]) ?><br><span class="sw-u"><?= h($p['title'][1]) ?></span></h3>
           <p class="sw-p"><?= h($p['text']) ?></p>
-          <ul class="sw-chips" role="list"><?php foreach ($p['chips'] as $c): ?><li><?= h($c) ?></li><?php endforeach; ?></ul>
           <a class="sw-cta" href="<?= h($p['href']) ?>"><span>Read Case Study</span><span class="sw-cta__ic"><?= $swIc('i-arrow') ?></span></a>
+          <ul class="sw-chips" role="list"><?php foreach ($p['chips'] as $c): ?><li><?= h($c) ?></li><?php endforeach; ?></ul>
         </div>
-        <div class="sw-media reveal" style="--d:.08s" role="img" aria-label="<?= h($p['mockLabel']) ?>">
+        <div class="swx-media">
+          <img src="<?= h($p['photo']) ?>" alt="<?= h($p['photoAlt']) ?>" width="1000" height="1000" loading="lazy" decoding="async">
+          <div class="sw-media swx-mock" role="img" aria-label="<?= h($p['mockLabel']) ?>">
 <?php if ($p['mock'] === 'profit'): ?>
           <div class="sw-card" aria-hidden="true">
             <div class="sw-card__hd"><div><b>Project profitability</b><small>Active projects · this financial year</small></div><span class="sw-tabs"><i class="is-on">Margin</i><i>Cost</i><i>Cash</i></span></div>
@@ -268,7 +291,6 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
             </ul>
             <div class="sw-split"><div class="sw-split__hd"><b>Residential Tower A · cost split</b><span>₹1.09 Cr</span></div><span class="sw-stack"><i style="--w:.52;background:var(--accent-500)"></i><i style="--w:.31;background:var(--accent-700)"></i><i style="--w:.04;background:#E0A100"></i><i style="--w:.13;background:#C9CCD6"></i></span><span class="sw-legend"><i style="--c:var(--accent-500)">Material 52%</i><i style="--c:var(--accent-700)">Labour 31%</i><i style="--c:#E0A100">Petty cash 4%</i><i style="--c:#C9CCD6">Other 13%</i></span></div>
           </div>
-          <div class="sw-evt" aria-hidden="true"><span class="sw-tile"><?= $swIc('i-chart') ?></span><div><b>Margin updated</b><small>Villa Community B · just now</small></div></div>
 <?php elseif ($p['mock'] === 'store'): ?>
           <div class="sw-card" aria-hidden="true">
             <div class="sw-card__hd"><div><b>Store performance</b><small>Last 30 days</small></div><span class="sw-tabs"><i class="is-on">30D</i><i>7D</i></span></div>
@@ -284,7 +306,6 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
               <li><span class="sw-tile sw-tile--sm"><?= $swIc('i-briefcase') ?></span><div><b>Leather Wallet</b><small>1,190 visits</small></div><span class="sw-bar"><i style="--w:.5"></i></span><em>3.0%</em></li>
             </ul>
           </div>
-          <div class="sw-evt" aria-hidden="true"><span class="sw-tile"><?= $swIc('i-rocket') ?></span><div><b>New product page live</b><small>Page 104 published</small></div></div>
 <?php elseif ($p['mock'] === 'branches'): ?>
           <div class="sw-card" aria-hidden="true">
             <div class="sw-card__hd"><div><b>Branch overview</b><small>All branches · this month</small></div><span class="sw-tabs"><i class="is-on">Month</i><i>Week</i></span></div>
@@ -298,7 +319,6 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
             </ul>
             <div class="sw-alert"><span><b>12 enquiries</b> awaiting follow-up</span><span class="sw-alert__btn">Assign</span></div>
           </div>
-          <div class="sw-evt" aria-hidden="true"><span class="sw-tile"><?= $swIc('i-calendar') ?></span><div><b>Booking confirmed</b><small>Branch 02 · 4:30 PM</small></div></div>
 <?php else: ?>
           <div class="sw-chat" aria-hidden="true">
             <div class="sw-phone">
@@ -319,13 +339,22 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
               </ol>
             </div>
           </div>
-          <div class="sw-evt" aria-hidden="true"><span class="sw-tile"><?= $swIc('i-users') ?></span><div><b>Lead added to CRM</b><small>Demo call · Thursday</small></div></div>
 <?php endif; ?>
+          </div>
         </div>
+        </div></div>
       </article>
 <?php endforeach; ?>
     </div>
-    <p class="sw-foot">Product screens use sample data.</p>
+    <div class="swx-foot">
+      <p class="sw-foot">Product screens use sample data.</p>
+      <div class="swx-nav" role="group" aria-label="Browse the case studies">
+        <button type="button" class="swx-arrow" data-swx-step="-1" aria-label="Previous case study"><?= $swIc('i-left') ?></button>
+        <button type="button" class="swx-arrow" data-swx-step="1" aria-label="Next case study"><?= $swIc('i-right') ?></button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
     <div class="more reveal">
       <div><span class="pill pill--mint"><span class="pill__dot" aria-hidden="true"></span>Explore More</span><h3>Technology for Every Stage of Your Business.</h3>
       <p>From custom business systems and software engineering to digital commerce, AI implementation, automation and marketing, discover the complete range of solutions we build to help businesses move forward.</p></div>
@@ -545,10 +574,11 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
   </div>
 </section>
 <?php
-// Industries. Same layout and parts as Selected Work above ($swProjects): one
-// entry per row, in page order, with the mockup on the left for 01, 03 and 05.
-// 'title' is the question in two parts; the second part is underlined. An
-// industry that also appears in Selected Work keeps the same accent here.
+// Industries. One entry per row, in page order, with the mockup on the left for
+// 01, 03 and 05. The mockups share their parts (.sw-card and so on) with
+// Selected Work above.
+// 'title' is the question in two parts; the second part is underlined.
+// 'accent' is one of indigo, rose, green, amber, cyan.
 $indRows = [
     [
         'accent' => 'indigo',

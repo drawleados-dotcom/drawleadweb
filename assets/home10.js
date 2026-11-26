@@ -200,6 +200,40 @@
     return { select, count: tabEls.length, tabEls };
   }
 
+  /* ---------- selected work: colour panels ---------- */
+  const swx = $('[data-swx]');
+  if (swx) {
+    const ps = $$('.swx-p', swx), btns = ps.map((p) => $('.swx-tab', p));
+    const stacked = matchMedia('(max-width:1240px)');
+    const openAt = () => ps.findIndex((p) => p.classList.contains('is-open'));
+    const select = (i) => {
+      if (ps[i].classList.contains('is-open')) return;
+      ps.forEach((p, k) => {
+        p.classList.toggle('is-open', k === i);
+        btns[k].setAttribute('aria-expanded', k === i);
+      });
+      // stacked: the panel above has just closed, so bring this one's top back into view
+      if (stacked.matches) setTimeout(() => {
+        const top = ps[i].getBoundingClientRect().top;
+        if (top < 90 || top > innerHeight * .6) scrollTo({ top: top + scrollY - 100, behavior: reduce ? 'auto' : 'smooth' });
+      }, reduce ? 0 : 580);
+    };
+    const step = (d) => (openAt() + d + ps.length) % ps.length;
+    btns.forEach((b, i) => {
+      b.addEventListener('click', () => select(i));
+      // side by side: left and right arrow keys move between panels
+      b.addEventListener('keydown', (e) => {
+        const d = { ArrowLeft: -1, ArrowRight: 1 }[e.key];
+        if (!d || stacked.matches) return;
+        e.preventDefault();
+        const to = (i + d + ps.length) % ps.length;
+        select(to);
+        btns[to].focus({ preventScroll: true });
+      });
+    });
+    $$('[data-swx-step]', swx.parentElement).forEach((a) => a.addEventListener('click', () => select(step(+a.dataset.swxStep))));
+  }
+
   /* ---------- 8-week timeline ---------- */
   const tl = $('[data-timeline]');
   if (tl) {
