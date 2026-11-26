@@ -195,6 +195,7 @@ $h10Case = function (string $slug, string $fallback) use ($pdo): string {
 // it; its sample numbers are in the markup below.
 $swProjects = [
     [
+        'id' => 'construction',
         'accent' => 'mint',
         'icon' => 'i-building',
         'photo' => '/assets/home10/work/construction.webp',
@@ -208,6 +209,7 @@ $swProjects = [
         'mockLabel' => 'Sample dashboard: project profitability across four construction projects',
     ],
     [
+        'id' => 'ecommerce',
         'accent' => 'sky',
         'icon' => 'i-cart',
         'photo' => '/assets/home10/work/ecommerce.webp',
@@ -221,6 +223,7 @@ $swProjects = [
         'mockLabel' => 'Sample dashboard: store revenue, conversion and top product pages',
     ],
     [
+        'id' => 'healthcare',
         'accent' => 'lilac',
         'icon' => 'i-heart',
         'photo' => '/assets/home10/work/healthcare.webp',
@@ -234,6 +237,7 @@ $swProjects = [
         'mockLabel' => 'Sample dashboard: enquiries and bookings across four branches',
     ],
     [
+        'id' => 'automation',
         'accent' => 'aqua',
         'icon' => 'i-chat',
         'photo' => '/assets/home10/work/automation.webp',
@@ -247,6 +251,30 @@ $swProjects = [
         'mockLabel' => 'Sample chat: an enquiry answered automatically, booked, and added to the CRM',
     ],
 ];
+$swOrder = [];
+$swExpanded = '';
+try {
+    $swSavedRaw = $pdo->query("SELECT `value` FROM settings WHERE `key`='home10_selected_work'")->fetchColumn();
+    $swSaved = is_string($swSavedRaw) ? json_decode($swSavedRaw, true) : null;
+    if (is_array($swSaved)) {
+        $swOrder = isset($swSaved['order']) && is_array($swSaved['order']) ? $swSaved['order'] : [];
+        $swExpanded = isset($swSaved['expanded']) && is_string($swSaved['expanded']) ? $swSaved['expanded'] : '';
+    }
+} catch (PDOException $e) {
+    // Keep the default order and first card if settings are unavailable.
+}
+$swById = [];
+foreach ($swProjects as $project) $swById[$project['id']] = $project;
+$swOrdered = [];
+foreach ($swOrder as $projectId) {
+    if (is_string($projectId) && isset($swById[$projectId])) {
+        $swOrdered[] = $swById[$projectId];
+        unset($swById[$projectId]);
+    }
+}
+$swProjects = array_merge($swOrdered, array_values($swById));
+if (!isset($swById[$swExpanded]) && !in_array($swExpanded, array_column($swProjects, 'id'), true)) $swExpanded = '';
+if ($swExpanded === '' && isset($swProjects[0])) $swExpanded = $swProjects[0]['id'];
 $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable="false"><use href="#' . $id . '"/></svg>';
 ?>
 <section class="sw sw--work" id="case-studies">
@@ -260,10 +288,10 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
   </div>
   <div class="wrap swx-wrap">
     <div class="swx reveal" data-swx style="--n:<?= count($swProjects) - 1 ?>">
-<?php foreach ($swProjects as $i => $p): $n = sprintf('%02d', $i + 1); ?>
-      <article class="swx-p<?= $i === 0 ? ' is-open' : '' ?>" data-accent="<?= h($p['accent']) ?>">
+<?php foreach ($swProjects as $i => $p): $n = sprintf('%02d', $i + 1); $isOpen = $p['id'] === $swExpanded; ?>
+      <article class="swx-p<?= $isOpen ? ' is-open' : '' ?>" data-accent="<?= h($p['accent']) ?>">
         <img class="swx-tex" src="<?= h($p['photo']) ?>" alt="" width="1000" height="1000" loading="lazy" decoding="async">
-        <button type="button" class="swx-tab" aria-expanded="<?= $i === 0 ? 'true' : 'false' ?>" aria-controls="swx-<?= $i + 1 ?>">
+        <button type="button" class="swx-tab" aria-expanded="<?= $isOpen ? 'true' : 'false' ?>" aria-controls="swx-<?= $i + 1 ?>">
           <span class="swx-ic" aria-hidden="true"><?= $swIc($p['icon']) ?></span>
           <span class="sw-cat"><b><?= $n ?></b><?= h($p['category']) ?></span>
           <span class="swx-plus" aria-hidden="true"></span>
