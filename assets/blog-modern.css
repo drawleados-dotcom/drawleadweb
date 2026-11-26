@@ -5,6 +5,7 @@
 .h10.blog-page .journal-hero__copy{max-width:700px}
 .h10.blog-page .journal-hero .pill{margin-bottom:22px}
 .h10.blog-page .journal-hero h1{max-width:740px;margin:0 0 20px;font-size:clamp(44px,6vw,76px);line-height:1.02;letter-spacing:-.055em}
+.h10.blog-page .journal-hero h1.h1x{color:#151a18}
 .h10.blog-page .journal-hero .lede{max-width:600px;margin:0 0 28px;color:#606d66;font-size:clamp(16px,1.6vw,19px);line-height:1.65}
 .h10.blog-page .journal-hero__art{position:relative;min-height:360px;display:grid;place-items:center}
 .h10.blog-page .journal-orbit{position:absolute;display:block;border:1px solid rgba(24,130,77,.2);border-radius:50%;transform:rotate(-24deg)}
