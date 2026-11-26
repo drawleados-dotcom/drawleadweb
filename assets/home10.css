@@ -101,15 +101,16 @@ html.js .h10 .reveal.is-in{opacity:1;transform:none}
 .h10 .hero__bg .b3{width:700px;height:420px;right:12%;bottom:-120px;background:radial-gradient(circle,#a6e6c2,transparent 70%);opacity:.45;animation:drift2 26s ease-in-out infinite alternate-reverse}
 .h10 .hero__bg .grid{position:absolute;inset:0;background-image:radial-gradient(rgba(15,58,36,.16) 1px,transparent 1.2px);background-size:26px 26px;mask-image:radial-gradient(ellipse 70% 60% at 70% 30%,#000,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 70% 30%,#000,transparent 75%)}
 .h10 .hero .wrap{position:relative}
-.h10 .hero__top{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);align-items:center;gap:clamp(16px,3vw,48px)}
-.h10 .hero__title{display:flex;flex-direction:column;gap:clamp(8px,1.2vw,16px);margin-top:4px}
-.h10 .strike{display:block;font-size:clamp(1.15rem,2.2vw,2.15rem);font-weight:500;letter-spacing:-.025em;color:var(--mut)}
+.h10 .hero__top{display:grid;grid-template-columns:minmax(0,1fr);align-items:center;gap:clamp(16px,3vw,48px)}
+.h10 .hero__title{display:flex;flex-direction:column;gap:clamp(6px,.8vw,12px);margin-top:clamp(14px,1.6vw,22px)}
+.h10 .strike{display:block;font-family:var(--f-head);font-size:clamp(1.05rem,1.7vw,1.6rem);font-weight:500;letter-spacing:-.01em;color:#1f2937}
 .h10 .strike s{position:relative;text-decoration:none;display:inline-block}
 html:not(.js) .h10 .strike s{text-decoration:line-through}
-.h10 .strike s::after{content:"";position:absolute;left:-2%;top:56%;height:3px;width:104%;background:var(--ink);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease-io) .8s}
+.h10 .strike s::after{content:"";position:absolute;left:-2%;top:56%;height:2px;width:104%;background:var(--ink);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease-io) .8s}
 .h10 .strike.is-in s::after,html:not(.js) .h10 .strike s::after{transform:scaleX(1)}
-.h10 .hero__start{display:block;font-size:clamp(2.7rem,5.6vw,5.4rem);line-height:1.02;font-weight:800;letter-spacing:-.045em;text-wrap:balance}
+.h10 .hero__start{display:block;font-family:var(--f-head);font-size:clamp(2.4rem,5.4vw,5.2rem);line-height:1.08;font-weight:800;letter-spacing:-.03em;color:#0b0d0c}
 .h10 .hero__start em{font-style:normal;background:linear-gradient(100deg,var(--ink) 0%,var(--green-700) 55%,var(--green) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.h10 .hero__start em{background:none;-webkit-text-fill-color:currentColor;color:inherit}.h10 .hero .pill--outline{padding:6px 14px;font-size:.78rem;font-weight:500}
 .h10 .hero__art{position:relative;aspect-ratio:560/520;width:100%;max-width:600px;justify-self:end}
 .h10 .hero__art.il{background:transparent}
 .h10 .hero__art svg{overflow:visible}
