@@ -175,31 +175,6 @@
   addEventListener('resize', req);
   onScroll();
 
-  /* ---------- generic accessible tabs ---------- */
-  function tabs(list, orientation, onChange) {
-    const tabEls = $$('[role="tab"]', list);
-    const panels = tabEls.map((t) => document.getElementById(t.getAttribute('aria-controls')));
-    const select = (i, focus) => {
-      tabEls.forEach((t, k) => { t.setAttribute('aria-selected', k === i); t.tabIndex = k === i ? 0 : -1; });
-      panels.forEach((p, k) => { p.hidden = k !== i; });
-      if (focus) tabEls[i].focus();
-      onChange && onChange(i);
-    };
-    tabEls.forEach((t, i) => {
-      t.addEventListener('click', () => select(i, false));
-      t.addEventListener('keydown', (e) => {
-        const prev = orientation === 'vertical' ? 'ArrowUp' : 'ArrowLeft', next = orientation === 'vertical' ? 'ArrowDown' : 'ArrowRight';
-        let n = null;
-        if (e.key === next || (orientation === 'vertical' && e.key === 'ArrowRight')) n = (i + 1) % tabEls.length;
-        else if (e.key === prev || (orientation === 'vertical' && e.key === 'ArrowLeft')) n = (i - 1 + tabEls.length) % tabEls.length;
-        else if (e.key === 'Home') n = 0;
-        else if (e.key === 'End') n = tabEls.length - 1;
-        if (n !== null) { e.preventDefault(); select(n, true); }
-      });
-    });
-    return { select, count: tabEls.length, tabEls };
-  }
-
   /* ---------- selected work: colour panels ---------- */
   const swx = $('[data-swx]');
   if (swx) {
@@ -234,44 +209,54 @@
     $$('[data-swx-step]', swx.parentElement).forEach((a) => a.addEventListener('click', () => select(step(+a.dataset.swxStep))));
   }
 
-  /* ---------- 8-week timeline ---------- */
-  const tl = $('[data-timeline]');
-  if (tl) {
-    const rail = $('.wkrail', tl), phases = $$('.phase', tl);
-    const playBtn = $('[data-play]', tl);
-    let cur = 0, userPaused = reduce, hover = false, inView = false, timer = null;
-    const DUR = 7000;
-    const T = tabs(rail, 'horizontal', (i) => { cur = i; paint(); schedule(); });
-    const paint = () => {
-      rail.style.setProperty('--tp', (cur / (T.count - 1)).toFixed(3));
-      $('.wkrail__line', rail).style.setProperty('--tp', (cur / (T.count - 1)).toFixed(3));
-      T.tabEls.forEach((t, k) => t.classList.toggle('is-done', k < cur));
-      phases.forEach((p, k) => p.classList.toggle('is-on', k === (cur < 4 ? 0 : 1)));
+  /* ---------- 8-week program: week cards scroll, the calendar flips 1 → 8 ---------- */
+  const pg = $('[data-pg]');
+  if (pg) {
+    const weeks = $$('.pg-week', pg);
+    const stage = $('.pg-stage', pg), pad = $('.pg-cal__pad', pg);
+    const num = $('[data-cal-n]', pg), lab = $('[data-cal-l]', pg);
+    const capK = $('[data-cal-k]', pg), capT = $('[data-cal-t]', pg), dots = $$('.pg-dots li', pg);
+    let shown = 0, target = 0, busy = false;
+    const paint = (i) => {
+      num.textContent = i + 1;
+      lab.textContent = i ? 'Weeks' : 'Week';
+      stage.style.setProperty('--t', getComputedStyle(weeks[i]).getPropertyValue('--t'));
+      capK.textContent = 'Week ' + String(i + 1).padStart(2, '0');
+      capT.textContent = weeks[i].dataset.stage;
+      dots.forEach((d, k) => { d.classList.toggle('is-on', k <= i); d.classList.toggle('is-cur', k === i); });
+      weeks.forEach((w, k) => w.classList.toggle('is-on', k === i));
     };
-    const running = () => !userPaused && !hover && inView;
-    const schedule = () => {
-      clearTimeout(timer);
-      tl.classList.remove('is-playing'); void tl.offsetWidth;
-      if (!running()) return;
-      tl.style.setProperty('--dur', DUR + 'ms');
-      tl.classList.add('is-playing');
-      timer = setTimeout(() => T.select((cur + 1) % T.count, false), DUR);
+    const step = () => {
+      if (shown === target) { busy = false; return; }
+      busy = true;
+      const fwd = target > shown, next = shown + (fwd ? 1 : -1);
+      if (reduce) { shown = target; paint(shown); busy = false; return; }
+      const leaf = document.createElement('div');
+      leaf.className = 'pg-cal__leaf' + (fwd ? '' : ' is-down');
+      leaf.style.animationDuration = (Math.abs(target - shown) > 1 ? 340 : 640) + 'ms';
+      leaf.innerHTML = '<div class="pg-cal__page"><b>' + ((fwd ? shown : next) + 1) + '</b></div><div class="pg-cal__page pg-face--back"></div>';
+      pad.appendChild(leaf);
+      if (fwd) paint(next); // the new page sits underneath while the old one flips away
+      leaf.addEventListener('animationend', () => {
+        if (!fwd) paint(next);
+        leaf.remove();
+        shown = next;
+        step();
+      }, { once: true });
     };
-    const manual = (i) => { userPaused = true; syncPlay(); T.select(i, false); };
-    const syncPlay = () => {
-      playBtn.setAttribute('aria-pressed', userPaused);
-      playBtn.setAttribute('aria-label', userPaused ? 'Resume automatic progression' : 'Pause automatic progression');
-      playBtn.innerHTML = `<svg class="ic" aria-hidden="true"><use href="#i-${userPaused ? 'play' : 'pause'}"/></svg>`;
-      schedule();
+    let pgRaf = 0;
+    const pgUpdate = () => {
+      pgRaf = 0;
+      const line = innerHeight * .55;
+      let act = 0;
+      weeks.forEach((w, i) => { if (w.getBoundingClientRect().top <= line) act = i; });
+      if (act !== target) { target = act; if (!busy) step(); }
     };
-    T.tabEls.forEach((t, i) => t.addEventListener('click', () => { userPaused = true; syncPlay(); }));
-    $('[data-prev]', tl).addEventListener('click', () => manual((cur - 1 + T.count) % T.count));
-    $('[data-next]', tl).addEventListener('click', () => manual((cur + 1) % T.count));
-    playBtn.addEventListener('click', () => { userPaused = !userPaused; syncPlay(); });
-    tl.addEventListener('pointerenter', () => { hover = true; schedule(); });
-    tl.addEventListener('pointerleave', () => { hover = false; schedule(); });
-    if (hasIO) new IntersectionObserver((es) => { inView = es[0].isIntersecting; schedule(); }, { threshold: 0.35 }).observe(tl);
-    syncPlay(); paint();
+    const pgQueue = () => { if (!pgRaf) pgRaf = requestAnimationFrame(pgUpdate); };
+    addEventListener('scroll', pgQueue, { passive: true });
+    addEventListener('resize', pgQueue);
+    paint(0);
+    pgUpdate();
   }
 
   /* ---------- data sources ↔ visualisation ---------- */

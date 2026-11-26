@@ -420,117 +420,73 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
     </div>
   </div>
 </section>
+<?php
+$pgWeeks = [
+  ['Discover & Audit', 'Understand Your Business from the Inside.', ['Existing Workflows', 'Organizational Hierarchy', 'Work Culture', 'Existing Systems & Software'], ''],
+  ['Design & Engineer', 'Design Technology Around Your Business.', ['Workflow Mapping', 'Process Redesign', 'System Architecture', 'Solution Planning'], ''],
+  ['Build & Configure', 'Build Solutions Around Real Business Needs.', ['Custom Development', 'System Configuration', 'Feature Engineering', 'Application Development'], ''],
+  ['Integrate & Prepare', 'Connect Systems and Prepare for Implementation.', ['API Integration', 'Data Structuring', 'System Testing', 'Deployment Preparation'], ''],
+  ['Live Data Integration', 'Bring Your Business Data into the System.', ['Lead Migration', 'Customer Records', 'Project Data', 'Financial Records'], ''],
+  ['Workflow Implementation', 'Connect Your Teams, Systems and Processes.', ['Department Integration', 'Workflow Automation', 'Task Coordination', 'Process Activation'], ''],
+  ['Team Deployment & Training', 'Prepare Your People to Work with the New Systems.', ['Employee Onboarding', 'Role Assignment', 'Hands-on Training', 'User Enablement'], ''],
+  ['Go Live & Optimization', 'Run Your Business Through Connected Systems.', [], 'A connected business environment where everyday operations, from leads to profit, are tracked through structured workflows.'],
+];
+$pgTints = ['#DAF1E5', '#DFEAF9', '#E8E2F5', '#DCEFF0', '#F8E6D6', '#E3E5F6', '#F5E1E9', '#EDF0D7'];
+$pgPhases = [0 => ['Phase 01', 'Engineer & Build'], 4 => ['Phase 02', 'Implement & Go Live']];
+?>
 <section class="prog" id="program">
-  <div class="prog__glow" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="prog__head">
-      <span class="pill pill--mint reveal"><span class="pill__dot" aria-hidden="true"></span>A Structured Business Implementation Program</span>
-      <h2 class="h2 h2--light reveal" style="--d:.06s">Transform the Way Your Business Works.<br><span class="grn">In 8 Weeks.</span></h2>
-      <p class="lede lede--light reveal" style="--d:.1s">Move beyond disconnected tools, manual processes and operational bottlenecks.</p>
-      <p class="lede lede--light reveal" style="--d:.14s">Our structured 8-week transformation program helps businesses understand their challenges, redesign workflows, implement intelligent technology and establish connected business operations.</p>
-    </div>
-    <div class="timeline reveal" data-timeline>
-      <div class="phases"><div class="phase" data-phase="0"><span class="phase__k">Phase 01 · Week 01–04</span><b>Engineer & Build</b>
-      <span class="phase__t">Understand. Design. Build.</span><span class="phase__d"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><em>Deliverable</em> Business Systems Ready for Implementation</span></div><div class="phase" data-phase="1"><span class="phase__k">Phase 02 · Week 05–08</span><b>Implement & Go Live</b>
-      <span class="phase__t">Connect. Deploy. Train.</span><span class="phase__d"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><em>Deliverable</em> Live Systems & Connected Workflows</span></div></div>
-      <div class="wkrail" role="tablist" aria-label="8-week program timeline"><button type="button" role="tab" class="wk" id="wk-tab-1" aria-controls="wk-panel-1" aria-selected="true" tabindex="0" data-i="0">
-        <span class="wk__n">01</span><span class="wk__l">Week 01</span><i class="wk__bar"><u></u></i></button><button type="button" role="tab" class="wk" id="wk-tab-2" aria-controls="wk-panel-2" aria-selected="false" tabindex="-1" data-i="1">
-        <span class="wk__n">02</span><span class="wk__l">Week 02</span><i class="wk__bar"><u></u></i></button><button type="button" role="tab" class="wk" id="wk-tab-3" aria-controls="wk-panel-3" aria-selected="false" tabindex="-1" data-i="2">
-        <span class="wk__n">03</span><span class="wk__l">Week 03</span><i class="wk__bar"><u></u></i></button><button type="button" role="tab" class="wk" id="wk-tab-4" aria-controls="wk-panel-4" aria-selected="false" tabindex="-1" data-i="3">
-        <span class="wk__n">04</span><span class="wk__l">Week 04</span><i class="wk__bar"><u></u></i></button><button type="button" role="tab" class="wk" id="wk-tab-5" aria-controls="wk-panel-5" aria-selected="false" tabindex="-1" data-i="4">
-        <span class="wk__n">05</span><span class="wk__l">Week 05</span><i class="wk__bar"><u></u></i></button><button type="button" role="tab" class="wk" id="wk-tab-6" aria-controls="wk-panel-6" aria-selected="false" tabindex="-1" data-i="5">
-        <span class="wk__n">06</span><span class="wk__l">Week 06</span><i class="wk__bar"><u></u></i></button><button type="button" role="tab" class="wk" id="wk-tab-7" aria-controls="wk-panel-7" aria-selected="false" tabindex="-1" data-i="6">
-        <span class="wk__n">07</span><span class="wk__l">Week 07</span><i class="wk__bar"><u></u></i></button><button type="button" role="tab" class="wk" id="wk-tab-8" aria-controls="wk-panel-8" aria-selected="false" tabindex="-1" data-i="7">
-        <span class="wk__n">08</span><span class="wk__l">Week 08</span><i class="wk__bar"><u></u></i></button><i class="wkrail__line" aria-hidden="true"><u></u></i></div>
-      <div class="wkstage">
-      <div class="wkp" role="tabpanel" id="wk-panel-1" aria-labelledby="wk-tab-1"  tabindex="0">
-        <div class="wkp__copy">
-          <span class="wkp__big" aria-hidden="true">01</span>
-          <span class="wkp__k">01 — Week 01 <i>|</i> Discover & Audit</span>
-          <h3>Understand Your Business from the Inside.</h3>
-          <ul class="tags tags--dark"><li>Existing Workflows</li><li>Organizational Hierarchy</li><li>Work Culture</li><li>Existing Systems &amp; Software</li></ul>
-          <span class="wkp__phase">Phase 01 — Engineer & Build</span>
-        </div>
-        <div class="wkp__art il on-dark"><svg class="il-svg" viewBox="0 0 320 200" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="wk1" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern></defs><rect class="pn" width="320" height="200"/><rect width="320" height="200" fill="url(#wk1)"/><path class="ln" d="M160 56 V84 M160 84 H80 V108 M160 84 H240 V108 M160 84 V108" /><rect class="c" x="130" y="30" width="60" height="28" rx="9" /><rect class="g" x="142" y="40" width="36" height="7" rx="3.5" /><rect class="c" x="50" y="108" width="60" height="28" rx="9" /><rect class="k2" x="62" y="118" width="36" height="7" rx="3.5" /><rect class="c" x="130" y="108" width="60" height="28" rx="9" /><rect class="k2" x="142" y="118" width="36" height="7" rx="3.5" /><rect class="c" x="210" y="108" width="60" height="28" rx="9" /><rect class="k2" x="222" y="118" width="36" height="7" rx="3.5" /><g class="scan"><circle cx="196" cy="128" r="30" class="lens"/><path class="gl" d="M218 150 L244 176" stroke-width="7"/></g></svg></div>
+    <div class="pg-head">
+      <div class="pg-head__l">
+        <span class="pg-pill reveal">A Structured Business Implementation Program</span>
+        <h2 class="pg-h2 reveal" style="--d:.06s">Transform the Way Your Business Works. In 8 Weeks.</h2>
       </div>
-      <div class="wkp" role="tabpanel" id="wk-panel-2" aria-labelledby="wk-tab-2" hidden tabindex="0">
-        <div class="wkp__copy">
-          <span class="wkp__big" aria-hidden="true">02</span>
-          <span class="wkp__k">02 — Week 02 <i>|</i> Design & Engineer</span>
-          <h3>Design Technology Around Your Business.</h3>
-          <ul class="tags tags--dark"><li>Workflow Mapping</li><li>Process Redesign</li><li>System Architecture</li><li>Solution Planning</li></ul>
-          <span class="wkp__phase">Phase 01 — Engineer & Build</span>
-        </div>
-        <div class="wkp__art il on-dark"><svg class="il-svg" viewBox="0 0 320 200" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="wk2" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern></defs><rect class="pn" width="320" height="200"/><rect width="320" height="200" fill="url(#wk2)"/><rect class="c" x="30" y="40" width="70" height="34" rx="10" /><rect class="k2" x="44" y="54" width="42" height="7" rx="3.5" /><rect class="c" x="124" y="40" width="70" height="34" rx="10" /><rect class="k2" x="138" y="54" width="42" height="7" rx="3.5" /><path class="ln" d="M100 57 H124" /><rect class="c g-outline" x="30" y="122" width="70" height="34" rx="10" /><rect class="g" x="44" y="136" width="42" height="7" rx="3.5" /><rect class="c g-outline" x="124" y="122" width="70" height="34" rx="10" /><rect class="g" x="138" y="136" width="42" height="7" rx="3.5" /><rect class="c g-outline" x="218" y="82" width="70" height="34" rx="10" /><rect class="g" x="232" y="96" width="42" height="7" rx="3.5" /><path class="gl flow" d="M100 139 H124 M194 139 C210 139 206 99 218 99" stroke-dasharray="4 5"/><path class="ln" d="M194 57 C230 57 230 70 253 82" /><svg x="240" y="36" width="28" height="28" style="color:var(--green)" ><use href="#i-workflow"/></svg></svg></div>
-      </div>
-      <div class="wkp" role="tabpanel" id="wk-panel-3" aria-labelledby="wk-tab-3" hidden tabindex="0">
-        <div class="wkp__copy">
-          <span class="wkp__big" aria-hidden="true">03</span>
-          <span class="wkp__k">03 — Week 03 <i>|</i> Build & Configure</span>
-          <h3>Build Solutions Around Real Business Needs.</h3>
-          <ul class="tags tags--dark"><li>Custom Development</li><li>System Configuration</li><li>Feature Engineering</li><li>Application Development</li></ul>
-          <span class="wkp__phase">Phase 01 — Engineer & Build</span>
-        </div>
-        <div class="wkp__art il on-dark"><svg class="il-svg" viewBox="0 0 320 200" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="wk3" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern></defs><rect class="pn" width="320" height="200"/><rect width="320" height="200" fill="url(#wk3)"/><rect class="c" x="32" y="28" width="170" height="144" rx="16" /><circle class="k2" cx="50" cy="44" r="4" /><circle class="k2" cx="63" cy="44" r="4" /><circle class="k2" cx="76" cy="44" r="4" /><rect class="g typeln" x="48" y="64" width="50" height="7" rx="3.5" style="--d:0.0s"/><rect class="k2 typeln" x="60" y="80" width="86" height="7" rx="3.5" style="--d:0.2s"/><rect class="k2 typeln" x="60" y="96" width="60" height="7" rx="3.5" style="--d:0.4s"/><rect class="g typeln" x="48" y="112" width="74" height="7" rx="3.5" style="--d:0.6000000000000001s"/><rect class="k2 typeln" x="60" y="128" width="98" height="7" rx="3.5" style="--d:0.8s"/><rect class="k2 typeln" x="60" y="144" width="44" height="7" rx="3.5" style="--d:1.0s"/><g class="float" style="--d:0.3s"><rect class="c" x="220" y="74" width="72" height="74" rx="16" /><g class="spin"><svg x="236" y="90" width="40" height="40" style="color:var(--green)" ><use href="#i-gear"/></svg></g></g></svg></div>
-      </div>
-      <div class="wkp" role="tabpanel" id="wk-panel-4" aria-labelledby="wk-tab-4" hidden tabindex="0">
-        <div class="wkp__copy">
-          <span class="wkp__big" aria-hidden="true">04</span>
-          <span class="wkp__k">04 — Week 04 <i>|</i> Integrate & Prepare</span>
-          <h3>Connect Systems and Prepare for Implementation.</h3>
-          <ul class="tags tags--dark"><li>API Integration</li><li>Data Structuring</li><li>System Testing</li><li>Deployment Preparation</li></ul>
-          <span class="wkp__phase">Phase 01 — Engineer & Build</span>
-        </div>
-        <div class="wkp__art il on-dark"><svg class="il-svg" viewBox="0 0 320 200" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="wk4" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern></defs><rect class="pn" width="320" height="200"/><rect width="320" height="200" fill="url(#wk4)"/><rect class="c" x="26" y="50" width="96" height="100" rx="14" /><rect class="k" x="40" y="66" width="56" height="7" rx="3.5" /><rect class="k2" x="40" y="82" width="40" height="6" rx="3.0" /><rect class="gs" x="40" y="104" width="68" height="26" rx="8" /><rect class="c" x="198" y="50" width="96" height="100" rx="14" /><rect class="k" x="212" y="66" width="56" height="7" rx="3.5" /><rect class="k2" x="212" y="82" width="40" height="6" rx="3.0" /><rect class="gs" x="212" y="104" width="68" height="26" rx="8" /><path class="gl flow" d="M122 100 H198" stroke-dasharray="4 5"/><circle class="g" cx="160" cy="100" r="22" /><svg x="148" y="88" width="24" height="24" style="color:#fff" ><use href="#i-plug"/></svg><circle class="g" cx="280" cy="56" r="9" /><path class="tick" d="M275.5 56l3 3 5.5-6" /></svg></div>
-      </div>
-      <div class="wkp" role="tabpanel" id="wk-panel-5" aria-labelledby="wk-tab-5" hidden tabindex="0">
-        <div class="wkp__copy">
-          <span class="wkp__big" aria-hidden="true">05</span>
-          <span class="wkp__k">05 — Week 05 <i>|</i> Live Data Integration</span>
-          <h3>Bring Your Business Data into the System.</h3>
-          <ul class="tags tags--dark"><li>Lead Migration</li><li>Customer Records</li><li>Project Data</li><li>Financial Records</li></ul>
-          <span class="wkp__phase">Phase 02 — Implement & Go Live</span>
-        </div>
-        <div class="wkp__art il on-dark"><svg class="il-svg" viewBox="0 0 320 200" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="wk5" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern></defs><rect class="pn" width="320" height="200"/><rect width="320" height="200" fill="url(#wk5)"/><rect class="c" x="30" y="40" width="80" height="120" rx="14" /><rect class="k" x="42" y="56" width="56" height="7" rx="3.5" /><rect class="k2" x="42" y="76" width="56" height="7" rx="3.5" /><rect class="k" x="42" y="96" width="56" height="7" rx="3.5" /><rect class="k2" x="42" y="116" width="56" height="7" rx="3.5" /><rect class="k" x="42" y="136" width="56" height="7" rx="3.5" /><rect class="g moverow" x="130" y="70" width="40" height="8" rx="4" style="--d:0.0s"/><rect class="g moverow" x="130" y="96" width="40" height="8" rx="4" style="--d:0.35s"/><rect class="g moverow" x="130" y="122" width="40" height="8" rx="4" style="--d:0.7s"/><path class="ln" d="M118 100 H200" stroke-dasharray="3 5"/><g class="float" style="--d:0.2s"><ellipse class="c" cx="250" cy="58" rx="46" ry="16"/><path class="c" d="M204 58v70c0 9 21 16 46 16s46-7 46-16V58"/><path class="ln" d="M204 93c0 9 21 16 46 16s46-7 46-16"/><ellipse class="gs" cx="250" cy="58" rx="46" ry="16" style="opacity:.6"/><circle class="g" cx="250" cy="124" r="6" /></g></svg></div>
-      </div>
-      <div class="wkp" role="tabpanel" id="wk-panel-6" aria-labelledby="wk-tab-6" hidden tabindex="0">
-        <div class="wkp__copy">
-          <span class="wkp__big" aria-hidden="true">06</span>
-          <span class="wkp__k">06 — Week 06 <i>|</i> Workflow Implementation</span>
-          <h3>Connect Your Teams, Systems and Processes.</h3>
-          <ul class="tags tags--dark"><li>Department Integration</li><li>Workflow Automation</li><li>Task Coordination</li><li>Process Activation</li></ul>
-          <span class="wkp__phase">Phase 02 — Implement & Go Live</span>
-        </div>
-        <div class="wkp__art il on-dark"><svg class="il-svg" viewBox="0 0 320 200" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="wk6" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern></defs><rect class="pn" width="320" height="200"/><rect width="320" height="200" fill="url(#wk6)"/><circle class="ring spin" cx="160" cy="100" r="62" fill="none"/><path class="ln flow" d="M160 40 L258 100" style="--d:0.0s"/><path class="ln flow" d="M258 100 L160 160" style="--d:0.2s"/><path class="ln flow" d="M160 160 L62 100" style="--d:0.4s"/><path class="ln flow" d="M62 100 L160 40" style="--d:0.6000000000000001s"/><g class="float" style="--d:0.0s"><rect class="c" x="130" y="24" width="60" height="32" rx="10" /><rect class="g" x="142" y="37" width="36" height="7" rx="3.5" /></g><g class="float" style="--d:0.3s"><rect class="c" x="228" y="84" width="60" height="32" rx="10" /><rect class="k2" x="240" y="97" width="36" height="7" rx="3.5" /></g><g class="float" style="--d:0.6s"><rect class="c" x="130" y="144" width="60" height="32" rx="10" /><rect class="k2" x="142" y="157" width="36" height="7" rx="3.5" /></g><g class="float" style="--d:0.8999999999999999s"><rect class="c" x="32" y="84" width="60" height="32" rx="10" /><rect class="k2" x="44" y="97" width="36" height="7" rx="3.5" /></g><circle class="g" cx="160" cy="100" r="22" /><svg x="148" y="88" width="24" height="24" style="color:#fff" ><use href="#i-gear"/></svg></svg></div>
-      </div>
-      <div class="wkp" role="tabpanel" id="wk-panel-7" aria-labelledby="wk-tab-7" hidden tabindex="0">
-        <div class="wkp__copy">
-          <span class="wkp__big" aria-hidden="true">07</span>
-          <span class="wkp__k">07 — Week 07 <i>|</i> Team Deployment & Training</span>
-          <h3>Prepare Your People to Work with the New Systems.</h3>
-          <ul class="tags tags--dark"><li>Employee Onboarding</li><li>Role Assignment</li><li>Hands-on Training</li><li>User Enablement</li></ul>
-          <span class="wkp__phase">Phase 02 — Implement & Go Live</span>
-        </div>
-        <div class="wkp__art il on-dark"><svg class="il-svg" viewBox="0 0 320 200" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="wk7" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern></defs><rect class="pn" width="320" height="200"/><rect width="320" height="200" fill="url(#wk7)"/><rect class="c" x="80" y="34" width="160" height="96" rx="14" /><rect class="g" x="96" y="50" width="80" height="8" rx="4.0" /><rect class="k" x="96" y="68" width="128" height="6" rx="3.0" /><rect class="k2" x="96" y="82" width="100" height="6" rx="3.0" /><rect class="gs" x="96" y="98" width="50" height="18" rx="9" /><path class="ln" d="M160 130 V148 M130 148 H190" /><g class="float" style="--d:0.0s"><circle class="gs" cx="60" cy="172" r="12" /><circle class="g" cx="60" cy="168" r="5" /><path class="g" d="M51 180 a9 7 0 0 1 18 0z"/></g><g class="float" style="--d:0.35s"><circle class="gs" cx="160" cy="172" r="12" /><circle class="g" cx="160" cy="168" r="5" /><path class="g" d="M151 180 a9 7 0 0 1 18 0z"/></g><g class="float" style="--d:0.7s"><circle class="gs" cx="260" cy="172" r="12" /><circle class="g" cx="260" cy="168" r="5" /><path class="g" d="M251 180 a9 7 0 0 1 18 0z"/></g><rect class="g" x="226" y="20" width="62" height="22" rx="11" /><svg x="236" y="23" width="16" height="16" style="color:#fff" ><use href="#i-check"/></svg><rect class="wh" x="256" y="28" width="24" height="6" rx="3.0" /></svg></div>
-      </div>
-      <div class="wkp" role="tabpanel" id="wk-panel-8" aria-labelledby="wk-tab-8" hidden tabindex="0">
-        <div class="wkp__copy">
-          <span class="wkp__big" aria-hidden="true">08</span>
-          <span class="wkp__k">08 — Week 08 <i>|</i> Go Live & Optimization</span>
-          <h3>Run Your Business Through Connected Systems.</h3>
-          <p class="wkp__body">A connected business environment where everyday operations, from leads to profit, are tracked through structured workflows.</p>
-          <span class="wkp__phase">Phase 02 — Implement & Go Live</span>
-        </div>
-        <div class="wkp__art il on-dark"><svg class="il-svg" viewBox="0 0 320 200" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="wk8" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" class="dotp"/></pattern></defs><rect class="pn" width="320" height="200"/><rect width="320" height="200" fill="url(#wk8)"/><g class="float" style="--d:0.0s"><rect class="c" x="28" y="56" width="84" height="66" rx="14" /><text class="lbl" x="70" y="84" text-anchor="middle" >Leads</text><rect class="g rise" x="44" y="104" width="8" height="8" rx="2" style="--d:0.0s;opacity:0.35"/><rect class="g rise" x="58" y="98" width="8" height="14" rx="2" style="--d:0.08s;opacity:0.55"/><rect class="g rise" x="72" y="92" width="8" height="20" rx="2" style="--d:0.16s;opacity:0.75"/><rect class="g rise" x="86" y="86" width="8" height="26" rx="2" style="--d:0.24s;opacity:0.9500000000000001"/></g><g class="float" style="--d:0.3s"><rect class="c" x="118" y="56" width="84" height="66" rx="14" /><text class="lbl" x="160" y="84" text-anchor="middle" >Projects</text><rect class="g rise" x="134" y="104" width="8" height="8" rx="2" style="--d:0.24s;opacity:0.35"/><rect class="g rise" x="148" y="98" width="8" height="14" rx="2" style="--d:0.32s;opacity:0.55"/><rect class="g rise" x="162" y="92" width="8" height="20" rx="2" style="--d:0.4s;opacity:0.75"/><rect class="g rise" x="176" y="86" width="8" height="26" rx="2" style="--d:0.48s;opacity:0.9500000000000001"/></g><g class="float" style="--d:0.6s"><rect class="c" x="208" y="56" width="84" height="66" rx="14" /><text class="lbl" x="250" y="84" text-anchor="middle" >Profit</text><rect class="g rise" x="224" y="104" width="8" height="8" rx="2" style="--d:0.48s;opacity:0.35"/><rect class="g rise" x="238" y="98" width="8" height="14" rx="2" style="--d:0.56s;opacity:0.55"/><rect class="g rise" x="252" y="92" width="8" height="20" rx="2" style="--d:0.64s;opacity:0.75"/><rect class="g rise" x="266" y="86" width="8" height="26" rx="2" style="--d:0.72s;opacity:0.9500000000000001"/></g><path class="gl flow" d="M112 89 H118 M202 89 H208" /><rect class="g" x="104" y="18" width="112" height="26" rx="13" /><circle class="wh blink" cx="122" cy="31" r="4" /><text class="lbl wht" x="134" y="35" text-anchor="start" >Live</text><path class="gl draw" d="M40 156 C90 150 120 138 160 140 S250 128 288 112" pathLength="1"/></svg></div>
-      </div></div>
-      <div class="wkctl">
-        <button type="button" class="iconbtn" data-prev aria-label="Previous week"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-left"/></svg></button>
-        <button type="button" class="iconbtn" data-play aria-label="Pause automatic progression" aria-pressed="false"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg></button>
-        <button type="button" class="iconbtn" data-next aria-label="Next week"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-right"/></svg></button>
+      <div class="pg-lede reveal" style="--d:.12s">
+        <p>Move beyond <b>disconnected tools</b>, manual processes and operational bottlenecks.</p>
+        <p>Our structured 8-week transformation program helps businesses understand their challenges, <b>redesign workflows, implement intelligent technology</b> and establish connected business operations.</p>
       </div>
     </div>
-    <div class="prog__cta reveal">
-      <a class="h10-btn h10-btn--green" href="/book" data-book><span>Begin Your 8-Week Implementation Journey</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
+    <div class="pg" data-pg>
+      <div class="pg-list">
+<?php foreach ($pgWeeks as $i => [$stage, $title, $tags, $body]): $n = str_pad((string)($i + 1), 2, '0', STR_PAD_LEFT); ?>
+<?php if (isset($pgPhases[$i])): ?>
+        <div class="pg-phase reveal"><span class="pg-phase__k"><?= h($pgPhases[$i][0]) ?></span><span class="pg-phase__line" aria-hidden="true"></span><span class="pg-phase__t"><?= h($pgPhases[$i][1]) ?></span></div>
+<?php endif; ?>
+        <div class="pg-week reveal" data-stage="<?= h($stage) ?>" style="--t:<?= $pgTints[$i] ?>;--r:<?= $i % 2 ? '.7deg' : '-.6deg' ?>">
+          <span class="pg-wk">Week <?= $n ?></span>
+          <article class="pg-card">
+            <span class="pg-rod" aria-hidden="true"></span>
+            <span class="pg-card__k"><?= h($stage) ?></span>
+            <h3 class="pg-card__h"><?= h($title) ?></h3>
+<?php if ($tags): ?>
+            <p class="pg-card__p"><?= h(implode(' · ', $tags)) ?></p>
+<?php else: ?>
+            <p class="pg-card__p"><?= h($body) ?></p>
+<?php endif; ?>
+          </article>
+        </div>
+<?php endforeach; ?>
+      </div>
+      <div class="pg-aside" aria-hidden="true">
+        <div class="pg-stage" style="--t:<?= $pgTints[0] ?>">
+          <div class="pg-cal">
+            <span class="pg-cal__clip"></span>
+            <div class="pg-cal__frame">
+              <div class="pg-cal__pad">
+                <span class="pg-cal__sheet pg-cal__sheet--3"></span>
+                <span class="pg-cal__sheet pg-cal__sheet--2"></span>
+                <div class="pg-cal__page"><b data-cal-n>1</b></div>
+              </div>
+              <div class="pg-cal__label" data-cal-l>Week</div>
+            </div>
+          </div>
+          <div class="pg-cap"><span data-cal-k>Week 01</span><b data-cal-t>Discover &amp; Audit</b></div>
+          <ol class="pg-dots"><?php for ($d = 0; $d < 8; $d++): ?><li></li><?php endfor; ?></ol>
+        </div>
+      </div>
+    </div>
+    <div class="pg-cta reveal">
+      <a class="cx-btn" href="/book" data-book>Begin Your 8-Week Implementation Journey<svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
       <p class="fine">The 8-week timeline is based on agreed scope, system complexity, data readiness and client participation. Additional integrations or larger requirements may require an extended implementation period.</p>
     </div>
   </div>
