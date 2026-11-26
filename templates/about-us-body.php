@@ -418,14 +418,18 @@ $abSteps = [
 </section>
 
 <!-- 10 · Let's build what's next -->
-<section class="final afinal" id="start">
-  <div class="final__bg" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><i class="grid"></i></div>
-  <div class="wrap final__in">
-    <span class="pill pill--mint reveal"><span class="pill__dot" aria-hidden="true"></span>Every great solution starts with a conversation.</span>
-    <h2 class="h1x reveal" style="--d:.06s">Have a Business Challenge? <span class="grn">We'd Love to Understand It.</span></h2>
-    <p class="lede lede--light reveal" style="--d:.1s">Maybe you need a system that connects your departments. Maybe you're building an ecommerce brand. Maybe you want to bring AI into your operations.</p>
-    <p class="final__line reveal" style="--d:.14s">Whatever the challenge, let's start by understanding it.</p>
-    <div class="final__ctas reveal" style="--d:.18s"><a class="h10-btn h10-btn--green" href="/book" data-book><span>Start a Conversation</span><?= $abIcon('arrow', 'h10-btn__arr') ?></a><a class="h10-btn h10-btn--ghost" href="/case-studies"><span>Explore Our Work</span><?= $abIcon('arrow', 'h10-btn__arr') ?></a></div>
+<section class="final final--card afinal" id="start">
+  <div class="wrap">
+    <div class="final__card">
+      <img class="final__photo" src="/assets/home10/cta-handshake.webp" alt="" width="1600" height="1068" loading="lazy" decoding="async">
+      <div class="final__in">
+        <span class="pill pill--mint reveal"><span class="pill__dot" aria-hidden="true"></span>Every great solution starts with a conversation.</span>
+        <h2 class="h1x reveal" style="--d:.06s">Have a Business Challenge? <span class="grn">We'd Love to Understand It.</span></h2>
+        <p class="lede lede--light reveal" style="--d:.1s">Maybe you need a system that connects your departments. Maybe you're building an ecommerce brand. Maybe you want to bring AI into your operations.</p>
+        <p class="final__line reveal" style="--d:.14s">Whatever the challenge, let's start by understanding it.</p>
+        <div class="final__ctas reveal" style="--d:.18s"><a class="h10-btn h10-btn--green" href="/book" data-book><span>Start a Conversation</span><?= $abIcon('arrow', 'h10-btn__arr') ?></a><a class="h10-btn h10-btn--ghost" href="/case-studies"><span>Explore Our Work</span><?= $abIcon('arrow', 'h10-btn__arr') ?></a></div>
+      </div>
+    </div>
   </div>
   <div class="wrap signoff reveal">
     <p class="signoff__w">Drawlead</p>

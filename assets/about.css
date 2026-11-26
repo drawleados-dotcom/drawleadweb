@@ -385,6 +385,11 @@ html.js .ab .tix__item.is-in .tik__route .is-here{transform:none}
 .ab .signoff__w{font-family:var(--f-head);font-size:clamp(4.2rem,19.5vw,18.5rem);line-height:.8;font-weight:700;letter-spacing:-.06em;background:linear-gradient(180deg,rgba(123,224,169,.5),rgba(123,224,169,.04) 88%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;user-select:none}
 .ab .signoff__l{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 12px;padding:clamp(18px,2.4vw,30px) 0 clamp(30px,3.4vw,46px);font-size:1rem;color:#aeb8b3}
 .ab .signoff__l b{color:#fff;font-weight:600}
+/* close as a contained photo card (shared .final--card styles in home10.css) on a white section */
+.ab .afinal.final--card{padding:clamp(56px,6vw,88px) 0 0;background:#fff}
+.ab .final--card .signoff__w{background:linear-gradient(180deg,rgba(50,180,111,.34),rgba(50,180,111,.03) 88%);-webkit-background-clip:text;background-clip:text}
+.ab .final--card .signoff__l{color:var(--mut)}
+.ab .final--card .signoff__l b{color:var(--ink)}
 
 /* ==========================================================================
    Responsive
