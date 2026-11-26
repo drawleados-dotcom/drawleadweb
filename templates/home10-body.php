@@ -371,7 +371,7 @@ $swIc = fn (string $id): string => '<svg class="ic" aria-hidden="true" focusable
       </div>
       <div class="appr__side reveal" style="--d:.12s">
         <p class="lede">We work directly with your teams to understand how your business operates, identify challenges and uncover opportunities. Our engineers collaborate with your people to design, build and implement technology that fits your actual workflows — from custom software and system integrations to AI and automation.</p>
-        <a class="h10-btn h10-btn--green" href="#program"><span>Explore Our Engineering Approach</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
+        <a class="h10-btn h10-btn--dark" href="#program"><span>Explore Our Engineering Approach</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
     <div class="flow" data-flow>

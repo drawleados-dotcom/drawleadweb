@@ -302,7 +302,8 @@ html.js .h10 .cx-panel:not(.is-in){opacity:0;translate:0 60px;scale:.96}
 .h10 .appr__head{margin-bottom:clamp(48px,5vw,72px);align-items:start}
 .h10 .appr__head .h2{max-width:22ch;font-size:clamp(2rem,3.5vw,3.2rem)}
 .h10 .appr__side{display:flex;flex-direction:column;gap:28px;align-items:flex-start}
-/* deep green ground so the pastel tickets read clearly */body>.h10:not(.ab) section.appr{position:relative;background-color:#0c2a1c;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.4px),radial-gradient(ellipse 70% 50% at 50% 0%,rgba(50,180,111,.18),transparent 70%);background-size:22px 22px,100% 100%;color:#fff}body>.h10:not(.ab) section.appr .h2{color:#fff}body>.h10:not(.ab) section.appr .lede{color:rgba(255,255,255,.72)}body>.h10:not(.ab) section.appr .pill{background:rgba(255,255,255,.08);color:#9fe7bf;border-color:rgba(159,231,191,.3)}body>.h10:not(.ab) section.appr :focus-visible{outline-color:#7be0a9}.h10 .appr .step{filter:drop-shadow(0 2px 2px rgba(0,0,0,.25)) drop-shadow(0 18px 22px rgba(0,0,0,.35))}
+/* mild neutral ground: soft enough to stay calm, distinct enough for the pastel tickets */
+body>.h10:not(.ab) section.appr{background-color:#f6f7f9;background-image:radial-gradient(rgba(15,23,42,.06) 1px,transparent 1.4px);background-size:22px 22px}
 .h10 .flow{position:relative;--fp:0}
 .h10 .flow__rail{position:absolute;left:12.5%;right:12.5%;top:23px;height:3px;background:rgba(15,58,36,.1);border-radius:3px}
 .h10 .flow__fill{position:absolute;inset:0;background:linear-gradient(90deg,var(--green),#7be0a9);border-radius:3px;transform-origin:left;transform:scaleX(var(--fp))}
@@ -326,7 +327,7 @@ html.js .h10 .cx-panel:not(.is-in){opacity:0;translate:0 60px;scale:.96}
 .h10 .step:nth-child(3){--tk:#E8E2F5}
 .h10 .step:nth-child(4){--tk:#EDF0D7}
 .h10 .flow__rail,.h10 .step__node{display:none}
-.h10 .appr .step{--ink-t:color-mix(in oklch,var(--tk),#000 62%);--ln:color-mix(in oklch,var(--tk),#000 30%);filter:drop-shadow(0 2px 2px rgba(0,0,0,.25)) drop-shadow(0 18px 22px rgba(0,0,0,.35))}
+.h10 .appr .step{--ink-t:color-mix(in oklch,var(--tk),#000 62%);--ln:color-mix(in oklch,var(--tk),#000 30%);filter:drop-shadow(0 1px 1px rgba(15,23,42,.12)) drop-shadow(0 6px 10px rgba(15,23,42,.08))}
 .h10 .step__card.tk{flex:1;gap:0;margin-top:0;padding:0;background:none;border:0;border-radius:0;box-shadow:none;transition:none}
 .h10 .step__card.tk::before{display:none}
 .h10 .step:hover .step__card.tk{transform:none;border:0;box-shadow:none}
