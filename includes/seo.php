@@ -1443,6 +1443,8 @@ function seo_audit(PDO $pdo): array
         get_setting($pdo, 'gsc_verification_tag', '') !== '' ? 'Verification tag is on every page.' : 'Verify the site to see search queries and indexing errors.', 'analytics.php', 'Analytics & Search');
     $add(get_setting($pdo, 'ga_measurement_id', '') !== '' ? 'pass' : 'warn', 'Google Analytics connected',
         get_setting($pdo, 'ga_measurement_id', '') !== '' ? 'GA4 tracking is on every page.' : 'Add a GA4 Measurement ID to measure organic traffic.', 'analytics.php', 'Analytics & Search');
+    $add(get_setting($pdo, 'clarity_project_id', '') !== '' ? 'pass' : 'warn', 'Microsoft Clarity connected',
+        get_setting($pdo, 'clarity_project_id', '') !== '' ? 'Clarity heatmaps & recordings are on every page.' : 'Add a Clarity Project ID to see heatmaps and session recordings.', 'analytics.php', 'Analytics & Search');
 
     // Global settings & schema
     $add(trim($g['default_og_image']) !== '' ? 'pass' : 'warn', 'Default social share image',

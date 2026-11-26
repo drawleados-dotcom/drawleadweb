@@ -529,6 +529,7 @@ UPDATE pages SET show_in_menu = 1 WHERE slug IN ('/', '/home-2', '/about-us', '/
 INSERT IGNORE INTO settings (`key`, `value`) VALUES
 ('ga_measurement_id', ''),
 ('gsc_verification_tag', ''),
+('clarity_project_id', ''),
 ('blog_meta_title', 'Blog | Drawlead'),
 ('blog_meta_description', 'Insights on growth, SEO, and digital transformation from the Drawlead team.'),
 ('site_name', 'Drawlead');

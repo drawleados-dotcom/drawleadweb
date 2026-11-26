@@ -7,15 +7,21 @@ $success = '';
 
 $gaId = get_setting($pdo, 'ga_measurement_id', '');
 $gscTag = get_setting($pdo, 'gsc_verification_tag', '');
+$clarityId = get_setting($pdo, 'clarity_project_id', '');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_verify();
 
     $newGaId = trim($_POST['ga_measurement_id'] ?? '');
     $newGscTag = trim($_POST['gsc_verification_tag'] ?? '');
+    $newClarityId = trim($_POST['clarity_project_id'] ?? '');
 
     if ($newGaId !== '' && !preg_match('/^(G-[A-Za-z0-9]+|UA-\d+-\d+)$/', $newGaId)) {
         $error = 'That doesn\'t look like a valid GA4 Measurement ID (should look like G-XXXXXXXXXX).';
+    }
+
+    if (!$error && $newClarityId !== '' && !preg_match('/^[a-z0-9]{6,20}$/i', $newClarityId)) {
+        $error = 'That doesn\'t look like a valid Clarity Project ID — paste just the short code from your install URL (clarity.ms/tag/XXXXXXXXXX).';
     }
 
     if (!$error && $newGscTag !== '') {
@@ -31,8 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$error) {
         set_setting($pdo, 'ga_measurement_id', $newGaId);
         set_setting($pdo, 'gsc_verification_tag', $newGscTag);
+        set_setting($pdo, 'clarity_project_id', $newClarityId);
         $gaId = $newGaId;
         $gscTag = $newGscTag;
+        $clarityId = $newClarityId;
         $success = 'Saved. These now apply to every page on the live site.';
     }
 }
@@ -58,6 +66,18 @@ include __DIR__ . '/includes/header.php';
     <div class="field">
       <label for="ga_measurement_id">Measurement ID</label>
       <input type="text" id="ga_measurement_id" name="ga_measurement_id" placeholder="G-XXXXXXXXXX" value="<?= h($gaId) ?>">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Microsoft Clarity</div>
+    <div class="card-desc">
+      In Clarity: Settings → Overview → copy your <b>Project ID</b> (the short code in the install URL, <code>clarity.ms/tag/<b>xxxxxxxxxx</b></code>).
+      Paste it below and Clarity's heatmap &amp; session-recording script is automatically added to every page.
+    </div>
+    <div class="field">
+      <label for="clarity_project_id">Project ID</label>
+      <input type="text" id="clarity_project_id" name="clarity_project_id" placeholder="abcd1234ef" value="<?= h($clarityId) ?>">
     </div>
   </div>
 

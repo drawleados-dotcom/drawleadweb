@@ -17,6 +17,7 @@ $recentBlogs = $pdo->query(
 
 $gaConnected = get_setting($pdo, 'ga_measurement_id', '') !== '';
 $gscConnected = get_setting($pdo, 'gsc_verification_tag', '') !== '';
+$clarityConnected = get_setting($pdo, 'clarity_project_id', '') !== '';
 $hasPendingMigrations = $u['role'] === 'admin' && pending_migrations_exist($pdo);
 
 $pageTitle = 'Dashboard';
@@ -77,12 +78,17 @@ include __DIR__ . '/includes/header.php';
 
 <div class="card">
   <div class="card-title">Connections</div>
-  <div class="card-desc">Google Analytics &amp; Search Console status.</div>
+  <div class="card-desc">Google Analytics, Microsoft Clarity &amp; Search Console status.</div>
   <table>
     <tbody>
       <tr>
         <td class="t-name">Google Analytics (GA4)</td>
         <td><span class="badge <?= $gaConnected ? 'badge-published' : 'badge-draft' ?>"><?= $gaConnected ? 'Connected' : 'Not Connected' ?></span></td>
+        <td><a class="row-link" href="analytics.php">Manage →</a></td>
+      </tr>
+      <tr>
+        <td class="t-name">Microsoft Clarity</td>
+        <td><span class="badge <?= $clarityConnected ? 'badge-published' : 'badge-draft' ?>"><?= $clarityConnected ? 'Connected' : 'Not Connected' ?></span></td>
         <td><a class="row-link" href="analytics.php">Manage →</a></td>
       </tr>
       <tr>
