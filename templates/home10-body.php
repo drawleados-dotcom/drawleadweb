@@ -190,13 +190,13 @@ $h10Case = function (string $slug, string $fallback) use ($pdo): string {
 </section>
 <?php
 // Selected Work. Edit the copy here: one entry per colour panel, in page order;
-// the first starts open. 'accent' is the panel's colour: sun, coral, orchid or
-// leaf. 'photo' is a greyscale picture the panel tints (the files in
+// the first starts open. 'accent' is the panel's colour, one of the site tints
+// mint, sky, lilac or aqua. 'photo' is a greyscale picture the panel tints (the files in
 // assets/home10/work are Unsplash stock). 'mock' picks the dashboard drawn over
 // it; its sample numbers are in the markup below.
 $swProjects = [
     [
-        'accent' => 'sun',
+        'accent' => 'mint',
         'icon' => 'i-building',
         'photo' => '/assets/home10/work/construction.webp',
         'photoAlt' => 'Site crew working among steel reinforcement, seen from above',
@@ -209,7 +209,7 @@ $swProjects = [
         'mockLabel' => 'Sample dashboard: project profitability across four construction projects',
     ],
     [
-        'accent' => 'coral',
+        'accent' => 'sky',
         'icon' => 'i-cart',
         'photo' => '/assets/home10/work/ecommerce.webp',
         'photoAlt' => 'Rail of plain t-shirts on hangers',
@@ -222,7 +222,7 @@ $swProjects = [
         'mockLabel' => 'Sample dashboard: store revenue, conversion and top product pages',
     ],
     [
-        'accent' => 'orchid',
+        'accent' => 'lilac',
         'icon' => 'i-heart',
         'photo' => '/assets/home10/work/healthcare.webp',
         'photoAlt' => 'Clinician fitting a wrist brace for a patient',
@@ -235,7 +235,7 @@ $swProjects = [
         'mockLabel' => 'Sample dashboard: enquiries and bookings across four branches',
     ],
     [
-        'accent' => 'leaf',
+        'accent' => 'aqua',
         'icon' => 'i-chat',
         'photo' => '/assets/home10/work/automation.webp',
         'photoAlt' => 'Paper speech bubble with three dots',
