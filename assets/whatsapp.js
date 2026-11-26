@@ -22,6 +22,14 @@
     answers: [],
     phase: 'idle', // 'idle' | 'choice' | 'text' | 'phone' | 'done'
   };
+  var hasOpened = false;
+
+  function openChat() {
+    hasOpened = true;
+    panel.classList.add('open');
+    panel.setAttribute('aria-hidden', 'false');
+    startFlow();
+  }
 
   function fetchJSON(url, opts) {
     return fetch(url, opts).then(function (r) { return r.json(); });
@@ -216,12 +224,25 @@
   });
 
   fab.addEventListener('click', function () {
-    panel.classList.add('open');
-    panel.setAttribute('aria-hidden', 'false');
-    startFlow();
+    openChat();
   });
   closeBtn.addEventListener('click', function () {
     panel.classList.remove('open');
     panel.setAttribute('aria-hidden', 'true');
   });
+
+  // Open the chat once when visitors reach the Selected Work / Case Studies
+  // section on the homepage. The floating button remains available afterward.
+  var caseStudiesSection = document.getElementById('case-studies');
+  if (caseStudiesSection && 'IntersectionObserver' in window) {
+    var sectionObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !hasOpened) {
+          openChat();
+          sectionObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.01, rootMargin: '0px 0px -15% 0px' });
+    sectionObserver.observe(caseStudiesSection);
+  }
 })();
