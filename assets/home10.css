@@ -201,12 +201,12 @@ html:not(.js) .h10 .strike s{text-decoration:line-through}
 .h10 .marquee--tech .marquee__track{--shift:-50%;--speed:38s}
 
 /* ---------- credibility ---------- */
-.h10 .cred{position:relative;padding:clamp(70px,8vw,110px) 0 clamp(80px,9vw,130px);background:linear-gradient(180deg,#fff,#fbfefc)}
-.h10 .cred__head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;margin-bottom:clamp(36px,4vw,56px)}
+.h10 .cred{position:relative;padding:clamp(44px,5vw,72px) 0 clamp(48px,5.4vw,80px);background:linear-gradient(180deg,#fff,#fbfefc)}
+.h10 .cred__head{display:flex;justify-content:space-between;align-items:flex-end;gap:clamp(24px,3vw,48px);flex-wrap:nowrap;margin-bottom:clamp(28px,3.4vw,44px)}
 .h10 .cred__head .pill{margin-bottom:18px}
-.h10 .cred__head .h2{font-size:clamp(2rem,3.4vw,3.1rem)}
-.h10 .stats{display:flex;gap:0;align-items:stretch}
-.h10 .stat{display:flex;align-items:center;gap:14px;padding:6px 26px;border-left:1px solid var(--line)}
+.h10 .cred__head .h2{font-size:clamp(1.8rem,3vw,2.8rem)}
+.h10 .stats{flex:none;display:flex;gap:0;align-items:stretch;padding-bottom:6px}
+.h10 .stat{display:flex;align-items:center;gap:14px;padding:6px clamp(14px,1.6vw,24px);border-left:1px solid var(--line)}
 .h10 .stat:first-child{border-left:0}
 .h10 .stat__ic{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--mint-100);color:var(--green-700);transition:transform .4s var(--ease),background .3s,color .3s}
 .h10 .stat:hover .stat__ic{transform:translateY(-3px);background:var(--green);color:#fff}
@@ -221,7 +221,7 @@ html:not(.js) .h10 .strike s{text-decoration:line-through}
 .h10 .h10-logo--text span{font-family:var(--f-head);font-weight:700;font-size:1.05rem;letter-spacing:-.01em;color:var(--ink)}
 
 /* ---------- capabilities ---------- */
-.h10 .caps{position:relative;z-index:2;margin-top:-44px;padding:clamp(56px,7vw,96px) 0;background:#fff;border-radius:var(--r-xl) var(--r-xl) 0 0;color:var(--ink);overflow:clip}
+.h10 .caps{position:relative;z-index:2;margin-top:-44px;padding:clamp(40px,4.8vw,64px) 0;background:#fff;border-radius:var(--r-xl) var(--r-xl) 0 0;color:var(--ink);overflow:clip}
 .h10 .caps .wrap{position:relative}
 .h10 .cx-shell{position:relative}
 .h10 .cx-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:#DAF1E5;border:1px solid #bfe5cf;color:#0f4a2c;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.02em;line-height:1.2;margin-bottom:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
@@ -293,7 +293,7 @@ html.js .h10 .cx-panel:not(.is-in){opacity:0;translate:0 60px;scale:.96}
 .h10 .spot:hover::before,.h10 .spot:hover>.step__card::before{opacity:1}
 
 /* ---------- problem → solution ---------- */
-.h10 .prob{padding:clamp(80px,9vw,128px) 0;background:#fff;overflow:hidden}
+.h10 .prob{padding:clamp(48px,5.6vw,80px) 0;background:#fff;overflow:hidden}
 .h10 .pb-head{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:clamp(56px,6vw,80px)}
 .h10 .pb-h2{font-family:var(--f-head);font-weight:700;font-size:clamp(2.1rem,4.2vw,3.5rem);line-height:1.15;letter-spacing:-.025em;color:#0b0d0c}
 .h10 .pb-tool{position:relative;display:inline-grid;box-sizing:content-box;margin:0 .2em;padding:.05em .26em .09em;border-radius:.2em;background:#ef3b2d;color:#fff;font-weight:600;line-height:1.14;overflow:hidden;vertical-align:baseline;transition:width .7s cubic-bezier(.76,0,.24,1)}
@@ -355,7 +355,7 @@ html.js .h10 .cx-panel:not(.is-in){opacity:0;translate:0 60px;scale:.96}
 }
 
 /* ---------- approach ---------- */
-.h10 .appr{padding:clamp(88px,10vw,140px) 0;background:linear-gradient(180deg,var(--mint-50),#fff)}
+.h10 .appr{padding:clamp(52px,6vw,88px) 0;background:linear-gradient(180deg,var(--mint-50),#fff)}
 .h10 .appr__head{margin-bottom:clamp(48px,5vw,72px);align-items:start}
 .h10 .appr__head .h2{max-width:22ch;font-size:clamp(2rem,3.5vw,3.2rem)}
 .h10 .appr__side{display:flex;flex-direction:column;gap:28px;align-items:flex-start}
@@ -416,7 +416,7 @@ body>.h10 .step .tk .step__art.il,body>.h10:not(.ab) .step:nth-child(n) .tk .ste
 .h10 .appr .step:hover .step__card.tk{transform:translateY(-6px)}
 
 /* ---------- 8-week program: scrolling week cards + sticky tear-off calendar ---------- */
-.h10 .prog{position:relative;padding:clamp(72px,9vw,128px) 0;background-color:#fff;background-image:radial-gradient(rgba(15,58,36,.075) 1px,transparent 1.4px);background-size:22px 22px;color:var(--ink);overflow:clip}
+.h10 .prog{position:relative;padding:clamp(48px,5.6vw,80px) 0;background-color:#fff;background-image:radial-gradient(rgba(15,58,36,.075) 1px,transparent 1.4px);background-size:22px 22px;color:var(--ink);overflow:clip}
 .h10 .prog .wrap{position:relative}
 .h10 .pg-head{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(24px,5vw,72px);align-items:end;margin-bottom:clamp(40px,6vw,72px)}
 .h10 .pg-pill{display:inline-flex;align-items:center;padding:7px 16px;border-radius:999px;background:#DAF1E5;border:1px solid #a9e0c2;color:#0f3a24;font-size:.76rem;font-weight:600;letter-spacing:.02em;text-transform:uppercase;line-height:1.3;margin-bottom:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
@@ -499,7 +499,7 @@ body>.h10 .step .tk .step__art.il,body>.h10:not(.ab) .step:nth-child(n) .tk .ste
 }
 
 /* ---------- data intelligence ---------- */
-.h10 .data{padding:clamp(88px,10vw,140px) 0;background:#fff}
+.h10 .data{padding:clamp(52px,6vw,88px) 0;background:#fff}
 .h10 .data__head{gap:18px;margin-bottom:clamp(40px,5vw,64px)}
 .h10 .data__head .lede{text-align:center}
 .h10 .ticker{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
@@ -538,7 +538,7 @@ body>.h10 .step .tk .step__art.il,body>.h10:not(.ab) .step:nth-child(n) .tk .ste
    Mockups are sized in em off a container-relative font size so the whole
    card scales with its 4:3 panel; below 600px the panel drops the ratio and
    the card sits at a fixed small size instead. */
-.h10 .sw{--sw-ink:#14151A;--sw-body:#4B4F5A;--sw-line:#E7E8EC;--sw-pos:#1F9D63;--sw-neg:#D64545;--sw-warn:#E0A100;--sw-warn-bg:#FFF6DB;padding:clamp(80px,10vw,136px) 0;background:#fff}
+.h10 .sw{--sw-ink:#14151A;--sw-body:#4B4F5A;--sw-line:#E7E8EC;--sw-pos:#1F9D63;--sw-neg:#D64545;--sw-warn:#E0A100;--sw-warn-bg:#FFF6DB;padding:clamp(52px,6vw,88px) 0;background:#fff}
 .h10 .sw .wrap{--wrap:1200px}
 .h10 .sw [data-accent="indigo"]{--accent-50:#EEF0FD;--accent-100:#DDE1FA;--accent-500:#5B67E0;--accent-700:#353DA3;--accent-line:rgba(91,103,224,.4)}
 .h10 .sw [data-accent="green"]{--accent-50:#E8F6EE;--accent-100:#CDEBDA;--accent-500:#2FA36B;--accent-700:#1A6B45;--accent-line:rgba(47,163,107,.4)}
@@ -695,7 +695,7 @@ html.js .h10 .sw-media .sw-list li:nth-child(4) .sw-bar i{transition-delay:.65s}
    assets/palette.css: it also tints the greyscale photo, and the mockup reads
    --accent-*. Up to 1240px, and with JavaScript off, the panels stack
    instead. Text on every panel is ink, never white. */
-.h10 .sw--work .sw-head{margin-bottom:64px}
+.h10 .sw--work .sw-head{margin-bottom:clamp(36px,4vw,52px)}
 .h10 .sw .swx-wrap{--wrap:1720px;--gutter:clamp(16px,2vw,36px);container-type:inline-size}
 .h10 .swx [data-accent="mint"]{--c:var(--t-mint,#DAF1E5);--accent-50:#EEF8F2;--accent-100:#DAF1E5;--accent-500:#32B46F;--accent-700:#14613A}
 .h10 .swx [data-accent="sky"]{--c:var(--t-sky,#DFEAF9);--accent-50:#F1F6FD;--accent-100:#DFEAF9;--accent-500:#3B7DD8;--accent-700:#1F4E8C}
@@ -905,7 +905,7 @@ html.js .h10 .sw-media.is-in :is(.sw-fun,.sw-mix,.sw-cols) i{transform:none}
 
 
 /* ---------- client experiences ---------- */
-.h10 .test{padding:clamp(72px,9vw,128px) 0;background-color:#fff;background-image:radial-gradient(rgba(15,58,36,.07) 1px,transparent 1.4px);background-size:22px 22px}
+.h10 .test{padding:clamp(48px,5.6vw,80px) 0;background-color:#fff;background-image:radial-gradient(rgba(15,58,36,.07) 1px,transparent 1.4px);background-size:22px 22px}
 .h10 .ts-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:end;margin-bottom:clamp(40px,5vw,64px)}
 .h10 .ts-head .pill{margin-bottom:18px}
 .h10 .ts-h2{font-family:var(--f-head);font-weight:800;font-size:clamp(1.9rem,3.5vw,3rem);line-height:1.14;letter-spacing:-.025em;color:#111827}
@@ -940,7 +940,7 @@ html.js .h10 .sw-media.is-in :is(.sw-fun,.sw-mix,.sw-cols) i{transform:none}
 }
 
 /* ---------- final CTA + footer ---------- */
-.h10 .final{position:relative;padding:clamp(100px,12vw,170px) 0;background:linear-gradient(180deg,#0b1812,#08120d);color:#fff;overflow:hidden;text-align:center}
+.h10 .final{position:relative;padding:clamp(64px,7.4vw,110px) 0;background:linear-gradient(180deg,#0b1812,#08120d);color:#fff;overflow:hidden;text-align:center}
 .h10 .final__bg{position:absolute;inset:0;pointer-events:none}
 .h10 .final__bg .orb{position:absolute;border-radius:50%;filter:blur(90px);will-change:transform}
 .h10 .final__bg .o1{width:640px;height:640px;left:-160px;top:-160px;background:radial-gradient(circle,rgba(50,180,111,.55),transparent 65%);animation:drift1 20s ease-in-out infinite alternate}
@@ -1059,6 +1059,7 @@ html.js .h10 .sw-media.is-in :is(.sw-fun,.sw-mix,.sw-cols) i{transform:none}
   .h10 .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
   .h10 .flow__rail{display:none}
   .h10 .stats .stat{padding-inline:20px}
+  .h10 .cred__head{flex-wrap:wrap}
 }
 @media (max-width:960px){
   .h10 .hero__top{grid-template-columns:1fr}
