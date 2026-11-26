@@ -47,52 +47,12 @@ $abRhythms = [
     ['Manufacturing', 'aqua',  'M2 58H20V26H42V58H60V26H82V58H100V26H122V58H140V26H162V58H180V26H202V58H220V26H242V58H278'],
 ];
 
-// Capabilities, one alternating row each in the home page's Industries layout
-// (.sw-row in home10.css). The mockup sits on the left for 01 and 03.
-// 'title' is the question in two parts; the second part is underlined.
-// 'accent' is one of sky, peach, lilac, lime (about.css). Mockup figures are
-// sample data, not client results.
+// Capabilities: [tint, image, alt, title, text]
 $abCaps = [
-    [
-        'accent' => 'sky',
-        'category' => 'Business Systems',
-        'title' => ['Still running your growing business on', 'spreadsheets and disconnected tools?'],
-        'text' => 'We engineer custom software, ERP and Business Operating Systems that connect departments, teams, projects and everyday operations.',
-        'chips' => ['Custom ERP & Business OS', 'Project & Operations Management', 'CRM & Workflow Management', 'Department-Wise Systems Automation'],
-        'cta' => 'Let\'s Build a Solution, Not Just Software',
-        'mock' => 'os',
-        'mockLabel' => 'Sample dashboard: one order moving through sales, projects, procurement and finance in a single system',
-    ],
-    [
-        'accent' => 'peach',
-        'category' => 'Digital Commerce',
-        'title' => ['Ready to turn your ecommerce vision into a', 'high-performing online store?'],
-        'text' => 'We create digital shopping experiences that bring brands closer to their customers and support better online commerce.',
-        'chips' => ['Brand Story-Driven Storefronts', 'Custom Ecommerce Development', 'App-Free Functionality', 'Customer-Centric & Scalable Experiences'],
-        'cta' => 'Let\'s Build a High-Converting Ecommerce Store',
-        'mock' => 'orders',
-        'mockLabel' => 'Sample dashboard: today\'s online store orders with payment and shipping in sync',
-    ],
-    [
-        'accent' => 'lilac',
-        'category' => 'AI & Automation',
-        'title' => ['Are manual tasks and repetitive workflows', 'slowing your business growth?'],
-        'text' => 'We use intelligent technology to simplify repetitive work, connect workflows and help businesses operate more efficiently.',
-        'chips' => ['AI-Powered Business Solutions', 'Intelligent Workflow Automation', 'WhatsApp & Communication Automation', 'Custom AI Applications & Agents'],
-        'cta' => 'Let\'s Automate the Way You Work',
-        'mock' => 'auto',
-        'mockLabel' => 'Sample dashboard: automated workflows running across teams and the hours they save',
-    ],
-    [
-        'accent' => 'lime',
-        'category' => 'Marketing & Growth',
-        'title' => ['Reaching the right audience but struggling to generate', 'quality leads?'],
-        'text' => 'We help businesses improve digital visibility, attract customers, generate opportunities and optimize their growth.',
-        'chips' => ['Performance Marketing & Paid Campaigns', 'Lead Generation & Customer Acquisition', 'SEO, AEO & GEO', 'Conversion Optimization & Analytics'],
-        'cta' => 'Let\'s Build Your Growth Engine',
-        'mock' => 'leads',
-        'mockLabel' => 'Sample dashboard: qualified leads for the month by channel',
-    ],
+    ['sky',   'cap-systems.webp',  'Department blocks stacked into one building and joined by a single green line', 'Business Systems', 'We engineer custom software, ERP and Business Operating Systems that connect departments, teams, projects and everyday operations.'],
+    ['peach', 'cap-commerce.webp', 'A small shop with a green awning, a shopping bag and parcels ready to go', 'Digital Commerce', 'We create digital shopping experiences that bring brands closer to their customers and support better online commerce.'],
+    ['lilac', 'cap-ai.webp',       'A robot turning mixed-up boxes on a conveyor into neat, checked ones', 'AI & Automation', 'We use intelligent technology to simplify repetitive work, connect workflows and help businesses operate more efficiently.'],
+    ['lime',  'cap-growth.webp',   'Rising bars with an arrow above them and a magnet drawing an audience in', 'Marketing & Growth', 'We help businesses improve digital visibility, attract customers, generate opportunities and optimize their growth.'],
 ];
 
 // Culture: [tint, image, title, text]
@@ -134,7 +94,7 @@ $abSteps = [
 <script>document.documentElement.classList.add('js')</script>
 
 <div class="h10 ab">
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol><symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z" fill="currentColor" stroke="none"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" fill="currentColor" stroke="none"/></symbol><symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.8 0 5 2.2 5 5"/></symbol><symbol id="i-plug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 01-12 0zM12 17v4"/></symbol><symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 2 5 5 5 9l-2.5 3h-5L7 12c0-4 2-7 5-9z"/><circle cx="12" cy="10" r="1.6"/><path d="M9.5 15L7 19M14.5 15L17 19M12 15v5"/></symbol><symbol id="i-db" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></symbol><symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".6"/></symbol><symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12.5l9 5 9-5"/><path d="M3 17l9 5 9-5" opacity=".55"/></symbol><symbol id="i-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0110.5 4h3A1.5 1.5 0 0115 5.5V7M3 13h18"/></symbol><symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></symbol><symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.4 11h10.4L20 8H6.3"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></symbol><symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A1.5 1.5 0 015.5 4h13A1.5 1.5 0 0120 5.5v9a1.5 1.5 0 01-1.5 1.5H10l-4.5 4v-4h0A1.5 1.5 0 014 14.5z"/><path d="M8 9h8M8 12h5"/></symbol><symbol id="i-bot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="3.5"/><path d="M12 8V5M9.5 13v1.6M14.5 13v1.6M2 13v3M22 13v3"/><circle cx="12" cy="4" r="1"/></symbol><symbol id="i-workflow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="14.5" y="13.5" width="6.5" height="6.5" rx="1.8"/><path d="M9.5 7.2H12a3 3 0 013 3v3.3"/></symbol><symbol id="i-megaphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4l12 5V5z"/><path d="M16 9.5a3 3 0 010 5M7 14.5V19"/></symbol><symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol><symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z" fill="currentColor" stroke="none"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" fill="currentColor" stroke="none"/></symbol><symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.8 0 5 2.2 5 5"/></symbol><symbol id="i-plug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 01-12 0zM12 17v4"/></symbol><symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 2 5 5 5 9l-2.5 3h-5L7 12c0-4 2-7 5-9z"/><circle cx="12" cy="10" r="1.6"/><path d="M9.5 15L7 19M14.5 15L17 19M12 15v5"/></symbol><symbol id="i-db" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></symbol></defs></svg>
 <a class="skip" href="#about-top">Skip to content</a>
 <div class="progress" aria-hidden="true"><i></i></div><main>
 
@@ -341,68 +301,14 @@ $abSteps = [
       <p class="lede reveal" style="--d:.12s">Our work brings four technology capabilities together.</p>
     </div>
     <div class="sw-rows">
-<?php foreach ($abCaps as $i => $p): $n = sprintf('%02d', $i + 1); ?>
-      <article class="sw-row<?= $i % 2 === 0 ? ' sw-row--media-first' : '' ?>" data-accent="<?= h($p['accent']) ?>">
+<?php foreach ($abCaps as $i => [$tint, $file, $alt, $title, $text]): ?>
+      <article class="sw-row<?= $i % 2 === 0 ? ' sw-row--media-first' : '' ?>" data-accent="<?= $tint ?>">
         <div class="sw-text reveal">
-          <span class="sw-cat"><b><?= $n ?></b><?= h($p['category']) ?></span>
-          <h3 class="sw-h3"><?= h($p['title'][0]) ?> <span class="sw-u"><?= h($p['title'][1]) ?></span></h3>
-          <p class="sw-p"><?= h($p['text']) ?></p>
-          <b class="sw-chips__l">Solutions:</b>
-          <ul class="sw-chips" role="list"><?php foreach ($p['chips'] as $c): ?><li><?= h($c) ?></li><?php endforeach; ?></ul>
-          <a class="sw-cta" href="/book" data-book><span><?= h($p['cta']) ?></span><span class="sw-cta__ic"><?= $abIcon('arrow') ?></span></a>
+          <span class="sw-cat"><b><?= sprintf('%02d', $i + 1) ?></b></span>
+          <h3 class="sw-h3"><?= h($title) ?></h3>
+          <p class="sw-p"><?= h($text) ?></p>
         </div>
-        <div class="sw-media reveal" style="--d:.08s" role="img" aria-label="<?= h($p['mockLabel']) ?>">
-<?php if ($p['mock'] === 'os'): ?>
-          <div class="sw-card" aria-hidden="true">
-            <div class="sw-card__hd"><div><b>Business OS</b><small>Order 2141 · one record, every team</small></div><span class="sw-tabs"><i class="is-on">Flow</i><i>Teams</i><i>Reports</i></span></div>
-            <div class="sw-kpis sw-kpis--3"><div class="sw-kpi"><small>Open projects</small><b>18</b></div><div class="sw-kpi"><small>Tasks today</small><b>142</b></div><div class="sw-kpi"><small>Approvals</small><b class="sw-acc">7</b></div></div>
-            <ul class="sw-list">
-              <li><span class="sw-tile sw-tile--sm"><?= $abIcon('target') ?></span><div><b>Sales</b><small>Quote approved · ₹4.8L</small></div><span class="sw-st sw-st--ok">Done</span></li>
-              <li><span class="sw-tile sw-tile--sm"><?= $abIcon('layers') ?></span><div><b>Projects</b><small>Plan and timeline created</small></div><span class="sw-st sw-st--ok">Done</span></li>
-              <li><span class="sw-tile sw-tile--sm"><?= $abIcon('briefcase') ?></span><div><b>Procurement</b><small>Purchase order · 3 vendors</small></div><span class="sw-st sw-st--wait">In review</span></li>
-              <li><span class="sw-tile sw-tile--sm"><?= $abIcon('chart') ?></span><div><b>Finance</b><small>Advance invoice ready</small></div><span class="sw-st">Next</span></li>
-            </ul>
-          </div>
-          <div class="sw-evt" aria-hidden="true"><span class="sw-tile"><?= $abIcon('check') ?></span><div><b>Purchase order approved</b><small>Order 2141 · by Operations</small></div></div>
-<?php elseif ($p['mock'] === 'orders'): ?>
-          <div class="sw-card" aria-hidden="true">
-            <div class="sw-card__hd"><div><b>Online store</b><small>Today · all channels</small></div><span class="sw-tabs"><i class="is-on">Orders</i><i>Products</i></span></div>
-            <div class="sw-kpis sw-kpis--3"><div class="sw-kpi"><small>Orders</small><b>128 <span class="sw-up">+12%</span></b></div><div class="sw-kpi"><small>Revenue</small><b>₹2.4L</b></div><div class="sw-kpi"><small>Returning</small><b class="sw-acc">38%</b></div></div>
-            <ul class="sw-list">
-              <li><span class="sw-time">#1052</span><div><b>Handwoven tote bag</b><small>2 items · UPI</small></div><span class="sw-st sw-st--ok">Paid</span></li>
-              <li><span class="sw-time">#1051</span><div><b>Linen shirt</b><small>1 item · Card</small></div><span class="sw-st sw-st--wait">Packing</span></li>
-              <li><span class="sw-time">#1050</span><div><b>Festive gift box</b><small>3 items · Cash on delivery</small></div><span class="sw-st">Shipped</span></li>
-            </ul>
-            <div class="sw-sync"><b>In sync</b><span><?= $abIcon('check') ?>Storefront</span><span><?= $abIcon('check') ?>Payments</span><span><?= $abIcon('check') ?>Shipping</span></div>
-          </div>
-          <div class="sw-evt" aria-hidden="true"><span class="sw-tile"><?= $abIcon('cart') ?></span><div><b>New order placed</b><small>#1053 · ₹3,180 · paid online</small></div></div>
-<?php elseif ($p['mock'] === 'auto'): ?>
-          <div class="sw-card" aria-hidden="true">
-            <div class="sw-card__hd"><div><b>Automations</b><small>Running across 4 teams</small></div><span class="sw-tabs"><i class="is-on">Live</i><i>Logs</i></span></div>
-            <div class="sw-kpis sw-kpis--2"><div class="sw-kpi"><small>Tasks automated</small><b>1,240 <span class="sw-up">+32%</span></b></div><div class="sw-kpi"><small>Hours saved this week</small><b class="sw-acc">86</b></div></div>
-            <ul class="sw-list">
-              <li><span class="sw-tile sw-tile--sm"><?= $abIcon('chat') ?></span><div><b>Payment reminders</b><small>WhatsApp · daily at 10:00</small></div><span class="sw-st sw-st--ok">Running</span></li>
-              <li><span class="sw-tile sw-tile--sm"><?= $abIcon('bot') ?></span><div><b>Lead follow-ups</b><small>AI agent · chat and email</small></div><span class="sw-st sw-st--ok">Running</span></li>
-              <li><span class="sw-tile sw-tile--sm"><?= $abIcon('workflow') ?></span><div><b>Stock reorder</b><small>When stock drops below 20</small></div><span class="sw-st sw-st--wait">Waiting</span></li>
-              <li><span class="sw-tile sw-tile--sm"><?= $abIcon('chart') ?></span><div><b>Weekly report</b><small>Mondays · sent to owners</small></div><span class="sw-st">Scheduled</span></li>
-            </ul>
-          </div>
-          <div class="sw-evt" aria-hidden="true"><span class="sw-tile"><?= $abIcon('sparkle') ?></span><div><b>AI replied in 4 seconds</b><small>Customer asked for order status</small></div></div>
-<?php else: ?>
-          <div class="sw-card" aria-hidden="true">
-            <div class="sw-card__hd"><div><b>Lead sources</b><small>Last 30 days</small></div><span class="sw-tabs"><i class="is-on">Leads</i><i>Spend</i></span></div>
-            <div class="sw-kpis sw-kpis--2"><div class="sw-kpi"><small>Qualified leads</small><b>312 <span class="sw-up">+24%</span></b></div><div class="sw-kpi"><small>Cost per lead</small><b class="sw-acc">₹184</b></div></div>
-            <div class="sw-list__hd"><span>Leads by channel</span><span>Leads</span></div>
-            <ul class="sw-list">
-              <li><div><b>Google Ads</b></div><span class="sw-bar"><i style="--w:1"></i></span><em>128</em></li>
-              <li><div><b>Meta Ads</b></div><span class="sw-bar"><i style="--w:.73"></i></span><em>94</em></li>
-              <li><div><b>SEO &amp; AI search</b></div><span class="sw-bar"><i style="--w:.48"></i></span><em>62</em></li>
-              <li><div><b>Referrals</b></div><span class="sw-bar"><i style="--w:.22"></i></span><em>28</em></li>
-            </ul>
-          </div>
-          <div class="sw-evt" aria-hidden="true"><span class="sw-tile"><?= $abIcon('target') ?></span><div><b>New qualified lead</b><small>From Google search · 2 min ago</small></div></div>
-<?php endif; ?>
-        </div>
+        <div class="sw-media reveal" style="--d:.08s"><?= $abImg($file, $alt, 1400, 1100) ?></div>
       </article>
 <?php endforeach; ?>
     </div>
