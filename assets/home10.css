@@ -318,42 +318,39 @@ html.js .h10 .cx-panel:not(.is-in){opacity:0;translate:0 60px;scale:.96}
 .h10 .step h3{font-size:1.2rem;line-height:1.3;font-weight:700;letter-spacing:-.02em;text-wrap:balance}
 .h10 .step p{color:var(--mut);font-size:.95rem;line-height:1.6}
 .h10 .step .tags{margin-top:auto;padding-top:6px}
-/* approach steps as paper tickets: coloured stub, perforation, body */
-.h10 .step:nth-child(1){--tk:#F8E6D6}
-.h10 .step:nth-child(2){--tk:#DFEAF9}
-.h10 .step:nth-child(3){--tk:#E8E2F5}
-.h10 .step:nth-child(4){--tk:#EDF0D7}
-.h10 .step__card.tk{--c:14px;--n:13px;--o:7px;--ln:color-mix(in oklch,var(--tk),#000 38%);flex:1;gap:0;padding:0;background:none;border:0;border-radius:0;box-shadow:none;filter:drop-shadow(0 1px 1px rgba(15,23,42,.1)) drop-shadow(0 16px 18px rgba(15,23,42,.12));transition:transform .5s var(--ease),filter .5s var(--ease)}
+/* approach steps as pastel tickets: stub (step + progress), notched perforation, body */
+.h10 .step:nth-child(1){--tk:#F8E6D6;--tkd:#C77A3E}
+.h10 .step:nth-child(2){--tk:#DFEAF9;--tkd:#3F6FC4}
+.h10 .step:nth-child(3){--tk:#E8E2F5;--tkd:#7656C2}
+.h10 .step:nth-child(4){--tk:#EDF0D7;--tkd:#7E8F2E}
+.h10 .flow__rail,.h10 .step__node{display:none}
+.h10 .appr .step{filter:drop-shadow(0 12px 16px color-mix(in oklch,var(--tk),#000 22%))}
+.h10 .step__card.tk{--sy:76px;--n:11px;--ln:color-mix(in oklch,var(--tk),#000 22%);flex:1;gap:0;margin-top:0;padding:5px;border:0;border-radius:16px;
+  background:radial-gradient(circle at 0 var(--sy),#0000 var(--n),var(--ln) 0 calc(var(--n) + 1px),#0000 0),radial-gradient(circle at 100% var(--sy),#0000 var(--n),var(--ln) 0 calc(var(--n) + 1px),#0000 0),color-mix(in srgb,var(--tk) 70%,#fff);
+  box-shadow:inset 0 0 0 1px color-mix(in oklch,var(--tk),#000 10%);
+  -webkit-mask:radial-gradient(circle at 0 var(--sy),#0000 var(--n),#000 calc(var(--n) + .5px)),radial-gradient(circle at 100% var(--sy),#0000 var(--n),#000 calc(var(--n) + .5px));-webkit-mask-composite:source-in;
+  mask:radial-gradient(circle at 0 var(--sy),#0000 var(--n),#000 calc(var(--n) + .5px)),radial-gradient(circle at 100% var(--sy),#0000 var(--n),#000 calc(var(--n) + .5px));mask-composite:intersect;
+  transition:transform .5s var(--ease)}
 .h10 .step__card.tk::before{display:none}
-.h10 .step:hover .step__card.tk{transform:translateY(-6px) rotate(-.5deg);border:0;box-shadow:none;filter:drop-shadow(0 2px 2px rgba(15,23,42,.1)) drop-shadow(0 26px 24px rgba(15,23,42,.16))}
+.h10 .step:hover .step__card.tk{transform:translateY(-6px);box-shadow:inset 0 0 0 1px color-mix(in oklch,var(--tk),#000 10%)}
 .h10 .step__card.tk>*{padding-inline:0}
-.h10 .tk-stub,.h10 .tk-body{position:relative;isolation:isolate;
-  -webkit-mask:radial-gradient(circle at 0 0,#0000 var(--c),#000 calc(var(--c) + .5px)),radial-gradient(circle at 100% 0,#0000 var(--c),#000 calc(var(--c) + .5px)),radial-gradient(circle at 0 100%,#0000 var(--c),#000 calc(var(--c) + .5px)),radial-gradient(circle at 100% 100%,#0000 var(--c),#000 calc(var(--c) + .5px)),radial-gradient(circle at 0 50%,#0000 var(--n),#000 calc(var(--n) + .5px)),radial-gradient(circle at 100% 50%,#0000 var(--n),#000 calc(var(--n) + .5px));
-  -webkit-mask-composite:source-in;
-  mask:radial-gradient(circle at 0 0,#0000 var(--c),#000 calc(var(--c) + .5px)),radial-gradient(circle at 100% 0,#0000 var(--c),#000 calc(var(--c) + .5px)),radial-gradient(circle at 0 100%,#0000 var(--c),#000 calc(var(--c) + .5px)),radial-gradient(circle at 100% 100%,#0000 var(--c),#000 calc(var(--c) + .5px)),radial-gradient(circle at 0 50%,#0000 var(--n),#000 calc(var(--n) + .5px)),radial-gradient(circle at 100% 50%,#0000 var(--n),#000 calc(var(--n) + .5px));
-  mask-composite:intersect}
-.h10 .tk-stub{padding:16px 18px;background:color-mix(in srgb,var(--tk) 85%,#fbfaf6)}
-.h10 .tk-body{flex:1;display:flex;flex-direction:column;gap:12px;padding:22px 24px 26px;background:color-mix(in srgb,var(--tk) 22%,#fbfaf6)}
-/* thin inner line that follows the notches and corners */
-.h10 .tk-stub::before,.h10 .tk-body::before{content:"";position:absolute;z-index:-1;inset:var(--o);border:1px solid var(--ln);opacity:.45;pointer-events:none;
-  background:radial-gradient(circle at calc(-1 * var(--o)) calc(-1 * var(--o)),#0000 calc(var(--c) + var(--o)),var(--ln) 0 calc(var(--c) + var(--o) + 1px),#0000 0),radial-gradient(circle at calc(100% + var(--o)) calc(-1 * var(--o)),#0000 calc(var(--c) + var(--o)),var(--ln) 0 calc(var(--c) + var(--o) + 1px),#0000 0),radial-gradient(circle at calc(-1 * var(--o)) calc(100% + var(--o)),#0000 calc(var(--c) + var(--o)),var(--ln) 0 calc(var(--c) + var(--o) + 1px),#0000 0),radial-gradient(circle at calc(100% + var(--o)) calc(100% + var(--o)),#0000 calc(var(--c) + var(--o)),var(--ln) 0 calc(var(--c) + var(--o) + 1px),#0000 0),radial-gradient(circle at calc(-1 * var(--o)) 50%,#0000 calc(var(--n) + var(--o)),var(--ln) 0 calc(var(--n) + var(--o) + 1px),#0000 0),radial-gradient(circle at calc(100% + var(--o)) 50%,#0000 calc(var(--n) + var(--o)),var(--ln) 0 calc(var(--n) + var(--o) + 1px),#0000 0);
-  background-origin:border-box;
-  -webkit-mask:radial-gradient(circle at calc(-1 * var(--o)) calc(-1 * var(--o)),#0000 calc(var(--c) + var(--o)),#000 0),radial-gradient(circle at calc(100% + var(--o)) calc(-1 * var(--o)),#0000 calc(var(--c) + var(--o)),#000 0),radial-gradient(circle at calc(-1 * var(--o)) calc(100% + var(--o)),#0000 calc(var(--c) + var(--o)),#000 0),radial-gradient(circle at calc(100% + var(--o)) calc(100% + var(--o)),#0000 calc(var(--c) + var(--o)),#000 0),radial-gradient(circle at calc(-1 * var(--o)) 50%,#0000 calc(var(--n) + var(--o)),#000 0),radial-gradient(circle at calc(100% + var(--o)) 50%,#0000 calc(var(--n) + var(--o)),#000 0);
-  -webkit-mask-composite:source-in;
-  mask:radial-gradient(circle at calc(-1 * var(--o)) calc(-1 * var(--o)),#0000 calc(var(--c) + var(--o)),#000 0),radial-gradient(circle at calc(100% + var(--o)) calc(-1 * var(--o)),#0000 calc(var(--c) + var(--o)),#000 0),radial-gradient(circle at calc(-1 * var(--o)) calc(100% + var(--o)),#0000 calc(var(--c) + var(--o)),#000 0),radial-gradient(circle at calc(100% + var(--o)) calc(100% + var(--o)),#0000 calc(var(--c) + var(--o)),#000 0),radial-gradient(circle at calc(-1 * var(--o)) 50%,#0000 calc(var(--n) + var(--o)),#000 0),radial-gradient(circle at calc(100% + var(--o)) 50%,#0000 calc(var(--n) + var(--o)),#000 0);
-  mask-composite:intersect}
-/* rough, lightly crumpled paper: lit fractal noise + a couple of soft creases */
-.h10 .tk-stub::after,.h10 .tk-body::after{content:"";position:absolute;z-index:1;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.5;
-  background:linear-gradient(var(--cr1,112deg),transparent 47%,rgba(255,255,255,.55) 49%,rgba(15,23,42,.05) 50.5%,transparent 53%),linear-gradient(var(--cr2,24deg),transparent 60%,rgba(255,255,255,.45) 61.5%,rgba(15,23,42,.045) 62.5%,transparent 64.5%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='p' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='5' seed='11'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='1.8' diffuseConstant='1.05'%3E%3CfeDistantLight azimuth='225' elevation='58'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E") 0 0/360px 360px,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") 0 0/160px 160px}
-.h10 .step:nth-child(2) .tk-body{--cr1:68deg;--cr2:150deg}
-.h10 .step:nth-child(3) .tk-body{--cr1:128deg;--cr2:-12deg}
-.h10 .step:nth-child(4) .tk-body{--cr1:80deg;--cr2:200deg}
-.h10 .tk-stub>*,.h10 .tk-body>*{position:relative}
-.h10 .tk-stub .step__art{border-radius:10px;box-shadow:inset 0 0 0 1px rgba(15,23,42,.06)}
-.h10 .tk-body .step__k{margin-top:0;color:color-mix(in oklch,var(--tk),#000 62%)}
-/* perforation joining the two halves: paper bridge with punched holes */
-.h10 .tk-perf{position:relative;height:12px;margin:-1px var(--c);background:linear-gradient(180deg,color-mix(in srgb,var(--tk) 85%,#fbfaf6) 50%,color-mix(in srgb,var(--tk) 22%,#fbfaf6) 50%);
-  -webkit-mask:radial-gradient(circle at 50% 50%,#0000 3.4px,#000 4px) 50% 0/13px 100% repeat-x;mask:radial-gradient(circle at 50% 50%,#0000 3.4px,#000 4px) 50% 0/13px 100% repeat-x}
+.h10 .tk-stub,.h10 .tk-body{position:relative;background:var(--tk);border:1px solid var(--ln)}
+.h10 .tk-stub{display:flex;justify-content:space-between;align-items:flex-end;height:calc(var(--sy) - 5px);padding:10px 12px;border-bottom:0;border-radius:11px 11px 0 0}
+.h10 .tk-num,.h10 .tk-of{display:flex;flex-direction:column;gap:2px}
+.h10 .tk-of{align-items:flex-end;gap:6px;padding-bottom:4px}
+.h10 .tk-stub small{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#374151}
+.h10 .tk-num b{font-family:var(--f-head);font-size:1.9rem;font-weight:800;line-height:1;letter-spacing:-.02em;color:#111827}
+.h10 .tk-dots{display:flex;align-items:center;gap:4px}
+.h10 .tk-dots i{width:7px;height:7px;border-radius:50%;opacity:.45}
+.h10 .tk-dots i:nth-child(1){background:#C77A3E}.h10 .tk-dots i:nth-child(2){background:#3F6FC4}.h10 .tk-dots i:nth-child(3){background:#7656C2}.h10 .tk-dots i:nth-child(4){background:#7E8F2E}
+.h10 .tk-dots i.is-cur{opacity:1;box-shadow:0 0 0 2px var(--tk),0 0 0 3.5px #111827}
+.h10 .tk-perf{height:0;margin:0 calc(var(--n) - 3px);border-top:2px dotted color-mix(in oklch,var(--tk),#000 30%)}
+.h10 .tk-body{flex:1;display:flex;flex-direction:column;gap:8px;padding:14px 12px 18px;border-top:0;border-radius:0 0 11px 11px}
+.h10 .tk-body .step__art{margin-bottom:8px;border-radius:10px;background:rgba(255,255,255,.55)}
+body>.h10 .step .tk .step__art.il,body>.h10:not(.ab) .step:nth-child(n) .tk .step__art.il{--il-bg:color-mix(in srgb,var(--tk) 35%,#fff)}
+.h10 .tk-h{font-size:1.08rem;font-weight:700;line-height:1.3;letter-spacing:-.01em;color:#111827}
+.h10 .step .tk-lead{font-size:.9rem;font-weight:600;line-height:1.45;color:#1f2937}
+.h10 .step .tk-body p:not(.tk-lead){font-size:.86rem;line-height:1.55;color:#4b5563}
 
 /* ---------- 8-week program: scrolling week cards + sticky tear-off calendar ---------- */
 .h10 .prog{position:relative;padding:clamp(72px,9vw,128px) 0;background-color:#fff;background-image:radial-gradient(rgba(15,58,36,.075) 1px,transparent 1.4px);background-size:22px 22px;color:var(--ink);overflow:clip}
