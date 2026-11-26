@@ -689,33 +689,41 @@ $indRows = [
     <p class="sw-foot">Product screens use sample data.</p>
   </div>
 </section>
+<?php
+// Client testimonials. Client names stay out where an NDA applies, so each card
+// is credited by role and industry. The phrase in [[...]] gets the marker highlight.
+$tsItems = [
+  ['Construction & Real Estate', 'i-building', '#F8E6D6', 'Founder & CEO',
+    'We needed more than just software. We needed a system that could connect our projects, teams and day-to-day operations. Drawlead understood our requirements and [[built a solution around how our business actually works.]]'],
+  ['Ecommerce & D2C', 'i-cart', '#DFEAF9', 'Founder',
+    'We wanted an ecommerce experience that truly represented our brand, not just another standard online store. Drawlead understood our vision and [[developed a customized shopping experience around our products and customers.]]'],
+  ['Healthcare', 'i-heart', '#DAF1E5', 'Founder',
+    'Managing multiple operations while maintaining a smooth patient experience was challenging. Drawlead helped us bring our processes together through [[technology designed around our healthcare operations.]]'],
+];
+$tsMark = fn(string $q) => preg_replace('/\[\[(.+?)\]\]/', '<mark>$1</mark>', h($q));
+?>
 <section class="test" id="testimonials">
   <div class="wrap">
-    <div class="center">
-      <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Client Experiences</span>
-      <h2 class="h2 reveal" style="--d:.06s">Built on Trust.<br>Strengthened by Results.</h2>
-      <p class="lede reveal" style="--d:.1s">Great technology is built through great partnerships. We work closely with our clients to understand their business, solve complex challenges and deliver solutions that create lasting value.</p>
-      <p class="lede reveal" style="--d:.14s">Here's what our clients have to say about working with Drawlead.</p>
+    <div class="ts-head">
+      <div>
+        <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Client Experiences</span>
+        <h2 class="ts-h2 reveal" style="--d:.06s">Built on Trust.<br>Strengthened by Results.</h2>
+      </div>
+      <div class="ts-lede reveal" style="--d:.12s">
+        <p>Great technology is built through great partnerships. We work closely with our clients to understand their business, solve complex challenges and deliver solutions that create lasting value.</p>
+        <p><b>Here's what our clients have to say about working with Drawlead.</b></p>
+      </div>
     </div>
-    <div class="tgrid">
-      <figure class="tcard spot reveal" style="--d:0.0s" data-testimonial-slot="1">
-        <span class="tcard__q"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg></span>
-        <figcaption class="tcard__who"><span class="tcard__av" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg></span><b>[Client Name / Business Name]</b></figcaption>
-        <blockquote>“[Insert the client's actual feedback about their experience working with Drawlead.]”</blockquote>
-        <p class="tcard__by">— [Client Name], [Designation]</p>
+    <div class="ts-grid">
+<?php foreach ($tsItems as $i => [$ind, $icon, $tint, $role, $quote]): ?>
+      <figure class="ts-card<?= $i === 0 ? ' ts-card--lead' : '' ?> reveal" style="--t:<?= $tint ?>;--d:<?= $i * .08 ?>s">
+        <div class="ts-top"><span class="ts-no">Testimonial <?= str_pad((string)($i + 1), 2, '0', STR_PAD_LEFT) ?></span><span class="ts-ind"><?= h($ind) ?></span></div>
+        <svg class="ts-q" viewBox="0 0 48 36" aria-hidden="true" focusable="false"><path d="M0 36V22C0 9.5 6.4 2.2 19 0l1.8 5.2C14 7 10.6 10.8 10 16h9v20H0zm27 0V22C27 9.5 33.4 2.2 46 0l1.8 5.2C41 7 37.6 10.8 37 16h9v20H27z"/></svg>
+        <blockquote><p><?= $tsMark($quote) ?></p></blockquote>
+        <figcaption class="ts-by"><span class="ts-av" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#<?= $icon ?>"/></svg></span><span><b><?= h($role) ?></b><span><?= h($ind) ?></span></span></figcaption>
       </figure>
-      <figure class="tcard spot reveal" style="--d:0.08s" data-testimonial-slot="2">
-        <span class="tcard__q"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg></span>
-        <figcaption class="tcard__who"><span class="tcard__av" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg></span><b>[Client Name / Business Name]</b></figcaption>
-        <blockquote>“[Insert genuine feedback about the solution, collaboration or project delivery.]”</blockquote>
-        <p class="tcard__by">— [Client Name], [Designation]</p>
-      </figure>
-      <figure class="tcard spot reveal" style="--d:0.16s" data-testimonial-slot="3">
-        <span class="tcard__q"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg></span>
-        <figcaption class="tcard__who"><span class="tcard__av" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg></span><b>[Client Name / Business Name]</b></figcaption>
-        <blockquote>“[Insert genuine feedback about the business impact or overall working relationship.]”</blockquote>
-        <p class="tcard__by">— [Client Name], [Designation]</p>
-      </figure></div>
+<?php endforeach; ?>
+    </div>
     <div class="bcta bcta--light reveal">
       <div><h3>Your Business Could Be Our Next Success Story.</h3><p>Let's build something meaningful together.</p></div>
       <a class="h10-btn h10-btn--dark" href="/book" data-book><span>Start a Conversation</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
