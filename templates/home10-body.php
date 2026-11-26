@@ -788,14 +788,18 @@ $tsMark = fn(string $q) => preg_replace('/\[\[(.+?)\]\]/', '<mark>$1</mark>', h(
     </div>
   </div>
 </section>
-<section class="final" id="contact">
-  <div class="final__bg" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><i class="grid"></i></div>
-  <div class="wrap final__in">
-    <span class="pill pill--mint reveal"><span class="pill__dot" aria-hidden="true"></span>Let's Build Something Better</span>
-    <h2 class="h1x reveal" style="--d:.06s">Your Next Business Transformation <span class="grn">Starts Here.</span></h2>
-    <p class="lede lede--light reveal" style="--d:.1s">Whether you're looking to build a custom business system, develop a high-performing ecommerce platform, implement AI-powered automation or accelerate digital growth, we're ready to understand your requirements and engineer the right solution.</p>
-    <p class="final__line reveal" style="--d:.14s">Let's turn your business challenges into technology opportunities.</p>
-    <div class="final__ctas reveal" style="--d:.18s"><a class="h10-btn h10-btn--green" href="/book" data-book><span>Book a Consultation</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a><a class="h10-btn h10-btn--ghost" href="#solutions"><span>Explore Our Services</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a></div>
+<section class="final final--card" id="contact">
+  <div class="wrap">
+    <div class="final__card">
+      <img class="final__photo" src="/assets/home10/cta-handshake.webp" alt="" width="1600" height="1068" loading="lazy" decoding="async">
+      <div class="final__in">
+        <span class="pill pill--mint reveal"><span class="pill__dot" aria-hidden="true"></span>Let's Build Something Better</span>
+        <h2 class="h1x reveal" style="--d:.06s">Your Next Business Transformation <span class="grn">Starts Here.</span></h2>
+        <p class="lede lede--light reveal" style="--d:.1s">Whether you're looking to build a custom business system, develop a high-performing ecommerce platform, implement AI-powered automation or accelerate digital growth, we're ready to understand your requirements and engineer the right solution.</p>
+        <p class="final__line reveal" style="--d:.14s">Let's turn your business challenges into technology opportunities.</p>
+        <div class="final__ctas reveal" style="--d:.18s"><a class="h10-btn h10-btn--green" href="/book" data-book><span>Book a Consultation</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a><a class="h10-btn h10-btn--ghost" href="#solutions"><span>Explore Our Services</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a></div>
+      </div>
+    </div>
   </div>
 </section>
 </main><footer class="foot">
