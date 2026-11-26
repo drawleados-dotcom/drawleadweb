@@ -1,4 +1,5 @@
 <footer>
+ <?php $signClass = 'dl-sign--light'; include __DIR__ . '/footer-signoff.php'; ?>
  <div>
  <div class="ft-logo" style="background:linear-gradient(115deg,#32b46f,#14855a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Drawlead</div>
  <div class="ft-sub">Secure · Intelligent<br>Scalable · Future-Ready</div>

@@ -803,6 +803,7 @@ $tsMark = fn(string $q) => preg_replace('/\[\[(.+?)\]\]/', '<mark>$1</mark>', h(
   </div>
 </section>
 </main><footer class="foot">
+  <?php $signClass = 'wrap'; include __DIR__ . '/partials/footer-signoff.php'; ?>
   <div class="wrap foot__in">
     <a href="#top" aria-label="Drawlead – back to top"><img src="/assets/home10/logos/drawlead-white.webp" alt="Drawlead" width="153" height="30" loading="lazy"></a>
     <p>Business Systems. Digital Commerce. Intelligent Growth.</p>

@@ -45,5 +45,6 @@ gtag('config', '<?= h($gaId) ?>');
 </style>
 <link rel="stylesheet" href="<?= asset_url('/assets/palette.css') ?>">
 <link rel="stylesheet" href="<?= asset_url('/assets/site-header.css') ?>">
+<link rel="stylesheet" href="<?= asset_url('/assets/footer-signoff.css') ?>">
 </head>
 <body>

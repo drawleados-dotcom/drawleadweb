@@ -1,4 +1,5 @@
 <footer class="foot">
+  <?php $signClass = 'wrap'; include __DIR__ . '/footer-signoff.php'; ?>
   <div class="wrap foot__in">
     <a href="<?= h($homeUrl ?? '/') ?>" aria-label="Drawlead home"><img src="/assets/home10/logos/drawlead-white.webp" alt="Drawlead" width="153" height="30" loading="lazy"></a>
     <p>Business Systems. Digital Commerce. Intelligent Growth.</p>

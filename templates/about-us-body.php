@@ -431,12 +431,9 @@ $abSteps = [
       </div>
     </div>
   </div>
-  <div class="wrap signoff reveal">
-    <p class="signoff__w">Drawlead</p>
-    <p class="signoff__l"><b>Business Systems &amp; Technology.</b> <span>Built around the way businesses work.</span></p>
-  </div>
 </section>
 </main><footer class="foot">
+  <?php $signClass = 'wrap'; include __DIR__ . '/partials/footer-signoff.php'; ?>
   <div class="wrap foot__in">
     <a href="#about-top" aria-label="Drawlead – back to top"><img src="/assets/home10/logos/drawlead-white.webp" alt="Drawlead" width="153" height="30" loading="lazy"></a>
     <p>Business Systems. Digital Commerce. Intelligent Growth.</p>

@@ -378,18 +378,11 @@ html.js .ab .tix__item.is-in .tik__route .is-here{transform:none}
 .ab .vis__b{max-width:22em;margin:12px auto 0;text-align:center;font-size:clamp(1.6rem,3.2vw,2.9rem);line-height:1.16;font-weight:700;letter-spacing:-.036em;text-wrap:balance}
 
 /* ---------- 10 close ---------- */
-.ab .afinal{padding-bottom:0}
 .ab .afinal .h1x{max-width:none}
 .ab .afinal .h1x .grn{display:block}
-.ab .signoff{position:relative;margin-top:clamp(64px,8vw,120px);text-align:center}
-.ab .signoff__w{font-family:var(--f-head);font-size:clamp(4.2rem,19.5vw,18.5rem);line-height:.8;font-weight:700;letter-spacing:-.06em;background:linear-gradient(180deg,rgba(123,224,169,.5),rgba(123,224,169,.04) 88%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;user-select:none}
-.ab .signoff__l{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 12px;padding:clamp(18px,2.4vw,30px) 0 clamp(30px,3.4vw,46px);font-size:1rem;color:#aeb8b3}
-.ab .signoff__l b{color:#fff;font-weight:600}
-/* close as a contained photo card (shared .final--card styles in home10.css) on a white section */
-.ab .afinal.final--card{padding:clamp(56px,6vw,88px) 0 0;background:#fff}
-.ab .final--card .signoff__w{background:linear-gradient(180deg,rgba(50,180,111,.34),rgba(50,180,111,.03) 88%);-webkit-background-clip:text;background-clip:text}
-.ab .final--card .signoff__l{color:var(--mut)}
-.ab .final--card .signoff__l b{color:var(--ink)}
+/* close as a contained photo card (shared .final--card styles in home10.css) on a white section.
+   The big "Drawlead" signoff now opens the footer (partials/footer-signoff.php). */
+.ab .afinal.final--card{padding:clamp(56px,6vw,88px) 0 clamp(72px,9vw,128px);background:#fff}
 
 /* ==========================================================================
    Responsive
