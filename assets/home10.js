@@ -209,7 +209,7 @@
     $$('[data-swx-step]', swx.parentElement).forEach((a) => a.addEventListener('click', () => select(step(+a.dataset.swxStep))));
   }
 
-  /* ---------- 8-week program: week cards scroll, the calendar flips 1 → 8 ---------- */
+  /* ---------- 8-week program: week cards scroll, calendar pages tear off 1 → 8 ---------- */
   const pg = $('[data-pg]');
   if (pg) {
     const weeks = $$('.pg-week', pg);
@@ -226,23 +226,61 @@
       dots.forEach((d, k) => { d.classList.toggle('is-on', k <= i); d.classList.toggle('is-cur', k === i); });
       weeks.forEach((w, k) => w.classList.toggle('is-on', k === i));
     };
+    // a ragged top edge, so the page looks torn along the perforation
+    const ragged = () => {
+      const pts = ['0% 100%', '0% 0.9em'];
+      for (let x = 0; x <= 100; x += 4) pts.push(x + '% calc(0.75em + ' + (Math.random() * 0.32).toFixed(2) + 'em)');
+      pts.push('100% 100%');
+      return 'polygon(' + pts.join(',') + ')';
+    };
+    // tear: peel from one corner, then fall under gravity with spin and drift
+    const tear = (leaf, speed, done) => {
+      const dir = Math.random() < .5 ? -1 : 1;
+      const h = leaf.offsetHeight || 200;
+      leaf.style.transformOrigin = dir > 0 ? '0% 0%' : '100% 0%';
+      const PEEL = 170 / speed;
+      let t0 = 0, last = 0, x = 0, y = 0, a = 0;
+      let vx = dir * (80 + Math.random() * 120), vy = -40, va = dir * (40 + Math.random() * 50);
+      const G = 2400;
+      const frame = (now) => {
+        if (!t0) { t0 = last = now; }
+        const el = now - t0;
+        if (el < PEEL) {
+          const p = el / PEEL;
+          a = dir * 10 * p * p;
+          y = -4 * p;
+          if (p > .55 && !leaf.style.clipPath) leaf.style.clipPath = ragged();
+        } else {
+          const dt = Math.min(.034, (now - last) / 1000) * speed;
+          vy += G * dt; vx *= .995; va *= .99;
+          x += vx * dt; y += vy * dt; a += va * dt;
+        }
+        last = now;
+        leaf.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) rotate(${a.toFixed(2)}deg)`;
+        leaf.style.opacity = String(clamp(1 - (y - h * .5) / (h * .9)));
+        if (y > h * 1.6 || el > 2200) done(); else requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
+    };
     const step = () => {
       if (shown === target) { busy = false; return; }
       busy = true;
       const fwd = target > shown, next = shown + (fwd ? 1 : -1);
       if (reduce) { shown = target; paint(shown); busy = false; return; }
+      const fast = Math.abs(target - shown) > 1 ? 1.9 : 1;
       const leaf = document.createElement('div');
-      leaf.className = 'pg-cal__leaf' + (fwd ? '' : ' is-down');
-      leaf.style.animationDuration = (Math.abs(target - shown) > 1 ? 340 : 640) + 'ms';
-      leaf.innerHTML = '<div class="pg-cal__page"><b>' + ((fwd ? shown : next) + 1) + '</b></div><div class="pg-cal__page pg-face--back"></div>';
+      leaf.className = 'pg-cal__leaf' + (fwd ? '' : ' is-back');
+      leaf.innerHTML = '<div class="pg-cal__page"><b>' + ((fwd ? shown : next) + 1) + '</b></div>';
       pad.appendChild(leaf);
-      if (fwd) paint(next); // the new page sits underneath while the old one flips away
-      leaf.addEventListener('animationend', () => {
-        if (!fwd) paint(next);
-        leaf.remove();
-        shown = next;
-        step();
-      }, { once: true });
+      const finish = () => { leaf.remove(); shown = next; step(); };
+      if (fwd) {
+        paint(next); // the next page is already underneath while the old one tears away
+        tear(leaf, fast, finish);
+      } else {
+        // scrolling back: the previous page settles back onto the pad
+        leaf.style.animationDuration = (420 / fast) + 'ms';
+        leaf.addEventListener('animationend', () => { paint(next); finish(); }, { once: true });
+      }
     };
     let pgRaf = 0;
     const pgUpdate = () => {

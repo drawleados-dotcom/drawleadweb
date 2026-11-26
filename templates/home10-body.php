@@ -452,10 +452,9 @@ $pgPhases = [0 => ['Phase 01', 'Engineer & Build'], 4 => ['Phase 02', 'Implement
 <?php if (isset($pgPhases[$i])): ?>
         <div class="pg-phase reveal"><span class="pg-phase__k"><?= h($pgPhases[$i][0]) ?></span><span class="pg-phase__line" aria-hidden="true"></span><span class="pg-phase__t"><?= h($pgPhases[$i][1]) ?></span></div>
 <?php endif; ?>
-        <div class="pg-week reveal" data-stage="<?= h($stage) ?>" style="--t:<?= $pgTints[$i] ?>;--r:<?= $i % 2 ? '.7deg' : '-.6deg' ?>">
+        <div class="pg-week reveal" data-stage="<?= h($stage) ?>" style="--t:<?= $pgTints[$i] ?>">
           <span class="pg-wk">Week <?= $n ?></span>
           <article class="pg-card">
-            <span class="pg-rod" aria-hidden="true"></span>
             <span class="pg-card__k"><?= h($stage) ?></span>
             <h3 class="pg-card__h"><?= h($title) ?></h3>
 <?php if ($tags): ?>
@@ -470,7 +469,7 @@ $pgPhases = [0 => ['Phase 01', 'Engineer & Build'], 4 => ['Phase 02', 'Implement
       <div class="pg-aside" aria-hidden="true">
         <div class="pg-stage" style="--t:<?= $pgTints[0] ?>">
           <div class="pg-cal">
-            <span class="pg-cal__clip"></span>
+            <span class="pg-cal__ring pg-cal__ring--l"></span><span class="pg-cal__ring pg-cal__ring--r"></span>
             <div class="pg-cal__frame">
               <div class="pg-cal__pad">
                 <span class="pg-cal__sheet pg-cal__sheet--3"></span>
