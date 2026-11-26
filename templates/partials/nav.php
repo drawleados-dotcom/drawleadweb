@@ -14,12 +14,20 @@
  * 7/8/9), and the Platform mega menu is gone.
  */
 $activePage = $activePage ?? '';
-$navConfig = ['mega_enabled' => true, 'visible' => array_fill_keys(['home', 'about-us', 'solutions', 'case-studies', 'industries', 'blog'], true)];
+$navMegaItems = ['solutions', 'case-studies', 'industries'];
+$navConfig = [
+    'mega' => array_fill_keys($navMegaItems, true),
+    'visible' => array_fill_keys(['home', 'about-us', 'solutions', 'case-studies', 'industries', 'blog'], true),
+];
 try {
     $navRaw = $pdo->query("SELECT `value` FROM settings WHERE `key`='site_navigation'")->fetchColumn();
     $navSaved = is_string($navRaw) ? json_decode($navRaw, true) : null;
     if (is_array($navSaved)) {
-        $navConfig['mega_enabled'] = !array_key_exists('mega_enabled', $navSaved) || (bool) $navSaved['mega_enabled'];
+        foreach ($navMegaItems as $key) {
+            $navConfig['mega'][$key] = isset($navSaved['mega']) && is_array($navSaved['mega']) && array_key_exists($key, $navSaved['mega'])
+                ? (bool) $navSaved['mega'][$key]
+                : (!array_key_exists('mega_enabled', $navSaved) || (bool) $navSaved['mega_enabled']);
+        }
         if (isset($navSaved['visible']) && is_array($navSaved['visible'])) {
             foreach ($navConfig['visible'] as $key => $_) {
                 if (array_key_exists($key, $navSaved['visible'])) $navConfig['visible'][$key] = (bool) $navSaved['visible'][$key];
@@ -67,7 +75,7 @@ $navCurrent = fn (string $link): string => $link === $navSection ? ' aria-curren
  <?php if ($navConfig['visible']['solutions']): ?>
  <li class="has-mega">
    <a href="<?= h($homeUrl) ?>#solutions"<?= $navCurrent('solutions') ?>>Solutions</a>
-   <?php if ($navConfig['mega_enabled']): ?>
+   <?php if ($navConfig['mega']['solutions']): ?>
    <div class="mega-panel">
     <div class="mega-inner">
 
@@ -124,7 +132,7 @@ $navCurrent = fn (string $link): string => $link === $navSection ? ' aria-curren
  <?php if ($navConfig['visible']['case-studies']): ?>
  <li class="has-mega">
    <a href="/case-studies"<?= $navCurrent('case-studies') ?>>Case Studies</a>
-   <?php if ($navConfig['mega_enabled']): ?>
+   <?php if ($navConfig['mega']['case-studies']): ?>
    <div class="mega-panel">
     <div class="mega-inner">
 
@@ -176,7 +184,7 @@ $navCurrent = fn (string $link): string => $link === $navSection ? ' aria-curren
  <?php if ($navConfig['visible']['industries']): ?>
  <li class="has-mega">
    <a href="<?= h($homeUrl) ?>#industries"<?= $navCurrent('industries') ?>>Industries</a>
-   <?php if ($navConfig['mega_enabled']): ?>
+   <?php if ($navConfig['mega']['industries']): ?>
    <div class="mega-panel">
     <div class="mega-inner mega-inner-ind">
 

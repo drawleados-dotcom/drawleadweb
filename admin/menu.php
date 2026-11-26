@@ -10,13 +10,21 @@ $items = [
     'industries' => ['Industries', 'Homepage #industries'],
     'blog' => ['Blog', '/blog'],
 ];
-$defaults = ['mega_enabled' => true, 'visible' => array_fill_keys(array_keys($items), true)];
+$megaItems = ['solutions', 'case-studies', 'industries'];
+$defaults = [
+    'mega' => array_fill_keys($megaItems, true),
+    'visible' => array_fill_keys(array_keys($items), true),
+];
 $config = $defaults;
 try {
     $raw = $pdo->query("SELECT `value` FROM settings WHERE `key`='site_navigation'")->fetchColumn();
     $saved = is_string($raw) ? json_decode($raw, true) : null;
     if (is_array($saved)) {
-        $config['mega_enabled'] = !array_key_exists('mega_enabled', $saved) || (bool) $saved['mega_enabled'];
+        foreach ($megaItems as $key) {
+            $config['mega'][$key] = isset($saved['mega']) && is_array($saved['mega']) && array_key_exists($key, $saved['mega'])
+                ? (bool) $saved['mega'][$key]
+                : (!array_key_exists('mega_enabled', $saved) || (bool) $saved['mega_enabled']);
+        }
         foreach ($items as $key => $_) {
             if (isset($saved['visible']) && is_array($saved['visible']) && array_key_exists($key, $saved['visible'])) {
                 $config['visible'][$key] = (bool) $saved['visible'][$key];
@@ -31,7 +39,9 @@ $error = '';
 $success = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_verify();
-    $config['mega_enabled'] = isset($_POST['mega_enabled']);
+    foreach ($megaItems as $key) {
+        $config['mega'][$key] = isset($_POST['mega'][$key]);
+    }
     foreach ($items as $key => $_) {
         $config['visible'][$key] = isset($_POST['visible'][$key]);
     }
@@ -56,23 +66,21 @@ include __DIR__ . '/includes/header.php';
 <form method="post">
   <?= csrf_field() ?>
   <div class="card">
-    <div class="card-title">Mega menu</div>
-    <label class="checkbox-row" style="max-width:440px">
-      <input type="checkbox" name="mega_enabled" <?= $config['mega_enabled'] ? 'checked' : '' ?>>
-      Enable mega menus on the public site
-    </label>
-    <div class="field-hint">When off, Solutions, Case Studies, and Industries remain as regular navigation links.</div>
-  </div>
-
-  <div class="card">
     <div class="card-title">Navigation links</div>
-    <div class="card-desc">Turn links on or off in the desktop navigation and mobile menu.</div>
+    <div class="card-desc">Control link visibility and each dropdown mega menu. Mega menus are available for Solutions, Case Studies, and Industries.</div>
+    <div style="display:grid;grid-template-columns:minmax(220px,1fr) 150px 150px;gap:12px;padding:10px 0;color:var(--g500);font-size:12px;font-weight:700">
+      <span>Navigation item</span><span>Show link</span><span>Mega menu</span>
+    </div>
     <?php foreach ($items as $key => [$label, $destination]): ?>
-    <label class="checkbox-row" style="max-width:600px; padding:13px 0; border-bottom:1px solid var(--border)">
-      <input type="checkbox" name="visible[<?= h($key) ?>]" <?= $config['visible'][$key] ? 'checked' : '' ?>>
-      <span style="flex:1"><?= h($label) ?></span>
-      <span style="color:var(--g500);font-size:12px"><?= h($destination) ?></span>
-    </label>
+    <div style="display:grid;grid-template-columns:minmax(220px,1fr) 150px 150px;gap:12px;align-items:center;padding:13px 0;border-top:1px solid var(--border)">
+      <span><strong><?= h($label) ?></strong><small style="display:block;color:var(--g500);margin-top:4px"><?= h($destination) ?></small></span>
+      <label class="checkbox-row"><input type="checkbox" name="visible[<?= h($key) ?>]" <?= $config['visible'][$key] ? 'checked' : '' ?>> Show link</label>
+      <?php if (in_array($key, $megaItems, true)): ?>
+      <label class="checkbox-row"><input type="checkbox" name="mega[<?= h($key) ?>]" <?= $config['mega'][$key] ? 'checked' : '' ?>> Enabled</label>
+      <?php else: ?>
+      <span style="color:var(--g500);font-size:13px">Not configured</span>
+      <?php endif; ?>
+    </div>
     <?php endforeach; ?>
   </div>
   <button type="submit" class="btn btn-primary">Save Menu</button>
