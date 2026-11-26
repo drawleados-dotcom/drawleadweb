@@ -263,20 +263,30 @@ $abSteps = [
 <?php endforeach; ?>
       </ul>
       <p class="realz__p reveal">The way a construction company manages projects is different from how a hospital manages patients. An ecommerce brand has different customer journeys from a manufacturing business.</p>
-      <figure class="realz__fig reveal"><?= $abImg('fit.webp', 'A board with four differently shaped openings, each filled by the piece made for it, with one green piece being lowered into place', 1800, 1000, 'loading="lazy" data-drift') ?></figure>
-      <div class="realz__cols">
-        <div class="reveal">
-          <p><b>Even two companies in the same industry may work completely differently.</b></p>
-          <p>Yet technology is often sold as a predefined product, expecting businesses to adjust their processes around it.</p>
-        </div>
-        <div class="reveal" style="--d:.08s">
-          <p><b>We question that approach.</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- 04b · Our approach: start from the challenge, not the product -->
+<section class="fit" id="approach">
+  <div class="wrap">
+    <div class="fit__top">
+      <figure class="fit__art reveal"><?= $abImg('fit.webp', 'A board with four differently shaped openings, each filled by the piece made for it, with one green piece being lowered into place', 1800, 1000, 'loading="lazy" data-drift') ?></figure>
+      <div class="fit__copy">
+        <h2 class="fit__h reveal" style="--d:.06s">Even two companies in the same industry may work completely differently.</h2>
+        <p class="fit__p reveal" style="--d:.12s">Yet technology is often sold as a predefined product, expecting businesses to adjust their processes around it.</p>
+        <div class="fit__turn reveal" style="--d:.18s">
+          <h3>We question that approach.</h3>
           <p>We believe the starting point should always be the business challenge.</p>
         </div>
       </div>
-      <ol class="chain" role="list"><li class="reveal">Understand the people.</li><li class="reveal" style="--d:.1s">Understand the process.</li><li class="reveal" style="--d:.2s">Understand the problem.</li><li class="reveal" style="--d:.3s">Then engineer the technology.</li></ol>
-      <p class="realz__end reveal">That's the difference between simply delivering software and making technology work for a business.</p>
     </div>
+    <ol class="fsteps" role="list">
+<?php foreach (['Understand the people.', 'Understand the process.', 'Understand the problem.', 'Then engineer the technology.'] as $i => $step): ?>
+      <li class="fstep reveal" <?= $abDelay($i, .12) ?>><span class="fstep__n"><?= sprintf('%02d', $i + 1) ?></span><span class="fstep__t"><?= $step ?></span></li>
+<?php endforeach; ?>
+    </ol>
+    <p class="fit__end reveal">That's the difference between simply delivering software and <span class="hl">making technology work for a business.</span></p>
   </div>
 </section>
 
