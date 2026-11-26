@@ -103,6 +103,10 @@ body>.h10:not(.ab) section.hero{background:linear-gradient(180deg,#DAF1E5 0%,#ea
 .h10 .hero__bg .grid{position:absolute;inset:0;background-image:radial-gradient(rgba(15,58,36,.16) 1px,transparent 1.2px);background-size:26px 26px;mask-image:radial-gradient(ellipse 70% 60% at 70% 30%,#000,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 70% 30%,#000,transparent 75%)}
 .h10 .hero .wrap{position:relative}
 .h10 .hero__top{display:grid;grid-template-columns:minmax(0,1fr);align-items:center;gap:clamp(16px,3vw,48px)}
+.h10 .hero-eb{display:inline-flex;align-items:center;gap:12px;max-width:100%;padding:6px 22px 6px 6px;border-radius:999px;background:linear-gradient(90deg,#DAF1E5 0%,#eef9f3 55%,rgba(255,255,255,.85) 100%);border:1px solid #b9e4cb;box-shadow:inset 0 1px 0 #fff,0 10px 24px -14px rgba(29,122,73,.45)}
+.h10 .hero-eb__ic{flex:none;display:grid;place-items:center;width:clamp(36px,3.4vw,44px);height:clamp(36px,3.4vw,44px);border-radius:50%;background:linear-gradient(180deg,#3cc47d,#1d7a49);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 6px 14px -4px rgba(29,122,73,.55)}
+.h10 .hero-eb__ic .ic{width:46%;height:46%}
+.h10 .hero-eb__t{font-family:var(--f-head);font-size:clamp(.95rem,1.45vw,1.2rem);font-weight:600;letter-spacing:-.01em;line-height:1.3;background:linear-gradient(90deg,#14532d 0%,#1d7a49 55%,#4fbf85 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 .h10 .hero__title{display:flex;flex-direction:column;gap:clamp(4px,.6vw,10px);margin-top:clamp(10px,1.2vw,16px)}
 .h10 .strike{display:block;font-family:var(--f-head);font-size:clamp(1.13rem,2.54vw,2.44rem);font-weight:500;letter-spacing:-.01em;color:#1f2937}
 .h10 .strike s{position:relative;text-decoration:none;display:inline-block}
@@ -117,7 +121,7 @@ html:not(.js) .h10 .strike s{text-decoration:line-through}
 @media (max-width:760px){.h10 .hero__start .hero__hl{display:inline;-webkit-box-decoration-break:clone;box-decoration-break:clone}}
 .h10 .hero__start{display:block;font-family:var(--f-head);font-size:clamp(2.4rem,5.4vw,5.2rem);line-height:1.08;font-weight:800;letter-spacing:-.03em;color:#0b0d0c}
 .h10 .hero__start em{font-style:normal;background:linear-gradient(100deg,var(--ink) 0%,var(--green-700) 55%,var(--green) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
-.h10 .hero__start em{background:none;-webkit-text-fill-color:currentColor;color:inherit}.h10 .hero .pill--outline{padding:10px 20px;font-size:clamp(.88rem,1.1vw,1rem);font-weight:500}
+.h10 .hero__start em{background:none;-webkit-text-fill-color:currentColor;color:inherit}
 .h10 .hero__art{position:relative;aspect-ratio:560/520;width:100%;max-width:600px;justify-self:end}
 .h10 .hero__art.il{background:transparent}
 .h10 .hero__art svg{overflow:visible}

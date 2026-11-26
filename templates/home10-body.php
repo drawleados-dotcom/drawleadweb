@@ -51,7 +51,7 @@ $h10Case = function (string $slug, string $fallback) use ($pdo): string {
   <div class="wrap">
     <div class="hero__top">
       <div class="hero__copy">
-        <span class="pill pill--outline reveal"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-sparkle"/></svg>Turning Business Data into Intelligent AI &amp; Automation Solutions</span>
+        <span class="hero-eb reveal"><span class="hero-eb__ic" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-sparkle"/></svg></span><span class="hero-eb__t">Turning Business Data into Intelligent AI &amp; Automation Solutions</span></span>
         <h1 class="hero__title">
           <span class="strike reveal" style="--d:.08s" data-fit-strike><s>Stop Managing Business Complexity.<svg class="strike__svg" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 14 C 50 9, 92 16, 140 12 S 236 9, 297 11"/><path d="M8 16.5 C 70 13, 130 18, 190 14.5 S 262 13, 293 15"/></svg></s></span>
           <span class="hero__start reveal" style="--d:.2s"><span class="hero__sb">Start Building</span><br><em class="hero__hl">Smarter Business Solutions.</em></span>
