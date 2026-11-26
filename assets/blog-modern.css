@@ -1,0 +1,68 @@
+.h10.blog-page{--journal-ink:#151a18;--journal-muted:#66716b;--journal-line:#e3e9e5;color:var(--journal-ink)}
+.h10.blog-page .journal-hero{position:relative;overflow:hidden;padding:clamp(150px,18vh,205px) 0 92px;background:radial-gradient(ellipse at 78% 46%,rgba(50,180,111,.12),transparent 34%),linear-gradient(180deg,#f8fbf9 0%,#fff 100%)}
+.h10.blog-page .journal-hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.28;background-image:linear-gradient(rgba(20,80,49,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(20,80,49,.045) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(90deg,transparent 30%,#000 100%)}
+.h10.blog-page .journal-hero__in{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);align-items:center;gap:50px}
+.h10.blog-page .journal-hero__copy{max-width:700px}
+.h10.blog-page .journal-hero .pill{margin-bottom:22px}
+.h10.blog-page .journal-hero h1{max-width:740px;margin:0 0 20px;font-size:clamp(44px,6vw,76px);line-height:1.02;letter-spacing:-.055em}
+.h10.blog-page .journal-hero .lede{max-width:600px;margin:0 0 28px;color:#606d66;font-size:clamp(16px,1.6vw,19px);line-height:1.65}
+.h10.blog-page .journal-hero__art{position:relative;min-height:360px;display:grid;place-items:center}
+.h10.blog-page .journal-orbit{position:absolute;display:block;border:1px solid rgba(24,130,77,.2);border-radius:50%;transform:rotate(-24deg)}
+.h10.blog-page .journal-orbit--one{width:300px;height:220px}.h10.blog-page .journal-orbit--two{width:240px;height:330px;transform:rotate(34deg)}.h10.blog-page .journal-orbit--three{width:380px;height:300px;transform:rotate(64deg)}
+.h10.blog-page .journal-hero__mark{position:relative;display:grid;place-items:center;width:128px;height:128px;border-radius:36px;background:linear-gradient(145deg,#35bd76,#08754b);color:#fff;font-size:66px;font-weight:800;box-shadow:0 26px 65px rgba(15,107,65,.25);transform:rotate(-8deg)}
+.h10.blog-page .journal-float{position:absolute;padding:11px 16px;border:1px solid rgba(255,255,255,.9);border-radius:12px;background:rgba(255,255,255,.88);box-shadow:0 14px 30px rgba(15,40,26,.1);color:#244d37;font-size:13px;font-weight:700;backdrop-filter:blur(8px)}
+.h10.blog-page .journal-float--one{top:18%;left:2%}.h10.blog-page .journal-float--two{top:27%;right:0}.h10.blog-page .journal-float--three{bottom:13%;left:10%}
+.h10.blog-page .journal-content{padding:76px 0 112px;background:#fff}
+.h10.blog-page .journal-section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:26px}
+.h10.blog-page .journal-kicker{display:block;margin-bottom:9px;color:#13834e;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.h10.blog-page .journal-section-head h2{margin:0;font-size:clamp(30px,4vw,42px);line-height:1.1;letter-spacing:-.04em}
+.h10.blog-page .journal-count{padding:9px 13px;border:1px solid var(--journal-line);border-radius:999px;color:var(--journal-muted);font-size:12px;font-weight:600}
+.h10.blog-page .journal-feature,.h10.blog-page .journal-card{display:flex;overflow:hidden;border:1px solid var(--journal-line);border-radius:20px;background:#fff;color:inherit;text-decoration:none;box-shadow:0 12px 40px rgba(16,43,27,.045);transition:transform .25s,box-shadow .25s,border-color .25s}
+.h10.blog-page .journal-feature:hover,.h10.blog-page .journal-card:hover{transform:translateY(-4px);border-color:#b6d9c4;box-shadow:0 22px 50px rgba(16,43,27,.11)}
+.h10.blog-page .journal-feature{display:grid;grid-template-columns:1.05fr .95fr;min-height:360px;margin-bottom:24px}
+.h10.blog-page .journal-feature__image,.h10.blog-page .journal-card__image{position:relative;min-height:240px;overflow:hidden;background:#eaf4ee}
+.h10.blog-page .journal-feature__image img,.h10.blog-page .journal-card__image img{width:100%;height:100%;min-height:inherit;display:block;object-fit:cover;transition:transform .6s}
+.h10.blog-page .journal-feature:hover img,.h10.blog-page .journal-card:hover img{transform:scale(1.035)}
+.h10.blog-page .journal-feature__badge{position:absolute;left:20px;top:20px;padding:8px 12px;border-radius:999px;background:#fff;color:#137a49;font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
+.h10.blog-page .journal-feature__body{display:flex;flex-direction:column;align-items:flex-start;padding:clamp(26px,4vw,48px)}
+.h10.blog-page .journal-meta{display:flex;align-items:center;gap:10px;color:#7b8780;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.h10.blog-page .journal-meta__dot{width:4px;height:4px;border-radius:50%;background:#32b46f}
+.h10.blog-page .journal-feature h3{margin:18px 0 12px;font-size:clamp(25px,3vw,38px);line-height:1.15;letter-spacing:-.04em}
+.h10.blog-page .journal-feature p,.h10.blog-page .journal-card p{margin:0;color:var(--journal-muted);font-size:14px;line-height:1.7}
+.h10.blog-page .journal-read{display:inline-flex;align-items:center;gap:9px;margin-top:auto;padding-top:26px;color:#08784a;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.h10.blog-page .journal-read span{display:grid;place-items:center;width:29px;height:29px;border:1px solid #c6e2d0;border-radius:50%;font-size:16px;transition:background .2s,color .2s}
+.h10.blog-page .journal-feature:hover .journal-read span,.h10.blog-page .journal-card:hover .journal-read span{background:#0a7146;color:#fff}
+.h10.blog-page .journal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.h10.blog-page .journal-card{flex-direction:column;min-height:390px}
+.h10.blog-page .journal-card__image{height:205px;min-height:205px}
+.h10.blog-page .journal-card__body{display:flex;flex:1;flex-direction:column;align-items:flex-start;padding:23px}
+.h10.blog-page .journal-card h3{margin:13px 0 10px;font-size:20px;line-height:1.28;letter-spacing:-.025em}
+.h10.blog-page .journal-image-placeholder{display:grid;width:100%;height:100%;min-height:inherit;place-items:center;background:radial-gradient(circle at 70% 25%,#ccebd8,transparent 30%),linear-gradient(135deg,#e7f4ec,#d6eddf);color:#167247;font-size:19px;font-weight:800;letter-spacing:-.04em}
+.h10.blog-page .journal-empty{padding:72px 24px;border:1px solid var(--journal-line);border-radius:22px;background:linear-gradient(145deg,#f7fbf8,#fff);text-align:center}
+.h10.blog-page .journal-empty__icon{display:grid;place-items:center;width:54px;height:54px;margin:0 auto 18px;border-radius:17px;background:#e3f5e9;color:#11834d;font-size:28px}
+.h10.blog-page .journal-empty h3{margin:0 0 8px;font-size:24px;letter-spacing:-.03em}.h10.blog-page .journal-empty p{margin:0;color:var(--journal-muted);font-size:14px;line-height:1.6}
+.h10.blog-page .journal-post-hero{padding:150px 0 48px;background:linear-gradient(180deg,#f8fbf9,#fff)}
+.h10.blog-page .journal-post-hero__in{max-width:980px;margin:0 auto;text-align:center}
+.h10.blog-page .journal-post-hero h1{max-width:900px;margin:19px auto 14px;font-size:clamp(38px,5.5vw,66px);line-height:1.04;letter-spacing:-.05em}
+.h10.blog-page .journal-post-meta{margin-bottom:28px;color:#708077;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+.h10.blog-page .journal-post-image{overflow:hidden;max-height:520px;border:1px solid var(--journal-line);border-radius:22px;background:#eaf4ee;box-shadow:0 20px 60px rgba(16,43,27,.1)}
+.h10.blog-page .journal-post-image img{display:block;width:100%;max-height:520px;object-fit:cover}
+.h10.blog-page .journal-post-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:56px;align-items:start;padding-top:52px;padding-bottom:100px}
+.h10.blog-page .journal-post-content{max-width:760px;color:#35413a;font-size:16px;line-height:1.85}
+.h10.blog-page .journal-post-content h2,.h10.blog-page .journal-post-content h3{color:#151a18;letter-spacing:-.035em;line-height:1.2}
+.h10.blog-page .journal-post-content h2{margin:2em 0 .7em;font-size:32px}.h10.blog-page .journal-post-content h3{margin:1.7em 0 .6em;font-size:24px}
+.h10.blog-page .journal-post-content p{margin:0 0 1.2em}.h10.blog-page .journal-post-content a{color:#08784a;font-weight:700}.h10.blog-page .journal-post-content img{max-width:100%;height:auto;border-radius:14px}
+.h10.blog-page .journal-post-content blockquote{margin:1.7em 0;padding:8px 0 8px 22px;border-left:3px solid #32b46f;color:#375344;font-size:19px;font-weight:600}
+.h10.blog-page .journal-post-aside{position:sticky;top:110px;padding:24px;border:1px solid var(--journal-line);border-radius:18px;background:#f6faf7}
+.h10.blog-page .journal-post-aside .post-sidebar{position:static;top:auto;max-width:none;margin:0}
+.h10.blog-page .journal-post-aside .sidebar-card{padding:0;background:transparent;border-radius:0}
+.h10.blog-page .journal-post-aside .sidebar-card-title{margin-bottom:12px;color:#17211b;font-size:18px}
+.h10.blog-page .journal-post-aside .sidebar-post{padding:13px 0;margin:0;border-bottom:1px solid var(--journal-line)}
+.h10.blog-page .journal-post-aside .sidebar-post-title{color:#27352c;font-size:13px}
+.h10.blog-page .journal-post-aside .sidebar-post-excerpt{color:#718078;font-size:11px}
+.h10.blog-page .journal-post-aside .sidebar-cta{margin-top:20px;background:#fff;border:1px solid var(--journal-line)}
+.h10.blog-page .journal-post-aside .sidebar-cta-btn{border-radius:999px}
+.h10.blog-page .journal-post-aside h2{margin:0 0 16px;font-size:18px;letter-spacing:-.025em}.h10.blog-page .journal-post-aside a{display:block;padding:13px 0;border-top:1px solid var(--journal-line);color:#26332b;text-decoration:none;font-size:13px;font-weight:700;line-height:1.45}.h10.blog-page .journal-post-aside a:hover{color:#08784a}
+.h10.blog-page .journal-back{display:inline-flex;align-items:center;gap:8px;margin-top:20px;color:#08784a;font-size:12px;font-weight:800;text-decoration:none;text-transform:uppercase;letter-spacing:.05em}
+@media(max-width:900px){.h10.blog-page .journal-hero__in{grid-template-columns:1fr}.h10.blog-page .journal-hero__art{min-height:280px}.h10.blog-page .journal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.h10.blog-page .journal-post-layout{grid-template-columns:1fr;gap:28px}.h10.blog-page .journal-post-aside{position:static}}
+@media(max-width:600px){.h10.blog-page .journal-hero{padding-top:125px;padding-bottom:62px}.h10.blog-page .journal-hero__in{gap:20px}.h10.blog-page .journal-hero__art{min-height:220px}.h10.blog-page .journal-orbit--one{width:220px;height:170px}.h10.blog-page .journal-orbit--two{width:180px;height:250px}.h10.blog-page .journal-orbit--three{width:280px;height:220px}.h10.blog-page .journal-hero__mark{width:90px;height:90px;border-radius:27px;font-size:48px}.h10.blog-page .journal-float{padding:8px 11px;font-size:11px}.h10.blog-page .journal-content{padding:52px 0 72px}.h10.blog-page .journal-section-head{align-items:flex-start}.h10.blog-page .journal-feature{grid-template-columns:1fr}.h10.blog-page .journal-feature__image{min-height:210px}.h10.blog-page .journal-feature__body{min-height:270px;padding:25px}.h10.blog-page .journal-grid{grid-template-columns:1fr}.h10.blog-page .journal-card{min-height:0}.h10.blog-page .journal-post-hero{padding-top:120px;padding-bottom:28px}.h10.blog-page .journal-post-image{border-radius:16px}.h10.blog-page .journal-post-layout{padding-top:34px;padding-bottom:68px}.h10.blog-page .journal-post-content{font-size:15px}.h10.blog-page .journal-post-content h2{font-size:27px}.h10.blog-page .journal-post-content h3{font-size:21px}}
