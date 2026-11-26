@@ -329,16 +329,38 @@ html.js .ab .rhythm.is-in .rhythm__ln{stroke-dashoffset:0}
 .ab .people__end{max-width:27em;margin:clamp(48px,5.6vw,84px) auto 0;text-align:center;font-size:clamp(1.5rem,2.8vw,2.5rem);line-height:1.22;font-weight:700;letter-spacing:-.034em;text-wrap:balance}
 .ab .people .hl{background-image:linear-gradient(transparent 64%,var(--t-rose) 64%,var(--t-rose) 92%,transparent 92%)}
 
-/* ---------- 08 way of working ---------- */
-.ab .way{padding:var(--pad) 0;background:linear-gradient(180deg,var(--t-lime),#f8f9ee 58%,#fff)}
+/* ---------- 08 way of working ----------
+   Five old railway tickets, one per step, each printed on its step's tint.
+   A row of tear dots, with notches cut into both edges, parts the stub from
+   the ticket. The stub carries the step number and a five-stop route in the
+   steps' own colours: stops already made are solid, this one is ringed and
+   punched in as the ticket arrives, the rest are faint. So the order reads
+   across the row without a rail. The notches are a mask, which would clip a
+   box-shadow, so the shadow is a drop-shadow on the list item. */
+.ab .way{--w-peach:#C77A2E;--w-sky:#3B7DD8;--w-lilac:#7B5CC4;--w-aqua:#1E9AA0;--w-lime:#7E9220;padding:var(--pad) 0;background:linear-gradient(180deg,var(--t-lime),#f8f9ee 58%,#fff)}
 .ab .way__head{display:flex;flex-direction:column;align-items:center;gap:0;text-align:center;margin-bottom:clamp(44px,5vw,72px)}
 .ab .way__head .lede{margin-top:18px;color:var(--t-ink)}
-.ab .flow--5 .flow__rail{left:10%;right:10%}
-.ab .steps--5{grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(12px,1.2vw,18px)}
-.ab .steps--5 .step__card{padding:12px 12px 24px}
-.ab .steps--5 .step__art{background:var(--tint)}
-.ab .steps--5 .il{--il-bg:var(--tint);--il-line:rgba(15,58,36,.18)}
-.ab .steps--5 h3{font-size:1.12rem;margin-top:8px}
+.ab .tix{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(12px,1.3vw,20px)}
+.ab .tix__item{display:flex;filter:drop-shadow(0 1px 1px rgba(15,58,36,.08)) drop-shadow(0 12px 14px rgba(15,58,36,.07))}
+.ab .tik{--stub:84px;--notch:12px;--tik-mask:radial-gradient(circle var(--notch) at 0 var(--stub),#0000 95%,#000) 0 0/51% 100% no-repeat,radial-gradient(circle var(--notch) at 100% var(--stub),#0000 95%,#000) 100% 0/51% 100% no-repeat;position:relative;display:flex;flex-direction:column;width:100%;padding:0 clamp(14px,1.3vw,20px) clamp(20px,1.9vw,28px);border-radius:18px;background:var(--tint);-webkit-mask:var(--tik-mask);mask:var(--tik-mask);transition:transform .5s var(--ease)}
+.ab .tik::before{content:"";position:absolute;inset:7px;border:1px solid rgba(11,13,12,.09);border-radius:12px;pointer-events:none}
+.ab .tik::after{content:"";position:absolute;z-index:-1;inset:0;border-radius:inherit;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .25 0 0 0 0 .2 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.22;mix-blend-mode:multiply;pointer-events:none}
+.ab .tix__item:hover .tik{transform:translateY(-6px) rotate(-1deg)}
+.ab .tik__stub{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;height:var(--stub);padding-bottom:15px}
+.ab .tik__no{display:flex;flex-direction:column;gap:5px;line-height:1}
+.ab .tik__k{font-size:.64rem;line-height:1;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--t-ink)}
+.ab .tik__no b{font-size:clamp(1.6rem,2vw,2.05rem);font-weight:800;letter-spacing:-.04em;color:var(--ink)}
+.ab .tik__trip{display:flex;flex-direction:column;align-items:flex-end;gap:9px;padding-bottom:4px}
+.ab .tik__route{display:flex;gap:5px}
+.ab .tik__route i{width:9px;height:9px;border-radius:50%;background:var(--c);opacity:.3}
+.ab .tik__route .is-done{opacity:1}
+.ab .tik__route .is-here{opacity:1;box-shadow:0 0 0 2px var(--tint),0 0 0 3.5px var(--ink)}
+html.js .ab .tix__item .tik__route .is-here{transform:scale(0);transition:transform .5s cubic-bezier(.34,1.56,.64,1) calc(var(--d,0s) + .55s)}
+html.js .ab .tix__item.is-in .tik__route .is-here{transform:none}
+.ab .tik__tear{position:absolute;left:calc(var(--notch) + 5px);right:calc(var(--notch) + 5px);top:calc(var(--stub) - 2px);height:4px;background:radial-gradient(circle,rgba(11,13,12,.28) 1.5px,transparent 2px) 0 50%/9px 4px space no-repeat}
+.ab .tik .tik__art{--il-bg:rgba(255,255,255,.5);--il-line:rgba(15,58,36,.18);margin-top:18px;aspect-ratio:200/140;border-radius:12px;overflow:hidden}
+.ab .tik h3{margin-top:16px;padding-inline:4px;font-size:1.12rem;line-height:1.3;font-weight:700;letter-spacing:-.02em;text-wrap:balance}
+.ab .tik__p{margin-top:8px;padding-inline:4px;font-size:.95rem;line-height:1.6;color:var(--t-ink);text-wrap:pretty}
 
 /* ---------- 09 vision ---------- */
 .ab .vis{position:relative;padding:var(--pad) 0;background:var(--t-aqua);overflow:clip}
@@ -368,9 +390,10 @@ html.js .ab .rhythm.is-in .rhythm__ln{stroke-dashoffset:0}
    Responsive
    ========================================================================== */
 @media (max-width:1180px){
-  .ab .steps--5{grid-template-columns:repeat(6,minmax(0,1fr))}
-  .ab .steps--5 .step{grid-column:span 2}
-  .ab .steps--5 .step:nth-child(n+4){grid-column:span 3}
+  .ab .tix{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .ab .tix__item{grid-column:span 2}
+  .ab .tix__item:nth-child(4){grid-column:2/span 2}
+  .ab .tix__item:nth-child(5){grid-column:4/span 2}
   .ab .cugrid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .ab .ahero__stage{margin-top:18px}
   .ab .ahero__noise{max-width:33%;top:2%}
@@ -405,8 +428,8 @@ html.js .ab .rhythm.is-in .rhythm__ln{stroke-dashoffset:0}
 }
 @media (max-width:720px){
   .ab .ahero__stage img{aspect-ratio:5/4;object-position:50% 70%}
-  .ab .steps--5{grid-template-columns:1fr}
-  .ab .steps--5 .step,.ab .steps--5 .step:nth-child(n+4){grid-column:auto}
+  .ab .tix{grid-template-columns:1fr;max-width:420px;margin-inline:auto;gap:18px}
+  .ab .tix__item,.ab .tix__item:nth-child(n){grid-column:auto}
   .ab .cugrid{grid-template-columns:1fr}
   .ab .cu__top{min-height:0}
   .ab .realz .strike{text-align:center}
@@ -431,4 +454,7 @@ html.js .ab .rhythm.is-in .rhythm__ln{stroke-dashoffset:0}
   .ab .marquee--line .marquee__track{justify-content:center}
   .ab .marquee--line li{font-size:clamp(1.5rem,3.4vw,2.6rem)}
   .ab .fstep__n::after{transform:none}
+  .ab .tik{transition:none}
+  .ab .tix__item:hover .tik{transform:none}
+  html.js .ab .tix__item .tik__route .is-here{transform:none;transition:none}
 }

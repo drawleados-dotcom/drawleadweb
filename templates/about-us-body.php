@@ -377,21 +377,25 @@ $abSteps = [
       <h2 class="h2 reveal" style="--d:.06s">From Understanding a Challenge<br>to Making It Work.</h2>
       <p class="lede reveal" style="--d:.12s">Our approach is simple in principle, but thoughtful in execution.</p>
     </div>
-    <div class="flow flow--5" data-way>
-      <div class="flow__rail" aria-hidden="true"><i class="flow__fill"></i><i class="flow__dot"></i></div>
-      <ol class="steps steps--5" role="list">
+    <ol class="tix" role="list">
 <?php foreach ($abSteps as $i => [$tint, $title, $text, $art]): ?>
-        <li class="step reveal" <?= $abDelay($i, .07) ?>>
-          <span class="step__node" aria-hidden="true"><?= sprintf('%02d', $i + 1) ?></span>
-          <div class="step__card">
-            <div class="step__art il t-<?= $tint ?>"><svg class="il-svg" viewBox="0 0 200 140" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><?= $art ?></svg></div>
-            <h3><?= h($title) ?></h3>
-            <p><?= h($text) ?></p>
+      <li class="tix__item reveal" <?= $abDelay($i, .08) ?>>
+        <article class="tik t-<?= $tint ?>">
+          <div class="tik__stub">
+            <p class="tik__no"><span class="tik__k">Step</span> <b><?= sprintf('%02d', $i + 1) ?></b></p>
+            <div class="tik__trip">
+              <span class="tik__k">of <?= sprintf('%02d', count($abSteps)) ?></span>
+              <span class="tik__route" aria-hidden="true"><?php foreach ($abSteps as $k => [$stopTint]): ?><i class="<?= $k < $i ? 'is-done' : ($k === $i ? 'is-here' : '') ?>" style="--c:var(--w-<?= $stopTint ?>)"></i><?php endforeach; ?></span>
+            </div>
           </div>
-        </li>
+          <i class="tik__tear" aria-hidden="true"></i>
+          <div class="tik__art il"><svg class="il-svg" viewBox="0 0 200 140" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><?= $art ?></svg></div>
+          <h3><?= h($title) ?></h3>
+          <p class="tik__p"><?= h($text) ?></p>
+        </article>
+      </li>
 <?php endforeach; ?>
-      </ol>
-    </div>
+    </ol>
   </div>
 </section>
 

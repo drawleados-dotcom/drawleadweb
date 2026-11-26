@@ -144,11 +144,6 @@
     });
   }
 
-  /* ---------- way of working: the rail fills, steps light up ---------- */
-  const way = $('[data-way]');
-  const steps = way ? $$('.step', way) : [];
-  const rail = way && $('.flow__rail', way);
-
   /* ---------- slight drift on large images ---------- */
   const drifts = reduce ? [] : $$('[data-drift]').map((el) => ({ el, box: el.parentElement, on: false }));
   if (hasIO && drifts.length) {
@@ -174,15 +169,6 @@
       const n = Math.round(p * words.length);
       words.forEach((w, i) => w.classList.toggle('on', i < n));
     });
-    if (way) {
-      const r = way.getBoundingClientRect();
-      const p = clamp((vh * 0.78 - r.top) / (r.height * 0.8));
-      way.style.setProperty('--fp', p.toFixed(3));
-      const wide = rail && rail.offsetParent !== null;
-      steps.forEach((s, i) => s.classList.toggle('is-on', wide
-        ? p > 0.02 && p >= i / (steps.length - 1) - 0.03
-        : s.getBoundingClientRect().top < vh * 0.68));
-    }
     drifts.forEach((d) => {
       if (!d.on) return;
       const r = d.box.getBoundingClientRect();
