@@ -380,7 +380,7 @@ html.js .ab .tix__item.is-in .tik__route .is-here{transform:none}
 /* ---------- 10 close ---------- */
 .ab .afinal .h1x{max-width:none}
 .ab .afinal .h1x .grn{display:block}
-/* close as a contained photo card (shared .final--card styles in home10.css) on a white section.
+/* close as a contained black card (shared .final--card styles in home10.css) on a white section.
    The big "Drawlead" signoff now opens the footer (partials/footer-signoff.php). */
 .ab .afinal.final--card{padding:clamp(56px,6vw,88px) 0 clamp(72px,9vw,128px);background:#fff}
 

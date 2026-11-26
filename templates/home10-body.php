@@ -791,7 +791,6 @@ $tsMark = fn(string $q) => preg_replace('/\[\[(.+?)\]\]/', '<mark>$1</mark>', h(
 <section class="final final--card" id="contact">
   <div class="wrap">
     <div class="final__card">
-      <img class="final__photo" src="/assets/home10/cta-handshake.webp" alt="" width="1600" height="1068" loading="lazy" decoding="async">
       <div class="final__in">
         <span class="pill pill--mint reveal"><span class="pill__dot" aria-hidden="true"></span>Let's Build Something Better</span>
         <h2 class="h1x reveal" style="--d:.06s">Your Next Business Transformation <span class="grn">Starts Here.</span></h2>

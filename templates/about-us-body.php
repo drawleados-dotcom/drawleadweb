@@ -421,7 +421,6 @@ $abSteps = [
 <section class="final final--card afinal" id="start">
   <div class="wrap">
     <div class="final__card">
-      <img class="final__photo" src="/assets/home10/cta-handshake.webp" alt="" width="1600" height="1068" loading="lazy" decoding="async">
       <div class="final__in">
         <span class="pill pill--mint reveal"><span class="pill__dot" aria-hidden="true"></span>Every great solution starts with a conversation.</span>
         <h2 class="h1x reveal" style="--d:.06s">Have a Business Challenge? <span class="grn">We'd Love to Understand It.</span></h2>
