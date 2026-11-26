@@ -238,27 +238,36 @@ html.js .ab .rhythm.is-in .rhythm__ln{stroke-dashoffset:0}
 .ab .realz__p{max-width:62ch;margin:clamp(30px,3.6vw,52px) auto 0;text-align:center;font-size:1.12rem;line-height:1.65;color:var(--t-ink);text-wrap:pretty}
 
 /* ---------- 04b approach ----------
-   Split: the shape-sorter on a tint beside the argument. Under it the four
-   steps sit on one rule that fills green left to right as they come in, and
-   the closing line ends the section. */
-.ab .fit{padding:clamp(72px,8vw,124px) 0 0;background:#fff}
+   Split: the shape-sorter on a tint beside the argument, under a short green
+   rule. Below it the four steps share one pale-mint panel split by thin
+   dividers, each number trailed by a green dash that draws in, and the closing
+   line ends the section. Two pale circles bleed off the viewport edges, top
+   left and bottom right; the section clips sideways only, so they never cross
+   into the sections above or below. */
+.ab .fit{position:relative;isolation:isolate;padding:clamp(72px,8vw,124px) 0 clamp(48px,5.4vw,88px);background:#fff;overflow-x:clip}
+.ab .fit::before,.ab .fit::after{content:"";position:absolute;z-index:-1;aspect-ratio:1;border-radius:50%;background:var(--t-mint);opacity:.55;pointer-events:none}
+.ab .fit::before{top:clamp(8px,1.6vw,28px);left:0;width:clamp(240px,28vw,520px);translate:-58% 0}
+.ab .fit::after{bottom:0;right:0;width:clamp(180px,16vw,300px);translate:50% 0}
 .ab .fit__top{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:clamp(32px,5.4vw,96px);align-items:center}
 .ab .fit__art{display:grid;place-items:center;aspect-ratio:16/11;padding:0 3%;border-radius:var(--r-xl);background:var(--t-mint);overflow:hidden}
 .ab .fit__art img{width:100%;height:auto}
 .ab .fit__h{font-size:clamp(1.9rem,3.3vw,3rem);line-height:1.08;font-weight:700;letter-spacing:-.038em;text-wrap:balance}
+.ab .fit__h::before{content:"";display:block;width:56px;height:4px;margin-bottom:clamp(20px,2.2vw,30px);border-radius:4px;background:var(--green)}
 .ab .fit__p{margin-top:20px;max-width:44ch;font-size:clamp(1.05rem,1.25vw,1.18rem);line-height:1.6;color:var(--t-ink);text-wrap:pretty}
 .ab .fit__turn{margin-top:clamp(30px,3.4vw,48px);padding-left:clamp(18px,1.6vw,24px);border-left:3px solid var(--green)}
 .ab .fit__turn h3{font-size:clamp(1.2rem,1.55vw,1.42rem);line-height:1.3;font-weight:700;letter-spacing:-.022em}
 .ab .fit__turn p{margin-top:6px;font-size:1.05rem;line-height:1.6;color:var(--t-ink);text-wrap:pretty}
-.ab .fsteps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2.2vw,32px);margin-top:clamp(64px,7vw,104px)}
-.ab .fstep{position:relative;display:flex;flex-direction:column;gap:clamp(12px,1.3vw,18px);padding-top:clamp(20px,2vw,28px)}
-.ab .fstep::before,.ab .fstep::after{content:"";position:absolute;left:0;right:0;top:0;height:2px;border-radius:2px;background:rgba(11,13,12,.12)}
-.ab .fstep::after{background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .8s var(--ease) calc(var(--d,0s) + .25s)}
-.ab .fstep.is-in::after,html:not(.js) .ab .fstep::after{transform:none}
-.ab .fstep__n{font-size:.82rem;font-weight:700;letter-spacing:.06em;color:var(--t-green)}
-.ab .fstep__t{font-size:clamp(1.15rem,1.65vw,1.5rem);line-height:1.22;font-weight:700;letter-spacing:-.026em;text-wrap:balance}
-.ab .fstep:last-child .fstep__t{color:var(--green-700)}
-.ab .fit__end{max-width:26em;margin:clamp(64px,7vw,104px) auto 0;text-align:center;font-size:clamp(1.4rem,2.5vw,2.2rem);line-height:1.25;font-weight:700;letter-spacing:-.032em;text-wrap:balance}
+.ab .fsteps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:clamp(56px,6vw,88px);padding:clamp(28px,3vw,44px) clamp(24px,3.4vw,56px);border-radius:var(--r-l);background:var(--t-mint);background:color-mix(in srgb,var(--t-mint) 72%,#fff)}
+.ab .fstep{display:flex;flex-direction:column;gap:clamp(14px,1.5vw,22px);padding:4px clamp(10px,1.2vw,20px) 4px clamp(18px,2.6vw,44px)}
+.ab .fstep:first-child{padding-left:0}
+.ab .fstep:last-child{padding-right:0}
+.ab .fstep+.fstep{border-left:1px solid rgba(11,13,12,.1)}
+.ab .fstep__n{display:flex;align-items:center;gap:16px;font-size:clamp(1.1rem,1.45vw,1.4rem);line-height:1;font-weight:700;letter-spacing:.01em;color:var(--green-700)}
+.ab .fstep__n::after{content:"";width:clamp(32px,3.2vw,50px);height:4px;border-radius:4px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .7s var(--ease) calc(var(--d,0s) + .3s)}
+.ab .fstep.is-in .fstep__n::after,html:not(.js) .ab .fstep__n::after{transform:none}
+.ab .fstep__t{font-size:clamp(1.02rem,1.3vw,1.24rem);line-height:1.3;font-weight:700;letter-spacing:-.018em;text-wrap:balance}
+.ab .fstep:last-child .fstep__t{font-size:clamp(1.2rem,1.8vw,1.7rem);line-height:1.18;letter-spacing:-.028em;color:var(--green-700)}
+.ab .fit__end{max-width:26em;margin:clamp(56px,6vw,96px) auto 0;text-align:center;font-size:clamp(1.4rem,2.5vw,2.2rem);line-height:1.25;font-weight:700;letter-spacing:-.032em;text-wrap:balance}
 
 /* ---------- 05 capabilities ---------- */
 .ab .build{padding:var(--pad) 0 clamp(110px,11vw,160px);background:#fff}
@@ -365,7 +374,12 @@ html.js .ab .rhythm.is-in .rhythm__ln{stroke-dashoffset:0}
   .ab .aiflow__m{display:block;margin-bottom:-12px}
   .ab .rhythms{grid-template-columns:1fr 1fr;gap:26px 20px}
   .ab .fit__top{grid-template-columns:1fr;gap:36px}
-  .ab .fsteps{grid-template-columns:1fr 1fr;gap:36px 24px}
+  .ab .fsteps{grid-template-columns:1fr 1fr}
+  .ab .fstep,.ab .fstep:first-child,.ab .fstep:last-child{padding:24px clamp(18px,3vw,32px)}
+  .ab .fstep:nth-child(odd){padding-left:0;border-left:0}
+  .ab .fstep:nth-child(even){padding-right:0}
+  .ab .fstep:nth-child(-n+2){padding-top:0}
+  .ab .fstep:nth-child(n+3){padding-bottom:0;border-top:1px solid rgba(11,13,12,.1)}
   .ab .scard{position:relative;top:auto;grid-template-columns:1fr;min-height:0}
   .ab .scard+.scard{box-shadow:none}
   .ab .scard__art{order:-1;padding:8px 8px 0}
@@ -384,7 +398,11 @@ html.js .ab .rhythm.is-in .rhythm__ln{stroke-dashoffset:0}
   .ab .realz .strike s{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--ink)}
   .ab .realz .strike s::after{content:none}
   .ab .fit__art{aspect-ratio:4/3;padding:0}
-  .ab .fsteps{grid-template-columns:1fr;gap:28px}
+  .ab .fit::before,.ab .fit::after{content:none}
+  .ab .fsteps{grid-template-columns:1fr;padding:26px 22px}
+  .ab .fstep,.ab .fstep:nth-child(n){padding:20px 0;border-left:0;border-top:1px solid rgba(11,13,12,.1)}
+  .ab .fstep:first-child{padding-top:0;border-top:0}
+  .ab .fstep:last-child{padding-bottom:0}
   .ab .vis__cards{grid-template-columns:1fr}
   .ab .vis__fig img{min-height:300px}
   .ab .vis__foot{margin-top:-12px}
@@ -398,5 +416,5 @@ html.js .ab .rhythm.is-in .rhythm__ln{stroke-dashoffset:0}
   .ab .scard{position:relative;top:auto}
   .ab .marquee--line .marquee__track{justify-content:center}
   .ab .marquee--line li{font-size:clamp(1.5rem,3.4vw,2.6rem)}
-  .ab .fstep::after{transform:none}
+  .ab .fstep__n::after{transform:none}
 }
