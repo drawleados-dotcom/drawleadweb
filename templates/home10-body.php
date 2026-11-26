@@ -787,7 +787,7 @@ $tsMark = fn(string $q) => preg_replace('/\[\[(.+?)\]\]/', '<mark>$1</mark>', h(
   <div class="wrap foot__in">
     <a href="#top" aria-label="Drawlead – back to top"><img src="/assets/home10/logos/drawlead-white.webp" alt="Drawlead" width="153" height="30" loading="lazy"></a>
     <p>Business Systems. Digital Commerce. Intelligent Growth.</p>
-    <nav aria-label="Footer"><a href="#solutions">Solutions</a><a href="#program">8-Week Program</a><a href="/case-studies">Case Studies</a><a href="#industries">Industries</a><a href="/about-us">About Us</a><a href="/blog">Blog</a></nav>
+    <nav aria-label="Footer"><a href="#solutions">Solutions</a><a href="#program">8-Week Program</a><a href="#case-studies">Case Studies</a><a href="#industries">Industries</a><a href="/about-us">About Us</a><a href="/blog">Blog</a></nav>
   </div>
   <div class="wrap foot__base">
     <span>official@drawlead.co.in &nbsp;·&nbsp; www.drawlead.co.in &nbsp;·&nbsp; Chennai, Tamil Nadu, IN</span>

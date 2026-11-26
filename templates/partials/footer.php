@@ -6,7 +6,7 @@
  <div class="ft-links">
  <a href="/#solutions">Solutions</a>
  <a href="/#program">8-Week Program</a>
- <a href="/case-studies">Case Studies</a>
+ <a href="/#case-studies">Case Studies</a>
  <a href="/#industries">Industries</a>
  <a href="/blog">Blog</a>
  <a href="/about-us">About Us</a>
