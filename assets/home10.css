@@ -161,7 +161,6 @@ html:not(.js) .h10 .strike s{text-decoration:line-through}
 .h10 .h10-logo img{display:block;object-fit:contain}
 .h10 .h10-logo span{font-size:.95rem;font-weight:500;color:var(--ink-2)}
 .h10 .h10-logo--text span{font-family:var(--f-head);font-weight:700;font-size:1.05rem;letter-spacing:-.01em;color:var(--ink)}
-.h10 .cred__note{text-align:center;font-size:.78rem;color:var(--mut-2);margin-top:30px}
 
 /* ---------- capabilities ---------- */
 .h10 .caps{position:relative;z-index:2;margin-top:-44px;padding:clamp(56px,7vw,96px) 0;background:#fff;border-radius:var(--r-xl) var(--r-xl) 0 0;color:var(--ink);overflow:clip}
