@@ -6,6 +6,7 @@
  * Applied on the live site by seo_apply_globals() / seo_extra_head_tags().
  */
 require_once __DIR__ . '/../includes/bootstrap.php';
+require_once __DIR__ . '/../includes/media-lib.php';
 require_admin();
 
 $g = seo_global($pdo);
@@ -41,6 +42,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'A Facebook App ID is numbers only.';
     }
 
+    // Favicon: keep the current one unless the admin removes or replaces it.
+    // (The loop above blanked it since it isn't a plain text field.)
+    $new['favicon'] = is_string($g['favicon'] ?? null) ? $g['favicon'] : '';
+    if (!$error) {
+        if (!empty($_POST['favicon_remove'])) {
+            $new['favicon'] = '';
+        }
+        if (($_FILES['favicon_file']['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE) {
+            $up = media_save_upload(
+                (string) ($_FILES['favicon_file']['tmp_name'] ?? ''),
+                (string) ($_FILES['favicon_file']['name'] ?? 'favicon'),
+                (int) ($_FILES['favicon_file']['size'] ?? 0),
+                (int) ($_FILES['favicon_file']['error'] ?? UPLOAD_ERR_NO_FILE)
+            );
+            if (isset($up['error'])) {
+                $error = $up['error'];
+            } elseif (isset($up['file'])) {
+                $new['favicon'] = '/uploads/media/' . $up['file'];
+            }
+        }
+    }
+
     if ($error) {
         $g = $new;
     } else {
@@ -62,7 +85,7 @@ include __DIR__ . '/includes/header.php';
 <?= seo_flash_html() ?>
 <?php if ($error): ?><div class="alert alert-error"><?= h($error) ?></div><?php endif; ?>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
   <?= csrf_field() ?>
 
   <div class="card">
@@ -146,6 +169,29 @@ include __DIR__ . '/includes/header.php';
         <label for="baidu_verification">Baidu</label>
         <input type="text" id="baidu_verification" name="baidu_verification" value="<?= h($g['baidu_verification']) ?>">
       </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Favicon</div>
+    <div class="card-desc">The small icon shown in the browser tab, bookmarks and history. Upload a square <b>PNG</b> — <b>512 × 512 px</b> recommended (32 × 32 px minimum). It applies to every page on the live site.</div>
+    <?php if (trim($g['favicon'] ?? '') !== ''): ?>
+      <div class="field">
+        <label>Current favicon</label>
+        <div class="upload-preview">
+          <img src="<?= h($g['favicon']) ?>" alt="Current favicon" style="width:48px;height:48px;object-fit:contain;background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:6px">
+        </div>
+      </div>
+      <label class="seo-switch-row">
+        <input type="checkbox" name="favicon_remove">
+        <span><b>Remove the current favicon</b>
+          <span>The browser falls back to its own default tab icon.</span></span>
+      </label>
+    <?php endif; ?>
+    <div class="field">
+      <label for="favicon_file"><?= trim($g['favicon'] ?? '') !== '' ? 'Replace favicon' : 'Upload favicon' ?></label>
+      <input type="file" id="favicon_file" name="favicon_file" accept="image/png,image/webp">
+      <div class="field-hint">PNG or WEBP, up to 10&nbsp;MB. A new upload replaces the current favicon when you save.</div>
     </div>
   </div>
 

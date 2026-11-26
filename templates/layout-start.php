@@ -18,6 +18,14 @@ $seoUri = $seoUri === '' ? '/' : $seoUri;
 $seo = seo_apply_globals($pdo, $seo, $seoUri);
 echo seo_head_tags($seo);
 echo seo_extra_head_tags($pdo, $seo, $seoUri);
+
+// Favicon set in Admin → SEO → Global Settings (served from /uploads/media/).
+$siteFavicon = seo_global($pdo)['favicon'] ?? '';
+if (is_string($siteFavicon) && $siteFavicon !== '') {
+    $faviconUrl = h($siteFavicon);
+    echo '<link rel="icon" href="' . $faviconUrl . '">' . "\n";
+    echo '<link rel="apple-touch-icon" href="' . $faviconUrl . '">' . "\n";
+}
 ?>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

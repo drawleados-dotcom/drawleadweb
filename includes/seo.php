@@ -163,6 +163,7 @@ function seo_global_defaults(): array
         'yandex_verification' => '',
         'pinterest_verification' => '',
         'baidu_verification' => '',
+        'favicon' => '',
     ];
 }
 
