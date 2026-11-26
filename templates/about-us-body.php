@@ -90,7 +90,6 @@ $abSteps = [
 ];
 ?>
 <link rel="stylesheet" href="<?= asset_url('/assets/home10.css') ?>">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Condensed:wght@700&amp;family=Newsreader:opsz,wght@6..72,400..600&amp;display=swap">
 <link rel="stylesheet" href="<?= asset_url('/assets/about.css') ?>">
 <script>document.documentElement.classList.add('js')</script>
 

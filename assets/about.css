@@ -81,7 +81,7 @@ html.js .ab .ahero__stage.reveal:not(.is-in) .ahero__noise li{opacity:0;transfor
    screens, pins the section and slides the paper sideways from 2022 to 2026.
    The paper is a greyscale print multiplied over the tint, which changes with
    the year. */
-.ab .story{--tint:var(--t-peach);--lx:max(clamp(46px,9vw,84px),(100vw - 1080px)/2);--np:'Libre Caslon Condensed','Times New Roman',Times,serif;--nt:'Newsreader',Georgia,'Times New Roman',serif;--rule:rgba(20,18,15,.56);--nink:#14120f;--ntext:#2b2823;
+.ab .story{--tint:var(--t-peach);--lx:max(clamp(46px,9vw,84px),(100vw - 1080px)/2);--np:'Montserrat','Inter',ui-sans-serif,system-ui,sans-serif;--nt:'Inter',ui-sans-serif,system-ui,sans-serif;--rule:rgba(20,18,15,.56);--nink:#14120f;--ntext:#2b2823;
   position:relative;color:var(--nink)}
 .ab .story[data-at="1"]{--tint:var(--t-rose)}
 .ab .story[data-at="2"]{--tint:var(--t-peri)}
@@ -99,20 +99,20 @@ html.js .ab .ahero__stage.reveal:not(.is-in) .ahero__noise li{opacity:0;transfor
 .ab .pg{position:relative;margin:0 max(20px,(100vw - 1080px)/2) 0 var(--lx)}
 .ab .pg:where(:not(.pg--front)){margin-top:clamp(36px,5vw,56px);padding-top:clamp(24px,3vw,36px);border-top:3px double var(--rule)}
 .ab .pg .pill{margin-bottom:clamp(16px,2vw,24px)}
-.ab .story__h{font-family:var(--np);font-size:clamp(2.7rem,8vw,5.4rem);line-height:.96;font-weight:700;letter-spacing:-.018em;text-wrap:balance}
-.ab .yr{width:max-content;font-family:var(--np);font-size:clamp(7.2rem,32vw,14rem);line-height:.76;font-weight:700;letter-spacing:-.035em;font-variant-numeric:lining-nums;margin-top:-.07em;padding:.09em .06em .03em 0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 240' width='16' height='240' fill='%2314120f'%3E%3Ccircle cx='0' cy='0' r='6.10'/%3E%3Ccircle cx='8' cy='0' r='6.10'/%3E%3Ccircle cx='16' cy='0' r='6.10'/%3E%3Ccircle cx='4' cy='8' r='6.10'/%3E%3Ccircle cx='12' cy='8' r='6.10'/%3E%3Ccircle cx='0' cy='16' r='6.10'/%3E%3Ccircle cx='8' cy='16' r='6.10'/%3E%3Ccircle cx='16' cy='16' r='6.10'/%3E%3Ccircle cx='4' cy='24' r='6.10'/%3E%3Ccircle cx='12' cy='24' r='6.10'/%3E%3Ccircle cx='0' cy='32' r='6.10'/%3E%3Ccircle cx='8' cy='32' r='6.10'/%3E%3Ccircle cx='16' cy='32' r='6.10'/%3E%3Ccircle cx='4' cy='40' r='6.10'/%3E%3Ccircle cx='12' cy='40' r='6.10'/%3E%3Ccircle cx='0' cy='48' r='5.92'/%3E%3Ccircle cx='8' cy='48' r='5.92'/%3E%3Ccircle cx='16' cy='48' r='5.92'/%3E%3Ccircle cx='4' cy='56' r='5.68'/%3E%3Ccircle cx='12' cy='56' r='5.68'/%3E%3Ccircle cx='0' cy='64' r='5.46'/%3E%3Ccircle cx='8' cy='64' r='5.46'/%3E%3Ccircle cx='16' cy='64' r='5.46'/%3E%3Ccircle cx='4' cy='72' r='5.26'/%3E%3Ccircle cx='12' cy='72' r='5.26'/%3E%3Ccircle cx='0' cy='80' r='5.07'/%3E%3Ccircle cx='8' cy='80' r='5.07'/%3E%3Ccircle cx='16' cy='80' r='5.07'/%3E%3Ccircle cx='4' cy='88' r='4.88'/%3E%3Ccircle cx='12' cy='88' r='4.88'/%3E%3Ccircle cx='0' cy='96' r='4.69'/%3E%3Ccircle cx='8' cy='96' r='4.69'/%3E%3Ccircle cx='16' cy='96' r='4.69'/%3E%3Ccircle cx='4' cy='104' r='4.52'/%3E%3Ccircle cx='12' cy='104' r='4.52'/%3E%3Ccircle cx='0' cy='112' r='4.34'/%3E%3Ccircle cx='8' cy='112' r='4.34'/%3E%3Ccircle cx='16' cy='112' r='4.34'/%3E%3Ccircle cx='4' cy='120' r='4.17'/%3E%3Ccircle cx='12' cy='120' r='4.17'/%3E%3Ccircle cx='0' cy='128' r='4.00'/%3E%3Ccircle cx='8' cy='128' r='4.00'/%3E%3Ccircle cx='16' cy='128' r='4.00'/%3E%3Ccircle cx='4' cy='136' r='3.83'/%3E%3Ccircle cx='12' cy='136' r='3.83'/%3E%3Ccircle cx='0' cy='144' r='3.67'/%3E%3Ccircle cx='8' cy='144' r='3.67'/%3E%3Ccircle cx='16' cy='144' r='3.67'/%3E%3Ccircle cx='4' cy='152' r='3.50'/%3E%3Ccircle cx='12' cy='152' r='3.50'/%3E%3Ccircle cx='0' cy='160' r='3.34'/%3E%3Ccircle cx='8' cy='160' r='3.34'/%3E%3Ccircle cx='16' cy='160' r='3.34'/%3E%3Ccircle cx='4' cy='168' r='3.18'/%3E%3Ccircle cx='12' cy='168' r='3.18'/%3E%3Ccircle cx='0' cy='176' r='3.02'/%3E%3Ccircle cx='8' cy='176' r='3.02'/%3E%3Ccircle cx='16' cy='176' r='3.02'/%3E%3Ccircle cx='4' cy='184' r='2.87'/%3E%3Ccircle cx='12' cy='184' r='2.87'/%3E%3Ccircle cx='0' cy='192' r='2.71'/%3E%3Ccircle cx='8' cy='192' r='2.71'/%3E%3Ccircle cx='16' cy='192' r='2.71'/%3E%3Ccircle cx='4' cy='200' r='2.56'/%3E%3Ccircle cx='12' cy='200' r='2.56'/%3E%3Ccircle cx='0' cy='208' r='2.40'/%3E%3Ccircle cx='8' cy='208' r='2.40'/%3E%3Ccircle cx='16' cy='208' r='2.40'/%3E%3Ccircle cx='4' cy='216' r='2.25'/%3E%3Ccircle cx='12' cy='216' r='2.25'/%3E%3Ccircle cx='0' cy='224' r='2.10'/%3E%3Ccircle cx='8' cy='224' r='2.10'/%3E%3Ccircle cx='16' cy='224' r='2.10'/%3E%3Ccircle cx='4' cy='232' r='1.95'/%3E%3Ccircle cx='12' cy='232' r='1.95'/%3E%3Ccircle cx='0' cy='240' r='1.80'/%3E%3Ccircle cx='8' cy='240' r='1.80'/%3E%3Ccircle cx='16' cy='240' r='1.80'/%3E%3C/svg%3E") 0 0/auto 100% repeat-x;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.ab .story__h{font-family:var(--np);font-size:clamp(2.1rem,6.4vw,4.2rem);line-height:1.04;font-weight:800;letter-spacing:-.035em;text-wrap:balance}
+.ab .yr{width:max-content;font-family:var(--np);font-size:clamp(5.4rem,23vw,10rem);line-height:.76;font-weight:800;letter-spacing:-.055em;font-variant-numeric:lining-nums;margin-top:-.07em;padding:.09em .06em .03em 0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 240' width='16' height='240' fill='%2314120f'%3E%3Ccircle cx='0' cy='0' r='6.10'/%3E%3Ccircle cx='8' cy='0' r='6.10'/%3E%3Ccircle cx='16' cy='0' r='6.10'/%3E%3Ccircle cx='4' cy='8' r='6.10'/%3E%3Ccircle cx='12' cy='8' r='6.10'/%3E%3Ccircle cx='0' cy='16' r='6.10'/%3E%3Ccircle cx='8' cy='16' r='6.10'/%3E%3Ccircle cx='16' cy='16' r='6.10'/%3E%3Ccircle cx='4' cy='24' r='6.10'/%3E%3Ccircle cx='12' cy='24' r='6.10'/%3E%3Ccircle cx='0' cy='32' r='6.10'/%3E%3Ccircle cx='8' cy='32' r='6.10'/%3E%3Ccircle cx='16' cy='32' r='6.10'/%3E%3Ccircle cx='4' cy='40' r='6.10'/%3E%3Ccircle cx='12' cy='40' r='6.10'/%3E%3Ccircle cx='0' cy='48' r='5.92'/%3E%3Ccircle cx='8' cy='48' r='5.92'/%3E%3Ccircle cx='16' cy='48' r='5.92'/%3E%3Ccircle cx='4' cy='56' r='5.68'/%3E%3Ccircle cx='12' cy='56' r='5.68'/%3E%3Ccircle cx='0' cy='64' r='5.46'/%3E%3Ccircle cx='8' cy='64' r='5.46'/%3E%3Ccircle cx='16' cy='64' r='5.46'/%3E%3Ccircle cx='4' cy='72' r='5.26'/%3E%3Ccircle cx='12' cy='72' r='5.26'/%3E%3Ccircle cx='0' cy='80' r='5.07'/%3E%3Ccircle cx='8' cy='80' r='5.07'/%3E%3Ccircle cx='16' cy='80' r='5.07'/%3E%3Ccircle cx='4' cy='88' r='4.88'/%3E%3Ccircle cx='12' cy='88' r='4.88'/%3E%3Ccircle cx='0' cy='96' r='4.69'/%3E%3Ccircle cx='8' cy='96' r='4.69'/%3E%3Ccircle cx='16' cy='96' r='4.69'/%3E%3Ccircle cx='4' cy='104' r='4.52'/%3E%3Ccircle cx='12' cy='104' r='4.52'/%3E%3Ccircle cx='0' cy='112' r='4.34'/%3E%3Ccircle cx='8' cy='112' r='4.34'/%3E%3Ccircle cx='16' cy='112' r='4.34'/%3E%3Ccircle cx='4' cy='120' r='4.17'/%3E%3Ccircle cx='12' cy='120' r='4.17'/%3E%3Ccircle cx='0' cy='128' r='4.00'/%3E%3Ccircle cx='8' cy='128' r='4.00'/%3E%3Ccircle cx='16' cy='128' r='4.00'/%3E%3Ccircle cx='4' cy='136' r='3.83'/%3E%3Ccircle cx='12' cy='136' r='3.83'/%3E%3Ccircle cx='0' cy='144' r='3.67'/%3E%3Ccircle cx='8' cy='144' r='3.67'/%3E%3Ccircle cx='16' cy='144' r='3.67'/%3E%3Ccircle cx='4' cy='152' r='3.50'/%3E%3Ccircle cx='12' cy='152' r='3.50'/%3E%3Ccircle cx='0' cy='160' r='3.34'/%3E%3Ccircle cx='8' cy='160' r='3.34'/%3E%3Ccircle cx='16' cy='160' r='3.34'/%3E%3Ccircle cx='4' cy='168' r='3.18'/%3E%3Ccircle cx='12' cy='168' r='3.18'/%3E%3Ccircle cx='0' cy='176' r='3.02'/%3E%3Ccircle cx='8' cy='176' r='3.02'/%3E%3Ccircle cx='16' cy='176' r='3.02'/%3E%3Ccircle cx='4' cy='184' r='2.87'/%3E%3Ccircle cx='12' cy='184' r='2.87'/%3E%3Ccircle cx='0' cy='192' r='2.71'/%3E%3Ccircle cx='8' cy='192' r='2.71'/%3E%3Ccircle cx='16' cy='192' r='2.71'/%3E%3Ccircle cx='4' cy='200' r='2.56'/%3E%3Ccircle cx='12' cy='200' r='2.56'/%3E%3Ccircle cx='0' cy='208' r='2.40'/%3E%3Ccircle cx='8' cy='208' r='2.40'/%3E%3Ccircle cx='16' cy='208' r='2.40'/%3E%3Ccircle cx='4' cy='216' r='2.25'/%3E%3Ccircle cx='12' cy='216' r='2.25'/%3E%3Ccircle cx='0' cy='224' r='2.10'/%3E%3Ccircle cx='8' cy='224' r='2.10'/%3E%3Ccircle cx='16' cy='224' r='2.10'/%3E%3Ccircle cx='4' cy='232' r='1.95'/%3E%3Ccircle cx='12' cy='232' r='1.95'/%3E%3Ccircle cx='0' cy='240' r='1.80'/%3E%3Ccircle cx='8' cy='240' r='1.80'/%3E%3Ccircle cx='16' cy='240' r='1.80'/%3E%3C/svg%3E") 0 0/auto 100% repeat-x;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 .ab .yr--g{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 240' width='16' height='240' fill='%231d7a49'%3E%3Ccircle cx='0' cy='0' r='6.10'/%3E%3Ccircle cx='8' cy='0' r='6.10'/%3E%3Ccircle cx='16' cy='0' r='6.10'/%3E%3Ccircle cx='4' cy='8' r='6.10'/%3E%3Ccircle cx='12' cy='8' r='6.10'/%3E%3Ccircle cx='0' cy='16' r='6.10'/%3E%3Ccircle cx='8' cy='16' r='6.10'/%3E%3Ccircle cx='16' cy='16' r='6.10'/%3E%3Ccircle cx='4' cy='24' r='6.10'/%3E%3Ccircle cx='12' cy='24' r='6.10'/%3E%3Ccircle cx='0' cy='32' r='6.10'/%3E%3Ccircle cx='8' cy='32' r='6.10'/%3E%3Ccircle cx='16' cy='32' r='6.10'/%3E%3Ccircle cx='4' cy='40' r='6.10'/%3E%3Ccircle cx='12' cy='40' r='6.10'/%3E%3Ccircle cx='0' cy='48' r='5.92'/%3E%3Ccircle cx='8' cy='48' r='5.92'/%3E%3Ccircle cx='16' cy='48' r='5.92'/%3E%3Ccircle cx='4' cy='56' r='5.68'/%3E%3Ccircle cx='12' cy='56' r='5.68'/%3E%3Ccircle cx='0' cy='64' r='5.46'/%3E%3Ccircle cx='8' cy='64' r='5.46'/%3E%3Ccircle cx='16' cy='64' r='5.46'/%3E%3Ccircle cx='4' cy='72' r='5.26'/%3E%3Ccircle cx='12' cy='72' r='5.26'/%3E%3Ccircle cx='0' cy='80' r='5.07'/%3E%3Ccircle cx='8' cy='80' r='5.07'/%3E%3Ccircle cx='16' cy='80' r='5.07'/%3E%3Ccircle cx='4' cy='88' r='4.88'/%3E%3Ccircle cx='12' cy='88' r='4.88'/%3E%3Ccircle cx='0' cy='96' r='4.69'/%3E%3Ccircle cx='8' cy='96' r='4.69'/%3E%3Ccircle cx='16' cy='96' r='4.69'/%3E%3Ccircle cx='4' cy='104' r='4.52'/%3E%3Ccircle cx='12' cy='104' r='4.52'/%3E%3Ccircle cx='0' cy='112' r='4.34'/%3E%3Ccircle cx='8' cy='112' r='4.34'/%3E%3Ccircle cx='16' cy='112' r='4.34'/%3E%3Ccircle cx='4' cy='120' r='4.17'/%3E%3Ccircle cx='12' cy='120' r='4.17'/%3E%3Ccircle cx='0' cy='128' r='4.00'/%3E%3Ccircle cx='8' cy='128' r='4.00'/%3E%3Ccircle cx='16' cy='128' r='4.00'/%3E%3Ccircle cx='4' cy='136' r='3.83'/%3E%3Ccircle cx='12' cy='136' r='3.83'/%3E%3Ccircle cx='0' cy='144' r='3.67'/%3E%3Ccircle cx='8' cy='144' r='3.67'/%3E%3Ccircle cx='16' cy='144' r='3.67'/%3E%3Ccircle cx='4' cy='152' r='3.50'/%3E%3Ccircle cx='12' cy='152' r='3.50'/%3E%3Ccircle cx='0' cy='160' r='3.34'/%3E%3Ccircle cx='8' cy='160' r='3.34'/%3E%3Ccircle cx='16' cy='160' r='3.34'/%3E%3Ccircle cx='4' cy='168' r='3.18'/%3E%3Ccircle cx='12' cy='168' r='3.18'/%3E%3Ccircle cx='0' cy='176' r='3.02'/%3E%3Ccircle cx='8' cy='176' r='3.02'/%3E%3Ccircle cx='16' cy='176' r='3.02'/%3E%3Ccircle cx='4' cy='184' r='2.87'/%3E%3Ccircle cx='12' cy='184' r='2.87'/%3E%3Ccircle cx='0' cy='192' r='2.71'/%3E%3Ccircle cx='8' cy='192' r='2.71'/%3E%3Ccircle cx='16' cy='192' r='2.71'/%3E%3Ccircle cx='4' cy='200' r='2.56'/%3E%3Ccircle cx='12' cy='200' r='2.56'/%3E%3Ccircle cx='0' cy='208' r='2.40'/%3E%3Ccircle cx='8' cy='208' r='2.40'/%3E%3Ccircle cx='16' cy='208' r='2.40'/%3E%3Ccircle cx='4' cy='216' r='2.25'/%3E%3Ccircle cx='12' cy='216' r='2.25'/%3E%3Ccircle cx='0' cy='224' r='2.10'/%3E%3Ccircle cx='8' cy='224' r='2.10'/%3E%3Ccircle cx='16' cy='224' r='2.10'/%3E%3Ccircle cx='4' cy='232' r='1.95'/%3E%3Ccircle cx='12' cy='232' r='1.95'/%3E%3Ccircle cx='0' cy='240' r='1.80'/%3E%3Ccircle cx='8' cy='240' r='1.80'/%3E%3Ccircle cx='16' cy='240' r='1.80'/%3E%3C/svg%3E")}
-.ab .np{font-family:var(--np);font-size:clamp(1.75rem,5.4vw,2.6rem);line-height:1.04;font-weight:700;letter-spacing:-.01em;color:var(--nink);text-wrap:pretty}
-.ab .np--xl{font-size:clamp(2.7rem,8.6vw,5rem);line-height:.96;letter-spacing:-.018em;text-wrap:balance}
-.ab .cols p,.ab .drop{font-family:var(--nt);font-size:1.14rem;line-height:1.46;font-weight:500;color:var(--ntext);text-wrap:pretty}
-.ab .drop::first-letter{float:left;font-family:var(--np);font-size:3.9em;line-height:.74;font-weight:700;padding:.07em .07em 0 0;color:var(--green-700)}
+.ab .np{font-family:var(--np);font-size:clamp(1.4rem,4.4vw,2.1rem);line-height:1.14;font-weight:700;letter-spacing:-.025em;color:var(--nink);text-wrap:pretty}
+.ab .np--xl{font-size:clamp(2.1rem,6.8vw,3.9rem);line-height:1.04;font-weight:800;letter-spacing:-.035em;text-wrap:balance}
+.ab .cols p,.ab .drop{font-family:var(--nt);font-size:1.05rem;line-height:1.6;font-weight:400;color:var(--ntext);text-wrap:pretty}
+.ab .drop::first-letter{float:left;font-family:var(--np);font-size:3.5em;line-height:.8;font-weight:800;padding:.06em .08em 0 0;color:var(--green-700)}
 .ab .story:not(.is-travel) .cols p+p{margin-top:.7em}
 .ab .cut img{width:100%}
 .ab .ads{display:flex;flex-wrap:wrap}
-.ab .ads li{margin:0 -1px -1px 0;padding:9px 15px 10px;border:1px solid var(--nink);font-family:var(--nt);font-size:1.02rem;font-weight:600;line-height:1.25;color:var(--nink)}
-.ab .briefs li{padding:14px 0;border-top:1px solid var(--rule);font-family:var(--np);font-size:1.42rem;line-height:1.12;font-weight:700;color:var(--nink);text-wrap:pretty}
+.ab .ads li{margin:0 -1px -1px 0;padding:9px 15px 10px;border:1px solid var(--nink);font-family:var(--nt);font-size:.98rem;font-weight:500;line-height:1.3;color:var(--nink)}
+.ab .briefs li{padding:14px 0;border-top:1px solid var(--rule);font-family:var(--nt);font-size:1.15rem;line-height:1.35;font-weight:600;letter-spacing:-.01em;color:var(--nink);text-wrap:pretty}
 .ab .briefs li:last-child{border-bottom:1px solid var(--rule)}
-.ab .pull{padding:18px 0;border-block:1px solid var(--rule);font-family:var(--np);font-size:clamp(1.75rem,5.4vw,2.6rem);line-height:1.08;font-weight:700;letter-spacing:-.01em;color:var(--nink);text-wrap:pretty}
+.ab .pull{padding:18px 0;border-block:1px solid var(--rule);font-family:var(--np);font-size:clamp(1.4rem,4.4vw,2.1rem);line-height:1.18;font-weight:700;letter-spacing:-.025em;color:var(--nink);text-wrap:pretty}
 .ab .mark{padding:0 .12em;margin:0 -.12em;background:linear-gradient(transparent 14%,rgba(50,180,111,.5) 14%,rgba(50,180,111,.4) 88%,transparent 88%);border-radius:.2em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .ab .pg--a,.ab .pg--b,.ab .pg--c,.ab .pg--d,.ab .pg--e,.ab .pg--b .pg__mid{display:grid;gap:20px}
 .ab .pg__txt{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;align-content:start;min-width:0}
@@ -121,9 +121,9 @@ html.js .ab .ahero__stage.reveal:not(.is-in) .ahero__noise li{opacity:0;transfor
 /* tablets, and wide screens when the paper is not travelling */
 @media (min-width:720px){
   .ab .story:not(.is-travel) .pg--a,.ab .story:not(.is-travel) .pg--b,.ab .story:not(.is-travel) .pg--c,.ab .story:not(.is-travel) .pg--d,.ab .story:not(.is-travel) .pg--e{grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:clamp(20px,3vw,36px) clamp(24px,4vw,52px);align-items:center}
-  .ab .story:not(.is-travel) .yr{font-size:clamp(9rem,21vw,15rem)}
-  .ab .story:not(.is-travel) .np,.ab .story:not(.is-travel) .pull{font-size:clamp(1.8rem,3.3vw,2.5rem)}
-  .ab .story:not(.is-travel) .np--xl{font-size:clamp(2.8rem,5.4vw,4.4rem)}
+  .ab .story:not(.is-travel) .yr{font-size:clamp(6.4rem,14vw,10.5rem)}
+  .ab .story:not(.is-travel) .np,.ab .story:not(.is-travel) .pull{font-size:clamp(1.45rem,2.7vw,2rem)}
+  .ab .story:not(.is-travel) .np--xl{font-size:clamp(2.2rem,4.3vw,3.5rem)}
   .ab .story:not(.is-travel) .pg--a .yr{grid-area:1/1;align-self:end}
   .ab .story:not(.is-travel) .pg--a .pg__txt{grid-area:2/1;align-self:start}
   .ab .story:not(.is-travel) .pg--a .cut{grid-area:1/2/3/3}
@@ -153,52 +153,52 @@ html.js .ab .ahero__stage.reveal:not(.is-in) .ahero__noise li{opacity:0;transfor
 .ab .is-travel .story__track::after{bottom:var(--bot);border-top:1px solid var(--rule)}
 .ab .is-travel .pg{flex:none;width:auto;margin:0;padding:calc(var(--top) + 1.7*var(--u)) calc(3*var(--u)) calc(var(--bot) + 1.3*var(--u));border:0}
 .ab .is-travel .pg:where(:not(.pg--front))::before{content:"";position:absolute;left:0;top:calc(var(--top) + 1.7*var(--u));bottom:calc(var(--bot) + 1.3*var(--u));width:1px;background:var(--rule)}
-.ab .is-travel .yr{font-size:calc(19*var(--u))}
-.ab .is-travel .np{font-size:calc(2.75*var(--u))}
-.ab .is-travel .cols p,.ab .is-travel .drop{font-size:var(--b);line-height:1.42}
+.ab .is-travel .yr{font-size:calc(13.5*var(--u))}
+.ab .is-travel .np{font-size:calc(2.2*var(--u))}
+.ab .is-travel .cols p,.ab .is-travel .drop{font-size:var(--b);line-height:1.58}
 .ab .is-travel .ads li{padding:.55em .9em .6em;font-size:var(--b)}
 .ab .is-travel .pg__txt{gap:calc(1.6*var(--u))}
 
 .ab .is-travel .pg--front{display:flex;flex-direction:column;justify-content:center;width:calc(62*var(--u))}
-.ab .is-travel .story__h{font-size:calc(6.4*var(--u));line-height:.94}
+.ab .is-travel .story__h{font-size:calc(5*var(--u));line-height:1.04}
 .ab .is-travel .pg--front .pill{align-self:flex-start}
 
 .ab .is-travel .pg--a{width:calc(66*var(--u));grid-template-columns:calc(27*var(--u)) minmax(0,1fr);grid-template-rows:auto 1fr;gap:calc(1.6*var(--u)) calc(2*var(--u))}
-.ab .is-travel .pg--a .yr{grid-area:1/1/2/3;font-size:calc(21*var(--u))}
-.ab .is-travel .pg--a .np{font-size:calc(2.5*var(--u))}
+.ab .is-travel .pg--a .yr{grid-area:1/1/2/3;font-size:calc(15*var(--u))}
+.ab .is-travel .pg--a .np{font-size:calc(2.05*var(--u))}
 .ab .is-travel .pg--a .cut{grid-area:1/2/3/3;align-self:end;margin:0 calc(-1.4*var(--u)) calc(-.6*var(--u)) calc(-2.6*var(--u))}
 .ab .is-travel .pg--a .pg__txt{grid-area:2/1/3/2;align-content:space-between}
 
 .ab .is-travel .pg--b{width:calc(104*var(--u));grid-template-columns:calc(35*var(--u)) minmax(0,1fr) calc(18*var(--u));gap:calc(2.6*var(--u))}
-.ab .is-travel .pg--b .np{font-size:calc(3*var(--u))}
+.ab .is-travel .pg--b .np{font-size:calc(2.4*var(--u))}
 .ab .is-travel .pg--b .pg__mid{align-content:space-between;gap:calc(1.2*var(--u));padding-inline:calc(2.6*var(--u));border-inline:1px solid var(--rule)}
 .ab .is-travel .pg--b .cut{margin:calc(1*var(--u)) calc(-1.8*var(--u)) 0}
-.ab .is-travel .cols p{font-size:calc(1.1*var(--b))}
+.ab .is-travel .cols p{font-size:calc(1.02*var(--b))}
 .ab .is-travel .cols{display:grid;grid-template-columns:1fr 1fr;gap:calc(2*var(--u))}
 .ab .is-travel .briefs{display:flex;flex-direction:column;justify-content:space-between}
-.ab .is-travel .briefs li{flex:1 1 auto;padding:calc(1.1*var(--u)) 0;font-size:calc(1.95*var(--u))}
+.ab .is-travel .briefs li{flex:1 1 auto;padding:calc(1.1*var(--u)) 0;font-size:calc(1.55*var(--u))}
 .ab .is-travel .briefs li:first-child{border-top:0;padding-top:0}
 .ab .is-travel .briefs li:last-child{border-bottom:0;padding-bottom:0;flex-grow:0}
 
 .ab .is-travel .pg--c{width:calc(78*var(--u));grid-template-columns:calc(36*var(--u)) minmax(0,1fr);grid-template-rows:auto 1fr;gap:calc(1.6*var(--u)) calc(2.6*var(--u))}
-.ab .is-travel .np--l{align-self:end;font-size:calc(3.5*var(--u));line-height:1}
+.ab .is-travel .np--l{align-self:end;font-size:calc(2.8*var(--u));line-height:1.1}
 .ab .is-travel .pg--c .cut{align-self:end;margin:0 calc(-1*var(--u)) 0 calc(-1.6*var(--u))}
-.ab .is-travel .pull{align-self:end;padding:calc(1.5*var(--u)) 0;font-size:calc(3.1*var(--u));line-height:1.06}
+.ab .is-travel .pull{align-self:end;padding:calc(1.5*var(--u)) 0;font-size:calc(2.5*var(--u));line-height:1.16}
 
 .ab .is-travel .pg--d{width:calc(86*var(--u));grid-template-columns:minmax(0,1fr) calc(35*var(--u));gap:calc(2.6*var(--u))}
 .ab .is-travel .pg--d .cut{order:0;align-self:center;margin-left:calc(-1.4*var(--u))}
-.ab .is-travel .pg--d .np{font-size:calc(3.9*var(--u));line-height:.99}
-.ab .is-travel .drop{font-size:calc(1.08*var(--b))}
+.ab .is-travel .pg--d .np{font-size:calc(3.1*var(--u));line-height:1.08}
+.ab .is-travel .drop{font-size:calc(1.02*var(--b))}
 
 .ab .is-travel .pg--e{min-width:calc(100vw - 3*var(--u));width:calc(100*var(--u));grid-template-columns:calc(40*var(--u)) calc(47*var(--u));justify-content:center;align-items:center;gap:calc(1.5*var(--u))}
-.ab .is-travel .pg--e .yr{font-size:calc(22*var(--u))}
-.ab .is-travel .np--xl{font-size:calc(5.9*var(--u));line-height:.94}
+.ab .is-travel .pg--e .yr{font-size:calc(15.5*var(--u))}
+.ab .is-travel .np--xl{font-size:calc(4.6*var(--u));line-height:1.04}
 .ab .is-travel .pg--e .cut{margin:calc(-1*var(--u)) 0}
 
 @media (max-height:740px){
-  .ab .is-travel .yr{font-size:calc(16*var(--u))}
-  .ab .is-travel .pg--a .yr{font-size:calc(19*var(--u))}
-  .ab .is-travel .pg--d .np{font-size:calc(3.5*var(--u))}
+  .ab .is-travel .yr{font-size:calc(11.5*var(--u))}
+  .ab .is-travel .pg--a .yr{font-size:calc(13.5*var(--u))}
+  .ab .is-travel .pg--d .np{font-size:calc(2.8*var(--u))}
   .ab .is-travel .cols p{font-size:var(--b)}
   .ab .is-travel .drop{font-size:var(--b)}
 }
@@ -211,7 +211,7 @@ html.js .ab .ahero__stage.reveal:not(.is-in) .ahero__noise li{opacity:0;transfor
 .ab .route__nav path{fill:none;stroke-width:2;stroke-linecap:round}
 .ab .route__way{stroke:rgba(20,18,15,.5);stroke-dasharray:.1 7}
 .ab .route__done{stroke:var(--green-700);stroke-width:2.6}
-.ab .route__nav a{position:absolute;bottom:0;display:grid;justify-items:center;gap:5px;padding:0 10px 2px;transform:translateX(-50%);font-family:var(--np);font-size:1.12rem;line-height:1.2;font-weight:700;color:var(--ntext);text-decoration:none}
+.ab .route__nav a{position:absolute;bottom:0;display:grid;justify-items:center;gap:5px;padding:0 10px 2px;transform:translateX(-50%);font-family:var(--np);font-size:.98rem;line-height:1.2;font-weight:700;letter-spacing:-.01em;color:var(--ntext);text-decoration:none}
 .ab .route__nav a::before{content:"";width:11px;height:11px;border-radius:50%;border:2px solid var(--nink);background:transparent;transition:background-color .4s,border-color .4s,transform .4s var(--ease)}
 .ab .route__nav a.is-past::before{background:var(--green-700);border-color:var(--green-700)}
 .ab .route__nav a[aria-current]::before{transform:scale(1.25)}
