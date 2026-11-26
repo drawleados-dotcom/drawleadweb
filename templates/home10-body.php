@@ -68,18 +68,18 @@ $h10Case = function (string $slug, string $fallback) use ($pdo): string {
   ['#DAF1E5', 'i-layers', 'Business Systems', 'Custom ERP, CRM & Business OS'],
   ['#DFEAF9', 'i-cart', 'Digital Commerce', 'High-performing online stores'],
   ['#E8E2F5', 'i-sparkle', 'AI & Automation', 'Less manual work, smarter flows'],
+  ['#DCEFF0', 'i-chat', 'WhatsApp Automation', 'API, chatbots & instant replies'],
+  ['#F5E1E9', 'i-db', 'Data & Analytics', 'Dashboards, reports & insights'],
   ['#F8E6D6', 'i-chart', 'Marketing & Growth', 'SEO, AEO, GEO & paid ads'],
-] as $hi => [$ht, $hic, $htitle, $hsub]): ?>
-        <li class="hs-s" style="--t:<?= $ht ?>"><a href="#solutions"><span class="hs-top"><span class="hs-ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#<?= $hic ?>"/></svg></span><span class="hs-no">No. 0<?= $hi + 1 ?></span></span><b><?= h($htitle) ?></b><span class="hs-sub"><?= h($hsub) ?></span></a></li>
+] as [$ht, $hic, $htitle, $hsub]): ?>
+        <li class="hs-s" style="--t:<?= $ht ?>"><a href="#solutions"><span class="hs-ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#<?= $hic ?>"/></svg></span><b><?= h($htitle) ?></b><span class="hs-sub"><?= h($hsub) ?></span></a></li>
 <?php endforeach; ?>
       </ul>
-      <div class="hs-cta">
-        <span class="hs-cta__k"><b>8</b><span>Weeks</span></span>
-        <div class="hs-cta__c">
-          <p>Looking for a structured business transformation?</p>
-          <a class="h10-btn h10-btn--green" href="#program"><span>Explore Our 8-Week Program</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
-        </div>
-      </div>
+    </div>
+    <div class="hs-cta reveal" style="--d:.3s">
+      <span class="hs-cta__k"><b>8</b><span>Weeks</span></span>
+      <p>Looking for a structured business transformation?</p>
+      <a class="h10-btn h10-btn--green" href="#program"><span>Explore Our 8-Week Program</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
     </div>
     <ul class="pillars" role="list"><li class="reveal" style="--d:0.0s"><span class="pillar__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-layers"/></svg></span><h3>No Generic Software</h3><p>Solutions engineered around your business.</p></li><li class="reveal" style="--d:0.05s"><span class="pillar__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-target"/></svg></span><h3>No One-Size-Fits-All</h3><p>Every business gets a tailored approach.</p></li><li class="reveal" style="--d:0.1s"><span class="pillar__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-hierarchy"/></svg></span><h3>Hierarchy-Based Systems</h3><p>Structured roles, permissions and workflows.</p></li><li class="reveal" style="--d:0.15000000000000002s"><span class="pillar__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-shield"/></svg></span><h3>Security-First Engineering</h3><p>Security considered throughout implementation.</p></li></ul>
   </div>
