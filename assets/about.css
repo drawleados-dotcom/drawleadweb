@@ -269,17 +269,18 @@ html.js .ab .rhythm.is-in .rhythm__ln{stroke-dashoffset:0}
 .ab .fstep:last-child .fstep__t{font-size:clamp(1.2rem,1.8vw,1.7rem);line-height:1.18;letter-spacing:-.028em;color:var(--green-700)}
 .ab .fit__end{max-width:26em;margin:clamp(56px,6vw,96px) auto 0;text-align:center;font-size:clamp(1.4rem,2.5vw,2.2rem);line-height:1.25;font-weight:700;letter-spacing:-.032em;text-wrap:balance}
 
-/* ---------- 05 capabilities ---------- */
+/* ---------- 05 capabilities ----------
+   The home page's Industries rows (.sw-row in home10.css): badge, question,
+   solution chips, button, and a sample dashboard on a tinted panel, sides
+   alternating. Each row takes one site tint for its panel; the badge number,
+   chips and dashboard accents use a deeper shade of the same tint. The section
+   keeps the page's 1360px wrap rather than .sw's 1200px. */
 .ab .build{padding:var(--pad) 0 clamp(110px,11vw,160px);background:#fff}
-.ab .stackcards{display:flex;flex-direction:column;gap:24px}
-.ab .scard{position:sticky;top:calc(104px + var(--i)*16px);display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);min-height:clamp(420px,38vw,540px);border-radius:var(--r-xl);background:var(--tint);overflow:hidden}
-.ab .scard+.scard{box-shadow:0 -18px 40px -30px rgba(11,13,12,.28)}
-.ab .scard__body{display:flex;flex-direction:column;justify-content:space-between;gap:32px;padding:clamp(28px,3.6vw,56px)}
-.ab .scard__n{font-size:clamp(1rem,1.3vw,1.2rem);font-weight:700;color:var(--t-green);letter-spacing:.02em}
-.ab .scard h3{font-size:clamp(1.9rem,3.4vw,3.1rem);line-height:1.06;font-weight:700;letter-spacing:-.04em}
-.ab .scard p{margin-top:18px;max-width:40ch;font-size:clamp(1.02rem,1.3vw,1.18rem);line-height:1.6;color:var(--t-ink);text-wrap:pretty}
-.ab .scard__art{position:relative;display:flex;align-items:center;justify-content:center;padding:8px}
-.ab .scard__art img{width:100%;max-height:560px;object-fit:contain}
+.ab .build .wrap{--wrap:inherit}
+.ab .build [data-accent="sky"]{--accent-50:#F1F6FD;--accent-100:var(--t-sky);--accent-500:#3B7DD8;--accent-700:#1F4E8C;--accent-line:rgba(59,125,216,.4)}
+.ab .build [data-accent="peach"]{--accent-50:#FCF3EA;--accent-100:var(--t-peach);--accent-500:#C77A2E;--accent-700:#8A4A12;--accent-line:rgba(199,122,46,.4)}
+.ab .build [data-accent="lilac"]{--accent-50:#F5F2FB;--accent-100:var(--t-lilac);--accent-500:#7B5CC4;--accent-700:#4A3285;--accent-line:rgba(123,92,196,.4)}
+.ab .build [data-accent="lime"]{--accent-50:#F6F8E9;--accent-100:var(--t-lime);--accent-500:#7E9220;--accent-700:#4E5C0E;--accent-line:rgba(126,146,32,.45)}
 .ab .build__end{max-width:26em;margin:clamp(56px,6vw,96px) auto 0;text-align:center;font-size:clamp(1.5rem,2.8vw,2.5rem);line-height:1.22;font-weight:700;letter-spacing:-.034em;text-wrap:balance}
 
 /* ---------- 06 culture ---------- */
@@ -380,11 +381,6 @@ html.js .ab .rhythm.is-in .rhythm__ln{stroke-dashoffset:0}
   .ab .fstep:nth-child(even){padding-right:0}
   .ab .fstep:nth-child(-n+2){padding-top:0}
   .ab .fstep:nth-child(n+3){padding-bottom:0;border-top:1px solid rgba(11,13,12,.1)}
-  .ab .scard{position:relative;top:auto;grid-template-columns:1fr;min-height:0}
-  .ab .scard+.scard{box-shadow:none}
-  .ab .scard__art{order:-1;padding:8px 8px 0}
-  .ab .scard__art img{max-height:420px}
-  .ab .scard__body{gap:14px;padding-top:8px}
   .ab .mosaic{grid-auto-rows:clamp(180px,34vw,300px)}
   .ab .ph--1{grid-column:span 12}.ab .ph--2,.ab .ph--3,.ab .ph--4,.ab .ph--5{grid-column:span 6}.ab .ph--6{grid-column:span 12}
 }
@@ -413,7 +409,6 @@ html.js .ab .rhythm.is-in .rhythm__ln{stroke-dashoffset:0}
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion:reduce){
   html.js .ab .rhythm__ln{stroke-dashoffset:0}
-  .ab .scard{position:relative;top:auto}
   .ab .marquee--line .marquee__track{justify-content:center}
   .ab .marquee--line li{font-size:clamp(1.5rem,3.4vw,2.6rem)}
   .ab .fstep__n::after{transform:none}
