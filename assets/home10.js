@@ -270,7 +270,10 @@
       const fast = Math.abs(target - shown) > 1 ? 1.9 : 1;
       const leaf = document.createElement('div');
       leaf.className = 'pg-cal__leaf' + (fwd ? '' : ' is-back');
-      leaf.innerHTML = '<div class="pg-cal__page"><b>' + ((fwd ? shown : next) + 1) + '</b></div>';
+      const face = pad.querySelector(':scope > .pg-cal__page').cloneNode(true);
+      face.querySelector('b').removeAttribute('data-cal-n');
+      face.querySelector('b').textContent = (fwd ? shown : next) + 1;
+      leaf.appendChild(face);
       pad.appendChild(leaf);
       const finish = () => { leaf.remove(); shown = next; step(); };
       if (fwd) {

@@ -474,7 +474,7 @@ $pgPhases = [0 => ['Phase 01', 'Engineer & Build'], 4 => ['Phase 02', 'Implement
               <div class="pg-cal__pad">
                 <span class="pg-cal__sheet pg-cal__sheet--3"></span>
                 <span class="pg-cal__sheet pg-cal__sheet--2"></span>
-                <div class="pg-cal__page"><b data-cal-n>1</b></div>
+                <div class="pg-cal__page"><span class="pg-cal__grid"><?php foreach (["Mon","Tue","Wed","Thu","Fri","Sat","Sun"] as $dn): ?><span><?= $dn ?></span><?php endforeach; ?><?php for ($c = 0; $c < 35; $c++): ?><i></i><?php endfor; ?></span><b data-cal-n>1</b></div>
               </div>
               <div class="pg-cal__label" data-cal-l>Week</div>
             </div>
