@@ -99,8 +99,9 @@
 
   /* ---------- capabilities: sticky list + cards scrolling in ---------- */
   const cxWrap = $('.cx-panels');
-  const cxTabs = $$('.cx-tab');
-  const cxPanels = cxWrap ? $$('.cx-panel', cxWrap) : [];
+  const byVisualOrder = (a, b) => Number(a.style.order || 0) - Number(b.style.order || 0);
+  const cxTabs = $$('.cx-tab').sort(byVisualOrder);
+  const cxPanels = cxWrap ? $$('.cx-panel', cxWrap).sort(byVisualOrder) : [];
   if (cxWrap && cxPanels.length) {
     const cxTop = () => parseFloat(getComputedStyle(cxWrap.parentElement).getPropertyValue('--cx-top')) || 112;
     cxTabs.forEach((t, i) => t.addEventListener('click', () => {

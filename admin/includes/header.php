@@ -96,6 +96,10 @@ $sidebarCollapsed = !empty($sidebarCollapsed);
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h5M7 16h8"/><path d="m16 13 2 2 3-4"/></svg>
         Selected Work
       </a>
+      <a class="side-link<?= $activeNav === 'capabilities' ? ' active' : '' ?>" href="capabilities.php">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg>
+        Core Capabilities
+      </a>
       <a class="side-link<?= $activeNav === 'deployments' ? ' active' : '' ?>" href="deployments.php">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6"/></svg>
         Production Environment
