@@ -76,11 +76,11 @@ $h10Case = function (string $slug, string $fallback) use ($pdo): string {
 <?php endforeach; ?>
       </ul>
     </div>
-    <div class="hs-cta reveal" style="--d:.3s">
+    <div class="hs-cta-w reveal" style="--d:.3s"><div class="hs-cta">
       <span class="hs-cta__k"><b>8</b><span>Weeks</span></span>
       <p>Looking for a structured business transformation?</p>
       <a class="h10-btn h10-btn--green" href="#program"><span>Explore Our 8-Week Program</span><svg class="ic h10-btn__arr" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
-    </div>
+    </div></div>
     <ul class="pillars" role="list"><li class="reveal" style="--d:0.0s"><span class="pillar__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-layers"/></svg></span><h3>No Generic Software</h3><p>Solutions engineered around your business.</p></li><li class="reveal" style="--d:0.05s"><span class="pillar__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-target"/></svg></span><h3>No One-Size-Fits-All</h3><p>Every business gets a tailored approach.</p></li><li class="reveal" style="--d:0.1s"><span class="pillar__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-hierarchy"/></svg></span><h3>Hierarchy-Based Systems</h3><p>Structured roles, permissions and workflows.</p></li><li class="reveal" style="--d:0.15000000000000002s"><span class="pillar__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-shield"/></svg></span><h3>Security-First Engineering</h3><p>Security considered throughout implementation.</p></li></ul>
   </div>
   <div class="strip" aria-label="Services">
