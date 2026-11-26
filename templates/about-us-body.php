@@ -13,9 +13,10 @@
  * for this page. The six photographs under "people" are stand-ins that show no
  * faces: replace them with real team photographs from Page Content.
  *
- * Motion is small on purpose: things ease in once, the story illustration
- * changes with the chapter being read, and the AI illustration joins up when
- * the belief is reached. All of it stands down under prefers-reduced-motion,
+ * Motion is small on purpose: things ease in once, the story section travels
+ * sideways like a long newspaper from 2022 to 2026 (wide screens only; phones,
+ * reduced motion and the editor get the same pages stacked), and the AI
+ * illustration joins up when the belief is reached. All of it stands down under prefers-reduced-motion,
  * and the page reads in full with JavaScript off.
  */
 $activePage = 'about-us';
@@ -89,6 +90,7 @@ $abSteps = [
 ];
 ?>
 <link rel="stylesheet" href="<?= asset_url('/assets/home10.css') ?>">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Condensed:wght@700&amp;family=Newsreader:opsz,wght@6..72,400..600&amp;display=swap">
 <link rel="stylesheet" href="<?= asset_url('/assets/about.css') ?>">
 <script>document.documentElement.classList.add('js')</script>
 
@@ -176,59 +178,67 @@ $abSteps = [
   </div>
 </section>
 
-<!-- 03 · Where our story began -->
+<!-- 03 · Our story: one long newspaper that travels from 2022 to 2026 -->
 <section class="story" id="our-story" data-story data-at="0">
-  <div class="wrap">
-    <div class="story__head">
-      <span class="pill pill--white reveal"><span class="pill__dot" aria-hidden="true"></span>Our story · Since 2022</span>
-      <h2 class="h2 reveal" style="--d:.06s">It Started With Building Websites.<br>It Became Something Much Bigger.</h2>
-    </div>
-    <div class="story__grid">
-      <div class="story__fig" aria-hidden="true">
-        <div class="story__sticky">
-          <?= $abImg('story-1.webp', '', 1200, 1200, 'loading="lazy" data-pic') ?>
+  <div class="story__run" data-run>
+    <div class="story__stage" data-stage>
+      <div class="story__track" data-track>
+        <div class="story__paper" aria-hidden="true"></div>
 
-          <?= $abImg('story-2.webp', '', 1200, 1200, 'loading="lazy" data-pic') ?>
+        <header class="pg pg--front">
+          <span class="pill pill--white"><span class="pill__dot" aria-hidden="true"></span>Our story · Since 2022</span>
+          <h2 class="story__h">It Started With Building Websites.<br>It Became Something Much&nbsp;Bigger.</h2>
+        </header>
 
-          <?= $abImg('story-3.webp', '', 1200, 1200, 'loading="lazy" data-pic') ?>
+        <article class="pg pg--a" id="story-2022" data-yr>
+          <h3 class="yr">2022</h3>
+          <figure class="cut"><?= $abImg('press-2022.webp', 'One website on a small plinth with two people beside it, printed in black ink like a newspaper picture', 1300, 964) ?></figure>
+          <div class="pg__txt">
+            <p class="np">When we started Drawlead in 2022, our journey began with helping businesses build their digital presence.</p>
+            <ul class="ads" role="list"><li>Websites.</li><li>Digital experiences.</li><li>Online growth.</li></ul>
+          </div>
+        </article>
 
-          <?= $abImg('story-4.webp', '', 1200, 1200, 'loading="lazy" data-pic') ?>
+        <article class="pg pg--b" id="story-2023" data-yr>
+          <div class="pg__txt">
+            <h3 class="yr">2023</h3>
+            <p class="np">But as we worked with more businesses, we started noticing something beyond the projects we were delivering.</p>
+          </div>
+          <div class="pg__mid">
+            <figure class="cut"><?= $abImg('press-2023.webp', 'A website, an ERP, a CRM, spreadsheets and a phone, each on its own island with loose cables between them', 1400, 826) ?></figure>
+            <div class="cols">
+              <p>Businesses were investing in technology, but their everyday challenges weren't disappearing.</p>
+              <p>A company could have a website, an ERP, a CRM, multiple spreadsheets and several other tools—and still struggle to manage its operations.</p>
+            </div>
+          </div>
+          <ul class="briefs" role="list"><li>Departments weren't connected.</li><li>Information was scattered.</li><li>Teams depended on manual coordination.</li><li>Business owners struggled to get a clear picture of what was happening.</li></ul>
+        </article>
 
-        </div>
+        <article class="pg pg--c" id="story-2024" data-yr>
+          <h3 class="yr">2024</h3>
+          <p class="np np--l">We realized the problem wasn't always the absence of technology.</p>
+          <figure class="cut"><?= $abImg('press-2024.webp', 'People on one side, working systems on the other, and a bridge between them with the middle span missing', 1400, 761) ?></figure>
+          <p class="pull">Sometimes, the problem was <span class="mark">how technology was being implemented.</span></p>
+        </article>
+
+        <article class="pg pg--d" id="story-2025" data-yr>
+          <figure class="cut"><?= $abImg('press-2025.webp', 'Website, charts, data and people on one shared platform, joined by a green line under a magnet arch, partly printed in colour', 1400, 1013) ?></figure>
+          <div class="pg__txt">
+            <h3 class="yr">2025</h3>
+            <p class="np">That changed the way we looked at our work.</p>
+            <p class="drop">We moved beyond building individual digital solutions and started looking at the bigger picture: the business itself, its people, its processes and how technology could bring everything together.</p>
+          </div>
+        </article>
+
+        <article class="pg pg--e" id="story-2026" data-yr>
+          <div class="pg__txt">
+            <h3 class="yr yr--g">2026</h3>
+            <p class="np np--xl">That became the direction of Drawlead.</p>
+          </div>
+          <figure class="cut"><?= $abImg('press-2026.webp', 'A large green compass whose needle points to the Drawlead magnet, with people walking along a green path towards it, printed in full colour', 1600, 1280) ?></figure>
+        </article>
       </div>
-      <div class="story__chs">
-        <article class="ch t-peach" data-ch>
-          <?= $abImg('story-1.webp', 'One website on a small plinth with two people beside it', 1200, 1200, 'loading="lazy" class="ch__m"') ?>
-
-          <span class="ch__n" aria-hidden="true">01</span>
-          <p class="ch__lead">When we started Drawlead in 2022, our journey began with helping businesses build their digital presence.</p>
-          <ul class="tags" role="list"><li>Websites.</li><li>Digital experiences.</li><li>Online growth.</li></ul>
-        </article>
-        <article class="ch t-rose" data-ch>
-          <?= $abImg('story-2.webp', 'A website, an ERP, a CRM, spreadsheets and a phone, each on its own island with loose cables between them', 1200, 1200, 'loading="lazy" class="ch__m"') ?>
-
-          <span class="ch__n" aria-hidden="true">02</span>
-          <p class="ch__lead">But as we worked with more businesses, we started noticing something beyond the projects we were delivering.</p>
-          <p>Businesses were investing in technology, but their everyday challenges weren't disappearing.</p>
-          <p>A company could have a website, an ERP, a CRM, multiple spreadsheets and several other tools—and still struggle to manage its operations.</p>
-          <ul class="ch__pts" role="list"><li>Departments weren't connected.</li><li>Information was scattered.</li><li>Teams depended on manual coordination.</li><li>Business owners struggled to get a clear picture of what was happening.</li></ul>
-        </article>
-        <article class="ch t-peri" data-ch>
-          <?= $abImg('story-3.webp', 'People on one side, working systems on the other, and a bridge between them with the middle span missing', 1200, 1200, 'loading="lazy" class="ch__m"') ?>
-
-          <span class="ch__n" aria-hidden="true">03</span>
-          <p class="ch__lead">We realized the problem wasn't always the absence of technology.</p>
-          <p class="ch__lead ch__lead--g">Sometimes, the problem was how technology was being implemented.</p>
-        </article>
-        <article class="ch t-mint" data-ch>
-          <?= $abImg('story-4.webp', 'Website, charts, data and people on one shared platform, joined by a green line under a magnet arch', 1200, 1200, 'loading="lazy" class="ch__m"') ?>
-
-          <span class="ch__n" aria-hidden="true">04</span>
-          <p class="ch__lead">That changed the way we looked at our work.</p>
-          <p>We moved beyond building individual digital solutions and started looking at the bigger picture: the business itself, its people, its processes and how technology could bring everything together.</p>
-          <p class="ch__end">That became the direction of Drawlead.</p>
-        </article>
-      </div>
+      <div class="route" data-route aria-hidden="true"><?= $abImg('press-plane.webp', '', 360, 134, 'class="route__plane" loading="lazy"') ?></div>
     </div>
   </div>
 </section>
