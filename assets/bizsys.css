@@ -421,3 +421,48 @@ html.js .bs .file{grid-area:1/1}
   .bs .pipe.is-in .pipe__token{animation:none;opacity:0}
   .bs .cmp__range{transition:none}
 }
+
+/* ==========================================================================
+   Premium pass: 3D tilt, paper depth, ticket grain, calmer motion
+   ========================================================================== */
+.bs{--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='5'/%3E%3CfeColorMatrix values='0 0 0 0 .25 0 0 0 0 .22 0 0 0 0 .2 0 0 0 .12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E")}
+
+/* 3D tilt (pointer devices only; bizsys.js sets --rx/--ry) */
+.bs [data-tilt]{transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0px));transition:transform .45s var(--bs-ease),box-shadow .45s var(--bs-ease)}
+.bs [data-tilt].is-tilting{transition:transform .12s linear,box-shadow .45s var(--bs-ease)}
+.bs .bento__card:hover{--ty:-4px;transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0px))}
+
+/* hero console sits on a small stack of paper */
+.bs .cs-wrap{position:relative;isolation:isolate}
+.bs .cs-sheet{position:absolute;inset:0;z-index:-1;border-radius:26px;border:1px solid var(--bs-line)}
+.bs .cs-sheet--1{background:#DAF1E5;transform:rotate(-3.5deg) translate(-10px,10px)}
+.bs .cs-sheet--2{background:#E8E2F5;transform:rotate(2.5deg) translate(12px,14px)}
+.bs .cs{background-color:#fff;background-image:var(--grain)}
+/* the core only pulses while the system is booting */
+.bs .cs__ring{animation:none}
+.bs .cs.is-booting .cs__ring{animation:bs-ring 2.6s ease-out 3}
+
+/* ticket grain and printed serials */
+.bs .ptix__s,.bs .tkt__body,.bs .tkt__stub,.bs .composer,.bs .file__in{background-image:var(--grain)}
+.bs .file__in{background-image:var(--grain),radial-gradient(rgba(15,23,42,.06) 1px,transparent 1.4px);background-size:160px 160px,18px 18px}
+.bs .tkt__stub::after{content:"";position:absolute;left:18px;right:18px;bottom:12px;height:12px;background:repeating-linear-gradient(90deg,currentColor 0 1px,transparent 1px 3px,currentColor 3px 5px,transparent 5px 7px);opacity:.35}
+.bs .tkt__stub{padding-bottom:30px}
+
+/* calmer map: connectors are still until a department is picked */
+.bs .map__d::after{animation:none;opacity:.22}
+.bs .map .map__d.is-pick::after,.bs .map .map__d.is-rel::after{animation:bs-dash 1.4s linear infinite;opacity:1}
+.bs .map__pulse{animation:none;opacity:.25}
+
+/* AI preview flows only on hover */
+.bs .bento__card.is-live .pv-ai__ln{animation:none}
+
+/* compare slider: drag from a band through the handle, so text stays tappable */
+.bs .cmp__range{inset:auto 0;top:50%;height:72px;margin-top:-36px}
+@media (prefers-reduced-motion:reduce){
+  .bs [data-tilt]{transform:none!important}
+  .bs .cs.is-booting .cs__ring{animation:none}
+}
+@media (max-width:640px){
+  .bs .cs-sheet--1{transform:rotate(-2deg) translate(-6px,8px)}
+  .bs .cs-sheet--2{transform:rotate(1.5deg) translate(6px,10px)}
+}

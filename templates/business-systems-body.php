@@ -148,7 +148,8 @@ $bsPrompts = ['We use too many disconnected tools', 'We need a custom ERP', 'Aut
       </div>
       <ul class="bsh__proof reveal" style="--d:.38s" role="list"><li><b>50+</b> projects delivered</li><li><b>20+</b> industries</li><li><b>8-week</b> implementation program</li></ul>
     </div>
-    <div class="cs reveal" style="--d:.2s" aria-hidden="true" data-bs-console>
+    <div class="cs-wrap reveal" style="--d:.2s"><span class="cs-sheet cs-sheet--1" aria-hidden="true"></span><span class="cs-sheet cs-sheet--2" aria-hidden="true"></span>
+    <div class="cs" aria-hidden="true" data-bs-console data-tilt>
       <div class="cs__bar"><span class="cs__dots"><i></i><i></i><i></i></span><b>Business OS</b><span class="cs__live"><i></i>Live</span></div>
       <div class="cs__boot"><span data-bs-boot>6 of 6 modules connected</span><i class="cs__prog"><u></u></i></div>
       <div class="cs__stage">
@@ -160,7 +161,7 @@ $bsPrompts = ['We use too many disconnected tools', 'We need a custom ERP', 'Aut
         </ul>
       </div>
       <p class="cs__feed" data-bs-feed>New lead synced to CRM · Sales</p>
-    </div>
+    </div></div>
   </div>
   <div class="wrap">
     <div class="ptix reveal" style="--d:.4s">
@@ -217,7 +218,7 @@ $bsPrompts = ['We use too many disconnected tools', 'We need a custom ERP', 'Aut
     </div>
     <div class="bento">
 <?php foreach ($bsBuild as $i => [$icon, $tint, $title, $text, $size, $pv]): ?>
-      <article class="bento__card bs-tint--<?= $tint ?><?= $size === 'lg' ? ' bento__card--lg' : '' ?> reveal" style="--d:<?= $i * .05 ?>s">
+      <article data-tilt class="bento__card bs-tint--<?= $tint ?><?= $size === 'lg' ? ' bento__card--lg' : '' ?> reveal" style="--d:<?= $i * .05 ?>s">
         <div class="pv pv--<?= $pv ?>" aria-hidden="true">
 <?php if ($pv === 'os'): ?>
           <span class="pv-os__core">OS</span><span class="pv-os__m" style="--a:0">Sales</span><span class="pv-os__m" style="--a:1">Projects</span><span class="pv-os__m" style="--a:2">HR</span><span class="pv-os__m" style="--a:3">Finance</span><span class="pv-os__m" style="--a:4">Stock</span><span class="pv-os__m" style="--a:5">Reports</span>
@@ -241,7 +242,7 @@ $bsPrompts = ['We use too many disconnected tools', 'We need a custom ERP', 'Aut
       </article>
 <?php endforeach; ?>
     </div>
-    <div class="bs-cta-row reveal"><a class="h10-btn bs-btn" href="/book" data-book><span>Explore What We Can Build</span><?= $bsArrow ?></a></div>
+    <div class="bs-cta-row reveal"><a class="h10-btn bs-btn" href="#projects"><span>Explore What We Can Build</span><?= $bsArrow ?></a></div>
   </div>
 </section>
 
@@ -332,7 +333,7 @@ $bsPrompts = ['We use too many disconnected tools', 'We need a custom ERP', 'Aut
 <?php foreach ($bsInd as $i => [$icon, $tint, $ind, $q, $text, $cta]): ?>
         <article class="file bs-tint--<?= $tint ?>" role="tabpanel" id="bsi-p<?= $i ?>" aria-labelledby="bsi-t<?= $i ?>">
           <span class="file__tab" aria-hidden="true"><?= $bsN($i) ?> · <?= h($ind) ?></span>
-          <div class="file__in">
+          <div class="file__in" data-tilt>
             <span class="file__art" aria-hidden="true"><?= $bsIc($icon) ?></span>
             <h3><?= h($q) ?></h3>
             <p><?= h($text) ?></p>
@@ -369,7 +370,7 @@ $bsPrompts = ['We use too many disconnected tools', 'We need a custom ERP', 'Aut
           <ul class="case__chips" role="list"><?php foreach ($chips as $chip): ?><li><?= h($chip) ?></li><?php endforeach; ?></ul>
           <a class="h10-btn bs-btn case__cta" href="<?= h($href) ?>"><span>Explore Project</span><?= $bsArrow ?></a>
         </div>
-        <div class="cmp" style="--pos:50%">
+        <div class="cmp" style="--pos:50%" data-tilt>
           <div class="cmp__from">
             <span class="cmp__k">From</span>
             <div class="cmp__mess" aria-hidden="true"><?php foreach ($fromTiles as $k => $t): ?><span style="--k:<?= $k ?>"><?= h($t) ?></span><?php endforeach; ?></div>

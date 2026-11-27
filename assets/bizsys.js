@@ -208,6 +208,25 @@
     }, { threshold: .5 });
   });
 
+  /* ---------- 3D tilt: key surfaces lean gently towards the pointer (mouse/trackpad only) ---------- */
+  if (!reduce && window.matchMedia && matchMedia('(hover:hover) and (pointer:fine)').matches) {
+    $$('[data-tilt]').forEach(function (el) {
+      var max = el.classList.contains('bento__card') ? 5 : 4;
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        el.classList.add('is-tilting');
+        el.style.setProperty('--ry', (x * max).toFixed(2) + 'deg');
+        el.style.setProperty('--rx', (-y * max).toFixed(2) + 'deg');
+      });
+      el.addEventListener('pointerleave', function () {
+        el.classList.remove('is-tilting');
+        el.style.setProperty('--ry', '0deg');
+        el.style.setProperty('--rx', '0deg');
+      });
+    });
+  }
+
   /* ---------- 08 composer: a prompt fills the message, then opens the booking calendar ---------- */
   var msg = $('[data-bs-msg]');
   if (msg) {
