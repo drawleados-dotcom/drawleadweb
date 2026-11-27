@@ -2,21 +2,29 @@
 /**
  * Business Systems landing page (/business-systems, template "business-systems").
  *
- * Built in the home page's design language: it loads /assets/home10.css and
- * home10.js and wraps everything in .h10, so buttons, eyebrows, word reveals,
- * the palette and the footer are the same components. What is particular to
- * this page is /assets/bizsys.css (scoped under .bs) and /assets/bizsys.js
- * (the hero system board and the approach timeline).
- *
- * Copy is editable in Admin → Pages → Business Systems → Page Content.
- * Every animation stands down under prefers-reduced-motion and the page
- * reads in full with JavaScript off.
+ * In the home page's design language: it loads /assets/home10.css and
+ * home10.js and wraps everything in .h10, so buttons, eyebrows, the word
+ * reveal on headings, the palette and the footer are shared. What is
+ * particular to this page is /assets/bizsys.css (scoped under .bs) and
+ * /assets/bizsys.js. Each section has its own layout and interaction:
+ *   01 hero          a "Business OS" console that boots module by module
+ *   02 problems      chaos-to-clarity: app tiles react to each problem, then snap into order
+ *   03 capabilities  bento of live mini product previews
+ *   04 ecosystem     department map: pick one to see what it shares; leads-to-profit pipeline
+ *   05 approach      a track of paper tickets that tear off their stubs as you scroll
+ *   06 industries    case-file folders switched by tabs
+ *   07 projects      before/after case files with a drag-to-compare slider
+ *   08 final CTA     a message composer whose prompts open the booking calendar
+ * All copy is server-rendered so Admin → Pages → Page Content can edit it.
+ * Everything reads in full without JavaScript and stands still under
+ * prefers-reduced-motion.
  */
 $activePage = 'business-systems';
 include __DIR__ . '/partials/nav.php';
 
 $bsIc = fn (string $id, string $class = 'ic'): string => '<svg class="' . $class . '" aria-hidden="true" focusable="false"><use href="#i-' . $id . '"/></svg>';
 $bsArrow = $bsIc('arrow', 'ic h10-btn__arr');
+$bsN = fn (int $i): string => str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT);
 $bsCase = function (string $slug, string $fallback) use ($pdo): string {
     try {
         $stmt = $pdo->prepare("SELECT 1 FROM case_studies WHERE slug = ? AND status = 'published'");
@@ -27,15 +35,18 @@ $bsCase = function (string $slug, string $fallback) use ($pdo): string {
     }
 };
 
-// Engineering principles: [icon, tint, label]
-$bsPrinciples = [
-    ['puzzle', 'mint', 'No Generic Software'],
-    ['target', 'sky', 'Business-Specific Engineering'],
-    ['workflow', 'lilac', 'Connected Workflows'],
-    ['shield', 'peach', 'Security-First Development'],
+// 01 · console modules [icon, tint, label, value, unit]
+$bsMods = [
+    ['users', 'sky', 'CRM', '128', 'open leads'],
+    ['briefcase', 'lilac', 'Projects', '24', 'active'],
+    ['calendar', 'peach', 'HR', '86', 'on shift'],
+    ['wallet', 'lime', 'Finance', '₹18.6L', 'this month'],
+    ['grid', 'aqua', 'Inventory', '1,240', 'SKUs'],
+    ['chart', 'rose', 'Reports', '12', 'live boards'],
 ];
+$bsPrinciples = [['puzzle', 'mint', 'No Generic Software'], ['target', 'sky', 'Business-Specific Engineering'], ['workflow', 'lilac', 'Connected Workflows'], ['shield', 'peach', 'Security-First Development']];
 
-// The business problem: [icon, title, text]
+// 02 · problems [icon, title, text] and the app tile each one shakes [label, glyph, messy x/y/rot, tidy x/y]
 $bsProblems = [
     ['plug', 'Disconnected Software', 'Different departments use different applications that don\'t communicate with each other.'],
     ['db', 'Scattered Business Data', 'Customer records, project information and important business data remain spread across multiple platforms.'],
@@ -44,31 +55,57 @@ $bsProblems = [
     ['puzzle', 'Software That Doesn\'t Fit', 'Existing software cannot accommodate your specific workflows, hierarchy and business requirements.'],
     ['trend', 'Difficult to Scale', 'As your teams and operations expand, managing existing systems becomes increasingly complicated.'],
 ];
-
-// What we engineer: [icon, tint, title, text, size]
-$bsBuild = [
-    ['layers', 'mint', 'Custom ERP & Business Operating Systems', 'Connect your departments, people, processes and business activities through one unified operating system.', 'lg'],
-    ['users', 'sky', 'CRM & Customer Management', 'Manage leads, customer relationships, sales pipelines, follow-ups and customer interactions.', ''],
-    ['briefcase', 'lilac', 'Project & Operations Management', 'Manage projects, tasks, resources, timelines, responsibilities and operational activities.', ''],
-    ['calendar', 'peach', 'HR & Workforce Management', 'Organize employees, attendance, responsibilities, payroll workflows and team activities.', ''],
-    ['wallet', 'lime', 'Finance & Business Management', 'Connect expenses, invoices, payments, budgets, revenue and project-wise financial tracking.', ''],
-    ['chip', 'rose', 'AI, Automation & System Integration', 'Integrate applications, automate repetitive processes and implement AI capabilities across business workflows.', 'lg'],
+$bsTiles = [
+    ['Billing App', 'wallet', '6%', '8%', '-9deg', '4%', '14%'],
+    ['Spreadsheets', 'grid', '54%', '4%', '7deg', '36%', '14%'],
+    ['Sticky Notes', 'briefcase', '30%', '34%', '-4deg', '68%', '14%'],
+    ['Email Threads', 'mail', '62%', '40%', '11deg', '4%', '52%'],
+    ['Old ERP', 'layers', '4%', '58%', '6deg', '36%', '52%'],
+    ['WhatsApp Groups', 'chat', '46%', '68%', '-8deg', '68%', '52%'],
 ];
 
-// Connected ecosystem: departments either side of the core [label, tint]
-$bsDeptsL = [['Sales & Marketing', 'mint'], ['Lead Management', 'sky'], ['CRM & Customer Relations', 'lilac'], ['Project Management', 'aqua'], ['Planning & Scheduling', 'peach'], ['Procurement & Purchasing', 'rose']];
-$bsDeptsR = [['HR & Payroll', 'lime'], ['Finance & Accounts', 'peri'], ['Inventory & Materials', 'mint'], ['Vendor & Contractor Management', 'sky'], ['Operations & Administration', 'lilac'], ['Management & Business Intelligence', 'aqua']];
+// 03 · capabilities [icon, tint, title, text, size, preview]
+$bsBuild = [
+    ['layers', 'mint', 'Custom ERP & Business Operating Systems', 'Connect your departments, people, processes and business activities through one unified operating system.', 'lg', 'os'],
+    ['users', 'sky', 'CRM & Customer Management', 'Manage leads, customer relationships, sales pipelines, follow-ups and customer interactions.', '', 'crm'],
+    ['briefcase', 'lilac', 'Project & Operations Management', 'Manage projects, tasks, resources, timelines, responsibilities and operational activities.', '', 'gantt'],
+    ['calendar', 'peach', 'HR & Workforce Management', 'Organize employees, attendance, responsibilities, payroll workflows and team activities.', '', 'hr'],
+    ['wallet', 'lime', 'Finance & Business Management', 'Connect expenses, invoices, payments, budgets, revenue and project-wise financial tracking.', '', 'fin'],
+    ['chip', 'rose', 'AI, Automation & System Integration', 'Integrate applications, automate repetitive processes and implement AI capabilities across business workflows.', 'lg', 'ai'],
+];
+
+// 04 · departments [key, label, tint] with what each shares (related keys, caption)
+$bsDepts = [
+    ['sales', 'Sales & Marketing', 'mint'], ['leads', 'Lead Management', 'sky'], ['crm', 'CRM & Customer Relations', 'lilac'],
+    ['projects', 'Project Management', 'aqua'], ['planning', 'Planning & Scheduling', 'peach'], ['procurement', 'Procurement & Purchasing', 'rose'],
+    ['hr', 'HR & Payroll', 'lime'], ['finance', 'Finance & Accounts', 'peri'], ['inventory', 'Inventory & Materials', 'mint'],
+    ['vendors', 'Vendor & Contractor Management', 'sky'], ['ops', 'Operations & Administration', 'lilac'], ['mgmt', 'Management & Business Intelligence', 'aqua'],
+];
+$bsLinks = [
+    'sales' => ['leads crm finance', 'Campaign spend and won deals roll straight into revenue.'],
+    'leads' => ['sales crm', 'Every enquiry lands in the CRM with its source attached.'],
+    'crm' => ['leads sales projects', 'Won customers turn into projects without re-entering data.'],
+    'projects' => ['planning hr finance', 'Tasks, people and costs stay tied to each project.'],
+    'planning' => ['projects procurement hr', 'Schedules drive purchasing and staffing automatically.'],
+    'procurement' => ['inventory vendors finance', 'Purchase orders update stock and payables together.'],
+    'hr' => ['projects finance ops', 'Attendance flows into payroll and project costs.'],
+    'finance' => ['sales procurement mgmt', 'Revenue and expenses meet in one live ledger.'],
+    'inventory' => ['procurement ops finance', 'Stock levels trigger reorders before you run out.'],
+    'vendors' => ['procurement finance projects', 'Contractor work and bills link back to the job.'],
+    'ops' => ['hr inventory mgmt', 'Daily operations report up without manual updates.'],
+    'mgmt' => ['finance sales projects', 'Live dashboards built from every department.'],
+];
 $bsFlow = ['Leads', 'Sales', 'Projects', 'Teams', 'Expenses', 'Profit'];
 
-// Engineering approach: [number, label, title, text, tags]
+// 05 · approach [label, title, text, tags]
 $bsSteps = [
-    ['01', 'Discover & Audit', 'Understand how your business really works.', 'We study your existing workflows, organizational hierarchy, teams, work culture, software and operational challenges.', 'Business Discovery · Process Analysis · Workflow Mapping'],
-    ['02', 'Design & Engineer', 'Design the right solution for your business.', 'We redesign workflows, define system requirements and architect technology around your operational needs.', 'Workflow Engineering · System Architecture · Solution Design'],
-    ['03', 'Build & Integrate', 'Build technology around your workflows.', 'We develop custom applications, configure business systems and integrate existing platforms.', 'Custom Development · API Integration · System Configuration'],
-    ['04', 'Deploy & Evolve', 'Make technology work in everyday operations.', 'We deploy systems, onboard employees, train teams and continuously improve workflows based on real operational feedback.', 'Deployment · Team Enablement · Optimization'],
+    ['Discover & Audit', 'Understand how your business really works.', 'We study your existing workflows, organizational hierarchy, teams, work culture, software and operational challenges.', 'Business Discovery · Process Analysis · Workflow Mapping'],
+    ['Design & Engineer', 'Design the right solution for your business.', 'We redesign workflows, define system requirements and architect technology around your operational needs.', 'Workflow Engineering · System Architecture · Solution Design'],
+    ['Build & Integrate', 'Build technology around your workflows.', 'We develop custom applications, configure business systems and integrate existing platforms.', 'Custom Development · API Integration · System Configuration'],
+    ['Deploy & Evolve', 'Make technology work in everyday operations.', 'We deploy systems, onboard employees, train teams and continuously improve workflows based on real operational feedback.', 'Deployment · Team Enablement · Optimization'],
 ];
 
-// Industries: [icon, tint, industry, question, text, cta]
+// 06 · industries [icon, tint, industry, question, text, cta]
 $bsInd = [
     ['hardhat', 'peach', 'Construction & Real Estate', 'Are Your Projects Losing Profit Through Disconnected Operations?', 'Connect project management, procurement, materials, contractors, site activities and project finances through custom construction systems.', 'Stop Profit Leakage in Your Projects'],
     ['stetho', 'mint', 'Healthcare', 'Are Operational Gaps Affecting Your Patient Experience?', 'Connect patient management, appointments, clinic operations, branch management and administrative workflows.', 'Improve Your Healthcare Operations'],
@@ -78,12 +115,15 @@ $bsInd = [
     ['briefcase', 'lilac', 'Professional Services', 'Are You Losing Valuable Time Managing Clients and Team Workflows?', 'Connect CRM, project delivery, employee responsibilities, resource allocation and financial workflows.', 'Stop Losing Billable Hours'],
 ];
 
-// Selected projects: [tint, label, title, text, chips label, chips, from, to, href]
+// 07 · projects [tint, label, title, text, chips label, chips, from, to, href, from tiles, to modules]
 $bsProjects = [
-    ['peach', 'Construction & Real Estate', 'Multiple Construction Operations. One Connected Business System.', 'A custom-engineered Construction Business OS connecting project management, site operations, procurement, materials, contractors and finance.', 'Connected operations', ['Project Management', 'Site Operations', 'Procurement', 'Material Management', 'Contractor Management', 'Finance'], 'Disconnected departments, spreadsheets and manual site updates.', 'One connected Construction Business Operating System.', $bsCase('from-manual-construction-operations-to-a-fully-integrated-erp-ecosystem', '/case-studies')],
-    ['sky', 'Ecommerce & D2C', 'Beyond Standard Shopify. Custom Shopping Experiences Built to Convert.', 'A custom Shopify experience featuring over 100 unique product pages, intuitive navigation and tailored functionality designed around the brand and its customers.', 'Connected capabilities', ['Custom Shopify Development', 'Product Pages', 'Storefront Engineering', 'Customer Experience', 'Conversion Optimization'], 'Standard ecommerce experiences and limited customization.', 'A custom-built shopping experience designed around the brand and its products.', '/case-studies?service=Ecommerce+Solutions'],
-    ['mint', 'Healthcare', 'Connecting Multi-Branch Healthcare Operations Through Technology.', 'Digital and operational solutions supporting a multi-branch physiotherapy business through online presence, marketing and operational technology initiatives.', 'Connected capabilities', ['Healthcare Systems', 'Patient Management', 'Multi-Branch Operations', 'Digital Presence', 'Workflow Solutions'], 'Separate operational and digital activities.', 'More connected digital and operational workflows.', $bsCase('from-fragmented-clinic-operations-to-a-unified-multi-branch-physiotherapy-management-system', '/case-studies')],
+    ['peach', 'Construction & Real Estate', 'Multiple Construction Operations. One Connected Business System.', 'A custom-engineered Construction Business OS connecting project management, site operations, procurement, materials, contractors and finance.', 'Connected operations', ['Project Management', 'Site Operations', 'Procurement', 'Material Management', 'Contractor Management', 'Finance'], 'Disconnected departments, spreadsheets and manual site updates.', 'One connected Construction Business Operating System.', $bsCase('from-manual-construction-operations-to-a-fully-integrated-erp-ecosystem', '/case-studies'), ['Excel sheets', 'Site diary', 'Phone calls', 'Paper bills'], ['Projects', 'Site Ops', 'Procurement', 'Materials', 'Contractors', 'Finance']],
+    ['sky', 'Ecommerce & D2C', 'Beyond Standard Shopify. Custom Shopping Experiences Built to Convert.', 'A custom Shopify experience featuring over 100 unique product pages, intuitive navigation and tailored functionality designed around the brand and its customers.', 'Connected capabilities', ['Custom Shopify Development', 'Product Pages', 'Storefront Engineering', 'Customer Experience', 'Conversion Optimization'], 'Standard ecommerce experiences and limited customization.', 'A custom-built shopping experience designed around the brand and its products.', '/case-studies?service=Ecommerce+Solutions', ['Stock theme', 'Plugins', 'Generic pages', 'Slow checkout'], ['Storefront', '100+ Product Pages', 'Navigation', 'Brand Story', 'Checkout', 'Analytics']],
+    ['mint', 'Healthcare', 'Connecting Multi-Branch Healthcare Operations Through Technology.', 'Digital and operational solutions supporting a multi-branch physiotherapy business through online presence, marketing and operational technology initiatives.', 'Connected capabilities', ['Healthcare Systems', 'Patient Management', 'Multi-Branch Operations', 'Digital Presence', 'Workflow Solutions'], 'Separate operational and digital activities.', 'More connected digital and operational workflows.', $bsCase('from-fragmented-clinic-operations-to-a-unified-multi-branch-physiotherapy-management-system', '/case-studies'), ['Branch A', 'Branch B', 'Separate ads', 'Paper records'], ['Patients', 'Appointments', 'Branches', 'Digital Presence', 'Marketing', 'Workflows']],
 ];
+
+// 08 · composer prompts
+$bsPrompts = ['We use too many disconnected tools', 'We need a custom ERP', 'Automate our follow-ups', 'Connect our departments and branches'];
 ?>
 <link rel="stylesheet" href="<?= asset_url('/assets/home10.css') ?>">
 <link rel="stylesheet" href="<?= asset_url('/assets/bizsys.css') ?>">
@@ -94,7 +134,7 @@ $bsProjects = [
 <a class="skip" href="#bs-top">Skip to content</a>
 <div class="progress" aria-hidden="true"><i></i></div><main>
 
-<!-- 01 · Hero -->
+<!-- 01 · Hero: the Business OS boots -->
 <section class="bsh" id="bs-top">
   <div class="wrap bsh__grid">
     <div class="bsh__copy">
@@ -106,49 +146,66 @@ $bsProjects = [
         <a class="h10-btn bs-btn" href="/book" data-book><span>Build Your Business System</span><?= $bsArrow ?></a>
         <a class="h10-btn bs-btn--ghost" href="#capabilities"><span>Explore Our Capabilities</span><?= $bsArrow ?></a>
       </div>
+      <ul class="bsh__proof reveal" style="--d:.38s" role="list"><li><b>50+</b> projects delivered</li><li><b>20+</b> industries</li><li><b>8-week</b> implementation program</li></ul>
     </div>
-    <div class="bsh__board reveal" style="--d:.24s" aria-hidden="true" data-bs-board>
-      <div class="bsb__hd"><span class="bsb__logo">D</span><b>Business OS</b><span class="bsb__live"><i></i>Live</span></div>
-      <div class="bsb__core"><span class="bsb__ring"></span><span class="bsb__dot"><?= $bsIc('layers') ?></span><small>One connected system</small></div>
-      <ul class="bsb__mods">
-        <li style="--t:#DFEAF9;--k:var(--ik-sky)"><?= $bsIc('users') ?><span>CRM</span><b data-bs-tick="128">128</b><em>leads</em></li>
-        <li style="--t:#E8E2F5;--k:var(--ik-lilac)"><?= $bsIc('briefcase') ?><span>Projects</span><b data-bs-tick="24">24</b><em>active</em></li>
-        <li style="--t:#F8E6D6;--k:var(--ik-peach)"><?= $bsIc('calendar') ?><span>HR</span><b data-bs-tick="86">86</b><em>on shift</em></li>
-        <li style="--t:#EDF0D7;--k:var(--ik-lime)"><?= $bsIc('wallet') ?><span>Finance</span><b>₹18.6L</b><em>this month</em></li>
-      </ul>
-      <p class="bsb__feed" data-bs-feed>New lead synced to CRM · Sales</p>
+    <div class="cs reveal" style="--d:.2s" aria-hidden="true" data-bs-console>
+      <div class="cs__bar"><span class="cs__dots"><i></i><i></i><i></i></span><b>Business OS</b><span class="cs__live"><i></i>Live</span></div>
+      <div class="cs__boot"><span data-bs-boot>6 of 6 modules connected</span><i class="cs__prog"><u></u></i></div>
+      <div class="cs__stage">
+        <div class="cs__core"><span class="cs__ring"></span><span class="cs__dot"><?= $bsIc('layers') ?></span><small>One connected system</small></div>
+        <ul class="cs__mods">
+<?php foreach ($bsMods as $i => [$icon, $tint, $label, $val, $unit]): ?>
+          <li class="bs-tint--<?= $tint ?>" style="--i:<?= $i ?>"><span class="cs__ic"><?= $bsIc($icon) ?></span><span class="cs__lb"><?= h($label) ?></span><b<?= ctype_digit($val) ? ' data-bs-tick' : '' ?>><?= h($val) ?></b><em><?= h($unit) ?></em></li>
+<?php endforeach; ?>
+        </ul>
+      </div>
+      <p class="cs__feed" data-bs-feed>New lead synced to CRM · Sales</p>
     </div>
   </div>
   <div class="wrap">
-    <div class="bsh__principles reveal" style="--d:.36s">
-      <span class="bsh__pk">Our Engineering Principles</span>
-      <ul role="list">
+    <div class="ptix reveal" style="--d:.4s">
+      <span class="ptix__label" aria-hidden="true">Principles</span>
+      <ul class="ptix__row" role="list" aria-label="Our engineering principles">
 <?php foreach ($bsPrinciples as [$icon, $tint, $label]): ?>
-        <li class="bs-tint--<?= $tint ?>"><span class="bs-tile"><?= $bsIc($icon) ?></span><?= h($label) ?></li>
+        <li class="ptix__s bs-tint--<?= $tint ?>"><span class="bs-tile"><?= $bsIc($icon) ?></span><span><?= h($label) ?></span></li>
 <?php endforeach; ?>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- 02 · The business problem -->
+<!-- 02 · The business problem: chaos to clarity -->
 <section class="bsp" id="challenges">
-  <div class="wrap bsp__grid">
-    <div class="bsp__head">
-      <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>The Challenges of Running a Growing Business</span>
-      <h2 class="bs-h2">Growing Your Business Shouldn't Mean Managing More Complexity.</h2>
+  <div class="wrap">
+    <div class="bs-head">
+      <div>
+        <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>The Challenges of Running a Growing Business</span>
+        <h2 class="bs-h2">Growing Your Business Shouldn't Mean Managing More Complexity.</h2>
+      </div>
       <p class="bs-lede reveal" style="--d:.1s">As your business grows, managing operations through disconnected software, spreadsheets and manual processes becomes increasingly difficult.</p>
-      <a class="h10-btn bs-btn reveal" style="--d:.16s" href="/book" data-book><span>Let's Fix Your Business Workflows</span><?= $bsArrow ?></a>
     </div>
-    <ol class="bsp__list" role="list">
-<?php foreach ($bsProblems as $i => [$icon, $title, $text]): ?>
-      <li class="bsp__item reveal" style="--d:<?= $i * .05 ?>s"><span class="bsp__n"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></span><span class="bsp__ic"><?= $bsIc($icon) ?></span><div><h3><?= h($title) ?></h3><p><?= h($text) ?></p></div></li>
+    <div class="bsp__grid" data-bs-chaos>
+      <div class="bsp__stage" aria-hidden="true">
+        <div class="bsp__desk">
+<?php foreach ($bsTiles as $i => [$label, $glyph, $x, $y, $r, $gx, $gy]): ?>
+          <div class="bsp__tile" data-i="<?= $i ?>" style="--x:<?= $x ?>;--y:<?= $y ?>;--r:<?= $r ?>;--gx:<?= $gx ?>;--gy:<?= $gy ?>"><span class="bsp__tg"><?= $bsIc($glyph) ?></span><b><?= h($label) ?></b><i class="bsp__pin"></i><i class="bsp__ok"><?= $bsIc('check') ?></i></div>
 <?php endforeach; ?>
-    </ol>
+        </div>
+        <p class="bsp__cap"><span class="bsp__cap-a">6 tools · 0 connections</span><span class="bsp__cap-b">1 system · everything connected</span></p>
+      </div>
+      <div class="bsp__side">
+        <ol class="bsp__list" role="list">
+<?php foreach ($bsProblems as $i => [$icon, $title, $text]): ?>
+          <li class="bsp__item reveal" data-i="<?= $i ?>"><span class="bsp__n"><?= $bsN($i) ?></span><span class="bsp__ic"><?= $bsIc($icon) ?></span><div><h3><?= h($title) ?></h3><p><?= h($text) ?></p></div></li>
+<?php endforeach; ?>
+        </ol>
+        <a class="h10-btn bs-btn reveal" href="/book" data-book><span>Let's Fix Your Business Workflows</span><?= $bsArrow ?></a>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- 03 · What we engineer -->
+<!-- 03 · What we engineer: bento of live previews -->
 <section class="bsc" id="capabilities">
   <div class="wrap">
     <div class="bs-head">
@@ -158,12 +215,29 @@ $bsProjects = [
       </div>
       <p class="bs-lede reveal" style="--d:.1s">We design and develop technology solutions that connect your departments, automate workflows and simplify business operations.</p>
     </div>
-    <div class="bsc__grid">
-<?php foreach ($bsBuild as $i => [$icon, $tint, $title, $text, $size]): ?>
-      <article class="bsc__card bs-tint--<?= $tint ?><?= $size === 'lg' ? ' bsc__card--lg' : '' ?> reveal" style="--d:<?= $i * .05 ?>s">
-        <div class="bsc__top"><span class="bs-tile"><?= $bsIc($icon) ?></span><span class="bsc__n"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></span></div>
-        <h3><?= h($title) ?></h3>
-        <p><?= h($text) ?></p>
+    <div class="bento">
+<?php foreach ($bsBuild as $i => [$icon, $tint, $title, $text, $size, $pv]): ?>
+      <article class="bento__card bs-tint--<?= $tint ?><?= $size === 'lg' ? ' bento__card--lg' : '' ?> reveal" style="--d:<?= $i * .05 ?>s">
+        <div class="pv pv--<?= $pv ?>" aria-hidden="true">
+<?php if ($pv === 'os'): ?>
+          <span class="pv-os__core">OS</span><span class="pv-os__m" style="--a:0">Sales</span><span class="pv-os__m" style="--a:1">Projects</span><span class="pv-os__m" style="--a:2">HR</span><span class="pv-os__m" style="--a:3">Finance</span><span class="pv-os__m" style="--a:4">Stock</span><span class="pv-os__m" style="--a:5">Reports</span>
+<?php elseif ($pv === 'crm'): ?>
+          <div class="pv-crm__col"><small>New</small><i></i><i class="mv"></i></div><div class="pv-crm__col"><small>Qualified</small><i></i></div><div class="pv-crm__col"><small>Won</small><i class="won"></i></div>
+<?php elseif ($pv === 'gantt'): ?>
+          <i style="--s:0;--w:46%"></i><i style="--s:18%;--w:40%"></i><i style="--s:36%;--w:34%"></i><i style="--s:52%;--w:44%"></i>
+<?php elseif ($pv === 'hr'): ?>
+<?php for ($d = 0; $d < 21; $d++): ?><i class="<?= in_array($d, [4, 11, 17], true) ? 'off' : '' ?>" style="--d:<?= $d ?>"></i><?php endfor; ?>
+<?php elseif ($pv === 'fin'): ?>
+          <div><span>INV-1042</span><b>₹48,200</b><em class="due">Due</em></div><div><span>INV-1041</span><b>₹1,26,000</b><em>Paid</em></div><div><span>INV-1040</span><b>₹32,750</b><em>Paid</em></div>
+<?php else: ?>
+          <svg viewBox="0 0 240 110" focusable="false"><path class="pv-ai__ln" d="M30 55H90M90 55L150 25M90 55L150 85M150 25H210M150 85H210"/><circle cx="30" cy="55" r="9"/><circle cx="90" cy="55" r="12" class="hub"/><circle cx="150" cy="25" r="9"/><circle cx="150" cy="85" r="9"/><circle cx="210" cy="25" r="9"/><circle cx="210" cy="85" r="9"/></svg>
+<?php endif; ?>
+        </div>
+        <div class="bento__txt">
+          <span class="bento__n"><?= $bsN($i) ?></span>
+          <h3><?= h($title) ?></h3>
+          <p><?= h($text) ?></p>
+        </div>
       </article>
 <?php endforeach; ?>
     </div>
@@ -171,7 +245,7 @@ $bsProjects = [
   </div>
 </section>
 
-<!-- 04 · Connected ecosystem -->
+<!-- 04 · Connected ecosystem: the department map -->
 <section class="bse" id="ecosystem">
   <div class="wrap">
     <div class="bs-head bs-head--center">
@@ -179,59 +253,66 @@ $bsProjects = [
       <h2 class="bs-h2">Connect Every Part of Your Business Through One System.</h2>
       <p class="bs-lede reveal" style="--d:.1s">Your business shouldn't operate through disconnected departments and isolated applications. We engineer connected systems that allow information, responsibilities and workflows to move across your organization.</p>
     </div>
-    <div class="bse__map reveal">
-      <span class="bse__k">Business Departments &amp; Operations</span>
-      <ul class="bse__col bse__col--l" role="list">
-<?php foreach ($bsDeptsL as $i => [$label, $tint]): ?>
-        <li class="bs-tint--<?= $tint ?>" style="--i:<?= $i ?>"><i class="bse__dot" aria-hidden="true"></i><?= h($label) ?></li>
+    <div class="map reveal" data-bs-map>
+      <span class="map__k">Business Departments &amp; Operations</span>
+      <ul class="map__col map__col--l" role="list">
+<?php foreach (array_slice($bsDepts, 0, 6) as [$key, $label, $tint]): ?>
+        <li><button type="button" class="map__d bs-tint--<?= $tint ?>" data-dept="<?= $key ?>" data-rel="<?= h($bsLinks[$key][0]) ?>" data-cap="<?= h($bsLinks[$key][1]) ?>"><i class="map__dot" aria-hidden="true"></i><?= h($label) ?></button></li>
 <?php endforeach; ?>
       </ul>
-      <div class="bse__core" aria-hidden="true"><span class="bse__pulse"></span><span class="bse__logo">D</span><b>Business OS</b><small>Drawlead</small></div>
-      <ul class="bse__col bse__col--r" role="list">
-<?php foreach ($bsDeptsR as $i => [$label, $tint]): ?>
-        <li class="bs-tint--<?= $tint ?>" style="--i:<?= $i ?>"><i class="bse__dot" aria-hidden="true"></i><?= h($label) ?></li>
+      <div class="map__core"><span class="map__pulse" aria-hidden="true"></span><span class="map__logo" aria-hidden="true">D</span><b>Business OS</b><p class="map__cap" data-bs-cap aria-live="polite">Pick a department to see what it shares.</p></div>
+      <ul class="map__col map__col--r" role="list">
+<?php foreach (array_slice($bsDepts, 6) as [$key, $label, $tint]): ?>
+        <li><button type="button" class="map__d bs-tint--<?= $tint ?>" data-dept="<?= $key ?>" data-rel="<?= h($bsLinks[$key][0]) ?>" data-cap="<?= h($bsLinks[$key][1]) ?>"><i class="map__dot" aria-hidden="true"></i><?= h($label) ?></button></li>
 <?php endforeach; ?>
       </ul>
     </div>
-    <div class="bse__flow reveal">
-      <div class="bse__flow-copy"><span class="bse__k">From Leads to Profit</span><p>Connect customer acquisition, sales, project execution, team activities, operational expenses and financial performance through structured business workflows.</p></div>
-      <ol class="bse__steps" role="list">
+    <div class="pipe reveal" data-bs-pipe>
+      <div class="pipe__copy"><span class="map__k">From Leads to Profit</span><p>Connect customer acquisition, sales, project execution, team activities, operational expenses and financial performance through structured business workflows.</p></div>
+      <div class="pipe__track">
+        <i class="pipe__line" aria-hidden="true"><u></u></i><i class="pipe__token" aria-hidden="true"></i>
+        <ol class="pipe__steps" role="list">
 <?php foreach ($bsFlow as $i => $step): ?>
-        <li style="--i:<?= $i ?>"><span><?= h($step) ?></span></li>
+          <li style="--i:<?= $i ?>"><span class="pipe__dot" aria-hidden="true"></span><?= h($step) ?></li>
 <?php endforeach; ?>
-      </ol>
+        </ol>
+      </div>
     </div>
     <div class="bs-cta-row bs-cta-row--center reveal"><a class="h10-btn bs-btn" href="/book" data-book><span>Build Your Connected Business</span><?= $bsArrow ?></a></div>
   </div>
 </section>
 
-<!-- 05 · Engineering approach -->
-<section class="bsa" id="approach">
-  <div class="wrap bsa__grid">
-    <div class="bsa__head">
-      <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Working With Your Team. Building for Your Business.</span>
-      <h2 class="bs-h2">We Don't Adapt Your Business to Software. We Engineer Software Around Your Business.</h2>
-      <p class="bs-lede reveal" style="--d:.1s">Every business operates differently. That's why we work directly with your team to understand existing processes, identify challenges and engineer technology around your actual business requirements.</p>
-      <a class="h10-btn bs-btn reveal" style="--d:.16s" href="/book" data-book><span>Discuss Your Business Requirements</span><?= $bsArrow ?></a>
-    </div>
-    <ol class="bsa__steps" role="list" data-bs-steps>
-      <i class="bsa__rail" aria-hidden="true"><u></u></i>
-<?php foreach ($bsSteps as $i => [$n, $label, $title, $text, $tags]): ?>
-      <li class="bsa__step reveal" style="--d:<?= $i * .05 ?>s">
-        <span class="bsa__n"><?= $n ?></span>
-        <div class="bsa__card">
-          <span class="bsa__k"><?= h($label) ?></span>
-          <h3><?= h($title) ?></h3>
-          <p><?= h($text) ?></p>
-          <p class="bsa__tags"><?= h($tags) ?></p>
+<!-- 05 · Engineering approach: tear-off ticket track -->
+<section class="bsa" id="approach" data-bs-track>
+  <div class="bsa__pin">
+    <div class="wrap bsa__in">
+      <div class="bs-head bsa__head">
+        <div>
+          <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Working With Your Team. Building for Your Business.</span>
+          <h2 class="bs-h2">We Don't Adapt Your Business to Software. We Engineer Software Around Your Business.</h2>
         </div>
-      </li>
+        <div class="bs-lede reveal" style="--d:.1s"><p>Every business operates differently. That's why we work directly with your team to understand existing processes, identify challenges and engineer technology around your actual business requirements.</p><a class="h10-btn bs-btn" href="/book" data-book><span>Discuss Your Business Requirements</span><?= $bsArrow ?></a></div>
+      </div>
+      <div class="tkts">
+        <ol class="tkts__row" role="list">
+<?php foreach ($bsSteps as $i => [$label, $title, $text, $tags]): ?>
+          <li class="tkt reveal" style="--d:<?= $i * .06 ?>s">
+            <div class="tkt__stub"><span>Step</span><b><?= $bsN($i) ?></b><small><?= h($label) ?></small></div>
+            <div class="tkt__body">
+              <h3><?= h($title) ?></h3>
+              <p><?= h($text) ?></p>
+              <p class="tkt__tags"><?= h($tags) ?></p>
+            </div>
+          </li>
 <?php endforeach; ?>
-    </ol>
+        </ol>
+        <i class="tkts__bar" aria-hidden="true"><u></u></i>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- 06 · Industry-specific engineering -->
+<!-- 06 · Industries: case-file folders -->
 <section class="bsi" id="industries">
   <div class="wrap">
     <div class="bs-head">
@@ -241,20 +322,30 @@ $bsProjects = [
       </div>
       <div class="bs-lede reveal" style="--d:.1s"><p>Even two businesses within the same industry can have completely different workflows, organizational structures and operational challenges.</p><p>We understand your business, study your processes and engineer technology around your specific requirements.</p></div>
     </div>
-    <div class="bsi__grid">
-<?php foreach ($bsInd as $i => [$icon, $tint, $ind, $q, $text, $cta]): ?>
-      <article class="bsi__card bs-tint--<?= $tint ?> reveal" style="--d:<?= ($i % 3) * .06 ?>s">
-        <div class="bsi__top"><span class="bs-tile"><?= $bsIc($icon) ?></span><span class="bsi__ind"><b><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></b><?= h($ind) ?></span></div>
-        <h3><?= h($q) ?></h3>
-        <p><?= h($text) ?></p>
-        <a class="bsi__cta" href="/book" data-book><span><?= h($cta) ?></span><?= $bsIc('arrow') ?></a>
-      </article>
+    <div class="files reveal" data-bs-files>
+      <div class="files__tabs" role="tablist" aria-label="Industries" aria-orientation="vertical">
+<?php foreach ($bsInd as $i => [$icon, $tint, $ind]): ?>
+        <button type="button" role="tab" class="files__tab bs-tint--<?= $tint ?>" id="bsi-t<?= $i ?>" aria-controls="bsi-p<?= $i ?>" aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"<?= $i ? ' tabindex="-1"' : '' ?>><b><?= $bsN($i) ?></b><?= h($ind) ?></button>
 <?php endforeach; ?>
+      </div>
+      <div class="files__stack">
+<?php foreach ($bsInd as $i => [$icon, $tint, $ind, $q, $text, $cta]): ?>
+        <article class="file bs-tint--<?= $tint ?>" role="tabpanel" id="bsi-p<?= $i ?>" aria-labelledby="bsi-t<?= $i ?>">
+          <span class="file__tab" aria-hidden="true"><?= $bsN($i) ?> · <?= h($ind) ?></span>
+          <div class="file__in">
+            <span class="file__art" aria-hidden="true"><?= $bsIc($icon) ?></span>
+            <h3><?= h($q) ?></h3>
+            <p><?= h($text) ?></p>
+            <a class="file__cta" href="/book" data-book><span><?= h($cta) ?></span><?= $bsIc('arrow') ?></a>
+          </div>
+        </article>
+<?php endforeach; ?>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 07 · Selected projects -->
+<!-- 07 · Selected projects: before / after case files -->
 <section class="bsw" id="projects">
   <div class="wrap">
     <div class="bs-head bs-head--center">
@@ -262,30 +353,44 @@ $bsProjects = [
       <h2 class="bs-h2">We Understood. We Engineered. We Made It Work.</h2>
       <p class="bs-lede reveal" style="--d:.1s">Explore how we've understood different business requirements and engineered technology solutions that work in real business environments.</p>
     </div>
-    <div class="bsw__list">
-<?php foreach ($bsProjects as $i => [$tint, $label, $title, $text, $chipsLabel, $chips, $from, $to, $href]): ?>
-      <article class="bsw__card bs-tint--<?= $tint ?> reveal">
-        <div class="bsw__main">
-          <span class="bsw__k">Project <?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?> · <?= h($label) ?></span>
+    <div class="cases reveal" data-bs-cases>
+      <div class="cases__nav" role="tablist" aria-label="Projects">
+<?php foreach ($bsProjects as $i => $pr): ?>
+        <button type="button" role="tab" class="cases__tab" id="bsw-t<?= $i ?>" aria-controls="bsw-p<?= $i ?>" aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"<?= $i ? ' tabindex="-1"' : '' ?>><b><?= $bsN($i) ?></b><?= h($pr[1]) ?></button>
+<?php endforeach; ?>
+      </div>
+<?php foreach ($bsProjects as $i => [$tint, $label, $title, $text, $chipsLabel, $chips, $from, $to, $href, $fromTiles, $toMods]): ?>
+      <article class="case bs-tint--<?= $tint ?>" role="tabpanel" id="bsw-p<?= $i ?>" aria-labelledby="bsw-t<?= $i ?>">
+        <div class="case__copy">
+          <span class="case__k">Project <?= $bsN($i) ?> · <?= h($label) ?></span>
           <h3><?= h($title) ?></h3>
           <p><?= h($text) ?></p>
-          <span class="bsw__cl"><?= h($chipsLabel) ?></span>
-          <ul class="bsw__chips" role="list"><?php foreach ($chips as $chip): ?><li><?= h($chip) ?></li><?php endforeach; ?></ul>
+          <span class="case__cl"><?= h($chipsLabel) ?></span>
+          <ul class="case__chips" role="list"><?php foreach ($chips as $chip): ?><li><?= h($chip) ?></li><?php endforeach; ?></ul>
+          <a class="h10-btn bs-btn case__cta" href="<?= h($href) ?>"><span>Explore Project</span><?= $bsArrow ?></a>
         </div>
-        <div class="bsw__shift">
-          <div class="bsw__from"><span>From</span><p><?= h($from) ?></p></div>
-          <span class="bsw__arrow" aria-hidden="true"><?= $bsIc('arrow') ?></span>
-          <div class="bsw__to"><span>To</span><p><?= h($to) ?></p></div>
-          <a class="bsw__cta" href="<?= h($href) ?>"><span>Explore Project</span><?= $bsIc('arrow') ?></a>
+        <div class="cmp" style="--pos:50%">
+          <div class="cmp__from">
+            <span class="cmp__k">From</span>
+            <div class="cmp__mess" aria-hidden="true"><?php foreach ($fromTiles as $k => $t): ?><span style="--k:<?= $k ?>"><?= h($t) ?></span><?php endforeach; ?></div>
+            <p><?= h($from) ?></p>
+          </div>
+          <div class="cmp__to">
+            <span class="cmp__k">To</span>
+            <div class="cmp__sys" aria-hidden="true"><b>Business OS</b><?php foreach ($toMods as $t): ?><span><?= h($t) ?></span><?php endforeach; ?></div>
+            <p><?= h($to) ?></p>
+          </div>
+          <i class="cmp__handle" aria-hidden="true"><?= $bsIc('left') ?><?= $bsIc('right') ?></i>
+          <input class="cmp__range" type="range" min="0" max="100" value="50" aria-label="Compare before and after for project <?= $bsN($i) ?>">
         </div>
       </article>
 <?php endforeach; ?>
     </div>
-    <p class="bsw__nda reveal"><?= $bsIc('lock') ?><b>Client confidentiality.</b> Client names and identities remain confidential, as every engagement runs under applicable Non-Disclosure Agreements (NDAs).</p>
+    <p class="nda reveal"><span class="nda__stamp">Confidential · NDA</span>Client names and identities remain confidential, as every engagement runs under applicable Non-Disclosure Agreements (NDAs).</p>
   </div>
 </section>
 
-<!-- 08 · Final CTA -->
+<!-- 08 · Final CTA: tell us how your business works -->
 <section class="final final--card bsf" id="contact">
   <div class="wrap">
     <div class="final__card">
@@ -294,7 +399,15 @@ $bsProjects = [
         <h2 class="h1x">Your Business Deserves More Than <span class="grn">Off-the-Shelf Software.</span></h2>
         <p class="lede reveal" style="--d:.1s">Tell us how your business operates, what challenges your teams face and what you want to improve.</p>
         <p class="final__line reveal" style="--d:.14s">Our engineers will work with you to understand your requirements and explore the right technology solution for your business.</p>
-        <div class="final__ctas reveal" style="--d:.18s"><a class="h10-btn h10-btn--green" href="/book" data-book><span>Build Your Business System</span><?= $bsArrow ?></a><a class="h10-btn h10-btn--ghost" href="/book" data-book><span>Book a Strategy Call</span><?= $bsArrow ?></a></div>
+        <div class="composer reveal" style="--d:.18s">
+          <p class="composer__msg" data-bs-msg>Hi Drawlead, we'd like to talk about our business…</p>
+          <div class="composer__chips">
+<?php foreach ($bsPrompts as $prompt): ?>
+            <button type="button" class="composer__chip" data-book data-prompt="<?= h($prompt) ?>"><?= h($prompt) ?></button>
+<?php endforeach; ?>
+          </div>
+        </div>
+        <div class="final__ctas reveal" style="--d:.22s"><a class="h10-btn h10-btn--green" href="/book" data-book><span>Build Your Business System</span><?= $bsArrow ?></a><a class="h10-btn h10-btn--ghost" href="/book" data-book><span>Book a Strategy Call</span><?= $bsArrow ?></a></div>
         <p class="bsf__sign">Drawlead — Business Systems &amp; Technology Company</p>
       </div>
     </div>
