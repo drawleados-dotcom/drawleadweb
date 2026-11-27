@@ -436,12 +436,12 @@ $abSteps = [
   <div class="wrap foot__in">
     <a href="#about-top" aria-label="Drawlead – back to top"><img src="/assets/home10/logos/drawlead-white.webp" alt="Drawlead" width="153" height="30" loading="lazy"></a>
     <p>Business Systems. Digital Commerce. Intelligent Growth.</p>
-    <nav aria-label="Footer"><a href="<?= h($homeUrl) ?>#solutions">Solutions</a><a href="<?= h($homeUrl) ?>#program">8-Week Program</a><a href="<?= h($homeUrl) ?>#case-studies">Case Studies</a><a href="<?= h($homeUrl) ?>#industries">Industries</a><a href="/about-us">About Us</a><a href="/blog">Blog</a></nav>
+    <?php if ($footLinks = footer_menu_links($pdo, 'links')): ?><nav aria-label="Footer"><?= $footLinks ?></nav><?php endif; ?>
   </div>
   <div class="wrap foot__base">
     <span>official@drawlead.co.in &nbsp;·&nbsp; www.drawlead.co.in &nbsp;·&nbsp; Chennai, Tamil Nadu, IN</span>
     <span>© <?= date('Y') ?> Drawlead. All rights reserved.</span>
-    <nav class="foot__legal" aria-label="Legal"><a href="/privacy-policy">Privacy Policy</a><a href="/refund-policy">Refund Policy</a><a href="/terms-and-conditions">Terms &amp; Conditions</a></nav>
+    <?php if ($footLegal = footer_menu_links($pdo, 'legal')): ?><nav class="foot__legal" aria-label="Legal"><?= $footLegal ?></nav><?php endif; ?>
   </div>
 </footer>
 </div>

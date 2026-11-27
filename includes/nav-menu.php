@@ -1,9 +1,14 @@
 <?php
 /**
- * Site navigation: the menu edited in Admin → Menu and drawn by
- * templates/partials/nav.php.
+ * Site navigation: the two menus edited in Admin → Menu.
  *
- * Stored as JSON in settings.site_navigation:
+ * Header menu: drawn by templates/partials/nav.php. Footer menu: two rows of
+ * plain links (see footer_menu_rows()) drawn by every footer in templates/
+ * through footer_menu_links(). Admin → Menu is the only place either is set;
+ * a page's URL change or delete in Admin → Pages updates both
+ * (nav_menu_retarget()).
+ *
+ * The header menu is stored as JSON in settings.site_navigation:
  *   {"version":2,"items":[{id,label,url,visible,new_tab,children:[…],mega:{…}|null}, …]}
  *
  * Items nest up to NAV_MENU_MAX_DEPTH levels below the top level (a sub menu,
@@ -20,6 +25,10 @@
  *
  * Saves from before Admin → Menu could add items (the fixed six links with
  * label/url/visible/mega flags, no "version") are read into the default tree.
+ *
+ * The footer menu is stored in settings.site_footer_navigation:
+ *   {"version":1,"rows":{"links":[item, …],"legal":[item, …]}}
+ * with the same item shape, flat (no children, no mega menu, a link required).
  */
 
 const NAV_MENU_MAX_DEPTH = 2;        // 0 top level, 1 sub menu, 2 sub-sub menu
@@ -147,9 +156,9 @@ function nav_menu_url_ok(string $url): bool
 /**
  * Normalise a menu tree from storage or from the Admin → Menu form. Problems a
  * person must fix are added to $errors (the save is refused); anything
- * structural (wrong types, too deep, too many) is trimmed silently.
+ * structural (wrong types, deeper than $maxDepth, too many) is trimmed silently.
  */
-function nav_menu_clean($items, array &$errors, int $depth = 0, ?array &$ids = null, ?int &$count = null): array
+function nav_menu_clean($items, array &$errors, int $maxDepth = NAV_MENU_MAX_DEPTH, int $depth = 0, ?array &$ids = null, ?int &$count = null): array
 {
     if ($ids === null) $ids = [];
     if ($count === null) $count = 0;
@@ -179,7 +188,7 @@ function nav_menu_clean($items, array &$errors, int $depth = 0, ?array &$ids = n
         $item = [
             'id' => $id, 'label' => $label, 'url' => $url,
             'visible' => !empty($raw['visible']), 'new_tab' => !empty($raw['new_tab']),
-            'children' => $depth < NAV_MENU_MAX_DEPTH ? nav_menu_clean($raw['children'] ?? [], $errors, $depth + 1, $ids, $count) : [],
+            'children' => $depth < $maxDepth ? nav_menu_clean($raw['children'] ?? [], $errors, $maxDepth, $depth + 1, $ids, $count) : [],
             'mega' => null,
         ];
         if ($depth === 0 && is_array($raw['mega'] ?? null)) {
@@ -245,4 +254,230 @@ function nav_menu_href(string $url, string $homeUrl): string
     if (str_starts_with($url, '/#')) return $base . substr($url, 1);
     if (str_starts_with($url, '#')) return $base . $url;
     return $url;
+}
+
+/** Save the header menu. Throws PDOException on failure. */
+function nav_menu_save(PDO $pdo, array $items): void
+{
+    $pdo->prepare('INSERT INTO settings (`key`, `value`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`)')
+        ->execute(['site_navigation', json_encode(['version' => 2, 'items' => $items], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)]);
+}
+
+/**
+ * The home page's address. It is admin-managed (Admin → Pages, slug): the
+ * published page at / is home; failing that, Home 10 and then Home 9 are looked
+ * up by template; / if there is none or the query fails. Never throws: the
+ * header and footer on every page use it.
+ */
+function nav_home_url(PDO $pdo): string
+{
+    static $url = null;
+    if ($url !== null) {
+        return $url;
+    }
+    $url = '/';
+    try {
+        $slug = $pdo->query(
+            "SELECT slug FROM pages WHERE (slug = '/' OR template IN ('home10', 'home9')) AND COALESCE(status, 'published') <> 'draft'
+             ORDER BY slug = '/' DESC, template = 'home10' DESC, id LIMIT 1"
+        )->fetchColumn();
+        if (is_string($slug) && $slug !== '') {
+            $url = $slug;
+        }
+    } catch (Throwable $e) {
+        // e.g. no status column yet: keep /
+    }
+    return $url;
+}
+
+// ── Footer menu ──
+
+/** The footer's rows of links: key => [name in Admin → Menu, where it shows]. */
+function footer_menu_rows(): array
+{
+    return [
+        'links' => ['Footer links', 'The row of links under the Drawlead logo.'],
+        'legal' => ['Legal links', 'The small links in the bottom bar, after the copyright line.'],
+    ];
+}
+
+/** The footer as it was before it became editable. */
+function footer_menu_defaults(): array
+{
+    $item = fn (string $id, string $label, string $url): array =>
+        ['id' => $id, 'label' => $label, 'url' => $url, 'visible' => true, 'new_tab' => false, 'children' => [], 'mega' => null];
+    return [
+        'links' => [
+            $item('foot-solutions', 'Solutions', '/#solutions'),
+            $item('foot-program', '8-Week Program', '/#program'),
+            $item('foot-case-studies', 'Case Studies', '/#case-studies'),
+            $item('foot-industries', 'Industries', '/#industries'),
+            $item('foot-about-us', 'About Us', '/about-us'),
+            $item('foot-blog', 'Blog', '/blog'),
+        ],
+        'legal' => [
+            $item('foot-privacy', 'Privacy Policy', '/privacy-policy'),
+            $item('foot-refund', 'Refund Policy', '/refund-policy'),
+            $item('foot-terms', 'Terms & Conditions', '/terms-and-conditions'),
+        ],
+    ];
+}
+
+/** Normalise the footer rows from storage or from the Admin → Menu form, as nav_menu_clean(). */
+function footer_menu_clean($rows, array &$errors): array
+{
+    $out = [];
+    $ids = [];
+    $count = 0;
+    foreach (footer_menu_rows() as $key => [$rowName]) {
+        $items = nav_menu_clean(is_array($rows) ? ($rows[$key] ?? []) : [], $errors, 0, 0, $ids, $count);
+        foreach ($items as &$it) {
+            $it['mega'] = null;
+            if ($it['url'] === '' && $it['label'] !== '') {
+                $errors[] = "“{$it['label']}” in $rowName needs a link.";
+            }
+        }
+        unset($it);
+        $out[$key] = $items;
+    }
+    return $out;
+}
+
+/** The saved footer rows, or the defaults. Never throws: the footer is on every page. */
+function footer_menu_load(PDO $pdo): array
+{
+    try {
+        $raw = $pdo->query("SELECT `value` FROM settings WHERE `key`='site_footer_navigation'")->fetchColumn();
+        $saved = is_string($raw) ? json_decode($raw, true) : null;
+        if (is_array($saved) && ($saved['version'] ?? 0) === 1 && is_array($saved['rows'] ?? null)) {
+            $errors = [];
+            return footer_menu_clean($saved['rows'], $errors);
+        }
+    } catch (Throwable $e) {
+        // keep the defaults
+    }
+    return footer_menu_defaults();
+}
+
+/** Save the footer rows. Throws PDOException on failure. */
+function footer_menu_save(PDO $pdo, array $rows): void
+{
+    $pdo->prepare('INSERT INTO settings (`key`, `value`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`)')
+        ->execute(['site_footer_navigation', json_encode(['version' => 1, 'rows' => $rows], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)]);
+}
+
+/**
+ * One footer row ('links' or 'legal') as <a> tags joined by $sep, for the
+ * footers in templates/. Empty when the row has no visible links, so the
+ * caller can leave its wrapper out.
+ */
+function footer_menu_links(PDO $pdo, string $row, string $sep = ''): string
+{
+    static $rows = null;
+    $rows ??= footer_menu_load($pdo);
+    $home = nav_home_url($pdo);
+    $out = [];
+    foreach ($rows[$row] ?? [] as $it) {
+        if (!$it['visible'] || $it['label'] === '' || $it['url'] === '') {
+            continue;
+        }
+        $out[] = '<a href="' . h(nav_menu_href($it['url'], $home)) . '"'
+            . ($it['new_tab'] ? ' target="_blank" rel="noopener"' : '') . '>' . h($it['label']) . '</a>';
+    }
+    return implode($sep, $out);
+}
+
+// ── Keeping both menus in step with Admin → Pages ──
+
+/** The page path a menu link points at ("/about-us" for "/about-us/#team"), or '' for anything that isn't a path on this site. */
+function nav_menu_local_path(string $url): string
+{
+    if ($url === '' || $url[0] !== '/' || str_starts_with($url, '//')) {
+        return '';
+    }
+    return rtrim((string) preg_replace('/[?#].*$/s', '', $url), '/') ?: '/';
+}
+
+/**
+ * Point every menu link at a page's new URL, or take the links out when the
+ * page is deleted ($newSlug null), so neither menu is left with a dead link.
+ * Links keep their #section or ?query; the sub items of a removed item take
+ * its place; a mega menu column that linked to a deleted page loses its link.
+ * Links to "/" are left alone: they always mean the home page, wherever it is.
+ * Never throws: it runs after the page change itself has been saved.
+ */
+function nav_menu_retarget(PDO $pdo, string $oldSlug, ?string $newSlug): void
+{
+    $oldSlug = rtrim($oldSlug, '/') ?: '/';
+    if ($oldSlug === '/' || $oldSlug === $newSlug) {
+        return;
+    }
+    $changed = false;
+    $fix = function (string $url) use ($oldSlug, $newSlug, &$changed): ?string {
+        if (nav_menu_local_path($url) !== $oldSlug) {
+            return $url;
+        }
+        $changed = true;
+        return $newSlug === null ? null : $newSlug . preg_replace('/^[^?#]*/', '', $url);
+    };
+    $walk = function (array $items) use (&$walk, $fix): array {
+        $out = [];
+        foreach ($items as $it) {
+            $it['children'] = $walk($it['children'] ?? []);
+            if (is_array($it['mega'] ?? null)) {
+                foreach ($it['mega']['columns'] as &$c) {
+                    $c['link_url'] = $fix($c['link_url']) ?? '';
+                }
+                unset($c);
+            }
+            $url = $fix($it['url']);
+            if ($url === null) {
+                array_push($out, ...$it['children']);
+                continue;
+            }
+            $it['url'] = $url;
+            $out[] = $it;
+        }
+        return $out;
+    };
+    try {
+        $header = $walk(nav_menu_load($pdo));
+        if ($changed) {
+            nav_menu_save($pdo, $header);
+        }
+        $changed = false;
+        $footer = array_map($walk, footer_menu_load($pdo));
+        if ($changed) {
+            footer_menu_save($pdo, $footer);
+        }
+    } catch (Throwable $e) {
+        error_log('nav_menu_retarget: ' . $e->getMessage());
+    }
+}
+
+/**
+ * Which pages the menus link to, for Admin → Pages: ['header' => [path => true],
+ * 'footer' => [path => true]]. Visible links to a whole page count; links to a
+ * #section of one don't.
+ */
+function nav_menu_linked_paths(PDO $pdo): array
+{
+    $found = ['header' => [], 'footer' => []];
+    $walk = function (array $items, string $menu) use (&$walk, &$found): void {
+        foreach ($items as $it) {
+            if (!$it['visible']) {
+                continue;
+            }
+            $path = str_contains($it['url'], '#') ? '' : nav_menu_local_path($it['url']);
+            if ($path !== '') {
+                $found[$menu][$path] = true;
+            }
+            $walk($it['children'] ?? [], $menu);
+        }
+    };
+    $walk(nav_menu_load($pdo), 'header');
+    foreach (footer_menu_load($pdo) as $items) {
+        $walk($items, 'footer');
+    }
+    return $found;
 }

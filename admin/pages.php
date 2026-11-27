@@ -1,9 +1,12 @@
 <?php
 require_once __DIR__ . '/../includes/bootstrap.php';
+require_once __DIR__ . '/../includes/nav-menu.php';
 require_login();
 
 $u = current_user();
 $pages = $pdo->query('SELECT * FROM pages ORDER BY id')->fetchAll();
+// "In header / footer menu" under the status: read from Admin → Menu.
+$menuLinked = nav_menu_linked_paths($pdo);
 
 $pageTitle = 'Pages';
 $pageSub = 'Edit each page\'s content section by section, plus its URL, name, and SEO. Changes go live instantly.';
@@ -62,7 +65,11 @@ if ($pagesMsg): ?>
         <td><code><?= h($p['slug']) ?></code></td>
         <td>
           <span class="badge badge-<?= h($pStatus) ?>"><?= h($pStatus) ?></span>
-          <?php if (!empty($p['show_in_menu'])): ?><div class="t-sub">In menu</div><?php endif; ?>
+          <?php $inMenus = array_keys(array_filter([
+              'header' => isset($menuLinked['header'][$p['slug']]),
+              'footer' => isset($menuLinked['footer'][$p['slug']]),
+          ])); ?>
+          <?php if ($inMenus): ?><div class="t-sub">In <?= implode(' &amp; ', $inMenus) ?> menu</div><?php endif; ?>
         </td>
         <td><?= h($p['meta_title']) ?></td>
         <td><?= h(date('M j, Y', strtotime($p['updated_at']))) ?></td>

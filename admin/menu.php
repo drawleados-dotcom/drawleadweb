@@ -1,32 +1,48 @@
 <?php
 /**
- * Admin → Menu: build the site navigation. Items can be added (a page or a
- * custom link), edited, hidden, removed, and dragged into order and into sub
- * menus up to two levels deep; top-level items can carry an editable mega
- * menu. The builder is admin/assets/menu-builder.js, which posts the whole
- * tree as JSON; includes/nav-menu.php checks it, and templates/partials/nav.php
- * draws it.
+ * Admin → Menu: the only place the site's links are set. Two tabs:
+ *
+ *   Header — the navigation bar. Items can be added (a page or a custom link),
+ *            edited, hidden, removed, and dragged into order and into sub
+ *            menus up to two levels deep; top-level items can carry an
+ *            editable mega menu. Drawn by templates/partials/nav.php.
+ *   Footer — the footer's two rows of plain links (footer_menu_rows()), drawn
+ *            by every footer in templates/ through footer_menu_links().
+ *
+ * The builder is admin/assets/menu-builder.js, which posts the tab's lists as
+ * JSON; includes/nav-menu.php checks and stores them. A page's URL change or
+ * delete in Admin → Pages updates the links here (nav_menu_retarget()).
  */
 require_once __DIR__ . '/../includes/bootstrap.php';
 require_once __DIR__ . '/../includes/nav-menu.php';
 require_admin();
 
+$isPost = $_SERVER['REQUEST_METHOD'] === 'POST';
+$tab = (($isPost ? $_POST['menu'] ?? '' : $_GET['menu'] ?? '') === 'footer') ? 'footer' : 'header';
 $errors = [];
-$items = nav_menu_load($pdo);
+$header = $tab === 'header' ? nav_menu_load($pdo) : [];
+$footer = $tab === 'footer' ? footer_menu_load($pdo) : [];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($isPost) {
     csrf_verify();
     $posted = json_decode((string) ($_POST['menu_json'] ?? ''), true);
-    if (!is_array($posted)) {
+    if (!is_array($posted) || ($tab === 'header' && !is_array($posted['header'] ?? null))) {
         $errors[] = 'The menu could not be read. Reload the page and try again.';
     } else {
         // On a problem the page shows what was posted, so no edits are lost.
-        $items = nav_menu_clean($posted, $errors);
+        if ($tab === 'footer') {
+            $footer = footer_menu_clean($posted, $errors);
+        } else {
+            $header = nav_menu_clean($posted['header'], $errors);
+        }
         if (!$errors) {
             try {
-                $stmt = $pdo->prepare('INSERT INTO settings (`key`, `value`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`)');
-                $stmt->execute(['site_navigation', json_encode(['version' => 2, 'items' => $items], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)]);
-                header('Location: menu.php?saved=1');
+                if ($tab === 'footer') {
+                    footer_menu_save($pdo, $footer);
+                } else {
+                    nav_menu_save($pdo, $header);
+                }
+                header('Location: menu.php?' . ($tab === 'footer' ? 'menu=footer&' : '') . 'saved=1');
                 exit;
             } catch (PDOException $e) {
                 error_log('admin/menu.php: ' . $e->getMessage());
@@ -49,29 +65,47 @@ try {
 foreach (industries_ordered() as $entry) {
     $addGroups['Industries'][] = [$entry['industry']['name'], '/industry-' . $entry['key']];
 }
+
+// The lists on this tab: key => [title, description (HTML), builder settings].
+$lists = [];
+if ($tab === 'header') {
+    $lists['header'] = ['Header menu', 'Drag <span class="mb-key">⠿</span> to reorder. Drop an item a little to the right, below another item, to make it a sub item; sub items can have their own sub items. The arrow buttons do the same. Click an item to edit it, hide it, or give a top-level item a mega menu.',
+        ['items' => $header, 'maxDepth' => NAV_MENU_MAX_DEPTH, 'mega' => true, 'needsUrl' => false, 'showLabel' => 'Show in menu']];
+} else {
+    foreach (footer_menu_rows() as $key => [$rowName, $rowWhere]) {
+        $lists[$key] = [$rowName, h($rowWhere) . ' Drag <span class="mb-key">⠿</span> or use the arrows to reorder; click a link to edit or hide it.',
+            ['items' => $footer[$key] ?? [], 'maxDepth' => 0, 'mega' => false, 'needsUrl' => true, 'showLabel' => 'Show in footer']];
+    }
+}
 $services = [];
-try {
-    $services = array_column(get_case_study_services($pdo), 'name');
-} catch (Throwable $e) {
-    // no case study services yet
+if ($tab === 'header') {
+    try {
+        $services = array_column(get_case_study_services($pdo), 'name');
+    } catch (Throwable $e) {
+        // no case study services yet
+    }
 }
 
 $builderData = [
-    'items' => $items,
-    'icons' => nav_menu_icons(),
+    'lists' => array_map(fn ($l) => $l[2], $lists),
+    'icons' => $tab === 'header' ? nav_menu_icons() : [],
     'services' => $services,
-    'maxDepth' => NAV_MENU_MAX_DEPTH,
     'maxColumns' => NAV_MEGA_MAX_COLUMNS,
     'maxBullets' => NAV_MEGA_MAX_BULLETS,
 ];
 
 $pageTitle = 'Menu';
-$pageSub = 'Build the site navigation: links, sub menus and mega menus.';
+$pageSub = 'The site’s header and footer links. Every page uses them.';
 $activeNav = 'menu';
 include __DIR__ . '/includes/header.php';
 ?>
 
-<?php if (isset($_GET['saved']) && !$errors): ?><div class="alert alert-success">Menu saved. The site header shows it now.</div><?php endif; ?>
+<div class="page-tabs">
+  <a class="page-tab<?= $tab === 'header' ? ' active' : '' ?>" href="menu.php"<?= $tab === 'header' ? ' aria-current="page"' : '' ?>>Header</a>
+  <a class="page-tab<?= $tab === 'footer' ? ' active' : '' ?>" href="menu.php?menu=footer"<?= $tab === 'footer' ? ' aria-current="page"' : '' ?>>Footer</a>
+</div>
+
+<?php if (isset($_GET['saved']) && !$errors): ?><div class="alert alert-success"><?= $tab === 'footer' ? 'Footer saved. Every page’s footer shows it now.' : 'Header menu saved. Every page’s header shows it now.' ?></div><?php endif; ?>
 <?php if ($errors): ?>
 <div class="alert alert-error">
   The menu wasn't saved. Fix these and save again:
@@ -79,25 +113,36 @@ include __DIR__ . '/includes/header.php';
 </div>
 <?php endif; ?>
 
-<form method="post" id="menuForm">
+<form method="post" id="menuForm" action="menu.php<?= $tab === 'footer' ? '?menu=footer' : '' ?>">
   <?= csrf_field() ?>
+  <input type="hidden" name="menu" value="<?= h($tab) ?>">
   <input type="hidden" name="menu_json" id="menuJson" value="">
   <div class="mb-layout">
-    <div class="card mb-main">
-      <div class="card-title">Menu structure</div>
-      <div class="card-desc">
-        Drag <span class="mb-key">⠿</span> to reorder. Drop an item a little to the right, below another item, to make it a sub item;
-        sub items can have their own sub items. The arrow buttons do the same. Click an item to edit it, hide it, or give a
-        top-level item a mega menu.
+    <div class="mb-main">
+      <?php foreach ($lists as $key => [$title, $desc]): ?>
+      <div class="card">
+        <div class="card-title"><?= h($title) ?></div>
+        <div class="card-desc"><?= $desc ?></div>
+        <ol class="mb-list" data-list="<?= h($key) ?>" aria-label="<?= h($title) ?>"></ol>
+        <div class="empty-state mb-empty" hidden><p>No links yet. Add pages or links from the panel on the right.</p></div>
       </div>
-      <ol class="mb-list" id="mbList" aria-label="Menu items"></ol>
-      <div class="empty-state" id="mbEmpty" hidden><p>The menu is empty. Add pages or links from the panel on the right.</p></div>
+      <?php endforeach; ?>
     </div>
 
     <aside class="mb-side">
       <div class="card">
         <div class="card-title">Add menu items</div>
+        <?php if (count($lists) > 1): ?>
+        <div class="field">
+          <label for="mbAddTo">Add to</label>
+          <select id="mbAddTo">
+            <?php foreach ($lists as $key => [$title]): ?><option value="<?= h($key) ?>"><?= h($title) ?></option><?php endforeach; ?>
+          </select>
+          <div class="field-hint">New items go to the end of that list. Drag them where you want them.</div>
+        </div>
+        <?php else: ?>
         <div class="card-desc">New items go to the end of the menu. Drag them where you want them.</div>
+        <?php endif; ?>
         <div class="field">
           <label for="mbPage">Page</label>
           <select id="mbPage">
@@ -119,7 +164,7 @@ include __DIR__ . '/includes/header.php';
         <div class="field">
           <label for="mbLinkUrl">Custom link: address</label>
           <input type="text" id="mbLinkUrl" maxlength="255" placeholder="/pricing, #section or https://…">
-          <div class="field-hint">Leave the address empty for a heading that only opens its sub menu.</div>
+          <?php if ($tab === 'header'): ?><div class="field-hint">Leave the address empty for a heading that only opens its sub menu.</div><?php endif; ?>
         </div>
         <div class="mb-add-err" id="mbAddErr" hidden></div>
         <button type="button" class="btn btn-ghost btn-sm" id="mbAddLink">Add link</button>
@@ -128,7 +173,7 @@ include __DIR__ . '/includes/header.php';
   </div>
 
   <div class="mb-savebar">
-    <button type="submit" class="btn btn-primary">Save Menu</button>
+    <button type="submit" class="btn btn-primary"><?= $tab === 'footer' ? 'Save Footer' : 'Save Header Menu' ?></button>
     <span class="mb-dirty" id="mbDirty" hidden>Unsaved changes</span>
   </div>
 </form>
@@ -167,7 +212,9 @@ include __DIR__ . '/includes/header.php';
 .mb-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:0 12px}
 .mb-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:.9rem}
 .mb-checks .checkbox-row{cursor:pointer}
-.mb-checks [hidden],#mbEmpty[hidden]{display:none}
+.mb-checks [hidden],.mb-empty[hidden]{display:none}
+.mb-main{display:flex;flex-direction:column;gap:20px;min-width:0}
+.mb-main>.card+.card{margin-top:0}
 .mb-note{font-size:12px;line-height:1.5;color:#8a5a14;background:#fdf6e8;border:1px solid #f1dcb2;border-radius:8px;padding:8px 11px;margin-bottom:.9rem}
 .mb-note[hidden]{display:none}
 .mb-panel-foot{display:flex;justify-content:flex-end}

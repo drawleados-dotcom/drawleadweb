@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/bootstrap.php';
+require_once __DIR__ . '/../includes/nav-menu.php';
 require_login();
 
 $u = current_user();
@@ -84,7 +85,6 @@ if ($isPost && ($_POST['form'] ?? '') === 'content') {
     $name = trim($_POST['name'] ?? '');
     $rawSlug = trim($_POST['slug'] ?? '');
     $status = ($_POST['status'] ?? 'published') === 'draft' ? 'draft' : 'published';
-    $showInMenu = isset($_POST['show_in_menu']) ? 1 : 0;
     $metaTitle = trim($_POST['meta_title'] ?? '');
     $metaDescription = trim($_POST['meta_description'] ?? '');
     $focusKeyword = trim($_POST['focus_keyword'] ?? '');
@@ -124,20 +124,23 @@ if ($isPost && ($_POST['form'] ?? '') === 'content') {
 
     if (!$error) {
         $pdo->prepare(
-            'UPDATE pages SET name = ?, slug = ?, status = ?, show_in_menu = ?, meta_title = ?, meta_description = ?,
+            'UPDATE pages SET name = ?, slug = ?, status = ?, meta_title = ?, meta_description = ?,
              focus_keyword = ?, canonical_url = ?, robots_index = ?, robots_follow = ?,
              og_title = ?, og_description = ?, og_image = ? WHERE id = ?'
         )->execute([
-            $name, $slug, $status, $showInMenu, $metaTitle, $metaDescription,
+            $name, $slug, $status, $metaTitle, $metaDescription,
             $focusKeyword, $canonicalUrl, $robotsIndex, $robotsFollow,
             $ogTitle, $ogDescription, $ogImage, $id,
         ]);
+        // A new URL: header and footer menu links to the page follow it.
+        if ($slug !== $page['slug']) {
+            nav_menu_retarget($pdo, $page['slug'], $slug);
+        }
 
         $success = 'Saved — the live site now reflects these changes.';
         $page['name'] = $name;
         $page['slug'] = $slug;
         $page['status'] = $status;
-        $page['show_in_menu'] = $showInMenu;
         $page['meta_title'] = $metaTitle;
         $page['meta_description'] = $metaDescription;
         $page['focus_keyword'] = $focusKeyword;
@@ -576,11 +579,6 @@ include __DIR__ . '/includes/header.php';
       </select>
       <div class="field-hint">Draft pages are unpublished — visitors get a 404, and they drop out of the sitemap.</div>
     </div>
-    <label class="checkbox-row" style="max-width:340px">
-      <input type="checkbox" name="show_in_menu" <?= !empty($page['show_in_menu']) ? 'checked' : '' ?>>
-      Show in main nav
-    </label>
-    <div class="field-hint">Only applies to Home, Home 2.0, Home 5, Final Home, Home 7, About Us, and Analyze — Platform, Industry, and Solution pages always use their own mega menus regardless of this setting.</div>
   </div>
 
   <?php include __DIR__ . '/includes/seo-panel.php'; ?>

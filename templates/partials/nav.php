@@ -11,27 +11,14 @@
  * Industries, Blog) with their three mega menus. Home 10 is the home page: "/"
  * and the logo go to it, and "/#section" links open sections there. On desktop
  * a mega menu replaces its item's dropdown; the mobile drawer lists the items
- * and their sub items. Admin → Pages "Show in Menu" does not add links here.
+ * and their sub items. Admin → Menu is the only place links are added; the
+ * footer's links are its Footer tab (footer_menu_links()).
  */
 require_once __DIR__ . '/../../includes/nav-menu.php';
 $activePage = $activePage ?? '';
 $navMenu = nav_menu_load($pdo);
-// The home page's address is admin-managed (Admin → Pages, slug). Whatever
-// published page sits at / is home; failing that, Home 10 and then Home 9 are
-// looked up by template; / if there is none or the query fails. nav.php loads
-// on every public page, so this must never throw.
-$homeUrl = '/';
-try {
-    $homeSlug = $pdo->query(
-        "SELECT slug FROM pages WHERE (slug = '/' OR template IN ('home10', 'home9')) AND COALESCE(status, 'published') <> 'draft'
-         ORDER BY slug = '/' DESC, template = 'home10' DESC, id LIMIT 1"
-    )->fetchColumn();
-    if (is_string($homeSlug) && $homeSlug !== '') {
-        $homeUrl = $homeSlug;
-    }
-} catch (PDOException $e) {
-    // e.g. no status column yet: keep /
-}
+// The home page's address (Admin → Pages decides it). Templates use $homeUrl too.
+$homeUrl = nav_home_url($pdo);
 
 // Which link the current page belongs under: the built-in items by id, any
 // other item whose address is this page. A parent counts when one of its sub

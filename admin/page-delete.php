@@ -6,11 +6,12 @@
  * never deleted: point another page at "/" first. Saved Page Content and its
  * history go with each page (foreign keys cascade). Editor access and popup
  * targeting are stored by page id without a foreign key, so they are cleaned
- * up here. Menu links come from each page's own "show in menu" flag, so they
- * leave the menu automatically. All selected pages go in one transaction:
- * if anything fails, nothing is deleted.
+ * up here. All selected pages go in one transaction: if anything fails,
+ * nothing is deleted. Afterwards, links to them come out of the header and
+ * footer menus (Admin → Menu), so neither is left with a dead link.
  */
 require_once __DIR__ . '/../includes/bootstrap.php';
+require_once __DIR__ . '/../includes/nav-menu.php';
 require_admin();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -34,12 +35,14 @@ $found = $stmt->fetchAll();
 
 $skippedHome = false;
 $toDelete = [];
+$deletedSlugs = [];
 foreach ($found as $row) {
     if ($row['slug'] === '/') {
         $skippedHome = true;
         continue;
     }
     $toDelete[] = (int) $row['id'];
+    $deletedSlugs[] = $row['slug'];
 }
 
 if (!$toDelete) {
@@ -77,6 +80,10 @@ try {
     }
     header('Location: pages.php?msg=error');
     exit;
+}
+
+foreach ($deletedSlugs as $slug) {
+    nav_menu_retarget($pdo, $slug, null);
 }
 
 header('Location: pages.php?msg=deleted&n=' . count($toDelete) . ($skippedHome ? '&home=1' : ''));

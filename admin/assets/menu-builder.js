@@ -1,26 +1,30 @@
 // Admin → Menu builder (admin/menu.php).
 //
-// The menu is shown as one flat list of rows, each with a depth: 0 top level,
-// 1 sub item, 2 sub-sub item (data-depth, drawn as an indent). An item moves
-// together with the rows below it that are deeper than it (its sub items).
-// Dragging the ⠿ handle or the arrow buttons reorder and nest; a move that
-// would leave a row more than one level deeper than the row above it is not
-// offered. On submit the rows are folded back into a tree and posted as JSON;
-// includes/nav-menu.php checks it, so nothing here is trusted.
+// The page holds one or more lists (<ol class="mb-list" data-list="…">): the
+// Header tab has the header menu, the Footer tab its two rows of links. Each
+// list's settings come from #menuData: how deep items may nest (0 = a flat
+// list), whether top-level items can have a mega menu, and whether every item
+// needs a link.
+//
+// A list is shown as flat rows, each with a depth: 0 top level, 1 sub item,
+// 2 sub-sub item (data-depth, drawn as an indent). An item moves together with
+// the rows below it that are deeper than it (its sub items). Dragging the ⠿
+// handle or the arrow buttons reorder and nest; a move that would leave a row
+// more than one level deeper than the row above it is not offered. On submit
+// each list is folded back into a tree and all are posted as JSON
+// ({listKey: items}); includes/nav-menu.php checks it, so nothing here is trusted.
 (function () {
   var dataEl = document.getElementById('menuData');
   var form = document.getElementById('menuForm');
-  var list = document.getElementById('mbList');
-  if (!dataEl || !form || !list) return;
+  if (!dataEl || !form) return;
 
   var data = JSON.parse(dataEl.textContent);
   var icons = data.icons || {};
   var services = data.services || [];
-  var MAX = data.maxDepth;
   var INDENT = 34; // px per level, as .mb-item's margin in menu.php
-  var emptyEl = document.getElementById('mbEmpty');
   var dirtyEl = document.getElementById('mbDirty');
   var dirty = false;
+  var URL_OK = /^(\/(?!\/)|#[A-Za-z][\w-]*$|https?:\/\/[^\/\s]|mailto:|tel:)\S*$/i;
 
   // ── helpers ──
   function esc(s) {
@@ -30,9 +34,6 @@
   }
   function uid() { return 'item-' + Math.random().toString(16).slice(2, 10); }
   function markDirty() { dirty = true; dirtyEl.hidden = false; }
-  function rows() {
-    return Array.prototype.filter.call(list.children, function (el) { return el.classList.contains('mb-item'); });
-  }
   function depth(el) { return +el.getAttribute('data-depth') || 0; }
   function setDepth(el, d) { el.setAttribute('data-depth', d); el.style.setProperty('--d', d); }
   function isRow(el) { return el && el.classList.contains('mb-item'); }
@@ -73,10 +74,10 @@
       (ind ? '<optgroup label="Industries">' + ind + '</optgroup>' : '');
   }
   function serviceOptions(selected) {
-    var list = services.slice();
-    if (selected && list.indexOf(selected) === -1) list.push(selected);
+    var names = services.slice();
+    if (selected && names.indexOf(selected) === -1) names.push(selected);
     return '<option value="">Show the bullet points</option><optgroup label="Show the latest case studies for">' +
-      list.map(function (s) {
+      names.map(function (s) {
         return '<option value="' + esc(s) + '"' + (s === selected ? ' selected' : '') + '>' + esc(s) + '</option>';
       }).join('') + '</optgroup>';
   }
@@ -88,66 +89,7 @@
     'in': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>'
   };
 
-  // ── one menu row ──
-  function makeRow(item, d) {
-    var li = document.createElement('li');
-    li.className = 'mb-item';
-    li.setAttribute('data-id', item.id || uid());
-    setDepth(li, d);
-    li.innerHTML =
-      '<div class="mb-bar">' +
-        '<button type="button" class="mb-handle" aria-label="Drag to move" title="Drag to move">' +
-          '<svg width="12" height="18" viewBox="0 0 12 18" fill="currentColor"><circle cx="3" cy="3" r="1.6"/><circle cx="9" cy="3" r="1.6"/><circle cx="3" cy="9" r="1.6"/><circle cx="9" cy="9" r="1.6"/><circle cx="3" cy="15" r="1.6"/><circle cx="9" cy="15" r="1.6"/></svg>' +
-        '</button>' +
-        '<button type="button" class="mb-toggle" aria-expanded="false"><span class="mb-title"></span><span class="mb-url"></span></button>' +
-        '<span class="mb-badges"><span class="mb-badge" data-b="hidden">Hidden</span><span class="mb-badge mb-badge-mega" data-b="mega">Mega menu</span></span>' +
-        '<span class="mb-moves">' +
-          '<button type="button" data-move="up" title="Move up" aria-label="Move up">' + ARROW.up + '</button>' +
-          '<button type="button" data-move="down" title="Move down" aria-label="Move down">' + ARROW.down + '</button>' +
-          '<button type="button" data-move="out" title="Move out of the sub menu" aria-label="Move out of the sub menu">' + ARROW.out + '</button>' +
-          '<button type="button" data-move="in" title="Make it a sub item of the item above" aria-label="Make it a sub item of the item above">' + ARROW['in'] + '</button>' +
-        '</span>' +
-        '<button type="button" class="mb-chev" tabindex="-1" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>' +
-      '</div>' +
-      '<div class="mb-panel" hidden>' +
-        '<div class="mb-grid">' +
-          '<div class="field"><label>Label</label><input type="text" data-f="label" maxlength="80"></div>' +
-          '<div class="field"><label>Link</label><input type="text" data-f="url" maxlength="255" placeholder="/about-us, #section or https://…">' +
-            '<div class="field-hint">Leave empty for a heading that only opens its sub menu.</div></div>' +
-        '</div>' +
-        '<div class="mb-checks">' +
-          '<label class="checkbox-row"><input type="checkbox" data-f="visible"> Show in menu</label>' +
-          '<label class="checkbox-row"><input type="checkbox" data-f="new_tab"> Open in a new tab</label>' +
-          '<label class="checkbox-row" data-mega-toggle><input type="checkbox" data-f="mega"> Mega menu</label>' +
-        '</div>' +
-        '<p class="mb-note" data-note="depth" hidden>Mega menus only work on top-level items. Move this item back to the top level to use its mega menu; it is kept until you save.</p>' +
-        '<p class="mb-note" data-note="kids" hidden>While the mega menu is on, the desktop header shows it instead of this item’s sub items. The sub items still show in the mobile menu.</p>' +
-        '<div class="mb-mega-slot"></div>' +
-        '<div class="mb-panel-foot"><button type="button" class="btn btn-danger btn-sm" data-act="remove">Remove item</button></div>' +
-      '</div>';
-    field(li, 'label').value = item.label || '';
-    field(li, 'url').value = item.url || '';
-    field(li, 'visible').checked = item.visible !== false;
-    field(li, 'new_tab').checked = !!item.new_tab;
-    field(li, 'mega').checked = !!(item.mega && item.mega.enabled);
-    if (item.mega) li.querySelector('.mb-mega-slot').appendChild(megaEditor(item.mega));
-    syncBar(li);
-    return li;
-  }
-
-  function syncBar(li) {
-    var label = field(li, 'label').value.trim();
-    var url = field(li, 'url').value.trim();
-    li.querySelector('.mb-title').textContent = label || 'Untitled item';
-    li.querySelector('.mb-url').textContent = url || 'no link';
-    li.querySelector('[data-b="hidden"]').hidden = field(li, 'visible').checked;
-    var megaOn = field(li, 'mega').checked && depth(li) === 0;
-    li.querySelector('[data-b="mega"]').hidden = !megaOn;
-    var ed = li.querySelector('.mb-mega');
-    if (ed) ed.hidden = !megaOn;
-  }
-
-  // ── mega menu editor ──
+  // ── mega menu editor (header menu, top-level items) ──
   function megaEditor(m) {
     var w = document.createElement('div');
     w.className = 'mb-mega' + (m.layout === 'tiles' ? ' is-tiles' : '');
@@ -263,247 +205,359 @@
     return m;
   }
 
-  // ── whole list ──
-  function refresh() {
-    var rs = rows();
-    emptyEl.hidden = rs.length > 0;
-    rs.forEach(function (li) {
-      var d = depth(li), blk = block(li);
-      li.querySelector('[data-move="up"]').disabled = !prevSibling(li);
-      li.querySelector('[data-move="down"]').disabled = !nextSibling(li);
-      li.querySelector('[data-move="out"]').disabled = d === 0;
-      li.querySelector('[data-move="in"]').disabled = !prevSibling(li) || d + 1 + blockHeight(blk) > MAX;
-      var megaChecked = field(li, 'mega').checked;
-      li.querySelector('[data-mega-toggle]').hidden = d > 0;
-      li.querySelector('[data-note="depth"]').hidden = !(d > 0 && megaChecked);
-      li.querySelector('[data-note="kids"]').hidden = !(d === 0 && megaChecked && blk.length > 1);
+  // ── one list ──
+  function makeBuilder(list, key, cfg) {
+    var MAX = cfg.maxDepth || 0;
+    var MEGA = !!cfg.mega;
+    var NEEDS_URL = !!cfg.needsUrl;
+    var emptyEl = list.parentNode.querySelector('.mb-empty');
+
+    function rows() {
+      return Array.prototype.filter.call(list.children, function (el) { return el.classList.contains('mb-item'); });
+    }
+
+    function makeRow(item, d) {
+      var li = document.createElement('li');
+      li.className = 'mb-item';
+      li.setAttribute('data-id', item.id || uid());
+      setDepth(li, d);
+      li.innerHTML =
+        '<div class="mb-bar">' +
+          '<button type="button" class="mb-handle" aria-label="Drag to move" title="Drag to move">' +
+            '<svg width="12" height="18" viewBox="0 0 12 18" fill="currentColor"><circle cx="3" cy="3" r="1.6"/><circle cx="9" cy="3" r="1.6"/><circle cx="3" cy="9" r="1.6"/><circle cx="9" cy="9" r="1.6"/><circle cx="3" cy="15" r="1.6"/><circle cx="9" cy="15" r="1.6"/></svg>' +
+          '</button>' +
+          '<button type="button" class="mb-toggle" aria-expanded="false"><span class="mb-title"></span><span class="mb-url"></span></button>' +
+          '<span class="mb-badges"><span class="mb-badge" data-b="hidden">Hidden</span>' +
+            (MEGA ? '<span class="mb-badge mb-badge-mega" data-b="mega">Mega menu</span>' : '') + '</span>' +
+          '<span class="mb-moves">' +
+            '<button type="button" data-move="up" title="Move up" aria-label="Move up">' + ARROW.up + '</button>' +
+            '<button type="button" data-move="down" title="Move down" aria-label="Move down">' + ARROW.down + '</button>' +
+            (MAX > 0
+              ? '<button type="button" data-move="out" title="Move out of the sub menu" aria-label="Move out of the sub menu">' + ARROW.out + '</button>' +
+                '<button type="button" data-move="in" title="Make it a sub item of the item above" aria-label="Make it a sub item of the item above">' + ARROW['in'] + '</button>'
+              : '') +
+          '</span>' +
+          '<button type="button" class="mb-chev" tabindex="-1" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>' +
+        '</div>' +
+        '<div class="mb-panel" hidden>' +
+          '<div class="mb-grid">' +
+            '<div class="field"><label>Label</label><input type="text" data-f="label" maxlength="80"></div>' +
+            '<div class="field"><label>Link</label><input type="text" data-f="url" maxlength="255" placeholder="/about-us, #section or https://…">' +
+              (NEEDS_URL ? '' : '<div class="field-hint">Leave empty for a heading that only opens its sub menu.</div>') + '</div>' +
+          '</div>' +
+          '<div class="mb-checks">' +
+            '<label class="checkbox-row"><input type="checkbox" data-f="visible"> ' + esc(cfg.showLabel || 'Show in menu') + '</label>' +
+            '<label class="checkbox-row"><input type="checkbox" data-f="new_tab"> Open in a new tab</label>' +
+            (MEGA ? '<label class="checkbox-row" data-mega-toggle><input type="checkbox" data-f="mega"> Mega menu</label>' : '') +
+          '</div>' +
+          (MEGA
+            ? '<p class="mb-note" data-note="depth" hidden>Mega menus only work on top-level items. Move this item back to the top level to use its mega menu; it is kept until you save.</p>' +
+              '<p class="mb-note" data-note="kids" hidden>While the mega menu is on, the desktop header shows it instead of this item’s sub items. The sub items still show in the mobile menu.</p>' +
+              '<div class="mb-mega-slot"></div>'
+            : '') +
+          '<div class="mb-panel-foot"><button type="button" class="btn btn-danger btn-sm" data-act="remove">Remove item</button></div>' +
+        '</div>';
+      field(li, 'label').value = item.label || '';
+      field(li, 'url').value = item.url || '';
+      field(li, 'visible').checked = item.visible !== false;
+      field(li, 'new_tab').checked = !!item.new_tab;
+      if (MEGA) {
+        field(li, 'mega').checked = !!(item.mega && item.mega.enabled);
+        if (item.mega) li.querySelector('.mb-mega-slot').appendChild(megaEditor(item.mega));
+      }
       syncBar(li);
-    });
-  }
-
-  function serialize() {
-    var roots = [], last = [];
-    rows().forEach(function (li) {
-      var d = depth(li);
-      var item = {
-        id: li.getAttribute('data-id'),
-        label: field(li, 'label').value,
-        url: field(li, 'url').value,
-        visible: field(li, 'visible').checked,
-        new_tab: field(li, 'new_tab').checked,
-        children: [],
-        mega: d === 0 ? readMega(li) : null
-      };
-      var parent = d > 0 ? last[d - 1] : null;
-      if (parent) parent.children.push(item); else roots.push(item);
-      last[d] = item;
-      last.length = d + 1;
-    });
-    return roots;
-  }
-
-  function addRows(items, d) {
-    items.forEach(function (it) {
-      list.appendChild(makeRow(it, d));
-      if (it.children && it.children.length && d < MAX) addRows(it.children, d + 1);
-    });
-  }
-
-  function togglePanel(li, open) {
-    var panel = li.querySelector('.mb-panel');
-    if (open === undefined) open = panel.hidden;
-    panel.hidden = !open;
-    li.classList.toggle('is-open', open);
-    li.querySelector('.mb-toggle').setAttribute('aria-expanded', open ? 'true' : 'false');
-  }
-
-  // ── moves ──
-  function move(li, how) {
-    var blk = block(li), s, after;
-    if (how === 'up') {
-      s = prevSibling(li);
-      if (!s) return;
-      blk.forEach(function (r) { list.insertBefore(r, s); });
-    } else if (how === 'down') {
-      s = nextSibling(li);
-      if (!s) return;
-      var sb = block(s);
-      after = sb[sb.length - 1].nextElementSibling;
-      blk.forEach(function (r) { list.insertBefore(r, after); });
-    } else if (how === 'in') {
-      if (!prevSibling(li) || depth(li) + 1 + blockHeight(blk) > MAX) return;
-      shift(blk, 1);
-    } else if (how === 'out') {
-      if (depth(li) === 0) return;
-      var pb = block(parentOf(li));
-      after = pb[pb.length - 1].nextElementSibling;
-      blk.forEach(function (r) { list.insertBefore(r, after); });
-      shift(blk, -1);
+      return li;
     }
-    refresh();
-    markDirty();
-    var btn = li.querySelector('[data-move="' + how + '"]');
-    (btn && !btn.disabled ? btn : li.querySelector('.mb-handle')).focus();
-  }
 
-  // ── drag and drop ──
-  var drag = null;
-  list.addEventListener('pointerdown', function (e) {
-    var handle = e.target.closest('.mb-handle');
-    if (!handle || e.button !== 0) return;
-    e.preventDefault();
-    var li = handle.closest('.mb-item');
-    var blk = block(li);
-    var top = li.getBoundingClientRect().top;
-    var bottom = blk[blk.length - 1].getBoundingClientRect().bottom;
-    var listRect = list.getBoundingClientRect();
-    var ph = document.createElement('li');
-    ph.className = 'mb-ph';
-    ph.style.height = (bottom - top) + 'px';
-    setDepth(ph, depth(li));
-    list.insertBefore(ph, li);
-    var ghost = document.createElement('ul');
-    ghost.className = 'mb-ghost';
-    ghost.style.left = listRect.left + 'px';
-    ghost.style.top = top + 'px';
-    ghost.style.width = listRect.width + 'px';
-    blk.forEach(function (r) { ghost.appendChild(r); });
-    document.body.appendChild(ghost);
-    document.body.classList.add('mb-dragging');
-    drag = { blk: blk, ph: ph, ghost: ghost, base: depth(li), height: blockHeight(blk), sx: e.clientX, sy: e.clientY, id: e.pointerId,
-      startNext: ph.nextElementSibling };
-    try { handle.setPointerCapture(e.pointerId); } catch (err) { /* not needed for mouse */ }
-  });
-
-  document.addEventListener('pointermove', function (e) {
-    if (!drag || e.pointerId !== drag.id) return;
-    var dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
-    drag.ghost.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
-    if (e.clientY < 70) window.scrollBy(0, -14);
-    else if (e.clientY > window.innerHeight - 70) window.scrollBy(0, 14);
-
-    // Where it would land: before the first row whose middle is below the pointer.
-    var target = null, rs = rows();
-    for (var i = 0; i < rs.length; i++) {
-      var r = rs[i].getBoundingClientRect();
-      if (e.clientY < r.top + r.height / 2) { target = rs[i]; break; }
+    function syncBar(li) {
+      var label = field(li, 'label').value.trim();
+      var url = field(li, 'url').value.trim();
+      li.querySelector('.mb-title').textContent = label || 'Untitled item';
+      li.querySelector('.mb-url').textContent = url || (NEEDS_URL ? 'needs a link' : 'no link');
+      li.querySelector('[data-b="hidden"]').hidden = field(li, 'visible').checked;
+      if (!MEGA) return;
+      var megaOn = field(li, 'mega').checked && depth(li) === 0;
+      li.querySelector('[data-b="mega"]').hidden = !megaOn;
+      var ed = li.querySelector('.mb-mega');
+      if (ed) ed.hidden = !megaOn;
     }
-    var oldNext = drag.ph.nextElementSibling;
-    if (target !== oldNext) list.insertBefore(drag.ph, target);
-    var prev = drag.ph.previousElementSibling, next = drag.ph.nextElementSibling;
-    var maxD = isRow(prev) ? Math.min(depth(prev) + 1, MAX - drag.height) : 0;
-    var minD = isRow(next) ? Math.max(0, depth(next) - 1) : 0;
-    if (minD > maxD) { // no depth works here: stay where it was
-      list.insertBefore(drag.ph, oldNext);
-      return;
+
+    function refresh() {
+      var rs = rows();
+      if (emptyEl) emptyEl.hidden = rs.length > 0;
+      rs.forEach(function (li) {
+        var d = depth(li), blk = block(li);
+        li.querySelector('[data-move="up"]').disabled = !prevSibling(li);
+        li.querySelector('[data-move="down"]').disabled = !nextSibling(li);
+        if (MAX > 0) {
+          li.querySelector('[data-move="out"]').disabled = d === 0;
+          li.querySelector('[data-move="in"]').disabled = !prevSibling(li) || d + 1 + blockHeight(blk) > MAX;
+        }
+        if (MEGA) {
+          var megaChecked = field(li, 'mega').checked;
+          li.querySelector('[data-mega-toggle]').hidden = d > 0;
+          li.querySelector('[data-note="depth"]').hidden = !(d > 0 && megaChecked);
+          li.querySelector('[data-note="kids"]').hidden = !(d === 0 && megaChecked && blk.length > 1);
+        }
+        syncBar(li);
+      });
     }
-    var want = drag.base + Math.round(dx / INDENT);
-    setDepth(drag.ph, Math.max(minD, Math.min(maxD, want)));
-  });
 
-  function endDrag(e) {
-    if (!drag || (e && e.pointerId !== drag.id)) return;
-    var delta = depth(drag.ph) - drag.base;
-    var moved = delta !== 0 || drag.ph.nextElementSibling !== drag.startNext;
-    drag.blk.forEach(function (r) { list.insertBefore(r, drag.ph); });
-    shift(drag.blk, delta);
-    drag.ph.remove();
-    drag.ghost.remove();
-    document.body.classList.remove('mb-dragging');
-    drag = null;
-    refresh();
-    if (moved) markDirty();
-  }
-  document.addEventListener('pointerup', endDrag);
-  document.addEventListener('pointercancel', endDrag);
+    function serialize() {
+      var roots = [], last = [];
+      rows().forEach(function (li) {
+        var d = depth(li);
+        var item = {
+          id: li.getAttribute('data-id'),
+          label: field(li, 'label').value,
+          url: field(li, 'url').value,
+          visible: field(li, 'visible').checked,
+          new_tab: field(li, 'new_tab').checked,
+          children: [],
+          mega: MEGA && d === 0 ? readMega(li) : null
+        };
+        var parent = d > 0 ? last[d - 1] : null;
+        if (parent) parent.children.push(item); else roots.push(item);
+        last[d] = item;
+        last.length = d + 1;
+      });
+      return roots;
+    }
 
-  // ── clicks and typing inside the list ──
-  list.addEventListener('click', function (e) {
-    var li = e.target.closest('.mb-item');
-    if (!li) return;
-    var t;
-    if ((t = e.target.closest('[data-move]'))) { move(li, t.getAttribute('data-move')); return; }
-    if (e.target.closest('.mb-toggle, .mb-chev')) { togglePanel(li); return; }
-    if (e.target.closest('[data-act="remove"]')) {
-      var blk = block(li);
-      var name = field(li, 'label').value.trim() || 'this item';
-      if (blk.length > 1 && !confirm('Remove “' + name + '” and its ' + (blk.length - 1) + ' sub item' + (blk.length > 2 ? 's' : '') + '?')) return;
-      blk.forEach(function (r) { r.remove(); });
+    function addRows(items, d) {
+      items.forEach(function (it) {
+        list.appendChild(makeRow(it, d));
+        if (it.children && it.children.length && d < MAX) addRows(it.children, d + 1);
+      });
+    }
+
+    function togglePanel(li, open) {
+      var panel = li.querySelector('.mb-panel');
+      if (open === undefined) open = panel.hidden;
+      panel.hidden = !open;
+      li.classList.toggle('is-open', open);
+      li.querySelector('.mb-toggle').setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    // ── moves ──
+    function move(li, how) {
+      var blk = block(li), s, after;
+      if (how === 'up') {
+        s = prevSibling(li);
+        if (!s) return;
+        blk.forEach(function (r) { list.insertBefore(r, s); });
+      } else if (how === 'down') {
+        s = nextSibling(li);
+        if (!s) return;
+        var sb = block(s);
+        after = sb[sb.length - 1].nextElementSibling;
+        blk.forEach(function (r) { list.insertBefore(r, after); });
+      } else if (how === 'in') {
+        if (!prevSibling(li) || depth(li) + 1 + blockHeight(blk) > MAX) return;
+        shift(blk, 1);
+      } else if (how === 'out') {
+        if (depth(li) === 0) return;
+        var pb = block(parentOf(li));
+        after = pb[pb.length - 1].nextElementSibling;
+        blk.forEach(function (r) { list.insertBefore(r, after); });
+        shift(blk, -1);
+      }
       refresh();
       markDirty();
-      return;
+      var btn = li.querySelector('[data-move="' + how + '"]');
+      (btn && !btn.disabled ? btn : li.querySelector('.mb-handle')).focus();
     }
-    var w = li.querySelector('.mb-mega');
-    if (e.target.closest('[data-act="add-col"]')) {
-      var col = columnEditor({});
-      w.querySelector('.mb-cols').appendChild(col);
-      col.open = true;
-      col.querySelector('[data-c="title"]').focus();
-      syncColumnTools(w);
-      markDirty();
-      return;
-    }
-    if ((t = e.target.closest('[data-col]'))) {
-      e.preventDefault(); // the buttons sit in <summary>: don't open/close the column
-      var d = t.closest('.mb-col'), how = t.getAttribute('data-col');
-      if (how === 'remove') {
-        var title = d.querySelector('[data-c="title"]').value.trim();
-        if (!confirm('Remove the column' + (title ? ' “' + title + '”' : '') + '?')) return;
-        d.remove();
-      } else if (how === 'up' && d.previousElementSibling) {
-        d.parentNode.insertBefore(d, d.previousElementSibling);
-      } else if (how === 'down' && d.nextElementSibling) {
-        d.parentNode.insertBefore(d.nextElementSibling, d);
+
+    // ── drag and drop ──
+    var drag = null;
+    list.addEventListener('pointerdown', function (e) {
+      var handle = e.target.closest('.mb-handle');
+      if (!handle || e.button !== 0) return;
+      e.preventDefault();
+      var li = handle.closest('.mb-item');
+      var blk = block(li);
+      var top = li.getBoundingClientRect().top;
+      var bottom = blk[blk.length - 1].getBoundingClientRect().bottom;
+      var listRect = list.getBoundingClientRect();
+      var ph = document.createElement('li');
+      ph.className = 'mb-ph';
+      ph.style.height = (bottom - top) + 'px';
+      setDepth(ph, depth(li));
+      list.insertBefore(ph, li);
+      var ghost = document.createElement('ul');
+      ghost.className = 'mb-ghost';
+      ghost.style.left = listRect.left + 'px';
+      ghost.style.top = top + 'px';
+      ghost.style.width = listRect.width + 'px';
+      blk.forEach(function (r) { ghost.appendChild(r); });
+      document.body.appendChild(ghost);
+      document.body.classList.add('mb-dragging');
+      drag = { blk: blk, ph: ph, ghost: ghost, base: depth(li), height: blockHeight(blk), sx: e.clientX, sy: e.clientY, id: e.pointerId,
+        startNext: ph.nextElementSibling };
+      try { handle.setPointerCapture(e.pointerId); } catch (err) { /* not needed for mouse */ }
+    });
+
+    document.addEventListener('pointermove', function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
+      drag.ghost.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+      if (e.clientY < 70) window.scrollBy(0, -14);
+      else if (e.clientY > window.innerHeight - 70) window.scrollBy(0, 14);
+
+      // Where it would land: before the first row whose middle is below the pointer.
+      var target = null, rs = rows();
+      for (var i = 0; i < rs.length; i++) {
+        var r = rs[i].getBoundingClientRect();
+        if (e.clientY < r.top + r.height / 2) { target = rs[i]; break; }
       }
-      syncColumnTools(w);
+      var oldNext = drag.ph.nextElementSibling;
+      if (target !== oldNext) list.insertBefore(drag.ph, target);
+      var prev = drag.ph.previousElementSibling, next = drag.ph.nextElementSibling;
+      var maxD = isRow(prev) ? Math.min(depth(prev) + 1, MAX - drag.height) : 0;
+      var minD = isRow(next) ? Math.max(0, depth(next) - 1) : 0;
+      if (minD > maxD) { // no depth works here: stay where it was
+        list.insertBefore(drag.ph, oldNext);
+        return;
+      }
+      var want = drag.base + Math.round(dx / INDENT);
+      setDepth(drag.ph, Math.max(minD, Math.min(maxD, want)));
+    });
+
+    function endDrag(e) {
+      if (!drag || (e && e.pointerId !== drag.id)) return;
+      var delta = depth(drag.ph) - drag.base;
+      var moved = delta !== 0 || drag.ph.nextElementSibling !== drag.startNext;
+      drag.blk.forEach(function (r) { list.insertBefore(r, drag.ph); });
+      shift(drag.blk, delta);
+      drag.ph.remove();
+      drag.ghost.remove();
+      document.body.classList.remove('mb-dragging');
+      drag = null;
+      refresh();
+      if (moved) markDirty();
+    }
+    document.addEventListener('pointerup', endDrag);
+    document.addEventListener('pointercancel', endDrag);
+
+    // ── clicks and typing inside the list ──
+    list.addEventListener('click', function (e) {
+      var li = e.target.closest('.mb-item');
+      if (!li) return;
+      var t;
+      if ((t = e.target.closest('[data-move]'))) { move(li, t.getAttribute('data-move')); return; }
+      if (e.target.closest('.mb-toggle, .mb-chev')) { togglePanel(li); return; }
+      if (e.target.closest('[data-act="remove"]')) {
+        var blk = block(li);
+        var name = field(li, 'label').value.trim() || 'this item';
+        if (blk.length > 1 && !confirm('Remove “' + name + '” and its ' + (blk.length - 1) + ' sub item' + (blk.length > 2 ? 's' : '') + '?')) return;
+        blk.forEach(function (r) { r.remove(); });
+        refresh();
+        markDirty();
+        return;
+      }
+      var w = li.querySelector('.mb-mega');
+      if (e.target.closest('[data-act="add-col"]')) {
+        var col = columnEditor({});
+        w.querySelector('.mb-cols').appendChild(col);
+        col.open = true;
+        col.querySelector('[data-c="title"]').focus();
+        syncColumnTools(w);
+        markDirty();
+        return;
+      }
+      if ((t = e.target.closest('[data-col]'))) {
+        e.preventDefault(); // the buttons sit in <summary>: don't open/close the column
+        var d = t.closest('.mb-col'), how = t.getAttribute('data-col');
+        if (how === 'remove') {
+          var title = d.querySelector('[data-c="title"]').value.trim();
+          if (!confirm('Remove the column' + (title ? ' “' + title + '”' : '') + '?')) return;
+          d.remove();
+        } else if (how === 'up' && d.previousElementSibling) {
+          d.parentNode.insertBefore(d, d.previousElementSibling);
+        } else if (how === 'down' && d.nextElementSibling) {
+          d.parentNode.insertBefore(d.nextElementSibling, d);
+        }
+        syncColumnTools(w);
+        markDirty();
+      }
+    });
+
+    list.addEventListener('input', function (e) {
+      var li = e.target.closest('.mb-item');
+      if (!li) return;
       markDirty();
-    }
-  });
+      var col = e.target.closest('.mb-col');
+      if (col) syncColumn(col);
+      else syncBar(li);
+    });
 
-  list.addEventListener('input', function (e) {
-    var li = e.target.closest('.mb-item');
-    if (!li) return;
-    markDirty();
-    var col = e.target.closest('.mb-col');
-    if (col) syncColumn(col);
-    else syncBar(li);
-  });
+    list.addEventListener('change', function (e) {
+      var li = e.target.closest('.mb-item');
+      if (!li) return;
+      markDirty();
+      var t = e.target;
+      if (MEGA && t.matches('[data-f="mega"]') && t.checked && !li.querySelector('.mb-mega')) {
+        // First time on: start with one empty column and a booking box.
+        li.querySelector('.mb-mega-slot').appendChild(megaEditor({
+          layout: 'columns', columns: [{}],
+          cta: { enabled: true, title: 'Not sure which fits?', text: 'Get a free consultation and we’ll map the right solution to your business.', button: 'Book a Free Consultation →' }
+        }));
+        var first = li.querySelector('.mb-col');
+        if (first) first.open = true;
+      }
+      if (t.matches('[data-m="layout"]')) t.closest('.mb-mega').classList.toggle('is-tiles', t.value === 'tiles');
+      if (t.matches('[data-m="cta-enabled"]')) t.closest('.mb-mega').querySelector('.mb-cta-fields').hidden = !t.checked;
+      var col = t.closest('.mb-col');
+      if (col) syncColumn(col);
+      refresh();
+    });
 
-  list.addEventListener('change', function (e) {
-    var li = e.target.closest('.mb-item');
-    if (!li) return;
-    markDirty();
-    var t = e.target;
-    if (t.matches('[data-f="mega"]') && t.checked && !li.querySelector('.mb-mega')) {
-      // First time on: start with one empty column and a booking box.
-      li.querySelector('.mb-mega-slot').appendChild(megaEditor({
-        layout: 'columns', columns: [{}],
-        cta: { enabled: true, title: 'Not sure which fits?', text: 'Get a free consultation and we’ll map the right solution to your business.', button: 'Book a Free Consultation →' }
-      }));
-      var first = li.querySelector('.mb-col');
-      if (first) first.open = true;
+    function addItem(label, url) {
+      var li = makeRow({ id: uid(), label: label, url: url, visible: true, new_tab: false, mega: null }, 0);
+      list.appendChild(li);
+      refresh();
+      markDirty();
+      li.classList.add('mb-new');
+      setTimeout(function () { li.classList.remove('mb-new'); }, 1700);
+      li.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     }
-    if (t.matches('[data-m="layout"]')) t.closest('.mb-mega').classList.toggle('is-tiles', t.value === 'tiles');
-    if (t.matches('[data-m="cta-enabled"]')) t.closest('.mb-mega').querySelector('.mb-cta-fields').hidden = !t.checked;
-    var col = t.closest('.mb-col');
-    if (col) syncColumn(col);
+
+    /** The first row that can't be saved: open it and put the cursor where the fix goes. */
+    function focusProblem() {
+      var rs = rows();
+      for (var i = 0; i < rs.length; i++) {
+        var f = !field(rs[i], 'label').value.trim() ? 'label' : (NEEDS_URL && !field(rs[i], 'url').value.trim() ? 'url' : '');
+        if (f) {
+          togglePanel(rs[i], true);
+          field(rs[i], f).focus();
+          return true;
+        }
+      }
+      return false;
+    }
+
+    addRows(cfg.items || [], 0);
     refresh();
+    return { key: key, needsUrl: NEEDS_URL, serialize: serialize, addItem: addItem, focusProblem: focusProblem };
+  }
+
+  var builders = {};
+  var order = [];
+  Array.prototype.forEach.call(document.querySelectorAll('.mb-list[data-list]'), function (list) {
+    var key = list.getAttribute('data-list');
+    if (!data.lists || !data.lists[key]) return;
+    builders[key] = makeBuilder(list, key, data.lists[key]);
+    order.push(key);
   });
+  if (!order.length) return;
 
   // ── add items ──
-  function addItem(label, url) {
-    var li = makeRow({ id: uid(), label: label, url: url, visible: true, new_tab: false, mega: null }, 0);
-    list.appendChild(li);
-    refresh();
-    markDirty();
-    li.classList.add('mb-new');
-    setTimeout(function () { li.classList.remove('mb-new'); }, 1700);
-    li.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  }
+  var addTo = document.getElementById('mbAddTo');
+  function target() { return builders[addTo ? addTo.value : order[0]] || builders[order[0]]; }
   var pageSel = document.getElementById('mbPage');
   document.getElementById('mbAddPage').addEventListener('click', function () {
     var opt = pageSel.options[pageSel.selectedIndex];
-    if (opt) addItem(opt.getAttribute('data-label'), opt.value);
+    if (opt) target().addItem(opt.getAttribute('data-label'), opt.value);
   });
   var linkLabel = document.getElementById('mbLinkLabel');
   var linkUrl = document.getElementById('mbLinkUrl');
@@ -512,31 +566,27 @@
     var label = linkLabel.value.trim(), url = linkUrl.value.trim();
     var msg = '';
     if (!label) msg = 'Give the link a label.';
-    else if (url && !/^(\/(?!\/)|#[A-Za-z][\w-]*$|https?:\/\/[^\/\s]|mailto:|tel:)\S*$/i.test(url)) msg = 'Use a page path like /pricing, a #section, or a full https:// address.';
+    else if (!url && target().needsUrl) msg = 'Give the link an address.';
+    else if (url && !URL_OK.test(url)) msg = 'Use a page path like /pricing, a #section, or a full https:// address.';
     addErr.textContent = msg;
     addErr.hidden = !msg;
     if (msg) { (label ? linkUrl : linkLabel).focus(); return; }
-    addItem(label, url);
+    target().addItem(label, url);
     linkLabel.value = '';
     linkUrl.value = '';
   });
 
   // ── save ──
   form.addEventListener('submit', function (e) {
-    var bad = rows().filter(function (li) { return !field(li, 'label').value.trim(); })[0];
-    if (bad) {
-      e.preventDefault();
-      togglePanel(bad, true);
-      field(bad, 'label').focus();
-      return;
+    for (var i = 0; i < order.length; i++) {
+      if (builders[order[i]].focusProblem()) { e.preventDefault(); return; }
     }
-    document.getElementById('menuJson').value = JSON.stringify(serialize());
+    var out = {};
+    order.forEach(function (k) { out[k] = builders[k].serialize(); });
+    document.getElementById('menuJson').value = JSON.stringify(out);
     dirty = false;
   });
   window.addEventListener('beforeunload', function (e) {
     if (dirty) { e.preventDefault(); e.returnValue = ''; }
   });
-
-  addRows(data.items || [], 0);
-  refresh();
 })();
