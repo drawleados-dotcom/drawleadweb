@@ -27,12 +27,42 @@ body>nav .nav-end{display:flex;align-items:center;gap:10px}
 body>nav .nav-btn{min-height:46px;padding:0 24px;border-radius:999px;background:#101211;color:#fff;font-family:'Inter',sans-serif;font-size:.9rem;font-weight:600;letter-spacing:-.005em;text-transform:none;white-space:nowrap}
 body>nav .nav-btn:hover{background:#000;opacity:1}
 body>nav :focus-visible{outline:3px solid #32B46F;outline-offset:3px}
+
+/* ---------- dropdown sub menus (Admin → Menu, two levels deep) ----------
+   nav.php's script adds .mega-open for a short hover grace period and
+   .sub-left when a dropdown would run off the right edge. The ::before strips
+   bridge the gap between a link and its dropdown so the pointer can cross it. */
+body>nav .nav-links>li.has-sub,body>nav .sub-menu>li{position:relative}
+body>nav .sub-menu{position:absolute;top:calc(100% + 12px);left:0;z-index:5;min-width:220px;margin:0;padding:8px;list-style:none;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:0 22px 50px -18px rgba(15,58,36,.35);opacity:0;visibility:hidden;transform:translateY(-6px);pointer-events:none;transition:opacity .18s ease,transform .18s ease,visibility .18s}
+body>nav .sub-menu::before{content:"";position:absolute;left:0;right:0;top:-13px;height:13px}
+body>nav .sub-menu .sub-menu{top:-9px;left:calc(100% + 8px)}
+body>nav .sub-menu .sub-menu::before{left:-9px;right:auto;top:0;bottom:0;width:9px;height:auto}
+body>nav .has-sub:hover>.sub-menu,body>nav .has-sub:focus-within>.sub-menu,body>nav .has-sub.mega-open>.sub-menu{opacity:1;visibility:visible;transform:none;pointer-events:auto}
+body>nav .nav-links>li.sub-left>.sub-menu{left:auto;right:0}
+body>nav .sub-menu>li.sub-left>.sub-menu{left:auto;right:calc(100% + 8px)}
+body>nav .sub-menu>li.sub-left>.sub-menu::before{left:auto;right:-9px}
+body>nav .sub-menu a{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 14px;border-radius:10px;font-size:.9rem;font-weight:500;letter-spacing:0;white-space:nowrap;color:#2a2f2d;text-decoration:none;cursor:pointer;transition:background .2s,color .2s}
+body>nav .sub-menu a:hover,body>nav .sub-menu .mega-open>a{background:#e4f6ec;color:#0b0d0c}
+body>nav .sub-menu a[aria-current]{color:#1d7a49}
+body>nav .sub-menu .has-sub>a::after{content:"";width:6px;height:6px;flex-shrink:0;border-top:1.6px solid currentColor;border-right:1.6px solid currentColor;transform:rotate(45deg);opacity:.55}
+body>nav .nav-links>li>a:not([href]),body>nav .sub-menu a:not([href]){cursor:default}
+
+/* ---------- mega menus: column count, text and icons set in Admin → Menu ---------- */
+body>nav .mega-inner:not(.mega-inner-ind){grid-template-columns:repeat(var(--mega-cols,4),minmax(0,1fr))}
+body>nav .mega-col-icon svg{width:19px;height:19px}
+body>nav .mega-col-text{font-size:11.5px;color:var(--g500);line-height:1.5;margin-bottom:.75rem}
+body>nav .mega-col-fill{flex:1}
+
 /* ---------- mobile menu ---------- */
 body>nav .nav-burger{display:none;width:46px;height:46px;border:0;border-radius:50%;background:#101211;color:#fff;align-items:center;justify-content:center;cursor:pointer}
 body>nav .nav-burger svg{width:22px;height:22px}
 body>nav .nav-burger .nb-x,body>nav .nav-burger[aria-expanded="true"] .nb-menu{display:none}
 body>nav .nav-burger[aria-expanded="true"] .nb-x{display:block}
 body>nav .nav-drawer{display:none}
+body>nav .nav-drawer-sub{display:flex;flex-direction:column;gap:2px;margin:0 0 6px 18px;padding-left:10px;border-left:2px solid #e4f6ec}
+body>nav .nav-drawer .nav-drawer-sub a{padding:10px 14px;font-size:.92rem;font-weight:500}
+body>nav .nav-drawer-label{padding:14px 16px;font-size:1rem;font-weight:600;color:#70706c}
+body>nav .nav-drawer-sub .nav-drawer-label{padding:10px 14px;font-size:.92rem;font-weight:500}
 
 /* ---------- responsive ---------- */
 @media (max-width:1240px){
