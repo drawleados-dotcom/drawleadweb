@@ -554,6 +554,16 @@ body>.h10 .step .tk .step__art.il,body>.h10:not(.ab) .step:nth-child(n) .tk .ste
 .h10 .data__viz text.dv-ax{font:600 8px var(--f-body);fill:#6b7280}
 .h10 .data__viz text.dv-r{font:600 9.5px var(--f-body);fill:#1f2937}
 .h10 .data__viz text.dv-pl{font:700 8.5px var(--f-body);fill:#1f2937}
+.h10 .data__viz .dv-card{filter:url(#dv-sh)}
+.h10 .data__viz .dv-s1 .ln{stroke:#3F6FC4;stroke-opacity:.55}.h10 .data__viz .dv-s1 .g{fill:#3F6FC4}
+.h10 .data__viz .dv-s2 .ln{stroke:#C77A3E;stroke-opacity:.55}.h10 .data__viz .dv-s2 .g{fill:#C77A3E}
+.h10 .data__viz .dv-s3 .ln{stroke:#7656C2;stroke-opacity:.55}.h10 .data__viz .dv-s3 .g{fill:#7656C2}
+.h10 .data__viz .dv-s4 .ln{stroke:#7E8F2E;stroke-opacity:.55}.h10 .data__viz .dv-s4 .g{fill:#7E8F2E}
+.h10 .data__viz .dv-orbit{fill:none;stroke:#1d7a49;stroke-opacity:.22;stroke-width:1.2;stroke-dasharray:2 6}
+.h10 .data__viz .dv-hub-in{fill:none;stroke:rgba(255,255,255,.3);stroke-width:1.5;transform:scale(.82);transform-origin:290px 280px}
+.h10 .data__viz text.dv-tw{font:700 9.5px var(--f-body);fill:#fff;letter-spacing:.01em}
+.h10 .data__viz .dv-spark{fill:none;stroke:#1d7a49;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.h10 .data__viz .dv-guide{stroke:#1d7a49;stroke-opacity:.35;stroke-width:1;stroke-dasharray:3 3}
 .h10 .data__grid[data-active] .src.on .dv-card{stroke:#1d7a49;stroke-width:2}
 
 /* ---------- case studies ---------- */
