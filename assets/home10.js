@@ -26,7 +26,7 @@
      split into words client-side, so the HTML and the admin editor keep the
      plain text. Highlighted spans stay intact; their words are split inside. */
   if (!reduce && !preview && hasIO) {
-    const heads = $$('section:not(.hero) h2, .ahero h1').filter((h) => !h.classList.contains('pb-h2') && !h.querySelector('[data-flip]'));
+    const heads = $$('section:not(.hero) h2, .ahero h1, .bsh h1').filter((h) => !h.classList.contains('pb-h2') && !h.querySelector('[data-flip]'));
     const wordIO = new IntersectionObserver((es) => es.forEach((e) => {
       if (e.isIntersecting) { e.target.classList.add('is-in'); wordIO.unobserve(e.target); }
     }), { threshold: 0.25, rootMargin: '0px 0px -8% 0px' });

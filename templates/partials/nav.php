@@ -81,7 +81,7 @@ $navSection = [
     'home9' => 'home', 'home10' => 'home',
     'about-us' => 'about-us',
     'custom-erp-solution' => 'solutions', 'ecommerce-solutions' => 'solutions',
-    'marketing-solutions' => 'solutions', 'crm-solution' => 'solutions',
+    'marketing-solutions' => 'solutions', 'crm-solution' => 'solutions', 'business-systems' => 'solutions',
     'case-studies' => 'case-studies',
     'blog' => 'blog',
 ][$activePage] ?? (strpos($activePage, 'industry-') === 0 ? 'industries' : '');
