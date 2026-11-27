@@ -873,29 +873,33 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .booking-close:hover{background:#DAF1E5;color:#0f3a24}
 .booking-modal :focus-visible{outline:3px solid #1d7a49;outline-offset:2px}
 
-.booking-left{background-color:#DAF1E5;background-image:radial-gradient(rgba(15,58,36,.1) 1px,transparent 1.4px);background-size:18px 18px;border-right:2px dashed #9fd3b6;color:#0f3a24;padding:2.5rem 2rem;overflow-y:auto;position:relative}
+.booking-left{background-color:#DAF1E5;background-image:radial-gradient(rgba(15,58,36,.1) 1px,transparent 1.4px);background-size:18px 18px;border-right:2px dashed #9fd3b6;color:#0f3a24;padding:2rem 1.75rem;overflow-y:auto;position:relative}
 .booking-left-inner{position:relative}
-.booking-eyebrow{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#1d7a49;font-weight:700;margin-bottom:1rem;padding:5px 12px;border-radius:999px;background:#fff}
-.booking-left h2{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:.9rem;color:#111827}
+.booking-eyebrow{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#1d7a49;font-weight:700;margin-bottom:.8rem;padding:5px 12px;border-radius:999px;background:#fff}
+.booking-left h2{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:.9rem;color:#111827}
 .booking-left h2 .g{color:#1d7a49}
-.booking-left p{font-size:14px;color:#374151;line-height:1.6;margin-bottom:1.5rem}
+.booking-left p{font-size:13.5px;color:#374151;line-height:1.55;margin-bottom:1.1rem}
 
-.bv{display:flex;flex-direction:column;align-items:center;gap:.55rem;margin-bottom:1.6rem;padding:1.1rem;background:#fff;border:1px solid #bfe5cf;border-radius:16px}
-.bv-chaos{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
-.bv-chip{font-size:11.5px;font-weight:600;padding:5px 11px;border-radius:999px;color:#374151;border:1px solid transparent}
+.bv{display:grid;grid-template-columns:auto 34px minmax(0,1fr);align-items:stretch;gap:0;margin-bottom:1.25rem;padding:12px;background:#fff;border:1px solid #bfe5cf;border-radius:16px}
+.bv-chaos{display:flex;flex-direction:column;justify-content:space-between;gap:5px}
+.bv-chip{display:block;font-size:11px;font-weight:600;line-height:1;padding:6px 9px;border-radius:999px;color:#374151;border:1px solid transparent;text-align:center}
 .bv-chip:nth-child(1){background:#DAF1E5;border-color:#bfe5cf}
 .bv-chip:nth-child(2){background:#DFEAF9;border-color:#c9d9f2}
 .bv-chip:nth-child(3){background:#F8E6D6;border-color:#ecd2bb}
 .bv-chip:nth-child(4){background:#E8E2F5;border-color:#d6cdee}
-.bv-arrow{color:#1d7a49;font-size:16px;font-weight:800}
-.bv-board{width:100%;background:#f4faf6;border:1px solid #e3e9e5;border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px}
-.bv-board-bar{height:7px;width:38%;background:#1d7a49;border-radius:4px;margin-bottom:2px}
-.bv-board-row{height:7px;background:#dfe7e2;border-radius:4px;width:100%}
-.bv-board-row.w2{width:70%}
+.bv-links{width:100%;height:100%;overflow:visible}
+.bv-links path{fill:none;stroke:#1d7a49;stroke-width:1.5;stroke-dasharray:3 3;vector-effect:non-scaling-stroke;opacity:.7}
+.bv-board{align-self:center;display:flex;flex-direction:column;gap:6px;padding:9px 10px;background:#f4faf6;border:1px solid #bfe5cf;border-radius:12px}
+.bv-board-hd{display:flex;align-items:center;gap:6px;margin-bottom:2px;font-family:'Montserrat',sans-serif;font-size:11.5px;font-weight:700;color:#0f3a24}
+.bv-board-hd i{width:8px;height:8px;border-radius:50%;background:#1d7a49}
+.bv-board-row{display:grid;grid-template-columns:34px minmax(0,1fr);align-items:center;gap:6px}
+.bv-board-row span{font-size:10px;font-weight:600;color:#6b7280}
+.bv-board-row b{display:block;height:6px;border-radius:3px;background:linear-gradient(#1d7a49,#1d7a49) no-repeat 0 0/var(--w) 100%,#dfe7e2}
 
-.booking-points{list-style:none;display:flex;flex-direction:column;gap:.65rem}
-.booking-points li{font-size:14px;color:#1f2937;font-weight:600;display:flex;align-items:center;gap:10px}
+.booking-points{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.booking-points li{font-size:13.5px;line-height:1.35;color:#1f2937;font-weight:600;display:flex;align-items:center;gap:10px}
 .booking-points li::before{content:"✓";flex-shrink:0;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#1d7a49;color:#fff;font-size:10px;font-weight:800}
+@media(max-height:760px){.booking-left p{display:none}.booking-left{padding-top:1.6rem;padding-bottom:1.6rem}}
 
 .booking-right{padding:2.25rem 2.25rem 2rem;overflow-y:auto;background:#fff}
 .booking-step-title{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800;letter-spacing:-.01em;margin-bottom:1.1rem;padding-right:3rem;color:#111827}

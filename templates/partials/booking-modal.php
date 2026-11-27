@@ -54,12 +54,12 @@ if ($bookingStandalone) {
             <span class="bv-chip">Notes</span>
             <span class="bv-chip">Email</span>
           </div>
-          <div class="bv-arrow" aria-hidden="true">↓</div>
+          <svg class="bv-links" viewBox="0 0 40 100" preserveAspectRatio="none" focusable="false"><path d="M0 12C22 12 18 50 40 50M0 37C20 37 22 50 40 50M0 63C20 63 22 50 40 50M0 88C22 88 18 50 40 50"/></svg>
           <div class="bv-board">
-            <div class="bv-board-bar"></div>
-            <div class="bv-board-row"></div>
-            <div class="bv-board-row"></div>
-            <div class="bv-board-row w2"></div>
+            <div class="bv-board-hd"><i></i>Drawlead OS</div>
+            <div class="bv-board-row"><span>Leads</span><b style="--w:82%"></b></div>
+            <div class="bv-board-row"><span>Sales</span><b style="--w:64%"></b></div>
+            <div class="bv-board-row"><span>Ops</span><b style="--w:74%"></b></div>
           </div>
         </div>
 
