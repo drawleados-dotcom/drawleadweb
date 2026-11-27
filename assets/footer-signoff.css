@@ -99,3 +99,30 @@
 @media (max-width:640px){
   .dl-sign::before{content:none}
 }
+
+/* ---------- light band + rocket (dark footers: Home 10, About, blog) ----------
+   The signoff sits on a white strip that runs edge to edge above the dark
+   footer; the letters are flat and soft. Two canvases from footer-rocket.js
+   sit just behind and just in front of the letters, so the rocket can weave
+   in and out of the word. */
+.dl-sign:not(.dl-sign--light){
+  --sign-hover:#1d7a49;
+  --sign-strong:#111827;
+  --sign-text:#5b6472;
+  --sign-dot:rgba(15,23,42,.08);
+  --sign-line:transparent;
+  margin-top:-40px;
+  padding-top:clamp(36px,4.4vw,72px);
+  background:#fcfcfd;
+  box-shadow:0 0 0 100vmax #fcfcfd;
+  clip-path:inset(0 -100vmax);
+}
+.dl-sign:not(.dl-sign--light)::after{content:none}
+.dl-sign:not(.dl-sign--light) .dl-sign__w span{background:none;color:#e1e8e4;-webkit-text-fill-color:#e1e8e4;text-shadow:0 1px 0 #fff,0 -1px 0 rgba(15,23,42,.04)}
+@media (hover:hover){
+  .dl-sign:not(.dl-sign--light) .dl-sign__w span:hover{color:var(--sign-hover);-webkit-text-fill-color:var(--sign-hover)}
+}
+.dl-rk{position:absolute;left:-4%;top:-16%;width:108%;height:134%;pointer-events:none}
+.dl-rk--back{z-index:-1}
+.dl-rk--front{z-index:2}
+.dl-sign--light .dl-rk{display:none}

@@ -14,7 +14,8 @@
 $signClass = trim('dl-sign ' . ($signClass ?? ''));
 ?>
 <div class="<?= h($signClass) ?>">
-  <div class="dl-sign__w" aria-hidden="true"><?php foreach (str_split('Drawlead') as $signLetter): ?><span><?= $signLetter ?></span><?php endforeach; ?></div>
+  <div class="dl-sign__w" aria-hidden="true"><canvas class="dl-rk dl-rk--back"></canvas><?php foreach (str_split('Drawlead') as $signLetter): ?><span><?= $signLetter ?></span><?php endforeach; ?><canvas class="dl-rk dl-rk--front"></canvas></div>
   <div class="dl-sign__l"><b>Business Systems &amp; Technology.</b> <span>Built around the way businesses work.</span></div>
 </div>
+<script src="<?= asset_url('/assets/footer-rocket.js') ?>" defer></script>
 <?php unset($signClass, $signLetter); ?>
