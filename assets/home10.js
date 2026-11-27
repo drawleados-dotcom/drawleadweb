@@ -210,16 +210,26 @@
     $$('[data-swx-step]', swx.parentElement).forEach((a) => a.addEventListener('click', () => select(step(+a.dataset.swxStep))));
   }
 
-  /* ---------- hero: the struck line is sized to the width of "Start Building" ---------- */
-  const fitS = $('[data-fit-strike]'), fitSb = $('.hero__sb');
-  if (fitS && fitSb) {
-    const fitStrike = () => {
-      fitS.style.fontSize = '';
-      const s = $('s', fitS), t = fitSb.getBoundingClientRect().width, w = s.getBoundingClientRect().width;
-      if (t && w) fitS.style.fontSize = (parseFloat(getComputedStyle(fitS).fontSize) * t / w).toFixed(2) + 'px';
+  /* ---------- hero: each heading line is fitted to a width (desktop only) ----------
+     the struck line and "Start Building" end at the eyebrow's right edge;
+     "Smarter Business Solutions." runs nearly the full width of the hero */
+  const fitS = $('[data-fit-strike]'), fitSb = $('.hero__sb'), fitHl = $('.hero__hl');
+  const fitEb = $('.hero-eb'), fitBox = $('.hero__copy');
+  if (fitS && fitSb && fitEb) {
+    const fitTo = (el, measure, target) => {
+      const w = measure.getBoundingClientRect().width;
+      if (w && target) el.style.fontSize = (parseFloat(getComputedStyle(el).fontSize) * target / w).toFixed(2) + 'px';
     };
-    (document.fonts ? document.fonts.ready : Promise.resolve()).then(fitStrike);
-    addEventListener('resize', fitStrike);
+    const fitHero = () => {
+      [fitS, fitSb, fitHl].forEach((e) => { if (e) e.style.fontSize = ''; });
+      if (innerWidth <= 760) return;
+      const eb = fitEb.getBoundingClientRect().width;
+      fitTo(fitSb, fitSb, eb);
+      fitTo(fitS, $('s', fitS), eb);
+      if (fitHl && fitBox) fitTo(fitHl, fitHl, fitBox.getBoundingClientRect().width * .94);
+    };
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(fitHero);
+    addEventListener('resize', fitHero);
   }
 
   /* ---------- 8-week program: week cards scroll, calendar pages tear off 1 → 8 ---------- */
