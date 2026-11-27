@@ -1,6 +1,6 @@
 /* ==========================================================================
    Home 10 — the homepage (templates/home10-body.php)
-   Ported from drawlead-website/css/styles.css with every rule scoped under
+   Ported from _dev/design/drawlead-website/css/styles.css with every rule scoped under
    .h10, because the site-wide stylesheet (templates/partials/style.php) is on
    the page too. Layout idea: light mint hero → dark capability block → light
    story sections → dark program/industry blocks → deep-green closing CTA.

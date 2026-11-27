@@ -19,19 +19,19 @@ use strict; use warnings;
 # are left out. Every section but 3, 5, 6, 8 and 9 is copied from Home 8
 # exactly as it stands, so any change to Home 8 reaches Home 9 on the next
 # run; 3 comes from templates/home-body.php (the main Home page) and 5, 6, 8
-# and 9 from tools/home9-process.html, tools/home9-cta-mid.html,
-# tools/home9-dashboards.html and tools/home9-testimonials.html. A few copied
+# and 9 from _dev/tools/home9-process.html, _dev/tools/home9-cta-mid.html,
+# _dev/tools/home9-dashboards.html and _dev/tools/home9-testimonials.html. A few copied
 # sections get Home 9's own edits (section 3b), and Solutions gains the
-# pinned one-card-at-a-time driver in tools/home9-solutions.js. sync-home8.pl runs this
+# pinned one-card-at-a-time driver in _dev/tools/home9-solutions.js. sync-home8.pl runs this
 # script at its end, so the usual workflow needs nothing extra; run it by hand
-# after editing any of those tools/home9-* files:
+# after editing any of those _dev/tools/home9-* files:
 #
-#     perl tools/sync-home9.pl
+#     perl _dev/tools/sync-home9.pl
 #
 # Like sync-home8.pl it fails loudly the moment Home 8's markup stops matching
 # what it expects, rather than writing a page with a section missing or doubled.
 #
-# Testing: `perl tools/sync-home9.pl --rendered IN OUT` runs the same section
+# Testing: `perl _dev/tools/sync-home9.pl --rendered IN OUT` runs the same section
 # reordering over a rendered copy of Home 8 (HTML, PHP already executed) and
 # skips the PHP-only header delta.
 #
@@ -43,7 +43,7 @@ my ($src, $dst) = ('templates/home8-body.php', 'templates/home9-body.php');
 if (@ARGV && $ARGV[0] eq '--rendered') {
   $rendered = 1;
   (undef, $src, $dst) = @ARGV;
-  die "usage: perl tools/sync-home9.pl [--rendered IN OUT]\n" unless defined $dst;
+  die "usage: perl _dev/tools/sync-home9.pl [--rendered IN OUT]\n" unless defined $dst;
 }
 
 my $s = slurp($src);
@@ -120,14 +120,14 @@ sub block_file {
     unless $opens == 1 && $t =~ /<section id="\Q$id\E"[\s>]/ && $t =~ m{</section>\n\n\z};
   return $t;
 }
-my $mid = block_file('tools/home9-cta-mid.html', 'cta-mid');
-my $tm  = block_file('tools/home9-testimonials.html', 'testimonials');
+my $mid = block_file('_dev/tools/home9-cta-mid.html', 'cta-mid');
+my $tm  = block_file('_dev/tools/home9-testimonials.html', 'testimonials');
 # How We Work: Home 8's copy with a centred header and the four steps as a
 # staggered card row, in place of Home 8's card grid and panel.
-my $proc = block_file('tools/home9-process.html', 'process');
+my $proc = block_file('_dev/tools/home9-process.html', 'process');
 # Platform Dashboards: the six modules wired to a central hub, in place of
 # Home 8's row of full dashboard cards (whose PHP helpers go with its block).
-my $dash = block_file('tools/home9-dashboards.html', 'dashboards');
+my $dash = block_file('_dev/tools/home9-dashboards.html', 'dashboards');
 # Core Platform: the main Home page's "7 Functions of Business" grid, taken
 # from templates/home-body.php on every run (so it stays Home's), in place
 # of Home 8's sliding row of function cards. It is plain markup; its look is
@@ -154,7 +154,7 @@ my $fn;
 # distance comes from .sol-scroll, a track wrapped round the layout that is
 # told the card count in --sol-n (assets/home9.css, section 5). Each card
 # gets an id for its nav entry, and its button moves above its features. The
-# driver, tools/home9-solutions.js, follows the section; the stack's driver
+# driver, _dev/tools/home9-solutions.js, follows the section; the stack's driver
 # is removed in 3b.
 {
   # No metrics row (100% Ownership, 3x Faster launch, 4x Organic traffic) on
@@ -203,10 +203,10 @@ my $fn;
     . qq{ </div>\n}
     . $post;
 
-  my $js = slurp('tools/home9-solutions.js');
+  my $js = slurp('_dev/tools/home9-solutions.js');
   $js =~ s/\r\n/\n/g;
   $js =~ s/\n*\z/\n/;
-  die "sync-home9: tools/home9-solutions.js should be one <script> block\n"
+  die "sync-home9: _dev/tools/home9-solutions.js should be one <script> block\n"
     unless $js =~ /\A\s*<script>/ && $js =~ m{</script>\n\z};
   $blk{solutions} =~ s{</section>\n}{</section>\n$js}
     or die "sync-home9: the Solutions section does not close\n";
@@ -254,12 +254,12 @@ for (@order) {
 }
 # After the last section: keeps ScrollTrigger's pin positions (the closing
 # CTA's letter train) in step when this page's own scripts change section
-# heights after it has measured (tools/home9-scroll-guard.js says why).
+# heights after it has measured (_dev/tools/home9-scroll-guard.js says why).
 {
-  my $guard = slurp('tools/home9-scroll-guard.js');
+  my $guard = slurp('_dev/tools/home9-scroll-guard.js');
   $guard =~ s/\r\n/\n/g;
   $guard =~ s/\n*\z/\n/;
-  die "sync-home9: tools/home9-scroll-guard.js should be one <script> block\n"
+  die "sync-home9: _dev/tools/home9-scroll-guard.js should be one <script> block\n"
     unless $guard =~ /\A\s*<script>/ && $guard =~ m{</script>\n\z} && (() = $guard =~ /<script>/g) == 1;
   $body .= "\n" . $guard;
 }
@@ -325,15 +325,15 @@ unless ($rendered) {
  * DB-managed page (Admin -> Pages).
  *
  * GENERATED FILE — do not edit by hand. It is built from
- * templates/home8-body.php by tools/sync-home9.pl, which tools/sync-home8.pl
+ * templates/home8-body.php by _dev/tools/sync-home9.pl, which _dev/tools/sync-home8.pl
  * runs at its end, so a change to Home 7 or Home 8 reaches this page on the
  * next sync. The order and the sections left out (Tech Stack and Home 8's
  * Core Platform, How We Work and Platform Dashboards) are defined in that
  * script; Core Platform is the main Home page's (templates/home-body.php),
  * and How We Work's process row, the horizontal mid-page CTA, the Platform
  * Dashboards hub and the placeholder Testimonials come from
- * tools/home9-process.html, tools/home9-cta-mid.html,
- * tools/home9-dashboards.html and tools/home9-testimonials.html.
+ * _dev/tools/home9-process.html, _dev/tools/home9-cta-mid.html,
+ * _dev/tools/home9-dashboards.html and _dev/tools/home9-testimonials.html.
  *
  * Styling is Home 8's: /assets/home7.css, /assets/home8-base.css and the dark
  * sheet /assets/home8.css, which the header toggle switches off for light.

@@ -3,7 +3,7 @@
  * Home 10: the homepage from the drawlead-website design, served as a
  * DB-managed page (Admin -> Pages; migration 032 adds it and puts it at /).
  *
- * Ported from drawlead-website/index.html. This file is now the source for
+ * Ported from _dev/design/drawlead-website/index.html. This file is now the source for
  * the live page: edit it here, or in Admin -> Pages -> Edit -> Page Content.
  *
  * Styling is /assets/home10.css, with every rule scoped under .h10 so neither

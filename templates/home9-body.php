@@ -4,15 +4,15 @@
  * DB-managed page (Admin -> Pages).
  *
  * GENERATED FILE — do not edit by hand. It is built from
- * templates/home8-body.php by tools/sync-home9.pl, which tools/sync-home8.pl
+ * templates/home8-body.php by _dev/tools/sync-home9.pl, which _dev/tools/sync-home8.pl
  * runs at its end, so a change to Home 7 or Home 8 reaches this page on the
  * next sync. The order and the sections left out (Tech Stack and Home 8's
  * Core Platform, How We Work and Platform Dashboards) are defined in that
  * script; Core Platform is the main Home page's (templates/home-body.php),
  * and How We Work's process row, the horizontal mid-page CTA, the Platform
  * Dashboards hub and the placeholder Testimonials come from
- * tools/home9-process.html, tools/home9-cta-mid.html,
- * tools/home9-dashboards.html and tools/home9-testimonials.html.
+ * _dev/tools/home9-process.html, _dev/tools/home9-cta-mid.html,
+ * _dev/tools/home9-dashboards.html and _dev/tools/home9-testimonials.html.
  *
  * Styling is Home 8's: /assets/home7.css, /assets/home8-base.css and the dark
  * sheet /assets/home8.css, which the header toggle switches off for light.
@@ -546,7 +546,7 @@ include __DIR__ . '/partials/nav.php';
      panel. The steps animate in one after another, each arrow drawing
      between them (the script at the foot of the section). Edit this file,
      then run
-     `perl tools/sync-home9.pl`; templates/home9-body.php is generated.
+     `perl _dev/tools/sync-home9.pl`; templates/home9-body.php is generated.
      Styles: #process in assets/home9.css. -->
 <section id="process">
  <div class="pr-head">
@@ -621,7 +621,7 @@ include __DIR__ . '/partials/nav.php';
      page. Eyebrow and heading on the left, description and buttons on the
      right, the strapline under both. The copy matches the closing CTA but is
      kept here rather than copied from it, because the layout and the line
-     breaks differ. Edit this file, then run `perl tools/sync-home9.pl`;
+     breaks differ. Edit this file, then run `perl _dev/tools/sync-home9.pl`;
      templates/home9-body.php is generated. Styles: #cta-mid in
      assets/home9.css; the card's own look comes from Home 7's .cta-* rules. -->
 <section id="cta-mid">
@@ -696,7 +696,7 @@ include __DIR__ . '/partials/nav.php';
      travelling in along each; hovering or tapping a module lights its card,
      wire, spoke and the hub's caption, and when nobody is pointing the
      highlight walks round the six on its own. Edit this file, then run
-     `perl tools/sync-home9.pl`; templates/home9-body.php is generated.
+     `perl _dev/tools/sync-home9.pl`; templates/home9-body.php is generated.
      Styles: #dashboards in assets/home9.css (section 11). -->
 <section id="dashboards">
  <div class="hub-head">
@@ -957,8 +957,8 @@ include __DIR__ . '/partials/nav.php';
 <!-- PLACEHOLDER CONTENT. These three quotes and their attributions are dummies
      standing in until real client testimonials are supplied. Replace the quote,
      name and role in each card (and remove this note) before the page goes
-     live. Edit this file, tools/home9-testimonials.html, then run
-     `perl tools/sync-home9.pl`; templates/home9-body.php is generated.
+     live. Edit this file, _dev/tools/home9-testimonials.html, then run
+     `perl _dev/tools/sync-home9.pl`; templates/home9-body.php is generated.
      Styles: #testimonials in assets/home9.css. -->
 <section id="testimonials">
  <div class="eyebrow rv"><span class="eyebrow-text">Testimonials</span></div>
@@ -1365,7 +1365,7 @@ $ciTrainGreen = ['ERP', 'AI?'];
 //    page's height is watched, and when it differs from the height at the
 //    last refresh, ScrollTrigger refreshes (debounced). A refresh that
 //    changes nothing leaves the height as it was, so this cannot loop.
-// tools/sync-home9.pl places this after the last section.
+// _dev/tools/sync-home9.pl places this after the last section.
 (function(){
  const html = document.documentElement;
  let lastH = -1, timer = 0, started = false;

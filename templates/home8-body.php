@@ -5,7 +5,7 @@
  *
  * GENERATED FILE — do not edit by hand. It is a copy of
  * templates/home7-body.php with four theme deltas applied. After any change to
- * Home 7's body, run `perl tools/sync-home8.pl` from the repo root and commit
+ * Home 7's body, run `perl _dev/tools/sync-home8.pl` from the repo root and commit
  * the result, or the two pages drift apart.
  *
  * Only the theme differs. This page loads /assets/home7.css for the layout,

@@ -37,7 +37,7 @@ Same as in `SETUP.md`:
    attach the user with all privileges.
 2. Note the database host (usually `localhost`), name, username, password.
 3. Open **phpMyAdmin** for that database → **Import** → select
-   `sql/schema.sql` from this project → Go.
+   `_dev/sql/schema.sql` from this project → Go.
 
 ## Step 3 — Create the GitHub repository
 

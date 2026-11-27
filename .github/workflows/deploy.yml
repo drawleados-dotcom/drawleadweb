@@ -47,9 +47,11 @@ jobs:
           dangerous-clean-slate: false
           # verbose output, so a failed transfer names the file and error it died on
           log-level: verbose
+          # _dev/ holds everything that is not the website (design files,
+          # build scripts, SQL, docs). It stays in GitHub and never reaches
+          # the server.
           exclude: |
             **/.git*
             **/.git*/**
-            **/sql/**
-            **/drawlead-website/**
+            **/_dev/**
             **/*.md

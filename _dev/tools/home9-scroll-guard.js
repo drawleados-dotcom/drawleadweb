@@ -22,7 +22,7 @@
 //    page's height is watched, and when it differs from the height at the
 //    last refresh, ScrollTrigger refreshes (debounced). A refresh that
 //    changes nothing leaves the height as it was, so this cannot loop.
-// tools/sync-home9.pl places this after the last section.
+// _dev/tools/sync-home9.pl places this after the last section.
 (function(){
  const html = document.documentElement;
  let lastH = -1, timer = 0, started = false;

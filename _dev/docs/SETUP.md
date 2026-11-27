@@ -22,7 +22,7 @@ In hPanel / cPanel → **MySQL Databases**:
 
 ## 3. Import the schema
 
-Open **phpMyAdmin** for that database → **Import** → choose `sql/schema.sql`
+Open **phpMyAdmin** for that database → **Import** → choose `_dev/sql/schema.sql`
 from this project → Go. This creates all tables and seeds the Home and
 About Us page rows.
 
@@ -39,26 +39,28 @@ define('DB_PASS', 'your-database-password');
 
 ## 5. Upload
 
-Upload the **entire contents** of this folder to your domain's web root
-(usually `public_html`), keeping the folder structure intact:
+Upload the contents of this folder **except `_dev/`** to your domain's web
+root (usually `public_html`), keeping the folder structure intact. The
+GitHub deploy does this for you on every push to `main`.
 
 ```
 public_html/
   .htaccess
   index.php
+  admin/
+  api/
+  assets/
   includes/
   templates/
-  admin/
   uploads/
-  sql/            (safe to delete after import, or keep as a backup)
 ```
 
 Make sure `uploads/` is writable (permissions `755` is normally enough on
 Hostinger — you generally don't need `777`).
 
-The original static files (`Drawlead New Website .html`, `about-us.html`)
-can stay in the folder untouched as a backup, or be deleted once you've
-confirmed the new site works — they're no longer linked from anywhere.
+`_dev/` never goes to the server. It holds the SQL (`_dev/sql/`), the build
+scripts (`_dev/tools/`), the original static design files (`_dev/design/`)
+and these docs (`_dev/docs/`).
 
 ## 6. Create your first admin account
 

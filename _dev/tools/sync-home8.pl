@@ -7,13 +7,13 @@ use strict; use warnings;
 # moment Home 7's markup moves. Run this from the repo root after any change to
 # Home 7's body and commit the result:
 #
-#     perl tools/sync-home8.pl
+#     perl _dev/tools/sync-home8.pl
 #
 # It applies exactly nine deltas and fails loudly if any of them no longer
 # matches, which is the signal that the change needs looking at by hand rather
 # than being copied across blind.
 #
-# It then runs tools/sync-home9.pl, which builds templates/home9-body.php from
+# It then runs _dev/tools/sync-home9.pl, which builds templates/home9-body.php from
 # the Home 8 just written, so commit both pages together.
 #
 sub slurp { my $f=shift; open(my $h,'<:raw',$f) or die "$f: $!"; local $/; my $s=<$h>; close $h; $s }
@@ -51,7 +51,7 @@ OLD
  *
  * GENERATED FILE — do not edit by hand. It is a copy of
  * templates/home7-body.php with four theme deltas applied. After any change to
- * Home 7's body, run `perl tools/sync-home8.pl` from the repo root and commit
+ * Home 7's body, run `perl _dev/tools/sync-home8.pl` from the repo root and commit
  * the result, or the two pages drift apart.
  *
  * Only the theme differs. This page loads /assets/home7.css for the layout,
@@ -218,7 +218,7 @@ rep(\$s, 'style="background:#fff;color:#0a1310"', 'style="background:#32b46f;col
 #     returns when they are absent, so it simply does nothing on this page.
 #
 #     The section's CTA is taken too: the stack pins together with its buttons,
-#     so tools/home8-industries.html re-emits them inside the pinned block. The
+#     so _dev/tools/home8-industries.html re-emits them inside the pinned block. The
 #     swap runs up to the section's closing tag and leaves that tag in place.
 #
 #     Styles live in assets/home8-base.css, which only this page loads.
@@ -233,7 +233,7 @@ rep(\$s, 'style="background:#fff;color:#0a1310"', 'style="background:#32b46f;col
    unless $old =~ /\$indStackOrder/ && $old =~ /ind-scard/ && $old =~ /Built for/
        && $old =~ /Find Your Industry Solution/ && $old !~ /<section[\s>]/;
 
- my $new = slurp('tools/home8-industries.html') . slurp('tools/home8-industries.js');
+ my $new = slurp('_dev/tools/home8-industries.html') . slurp('_dev/tools/home8-industries.js');
  $new =~ s/\r\n/\n/g;
  substr($s, $a, length($old)) = $new;
 
@@ -266,7 +266,7 @@ rep(\$s, 'style="background:#fff;color:#0a1310"', 'style="background:#32b46f;col
  die "sync-home8: the tech map to replace looks wrong\n"
    unless $old =~ /Centralized/ && $old =~ /tsPath-14/ && $old !~ /<ul/;
 
- my $new = slurp('tools/home8-tech.svg');
+ my $new = slurp('_dev/tools/home8-tech.svg');
  $new =~ s/\r\n/\n/g;
  substr($s, $a, length($old)) = $new;
 
@@ -277,10 +277,10 @@ rep(\$s, 'style="background:#fff;color:#0a1310"', 'style="background:#32b46f;col
 # 9 · the hero dashboard tilt driver (styles in assets/home8-base.css, 23),
 #     placed right after the dashboard's first render.
 rep(\$s, "renderDash(0);\n\n// Core Functions: sticky horizontal scroll\n",
-  "renderDash(0);\n\n" . (slurp('tools/home8-hero-tilt.js') =~ s/\r\n/\n/gr) . "\n// Core Functions: sticky horizontal scroll\n", 1);
+  "renderDash(0);\n\n" . (slurp('_dev/tools/home8-hero-tilt.js') =~ s/\r\n/\n/gr) . "\n// Core Functions: sticky horizontal scroll\n", 1);
 $s =~ s/\n/\r\n/g if $crlf;
 spew($dst, $s);
 print "sync-home8: $n deltas applied, $dst regenerated (", length($s), " bytes)\n";
 
 # Home 9 is built from Home 8's output, so it is regenerated with it.
-system($^X, 'tools/sync-home9.pl') == 0 or die "sync-home8: tools/sync-home9.pl failed\n";
+system($^X, '_dev/tools/sync-home9.pl') == 0 or die "sync-home8: _dev/tools/sync-home9.pl failed\n";

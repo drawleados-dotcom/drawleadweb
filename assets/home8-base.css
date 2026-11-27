@@ -299,7 +299,7 @@ html[data-theme="light"] .theme-toggle .tt-moon{display:block}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    24 · TECH STACK MODULE MAP
-   The map itself is tools/home8-tech.svg, swapped in by tools/sync-home8.pl:
+   The map itself is _dev/tools/home8-tech.svg, swapped in by _dev/tools/sync-home8.pl:
    fifteen module cards wired to the Centralized hub by dashed, square-routed
    connectors. Every connector is drawn from its card toward the hub, so moving
    the dash offset down by one dash period makes the dashes travel inward.

@@ -40,7 +40,7 @@ function seo_table_ready(PDO $pdo, string $table): bool
     return $cache[$table] ??= migration_table_exists($pdo, $table);
 }
 
-/** Migration 031 — same SQL as sql/migrations/031_seo_module.sql (sql/ isn't deployed). */
+/** Migration 031 — same SQL as _dev/sql/migrations/031_seo_module.sql (_dev/sql/ isn't deployed). */
 function seo_migration_031_statements(): array
 {
     return [

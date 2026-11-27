@@ -1,5 +1,5 @@
 /* Drawlead Home 10 — interaction layer (vanilla, no dependencies).
-   Ported from drawlead-website/js/main.js for templates/home10-body.php. */
+   Ported from _dev/design/drawlead-website/js/main.js for templates/home10-body.php. */
 (() => {
   'use strict';
   const $ = (s, r = document) => r.querySelector(s);

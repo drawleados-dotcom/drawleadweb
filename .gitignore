@@ -17,3 +17,7 @@ uploads/*
 
 # Local design reference bundle (source of the /home-7 page — not deployed)
 /home (1)/
+
+# Python bytecode from the design build scripts
+__pycache__/
+*.pyc

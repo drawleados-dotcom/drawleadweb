@@ -650,7 +650,7 @@ function migration_027_statements(): array
  */
 function migration_029_statements(PDO $pdo): array
 {
-    // Same SQL as sql/migrations/029_multiple_popups.sql (sql/ isn't deployed).
+    // Same SQL as _dev/sql/migrations/029_multiple_popups.sql (_dev/sql/ isn't deployed).
     $statements = [
         "CREATE TABLE IF NOT EXISTS popups (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -688,7 +688,7 @@ function migration_029_statements(PDO $pdo): array
 /** Lead Source: one row per booking / WhatsApp lead saying where it came from. */
 function migration_030_statements(): array
 {
-    // Same SQL as sql/migrations/030_lead_sources.sql (sql/ isn't deployed).
+    // Same SQL as _dev/sql/migrations/030_lead_sources.sql (_dev/sql/ isn't deployed).
     return [lead_source_table_sql()];
 }
 
@@ -705,7 +705,7 @@ function migration_032_statements(PDO $pdo): array
         return [];
     }
 
-    // Same SQL as sql/migrations/032_home10_page.sql (sql/ isn't deployed). In
+    // Same SQL as _dev/sql/migrations/032_home10_page.sql (_dev/sql/ isn't deployed). In
     // one transaction, so a failure part-way leaves the homepage as it was.
     $statements = [
         "START TRANSACTION",
