@@ -21,6 +21,48 @@
   addEventListener('hashchange', jumpMoved);
   jumpMoved();
 
+  /* ---------- heading text reveal: words rise one by one from behind a mask ----------
+     Section headings (not the hero, not the flipping problems heading) are
+     split into words client-side, so the HTML and the admin editor keep the
+     plain text. Highlighted spans stay intact; their words are split inside. */
+  if (!reduce && !preview && hasIO) {
+    const heads = $$('section:not(.hero) h2').filter((h) => !h.classList.contains('pb-h2') && !h.querySelector('[data-flip]'));
+    const wordIO = new IntersectionObserver((es) => es.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('is-in'); wordIO.unobserve(e.target); }
+    }), { threshold: 0.25, rootMargin: '0px 0px -8% 0px' });
+    heads.forEach((h) => {
+      let n = 0;
+      const word = (text) => {
+        const outer = document.createElement('span');
+        outer.className = 'tw';
+        const inner = document.createElement('span');
+        inner.className = 'tw__i';
+        inner.style.setProperty('--i', n++);
+        inner.textContent = text;
+        outer.appendChild(inner);
+        return outer;
+      };
+      const walk = (parent) => {
+        Array.from(parent.childNodes).forEach((node) => {
+          if (node.nodeType === 3) {
+            const frag = document.createDocumentFragment();
+            node.textContent.split(/(\s+)/).forEach((part) => {
+              if (!part) return;
+              frag.appendChild(/^\s+$/.test(part) ? document.createTextNode(part) : word(part));
+            });
+            parent.replaceChild(frag, node);
+          } else if (node.nodeType === 1 && node.tagName !== 'BR' && !node.classList.contains('tw')) {
+            walk(node);
+          }
+        });
+      };
+      walk(h);
+      h.classList.remove('reveal');
+      h.classList.add('tr');
+      wordIO.observe(h);
+    });
+  }
+
   /* ---------- reveal on scroll ---------- */
   const reveals = $$('.reveal');
   if (hasIO) {

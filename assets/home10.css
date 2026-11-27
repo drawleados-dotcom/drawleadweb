@@ -1345,3 +1345,18 @@ body>.h10.ab .way{background:#fff}
 @media (hover:none){
   .h10 .step:hover .step__card.tk,.h10 .ts-card:hover,.h10 .cx-tab:hover,.h10 .pillars li:hover .pillar__ic,.h10 .stat:hover .stat__ic{transform:none}
 }
+
+/* ---------- text reveal ----------
+   Section headings: each word sits in a clip mask and rises into place, one
+   after another (45ms apart) with a soft ease. Other revealing text lifts in
+   while a light blur clears. Words are wrapped by home10.js; with reduced
+   motion or no JS the headings are plain text. */
+.h10 .tw{display:inline-block;overflow:clip;overflow-clip-margin:.12em;vertical-align:top;padding:0 .04em .1em;margin:0 -.04em -.1em}
+.h10 .tw__i{display:inline-block;transform:translateY(108%);opacity:.001;transition:transform .95s cubic-bezier(.2,.8,.2,1),opacity .6s ease;transition-delay:calc(var(--d,0s) + var(--i,0) * 45ms)}
+.h10 .tr.is-in .tw__i{transform:none;opacity:1}
+html.js .h10 :is(p,span,ul,blockquote).reveal{filter:blur(4px);transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease);transition-delay:var(--d,0s)}
+html.js .h10 :is(p,span,ul,blockquote).reveal.is-in{filter:none}
+@media (prefers-reduced-motion:reduce){
+  .h10 .tw__i{transform:none;opacity:1;transition:none}
+  html.js .h10 :is(p,span,ul,blockquote).reveal{filter:none}
+}
