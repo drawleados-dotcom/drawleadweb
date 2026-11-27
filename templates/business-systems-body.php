@@ -135,7 +135,7 @@ $bsPrompts = ['We use too many disconnected tools', 'We need a custom ERP', 'Aut
 <div class="progress" aria-hidden="true"><i></i></div><main>
 
 <!-- 01 · Hero: the Business OS boots -->
-<section class="bsh" id="bs-top">
+<section class="bsh bs-band" id="bs-top"><span class="bs-idx" aria-hidden="true">01</span>
   <div class="wrap bsh__grid">
     <div class="bsh__copy">
       <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Business Systems · Custom Software · Business OS</span>
@@ -176,7 +176,7 @@ $bsPrompts = ['We use too many disconnected tools', 'We need a custom ERP', 'Aut
 </section>
 
 <!-- 02 · The business problem: chaos to clarity -->
-<section class="bsp" id="challenges">
+<section class="bsp bs-band" id="challenges"><span class="bs-idx" aria-hidden="true">02</span>
   <div class="wrap">
     <div class="bs-head">
       <div>
@@ -185,29 +185,17 @@ $bsPrompts = ['We use too many disconnected tools', 'We need a custom ERP', 'Aut
       </div>
       <p class="bs-lede reveal" style="--d:.1s">As your business grows, managing operations through disconnected software, spreadsheets and manual processes becomes increasingly difficult.</p>
     </div>
-    <div class="bsp__grid" data-bs-chaos>
-      <div class="bsp__stage" aria-hidden="true">
-        <div class="bsp__desk">
-<?php foreach ($bsTiles as $i => [$label, $glyph, $x, $y, $r, $gx, $gy]): ?>
-          <div class="bsp__tile" data-i="<?= $i ?>" style="--x:<?= $x ?>;--y:<?= $y ?>;--r:<?= $r ?>;--gx:<?= $gx ?>;--gy:<?= $gy ?>"><span class="bsp__tg"><?= $bsIc($glyph) ?></span><b><?= h($label) ?></b><i class="bsp__pin"></i><i class="bsp__ok"><?= $bsIc('check') ?></i></div>
-<?php endforeach; ?>
-        </div>
-        <p class="bsp__cap"><span class="bsp__cap-a">6 tools · 0 connections</span><span class="bsp__cap-b">1 system · everything connected</span></p>
-      </div>
-      <div class="bsp__side">
-        <ol class="bsp__list" role="list">
+    <ol class="bigp" role="list">
 <?php foreach ($bsProblems as $i => [$icon, $title, $text]): ?>
-          <li class="bsp__item reveal" data-i="<?= $i ?>"><span class="bsp__n"><?= $bsN($i) ?></span><span class="bsp__ic"><?= $bsIc($icon) ?></span><div><h3><?= h($title) ?></h3><p><?= h($text) ?></p></div></li>
+      <li class="bigp__item reveal" style="--d:<?= ($i % 3) * .06 ?>s"><span class="bigp__n" aria-hidden="true"><?= $bsN($i) ?></span><span class="bigp__ic"><?= $bsIc($icon) ?></span><h3><?= h($title) ?></h3><p><?= h($text) ?></p></li>
 <?php endforeach; ?>
-        </ol>
-        <a class="h10-btn bs-btn reveal" href="/book" data-book><span>Let's Fix Your Business Workflows</span><?= $bsArrow ?></a>
-      </div>
-    </div>
+    </ol>
+    <div class="bs-cta-row reveal"><a class="h10-btn bs-btn" href="/book" data-book><span>Let's Fix Your Business Workflows</span><?= $bsArrow ?></a></div>
   </div>
 </section>
 
 <!-- 03 · What we engineer: bento of live previews -->
-<section class="bsc" id="capabilities">
+<section class="bsc bs-band" id="capabilities"><span class="bs-idx" aria-hidden="true">03</span>
   <div class="wrap">
     <div class="bs-head">
       <div>
@@ -247,7 +235,7 @@ $bsPrompts = ['We use too many disconnected tools', 'We need a custom ERP', 'Aut
 </section>
 
 <!-- 04 · Connected ecosystem: the department map -->
-<section class="bse" id="ecosystem">
+<section class="bse bs-band" id="ecosystem"><span class="bs-idx" aria-hidden="true">04</span>
   <div class="wrap">
     <div class="bs-head bs-head--center">
       <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>One Connected Business. Every Department Working Together.</span>
@@ -284,37 +272,31 @@ $bsPrompts = ['We use too many disconnected tools', 'We need a custom ERP', 'Aut
 </section>
 
 <!-- 05 · Engineering approach: tear-off ticket track -->
-<section class="bsa" id="approach" data-bs-track>
-  <div class="bsa__pin">
-    <div class="wrap bsa__in">
-      <div class="bs-head bsa__head">
-        <div>
-          <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Working With Your Team. Building for Your Business.</span>
-          <h2 class="bs-h2">We Don't Adapt Your Business to Software. We Engineer Software Around Your Business.</h2>
-        </div>
-        <div class="bs-lede reveal" style="--d:.1s"><p>Every business operates differently. That's why we work directly with your team to understand existing processes, identify challenges and engineer technology around your actual business requirements.</p><a class="h10-btn bs-btn" href="/book" data-book><span>Discuss Your Business Requirements</span><?= $bsArrow ?></a></div>
+<section class="bsa bs-band" id="approach"><span class="bs-idx" aria-hidden="true">05</span>
+  <div class="wrap">
+    <div class="bs-head">
+      <div>
+        <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Working With Your Team. Building for Your Business.</span>
+        <h2 class="bs-h2">We Don't Adapt Your Business to Software. We Engineer Software Around Your Business.</h2>
       </div>
-      <div class="tkts">
-        <ol class="tkts__row" role="list">
-<?php foreach ($bsSteps as $i => [$label, $title, $text, $tags]): ?>
-          <li class="tkt reveal" style="--d:<?= $i * .06 ?>s">
-            <div class="tkt__stub"><span>Step</span><b><?= $bsN($i) ?></b><small><?= h($label) ?></small></div>
-            <div class="tkt__body">
-              <h3><?= h($title) ?></h3>
-              <p><?= h($text) ?></p>
-              <p class="tkt__tags"><?= h($tags) ?></p>
-            </div>
-          </li>
-<?php endforeach; ?>
-        </ol>
-        <i class="tkts__bar" aria-hidden="true"><u></u></i>
-      </div>
+      <div class="bs-lede reveal" style="--d:.1s"><p>Every business operates differently. That's why we work directly with your team to understand existing processes, identify challenges and engineer technology around your actual business requirements.</p><a class="h10-btn bs-btn" href="/book" data-book><span>Discuss Your Business Requirements</span><?= $bsArrow ?></a></div>
     </div>
+    <ol class="steps4" role="list">
+<?php foreach ($bsSteps as $i => [$label, $title, $text, $tags]): ?>
+      <li class="steps4__item reveal" style="--d:<?= $i * .08 ?>s">
+        <span class="steps4__n" aria-hidden="true"><?= $bsN($i) ?></span>
+        <span class="steps4__k"><?= h($label) ?></span>
+        <h3><?= h($title) ?></h3>
+        <p><?= h($text) ?></p>
+        <p class="steps4__tags"><?= h($tags) ?></p>
+      </li>
+<?php endforeach; ?>
+    </ol>
   </div>
 </section>
 
 <!-- 06 · Industries: case-file folders -->
-<section class="bsi" id="industries">
+<section class="bsi bs-band" id="industries"><span class="bs-idx" aria-hidden="true">06</span>
   <div class="wrap">
     <div class="bs-head">
       <div>
@@ -347,7 +329,7 @@ $bsPrompts = ['We use too many disconnected tools', 'We need a custom ERP', 'Aut
 </section>
 
 <!-- 07 · Selected projects: before / after case files -->
-<section class="bsw" id="projects">
+<section class="bsw bs-band" id="projects"><span class="bs-idx" aria-hidden="true">07</span>
   <div class="wrap">
     <div class="bs-head bs-head--center">
       <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Real Businesses. Real Challenges. Real Solutions.</span>
