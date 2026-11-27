@@ -126,3 +126,6 @@
 .dl-rk--back{z-index:-1}
 .dl-rk--front{z-index:2}
 .dl-sign--light .dl-rk{display:none}
+/* the word fades out towards its foot; masked per letter so the plane's
+   canvases are not faded with it */
+.dl-sign:not(.dl-sign--light) .dl-sign__w span{-webkit-mask-image:linear-gradient(180deg,#000 30%,rgba(0,0,0,.35) 72%,transparent 100%);mask-image:linear-gradient(180deg,#000 30%,rgba(0,0,0,.35) 72%,transparent 100%)}

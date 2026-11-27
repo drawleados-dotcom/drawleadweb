@@ -1271,3 +1271,18 @@ body>.h10:not(.ab) .pillars li:hover .pillar__ic,body>.h10:not(.ab) .stat:hover 
 body>.h10 :is(section:not(.hero) .pill,.cx-pill,.pg-pill){display:inline-flex;align-items:center;gap:10px;padding:0;border:0;border-radius:0;background:none;box-shadow:none;backdrop-filter:none;font-family:var(--f-body);font-size:clamp(.78rem,1vw,.86rem);font-weight:500;line-height:1.3;letter-spacing:.14em;text-transform:uppercase;color:#4b5563}
 body>.h10 :is(section:not(.hero) .pill,.cx-pill,.pg-pill) :is(.pill__dot,.cx-pill__dot){flex:none;width:7px;height:7px;border-radius:50%;background:#1f9d55;box-shadow:none}
 body>.h10 :is(section:not(.hero) .pill,.cx-pill,.pg-pill) .ic{display:none}
+
+/* eyebrow colours: each section takes one deep ink from the palette for its
+   dot and label, so neighbouring sections never share a colour */
+body>.h10 section.cred{--eb:var(--ik-aqua)}
+body>.h10 section.caps{--eb:var(--ik-sky)}
+body>.h10 section.sw--work{--eb:var(--ik-peach)}
+body>.h10 section.sw--work .more{--eb:var(--ik-rose)}
+body>.h10 section.appr{--eb:var(--ik-lilac)}
+body>.h10 section.prog{--eb:var(--ik-mint)}
+body>.h10 section.data{--eb:var(--ik-peri)}
+body>.h10 section.sw--ind{--eb:var(--ik-rose)}
+body>.h10 section.test{--eb:var(--ik-lime)}
+body>.h10 section.final{--eb:var(--ik-mint)}
+body>.h10 :is(section:not(.hero) .pill,.cx-pill,.pg-pill){color:var(--eb,#4b5563)}
+body>.h10 :is(section:not(.hero) .pill,.cx-pill,.pg-pill) :is(.pill__dot,.cx-pill__dot){background:var(--eb,#1f9d55)}
