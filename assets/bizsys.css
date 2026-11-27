@@ -466,3 +466,6 @@ html.js .bs .file{grid-area:1/1}
   .bs .cs-sheet--1{transform:rotate(-2deg) translate(-6px,8px)}
   .bs .cs-sheet--2{transform:rotate(1.5deg) translate(6px,10px)}
 }
+
+/* hero: the second line is green text only, no marker band */
+.bs .bsh__hl,.bs .bsh__h1.is-in .bsh__hl,html:not(.js) .bs .bsh__hl{background:none}
