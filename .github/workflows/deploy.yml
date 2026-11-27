@@ -1,4 +1,4 @@
-name: Deploy to Hostinger — admin.drawlead.com (staging)
+name: Deploy to Hostinger — drawlead.com (live)
 
 # Runs on every push to main: uploads the changed files to the Hostinger
 # subdomain via FTP/SFTP. It never deletes or overwrites includes/config.php
@@ -40,8 +40,10 @@ jobs:
           # see DEPLOYMENT.md. FTPS works on every Hostinger plan.
           protocol: ${{ vars.DEPLOY_PROTOCOL || 'ftps' }}
           port: ${{ vars.DEPLOY_PORT || 21 }}
-          # admin.drawlead.com's document root, relative to the FTP
-          # account's own root (which is already /public_html/). Override
+          # The site's folder, relative to the FTP account's own root (which
+          # is already /public_html/). drawlead.com is pointed at it by a
+          # rewrite in public_html/.htaccess, and admin.drawlead.com uses it
+          # as its document root. Override
           # with the DEPLOY_SERVER_DIR repo variable if this ever changes.
           server-dir: ${{ vars.DEPLOY_SERVER_DIR || '/drawlead_webapp/' }}
           dangerous-clean-slate: false

@@ -4,6 +4,30 @@ Options -Indexes
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # admin.drawlead.com was the staging address until drawlead.com went live
+  # (2026-11-27). It serves this same folder, so it sends every request to
+  # drawlead.com and search engines see one site. .well-known stays reachable
+  # so Hostinger can still renew the subdomain's SSL certificate.
+  RewriteCond %{HTTP_HOST} ^admin\.drawlead\.com$ [NC]
+  RewriteCond %{REQUEST_URI} !^/\.well-known/
+  RewriteRule ^(.*)$ https://drawlead.com/$1 [R=301,L]
+
+  # On drawlead.com this folder is drawlead_webapp/ inside the main domain's
+  # public_html, reached through a rewrite in public_html/.htaccess. The rules
+  # in that file stop at this folder (this file has its own rewrite rules), so
+  # the two rules below keep the folder name out of the address bar here.
+
+  # Anyone who types the folder name gets the clean address:
+  # drawlead.com/drawlead_webapp/about-us -> drawlead.com/about-us
+  RewriteCond %{THE_REQUEST} \s/drawlead_webapp[/?\s] [NC]
+  RewriteRule ^(.*)$ /$1 [R=301,L]
+
+  # A real folder asked for without its trailing slash (/admin) gets the
+  # slash here. Left to the server, that redirect would point at
+  # /drawlead_webapp/admin/ on drawlead.com.
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^(.+[^/])$ /$1/ [R=301,L]
+
   # robots.txt is edited in Admin → SEO → Robots, so it's always served by
   # index.php — even if an old static robots.txt is still on the server.
   RewriteRule ^robots\.txt$ index.php [L]

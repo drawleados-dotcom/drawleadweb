@@ -15,18 +15,18 @@ $workflowRunsUrl = $repoUrl . '/actions/workflows/deploy.yml';
 $actionsUrl = $repoUrl . '/actions';
 
 $pageTitle = 'Production Environment';
-$pageSub = 'Deployment history for admin.drawlead.com.';
+$pageSub = 'Deployment history for drawlead.com.';
 $activeNav = 'deployments';
 include __DIR__ . '/includes/header.php';
 ?>
 
 <div class="card">
   <div class="card-title">How deploys work</div>
-  <div class="card-desc">Every push to the <code>main</code> branch runs a GitHub Actions workflow that syncs the repository straight to admin.drawlead.com over FTP/SFTP — no manual upload step.</div>
+  <div class="card-desc">Every push to the <code>main</code> branch runs a GitHub Actions workflow that syncs the repository straight to the live site, drawlead.com, over FTP/SFTP — no manual upload step.</div>
   <table>
     <tbody>
       <tr><td style="width:180px;color:var(--g500)">Repository</td><td><a href="<?= h($repoUrl) ?>" target="_blank" rel="noopener">github.com/<?= h($repoSlug) ?> ↗</a></td></tr>
-      <tr><td style="color:var(--g500)">Deploy target</td><td>admin.drawlead.com</td></tr>
+      <tr><td style="color:var(--g500)">Deploy target</td><td>drawlead.com (files in public_html/drawlead_webapp/; admin.drawlead.com redirects here)</td></tr>
       <tr><td style="color:var(--g500)">Trigger</td><td>Every push to <code>main</code>, or run manually from the Actions tab</td></tr>
       <tr><td style="color:var(--g500)">Method</td><td>FTP/SFTP file sync (FTP-Deploy-Action)</td></tr>
       <tr><td style="color:var(--g500)">Workflow file</td><td><code>.github/workflows/deploy.yml</code></td></tr>
