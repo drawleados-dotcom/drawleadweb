@@ -1225,3 +1225,13 @@ body>.h10:not(.ab) .final--card :focus-visible{outline-color:#1d7a49}
   .h10 .stat{padding-inline:0}
   .h10 .pb-note{padding-inline:18px}
 }
+
+/* trust metrics on phones: three compact centred columns with dividers */
+@media (max-width:720px){
+  .h10 .cred__head .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;width:100%;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .h10 .cred__head .stats .stat{flex-direction:column;align-items:center;gap:8px;padding:4px 6px;border:0;border-left:1px solid var(--line);text-align:center}
+  .h10 .cred__head .stats .stat:first-child{border-left:0}
+  .h10 .cred__head .stat__ic{width:40px;height:40px;border-radius:12px}
+  .h10 .cred__head .stat__n{font-size:clamp(1.15rem,5.4vw,1.5rem);white-space:nowrap}
+  .h10 .cred__head .stat__l,.h10 .cred__head .stat div>span:not(.stat__n){display:block;font-size:.74rem;line-height:1.3}
+}
