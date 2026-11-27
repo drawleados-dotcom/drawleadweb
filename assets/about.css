@@ -446,6 +446,42 @@ html.js .ab .tix__item.is-in .tik__route .is-here{transform:none}
   .ab .ahero__end .h10-btn{width:100%}
 }
 
+
+/* ==========================================================================
+   Responsive pass: laptop, tablet and phone
+   - every two-column grid can shrink below its widest child (no sideways
+     overflow from a long word, image or marquee)
+   - laptops between 1100 and 1280 get slightly tighter spacing
+   - small phones get single columns and compact type
+   ========================================================================== */
+.ab :is(h1,h2,h3,p,li,figcaption,blockquote){overflow-wrap:break-word}
+.ab img{max-width:100%}
+.ab .story:not(.is-travel) .briefs,.ab .is-travel .cols,.ab .vis__cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:1280px){
+  .ab .ahead{gap:clamp(20px,3.6vw,56px)}
+  .ab .tix{gap:12px}
+}
+@media (max-width:960px){
+  .ab .ahead,.ab .ahero__q,.ab .aiflow,.ab .fit__top{grid-template-columns:minmax(0,1fr)}
+  .ab .rhythms,.ab .fsteps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ab .build .sw-row,.ab .build .sw-row--media-first{justify-content:stretch}
+}
+@media (max-width:720px){
+  .ab .tix,.ab .cugrid,.ab .vis__cards,.ab .fsteps{grid-template-columns:minmax(0,1fr)}
+  .ab .story:not(.is-travel) .briefs{grid-template-columns:minmax(0,1fr)}
+  .ab .ahero{padding-top:clamp(104px,26vw,124px)}
+  .ab .ahero__title{font-size:clamp(2rem,9vw,2.8rem);line-height:1.08}
+  .ab .ahero__big{font-size:clamp(1.35rem,6vw,1.8rem)}
+  .ab .mosaic{grid-auto-rows:clamp(150px,42vw,240px);gap:10px}
+  .ab .marquee--line li{font-size:clamp(1.6rem,8vw,2.4rem)}
+}
+@media (max-width:480px){
+  .ab .rhythms{grid-template-columns:minmax(0,1fr)}
+  .ab .mosaic .ph--2,.ab .mosaic .ph--3,.ab .mosaic .ph--4,.ab .mosaic .ph--5{grid-column:span 12}
+  .ab .mosaic{grid-auto-rows:clamp(170px,56vw,240px)}
+  .ab .yr{font-size:clamp(4.2rem,22vw,6rem)}
+  .ab .pull{font-size:clamp(1.25rem,6.4vw,1.6rem)}
+}
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion:reduce){
   html.js .ab .rhythm__ln{stroke-dashoffset:0}
