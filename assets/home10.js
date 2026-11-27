@@ -223,7 +223,7 @@
     const fitHero = () => {
       [fitS, fitSb, fitHl].forEach((e) => { if (e) e.style.fontSize = ''; });
       if (innerWidth <= 760) return;
-      const eb = fitEb.getBoundingClientRect().width;
+      const eb = fitEb.offsetWidth;
       fitTo(fitSb, fitSb, eb);
       fitTo(fitS, $('s', fitS), eb);
       if (fitHl && fitBox) fitTo(fitHl, fitHl, fitBox.getBoundingClientRect().width * .94);

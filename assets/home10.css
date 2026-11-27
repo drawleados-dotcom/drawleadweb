@@ -107,6 +107,13 @@ body>.h10:not(.ab) section.hero{background:linear-gradient(180deg,#DAF1E5 0%,#ea
 .h10 .hero-eb__ic{flex:none;display:grid;place-items:center;width:clamp(36px,3.4vw,44px);height:clamp(36px,3.4vw,44px);border-radius:50%;background:linear-gradient(180deg,#3cc47d,#1d7a49);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 6px 14px -4px rgba(29,122,73,.55)}
 .h10 .hero-eb__ic .ic{width:46%;height:46%}
 .h10 .hero-eb__t{font-family:var(--f-head);font-size:clamp(.95rem,1.45vw,1.2rem);font-weight:600;letter-spacing:-.01em;line-height:1.3;background:linear-gradient(90deg,#14532d 0%,#1d7a49 55%,#4fbf85 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.h10 .hero-eb{position:relative;overflow:hidden;transform-origin:0 50%;animation:eb-pulse 2.8s ease-in-out infinite}
+.h10 .hero-eb::after{content:"";position:absolute;top:-30%;bottom:-30%;left:-40%;width:24%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-20deg);animation:eb-shine 3.6s ease-in-out infinite;pointer-events:none}
+.h10 .hero-eb>*{position:relative;z-index:1}
+.h10 .hero-eb:hover{animation-play-state:paused}
+@keyframes eb-pulse{0%,100%{scale:1}50%{scale:1.035}}
+@keyframes eb-shine{0%,50%{left:-40%}100%{left:120%}}
+@media (prefers-reduced-motion:reduce){.h10 .hero-eb,.h10 .hero-eb::after{animation:none}}
 .h10 .hero__title{display:flex;flex-direction:column;gap:clamp(4px,.6vw,10px);margin-top:clamp(10px,1.2vw,16px)}
 .h10 .strike{display:block;font-family:var(--f-head);font-size:clamp(1.13rem,2.54vw,2.44rem);font-weight:500;letter-spacing:-.01em;color:#1f2937}
 .h10 .strike s{position:relative;text-decoration:none;display:inline-block}
