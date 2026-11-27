@@ -15,6 +15,11 @@
   var MAX_AGE = 90 * 24 * 60 * 60 * 1000;
   var UTM = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
   var CLICK_IDS = ['gclid', 'gbraid', 'wbraid', 'fbclid', 'msclkid', 'li_fat_id', 'ttclid'];
+  // This site's old address. admin.drawlead.com served it until drawlead.com
+  // went live (2026-11-27) and now redirects here, so a tab still open on it
+  // hands over admin.drawlead.com as the referrer. That's us, not a referral.
+  // Keep in step with LEAD_SOURCE_OWN_HOSTS in includes/lead-source.php.
+  var OWN_HOSTS = ['admin.drawlead.com'];
 
   function read(key) {
     try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch (e) { return null; }
@@ -28,7 +33,8 @@
     if (!ref) return '';
     try {
       var host = new URL(ref).hostname.replace(/^www\./, '');
-      return host === location.hostname.replace(/^www\./, '') ? '' : ref;
+      var self = location.hostname.replace(/^www\./, '');
+      return host === self || OWN_HOSTS.indexOf(host) !== -1 ? '' : ref;
     } catch (e) { return ''; }
   }
 

@@ -21,6 +21,16 @@ const LEAD_SOURCE_CHANNELS = [
 /** Label used for leads saved before tracking existed (no lead_sources row). */
 const LEAD_SOURCE_NOT_RECORDED = 'Not recorded';
 
+/**
+ * This site's other addresses, never counted as a referral. admin.drawlead.com
+ * served the site until drawlead.com went live (2026-11-27) and now redirects
+ * there, so a tab still open on it hands over admin.drawlead.com as the
+ * referrer. Checked here as well as in assets/lead-source.js (OWN_HOSTS),
+ * because browsers that stored that referrer before the fix keep sending it
+ * for up to 90 days.
+ */
+const LEAD_SOURCE_OWN_HOSTS = ['admin.drawlead.com'];
+
 function lead_source_str($v, int $max): string
 {
     if (!is_string($v) && !is_numeric($v)) {
@@ -53,7 +63,10 @@ function lead_source_clean_touch($t): array
     $t = is_array($t) ? $t : [];
     $ownHost = preg_replace('/^www\./', '', strtolower((string) ($_SERVER['HTTP_HOST'] ?? '')));
     $referrer = lead_source_str($t['referrer'] ?? '', 500);
-    if (!preg_match('#^https?://#i', $referrer) || ($ownHost !== '' && lead_source_host($referrer) === $ownHost)) {
+    $refHost = lead_source_host($referrer);
+    if (!preg_match('#^https?://#i', $referrer)
+        || ($ownHost !== '' && $refHost === $ownHost)
+        || in_array($refHost, LEAD_SOURCE_OWN_HOSTS, true)) {
         $referrer = ''; // only external referrers mean anything here
     }
     $click = strtolower(lead_source_str($t['click_id'] ?? '', 20));
