@@ -253,6 +253,16 @@
       fab.focus();
     }
   });
+  // A click anywhere outside the chat closes it. composedPath() is the path
+  // the click took when it happened, so it still includes the panel after a
+  // choice button removes itself from the page mid-click.
+  document.addEventListener('click', function (e) {
+    if (!panel.classList.contains('open')) return;
+    var path = e.composedPath ? e.composedPath() : [];
+    if (path.indexOf(panel) !== -1 || path.indexOf(fab) !== -1) return;
+    if (!path.length && (panel.contains(e.target) || fab.contains(e.target))) return;
+    closeChat();
+  });
 
   // Open the chat once when visitors reach the Selected Work / Case Studies
   // section on the homepage. The floating button remains available afterward.
