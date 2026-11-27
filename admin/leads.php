@@ -10,6 +10,35 @@ $hasSources = migration_table_exists($pdo, 'lead_sources');
 $hasBookings = migration_table_exists($pdo, 'bookings');
 $hasWhatsapp = migration_table_exists($pdo, 'whatsapp_leads');
 
+// ── Delete one lead (POST): the booking or chat row, and its lead_sources row ──
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'delete_lead') {
+    csrf_verify();
+    $delType = $_POST['lead_type'] ?? '';
+    $delId = (int) ($_POST['lead_id'] ?? 0);
+    $delTable = ['booking' => $hasBookings ? 'bookings' : null, 'whatsapp' => $hasWhatsapp ? 'whatsapp_leads' : null][$delType] ?? null;
+    $delOk = false;
+    if ($delTable && $delId > 0) {
+        try {
+            $pdo->beginTransaction();
+            $pdo->prepare("DELETE FROM $delTable WHERE id = ?")->execute([$delId]);
+            if ($hasSources) {
+                $pdo->prepare('DELETE FROM lead_sources WHERE lead_type = ? AND lead_id = ?')->execute([$delType, $delId]);
+            }
+            $pdo->commit();
+            $delOk = true;
+        } catch (Throwable $e) {
+            if ($pdo->inTransaction()) {
+                $pdo->rollBack();
+            }
+            error_log('admin/leads.php delete: ' . $e->getMessage());
+        }
+    }
+    // Back to the same filters and page the delete was made from.
+    $page = (int) ($_GET['page'] ?? 1);
+    header('Location: ' . leads_url(['page' => $page > 1 ? $page : null, $delOk ? 'deleted' : 'delete_failed' => 1]));
+    exit;
+}
+
 // ── Filters (GET) ──
 $fChannel = is_string($_GET['source'] ?? null) ? trim($_GET['source']) : '';
 $fForm = in_array($_GET['form'] ?? '', ['booking', 'whatsapp'], true) ? $_GET['form'] : '';
@@ -106,6 +135,8 @@ if ($parts) try {
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM $union $where");
     $stmt->execute($params);
     $total = (int) $stmt->fetchColumn();
+    // Deleting the last lead on the last page would otherwise land on an empty page.
+    $page = min($page, max(1, (int) ceil($total / $perPage)));
 
     $limit = $isExport ? '' : ' LIMIT ' . $perPage . ' OFFSET ' . (($page - 1) * $perPage);
     $stmt = $pdo->prepare("SELECT l.* FROM $union $where ORDER BY l.created_at DESC, l.lead_id DESC" . $limit);
@@ -262,6 +293,9 @@ include __DIR__ . '/includes/header.php';
 </div>
 <?php endif; ?>
 
+<?php if (isset($_GET['deleted'])): ?><div class="alert alert-success">Lead deleted.</div><?php endif; ?>
+<?php if (isset($_GET['delete_failed'])): ?><div class="alert alert-error">That lead couldn't be deleted. Please try again.</div><?php endif; ?>
+
 <?php if ($queryError): ?>
 <div class="alert alert-error">
   The leads couldn't be loaded for these filters. <a href="leads.php">Clear filters</a>.
@@ -381,7 +415,19 @@ include __DIR__ . '/includes/header.php';
           <?php else: ?><span class="t-sub">—</span><?php endif; ?>
         </td>
         <td class="ls-nowrap">
+          <div class="ls-actions">
           <button type="button" class="ls-more" aria-haspopup="dialog" data-ls-open="<?= h($rowId) ?>">Details</button>
+          <form method="post" action="<?= h(leads_url(['page' => $page > 1 ? $page : null])) ?>"
+            data-ls-confirm="<?= h('Delete the lead from ' . ($l['name'] ?: ($v['phone'] ?: 'this person')) . '?'
+              . ($l['lead_type'] === 'booking' ? ' This also deletes their calendar booking, so the time slot can be booked again.' : '')
+              . ' This can’t be undone.') ?>">
+            <?= csrf_field() ?>
+            <input type="hidden" name="action" value="delete_lead">
+            <input type="hidden" name="lead_type" value="<?= h($l['lead_type']) ?>">
+            <input type="hidden" name="lead_id" value="<?= (int) $l['lead_id'] ?>">
+            <button type="submit" class="ls-more ls-del">Delete</button>
+          </form>
+          </div>
           <template id="<?= h($rowId) ?>"
             data-title="<?= h($l['name'] ?: ($v['phone'] ?: 'Lead')) ?>"
             data-sub="<?= h(lead_form_label($l['lead_type']) . ' · ' . date('M j, Y g:i A', strtotime($l['created_at']))) ?>">
@@ -489,6 +535,10 @@ include __DIR__ . '/includes/header.php';
 .ls-link:hover{color:var(--violet);text-decoration:underline}
 .ls-more{font:inherit;font-size:12px;font-weight:700;background:none;border:1.5px solid var(--border);border-radius:6px;padding:5px 10px;cursor:pointer;color:var(--g600)}
 .ls-more:hover{border-color:var(--blue);color:var(--violet)}
+.ls-actions{display:flex;gap:6px;align-items:flex-start}
+.ls-actions form{margin:0}
+.ls-del{color:var(--danger)}
+.ls-del:hover{border-color:var(--danger);color:var(--danger);background:#fdecef}
 .ls-dialog{width:min(820px,calc(100vw - 32px))}
 .ls-dialog .media-dialog-head{align-items:flex-start}
 .ls-dialog .media-dialog-head h2{font-size:16px;margin-bottom:2px}
@@ -512,6 +562,12 @@ include __DIR__ . '/includes/header.php';
 </style>
 
 <script>
+document.querySelectorAll('form[data-ls-confirm]').forEach(function (f) {
+  f.addEventListener('submit', function (e) {
+    if (!confirm(f.getAttribute('data-ls-confirm'))) e.preventDefault();
+  });
+});
+
 (function () {
   var dialog = document.getElementById('lsDialog');
   if (!dialog) return;
