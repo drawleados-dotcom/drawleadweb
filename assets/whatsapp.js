@@ -28,7 +28,20 @@
     hasOpened = true;
     panel.classList.add('open');
     panel.setAttribute('aria-hidden', 'false');
+    panel.inert = false;
+    fab.classList.add('is-open');
+    fab.setAttribute('aria-expanded', 'true');
+    fab.setAttribute('aria-label', 'Close chat');
     startFlow();
+  }
+
+  function closeChat() {
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden', 'true');
+    panel.inert = true;
+    fab.classList.remove('is-open');
+    fab.setAttribute('aria-expanded', 'false');
+    fab.setAttribute('aria-label', 'Chat with us on WhatsApp');
   }
 
   function fetchJSON(url, opts) {
@@ -116,7 +129,7 @@
       input.disabled = true;
       sendBtn.disabled = true;
       input.value = '';
-      input.placeholder = 'Type a message';
+      input.placeholder = placeholder || 'Type a message';
       input.type = 'text';
     } else {
       input.disabled = false;
@@ -134,6 +147,9 @@
       state.steps = data.steps || [];
       if (!csrfToken) csrfToken = data.csrf_token;
       askStep(0);
+    }).catch(function () {
+      state.started = false; // let the next open try again
+      addMessage('Sorry, the chat could not load right now. Please try again in a moment, or use the Book a Consultation button on the page.', 'bot');
     });
   }
 
@@ -147,7 +163,7 @@
     state.phase = step.type === 'choice' && step.options && step.options.length ? 'choice' : 'text';
     botSay(step.message, function () {
       if (state.phase === 'choice') {
-        setInputMode('off');
+        setInputMode('off', 'Choose an option above');
         showChoices(step.options, function (choice) {
           removeChoices();
           addMessage(choice, 'user');
@@ -204,6 +220,7 @@
       if (res.success) {
         state.phase = 'done';
         addMessage('Thanks! Our team will reach out to you shortly. 🎉', 'bot');
+        input.placeholder = 'Thanks, we’ll be in touch';
       } else {
         addMessage(res.error || 'Something went wrong — please try again.', 'bot');
         setInputMode('phone', 'e.g. +91 98765 43210');
@@ -224,11 +241,17 @@
   });
 
   fab.addEventListener('click', function () {
-    openChat();
+    if (panel.classList.contains('open')) closeChat(); else openChat();
   });
   closeBtn.addEventListener('click', function () {
-    panel.classList.remove('open');
-    panel.setAttribute('aria-hidden', 'true');
+    closeChat();
+    fab.focus();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && panel.classList.contains('open')) {
+      closeChat();
+      fab.focus();
+    }
   });
 
   // Open the chat once when visitors reach the Selected Work / Case Studies
