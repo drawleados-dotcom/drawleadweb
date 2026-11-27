@@ -482,6 +482,22 @@ html.js .ab .tix__item.is-in .tik__route .is-here{transform:none}
   .ab .yr{font-size:clamp(4.2rem,22vw,6rem)}
   .ab .pull{font-size:clamp(1.25rem,6.4vw,1.6rem)}
 }
+
+/* eyebrow colours: each About section takes its own deep palette ink for the
+   dot and label (the dark culture band uses a light pastel so it stays legible) */
+body>.h10.ab section.ahero{--eb:var(--ik-mint)}
+body>.h10.ab section.aireal{--eb:var(--ik-sky)}
+body>.h10.ab section.story{--eb:var(--ik-peach)}
+body>.h10.ab section.realz{--eb:var(--ik-lilac)}
+body>.h10.ab section.fit{--eb:var(--ik-aqua)}
+body>.h10.ab section.build{--eb:var(--ik-rose)}
+body>.h10.ab section.cult{--eb:#DAF1E5}
+body>.h10.ab section.people{--eb:var(--ik-peri)}
+body>.h10.ab section.way{--eb:var(--ik-peach)}
+body>.h10.ab section.vis{--eb:var(--ik-lime)}
+body>.h10.ab section.afinal{--eb:var(--ik-sky)}
+body>.h10.ab .ahero :is(.pill,.cx-pill,.pg-pill){color:var(--eb)}
+body>.h10.ab .ahero :is(.pill,.cx-pill,.pg-pill) .pill__dot{background:var(--eb)}
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion:reduce){
   html.js .ab .rhythm__ln{stroke-dashoffset:0}
