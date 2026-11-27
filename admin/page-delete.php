@@ -1,12 +1,14 @@
 <?php
 /**
- * Deletes a page (Admin → Pages → Delete). Admins only.
+ * Deletes one or more pages (Admin → Pages → Delete / Delete selected). Admins only.
  *
- * The live homepage (slug "/") can't be deleted: point another page at "/"
- * first. Saved Page Content and its history go with the page (foreign keys
- * cascade). Editor access and popup targeting are stored by page id without
- * a foreign key, so they are cleaned up here. Menu links come from the
- * page's own "show in menu" flag, so it leaves the menu automatically.
+ * Takes id (one page) or ids[] (several). The live homepage (slug "/") is
+ * never deleted: point another page at "/" first. Saved Page Content and its
+ * history go with each page (foreign keys cascade). Editor access and popup
+ * targeting are stored by page id without a foreign key, so they are cleaned
+ * up here. Menu links come from each page's own "show in menu" flag, so they
+ * leave the menu automatically. All selected pages go in one transaction:
+ * if anything fails, nothing is deleted.
  */
 require_once __DIR__ . '/../includes/bootstrap.php';
 require_admin();
@@ -18,41 +20,56 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 csrf_verify();
 
-$id = (int) ($_POST['id'] ?? 0);
-$stmt = $pdo->prepare('SELECT id, slug FROM pages WHERE id = ?');
-$stmt->execute([$id]);
-$page = $stmt->fetch();
-
-if (!$page) {
-    header('Location: pages.php?msg=notfound');
+$ids = isset($_POST['ids']) && is_array($_POST['ids']) ? $_POST['ids'] : [$_POST['id'] ?? 0];
+$ids = array_values(array_unique(array_filter(array_map('intval', $ids))));
+if (!$ids) {
+    header('Location: pages.php?msg=none');
     exit;
 }
-if ($page['slug'] === '/') {
-    header('Location: pages.php?msg=home');
+
+$in = implode(',', array_fill(0, count($ids), '?'));
+$stmt = $pdo->prepare("SELECT id, slug FROM pages WHERE id IN ($in)");
+$stmt->execute($ids);
+$found = $stmt->fetchAll();
+
+$skippedHome = false;
+$toDelete = [];
+foreach ($found as $row) {
+    if ($row['slug'] === '/') {
+        $skippedHome = true;
+        continue;
+    }
+    $toDelete[] = (int) $row['id'];
+}
+
+if (!$toDelete) {
+    header('Location: pages.php?msg=' . ($skippedHome ? 'home' : 'notfound'));
     exit;
 }
 
 try {
     $pdo->beginTransaction();
+    $in = implode(',', array_fill(0, count($toDelete), '?'));
 
-    $pdo->prepare("DELETE FROM user_access WHERE item_type = 'page' AND item_id = ?")->execute([$id]);
+    $pdo->prepare("DELETE FROM user_access WHERE item_type = 'page' AND item_id IN ($in)")->execute($toDelete);
 
-    // drop "page:ID" from every popup that targets this page
+    // drop "page:ID" from every popup that targets one of these pages
     try {
-        $key = 'page:' . $id;
+        $keys = array_map(fn ($id) => 'page:' . $id, $toDelete);
         $popups = $pdo->query('SELECT id, targets FROM popups')->fetchAll();
         $upd = $pdo->prepare('UPDATE popups SET targets = ? WHERE id = ?');
         foreach ($popups as $p) {
-            $keys = popup_target_keys($p['targets']);
-            if (in_array($key, $keys, true)) {
-                $upd->execute([implode(',', array_values(array_diff($keys, [$key]))), $p['id']]);
+            $current = popup_target_keys($p['targets']);
+            $kept = array_values(array_diff($current, $keys));
+            if (count($kept) !== count($current)) {
+                $upd->execute([implode(',', $kept), $p['id']]);
             }
         }
     } catch (PDOException $e) {
         // popups table not migrated yet: nothing to clean up
     }
 
-    $pdo->prepare('DELETE FROM pages WHERE id = ?')->execute([$id]);
+    $pdo->prepare("DELETE FROM pages WHERE id IN ($in)")->execute($toDelete);
     $pdo->commit();
 } catch (PDOException $e) {
     if ($pdo->inTransaction()) {
@@ -62,5 +79,5 @@ try {
     exit;
 }
 
-header('Location: pages.php?msg=deleted');
+header('Location: pages.php?msg=deleted&n=' . count($toDelete) . ($skippedHome ? '&home=1' : ''));
 exit;
