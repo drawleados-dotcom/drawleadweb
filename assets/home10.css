@@ -209,7 +209,7 @@ html:not(.js) .h10 .strike s{text-decoration:line-through}
 
 /* ---------- credibility ---------- */
 .h10 .cred{position:relative;padding:clamp(44px,5vw,72px) 0 clamp(48px,5.4vw,80px);background:linear-gradient(180deg,#fff,#fbfefc)}
-.h10 .cred__head{display:flex;justify-content:space-between;align-items:flex-end;gap:clamp(24px,3vw,48px);flex-wrap:nowrap;margin-bottom:clamp(28px,3.4vw,44px)}
+.h10 .cred__head{display:flex;justify-content:space-between;align-items:flex-end;gap:clamp(24px,3vw,48px);flex-wrap:wrap;margin-bottom:clamp(28px,3.4vw,44px)}
 .h10 .cred__head .pill{margin-bottom:18px}
 .h10 .cred__head .h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .h10 .stats{flex:none;display:flex;gap:0;align-items:stretch;padding-bottom:6px}
@@ -1131,7 +1131,6 @@ body>.h10:not(.ab) .final--card :focus-visible{outline-color:#1d7a49}
   .h10 .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
   .h10 .flow__rail{display:none}
   .h10 .stats .stat{padding-inline:20px}
-  .h10 .cred__head{flex-wrap:wrap}
 }
 @media (max-width:960px){
   .h10 .hero__top{grid-template-columns:1fr}
@@ -1175,4 +1174,41 @@ body>.h10:not(.ab) .final--card :focus-visible{outline-color:#1d7a49}
   .h10 .strike__svg path{transition:none;stroke-dashoffset:0}
   .h10 .hero__start .hero__hl{transition:none;background-size:100% 36%}
   .h10 .hl{background-size:100% 100%}
+}
+
+/* ---------- responsive safety net (all Home 10 sections) ---------- */
+.h10{overflow-x:clip}
+.h10 img,.h10 video{max-width:100%}
+.h10 .wrap{min-width:0}
+.h10 :is(h1,h2,h3,p,li,blockquote){overflow-wrap:break-word}
+@media (max-width:1180px){
+  .h10 .cred__head .stats{flex-wrap:wrap;row-gap:12px}
+}
+@media (max-width:760px){
+  .h10 .hero-eb{align-items:center;border-radius:22px;padding:6px 16px 6px 6px}
+  .h10 .hero-eb__t{font-size:.92rem}
+  .h10 .hero__start{font-size:clamp(2.1rem,10vw,3.2rem)}
+  .h10 .cx-tab{min-height:44px}
+  .h10 .steps{max-width:460px;margin-inline:auto}
+  .h10 .ts-grid{gap:14px}
+}
+@media (max-width:600px){
+  /* the pinned 8-week calendar strip stays compact on phones */
+  .h10 .pg-aside{top:72px}
+  .h10 .pg-stage{padding:16px 12px 10px;gap:12px;border-radius:18px}
+  .h10 .pg-cal{font-size:4.6px}
+  .h10 .pg-cap b{font-size:.95rem}
+  .h10 .pg-cap span{font-size:.66rem}
+  .h10 .pg-list{gap:18px}
+  .h10 .hs-cta{padding:14px 16px}
+  .h10 .hs-cta__k b{font-size:2rem}
+  .h10 .more>div:first-child,.h10 .databanner>div:first-child{padding:22px 20px}
+  .h10 .cta-stub{padding:16px 20px 22px}
+  .h10 .cta-stub .h10-btn{width:100%;padding:0 18px;font-size:.95rem}
+  .h10 .ts-card--lead blockquote p{font-size:1.15rem}
+}
+@media (max-width:380px){
+  .h10 .hs-row{grid-template-columns:1fr}
+  .h10 .stat{padding-inline:0}
+  .h10 .pb-note{padding-inline:18px}
 }

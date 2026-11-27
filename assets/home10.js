@@ -223,6 +223,9 @@
     const fitHero = () => {
       [fitS, fitSb, fitHl].forEach((e) => { if (e) e.style.fontSize = ''; });
       if (innerWidth <= 760) return;
+      // tablets: only match the struck line to "Start Building" so the two
+      // heading lines keep the same size; the eyebrow-width fit is for laptops up
+      if (innerWidth < 1100) { fitTo(fitS, $('s', fitS), fitSb.getBoundingClientRect().width); return; }
       const eb = fitEb.offsetWidth;
       fitTo(fitSb, fitSb, eb);
       fitTo(fitS, $('s', fitS), eb);
