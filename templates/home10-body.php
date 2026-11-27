@@ -91,7 +91,7 @@ $h10Case = function (string $slug, string $fallback) use ($pdo): string {
   <div class="wrap">
     <div class="cred__head">
       <div>
-        <span class="pill reveal"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-verified"/></svg>Trusted Technology Partner</span>
+        <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Trusted Technology Partner</span>
         <h2 class="h2 reveal" style="--d:.06s">Engineering Partnerships.<br><span class="hl">Building Business Solutions.</span></h2>
       </div>
       <ul class="stats" role="list"><li class="stat reveal" style="--d:0.0s"><span class="stat__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-grid"/></svg></span><div><b class="stat__n"><span data-count="20">20</span>+</b><span class="stat__l">Industries</span></div></li><li class="stat reveal" style="--d:0.08s"><span class="stat__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-briefcase"/></svg></span><div><b class="stat__n"><span data-count="50">50</span>+</b><span class="stat__l">Projects Delivered</span></div></li><li class="stat reveal" style="--d:0.16s"><span class="stat__ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-calendar"/></svg></span><div><b class="stat__n"><span data-count="8">8</span> Weeks</b><span class="stat__l">Implementation Program</span></div></li></ul>
@@ -503,7 +503,7 @@ $pgPhases = [0 => ['Phase 01', 'Engineer & Build'], 4 => ['Phase 02', 'Implement
   <div class="wrap">
     <div class="pg-head">
       <div class="pg-head__l">
-        <span class="pg-pill reveal">A Structured Business Implementation Program</span>
+        <span class="pg-pill reveal"><span class="pill__dot" aria-hidden="true"></span>A Structured Business Implementation Program</span>
         <h2 class="pg-h2 reveal" style="--d:.06s">Transform the Way Your Business Works. In 8 Weeks.</h2>
       </div>
       <div class="pg-lede reveal" style="--d:.12s">
