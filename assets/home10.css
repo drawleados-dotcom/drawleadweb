@@ -537,6 +537,24 @@ body>.h10 .step .tk .step__art.il,body>.h10:not(.ab) .step:nth-child(n) .tk .ste
 .h10 .data__viz .src,.h10 .data__viz .stream{transition:opacity .4s,transform .4s}
 .h10 .data__grid[data-active] .src:not(.on),.h10 .data__grid[data-active] .stream:not(.on){opacity:.28}
 .h10 .data__grid[data-active] .src.on .c{stroke:var(--green);stroke-width:2}
+/* data illustration: flat colours, realistic sample figures */
+.h10 .data__viz .dv-card{fill:#fff;stroke:#e3e9e5;stroke-width:1.2;transition:stroke .3s}
+.h10 .data__viz .dv-tile{fill:#f6f8f7;stroke:#e7ece9;stroke-width:1}
+.h10 .data__viz .dv-gl{fill:none;stroke:#0f3a24;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.h10 .data__viz .dv-hub{fill:#1d7a49}
+.h10 .data__viz .dv-ring{fill:#fff;stroke:#1d7a49;stroke-opacity:.3;stroke-width:1.5}
+.h10 .data__viz .dv-grid{fill:none;stroke:#e3e9e5;stroke-width:1;stroke-dasharray:3 4}
+.h10 .data__viz .dv-line{fill:none;stroke:#1d7a49;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.h10 .data__viz text.dv-t{font:700 11px var(--f-head);fill:#111827}
+.h10 .data__viz text.dv-h{font:700 10.5px var(--f-head);fill:#111827}
+.h10 .data__viz text.dv-s{font:500 8.5px var(--f-body);fill:#6b7280}
+.h10 .data__viz text.dv-n{font:800 21px var(--f-head);fill:#111827;letter-spacing:-.02em}
+.h10 .data__viz text.dv-v{font:800 15px var(--f-head);fill:#111827;letter-spacing:-.01em}
+.h10 .data__viz text.dv-up{font:700 9px var(--f-body);fill:#1d7a49}
+.h10 .data__viz text.dv-ax{font:600 8px var(--f-body);fill:#6b7280}
+.h10 .data__viz text.dv-r{font:600 9.5px var(--f-body);fill:#1f2937}
+.h10 .data__viz text.dv-pl{font:700 8.5px var(--f-body);fill:#1f2937}
+.h10 .data__grid[data-active] .src.on .dv-card{stroke:#1d7a49;stroke-width:2}
 
 /* ---------- case studies ---------- */
 /* ---------- selected work ----------
@@ -1120,7 +1138,7 @@ body>.h10:not(.ab) .final--card :focus-visible{outline-color:#1d7a49}
   .h10 .hero__art{aspect-ratio:1/1;max-width:380px}
   .h10 .hero__art-d{display:none}
   .h10 .hero__art-m{display:block}
-  .h10 .data__viz .src text{display:none}
+  .h10 .data__viz .src text.dv-s{display:none}
   .h10 .steps{grid-template-columns:1fr}
   .h10 .stats{flex-direction:column;gap:16px;width:100%}
   .h10 .stat,.h10 .stat:first-child{padding:0;border:0}
