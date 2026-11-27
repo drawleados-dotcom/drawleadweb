@@ -1057,6 +1057,52 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
   .site-popup--corner .site-popup-image img{height:120px}
 }
 
+/* Popup in the home page theme: flat colours (no gradients), Montserrat
+   headings, Inter text, a mint ticket-style panel and a deep green CTA.
+   Two-class selectors so they win over the base copy in home7.css. */
+.site-popup .site-popup-overlay{background:rgba(10,19,16,.55);backdrop-filter:blur(4px)}
+.site-popup .site-popup-dialog{border-radius:24px;border:1px solid #e3e9e5;box-shadow:0 2px 6px rgba(15,23,42,.06),0 40px 80px -30px rgba(10,19,16,.45);font-family:'Inter',system-ui,sans-serif}
+.site-popup .site-popup-close{top:16px;right:16px;width:40px;height:40px;background:#fff;border:1px solid #e3e9e5;color:#374151;font-size:22px;transition:background .15s,color .15s}
+.site-popup .site-popup-close:hover{background:#DAF1E5;color:#0f3a24}
+.site-popup .site-popup-close:focus-visible,.site-popup .site-popup-cta:focus-visible{outline:3px solid #1d7a49;outline-offset:3px}
+.site-popup .site-popup-body{padding:3rem 2.75rem}
+.site-popup .site-popup-body h2{font-family:'Montserrat',sans-serif;font-size:28px;font-weight:800;letter-spacing:-.02em;color:#111827;padding-right:2.5rem}
+.site-popup .site-popup-desc{font-size:15px;line-height:1.65;color:#4b5563}
+.site-popup .site-popup-points li{font-size:14.5px;font-weight:600;color:#1f2937;line-height:1.45}
+.site-popup .site-popup-tick{width:22px;height:22px;background:#1d7a49;font-size:11px}
+.site-popup .site-popup-cta{min-height:52px;padding:0 26px;border-radius:14px;background:#0f3a24;color:#fff;font-family:'Inter',system-ui,sans-serif;font-size:15px;font-weight:700;letter-spacing:0;text-transform:none;box-shadow:0 2px 0 #072117,0 14px 24px -14px rgba(15,58,36,.7);transition:background .2s,transform .2s}
+.site-popup .site-popup-cta:hover{background:#0b2d1b;transform:translateY(-2px)}
+/* the built-in panel: flat mint, dot paper, dashed perforation on its inner edge */
+.site-popup .site-popup-art{display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:2.75rem 2.5rem;background-color:#DAF1E5;background-image:radial-gradient(rgba(15,58,36,.1) 1px,transparent 1.4px);background-size:18px 18px;border-right:2px dashed #9fd3b6;color:#0f3a24}
+.site-popup .spa-ic{display:grid;place-items:center;width:56px;height:56px;margin-bottom:auto;border-radius:16px;background:#fff;color:#1d7a49;box-shadow:inset 0 -2px 0 rgba(15,58,36,.08)}
+.site-popup .spa-ic svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.site-popup .spa-ic circle{fill:currentColor;stroke:none}
+.site-popup .spa-big{display:flex;align-items:baseline;gap:10px;margin:2.5rem 0 0;font-family:'Montserrat',sans-serif;line-height:.9;color:#0f3a24}
+.site-popup .spa-big b{font-size:104px;font-weight:800;letter-spacing:-.05em}
+.site-popup .spa-big span{font-size:40px;font-weight:700;letter-spacing:-.02em}
+.site-popup .spa-k{margin:0;font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#1d7a49}
+.site-popup .spa-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin:14px 0 0;padding:18px 0 0;border-top:2px dotted rgba(15,58,36,.22)}
+.site-popup .spa-list li{position:relative;padding-left:26px;font-size:14.5px;font-weight:600;color:#1f2937}
+.site-popup .spa-list li::before{content:"✓";position:absolute;left:0;top:1px;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#fff;color:#1d7a49;font-size:10px;font-weight:800}
+.site-popup--stacked .site-popup-art,.site-popup--corner .site-popup-art{border-right:0;border-bottom:2px dashed #9fd3b6}
+.site-popup--corner .site-popup-art{padding:1.25rem 1.5rem;gap:6px}
+.site-popup--corner .spa-big{margin-top:.5rem}
+.site-popup--corner .spa-big b{font-size:56px}
+.site-popup--corner .spa-big span{font-size:22px}
+.site-popup--corner .spa-list,.site-popup--corner .spa-ic{display:none}
+@media(max-width:800px){
+  .site-popup .site-popup-art{flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px 16px;padding:1.5rem;border-right:0;border-bottom:2px dashed #9fd3b6}
+  .site-popup .spa-ic{width:48px;height:48px;margin:0}
+  .site-popup .spa-big{margin:0}
+  .site-popup .spa-big b{font-size:56px}
+  .site-popup .spa-big span{font-size:22px}
+  .site-popup .spa-k{flex-basis:100%}
+  .site-popup .spa-list{display:none}
+  .site-popup .site-popup-body{padding:1.75rem 1.5rem}
+  .site-popup .site-popup-body h2{font-size:22px}
+  .site-popup .site-popup-cta{align-self:stretch;justify-content:center}
+}
+
 /* ══════════════════ WHATSAPP WIDGET ══════════════════
    Styled in the home page palette: deep brand green, mint paper, Inter body
    and Montserrat headings, pastel option chips. */

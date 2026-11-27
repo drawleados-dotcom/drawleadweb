@@ -28,14 +28,35 @@
     if (scrollObserver) scrollObserver.disconnect();
     popup.classList.add('open');
     popup.setAttribute('aria-hidden', 'false');
-    if (!isCorner) document.body.style.overflow = 'hidden';
+    if (!isCorner) {
+      document.body.style.overflow = 'hidden';
+      // move focus into the dialog so keyboard and screen-reader users land in it
+      lastFocus = document.activeElement;
+      var firstBtn = popup.querySelector('.site-popup-close');
+      if (firstBtn) firstBtn.focus({ preventScroll: true });
+    }
   }
 
   function closePopup() {
     popup.classList.remove('open');
     popup.setAttribute('aria-hidden', 'true');
-    if (!isCorner) document.body.style.overflow = '';
+    if (!isCorner) {
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+      lastFocus = null;
+    }
   }
+
+  // keep Tab inside the modal while it is open
+  var lastFocus = null;
+  popup.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab' || isCorner || !popup.classList.contains('open')) return;
+    var items = popup.querySelectorAll('.site-popup-dialog button, .site-popup-dialog a[href]');
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
 
   // ── Frequency: is this particular page load allowed to show the popup? ──
   var navEntries = window.performance && performance.getEntriesByType ? performance.getEntriesByType('navigation') : [];
