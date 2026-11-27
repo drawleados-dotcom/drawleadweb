@@ -19,5 +19,6 @@
  Chennai, Tamil Nadu, IN
  </div>
  <div class="ft-copy">© <?= date('Y') ?> Drawlead. All rights reserved.</div>
+ <div class="ft-copy ft-legal"><a href="/privacy-policy">Privacy Policy</a> · <a href="/refund-policy">Refund Policy</a> · <a href="/terms-and-conditions">Terms &amp; Conditions</a></div>
  </div>
 </footer>

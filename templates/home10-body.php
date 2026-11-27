@@ -811,6 +811,7 @@ $tsMark = fn(string $q) => preg_replace('/\[\[(.+?)\]\]/', '<mark>$1</mark>', h(
   <div class="wrap foot__base">
     <span>official@drawlead.co.in &nbsp;·&nbsp; www.drawlead.co.in &nbsp;·&nbsp; Chennai, Tamil Nadu, IN</span>
     <span>© <?= date('Y') ?> Drawlead. All rights reserved.</span>
+    <nav class="foot__legal" aria-label="Legal"><a href="/privacy-policy">Privacy Policy</a><a href="/refund-policy">Refund Policy</a><a href="/terms-and-conditions">Terms &amp; Conditions</a></nav>
   </div>
 </footer>
 </div>

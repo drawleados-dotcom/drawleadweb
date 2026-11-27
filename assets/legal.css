@@ -1,0 +1,46 @@
+/* Legal pages (Privacy Policy, Refund Policy, Terms & Conditions).
+   Built on the blog post's reading layout (blog-modern.css); this adds what
+   long policy text needs: lists (home10.css strips list styles), tighter
+   headings, the contents box and the short-version card. */
+
+.legal-page .legal-hero{padding-bottom:30px}
+.legal-page .legal-lede{max-width:640px;margin:0 auto 20px;color:#5d6a63;font-size:clamp(16px,1.5vw,18px);line-height:1.7}
+.legal-page .legal-hero .journal-post-meta{margin-bottom:0}
+/* Text and side panel centred as one block, instead of the blog's full-width
+   column, which leaves a wide gap between 760px of text and the panel. */
+.h10.blog-page.legal-page .legal-layout{grid-template-columns:minmax(0,760px) 280px;justify-content:center;column-gap:72px;padding-top:36px}
+
+.legal-page .legal-doc>section{scroll-margin-top:110px}
+.legal-page .legal-doc h2{margin:1.9em 0 .6em;font-size:clamp(23px,2.4vw,27px)}
+.legal-page .legal-doc h3{margin:1.5em 0 .5em;font-size:18px;letter-spacing:-.02em}
+.legal-page .legal-doc ul,.legal-page .legal-doc ol{margin:0 0 1.2em;padding-left:1.35em}
+.legal-page .legal-doc ul{list-style:disc}
+.legal-page .legal-doc ol{list-style:decimal}
+.legal-page .legal-doc li{margin:0 0 .55em;padding-left:.25em}
+.legal-page .legal-doc li::marker{color:#32b46f}
+.legal-page .legal-doc strong{color:#151a18}
+
+/* The short version: the first clause, on the mint tint. */
+.legal-page .legal-summary{margin-top:28px;padding:26px 28px 10px;border-radius:18px;background:var(--t-mint,#DAF1E5)}
+.legal-page .legal-summary h2{margin-top:0}
+
+/* On this page: filled from the clause headings by legal-bottom.php. */
+.legal-page .legal-toc{padding:20px 24px;border:1px solid var(--journal-line);border-radius:16px}
+.legal-page .legal-toc p{margin:0 0 12px;color:#13834e;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.legal-page .legal-toc ol{columns:2;column-gap:32px;margin:0;font-size:14px;line-height:1.45}
+.legal-page .legal-toc li{break-inside:avoid;margin:0 0 7px}
+.legal-page .legal-toc a{color:#26332b;font-weight:600;text-decoration:none}
+.legal-page .legal-toc a:hover{color:#08784a}
+
+.legal-page .legal-aside nav a[aria-current="page"]{color:#08784a}
+.legal-page .legal-aside p{margin:18px 0 0;color:#5d6a63;font-size:13px;line-height:1.6}
+/* The email link sits in the sentence, not as one of the panel's link rows. */
+.h10.blog-page.legal-page .legal-aside p a{display:inline;padding:0;border:0;color:#08784a;font-weight:700}
+
+@media(max-width:900px){
+  .h10.blog-page.legal-page .legal-layout{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:600px){
+  .legal-page .legal-toc ol{columns:1}
+  .legal-page .legal-summary{padding:22px 20px 6px}
+}

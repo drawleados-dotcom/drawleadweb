@@ -747,6 +747,28 @@ function migration_032_statements(PDO $pdo): array
     return $statements;
 }
 
+function migration_033_statements(): array
+{
+    // Same SQL as _dev/sql/migrations/033_legal_pages.sql (_dev/sql/ isn't deployed).
+    // The slugs are the old WordPress site's, so its links and search results
+    // land on the new pages. Published, not in the menu: the footers link them.
+    return [
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Privacy Policy', '/privacy-policy',
+           'Privacy Policy | Drawlead',
+           'How Drawlead collects, uses and protects personal data from drawlead.com: consultation bookings, chat enquiries, analytics, cookies and your rights.',
+           'privacy-policy'),
+         ('Refund Policy', '/refund-policy',
+           'Refund and Cancellation Policy | Drawlead',
+           'How cancellations and refunds work for Drawlead projects, retainers and subscriptions, what is not refundable, and how to request a refund.',
+           'refund-policy'),
+         ('Terms & Conditions', '/terms-and-conditions',
+           'Terms and Conditions | Drawlead',
+           'The terms for using drawlead.com and its free tools, including acceptable use, our content, liability and governing law.',
+           'terms-and-conditions')",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -847,6 +869,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($which === '032' || $which === 'all') {
         $toRun['032'] = migration_032_statements($pdo);
     }
+    if ($which === '033' || $which === 'all') {
+        $toRun['033'] = migration_033_statements();
+    }
 
     foreach ($toRun as $name => $statements) {
         try {
@@ -940,6 +965,7 @@ $migration031Done = migration_table_exists($pdo, 'seo_redirects')
     && migration_table_exists($pdo, 'seo_404_log')
     && migration_table_exists($pdo, 'seo_schemas');
 $migration032Done = (int) $pdo->query("SELECT COUNT(*) FROM pages WHERE template = 'home10'")->fetchColumn() >= 1;
+$migration033Done = (int) $pdo->query("SELECT COUNT(*) FROM pages WHERE template IN ('privacy-policy', 'refund-policy', 'terms-and-conditions')")->fetchColumn() >= 3;
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -1353,7 +1379,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration032Done || !$migration031Done || !$migration002Done ||!$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done || !$migration027Done || !$migration028Done || !$migration029Done || !$migration030Done): ?>
+<div class="card">
+  <div class="card-title">033 — Privacy, Refund and Terms pages</div>
+  <div class="card-desc">Adds Privacy Policy (/privacy-policy), Refund Policy (/refund-policy) and Terms &amp; Conditions (/terms-and-conditions), published and linked from every footer. Their wording lives in templates/privacy-policy-body.php, refund-policy-body.php and terms-and-conditions-body.php, and every clause can be edited in Admin → Pages → Page Content. The URLs match the old WordPress site's, so old links keep working.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration033Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration033Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration033Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="033">
+    <button type="submit" class="btn btn-primary">Run Migration 033</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration033Done || !$migration032Done ||!$migration031Done || !$migration002Done ||!$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done || !$migration027Done || !$migration028Done || !$migration029Done || !$migration030Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>

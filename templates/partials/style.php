@@ -501,6 +501,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .ft-links a:hover{color:var(--black)}
 .ft-contact{font-size:11.5px;color:var(--g400);line-height:2.2;font-weight:500}
 .ft-copy{margin-top:.85rem;font-size:10.5px;color:var(--g300);font-weight:500}
+.ft-legal{margin-top:.35rem}.ft-legal a{color:var(--g400);text-decoration:none;transition:color .15s}.ft-legal a:hover{color:var(--black)}
 
 /* ── REVEAL ── */
 .rv{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}

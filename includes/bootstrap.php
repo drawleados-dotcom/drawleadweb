@@ -344,6 +344,10 @@ function pending_migrations_exist(PDO $pdo): bool
     if ((int) $stmt10->fetchColumn() < 1) {
         return true;
     }
+    $stmt11 = $pdo->query("SELECT COUNT(*) FROM pages WHERE template IN ('privacy-policy', 'refund-policy', 'terms-and-conditions')");
+    if ((int) $stmt11->fetchColumn() < 3) {
+        return true;
+    }
     return false;
 }
 
