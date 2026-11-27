@@ -1181,6 +1181,14 @@ body>.h10:not(.ab) .final--card :focus-visible{outline-color:#1d7a49}
 .h10 img,.h10 video{max-width:100%}
 .h10 .wrap{min-width:0}
 .h10 :is(h1,h2,h3,p,li,blockquote){overflow-wrap:break-word}
+@media (max-width:960px){
+  /* single-column layouts must be able to shrink below their widest child
+  
+   (e.g. the logo marquee), or the cards push past the screen edge */
+  .h10 .cx,.h10 .pg,.h10 .ts-grid,.h10 .data__grid,.h10 .pg-head,.h10 .ts-head{grid-template-columns:minmax(0,1fr)}
+  .h10 .cx-panels,.h10 .cx-panel,.h10 .cx-tabs{min-width:0}
+  .h10 .cx-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .h10 .cx-h{text-wrap:pretty}}
 @media (max-width:1180px){
   .h10 .cred__head .stats{flex-wrap:wrap;row-gap:12px}
 }
