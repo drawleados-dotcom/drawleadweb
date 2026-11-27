@@ -5,9 +5,9 @@
 
 <div class="wa-panel" id="wa-panel" data-csrf="<?= h(csrf_token()) ?>" role="dialog" aria-label="Chat with Drawlead" aria-hidden="true" inert>
   <div class="wa-header">
-    <div class="wa-avatar">D</div>
+    <div class="wa-avatar"><img src="/assets/home10/logos/drawlead-mark.webp" alt="" width="26" height="26"></div>
     <div class="wa-header-info">
-      <div class="wa-header-name">Drawlead</div>
+      <div class="wa-header-name">Drawlead <svg class="wa-verified" viewBox="0 0 24 24" width="16" height="16" role="img" aria-label="Verified business"><path d="M12 1.5l2.4 1.9 3-.4 1.1 2.8 2.8 1.1-.4 3 1.9 2.4-1.9 2.4.4 3-2.8 1.1-1.1 2.8-3-.4L12 22.5l-2.4-1.9-3 .4-1.1-2.8-2.8-1.1.4-3L1.2 12l1.9-2.4-.4-3 2.8-1.1L6.6 3l3 .4z" fill="#4ADE80"/><path d="M8 12.3l2.7 2.7L16.2 9.5" fill="none" stroke="#0f3a24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="wa-header-status"><span class="wa-dot"></span>Typically replies instantly</div>
     </div>
     <button type="button" class="wa-close" id="wa-close" aria-label="Close chat">&times;</button>

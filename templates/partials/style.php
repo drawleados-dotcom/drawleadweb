@@ -1144,11 +1144,12 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 }
 .wa-panel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;visibility:visible;transition:opacity .2s ease,transform .2s ease}
 
-.wa-header{background:#0f3a24;background-image:radial-gradient(ellipse 70% 120% at 100% 0,rgba(50,180,111,.35),transparent 70%);color:#fff;padding:14px 14px 14px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0}
-.wa-avatar{position:relative;width:42px;height:42px;border-radius:50%;background:#DAF1E5;color:#0f3a24;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:800;font-size:17px;flex-shrink:0;box-shadow:0 0 0 2px rgba(255,255,255,.25)}
+.wa-header{background:#0f3a24;color:#fff;padding:14px 14px 14px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.wa-avatar{position:relative;width:42px;height:42px;border-radius:50%;background:#fff;color:#0f3a24;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:800;font-size:17px;flex-shrink:0;box-shadow:0 0 0 2px rgba(255,255,255,.25)}
 .wa-avatar::after{content:"";position:absolute;right:0;bottom:1px;width:11px;height:11px;border-radius:50%;background:#4ADE80;border:2px solid #0f3a24}
 .wa-header-info{flex:1;min-width:0}
-.wa-header-name{font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;letter-spacing:-.01em}
+.wa-header-name{font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:6px}
+.wa-verified{flex:none;width:16px;height:16px}.wa-avatar img{width:26px;height:26px;object-fit:contain}
 .wa-header-status{font-size:12px;color:rgba(255,255,255,.78);display:flex;align-items:center;gap:6px;margin-top:2px}
 .wa-dot{display:none}
 .wa-close{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:22px;line-height:1;cursor:pointer;transition:background .15s}
