@@ -1079,6 +1079,7 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .site-popup .site-popup-close{top:16px;right:16px;width:40px;height:40px;background:#fff;border:1px solid #e3e9e5;color:#374151;font-size:22px;transition:background .15s,color .15s}
 .site-popup .site-popup-close:hover{background:#DAF1E5;color:#0f3a24}
 .site-popup .site-popup-close:focus-visible,.site-popup .site-popup-cta:focus-visible{outline:3px solid #1d7a49;outline-offset:3px}
+.site-popup .site-popup-dialog:focus{outline:none}
 .site-popup .site-popup-body{padding:3rem 2.75rem}
 .site-popup .site-popup-body h2{font-family:'Montserrat',sans-serif;font-size:28px;font-weight:800;letter-spacing:-.02em;color:#111827;padding-right:2.5rem}
 .site-popup .site-popup-desc{font-size:15px;line-height:1.65;color:#4b5563}
@@ -1105,12 +1106,17 @@ footer{padding:2.75rem 3.5rem;display:grid;grid-template-columns:1.3fr 1fr 1fr;g
 .site-popup--corner .spa-big span{font-size:22px}
 .site-popup--corner .spa-list,.site-popup--corner .spa-ic{display:none}
 @media(max-width:800px){
-  .site-popup .site-popup-art{flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px 16px;padding:1.5rem;border-right:0;border-bottom:2px dashed #9fd3b6}
+  .site-popup .site-popup-art{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:4px 14px;padding:1.25rem 4.5rem 1.1rem 1.4rem;border-right:0;border-bottom:2px dashed #9fd3b6}
   .site-popup .spa-ic{width:48px;height:48px;margin:0}
   .site-popup .spa-big{margin:0}
-  .site-popup .spa-big b{font-size:56px}
+  .site-popup .spa-big b{font-size:52px}
   .site-popup .spa-big span{font-size:22px}
-  .site-popup .spa-k{flex-basis:100%}
+  .site-popup .spa-k{flex-basis:100%;margin-top:2px;font-size:11.5px;letter-spacing:.14em}
+  .site-popup .site-popup-close{top:12px;right:12px}
+  .site-popup .site-popup-desc{font-size:14px;margin-bottom:1.1rem}
+  .site-popup .site-popup-points{gap:.55rem;margin-bottom:1.4rem}
+  .site-popup .site-popup-points li{font-size:14px}
+  .site-popup .site-popup-dialog{max-height:calc(100dvh - 2rem)}
   .site-popup .spa-list{display:none}
   .site-popup .site-popup-body{padding:1.75rem 1.5rem}
   .site-popup .site-popup-body h2{font-size:22px}

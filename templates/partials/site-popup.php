@@ -30,7 +30,7 @@ if ($popup):
      data-trigger-refresh="<?= $popup['trigger_refresh'] ? '1' : '0' ?>"
      data-trigger-scroll-section="<?= $popup['trigger_scroll_section'] ? '1' : '0' ?>">
   <div class="site-popup-overlay" data-popup-close></div>
-  <div class="site-popup-dialog<?= $popupHasImage ? '' : ' no-image' ?>" role="dialog" aria-modal="<?= $popupLayout === 'corner' ? 'false' : 'true' ?>" aria-labelledby="site-popup-title">
+  <div class="site-popup-dialog<?= $popupHasImage ? '' : ' no-image' ?>" tabindex="-1" role="dialog" aria-modal="<?= $popupLayout === 'corner' ? 'false' : 'true' ?>" aria-labelledby="site-popup-title">
     <button type="button" class="site-popup-close" data-popup-close aria-label="Close">&times;</button>
 
     <?php if ($popupHasImage && $popupBuiltinArt): ?>

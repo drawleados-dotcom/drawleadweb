@@ -32,8 +32,8 @@
       document.body.style.overflow = 'hidden';
       // move focus into the dialog so keyboard and screen-reader users land in it
       lastFocus = document.activeElement;
-      var firstBtn = popup.querySelector('.site-popup-close');
-      if (firstBtn) firstBtn.focus({ preventScroll: true });
+      var dlg = popup.querySelector('.site-popup-dialog');
+      if (dlg) dlg.focus({ preventScroll: true });
     }
   }
 
