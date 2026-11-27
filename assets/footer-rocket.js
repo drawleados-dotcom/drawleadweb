@@ -69,34 +69,70 @@
     return false;
   }
 
-  // A folded paper dart, nose along +x, drawn as three flat faces like a real
-  // fold: the far wing peeking out below, the dark keel fold, and the big lit
-  // near wing on top. `pitch` (from the phugoid) tilts the wings a little.
+  // newsprint: off-white paper with a headline bar, two columns of tiny
+  // "text" lines and a gutter, built once as a repeating canvas pattern
+  var newsTile = null, newsPat = [];
+  // print at roughly 60% scale so the plane shows several lines of copy
+  function fine(p) { if (p && p.setTransform && window.DOMMatrix) p.setTransform(new DOMMatrix().scale(.6)); }
+  function newsprint(ctx) {
+    for (var n = 0; n < newsPat.length; n++) if (newsPat[n][0] === ctx) return newsPat[n][1];
+    if (newsTile) { var pp = ctx.createPattern(newsTile, 'repeat'); fine(pp); newsPat.push([ctx, pp]); return pp; }
+    var c = document.createElement('canvas');
+    c.width = 72; c.height = 72;
+    var g = c.getContext('2d');
+    g.fillStyle = '#eeeae0';
+    g.fillRect(0, 0, 72, 72);
+    g.fillStyle = 'rgba(30,30,28,.62)';
+    g.fillRect(3, 3, 52, 4);                      // headline
+    g.fillStyle = 'rgba(30,30,28,.4)';
+    g.fillRect(3, 9, 30, 2);                      // standfirst
+    g.fillStyle = 'rgba(30,30,28,.3)';
+    for (var row = 14; row < 70; row += 3) {     // body copy, two columns
+      var w1 = 20 + ((row * 7) % 11), w2 = 22 + ((row * 5) % 10);
+      g.fillRect(3, row, w1, 1);
+      g.fillRect(37, row, w2, 1);
+    }
+    g.fillStyle = 'rgba(30,30,28,.18)';
+    g.fillRect(34, 13, 1, 57);                    // column rule
+    newsTile = c;
+    var pat = ctx.createPattern(c, 'repeat');
+    fine(pat);
+    newsPat.push([ctx, pat]);
+    return pat;
+  }
+
+  // A folded newspaper dart, nose along +x, drawn as flat faces like a real
+  // fold: the far wing peeking out below, the keel fold, and the big near wing
+  // on top. Only grey shading, no colour. `pitch` (phugoid) tilts the wings.
   function drawPlane(ctx, x, y, a, sc, pitch) {
     var u = size * sc * 1.35;
     var lift = 1 + pitch * 1.4;
+    var paper = newsprint(ctx);
+    function face(pts, shade) {
+      ctx.beginPath();
+      ctx.moveTo(pts[0][0], pts[0][1]);
+      for (var i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+      ctx.closePath();
+      ctx.fillStyle = paper; ctx.fill();
+      if (shade) { ctx.fillStyle = shade; ctx.fill(); }
+      ctx.stroke();
+    }
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(a);
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
-    ctx.lineWidth = Math.max(1, u * .045);
-    ctx.strokeStyle = '#0b2418';
-    // far wing, seen below the body
-    ctx.fillStyle = '#1d7a49';
-    ctx.beginPath(); ctx.moveTo(u, 0); ctx.lineTo(-u * .55, u * .05); ctx.lineTo(-u * .78, u * .3 * lift); ctx.closePath(); ctx.fill(); ctx.stroke();
-    // keel fold hanging under the centre line
-    ctx.fillStyle = '#0f3a24';
-    ctx.beginPath(); ctx.moveTo(u * .92, u * .01); ctx.lineTo(-u * .55, u * .05); ctx.lineTo(-u * .5, u * .28); ctx.closePath(); ctx.fill(); ctx.stroke();
-    // near wing, the big lit face on top
-    ctx.fillStyle = '#32B46F';
-    ctx.beginPath(); ctx.moveTo(u, 0); ctx.lineTo(-u * .9, -u * .52 * lift); ctx.lineTo(-u * .55, u * .05); ctx.closePath(); ctx.fill(); ctx.stroke();
-    // light catching the fold of the near wing
-    ctx.fillStyle = '#5fd093';
-    ctx.beginPath(); ctx.moveTo(u, 0); ctx.lineTo(-u * .9, -u * .52 * lift); ctx.lineTo(-u * .66, -u * .3 * lift); ctx.closePath(); ctx.fill();
+    ctx.lineWidth = Math.max(.9, u * .035);
+    ctx.strokeStyle = 'rgba(45,45,42,.75)';
+    face([[u, 0], [-u * .55, u * .05], [-u * .78, u * .3 * lift]], 'rgba(20,20,18,.2)');     // far wing
+    face([[u * .92, u * .01], [-u * .55, u * .05], [-u * .5, u * .28]], 'rgba(20,20,18,.36)'); // keel
+    face([[u, 0], [-u * .9, -u * .52 * lift], [-u * .55, u * .05]], null);                   // near wing
+    // soft light along the leading fold of the near wing
+    ctx.fillStyle = 'rgba(255,255,255,.35)';
+    ctx.beginPath(); ctx.moveTo(u, 0); ctx.lineTo(-u * .9, -u * .52 * lift); ctx.lineTo(-u * .7, -u * .34 * lift); ctx.closePath(); ctx.fill();
     // centre crease
-    ctx.strokeStyle = 'rgba(11,36,24,.55)';
-    ctx.lineWidth = Math.max(.8, u * .03);
+    ctx.strokeStyle = 'rgba(45,45,42,.6)';
+    ctx.lineWidth = Math.max(.8, u * .028);
     ctx.beginPath(); ctx.moveTo(u * .96, 0); ctx.lineTo(-u * .55, u * .05); ctx.stroke();
     ctx.restore();
   }
@@ -108,7 +144,7 @@
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(a);
-    ctx.strokeStyle = 'rgba(11,36,24,.35)';
+    ctx.strokeStyle = 'rgba(60,60,56,.35)';
     ctx.lineWidth = Math.max(1, u * .05);
     ctx.lineCap = 'round';
     [[-1.5, -.55], [-1.7, -.2], [-1.45, .2]].forEach(function (o, i) {
@@ -156,7 +192,7 @@
       pt.life += dt;
       if (pt.life > pt.max) { parts.splice(j, 1); continue; }
       var k = pt.life / pt.max, ctx = pt.back ? bctx : fctx, d = size * .22;
-      ctx.strokeStyle = 'rgba(11,36,24,' + (1 - k) * .45 + ')';
+      ctx.strokeStyle = 'rgba(60,60,56,' + (1 - k) * .45 + ')';
       ctx.lineWidth = Math.max(1, size * .06);
       ctx.lineCap = 'round';
       ctx.beginPath();
