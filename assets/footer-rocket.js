@@ -1,8 +1,8 @@
-// Footer signoff: a small rocket that loops around the big "Drawlead" word.
+// Footer signoff: a small paper plane that loops around the big "Drawlead" word.
 // It flies a closed spline through and around the letters, passing behind
 // some of them (back canvas, under the word) and in front of others (front
 // canvas), with a little physics: it speeds up diving, slows climbing, banks
-// smoothly into turns and leaves a fading smoke-and-spark trail.
+// smoothly into turns, flutters its wings and leaves a fading dotted trail.
 // Paused when off screen or the tab is hidden; still for reduced motion.
 (function () {
   var word = document.querySelector('.dl-sign__w');
@@ -20,7 +20,7 @@
   var BEHIND = [[.13,.26],[.36,.47],[.6,.7]];
 
   var W = 0, H = 0, dpr = 1, pts = [], lens = [], total = 0;
-  var s = 0, v = 240, ang = 0, size = 18, parts = [], last = 0, running = false, raf = 0;
+  var s = 0, v = 240, ang = 0, size = 18, parts = [], last = 0, running = false, raf = 0, trailGap = 0;
 
   function cr(p0, p1, p2, p3, t) {
     var t2 = t * t, t3 = t2 * t;
@@ -68,38 +68,28 @@
     return false;
   }
 
+  // a folded paper plane, nose along +x; `flap` squeezes the wings for a flutter
   function drawRocket(ctx, x, y, a, sc, t) {
-    var u = size * sc;
+    var u = size * sc * 1.15;
+    var flap = .82 + .18 * Math.sin(t * 9);
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(a);
-    // flame (flickers)
-    var fl = u * (.9 + .35 * Math.sin(t * 40) + .2 * Math.random());
-    ctx.fillStyle = '#FF8A1F';
-    ctx.beginPath(); ctx.moveTo(-u * .55, -u * .22); ctx.quadraticCurveTo(-u * .55 - fl, 0, -u * .55, u * .22); ctx.closePath(); ctx.fill();
-    ctx.fillStyle = '#FFD166';
-    ctx.beginPath(); ctx.moveTo(-u * .55, -u * .11); ctx.quadraticCurveTo(-u * .55 - fl * .55, 0, -u * .55, u * .11); ctx.closePath(); ctx.fill();
-    // fins
-    ctx.fillStyle = '#1d7a49';
-    ctx.beginPath(); ctx.moveTo(-u * .35, -u * .26); ctx.lineTo(-u * .7, -u * .55); ctx.lineTo(-u * .58, -u * .2); ctx.closePath(); ctx.fill();
-    ctx.beginPath(); ctx.moveTo(-u * .35, u * .26); ctx.lineTo(-u * .7, u * .55); ctx.lineTo(-u * .58, u * .2); ctx.closePath(); ctx.fill();
-    // body
-    ctx.fillStyle = '#ffffff';
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = Math.max(1, u * .05);
     ctx.strokeStyle = '#0f3a24';
-    ctx.lineWidth = Math.max(1.2, u * .07);
-    ctx.beginPath();
-    ctx.moveTo(-u * .6, -u * .27);
-    ctx.lineTo(u * .25, -u * .27);
-    ctx.quadraticCurveTo(u * .75, -u * .2, u * .95, 0);
-    ctx.quadraticCurveTo(u * .75, u * .2, u * .25, u * .27);
-    ctx.lineTo(-u * .6, u * .27);
-    ctx.closePath();
-    ctx.fill(); ctx.stroke();
-    // nose band and window
-    ctx.fillStyle = '#1d7a49';
-    ctx.beginPath(); ctx.moveTo(u * .55, -u * .22); ctx.quadraticCurveTo(u * .8, -u * .14, u * .95, 0); ctx.quadraticCurveTo(u * .8, u * .14, u * .55, u * .22); ctx.closePath(); ctx.fill();
-    ctx.fillStyle = '#DAF1E5';
-    ctx.beginPath(); ctx.arc(u * .12, 0, u * .13, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    // far wing (in shadow)
+    ctx.fillStyle = '#dfe7e3';
+    ctx.beginPath(); ctx.moveTo(u, 0); ctx.lineTo(-u * .75, -u * .62 * flap); ctx.lineTo(-u * .35, 0); ctx.closePath(); ctx.fill(); ctx.stroke();
+    // keel fold underneath
+    ctx.fillStyle = '#b9c7c0';
+    ctx.beginPath(); ctx.moveTo(u, 0); ctx.lineTo(-u * .35, 0); ctx.lineTo(-u * .55, u * .2); ctx.closePath(); ctx.fill(); ctx.stroke();
+    // near wing (lit)
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.moveTo(u, 0); ctx.lineTo(-u * .8, u * .5 * flap); ctx.lineTo(-u * .35, 0); ctx.closePath(); ctx.fill(); ctx.stroke();
+    // centre crease
+    ctx.strokeStyle = 'rgba(15,58,36,.45)';
+    ctx.beginPath(); ctx.moveTo(u * .95, 0); ctx.lineTo(-u * .35, 0); ctx.stroke();
     ctx.restore();
   }
 
@@ -109,7 +99,7 @@
     last = now;
     var p = at(s);
     // gravity feel: faster diving (sin > 0 means moving down the screen), slower climbing
-    var target = (W / 4.2) * (1 + .55 * Math.sin(p[2]));
+    var target = (W / 5.5) * (1 + .6 * Math.sin(p[2]));
     v += (target - v) * Math.min(1, dt * 2.4);
     s += v * dt;
     var q = at(s), frac = (((s % total) + total) % total) / total;
@@ -117,16 +107,12 @@
     var da = Math.atan2(Math.sin(q[2] - ang), Math.cos(q[2] - ang));
     ang += da * Math.min(1, dt * 7);
     var behind = isBehind(frac);
-    // exhaust: smoke puffs and a few sparks from the tail
-    var tx = q[0] - Math.cos(ang) * size * .6, ty = q[1] - Math.sin(ang) * size * .6;
-    for (var i = 0; i < 2; i++) {
-      parts.push({
-        x: tx, y: ty,
-        vx: -Math.cos(ang) * (30 + Math.random() * 40) + (Math.random() - .5) * 30,
-        vy: -Math.sin(ang) * (30 + Math.random() * 40) + (Math.random() - .5) * 30,
-        r: size * (.12 + Math.random() * .1), life: 0, max: .9 + Math.random() * .6,
-        spark: Math.random() < .25, back: behind
-      });
+    // dotted flight trail: a dot dropped every few pixels of travel, fading out
+    var tx = q[0] - Math.cos(ang) * size * .5, ty = q[1] - Math.sin(ang) * size * .5;
+    trailGap += v * dt;
+    if (trailGap > size * .55) {
+      trailGap = 0;
+      parts.push({ x: tx, y: ty, vx: 0, vy: 0, r: Math.max(1.2, size * .07), life: 0, max: 1.6, spark: false, back: behind });
     }
     bctx.clearRect(0, 0, W, H);
     fctx.clearRect(0, 0, W, H);
@@ -134,17 +120,10 @@
       var pt = parts[j];
       pt.life += dt;
       if (pt.life > pt.max) { parts.splice(j, 1); continue; }
-      pt.x += pt.vx * dt; pt.y += pt.vy * dt;
-      pt.vx *= .96; pt.vy = pt.vy * .96 - 6 * dt; // smoke drifts up a touch
       var k = pt.life / pt.max, ctx = pt.back ? bctx : fctx;
       ctx.beginPath();
-      if (pt.spark) {
-        ctx.fillStyle = 'rgba(255,138,31,' + (1 - k) * .9 + ')';
-        ctx.arc(pt.x, pt.y, Math.max(.6, pt.r * .35 * (1 - k)), 0, Math.PI * 2);
-      } else {
-        ctx.fillStyle = 'rgba(100,116,139,' + (1 - k) * .22 + ')';
-        ctx.arc(pt.x, pt.y, pt.r * (1 + k * 2.2), 0, Math.PI * 2);
-      }
+      ctx.fillStyle = 'rgba(29,122,73,' + (1 - k) * .55 + ')';
+      ctx.arc(pt.x, pt.y, pt.r * (1 - k * .5), 0, Math.PI * 2);
       ctx.fill();
     }
     drawRocket(behind ? bctx : fctx, q[0], q[1], ang, behind ? .86 : 1, now / 1000);
