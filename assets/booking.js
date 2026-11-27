@@ -64,7 +64,9 @@
     if (state.availability) return Promise.resolve(state.availability);
     return fetchJSON('/api/booking-availability.php').then(function (a) {
       state.availability = a;
-      var t = new Date();
+      // open on the month of the first bookable day, not a month with nothing free
+      var first = firstOpenDate(a);
+      var t = first ? new Date(first + 'T00:00:00') : new Date();
       state.viewYear = t.getFullYear();
       state.viewMonth = t.getMonth();
       return a;
@@ -81,6 +83,23 @@
 
   // ── Calendar rendering ──
   var MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  function isOpenDay(a, iso, dow) {
+    return !(iso < todayIso()
+      || (a.range_start && iso < a.range_start)
+      || (a.range_end && iso > a.range_end)
+      || (a.days_of_week || []).indexOf(dow) === -1);
+  }
+
+  function firstOpenDate(a) {
+    var d = new Date();
+    for (var i = 0; i < 180; i++) {
+      var iso = isoDate(d.getFullYear(), d.getMonth(), d.getDate());
+      if (isOpenDay(a, iso, d.getDay())) return iso;
+      d.setDate(d.getDate() + 1);
+    }
+    return null;
+  }
 
   function renderCalendar() {
     var a = state.availability;
@@ -102,13 +121,12 @@
       var dow = new Date(state.viewYear, state.viewMonth, d).getDay();
       var btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'bcal-day';
+      btn.className = 'bcal-day' + (iso === today ? ' today' : '');
       btn.textContent = d;
 
-      var disabled = iso < today
-        || (a.range_start && iso < a.range_start)
-        || (a.range_end && iso > a.range_end)
-        || a.days_of_week.indexOf(dow) === -1;
+      var disabled = !isOpenDay(a, iso, dow);
+      btn.setAttribute('aria-label', new Date(state.viewYear, state.viewMonth, d).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' }) + (disabled ? ', unavailable' : ', available'));
+      if (iso === state.selectedDate) btn.setAttribute('aria-pressed', 'true');
 
       if (disabled) {
         btn.disabled = true;
@@ -155,7 +173,9 @@
     var d = new Date(iso + 'T00:00:00');
     slotsTitle.textContent = d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
 
+    slotsGrid.innerHTML = '<p class="bslots-note">Loading available times…</p>';
     fetchJSON('/api/booking-slots.php?date=' + encodeURIComponent(iso)).then(function (res) {
+      slotsGrid.innerHTML = '';
       var slots = res.slots || [];
       if (!slots.length) {
         slotsEmpty.hidden = false;
@@ -169,6 +189,10 @@
         b.addEventListener('click', function () { selectTime(iso, t); });
         slotsGrid.appendChild(b);
       });
+      var firstSlot = slotsGrid.querySelector('.bslot');
+      if (firstSlot) firstSlot.focus({ preventScroll: true });
+    }).catch(function () {
+      slotsGrid.innerHTML = '<p class="bslots-note">Could not load times. Please pick the date again.</p>';
     });
   }
 
@@ -341,22 +365,49 @@
   }
 
   // ── Open / close ──
+  var lastFocus = null;
+  var isStandalone = modal.classList.contains('booking-modal-standalone');
+
   function openModal() {
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    if (!isStandalone) {
+      document.body.style.overflow = 'hidden';
+      lastFocus = document.activeElement;
+    }
     showStep('datetime');
     state.selectedDate = null;
     state.selectedTime = null;
     slotsWrap.hidden = true;
-    ensureAvailability().then(renderCalendar);
+    ensureAvailability().then(function () {
+      renderCalendar();
+      if (isStandalone) return;
+      // land keyboard users on the first bookable day
+      var day = calDaysEl.querySelector('.bcal-day:not(.disabled):not(.empty)');
+      (day || modal.querySelector('.booking-close')).focus({ preventScroll: true });
+    });
   }
 
   function closeModal() {
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    lastFocus = null;
   }
+
+  // keep Tab inside the dialog while it is open
+  modal.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab' || isStandalone || !modal.classList.contains('open')) return;
+    var items = Array.prototype.filter.call(
+      modal.querySelectorAll('.booking-dialog button:not([disabled]), .booking-dialog a[href], .booking-dialog input:not([type="hidden"]):not([tabindex="-1"]), .booking-dialog select, .booking-dialog textarea'),
+      function (el) { return el.offsetParent !== null; }
+    );
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
 
   document.addEventListener('click', function (e) {
     var trigger = e.target.closest('[data-book]');

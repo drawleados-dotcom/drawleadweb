@@ -47,14 +47,14 @@ if ($bookingStandalone) {
         <h2 id="booking-title">From scattered spreadsheets<br>to <span class="g">one unified board</span></h2>
         <p>See how Drawlead brings your leads, sales, marketing, and operations out of Excel sheets, WhatsApp chats, and sticky notes — into a single command center.</p>
 
-        <div class="bv">
+        <div class="bv" aria-hidden="true">
           <div class="bv-chaos">
-            <span class="bv-chip">📊 Excel</span>
-            <span class="bv-chip">💬 WhatsApp</span>
-            <span class="bv-chip">📝 Notes</span>
-            <span class="bv-chip">📧 Email</span>
+            <span class="bv-chip">Excel</span>
+            <span class="bv-chip">WhatsApp</span>
+            <span class="bv-chip">Notes</span>
+            <span class="bv-chip">Email</span>
           </div>
-          <div class="bv-arrow">→</div>
+          <div class="bv-arrow" aria-hidden="true">↓</div>
           <div class="bv-board">
             <div class="bv-board-bar"></div>
             <div class="bv-board-row"></div>
@@ -82,15 +82,16 @@ if ($bookingStandalone) {
             <div class="bcal-month" id="bcal-month"></div>
             <button type="button" class="bcal-nav" id="bcal-next" aria-label="Next month">→</button>
           </div>
-          <div class="bcal-weekdays"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+          <div class="bcal-weekdays" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
           <div class="bcal-days" id="bcal-days"></div>
+          <p class="bcal-legend" aria-hidden="true"><span class="bcal-key bcal-key--open"></span>Available <span class="bcal-key bcal-key--today"></span>Today</p>
 
           <div class="bslots" id="bslots" hidden>
             <div class="bslots-head">
-              <button type="button" class="bslots-back" id="bslots-back">← Back</button>
+              <button type="button" class="bslots-back" id="bslots-back">← Change date</button>
               <div class="bslots-title" id="bslots-title"></div>
             </div>
-            <div class="bslots-grid" id="bslots-grid"></div>
+            <div class="bslots-grid" id="bslots-grid" aria-live="polite"></div>
             <div class="bslots-empty" id="bslots-empty" hidden>No times available this day — please pick another date.</div>
           </div>
         </div>
@@ -113,7 +114,7 @@ if ($bookingStandalone) {
           <h3>You're booked!</h3>
           <p id="booking-success-detail"></p>
           <p class="booking-success-sub">A confirmation email is on its way to you.</p>
-          <a href="/#cases" class="btn btn-outline2" data-book-close>View Our Case Studies →</a>
+          <a href="/#case-studies" class="btn btn-outline2" data-book-close>View Our Case Studies →</a>
         </div>
       </div>
     </div>
