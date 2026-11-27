@@ -2,7 +2,8 @@
 // It flies a closed spline through and around the letters, passing behind
 // some of them (back canvas, under the word) and in front of others (front
 // canvas), with a little physics: it speeds up diving, slows climbing, banks
-// smoothly into turns, flutters its wings and leaves a fading dotted trail.
+// smoothly into turns, porpoises gently (phugoid glide) and leaves a fading
+// dashed trail with sketchy speed lines.
 // Paused when off screen or the tab is hidden; still for reduced motion.
 (function () {
   var word = document.querySelector('.dl-sign__w');
@@ -68,51 +69,85 @@
     return false;
   }
 
-  // a folded paper plane, nose along +x; `flap` squeezes the wings for a flutter
-  function drawRocket(ctx, x, y, a, sc, t) {
-    var u = size * sc * 1.15;
-    var flap = .82 + .18 * Math.sin(t * 9);
+  // A folded paper dart, nose along +x, drawn as three flat faces like a real
+  // fold: the far wing peeking out below, the dark keel fold, and the big lit
+  // near wing on top. `pitch` (from the phugoid) tilts the wings a little.
+  function drawPlane(ctx, x, y, a, sc, pitch) {
+    var u = size * sc * 1.35;
+    var lift = 1 + pitch * 1.4;
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(a);
     ctx.lineJoin = 'round';
-    ctx.lineWidth = Math.max(1, u * .05);
-    ctx.strokeStyle = '#0f3a24';
-    // far wing (in shadow)
-    ctx.fillStyle = '#dfe7e3';
-    ctx.beginPath(); ctx.moveTo(u, 0); ctx.lineTo(-u * .75, -u * .62 * flap); ctx.lineTo(-u * .35, 0); ctx.closePath(); ctx.fill(); ctx.stroke();
-    // keel fold underneath
-    ctx.fillStyle = '#b9c7c0';
-    ctx.beginPath(); ctx.moveTo(u, 0); ctx.lineTo(-u * .35, 0); ctx.lineTo(-u * .55, u * .2); ctx.closePath(); ctx.fill(); ctx.stroke();
-    // near wing (lit)
-    ctx.fillStyle = '#ffffff';
-    ctx.beginPath(); ctx.moveTo(u, 0); ctx.lineTo(-u * .8, u * .5 * flap); ctx.lineTo(-u * .35, 0); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.lineCap = 'round';
+    ctx.lineWidth = Math.max(1, u * .045);
+    ctx.strokeStyle = '#0b2418';
+    // far wing, seen below the body
+    ctx.fillStyle = '#1d7a49';
+    ctx.beginPath(); ctx.moveTo(u, 0); ctx.lineTo(-u * .55, u * .05); ctx.lineTo(-u * .78, u * .3 * lift); ctx.closePath(); ctx.fill(); ctx.stroke();
+    // keel fold hanging under the centre line
+    ctx.fillStyle = '#0f3a24';
+    ctx.beginPath(); ctx.moveTo(u * .92, u * .01); ctx.lineTo(-u * .55, u * .05); ctx.lineTo(-u * .5, u * .28); ctx.closePath(); ctx.fill(); ctx.stroke();
+    // near wing, the big lit face on top
+    ctx.fillStyle = '#32B46F';
+    ctx.beginPath(); ctx.moveTo(u, 0); ctx.lineTo(-u * .9, -u * .52 * lift); ctx.lineTo(-u * .55, u * .05); ctx.closePath(); ctx.fill(); ctx.stroke();
+    // light catching the fold of the near wing
+    ctx.fillStyle = '#5fd093';
+    ctx.beginPath(); ctx.moveTo(u, 0); ctx.lineTo(-u * .9, -u * .52 * lift); ctx.lineTo(-u * .66, -u * .3 * lift); ctx.closePath(); ctx.fill();
     // centre crease
-    ctx.strokeStyle = 'rgba(15,58,36,.45)';
-    ctx.beginPath(); ctx.moveTo(u * .95, 0); ctx.lineTo(-u * .35, 0); ctx.stroke();
+    ctx.strokeStyle = 'rgba(11,36,24,.55)';
+    ctx.lineWidth = Math.max(.8, u * .03);
+    ctx.beginPath(); ctx.moveTo(u * .96, 0); ctx.lineTo(-u * .55, u * .05); ctx.stroke();
     ctx.restore();
   }
 
+  // a few sketchy speed lines behind the wing, longer when it is going fast
+  function drawSpeed(ctx, x, y, a, sc, spd) {
+    var u = size * sc;
+    var len = u * (.6 + Math.min(1.6, spd / (W / 5.5)) * .9);
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(a);
+    ctx.strokeStyle = 'rgba(11,36,24,.35)';
+    ctx.lineWidth = Math.max(1, u * .05);
+    ctx.lineCap = 'round';
+    [[-1.5, -.55], [-1.7, -.2], [-1.45, .2]].forEach(function (o, i) {
+      var j = (Math.random() - .5) * u * .15;
+      ctx.beginPath();
+      ctx.moveTo(u * o[0], u * o[1] + j);
+      ctx.lineTo(u * o[0] - len * (1 - i * .2), u * o[1] + j);
+      ctx.stroke();
+    });
+    ctx.restore();
+  }
+
+  var phase = 0;
   function frame(now) {
     if (!running) return;
     var dt = Math.min(.05, (now - (last || now)) / 1000);
     last = now;
     var p = at(s);
-    // gravity feel: faster diving (sin > 0 means moving down the screen), slower climbing
+    // glide: faster when diving (sin > 0 is moving down the screen), slower climbing
     var target = (W / 5.5) * (1 + .6 * Math.sin(p[2]));
     v += (target - v) * Math.min(1, dt * 2.4);
     s += v * dt;
     var q = at(s), frac = (((s % total) + total) % total) / total;
     // bank smoothly towards the path direction
     var da = Math.atan2(Math.sin(q[2] - ang), Math.cos(q[2] - ang));
-    ang += da * Math.min(1, dt * 7);
+    ang += da * Math.min(1, dt * 6);
+    // phugoid: the glide porpoises gently either side of the path, and the
+    // nose pitches up and down a quarter-cycle ahead of the height change
+    phase += dt * 2.3;
+    var amp = size * .45, off = Math.sin(phase) * amp, pitch = Math.cos(phase) * .12;
+    var nx = -Math.sin(q[2]), ny = Math.cos(q[2]);
+    var px = q[0] + nx * off, py = q[1] + ny * off;
     var behind = isBehind(frac);
-    // dotted flight trail: a dot dropped every few pixels of travel, fading out
-    var tx = q[0] - Math.cos(ang) * size * .5, ty = q[1] - Math.sin(ang) * size * .5;
+    // dashed flight trail behind the tail
+    var tx = px - Math.cos(ang) * size * .7, ty = py - Math.sin(ang) * size * .7;
     trailGap += v * dt;
-    if (trailGap > size * .55) {
+    if (trailGap > size * .5) {
       trailGap = 0;
-      parts.push({ x: tx, y: ty, vx: 0, vy: 0, r: Math.max(1.2, size * .07), life: 0, max: 1.6, spark: false, back: behind });
+      parts.push({ x: tx, y: ty, a: ang, life: 0, max: 1.8, back: behind });
     }
     bctx.clearRect(0, 0, W, H);
     fctx.clearRect(0, 0, W, H);
@@ -120,13 +155,18 @@
       var pt = parts[j];
       pt.life += dt;
       if (pt.life > pt.max) { parts.splice(j, 1); continue; }
-      var k = pt.life / pt.max, ctx = pt.back ? bctx : fctx;
+      var k = pt.life / pt.max, ctx = pt.back ? bctx : fctx, d = size * .22;
+      ctx.strokeStyle = 'rgba(11,36,24,' + (1 - k) * .45 + ')';
+      ctx.lineWidth = Math.max(1, size * .06);
+      ctx.lineCap = 'round';
       ctx.beginPath();
-      ctx.fillStyle = 'rgba(29,122,73,' + (1 - k) * .55 + ')';
-      ctx.arc(pt.x, pt.y, pt.r * (1 - k * .5), 0, Math.PI * 2);
-      ctx.fill();
+      ctx.moveTo(pt.x - Math.cos(pt.a) * d, pt.y - Math.sin(pt.a) * d);
+      ctx.lineTo(pt.x + Math.cos(pt.a) * d, pt.y + Math.sin(pt.a) * d);
+      ctx.stroke();
     }
-    drawRocket(behind ? bctx : fctx, q[0], q[1], ang, behind ? .86 : 1, now / 1000);
+    var lay = behind ? bctx : fctx, sc = behind ? .86 : 1, heading = ang - pitch;
+    drawSpeed(lay, px, py, heading, sc, v);
+    drawPlane(lay, px, py, heading, sc, pitch);
     raf = requestAnimationFrame(frame);
   }
 
