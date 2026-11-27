@@ -380,10 +380,11 @@ include __DIR__ . '/includes/header.php';
             <div class="t-sub ls-clip"><?= h($l['page_url']) ?></div>
           <?php else: ?><span class="t-sub">—</span><?php endif; ?>
         </td>
-        <td class="ls-nowrap"><button type="button" class="ls-more" aria-expanded="false" aria-controls="<?= h($rowId) ?>">Details</button></td>
-      </tr>
-      <tr class="ls-detail" id="<?= h($rowId) ?>" hidden>
-        <td colspan="6">
+        <td class="ls-nowrap">
+          <button type="button" class="ls-more" aria-haspopup="dialog" data-ls-open="<?= h($rowId) ?>">Details</button>
+          <template id="<?= h($rowId) ?>"
+            data-title="<?= h($l['name'] ?: ($v['phone'] ?: 'Lead')) ?>"
+            data-sub="<?= h(lead_form_label($l['lead_type']) . ' · ' . date('M j, Y g:i A', strtotime($l['created_at']))) ?>">
           <div class="ls-detail-grid">
             <div>
               <div class="ls-h">How they found you</div>
@@ -421,6 +422,7 @@ include __DIR__ . '/includes/header.php';
               <?php endif; ?>
             </div>
           </div>
+          </template>
         </td>
       </tr>
       <?php endforeach; ?>
@@ -446,6 +448,24 @@ include __DIR__ . '/includes/header.php';
   typing the address still counts as Google.
 </div>
 
+<?php if ($leads): ?>
+<dialog class="media-dialog ls-dialog" id="lsDialog" aria-labelledby="lsDialogTitle">
+  <div class="media-dialog-form">
+    <div class="media-dialog-head">
+      <div>
+        <h2 id="lsDialogTitle"></h2>
+        <div class="t-sub" data-ls-sub></div>
+      </div>
+      <button type="button" class="media-dialog-x" data-ls-close aria-label="Close">×</button>
+    </div>
+    <div class="ls-dialog-body" data-ls-body></div>
+    <div class="media-dialog-foot">
+      <button type="button" class="btn btn-ghost" data-ls-close>Close</button>
+    </div>
+  </div>
+</dialog>
+<?php endif; ?>
+
 <style>
 .ls-top{font-size:20px;line-height:1.25;padding-top:4px}
 .ls-filters{display:grid;grid-template-columns:2fr 1.3fr 1.1fr 1fr 1fr auto;gap:12px;align-items:end}
@@ -468,8 +488,11 @@ include __DIR__ . '/includes/header.php';
 .ls-link{color:inherit;text-decoration:none;font-weight:600}
 .ls-link:hover{color:var(--violet);text-decoration:underline}
 .ls-more{font:inherit;font-size:12px;font-weight:700;background:none;border:1.5px solid var(--border);border-radius:6px;padding:5px 10px;cursor:pointer;color:var(--g600)}
-.ls-more:hover,.ls-more[aria-expanded="true"]{border-color:var(--blue);color:var(--violet)}
-tr.ls-detail > td{background:var(--bg);padding:1.1rem 1.25rem}
+.ls-more:hover{border-color:var(--blue);color:var(--violet)}
+.ls-dialog{width:min(820px,calc(100vw - 32px))}
+.ls-dialog .media-dialog-head{align-items:flex-start}
+.ls-dialog .media-dialog-head h2{font-size:16px;margin-bottom:2px}
+.ls-dialog-body{padding:1.25rem;overflow-y:auto}
 .ls-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.75rem}
 .ls-h{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--g400);font-weight:800;margin-bottom:.5rem}
 .ls-dl{display:grid;grid-template-columns:120px 1fr;gap:6px 12px;font-size:12.5px}
@@ -489,15 +512,30 @@ tr.ls-detail > td{background:var(--bg);padding:1.1rem 1.25rem}
 </style>
 
 <script>
-document.querySelectorAll('.ls-more').forEach(function (btn) {
-  btn.addEventListener('click', function () {
-    var row = document.getElementById(btn.getAttribute('aria-controls'));
-    var open = row.hidden;
-    row.hidden = !open;
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    btn.textContent = open ? 'Hide' : 'Details';
+(function () {
+  var dialog = document.getElementById('lsDialog');
+  if (!dialog) return;
+  var body = dialog.querySelector('[data-ls-body]');
+  var close = function () {
+    if (typeof dialog.close === 'function') dialog.close(); else dialog.removeAttribute('open');
+  };
+
+  document.querySelectorAll('[data-ls-open]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var tpl = document.getElementById(btn.getAttribute('data-ls-open'));
+      if (!tpl) return;
+      document.getElementById('lsDialogTitle').textContent = tpl.getAttribute('data-title');
+      dialog.querySelector('[data-ls-sub]').textContent = tpl.getAttribute('data-sub');
+      body.replaceChildren(tpl.content.cloneNode(true));
+      body.scrollTop = 0;
+      if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
+    });
   });
-});
+
+  dialog.querySelectorAll('[data-ls-close]').forEach(function (b) { b.addEventListener('click', close); });
+  // A click on the dimmed backdrop lands on the <dialog> itself, not its contents.
+  dialog.addEventListener('click', function (e) { if (e.target === dialog) close(); });
+})();
 </script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
