@@ -1235,3 +1235,32 @@ body>.h10:not(.ab) .final--card :focus-visible{outline-color:#1d7a49}
   .h10 .cred__head .stat__n{font-size:clamp(1.15rem,5.4vw,1.5rem);white-space:nowrap}
   .h10 .cred__head .stat__l,.h10 .cred__head .stat div>span:not(.stat__n){display:block;font-size:.74rem;line-height:1.3}
 }
+
+/* ---------- icon colours: every icon tile pairs a site pastel with a deep ink
+   of the same hue (mint, sky, lilac, aqua, peach, periwinkle, rose, lime),
+   so icons read as one family without any two neighbours matching ---------- */
+.h10{--ik-mint:#1d7a49;--ik-sky:#2f5fae;--ik-lilac:#6a4fb3;--ik-aqua:#1f7f86;--ik-peach:#b0602a;--ik-peri:#4651a8;--ik-rose:#b03f6a;--ik-lime:#6c7a1f}
+body>.h10:not(.ab) .pillars li:nth-child(1) .pillar__ic{background:#DAF1E5;color:var(--ik-mint)}
+body>.h10:not(.ab) .pillars li:nth-child(2) .pillar__ic{background:#F8E6D6;color:var(--ik-peach)}
+body>.h10:not(.ab) .pillars li:nth-child(3) .pillar__ic{background:#E8E2F5;color:var(--ik-lilac)}
+body>.h10:not(.ab) .pillars li:nth-child(4) .pillar__ic{background:#DFEAF9;color:var(--ik-sky)}
+body>.h10:not(.ab) .stat:nth-child(1) .stat__ic{background:#DCEFF0;color:var(--ik-aqua)}
+body>.h10:not(.ab) .stat:nth-child(2) .stat__ic{background:#F5E1E9;color:var(--ik-rose)}
+body>.h10:not(.ab) .stat:nth-child(3) .stat__ic{background:#EDF0D7;color:var(--ik-lime)}
+body>.h10:not(.ab) .dcard:nth-child(1) .dcard__ic{background:#DFEAF9;color:var(--ik-sky)}
+body>.h10:not(.ab) .dcard:nth-child(2) .dcard__ic{background:#F8E6D6;color:var(--ik-peach)}
+body>.h10:not(.ab) .dcard:nth-child(3) .dcard__ic{background:#E8E2F5;color:var(--ik-lilac)}
+body>.h10:not(.ab) .dcard:nth-child(4) .dcard__ic{background:#EDF0D7;color:var(--ik-lime)}
+/* hover keeps the brand-green lift */
+body>.h10:not(.ab) .pillars li:hover .pillar__ic,body>.h10:not(.ab) .stat:hover .stat__ic,body>.h10:not(.ab) .dcard:is(:hover,.is-on) .dcard__ic{background:var(--green);color:#fff}
+/* hero coupons and testimonial cards: ink follows each card's own pastel */
+.h10 .hs-s:nth-child(1){--ink-t:var(--ik-mint)}
+.h10 .hs-s:nth-child(2){--ink-t:var(--ik-sky)}
+.h10 .hs-s:nth-child(3){--ink-t:var(--ik-lilac)}
+.h10 .hs-s:nth-child(4){--ink-t:var(--ik-aqua)}
+.h10 .hs-s:nth-child(5){--ink-t:var(--ik-rose)}
+.h10 .hs-s:nth-child(6){--ink-t:var(--ik-peach)}
+.h10 .ts-card:nth-child(1){--ink-t:var(--ik-peach)}
+.h10 .ts-card:nth-child(2){--ink-t:var(--ik-sky)}
+.h10 .ts-card:nth-child(3){--ink-t:var(--ik-mint)}
+.h10 .cred .pill .ic{color:var(--ik-mint)}
