@@ -1286,3 +1286,62 @@ body>.h10 section.test{--eb:var(--ik-lime)}
 body>.h10 section.final{--eb:var(--ik-mint)}
 body>.h10 :is(section:not(.hero) .pill,.cx-pill,.pg-pill){color:var(--eb,#4b5563)}
 body>.h10 :is(section:not(.hero) .pill,.cx-pill,.pg-pill) :is(.pill__dot,.cx-pill__dot){background:var(--eb,#1f9d55)}
+
+/* ==========================================================================
+   Flat colour pass (Home + About): no colour-to-colour gradients anywhere.
+   Kept on purpose: dot textures, fade masks, hard-edged marker highlights,
+   the hero gloss sweep and button shine (light, not colour), and the
+   fades over Selected Work images (one colour fading out).
+   ========================================================================== */
+body>.h10 .progress i,body>.h10 .flow__fill{background:var(--green)}
+body>.h10 section.cred{background:#fff}
+body>.h10:not(.ab) #industries{background:#fff}
+/* hero eyebrow */
+body>.h10 .hero-eb{background:#ecf8f1}
+body>.h10 .hero-eb__ic{background:#1d7a49}
+body>.h10 .hero-eb__t{background:none;color:#1d7a49;-webkit-text-fill-color:#1d7a49}
+body>.h10 .hero__start .hero__hl{background-image:linear-gradient(#DAF1E5,#DAF1E5)}
+/* core capabilities */
+body>.h10 .cx-tab[aria-current="true"]{background:color-mix(in srgb,var(--pt) 60%,#fff)}
+body>.h10 .cx-tab__n{background:#fff}
+body>.h10 .cx-tab[aria-current="true"] .cx-tab__n{background:var(--ac)}
+body>.h10 .cx-panel{background:color-mix(in srgb,var(--pt) 50%,#fff)}
+body>.h10 .cx-panel::before{content:none}
+body>.h10 .cx-checks .ic{background:#1d9a5b}
+body>.h10 .cx-logo{background:#fff}
+body>.h10 .cx-btn{background:#0b3a24}
+/* problems notes */
+body>.h10 .pb-note--p .pb-note__in{background:#fdeae6}
+body>.h10 .pb-note--s .pb-note__in{background:#e8f6ee}
+/* 8-week program */
+body>.h10 .pg-week.is-on .pg-card{background:color-mix(in srgb,var(--t) 30%,#fff)}
+body>.h10 .pg-cal__page{background-image:none;background-color:#fff}
+body>.h10 .pg-stage{background-image:radial-gradient(rgba(15,23,42,.08) 1px,transparent 1.4px);background-size:16px 16px}
+/* selected work media, CTA tickets, hero 8-week stub, testimonials, closing CTA */
+body>.h10 .sw-media{background:var(--accent-100,#f4f6f5)}
+body>.h10 .more{--cta-bg:radial-gradient(rgba(15,58,36,.06) 1px,transparent 1.4px) 0 0/18px 18px,#DAF1E5}
+body>.h10 .databanner{--cta-bg:radial-gradient(rgba(30,41,82,.06) 1px,transparent 1.4px) 0 0/18px 18px,#E8E2F5}
+body>.h10 .hs-cta{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.3px);background-size:14px 14px}
+body>.h10 .bcta--light{background:#f1faf5}
+body>.h10 .ts-card{background:#fff}
+body>.h10 .ts-card--lead{background:var(--t)}
+body>.h10:not(.ab) .final--card .grn{background-image:linear-gradient(#DAF1E5,#DAF1E5)}
+/* About page */
+body>.h10.ab .ahero{background:#fcfcfd}
+body>.h10.ab .ahero__title em{background:none;color:#1d7a49;-webkit-text-fill-color:#1d7a49}
+body>.h10.ab .mark{background:linear-gradient(transparent 14%,rgba(50,180,111,.42) 14%,rgba(50,180,111,.42) 88%,transparent 88%)}
+body>.h10.ab .way{background:#fff}
+
+/* ---------- mobile UX (Home + About) ---------- */
+/* in-page links (menu, CTAs, the hero coupons) land below the fixed header */
+.h10 section[id]{scroll-margin-top:88px}
+/* no grey flash on tap; buttons and chips keep a comfortable tap size */
+.h10 a,.h10 button,.h10 [tabindex]{-webkit-tap-highlight-color:transparent}
+@media (max-width:760px){
+  .h10 .h10-btn,.h10 .cx-btn,.h10 .sw-cta{min-height:50px}
+  .h10 .hs-s a{min-height:44px}
+}
+/* touch screens: hover-only lifts don't get stuck after a tap */
+@media (hover:none){
+  .h10 .step:hover .step__card.tk,.h10 .ts-card:hover,.h10 .cx-tab:hover,.h10 .pillars li:hover .pillar__ic,.h10 .stat:hover .stat__ic{transform:none}
+}
