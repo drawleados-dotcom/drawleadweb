@@ -11,6 +11,17 @@ $activeNav = 'pages';
 include __DIR__ . '/includes/header.php';
 ?>
 
+<?php
+$pagesMsg = [
+    'deleted'  => ['success', 'Page deleted.'],
+    'home'     => ['error', 'The live homepage can\'t be deleted. Point another page at "/" first, then delete this one.'],
+    'notfound' => ['error', 'That page no longer exists.'],
+    'error'    => ['error', 'The page couldn\'t be deleted. Nothing was changed.'],
+][$_GET['msg'] ?? ''] ?? null;
+if ($pagesMsg): ?>
+<div class="alert alert-<?= $pagesMsg[0] ?>"><?= h($pagesMsg[1]) ?></div>
+<?php endif; ?>
+
 <div class="card">
   <table>
     <thead><tr><th>Page Name</th><th>URL</th><th>Status</th><th>Meta Title</th><th>Last Updated</th><th></th></tr></thead>
@@ -34,7 +45,16 @@ include __DIR__ . '/includes/header.php';
         </td>
         <td><?= h($p['meta_title']) ?></td>
         <td><?= h(date('M j, Y', strtotime($p['updated_at']))) ?></td>
-        <td><?php if ($canEdit): ?><a class="row-link" href="page-edit.php?id=<?= (int) $p['id'] ?>">Edit →</a><?php endif; ?></td>
+        <td>
+          <?php if ($canEdit): ?><a class="row-link" href="page-edit.php?id=<?= (int) $p['id'] ?>">Edit →</a><?php endif; ?>
+          <?php if ($u['role'] === 'admin' && $p['slug'] !== '/'): ?>
+          <form method="post" action="page-delete.php" style="display:inline-block;margin-left:12px" onsubmit="return confirm(<?= h(json_encode('Delete the page "' . $p['name'] . '" (' . $p['slug'] . ') permanently?' . "\n\n" . 'Its content, history and access settings are removed too. This can\'t be undone. To hide it instead, open the page and set its status to Draft.')) ?>);">
+            <?= csrf_field() ?>
+            <input type="hidden" name="id" value="<?= (int) $p['id'] ?>">
+            <button type="submit" class="row-link" style="background:none;border:none;color:#e11d48;cursor:pointer;font:inherit;padding:0">Delete</button>
+          </form>
+          <?php endif; ?>
+        </td>
       </tr>
       <?php endforeach; ?>
     </tbody>
