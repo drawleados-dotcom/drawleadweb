@@ -2,22 +2,29 @@
 /**
  * Business Systems landing page (/business-systems, template "business-systems").
  *
- * In the home page's design language: it loads /assets/home10.css and
- * home10.js and wraps everything in .h10, so buttons, eyebrows, the word
- * reveal on headings, the palette and the footer are shared. What is
- * particular to this page is /assets/bizsys.css (scoped under .bs) and
- * /assets/bizsys.js. Each section has its own layout and interaction:
- *   01 hero          a "Business OS" console that boots module by module
- *   02 problems      chaos-to-clarity: app tiles react to each problem, then snap into order
- *   03 capabilities  bento of live mini product previews
- *   04 ecosystem     department map: pick one to see what it shares; leads-to-profit pipeline
- *   05 approach      a track of paper tickets that tear off their stubs as you scroll
- *   06 industries    case-file folders switched by tabs
- *   07 projects      before/after case files with a drag-to-compare slider
- *   08 final CTA     a message composer whose prompts open the booking calendar
- * All copy is server-rendered so Admin → Pages → Page Content can edit it.
- * Everything reads in full without JavaScript and stands still under
- * prefers-reduced-motion.
+ * Built on the home page's components and palette: /assets/home10.css and
+ * home10.js load first and the page sits in .h10, so the buttons, pills, word
+ * reveal on headings, tints and footer are shared with Home and About. What is
+ * particular to this page is /assets/bizsys.css (everything under .bz) and
+ * /assets/bizsys.js. Each section's layout follows what it says:
+ *
+ *   01 hero          the statement, beside a "business fingerprint": ridges no two
+ *                    businesses share, with the six modules on one green workflow
+ *   02 problems      sticky split: heading and the disconnected scene stay put
+ *                    while the six problems pass as a numbered index
+ *   03 capabilities  dark block holding one app window: the six capabilities as
+ *                    its sidebar, each with its own small product screen
+ *   04 ecosystem     twelve departments round a ring with the connected hub in
+ *                    the middle; picking one lights what it shares. Then Leads →
+ *                    Profit as a line of type
+ *   05 approach      four tinted cards that stack up as the page scrolls
+ *   06 industries    sticky intro beside a question accordion, one open at a time
+ *   07 projects      zig-zag rows: work photo with a From → To card, story beside
+ *   08 final CTA     deep-green close, the fingerprint again, the prompts
+ *
+ * All copy is server-rendered inside <section>s, so Admin → Pages → Page
+ * Content can edit it. Everything reads in full without JavaScript, and
+ * stands still under prefers-reduced-motion.
  */
 $activePage = 'business-systems';
 include __DIR__ . '/partials/nav.php';
@@ -35,7 +42,7 @@ $bsCase = function (string $slug, string $fallback) use ($pdo): string {
     }
 };
 
-// 01 · console modules [icon, tint, label, value, unit]
+// 01 · the modules that sit on the fingerprint's workflow ridge, and in the ERP screen [icon, tint, label, value, unit]
 $bsMods = [
     ['users', 'sky', 'CRM', '128', 'open leads'],
     ['briefcase', 'lilac', 'Projects', '24', 'active'],
@@ -46,7 +53,7 @@ $bsMods = [
 ];
 $bsPrinciples = [['puzzle', 'mint', 'No Generic Software'], ['target', 'sky', 'Business-Specific Engineering'], ['workflow', 'lilac', 'Connected Workflows'], ['shield', 'peach', 'Security-First Development']];
 
-// 02 · problems [icon, title, text] and the app tile each one shakes [label, glyph, messy x/y/rot, tidy x/y]
+// 02 · problems [icon, title, text]
 $bsProblems = [
     ['plug', 'Disconnected Software', 'Different departments use different applications that don\'t communicate with each other.'],
     ['db', 'Scattered Business Data', 'Customer records, project information and important business data remain spread across multiple platforms.'],
@@ -55,26 +62,18 @@ $bsProblems = [
     ['puzzle', 'Software That Doesn\'t Fit', 'Existing software cannot accommodate your specific workflows, hierarchy and business requirements.'],
     ['trend', 'Difficult to Scale', 'As your teams and operations expand, managing existing systems becomes increasingly complicated.'],
 ];
-$bsTiles = [
-    ['Billing App', 'wallet', '6%', '8%', '-9deg', '4%', '14%'],
-    ['Spreadsheets', 'grid', '54%', '4%', '7deg', '36%', '14%'],
-    ['Sticky Notes', 'briefcase', '30%', '34%', '-4deg', '68%', '14%'],
-    ['Email Threads', 'mail', '62%', '40%', '11deg', '4%', '52%'],
-    ['Old ERP', 'layers', '4%', '58%', '6deg', '36%', '52%'],
-    ['WhatsApp Groups', 'chat', '46%', '68%', '-8deg', '68%', '52%'],
-];
 
-// 03 · capabilities [icon, tint, title, text, size, preview]
+// 03 · capabilities [icon, tint, title, text, screen]
 $bsBuild = [
-    ['layers', 'mint', 'Custom ERP & Business Operating Systems', 'Connect your departments, people, processes and business activities through one unified operating system.', 'lg', 'os'],
-    ['users', 'sky', 'CRM & Customer Management', 'Manage leads, customer relationships, sales pipelines, follow-ups and customer interactions.', '', 'crm'],
-    ['briefcase', 'lilac', 'Project & Operations Management', 'Manage projects, tasks, resources, timelines, responsibilities and operational activities.', '', 'gantt'],
-    ['calendar', 'peach', 'HR & Workforce Management', 'Organize employees, attendance, responsibilities, payroll workflows and team activities.', '', 'hr'],
-    ['wallet', 'lime', 'Finance & Business Management', 'Connect expenses, invoices, payments, budgets, revenue and project-wise financial tracking.', '', 'fin'],
-    ['chip', 'rose', 'AI, Automation & System Integration', 'Integrate applications, automate repetitive processes and implement AI capabilities across business workflows.', 'lg', 'ai'],
+    ['layers', 'mint', 'Custom ERP & Business Operating Systems', 'Connect your departments, people, processes and business activities through one unified operating system.', 'os'],
+    ['users', 'sky', 'CRM & Customer Management', 'Manage leads, customer relationships, sales pipelines, follow-ups and customer interactions.', 'crm'],
+    ['briefcase', 'lilac', 'Project & Operations Management', 'Manage projects, tasks, resources, timelines, responsibilities and operational activities.', 'gantt'],
+    ['calendar', 'peach', 'HR & Workforce Management', 'Organize employees, attendance, responsibilities, payroll workflows and team activities.', 'hr'],
+    ['wallet', 'lime', 'Finance & Business Management', 'Connect expenses, invoices, payments, budgets, revenue and project-wise financial tracking.', 'fin'],
+    ['chip', 'rose', 'AI, Automation & System Integration', 'Integrate applications, automate repetitive processes and implement AI capabilities across business workflows.', 'ai'],
 ];
 
-// 04 · departments [key, label, tint] with what each shares (related keys, caption)
+// 04 · departments [key, label, tint] and what each shares (related keys, caption)
 $bsDepts = [
     ['sales', 'Sales & Marketing', 'mint'], ['leads', 'Lead Management', 'sky'], ['crm', 'CRM & Customer Relations', 'lilac'],
     ['projects', 'Project Management', 'aqua'], ['planning', 'Planning & Scheduling', 'peach'], ['procurement', 'Procurement & Purchasing', 'rose'],
@@ -104,6 +103,8 @@ $bsSteps = [
     ['Build & Integrate', 'Build technology around your workflows.', 'We develop custom applications, configure business systems and integrate existing platforms.', 'Custom Development · API Integration · System Configuration'],
     ['Deploy & Evolve', 'Make technology work in everyday operations.', 'We deploy systems, onboard employees, train teams and continuously improve workflows based on real operational feedback.', 'Deployment · Team Enablement · Optimization'],
 ];
+$bsStepIc = ['search', 'workflow', 'code', 'rocket'];
+$bsStepTint = ['peach', 'sky', 'lilac', 'lime'];
 
 // 06 · industries [icon, tint, industry, question, text, cta]
 $bsInd = [
@@ -115,285 +116,387 @@ $bsInd = [
     ['briefcase', 'lilac', 'Professional Services', 'Are You Losing Valuable Time Managing Clients and Team Workflows?', 'Connect CRM, project delivery, employee responsibilities, resource allocation and financial workflows.', 'Stop Losing Billable Hours'],
 ];
 
-// 07 · projects [tint, label, title, text, chips label, chips, from, to, href, from tiles, to modules]
+// 07 · projects [tint, label, title, text, chips label, chips, from, to, href, from tiles, to modules, photo, alt]
 $bsProjects = [
-    ['peach', 'Construction & Real Estate', 'Multiple Construction Operations. One Connected Business System.', 'A custom-engineered Construction Business OS connecting project management, site operations, procurement, materials, contractors and finance.', 'Connected operations', ['Project Management', 'Site Operations', 'Procurement', 'Material Management', 'Contractor Management', 'Finance'], 'Disconnected departments, spreadsheets and manual site updates.', 'One connected Construction Business Operating System.', $bsCase('from-manual-construction-operations-to-a-fully-integrated-erp-ecosystem', '/case-studies'), ['Excel sheets', 'Site diary', 'Phone calls', 'Paper bills'], ['Projects', 'Site Ops', 'Procurement', 'Materials', 'Contractors', 'Finance']],
-    ['sky', 'Ecommerce & D2C', 'Beyond Standard Shopify. Custom Shopping Experiences Built to Convert.', 'A custom Shopify experience featuring over 100 unique product pages, intuitive navigation and tailored functionality designed around the brand and its customers.', 'Connected capabilities', ['Custom Shopify Development', 'Product Pages', 'Storefront Engineering', 'Customer Experience', 'Conversion Optimization'], 'Standard ecommerce experiences and limited customization.', 'A custom-built shopping experience designed around the brand and its products.', '/case-studies?service=Ecommerce+Solutions', ['Stock theme', 'Plugins', 'Generic pages', 'Slow checkout'], ['Storefront', '100+ Product Pages', 'Navigation', 'Brand Story', 'Checkout', 'Analytics']],
-    ['mint', 'Healthcare', 'Connecting Multi-Branch Healthcare Operations Through Technology.', 'Digital and operational solutions supporting a multi-branch physiotherapy business through online presence, marketing and operational technology initiatives.', 'Connected capabilities', ['Healthcare Systems', 'Patient Management', 'Multi-Branch Operations', 'Digital Presence', 'Workflow Solutions'], 'Separate operational and digital activities.', 'More connected digital and operational workflows.', $bsCase('from-fragmented-clinic-operations-to-a-unified-multi-branch-physiotherapy-management-system', '/case-studies'), ['Branch A', 'Branch B', 'Separate ads', 'Paper records'], ['Patients', 'Appointments', 'Branches', 'Digital Presence', 'Marketing', 'Workflows']],
+    ['peach', 'Construction & Real Estate', 'Multiple Construction Operations. One Connected Business System.', 'A custom-engineered Construction Business OS connecting project management, site operations, procurement, materials, contractors and finance.', 'Connected operations', ['Project Management', 'Site Operations', 'Procurement', 'Material Management', 'Contractor Management', 'Finance'], 'Disconnected departments, spreadsheets and manual site updates.', 'One connected Construction Business Operating System.', $bsCase('from-manual-construction-operations-to-a-fully-integrated-erp-ecosystem', '/case-studies'), ['Excel sheets', 'Site diary', 'Phone calls', 'Paper bills'], ['Projects', 'Site Ops', 'Procurement', 'Materials', 'Contractors', 'Finance'], 'construction', 'Two workers cutting and laying steel bars on a construction site'],
+    ['sky', 'Ecommerce & D2C', 'Beyond Standard Shopify. Custom Shopping Experiences Built to Convert.', 'A custom Shopify experience featuring over 100 unique product pages, intuitive navigation and tailored functionality designed around the brand and its customers.', 'Connected capabilities', ['Custom Shopify Development', 'Product Pages', 'Storefront Engineering', 'Customer Experience', 'Conversion Optimization'], 'Standard ecommerce experiences and limited customization.', 'A custom-built shopping experience designed around the brand and its products.', '/case-studies?service=Ecommerce+Solutions', ['Stock theme', 'Plugins', 'Generic pages', 'Slow checkout'], ['Storefront', '100+ Product Pages', 'Navigation', 'Brand Story', 'Checkout', 'Analytics'], 'ecommerce', 'A rail of black, grey and white T-shirts on hangers'],
+    ['mint', 'Healthcare', 'Connecting Multi-Branch Healthcare Operations Through Technology.', 'Digital and operational solutions supporting a multi-branch physiotherapy business through online presence, marketing and operational technology initiatives.', 'Connected capabilities', ['Healthcare Systems', 'Patient Management', 'Multi-Branch Operations', 'Digital Presence', 'Workflow Solutions'], 'Separate operational and digital activities.', 'More connected digital and operational workflows.', $bsCase('from-fragmented-clinic-operations-to-a-unified-multi-branch-physiotherapy-management-system', '/case-studies'), ['Branch A', 'Branch B', 'Separate ads', 'Paper records'], ['Patients', 'Appointments', 'Branches', 'Digital Presence', 'Marketing', 'Workflows'], 'healthcare', 'A physiotherapist fitting a wrist brace on a patient\'s arm'],
 ];
 
 // 08 · composer prompts
 $bsPrompts = ['We use too many disconnected tools', 'We need a custom ERP', 'Automate our follow-ups', 'Connect our departments and branches'];
+
+/*
+ * The business fingerprint (01 and 08). Eighteen ridges round a core, each a
+ * slightly warped loop broken in one or two places, clipped to a fingertip
+ * oval. Seeded, so it is the same drawing on every visit. Ridge 8 is left out
+ * of the grey set and drawn whole in green: the workflow the six modules sit on.
+ * Coordinates are in a 400 × 480 box.
+ */
+$bzPrint = (function (): array {
+    $cx = 200; $cy = 236; $ox = 184; $oy = 228; $steps = 96;
+    $rnd = fn (float $s): float => fmod(abs(sin($s * 12.9898) * 43758.5453), 1.0);
+    $pt = function (int $i, float $t) use ($cx, $cy): array {
+        $r = 10 + $i * 12.4;
+        $f = 1 + 0.055 * sin(2 * $t + 0.33 * $i) + 0.03 * sin(3 * $t - 0.21 * $i);
+        return [$cx + $r * 0.9 * $f * cos($t), $cy + $i * 1.4 + $r * 1.1 * $f * sin($t)];
+    };
+    $f1 = fn (float $v): string => rtrim(rtrim(number_format($v, 1, '.', ''), '0'), '.');
+    $ridges = [];
+    for ($i = 0; $i < 18; $i++) {
+        if ($i === 8) {
+            continue;
+        }
+        $gaps = [[$rnd($i + 1.3) * 2 * M_PI, 0.14 + $rnd($i + 7.1) * 0.2]];
+        if ($i % 3 === 1) {
+            $gaps[] = [$rnd($i + 13.7) * 2 * M_PI, 0.1 + $rnd($i + 3.3) * 0.14];
+        }
+        $seg = [];
+        for ($k = 0; $k <= $steps; $k++) {
+            $t = -M_PI / 2 + $k * 2 * M_PI / $steps;
+            [$x, $y] = $pt($i, $t);
+            $skip = (($x - $cx) / $ox) ** 2 + (($y - $cy) / $oy) ** 2 > 1;
+            foreach ($gaps as [$g, $w]) {
+                if (abs(fmod($t - $g + 3 * M_PI, 2 * M_PI) - M_PI) < $w / 2) $skip = true;
+            }
+            if ($skip) {
+                if (count($seg) > 2) $ridges[] = 'M' . implode('L', $seg);
+                $seg = [];
+                continue;
+            }
+            $seg[] = $f1($x) . ' ' . $f1($y);
+        }
+        if (count($seg) > 2) $ridges[] = 'M' . implode('L', $seg);
+    }
+    $hi = [];
+    for ($k = 0; $k < $steps; $k++) {
+        [$x, $y] = $pt(8, -M_PI / 2 + $k * 2 * M_PI / $steps);
+        $hi[] = $f1($x) . ' ' . $f1($y);
+    }
+    $nodes = [];
+    for ($n = 0; $n < 6; $n++) {
+        [$x, $y] = $pt(8, -M_PI / 2 + $n * M_PI / 3);
+        $nodes[] = [round($x / 4, 2), round($y / 4.8, 2)];
+    }
+    return ['ridges' => $ridges, 'hi' => 'M' . implode('L', $hi) . 'Z', 'nodes' => $nodes];
+})();
+$bzRidges = function (bool $draw) use ($bzPrint): string {
+    $out = '';
+    foreach ($bzPrint['ridges'] as $i => $d) {
+        $out .= '<path d="' . $d . '"' . ($draw ? ' pathLength="1" style="--i:' . $i . '"' : '') . '/>';
+    }
+    return $out;
+};
+
+/*
+ * The department ring (04): twelve points round a circle in a 1200 × 800 box,
+ * labels a little further out, and a chord for every pair that shares work.
+ */
+$bzRing = [];
+foreach ($bsDepts as $k => [$key]) {
+    $a = deg2rad(-90 + $k * 30);
+    $bzRing[$key] = ['k' => $k, 'x' => 600 + 300 * cos($a), 'y' => 400 + 300 * sin($a), 'lx' => 600 + 336 * cos($a), 'ly' => 400 + 336 * sin($a), 'c' => cos($a)];
+}
+$bzChords = [];
+foreach ($bsLinks as $key => [$rel]) {
+    foreach (explode(' ', $rel) as $to) {
+        $pair = [$key, $to];
+        sort($pair);
+        $bzChords[implode('|', $pair)] = $pair;
+    }
+}
 ?>
 <link rel="stylesheet" href="<?= asset_url('/assets/home10.css') ?>">
 <link rel="stylesheet" href="<?= asset_url('/assets/bizsys.css') ?>">
 <script>document.documentElement.classList.add('js')</script>
 
-<div class="h10 bs">
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z" fill="currentColor" stroke="none"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" fill="currentColor" stroke="none"/></symbol><symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2.2 2.2L15 10"/></symbol><symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12.5l9 5 9-5"/><path d="M3 17l9 5 9-5" opacity=".55"/></symbol><symbol id="i-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0110.5 4h3A1.5 1.5 0 0115 5.5V7M3 13h18"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></symbol><symbol id="i-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="10" height="18" rx="1.5"/><path d="M15 9h4v12h-4M8 7h4M8 11h4M8 15h4"/></symbol><symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.4 11h10.4L20 8H6.3"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></symbol><symbol id="i-puzzle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h4a2 2 0 1 1 4 0h4v4a2 2 0 1 1 0 4v4H4v-4a2 2 0 1 0 0-4z"/></symbol><symbol id="i-store" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l1.5-5h13L20 9M4 9h16v1.5a2.7 2.7 0 0 1-5.3.7 2.7 2.7 0 0 1-5.4 0A2.7 2.7 0 0 1 4 10.5zM5.5 13v7h13v-7M10 20v-4h4v4"/></symbol><symbol id="i-chip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4M10.5 12h3"/></symbol><symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></symbol><symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16.5 14.5h1"/></symbol><symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></symbol><symbol id="i-verified" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l2.3 1.8 2.9-.4 1.1 2.7 2.7 1.1-.4 2.9 1.8 2.3-1.8 2.3.4 2.9-2.7 1.1-1.1 2.7-2.9-.4-2.3 1.8-2.3-1.8-2.9.4-1.1-2.7-2.7-1.1.4-2.9L2.5 12l1.8-2.3-.4-2.9 2.7-1.1 1.1-2.7 2.9.4z"/><path d="M8.5 12.2l2.4 2.4 4.6-4.6"/></symbol><symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></symbol><symbol id="i-hardhat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h18v2.5H3zM5 17a7 7 0 0 1 14 0M12 10V6.5M9 11V8.2M15 11V8.2"/></symbol><symbol id="i-stetho" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6a4 4 0 0 0 8 0V3M10 13v2.5a4 4 0 0 0 8 0V14"/><circle cx="18" cy="12" r="2"/></symbol><symbol id="i-wa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5z"/><path d="M9.4 8.6c.3 2.2 2.5 4.6 5 5.2l1.1-1.2-1.7-1-1 .8c-1-.4-1.9-1.3-2.3-2.3l.8-1-1-1.7z"/></symbol><symbol id="i-bot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="3.5"/><path d="M12 8V5M9.5 13v1.6M14.5 13v1.6M2 13v3M22 13v3"/><circle cx="12" cy="4" r="1"/></symbol><symbol id="i-megaphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4l12 5V5z"/><path d="M16 9.5a3 3 0 010 5M7 14.5V19"/></symbol><symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.8 0 5 2.2 5 5"/></symbol><symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 018 0v3"/></symbol><symbol id="i-db" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></symbol><symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A1.5 1.5 0 015.5 4h13A1.5 1.5 0 0120 5.5v9a1.5 1.5 0 01-1.5 1.5H10l-4.5 4v-4h0A1.5 1.5 0 014 14.5z"/><path d="M8 9h8M8 12h5"/></symbol><symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></symbol><symbol id="i-workflow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="14.5" y="13.5" width="6.5" height="6.5" rx="1.8"/><path d="M9.5 7.2H12a3 3 0 013 3v3.3"/></symbol><symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol><symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></symbol><symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 2 5 5 5 9l-2.5 3h-5L7 12c0-4 2-7 5-9z"/><circle cx="12" cy="10" r="1.6"/><path d="M9.5 15L7 19M14.5 15L17 19M12 15v5"/></symbol><symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol><symbol id="i-hierarchy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="5" rx="1.2"/><rect x="3" y="16" width="6" height="5" rx="1.2"/><rect x="15" y="16" width="6" height="5" rx="1.2"/><path d="M12 8v4M6 16v-4h12v4"/></symbol><symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-8-4.6-8-10.2A4.3 4.3 0 0112 7.2a4.3 4.3 0 018 2.6C20 15.4 12 20 12 20z"/><path d="M7 12.2h2.6l1.4-2.4 2 4.4 1.4-2H17"/></symbol><symbol id="i-gem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12l4 5-10 11L2 9z"/><path d="M2 9h20M9 4L7 9l5 11M15 4l2 5-5 11"/></symbol><symbol id="i-factory" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V10l6 3.5V10l6 3.5V5h4v16z"/><path d="M8 17h2M13 17h2"/></symbol><symbol id="i-plug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 01-12 0zM12 17v4"/></symbol><symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></symbol><symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".6"/></symbol><symbol id="i-quote" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h4v4.2c0 3-1.5 5-4 6M15 7h4v4.2c0 3-1.5 5-4 6"/></symbol><symbol id="i-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5v14M15 5v14"/></symbol><symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5l11 7-11 7z" fill="currentColor"/></symbol><symbol id="i-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></symbol><symbol id="i-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></symbol><symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 12l6-6 6 6"/></symbol><symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></symbol></defs></svg>
+<div class="h10 bz">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z" fill="currentColor" stroke="none"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" fill="currentColor" stroke="none"/></symbol><symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2.2 2.2L15 10"/></symbol><symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12.5l9 5 9-5"/><path d="M3 17l9 5 9-5" opacity=".55"/></symbol><symbol id="i-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0110.5 4h3A1.5 1.5 0 0115 5.5V7M3 13h18"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></symbol><symbol id="i-puzzle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h4a2 2 0 1 1 4 0h4v4a2 2 0 1 1 0 4v4H4v-4a2 2 0 1 0 0-4z"/></symbol><symbol id="i-chip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4M10.5 12h3"/></symbol><symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></symbol><symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16.5 14.5h1"/></symbol><symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></symbol><symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></symbol><symbol id="i-hardhat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h18v2.5H3zM5 17a7 7 0 0 1 14 0M12 10V6.5M9 11V8.2M15 11V8.2"/></symbol><symbol id="i-stetho" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6a4 4 0 0 0 8 0V3M10 13v2.5a4 4 0 0 0 8 0V14"/><circle cx="18" cy="12" r="2"/></symbol><symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.8 0 5 2.2 5 5"/></symbol><symbol id="i-db" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></symbol><symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></symbol><symbol id="i-workflow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="14.5" y="13.5" width="6.5" height="6.5" rx="1.8"/><path d="M9.5 7.2H12a3 3 0 013 3v3.3"/></symbol><symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol><symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></symbol><symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 2 5 5 5 9l-2.5 3h-5L7 12c0-4 2-7 5-9z"/><circle cx="12" cy="10" r="1.6"/><path d="M9.5 15L7 19M14.5 15L17 19M12 15v5"/></symbol><symbol id="i-gem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12l4 5-10 11L2 9z"/><path d="M2 9h20M9 4L7 9l5 11M15 4l2 5-5 11"/></symbol><symbol id="i-factory" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V10l6 3.5V10l6 3.5V5h4v16z"/><path d="M8 17h2M13 17h2"/></symbol><symbol id="i-plug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 01-12 0zM12 17v4"/></symbol><symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></symbol><symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".6"/></symbol><symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></symbol><symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A1.5 1.5 0 015.5 4h13A1.5 1.5 0 0120 5.5v9a1.5 1.5 0 01-1.5 1.5H10l-4.5 4v-4h0A1.5 1.5 0 014 14.5z"/><path d="M8 9h8M8 12h5"/></symbol></defs></svg>
 <a class="skip" href="#bs-top">Skip to content</a>
 <div class="progress" aria-hidden="true"><i></i></div><main>
 
-<!-- 01 · Hero: the Business OS boots -->
-<section class="bsh bs-band" id="bs-top"><span class="bs-idx" aria-hidden="true">01</span>
-  <div class="wrap bsh__grid">
-    <div class="bsh__copy">
-      <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Business Systems · Custom Software · Business OS</span>
-      <h1 class="bsh__h1">Your Business Is Unique. <span class="bsh__hl">Your Systems Should Work That Way.</span></h1>
-      <p class="bsh__lede reveal" style="--d:.2s">Every business has its own workflows, departments, people and operational challenges. We understand how your business works and engineer custom technology that connects your operations, simplifies processes and gives you better control.</p>
-      <p class="bsh__lede bsh__lede--2 reveal" style="--d:.26s">From custom ERP and Business Operating Systems to CRM, AI and workflow automation, we build technology around your actual business requirements.</p>
-      <div class="bsh__ctas reveal" style="--d:.32s">
-        <a class="h10-btn bs-btn" href="/book" data-book><span>Build Your Business System</span><?= $bsArrow ?></a>
-        <a class="h10-btn bs-btn--ghost" href="#capabilities"><span>Explore Our Capabilities</span><?= $bsArrow ?></a>
-      </div>
-      <ul class="bsh__proof reveal" style="--d:.38s" role="list"><li><b>50+</b> projects delivered</li><li><b>20+</b> industries</li><li><b>8-week</b> implementation program</li></ul>
-    </div>
-    <div class="cs-wrap reveal" style="--d:.2s"><span class="cs-sheet cs-sheet--1" aria-hidden="true"></span><span class="cs-sheet cs-sheet--2" aria-hidden="true"></span>
-    <div class="cs" aria-hidden="true" data-bs-console data-tilt>
-      <div class="cs__bar"><span class="cs__dots"><i></i><i></i><i></i></span><b>Business OS</b><span class="cs__live"><i></i>Live</span></div>
-      <div class="cs__boot"><span data-bs-boot>6 of 6 modules connected</span><i class="cs__prog"><u></u></i></div>
-      <div class="cs__stage">
-        <div class="cs__core"><span class="cs__ring"></span><span class="cs__dot"><?= $bsIc('layers') ?></span><small>One connected system</small></div>
-        <ul class="cs__mods">
-<?php foreach ($bsMods as $i => [$icon, $tint, $label, $val, $unit]): ?>
-          <li class="bs-tint--<?= $tint ?>" style="--i:<?= $i ?>"><span class="cs__ic"><?= $bsIc($icon) ?></span><span class="cs__lb"><?= h($label) ?></span><b<?= ctype_digit($val) ? ' data-bs-tick' : '' ?>><?= h($val) ?></b><em><?= h($unit) ?></em></li>
+<!-- 01 · Hero: the statement and the business fingerprint -->
+<section class="bsh bz-hero" id="bs-top">
+  <div class="wrap">
+    <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Business Systems · Custom Software · Business OS</span>
+    <h1 class="bz-hero__h1">Your Business Is Unique. <span class="bz-hero__h1b">Your Systems Should Work That Way.</span></h1>
+    <div class="bz-hero__grid">
+      <figure class="bz-print" aria-hidden="true">
+        <svg class="bz-print__svg" viewBox="0 0 400 480" focusable="false">
+          <g class="bz-print__ridges"><?= $bzRidges(true) ?></g>
+          <path class="bz-print__hi" id="bz-flow" d="<?= $bzPrint['hi'] ?>" pathLength="1"/>
+          <circle class="bz-print__dot" r="5"><animateMotion dur="14s" repeatCount="indefinite"><mpath href="#bz-flow"/></animateMotion></circle>
+        </svg>
+<?php foreach ($bsMods as $i => [$icon, $tint, $label]): [$x, $y] = $bzPrint['nodes'][$i]; ?>
+        <span class="bz-print__mod t-<?= $tint ?>" style="left:<?= $x ?>%;top:<?= $y ?>%;--i:<?= $i ?>"><i><?= $bsIc($icon) ?></i><?= h($label) ?></span>
+<?php endforeach; ?>
+      </figure>
+      <div class="bz-hero__copy">
+        <p class="bz-hero__lede reveal" style="--d:.15s">Every business has its own workflows, departments, people and operational challenges. We understand how your business works and engineer custom technology that connects your operations, simplifies processes and gives you better control.</p>
+        <p class="bz-hero__sub reveal" style="--d:.22s">From custom ERP and Business Operating Systems to CRM, AI and workflow automation, we build technology around your actual business requirements.</p>
+        <div class="bz-hero__ctas reveal" style="--d:.28s">
+          <a class="h10-btn h10-btn--dark" href="/book" data-book><span>Build Your Business System</span><?= $bsArrow ?></a>
+          <a class="h10-btn bz-btn-line" href="#capabilities"><span>Explore Our Capabilities</span><?= $bsArrow ?></a>
+        </div>
+        <ul class="bz-stats reveal" style="--d:.34s" role="list">
+          <li><b><span data-count="50">50</span>+</b><span>projects delivered</span></li>
+          <li><b><span data-count="20">20</span>+</b><span>industries</span></li>
+          <li><b>8-week</b><span>implementation program</span></li>
+        </ul>
+        <ul class="bz-principles reveal" style="--d:.4s" role="list" aria-label="Our engineering principles">
+<?php foreach ($bsPrinciples as [$icon, $tint, $label]): ?>
+          <li class="t-<?= $tint ?>"><i><?= $bsIc($icon) ?></i><?= h($label) ?></li>
 <?php endforeach; ?>
         </ul>
       </div>
-      <p class="cs__feed" data-bs-feed>New lead synced to CRM · Sales</p>
-    </div></div>
-  </div>
-  <div class="wrap">
-    <div class="ptix reveal" style="--d:.4s">
-      <span class="ptix__label" aria-hidden="true">Principles</span>
-      <ul class="ptix__row" role="list" aria-label="Our engineering principles">
-<?php foreach ($bsPrinciples as [$icon, $tint, $label]): ?>
-        <li class="ptix__s bs-tint--<?= $tint ?>"><span class="bs-tile"><?= $bsIc($icon) ?></span><span><?= h($label) ?></span></li>
-<?php endforeach; ?>
-      </ul>
     </div>
   </div>
 </section>
 
-<!-- 02 · The business problem: chaos to clarity -->
-<section class="bsp bs-band" id="challenges"><span class="bs-idx" aria-hidden="true">02</span>
-  <div class="wrap">
-    <div class="bs-head">
-      <div>
-        <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>The Challenges of Running a Growing Business</span>
-        <h2 class="bs-h2">Growing Your Business Shouldn't Mean Managing More Complexity.</h2>
+<!-- 02 · The business problem: sticky split, the six problems as an index -->
+<section class="bz-prob" id="challenges">
+  <div class="wrap bz-split">
+    <div class="bz-split__side">
+      <div class="bz-split__stick">
+        <span class="pill bz-pill t-rose reveal"><span class="pill__dot" aria-hidden="true"></span>The Challenges of Running a Growing Business</span>
+        <h2 class="h2">Growing Your Business Shouldn't Mean Managing More Complexity.</h2>
+        <p class="lede reveal" style="--d:.1s">As your business grows, managing operations through disconnected software, spreadsheets and manual processes becomes increasingly difficult.</p>
+        <figure class="bz-prob__art reveal" style="--d:.16s"><img src="/assets/about/ai-before.webp" alt="Five people on separate islands, each with their own tool, and cables that connect to nothing" width="1500" height="1200" loading="lazy" decoding="async"></figure>
+        <a class="h10-btn h10-btn--dark reveal" href="/book" data-book><span>Let's Fix Your Business Workflows</span><?= $bsArrow ?></a>
       </div>
-      <p class="bs-lede reveal" style="--d:.1s">As your business grows, managing operations through disconnected software, spreadsheets and manual processes becomes increasingly difficult.</p>
     </div>
-    <ol class="bigp" role="list">
+    <ol class="bz-index" role="list">
 <?php foreach ($bsProblems as $i => [$icon, $title, $text]): ?>
-      <li class="bigp__item reveal" style="--d:<?= ($i % 3) * .06 ?>s"><span class="bigp__n" aria-hidden="true"><?= $bsN($i) ?></span><span class="bigp__ic"><?= $bsIc($icon) ?></span><h3><?= h($title) ?></h3><p><?= h($text) ?></p></li>
-<?php endforeach; ?>
-    </ol>
-    <div class="bs-cta-row reveal"><a class="h10-btn bs-btn" href="/book" data-book><span>Let's Fix Your Business Workflows</span><?= $bsArrow ?></a></div>
-  </div>
-</section>
-
-<!-- 03 · What we engineer: bento of live previews -->
-<section class="bsc bs-band" id="capabilities"><span class="bs-idx" aria-hidden="true">03</span>
-  <div class="wrap">
-    <div class="bs-head">
-      <div>
-        <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Custom Business Systems &amp; Software Development</span>
-        <h2 class="bs-h2">Everything Your Business Needs. Engineered Around You.</h2>
-      </div>
-      <p class="bs-lede reveal" style="--d:.1s">We design and develop technology solutions that connect your departments, automate workflows and simplify business operations.</p>
-    </div>
-    <div class="bento">
-<?php foreach ($bsBuild as $i => [$icon, $tint, $title, $text, $size, $pv]): ?>
-      <article data-tilt class="bento__card bs-tint--<?= $tint ?><?= $size === 'lg' ? ' bento__card--lg' : '' ?> reveal" style="--d:<?= $i * .05 ?>s">
-        <div class="pv pv--<?= $pv ?>" aria-hidden="true">
-<?php if ($pv === 'os'): ?>
-          <span class="pv-os__core">OS</span><span class="pv-os__m" style="--a:0">Sales</span><span class="pv-os__m" style="--a:1">Projects</span><span class="pv-os__m" style="--a:2">HR</span><span class="pv-os__m" style="--a:3">Finance</span><span class="pv-os__m" style="--a:4">Stock</span><span class="pv-os__m" style="--a:5">Reports</span>
-<?php elseif ($pv === 'crm'): ?>
-          <div class="pv-crm__col"><small>New</small><i></i><i class="mv"></i></div><div class="pv-crm__col"><small>Qualified</small><i></i></div><div class="pv-crm__col"><small>Won</small><i class="won"></i></div>
-<?php elseif ($pv === 'gantt'): ?>
-          <i style="--s:0;--w:46%"></i><i style="--s:18%;--w:40%"></i><i style="--s:36%;--w:34%"></i><i style="--s:52%;--w:44%"></i>
-<?php elseif ($pv === 'hr'): ?>
-<?php for ($d = 0; $d < 21; $d++): ?><i class="<?= in_array($d, [4, 11, 17], true) ? 'off' : '' ?>" style="--d:<?= $d ?>"></i><?php endfor; ?>
-<?php elseif ($pv === 'fin'): ?>
-          <div><span>INV-1042</span><b>₹48,200</b><em class="due">Due</em></div><div><span>INV-1041</span><b>₹1,26,000</b><em>Paid</em></div><div><span>INV-1040</span><b>₹32,750</b><em>Paid</em></div>
-<?php else: ?>
-          <svg viewBox="0 0 240 110" focusable="false"><path class="pv-ai__ln" d="M30 55H90M90 55L150 25M90 55L150 85M150 25H210M150 85H210"/><circle cx="30" cy="55" r="9"/><circle cx="90" cy="55" r="12" class="hub"/><circle cx="150" cy="25" r="9"/><circle cx="150" cy="85" r="9"/><circle cx="210" cy="25" r="9"/><circle cx="210" cy="85" r="9"/></svg>
-<?php endif; ?>
-        </div>
-        <div class="bento__txt">
-          <span class="bento__n"><?= $bsN($i) ?></span>
-          <h3><?= h($title) ?></h3>
-          <p><?= h($text) ?></p>
-        </div>
-      </article>
-<?php endforeach; ?>
-    </div>
-    <div class="bs-cta-row reveal"><a class="h10-btn bs-btn" href="#projects"><span>Explore What We Can Build</span><?= $bsArrow ?></a></div>
-  </div>
-</section>
-
-<!-- 04 · Connected ecosystem: the department map -->
-<section class="bse bs-band" id="ecosystem"><span class="bs-idx" aria-hidden="true">04</span>
-  <div class="wrap">
-    <div class="bs-head bs-head--center">
-      <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>One Connected Business. Every Department Working Together.</span>
-      <h2 class="bs-h2">Connect Every Part of Your Business Through One System.</h2>
-      <p class="bs-lede reveal" style="--d:.1s">Your business shouldn't operate through disconnected departments and isolated applications. We engineer connected systems that allow information, responsibilities and workflows to move across your organization.</p>
-    </div>
-    <div class="map reveal" data-bs-map>
-      <span class="map__k">Business Departments &amp; Operations</span>
-      <ul class="map__col map__col--l" role="list">
-<?php foreach (array_slice($bsDepts, 0, 6) as [$key, $label, $tint]): ?>
-        <li><button type="button" class="map__d bs-tint--<?= $tint ?>" data-dept="<?= $key ?>" data-rel="<?= h($bsLinks[$key][0]) ?>" data-cap="<?= h($bsLinks[$key][1]) ?>"><i class="map__dot" aria-hidden="true"></i><?= h($label) ?></button></li>
-<?php endforeach; ?>
-      </ul>
-      <div class="map__core"><span class="map__pulse" aria-hidden="true"></span><span class="map__logo" aria-hidden="true">D</span><b>Business OS</b><p class="map__cap" data-bs-cap aria-live="polite">Pick a department to see what it shares.</p></div>
-      <ul class="map__col map__col--r" role="list">
-<?php foreach (array_slice($bsDepts, 6) as [$key, $label, $tint]): ?>
-        <li><button type="button" class="map__d bs-tint--<?= $tint ?>" data-dept="<?= $key ?>" data-rel="<?= h($bsLinks[$key][0]) ?>" data-cap="<?= h($bsLinks[$key][1]) ?>"><i class="map__dot" aria-hidden="true"></i><?= h($label) ?></button></li>
-<?php endforeach; ?>
-      </ul>
-    </div>
-    <div class="pipe reveal" data-bs-pipe>
-      <div class="pipe__copy"><span class="map__k">From Leads to Profit</span><p>Connect customer acquisition, sales, project execution, team activities, operational expenses and financial performance through structured business workflows.</p></div>
-      <div class="pipe__track">
-        <i class="pipe__line" aria-hidden="true"><u></u></i><i class="pipe__token" aria-hidden="true"></i>
-        <ol class="pipe__steps" role="list">
-<?php foreach ($bsFlow as $i => $step): ?>
-          <li style="--i:<?= $i ?>"><span class="pipe__dot" aria-hidden="true"></span><?= h($step) ?></li>
-<?php endforeach; ?>
-        </ol>
-      </div>
-    </div>
-    <div class="bs-cta-row bs-cta-row--center reveal"><a class="h10-btn bs-btn" href="/book" data-book><span>Build Your Connected Business</span><?= $bsArrow ?></a></div>
-  </div>
-</section>
-
-<!-- 05 · Engineering approach: tear-off ticket track -->
-<section class="bsa bs-band" id="approach"><span class="bs-idx" aria-hidden="true">05</span>
-  <div class="wrap">
-    <div class="bs-head">
-      <div>
-        <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Working With Your Team. Building for Your Business.</span>
-        <h2 class="bs-h2">We Don't Adapt Your Business to Software. We Engineer Software Around Your Business.</h2>
-      </div>
-      <div class="bs-lede reveal" style="--d:.1s"><p>Every business operates differently. That's why we work directly with your team to understand existing processes, identify challenges and engineer technology around your actual business requirements.</p><a class="h10-btn bs-btn" href="/book" data-book><span>Discuss Your Business Requirements</span><?= $bsArrow ?></a></div>
-    </div>
-    <ol class="steps4" role="list">
-<?php foreach ($bsSteps as $i => [$label, $title, $text, $tags]): ?>
-      <li class="steps4__item reveal" style="--d:<?= $i * .08 ?>s">
-        <span class="steps4__n" aria-hidden="true"><?= $bsN($i) ?></span>
-        <span class="steps4__k"><?= h($label) ?></span>
-        <h3><?= h($title) ?></h3>
-        <p><?= h($text) ?></p>
-        <p class="steps4__tags"><?= h($tags) ?></p>
+      <li class="bz-index__row reveal">
+        <span class="bz-index__n" aria-hidden="true"><?= $bsN($i) ?></span>
+        <div class="bz-index__txt"><h3><?= h($title) ?></h3><p><?= h($text) ?></p></div>
+        <span class="bz-index__ic"><?= $bsIc($icon) ?></span>
       </li>
 <?php endforeach; ?>
     </ol>
   </div>
 </section>
 
-<!-- 06 · Industries: case-file folders -->
-<section class="bsi bs-band" id="industries"><span class="bs-idx" aria-hidden="true">06</span>
-  <div class="wrap">
-    <div class="bs-head">
-      <div>
-        <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Same Industry ≠ Same Business Challenges</span>
-        <h2 class="bs-h2">We Don't Build for Industries. We Build for Businesses.</h2>
+<!-- 03 · What we engineer: one app window, the capabilities as its sidebar -->
+<section class="bz-caps" id="capabilities">
+  <div class="bz-dark">
+    <div class="wrap">
+      <div class="bz-head bz-head--dark">
+        <div>
+          <span class="pill bz-pill--dark reveal"><span class="pill__dot" aria-hidden="true"></span>Custom Business Systems &amp; Software Development</span>
+          <h2 class="h2 h2--light">Everything Your Business Needs. Engineered Around You.</h2>
+        </div>
+        <p class="lede lede--light reveal" style="--d:.1s">We design and develop technology solutions that connect your departments, automate workflows and simplify business operations.</p>
       </div>
-      <div class="bs-lede reveal" style="--d:.1s"><p>Even two businesses within the same industry can have completely different workflows, organizational structures and operational challenges.</p><p>We understand your business, study your processes and engineer technology around your specific requirements.</p></div>
-    </div>
-    <div class="files reveal" data-bs-files>
-      <div class="files__tabs" role="tablist" aria-label="Industries" aria-orientation="vertical">
-<?php foreach ($bsInd as $i => [$icon, $tint, $ind]): ?>
-        <button type="button" role="tab" class="files__tab bs-tint--<?= $tint ?>" id="bsi-t<?= $i ?>" aria-controls="bsi-p<?= $i ?>" aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"<?= $i ? ' tabindex="-1"' : '' ?>><b><?= $bsN($i) ?></b><?= h($ind) ?></button>
+      <div class="bz-win reveal" data-bz-tour>
+        <div class="bz-win__bar" aria-hidden="true"><span class="bz-win__dots"><i></i><i></i><i></i></span><b>Business OS</b><span class="bz-win__live"><i></i>Live</span></div>
+        <div class="bz-win__body">
+          <div class="bz-win__nav" role="tablist" aria-label="What we engineer" aria-orientation="vertical">
+<?php foreach ($bsBuild as $i => [$icon, $tint, $title]): ?>
+            <button type="button" role="tab" class="bz-win__tab t-<?= $tint ?>" id="bzc-t<?= $i ?>" aria-controls="bzc-p<?= $i ?>" aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"<?= $i ? ' tabindex="-1"' : '' ?>><i><?= $bsIc($icon) ?></i><span><?= h($title) ?></span></button>
 <?php endforeach; ?>
-      </div>
-      <div class="files__stack">
-<?php foreach ($bsInd as $i => [$icon, $tint, $ind, $q, $text, $cta]): ?>
-        <article class="file bs-tint--<?= $tint ?>" role="tabpanel" id="bsi-p<?= $i ?>" aria-labelledby="bsi-t<?= $i ?>">
-          <span class="file__tab" aria-hidden="true"><?= $bsN($i) ?> · <?= h($ind) ?></span>
-          <div class="file__in" data-tilt>
-            <span class="file__art" aria-hidden="true"><?= $bsIc($icon) ?></span>
-            <h3><?= h($q) ?></h3>
-            <p><?= h($text) ?></p>
-            <a class="file__cta" href="/book" data-book><span><?= h($cta) ?></span><?= $bsIc('arrow') ?></a>
           </div>
-        </article>
+<?php foreach ($bsBuild as $i => [$icon, $tint, $title, $text, $scr]): ?>
+          <article class="bz-panel t-<?= $tint ?><?= $i === 0 ? ' is-on' : '' ?>" role="tabpanel" id="bzc-p<?= $i ?>" aria-labelledby="bzc-t<?= $i ?>">
+            <div class="bz-scr bz-scr--<?= $scr ?>" aria-hidden="true">
+<?php if ($scr === 'os'): ?>
+              <div class="bz-scr__hub"><?= $bsIc('layers') ?><b>Business OS</b><small>6 modules connected</small></div>
+<?php foreach ($bsMods as [$mi, $mt, $ml, $mv, $mu]): ?>
+              <div class="bz-scr__mod t-<?= $mt ?>"><i><?= $bsIc($mi) ?></i><small><?= h($ml) ?></small><b><?= h($mv) ?></b><em><?= h($mu) ?></em></div>
 <?php endforeach; ?>
+<?php elseif ($scr === 'crm'): ?>
+<?php foreach ([['New', 4, ['Construction', 'Retail', 'Clinic']], ['Qualified', 3, ['Manufacturing', 'D2C brand']], ['Won', 2, ['Jewellery']]] as [$col, $cnt, $cards]): ?>
+              <div class="bz-scr__col"><small><?= $col ?> <em><?= $cnt ?></em></small><?php foreach ($cards as $c): ?><span><b><?= $c ?></b><i></i></span><?php endforeach; ?></div>
+<?php endforeach; ?>
+<?php elseif ($scr === 'gantt'): ?>
+              <div class="bz-scr__weeks"><span></span><?php for ($w = 1; $w <= 6; $w++): ?><small>W<?= $w ?></small><?php endfor; ?></div>
+<?php foreach ([['Site survey', 0, 22], ['Procurement', 14, 34], ['Structure', 30, 40], ['Interiors', 56, 30], ['Handover', 80, 18]] as [$task, $s, $w]): ?>
+              <div class="bz-scr__row"><small><?= $task ?></small><span><i style="left:<?= $s ?>%;width:<?= $w ?>%"></i></span></div>
+<?php endforeach; ?>
+<?php elseif ($scr === 'hr'): ?>
+              <div class="bz-scr__cal"><?php foreach (['M', 'T', 'W', 'T', 'F', 'S', 'S'] as $d): ?><small><?= $d ?></small><?php endforeach; ?><?php for ($d = 0; $d < 28; $d++): ?><i class="<?= $d % 7 === 6 ? 'off' : (in_array($d, [9, 17], true) ? 'leave' : '') ?>"></i><?php endfor; ?></div>
+              <div class="bz-scr__kpis"><span><b>86</b>on shift</span><span><b>4</b>on leave</span><span><b>98%</b>attendance</span></div>
+<?php elseif ($scr === 'fin'): ?>
+<?php foreach ([['INV-1042', '₹48,200', 'Due'], ['INV-1041', '₹1,26,000', 'Paid'], ['INV-1040', '₹32,750', 'Paid'], ['INV-1039', '₹64,500', 'Paid']] as [$inv, $amt, $st]): ?>
+              <div class="bz-scr__inv"><small><?= $inv ?></small><b><?= $amt ?></b><em class="<?= $st === 'Due' ? 'due' : '' ?>"><?= $st ?></em></div>
+<?php endforeach; ?>
+              <div class="bz-scr__bar"><small>This month</small><span><i style="width:72%"></i></span><b>₹18.6L</b></div>
+<?php else: ?>
+              <div class="bz-scr__flow">
+                <span class="bz-scr__node"><?= $bsIc('mail') ?>New enquiry</span>
+                <span class="bz-scr__node bz-scr__node--ai"><?= $bsIc('sparkle') ?>AI qualifies</span>
+                <span class="bz-scr__outs"><span class="bz-scr__node"><?= $bsIc('users') ?>CRM record</span><span class="bz-scr__node"><?= $bsIc('chat') ?>WhatsApp reply</span><span class="bz-scr__node"><?= $bsIc('check') ?>Task for sales</span></span>
+              </div>
+<?php endif; ?>
+            </div>
+            <div class="bz-panel__txt">
+              <span class="bz-panel__n"><?= $bsN($i) ?> / <?= $bsN(count($bsBuild) - 1) ?></span>
+              <h3><?= h($title) ?></h3>
+              <p><?= h($text) ?></p>
+            </div>
+          </article>
+<?php endforeach; ?>
+        </div>
+      </div>
+      <div class="bz-caps__foot reveal">
+        <p class="bz-fine">Product screens use sample data.</p>
+        <a class="h10-btn h10-btn--green" href="#projects"><span>Explore What We Can Build</span><?= $bsArrow ?></a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 07 · Selected projects: before / after case files -->
-<section class="bsw bs-band" id="projects"><span class="bs-idx" aria-hidden="true">07</span>
+<!-- 04 · Connected ecosystem: the department ring, then Leads → Profit -->
+<section class="bz-eco" id="ecosystem">
   <div class="wrap">
-    <div class="bs-head bs-head--center">
-      <span class="pill reveal"><span class="pill__dot" aria-hidden="true"></span>Real Businesses. Real Challenges. Real Solutions.</span>
-      <h2 class="bs-h2">We Understood. We Engineered. We Made It Work.</h2>
-      <p class="bs-lede reveal" style="--d:.1s">Explore how we've understood different business requirements and engineered technology solutions that work in real business environments.</p>
+    <div class="bz-head bz-head--center">
+      <span class="pill bz-pill t-peri reveal"><span class="pill__dot" aria-hidden="true"></span>One Connected Business. Every Department Working Together.</span>
+      <h2 class="h2">Connect Every Part of Your Business Through One System.</h2>
+      <p class="lede reveal" style="--d:.1s">Your business shouldn't operate through disconnected departments and isolated applications. We engineer connected systems that allow information, responsibilities and workflows to move across your organization.</p>
     </div>
-    <div class="cases reveal" data-bs-cases>
-      <div class="cases__nav" role="tablist" aria-label="Projects">
-<?php foreach ($bsProjects as $i => $pr): ?>
-        <button type="button" role="tab" class="cases__tab" id="bsw-t<?= $i ?>" aria-controls="bsw-p<?= $i ?>" aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"<?= $i ? ' tabindex="-1"' : '' ?>><b><?= $bsN($i) ?></b><?= h($pr[1]) ?></button>
+    <div class="bz-ring reveal" data-bz-ring>
+      <svg class="bz-ring__svg" viewBox="0 0 1200 800" aria-hidden="true" focusable="false">
+        <circle class="bz-ring__orbit" cx="600" cy="400" r="300"/>
+<?php foreach ($bzChords as [$a, $b]): $p = $bzRing[$a]; $q = $bzRing[$b]; $mx = 600 + (($p['x'] + $q['x']) / 2 - 600) * .14; $my = 400 + (($p['y'] + $q['y']) / 2 - 400) * .14; ?>
+        <path class="bz-ring__chord" data-a="<?= $a ?>" data-b="<?= $b ?>" d="M<?= round($p['x'], 1) ?> <?= round($p['y'], 1) ?>Q<?= round($mx, 1) ?> <?= round($my, 1) ?> <?= round($q['x'], 1) ?> <?= round($q['y'], 1) ?>"/>
 <?php endforeach; ?>
+<?php foreach ($bzRing as $key => $p): ?>
+        <circle class="bz-ring__pt" data-k="<?= $key ?>" cx="<?= round($p['x'], 1) ?>" cy="<?= round($p['y'], 1) ?>" r="7"/>
+<?php endforeach; ?>
+      </svg>
+      <div class="bz-ring__hub">
+        <img src="/assets/about/ai-after.webp" alt="The same five people with green bridges joining every island to one shared hub" width="1500" height="1200" loading="lazy" decoding="async">
+        <b>Business OS</b>
+        <p class="bz-ring__cap" data-bz-cap aria-live="polite">Pick a department to see what it shares.</p>
       </div>
-<?php foreach ($bsProjects as $i => [$tint, $label, $title, $text, $chipsLabel, $chips, $from, $to, $href, $fromTiles, $toMods]): ?>
-      <article class="case bs-tint--<?= $tint ?>" role="tabpanel" id="bsw-p<?= $i ?>" aria-labelledby="bsw-t<?= $i ?>">
-        <div class="case__copy">
-          <span class="case__k">Project <?= $bsN($i) ?> · <?= h($label) ?></span>
+      <span class="bz-ring__k">Business Departments &amp; Operations</span>
+      <ul class="bz-ring__depts" role="list">
+<?php foreach ($bsDepts as [$key, $label, $tint]): $p = $bzRing[$key]; $side = $p['c'] > .2 ? 'r' : ($p['c'] < -.2 ? 'l' : 'c'); ?>
+        <li class="bz-ring__d bz-ring__d--<?= $side ?>" style="left:<?= round($p['lx'] / 12, 2) ?>%;top:<?= round($p['ly'] / 8, 2) ?>%"><button type="button" class="t-<?= $tint ?>" data-dept="<?= $key ?>" data-rel="<?= h($bsLinks[$key][0]) ?>" data-cap="<?= h($bsLinks[$key][1]) ?>" aria-pressed="false"><i aria-hidden="true"></i><?= h($label) ?></button></li>
+<?php endforeach; ?>
+      </ul>
+    </div>
+    <div class="bz-flow reveal">
+      <div class="bz-flow__copy"><span class="bz-kick">From Leads to Profit</span><p>Connect customer acquisition, sales, project execution, team activities, operational expenses and financial performance through structured business workflows.</p></div>
+      <ol class="bz-flow__line" role="list">
+<?php foreach ($bsFlow as $i => $step): ?>
+        <li style="--i:<?= $i ?>"><span><?= h($step) ?></span></li>
+<?php endforeach; ?>
+      </ol>
+    </div>
+    <div class="bz-center reveal"><a class="h10-btn h10-btn--dark" href="/book" data-book><span>Build Your Connected Business</span><?= $bsArrow ?></a></div>
+  </div>
+</section>
+
+<!-- 05 · Engineering approach: four cards that stack as you scroll -->
+<section class="bz-appr" id="approach">
+  <div class="wrap">
+    <div class="bz-head">
+      <div>
+        <span class="pill bz-pill t-lilac reveal"><span class="pill__dot" aria-hidden="true"></span>Working With Your Team. Building for Your Business.</span>
+        <h2 class="h2">We Don't Adapt Your Business to Software. We Engineer Software Around Your Business.</h2>
+      </div>
+      <div class="bz-head__txt reveal" style="--d:.1s"><p class="lede">Every business operates differently. That's why we work directly with your team to understand existing processes, identify challenges and engineer technology around your actual business requirements.</p><a class="h10-btn h10-btn--dark" href="/book" data-book><span>Discuss Your Business Requirements</span><?= $bsArrow ?></a></div>
+    </div>
+    <ol class="bz-stack" role="list">
+<?php foreach ($bsSteps as $i => [$label, $title, $text, $tags]): ?>
+      <li class="bz-card t-<?= $bsStepTint[$i] ?>" style="--i:<?= $i ?>">
+        <div class="bz-card__side">
+          <span class="bz-card__n" aria-hidden="true"><?= $bsN($i) ?></span>
+          <span class="bz-card__k"><i><?= $bsIc($bsStepIc[$i]) ?></i><?= h($label) ?></span>
+        </div>
+        <div class="bz-card__main">
           <h3><?= h($title) ?></h3>
           <p><?= h($text) ?></p>
-          <span class="case__cl"><?= h($chipsLabel) ?></span>
-          <ul class="case__chips" role="list"><?php foreach ($chips as $chip): ?><li><?= h($chip) ?></li><?php endforeach; ?></ul>
-          <a class="h10-btn bs-btn case__cta" href="<?= h($href) ?>"><span>Explore Project</span><?= $bsArrow ?></a>
+          <ul class="bz-card__tags" role="list"><?php foreach (explode(' · ', $tags) as $tag): ?><li><?= h($tag) ?></li><?php endforeach; ?></ul>
         </div>
-        <div class="cmp" style="--pos:50%" data-tilt>
-          <div class="cmp__from">
-            <span class="cmp__k">From</span>
-            <div class="cmp__mess" aria-hidden="true"><?php foreach ($fromTiles as $k => $t): ?><span style="--k:<?= $k ?>"><?= h($t) ?></span><?php endforeach; ?></div>
-            <p><?= h($from) ?></p>
+      </li>
+<?php endforeach; ?>
+    </ol>
+  </div>
+</section>
+
+<!-- 06 · Industries: sticky intro beside a question accordion -->
+<section class="bz-ind" id="industries">
+  <div class="wrap bz-split bz-split--ind">
+    <div class="bz-split__side">
+      <div class="bz-split__stick">
+        <span class="pill bz-pill t-peach reveal"><span class="pill__dot" aria-hidden="true"></span>Same Industry ≠ Same Business Challenges</span>
+        <h2 class="h2">We Don't Build for Industries. We Build for Businesses.</h2>
+        <p class="lede reveal" style="--d:.1s">Even two businesses within the same industry can have completely different workflows, organizational structures and operational challenges.</p>
+        <p class="lede lede--strong reveal" style="--d:.14s">We understand your business, study your processes and engineer technology around your specific requirements.</p>
+      </div>
+    </div>
+    <div class="bz-qa">
+<?php foreach ($bsInd as $i => [$icon, $tint, $ind, $q, $text, $cta]): ?>
+      <details class="bz-qa__item t-<?= $tint ?> reveal" name="bz-industries"<?= $i === 0 ? ' open' : '' ?>>
+        <summary><i class="bz-qa__ic"><?= $bsIc($icon) ?></i><span class="bz-qa__q"><small><?= h($ind) ?></small><b><?= h($q) ?></b></span><i class="bz-qa__x" aria-hidden="true"><?= $bsIc('plus') ?></i></summary>
+        <div class="bz-qa__a">
+          <p><?= h($text) ?></p>
+          <a class="bz-qa__cta" href="/book" data-book><span><?= h($cta) ?></span><?= $bsIc('arrow') ?></a>
+        </div>
+      </details>
+<?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+<!-- 07 · Selected projects: zig-zag rows, photo with From → To beside the story -->
+<section class="bz-work" id="projects">
+  <div class="wrap">
+    <div class="bz-head bz-head--center">
+      <span class="pill bz-pill t-sky reveal"><span class="pill__dot" aria-hidden="true"></span>Real Businesses. Real Challenges. Real Solutions.</span>
+      <h2 class="h2">We Understood. We Engineered. We Made It Work.</h2>
+      <p class="lede reveal" style="--d:.1s">Explore how we've understood different business requirements and engineered technology solutions that work in real business environments.</p>
+    </div>
+    <div class="bz-cases">
+<?php foreach ($bsProjects as $i => [$tint, $label, $title, $text, $chipsLabel, $chips, $from, $to, $href, $fromTiles, $toMods, $photo, $alt]): ?>
+      <article class="bz-case t-<?= $tint ?><?= $i % 2 ? ' bz-case--flip' : '' ?>">
+        <figure class="bz-case__fig reveal">
+          <img src="/assets/home10/work/<?= $photo ?>.webp" alt="<?= h($alt) ?>" width="1000" height="1000" loading="lazy" decoding="async">
+          <div class="bz-ft" aria-hidden="true">
+            <div class="bz-ft__from"><small>From</small><?php foreach ($fromTiles as $t): ?><s><?= h($t) ?></s><?php endforeach; ?></div>
+            <span class="bz-ft__arr"><?= $bsIc('arrow') ?></span>
+            <div class="bz-ft__to"><small>To</small><?php foreach ($toMods as $t): ?><span><?= h($t) ?></span><?php endforeach; ?></div>
           </div>
-          <div class="cmp__to">
-            <span class="cmp__k">To</span>
-            <div class="cmp__sys" aria-hidden="true"><b>Business OS</b><?php foreach ($toMods as $t): ?><span><?= h($t) ?></span><?php endforeach; ?></div>
-            <p><?= h($to) ?></p>
-          </div>
-          <i class="cmp__handle" aria-hidden="true"><?= $bsIc('left') ?><?= $bsIc('right') ?></i>
-          <input class="cmp__range" type="range" min="0" max="100" value="50" aria-label="Compare before and after for project <?= $bsN($i) ?>">
+        </figure>
+        <div class="bz-case__copy reveal" style="--d:.08s">
+          <span class="bz-kick">Project <?= $bsN($i) ?> · <?= h($label) ?></span>
+          <h3><?= h($title) ?></h3>
+          <p><?= h($text) ?></p>
+          <dl class="bz-case__ft">
+            <div><dt>From</dt><dd><?= h($from) ?></dd></div>
+            <div><dt>To</dt><dd><?= h($to) ?></dd></div>
+          </dl>
+          <span class="bz-case__cl"><?= h($chipsLabel) ?></span>
+          <ul class="bz-case__chips" role="list"><?php foreach ($chips as $chip): ?><li><?= h($chip) ?></li><?php endforeach; ?></ul>
+          <a class="h10-btn h10-btn--dark" href="<?= h($href) ?>"><span>Explore Project</span><?= $bsArrow ?></a>
         </div>
       </article>
 <?php endforeach; ?>
     </div>
-    <p class="nda reveal"><span class="nda__stamp">Confidential · NDA</span>Client names and identities remain confidential, as every engagement runs under applicable Non-Disclosure Agreements (NDAs).</p>
+    <p class="bz-nda reveal"><span>Confidential · NDA</span>Client names and identities remain confidential, as every engagement runs under applicable Non-Disclosure Agreements (NDAs).</p>
   </div>
 </section>
 
-<!-- 08 · Final CTA: tell us how your business works -->
-<section class="final final--card bsf" id="contact">
-  <div class="wrap">
-    <div class="final__card">
-      <div class="final__in">
-        <span class="pill pill--mint reveal"><span class="pill__dot" aria-hidden="true"></span>Let's Build Your Business System</span>
-        <h2 class="h1x">Your Business Deserves More Than <span class="grn">Off-the-Shelf Software.</span></h2>
-        <p class="lede reveal" style="--d:.1s">Tell us how your business operates, what challenges your teams face and what you want to improve.</p>
-        <p class="final__line reveal" style="--d:.14s">Our engineers will work with you to understand your requirements and explore the right technology solution for your business.</p>
-        <div class="composer reveal" style="--d:.18s">
-          <p class="composer__msg" data-bs-msg>Hi Drawlead, we'd like to talk about our business…</p>
-          <div class="composer__chips">
+<!-- 08 · Final CTA: deep green, the fingerprint again, the prompts -->
+<section class="bz-final" id="contact">
+  <svg class="bz-final__print" viewBox="0 0 400 480" aria-hidden="true" focusable="false"><g><?= $bzRidges(false) ?></g><path d="<?= $bzPrint['hi'] ?>"/></svg>
+  <div class="wrap bz-final__in">
+    <span class="pill pill--mint reveal"><span class="pill__dot" aria-hidden="true"></span>Let's Build Your Business System</span>
+    <h2 class="h2 h2--light bz-final__h2">Your Business Deserves More Than <span class="bz-final__em">Off-the-Shelf Software.</span></h2>
+    <p class="lede lede--light reveal" style="--d:.1s">Tell us how your business operates, what challenges your teams face and what you want to improve.</p>
+    <p class="bz-final__line reveal" style="--d:.14s">Our engineers will work with you to understand your requirements and explore the right technology solution for your business.</p>
+    <div class="bz-compose reveal" style="--d:.18s">
+      <p class="bz-compose__msg" data-bz-msg>Hi Drawlead, we'd like to talk about our business…</p>
+      <div class="bz-compose__chips">
 <?php foreach ($bsPrompts as $prompt): ?>
-            <button type="button" class="composer__chip" data-book data-prompt="<?= h($prompt) ?>"><?= h($prompt) ?></button>
+        <button type="button" class="bz-compose__chip" data-book data-prompt="<?= h($prompt) ?>"><?= h($prompt) ?></button>
 <?php endforeach; ?>
-          </div>
-        </div>
-        <div class="final__ctas reveal" style="--d:.22s"><a class="h10-btn h10-btn--green" href="/book" data-book><span>Build Your Business System</span><?= $bsArrow ?></a><a class="h10-btn h10-btn--ghost" href="/book" data-book><span>Book a Strategy Call</span><?= $bsArrow ?></a></div>
-        <p class="bsf__sign">Drawlead — Business Systems &amp; Technology Company</p>
       </div>
     </div>
+    <div class="bz-final__ctas reveal" style="--d:.22s"><a class="h10-btn h10-btn--green" href="/book" data-book><span>Build Your Business System</span><?= $bsArrow ?></a><a class="h10-btn h10-btn--ghost" href="/book" data-book><span>Book a Strategy Call</span><?= $bsArrow ?></a></div>
+    <p class="bz-final__sign">Drawlead — Business Systems &amp; Technology Company</p>
   </div>
 </section>
 </main><footer class="foot">
