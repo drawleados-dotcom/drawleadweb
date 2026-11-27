@@ -415,22 +415,14 @@ include __DIR__ . '/includes/header.php';
           <?php else: ?><span class="t-sub">—</span><?php endif; ?>
         </td>
         <td class="ls-nowrap">
-          <div class="ls-actions">
           <button type="button" class="ls-more" aria-haspopup="dialog" data-ls-open="<?= h($rowId) ?>">Details</button>
-          <form method="post" action="<?= h(leads_url(['page' => $page > 1 ? $page : null])) ?>"
-            data-ls-confirm="<?= h('Delete the lead from ' . ($l['name'] ?: ($v['phone'] ?: 'this person')) . '?'
-              . ($l['lead_type'] === 'booking' ? ' This also deletes their calendar booking, so the time slot can be booked again.' : '')
-              . ' This can’t be undone.') ?>">
-            <?= csrf_field() ?>
-            <input type="hidden" name="action" value="delete_lead">
-            <input type="hidden" name="lead_type" value="<?= h($l['lead_type']) ?>">
-            <input type="hidden" name="lead_id" value="<?= (int) $l['lead_id'] ?>">
-            <button type="submit" class="ls-more ls-del">Delete</button>
-          </form>
-          </div>
           <template id="<?= h($rowId) ?>"
             data-title="<?= h($l['name'] ?: ($v['phone'] ?: 'Lead')) ?>"
-            data-sub="<?= h(lead_form_label($l['lead_type']) . ' · ' . date('M j, Y g:i A', strtotime($l['created_at']))) ?>">
+            data-sub="<?= h(lead_form_label($l['lead_type']) . ' · ' . date('M j, Y g:i A', strtotime($l['created_at']))) ?>"
+            data-lead-type="<?= h($l['lead_type']) ?>" data-lead-id="<?= (int) $l['lead_id'] ?>"
+            data-confirm="<?= h('Delete the lead from ' . ($l['name'] ?: ($v['phone'] ?: 'this person')) . '?'
+              . ($l['lead_type'] === 'booking' ? ' This also deletes their calendar booking, so the time slot can be booked again.' : '')
+              . ' This can’t be undone.') ?>">
           <div class="ls-detail-grid">
             <div>
               <div class="ls-h">How they found you</div>
@@ -506,6 +498,13 @@ include __DIR__ . '/includes/header.php';
     </div>
     <div class="ls-dialog-body" data-ls-body></div>
     <div class="media-dialog-foot">
+      <form method="post" action="<?= h(leads_url(['page' => $page > 1 ? $page : null])) ?>" data-ls-delete>
+        <?= csrf_field() ?>
+        <input type="hidden" name="action" value="delete_lead">
+        <input type="hidden" name="lead_type" value="">
+        <input type="hidden" name="lead_id" value="">
+        <button type="submit" class="btn btn-danger">Delete lead</button>
+      </form>
       <button type="button" class="btn btn-ghost" data-ls-close>Close</button>
     </div>
   </div>
@@ -535,10 +534,8 @@ include __DIR__ . '/includes/header.php';
 .ls-link:hover{color:var(--violet);text-decoration:underline}
 .ls-more{font:inherit;font-size:12px;font-weight:700;background:none;border:1.5px solid var(--border);border-radius:6px;padding:5px 10px;cursor:pointer;color:var(--g600)}
 .ls-more:hover{border-color:var(--blue);color:var(--violet)}
-.ls-actions{display:flex;gap:6px;align-items:flex-start}
-.ls-actions form{margin:0}
-.ls-del{color:var(--danger)}
-.ls-del:hover{border-color:var(--danger);color:var(--danger);background:#fdecef}
+.ls-dialog .media-dialog-foot{justify-content:space-between}
+.ls-dialog .media-dialog-foot form{margin:0}
 .ls-dialog{width:min(820px,calc(100vw - 32px))}
 .ls-dialog .media-dialog-head{align-items:flex-start}
 .ls-dialog .media-dialog-head h2{font-size:16px;margin-bottom:2px}
@@ -562,16 +559,15 @@ include __DIR__ . '/includes/header.php';
 </style>
 
 <script>
-document.querySelectorAll('form[data-ls-confirm]').forEach(function (f) {
-  f.addEventListener('submit', function (e) {
-    if (!confirm(f.getAttribute('data-ls-confirm'))) e.preventDefault();
-  });
-});
-
 (function () {
   var dialog = document.getElementById('lsDialog');
   if (!dialog) return;
   var body = dialog.querySelector('[data-ls-body]');
+  var delForm = dialog.querySelector('[data-ls-delete]');
+  var confirmText = '';
+  delForm.addEventListener('submit', function (e) {
+    if (!delForm.elements.lead_id.value || !confirm(confirmText)) e.preventDefault();
+  });
   var close = function () {
     if (typeof dialog.close === 'function') dialog.close(); else dialog.removeAttribute('open');
   };
@@ -582,6 +578,9 @@ document.querySelectorAll('form[data-ls-confirm]').forEach(function (f) {
       if (!tpl) return;
       document.getElementById('lsDialogTitle').textContent = tpl.getAttribute('data-title');
       dialog.querySelector('[data-ls-sub]').textContent = tpl.getAttribute('data-sub');
+      delForm.elements.lead_type.value = tpl.getAttribute('data-lead-type');
+      delForm.elements.lead_id.value = tpl.getAttribute('data-lead-id');
+      confirmText = tpl.getAttribute('data-confirm');
       body.replaceChildren(tpl.content.cloneNode(true));
       body.scrollTop = 0;
       if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
