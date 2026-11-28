@@ -108,8 +108,10 @@ html.js .h10 .hero__title :is(p,span).reveal,html.js .h10 p.hero__lede.reveal,ht
 /* Sections after the first are laid out and painted only when they come near
    the screen. The page is long (about 2,900 elements); laying all of it out at
    load, again when each web font arrives, held back the hero (the page's LCP)
-   and made taps wait. auto remembers each section's real height once seen. */
-.h10 main>section~section{content-visibility:auto;contain-intrinsic-size:auto 1000px}
+   and made taps wait. auto remembers each section's real height once seen.
+   Off (html.cv-off, set in layout-start.php) when the visit opens at a
+   #section or comes back via Back / reload: those land by real heights. */
+html:not(.cv-off) .h10 main>section~section{content-visibility:auto;contain-intrinsic-size:auto 1000px}
 /* Looping animations stop while their section is off screen (home10.js sets
    .is-off): otherwise they keep the main thread busy every frame and taps wait. */
 .h10 .is-off,.h10 .is-off *,.h10 .is-off::before,.h10 .is-off::after,.h10 .is-off *::before,.h10 .is-off *::after{animation-play-state:paused!important}

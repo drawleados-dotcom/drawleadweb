@@ -22,6 +22,32 @@
   // editor's markers are in them.
   const preview = new URLSearchParams(location.search).has('pc_preview');
 
+  /* ---------- Back / reload land where the visitor was ----------
+     Sections below the first screen are sized by an estimate until they come
+     near (content-visibility, home10.css), so the raw scroll offset of a visit
+     that jumped ahead does not match the full layout a Back or reload visit
+     gets (html.cv-off, layout-start.php). Remember the section at the top of
+     the screen and how far into it instead, and scroll there ourselves. */
+  if ('scrollRestoration' in history) {
+    const posKey = 'dl_pos:' + location.pathname;
+    const secs = () => $$('main > section');
+    history.scrollRestoration = 'manual';
+    addEventListener('pagehide', () => {
+      const list = secs();
+      const i = list.findIndex((s) => s.getBoundingClientRect().bottom > 0);
+      const pos = i < 0 ? { i: -1, y: Math.round(scrollY) } : { i, off: Math.round(-list[i].getBoundingClientRect().top) };
+      try { sessionStorage.setItem(posKey, JSON.stringify(pos)); } catch (e) { /* private mode */ }
+    });
+    const nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || {};
+    if ((nav.type === 'back_forward' || nav.type === 'reload') && location.hash.length < 2) {
+      let pos = null;
+      try { pos = JSON.parse(sessionStorage.getItem(posKey) || 'null'); } catch (e) { /* none saved */ }
+      const s = pos && pos.i >= 0 ? secs()[pos.i] : null;
+      const y = s ? s.getBoundingClientRect().top + scrollY + pos.off : pos ? pos.y : 0;
+      if (y) scrollTo({ top: y, behavior: 'instant' });
+    }
+  }
+
   /* ---------- links to sections of the previous home page ---------- */
   const moved = { functions: 'solutions', tech: 'solutions', cases: 'case-studies', dashboards: 'data', cta: 'contact' };
   const jumpMoved = () => {

@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <?php
+// Sections below the first screen are skipped until they near the screen
+// (content-visibility, assets/home10.css), sized by an estimate until then. A
+// visit that opens at a #section, or returns via Back / reload to a scroll
+// position, must land on real heights, so for those the skip is switched off
+// (html.cv-off) before the first layout.
+?>
+<script>(function(d){try{var n=performance.getEntriesByType('navigation')[0];if(location.hash.length>1||(n&&n.type!=='navigate'))d.classList.add('cv-off')}catch(e){}})(document.documentElement)</script>
+<?php
 // Every route in index.php sets $seo before including this file. This
 // fallback only protects against a route that forgets to — it should
 // never be the only thing that runs in practice.
