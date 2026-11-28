@@ -783,6 +783,20 @@ function migration_034_statements(): array
     ];
 }
 
+function migration_035_statements(): array
+{
+    // Same SQL as _dev/sql/migrations/035_digital_commerce_page.sql (_dev/sql/ isn't deployed).
+    // The Digital Commerce landing page, rendered by templates/digital-commerce-body.php.
+    // Published; add it to the menu from Admin → Menu when ready.
+    return [
+        "INSERT IGNORE INTO pages (name, slug, meta_title, meta_description, template) VALUES
+         ('Digital Commerce', '/digital-commerce',
+           'Ecommerce Development, Custom Shopify Stores & CRO | Drawlead',
+           'Custom Shopify storefronts, conversion-focused product pages, ecommerce integrations and automation, engineered around your brand and your customers. Talk to Drawlead.',
+           'digital-commerce')",
+    ];
+}
+
 $log = [];
 $error = '';
 
@@ -889,6 +903,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($which === '034' || $which === 'all') {
         $toRun['034'] = migration_034_statements();
     }
+    if ($which === '035' || $which === 'all') {
+        $toRun['035'] = migration_035_statements();
+    }
 
     foreach ($toRun as $name => $statements) {
         try {
@@ -984,6 +1001,7 @@ $migration031Done = migration_table_exists($pdo, 'seo_redirects')
 $migration032Done = (int) $pdo->query("SELECT COUNT(*) FROM pages WHERE template = 'home10'")->fetchColumn() >= 1;
 $migration033Done = (int) $pdo->query("SELECT COUNT(*) FROM pages WHERE template IN ('privacy-policy', 'refund-policy', 'terms-and-conditions')")->fetchColumn() >= 3;
 $migration034Done = (int) $pdo->query("SELECT COUNT(*) FROM pages WHERE template = 'business-systems'")->fetchColumn() >= 1;
+$migration035Done = (int) $pdo->query("SELECT COUNT(*) FROM pages WHERE template = 'digital-commerce'")->fetchColumn() >= 1;
 
 $pageTitle = 'Run Migrations';
 $pageSub = 'One-time database updates for new features.';
@@ -1423,7 +1441,20 @@ include __DIR__ . '/includes/header.php';
   <?php endif; ?>
 </div>
 
-<?php if (!$migration034Done || !$migration033Done || !$migration032Done ||!$migration031Done || !$migration002Done ||!$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done || !$migration027Done || !$migration028Done || !$migration029Done || !$migration030Done): ?>
+<div class="card">
+  <div class="card-title">035 — Digital Commerce landing page</div>
+  <div class="card-desc">Adds the Digital Commerce landing page at /digital-commerce, published but not in the menu (add it from Admin → Menu when ready). Its layout lives in templates/digital-commerce-body.php with /assets/dcom.css and dcom.js, and every heading, paragraph and button can be edited in Admin → Pages → Page Content.</div>
+  <p style="margin-bottom:1rem"><span class="badge <?= $migration035Done ? 'badge-published' : 'badge-draft' ?>"><?= $migration035Done ? 'Applied' : 'Pending' ?></span></p>
+  <?php if (!$migration035Done): ?>
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="run" value="035">
+    <button type="submit" class="btn btn-primary">Run Migration 035</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+<?php if (!$migration035Done || !$migration034Done || !$migration033Done || !$migration032Done ||!$migration031Done || !$migration002Done ||!$migration003Done || !$migration004Done || !$migration005Done || !$migration006Done || !$migration007Done || !$migration008Done || !$migration009Done || !$migration010Done || !$migration011Done || !$migration012Done || !$migration013Done || !$migration014Done || !$migration015Done || !$migration016Done || !$migration017Done || !$migration018Done || !$migration019Done || !$migration020Done || !$migration021Done || !$migration022Done || !$migration023Done || !$migration024Done || !$migration025Done || !$migration026Done || !$migration027Done || !$migration028Done || !$migration029Done || !$migration030Done): ?>
 <div class="card">
   <form method="post">
     <?= csrf_field() ?>
