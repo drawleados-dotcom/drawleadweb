@@ -13,7 +13,13 @@
   function byId(id) { return document.getElementById(id); }
   var body = byId('adBody'), titleEl = byId('adTitle'), subEl = byId('adSub'), rangeEl = byId('adRange'),
       updatedEl = byId('adUpdated'), linksEl = byId('adLinks'), refreshBtn = byId('adRefresh');
-  var NAMES = { ga: 'Google Analytics', gsc: 'Google Search Console', clarity: 'Microsoft Clarity' };
+  var NAMES = { site: 'Drawlead website', ga: 'Google Analytics', gsc: 'Google Search Console', clarity: 'Microsoft Clarity' };
+  var regionNames = null;
+  try { regionNames = new Intl.DisplayNames(['en'], { type: 'region' }); } catch (e) { /* old browser: show the code */ }
+  function countryName(code) {
+    if (!code) return 'Unknown';
+    try { return (regionNames && regionNames.of(code)) || code; } catch (e) { return code; }
+  }
   var INK = '#14855a';
   var state = { source: '', days: {}, metric: {}, data: null, req: 0, idx: -1 };
 
@@ -241,6 +247,7 @@
 
     var frag = document.createDocumentFragment();
     if (d.note) frag.appendChild(el('div', 'ad-note', d.note));
+    if (d.info) frag.appendChild(el('div', 'ad-info', d.info));
     if (d.live) frag.appendChild(liveView(d.live));
     frag.appendChild(kpiView(d));
     if (d.series && d.series.dates && d.series.dates.length) frag.appendChild(chartCard(d));
@@ -309,7 +316,7 @@
     if (!k) return card;
     var head = el('div', 'ad-chart-head');
     head.appendChild(el('h3', '', k.label));
-    head.appendChild(el('span', 't-sub', 'per day · ' + (d.period || '')));
+    head.appendChild(el('span', 't-sub', (d.series.labels ? 'per hour' : 'per day') + ' · ' + (d.period || '')));
     card.appendChild(head);
     var box = el('div', 'ad-chart');
     box.appendChild(el('div', 'ad-tip'));
@@ -318,13 +325,13 @@
     var det = el('details', 'ad-table-view');
     det.appendChild(el('summary', '', 'Show as a table'));
     var wrap = el('div', 'ad-table-scroll'), tbl = el('table', 'ad-table'), thead = el('thead'), tr = el('tr');
-    tr.appendChild(el('th', '', 'Date'));
+    tr.appendChild(el('th', '', d.series.labels ? 'Hour' : 'Date'));
     tr.appendChild(el('th', 'num', k.label));
     thead.appendChild(tr); tbl.appendChild(thead);
     var tb = el('tbody'), vals = d.series.metrics[k.id];
     d.series.dates.forEach(function (dt, i) {
       var r = el('tr');
-      r.appendChild(el('td', '', shortDate(dt, true)));
+      r.appendChild(el('td', '', d.series.tips ? d.series.tips[i] : shortDate(dt, true)));
       r.appendChild(el('td', 'num', fmt(vals[i], k.fmt)));
       tb.appendChild(r);
     });
@@ -352,6 +359,9 @@
     var k = currentKpi(d);
     if (!k) return;
     var vals = d.series.metrics[k.id], dates = d.series.dates, n = dates.length;
+    // an hourly series (Today) brings its own labels; a daily one is labelled by date
+    function axisLabel(i) { return d.series.labels ? d.series.labels[i] : shortDate(dates[i]); }
+    function tipLabel(i) { return d.series.tips ? d.series.tips[i] : shortDate(dates[i], true); }
     var old = box.querySelector('svg');
     if (old) box.removeChild(old);
     var tip = box.querySelector('.ad-tip');
@@ -371,8 +381,9 @@
     function x(i) { return padL + (n === 1 ? pw / 2 : i * pw / (n - 1)); }
     function y(v) { var f = (v - lo) / (hi - lo); return k.invert ? padT + f * ph : padT + ph - f * ph; }
 
+    var unit = d.series.labels ? 'hour' : 'day';
     var svg = sv('svg', { viewBox: '0 0 ' + W + ' ' + H, width: W, height: H, tabindex: '0', role: 'img',
-      'aria-label': k.label + ' per day, ' + (d.period || '') + '. Use the left and right arrow keys to read each day.' });
+      'aria-label': k.label + ' per ' + unit + ', ' + (d.period || '') + '. Use the left and right arrow keys to read each ' + unit + '.' });
     // grid and y ticks
     for (var t = lo; t <= hi + step / 2; t += step) {
       var yy = Math.round(y(t)) + .5;
@@ -389,7 +400,7 @@
     }
     at.forEach(function (i, j) {
       var anchor = n === 1 ? 'middle' : j === 0 ? 'start' : j === at.length - 1 ? 'end' : 'middle';
-      svg.appendChild(sv('text', { x: x(i), y: H - 6, 'text-anchor': anchor, class: 'ad-tick' }, shortDate(dates[i])));
+      svg.appendChild(sv('text', { x: x(i), y: H - 6, 'text-anchor': anchor, class: 'ad-tick' }, axisLabel(i)));
     });
 
     // runs of days that have a value (positions and CTR have gaps)
@@ -426,7 +437,7 @@
       else dot.setAttribute('visibility', 'hidden');
       clear(tip);
       tip.appendChild(el('b', '', v == null ? 'No data' : fmt(v, k.fmt)));
-      tip.appendChild(el('span', '', shortDate(dates[i], true)));
+      tip.appendChild(el('span', '', tipLabel(i)));
       tip.hidden = false;
       var half = tip.offsetWidth / 2;
       tip.style.left = Math.max(half, Math.min(W - half, cx)) + 'px';
@@ -474,8 +485,9 @@
         var tr = el('tr');
         p.cols.forEach(function (c, i) {
           if (i === 0) {
-            var td = el('td', 'lab'), lab = el('div', 'ad-lab', r[0] === '' ? '(not set)' : r[0]);
-            lab.title = r[0];
+            var text = c[1] === 'country' ? countryName(r[0]) : (r[0] === '' ? '(not set)' : String(r[0]));
+            var td = el('td', 'lab'), lab = el('div', 'ad-lab', text);
+            lab.title = text;
             td.appendChild(lab);
             if (p.bar && max > 0) {
               var bar = el('div', 'ad-bar'), fill = el('span');

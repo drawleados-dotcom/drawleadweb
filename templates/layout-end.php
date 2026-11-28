@@ -28,6 +28,7 @@ document.querySelectorAll('.rv, .ind-card').forEach(el=>obs.observe(el));
 
 <?php if (empty($pcPreview)): // not in the admin's live page preview (index.php) ?>
 <script src="<?= asset_url('/assets/lead-source.js') ?>"></script>
+<script src="<?= asset_url('/assets/pulse.js') ?>" defer></script>
 <?php include __DIR__ . '/partials/whatsapp-widget.php'; ?>
 <script src="<?= asset_url('/assets/whatsapp.js') ?>"></script>
 

@@ -105,14 +105,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $tokenHint = $clarityToken !== '' ? mb_substr($clarityToken, 0, 6) . '…' . mb_substr($clarityToken, -4) : '';
+$today = site_stats_today($pdo);
 $saEmail = $sa['client_email'] ?? '';
 
 $pageTitle = 'Analytics & Search Console';
-$pageSub = 'Connect Google Analytics, Clarity and Search Console, and see their numbers here.';
+$pageSub = 'See who visits drawlead.com, and connect Google Analytics, Clarity and Search Console.';
 $activeNav = 'analytics';
 include __DIR__ . '/includes/header.php';
-$viewBtn = fn (string $source, string $label): string =>
-    '<button type="button" class="btn btn-primary btn-sm ad-open" data-dash="' . h($source) . '" aria-haspopup="dialog" aria-label="' . h('View ' . $label . ' analytics') . '">'
+$viewBtn = fn (string $source, string $label, string $style = 'btn-ghost'): string =>
+    '<button type="button" class="btn ' . $style . ' btn-sm ad-open" data-dash="' . h($source) . '" aria-haspopup="dialog" aria-label="' . h('View ' . $label . ' analytics') . '">'
     . '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>'
     . 'View analytics</button>';
 ?>
@@ -120,6 +121,24 @@ $viewBtn = fn (string $source, string $label): string =>
 
 <?php if ($error): ?><div class="alert alert-error"><?= h($error) ?></div><?php endif; ?>
 <?php if ($success): ?><div class="alert alert-success"><?= h($success) ?></div><?php endif; ?>
+
+<div class="card ad-site" id="ad-site">
+  <div class="ad-card-head">
+    <div>
+      <div class="card-title">Website analytics</div>
+      <div class="card-desc">
+        drawlead.com counts its own visits: visitors, page views, top pages, traffic sources, countries and devices.
+        Nothing to set up, no cookies, and no IP addresses stored. Your own visits while logged in here are not counted.
+      </div>
+    </div>
+    <?= $viewBtn('site', 'website', 'btn-primary') ?>
+  </div>
+  <div class="ad-today">
+    <span><b><?= number_format($today['visitors']) ?></b> visitor<?= $today['visitors'] === 1 ? '' : 's' ?> today</span>
+    <span><b><?= number_format($today['views']) ?></b> page view<?= $today['views'] === 1 ? '' : 's' ?> today</span>
+    <span class="t-sub"><?= $today['since'] !== '' ? 'Counting since ' . h(date('M j, Y', strtotime($today['since']))) : 'Counting starts with the next visit' ?></span>
+  </div>
+</div>
 
 <form method="post" novalidate autocomplete="off">
   <?= csrf_field() ?>
@@ -201,9 +220,9 @@ $viewBtn = fn (string $source, string $label): string =>
   </div>
 
   <div class="card" id="ad-google-access">
-    <div class="card-title">Google service account</div>
+    <div class="card-title">Google service account <span class="ad-optional">Optional</span></div>
     <div class="card-desc">
-      Lets the Google Analytics and Search Console dashboards read your numbers. It can only read, and only the properties you add it to.
+      Only needed to see Google's own numbers in the Google Analytics and Search Console popups. It can only read, and only the properties you add it to.
     </div>
     <?php if ($saEmail !== ''): ?>
     <div class="ad-sa">
@@ -218,7 +237,7 @@ $viewBtn = fn (string $source, string $label): string =>
         placeholder='<?= h($saEmail !== '' ? 'Saved. Leave blank to keep it, or paste a new key file to replace it.' : '{ "type": "service_account", "project_id": "…", "private_key": "…", "client_email": "…" }') ?>'></textarea>
       <?php if ($saEmail !== ''): ?><label class="ad-check"><input type="checkbox" name="remove_service_account" value="1"> Remove the saved key</label><?php endif; ?>
     </div>
-    <details class="ad-steps"<?= $saEmail === '' ? ' open' : '' ?>>
+    <details class="ad-steps">
       <summary>How to set this up (about 5 minutes)</summary>
       <ol>
         <li>Open <a href="https://console.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Console</a> and create a project, or pick one you already have.</li>

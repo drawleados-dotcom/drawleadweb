@@ -16,16 +16,22 @@
  * property and as a user on the Search Console property. Clarity is read with a
  * Data Export API token. Answers are cached in the settings table, which also
  * keeps Clarity under its limit of 10 API calls per project per day.
+ *
+ * The fourth board, 'site', needs no setup: it reads the site's own visit
+ * counts (includes/site-stats.php) and is never cached.
  */
+
+require_once __DIR__ . '/site-stats.php';
 
 const DASH_GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
 const DASH_GOOGLE_SCOPES = 'https://www.googleapis.com/auth/analytics.readonly https://www.googleapis.com/auth/webmasters.readonly';
 const DASH_RANGES = [
+    'site'    => [1 => 'Today', 7 => 'Last 7 days', 28 => 'Last 28 days', 90 => 'Last 90 days'],
     'ga'      => [7 => 'Last 7 days', 28 => 'Last 28 days', 90 => 'Last 90 days'],
     'gsc'     => [7 => 'Last 7 days', 28 => 'Last 28 days', 90 => 'Last 3 months'],
     'clarity' => [1 => 'Last 24 hours', 2 => 'Last 2 days', 3 => 'Last 3 days'],
 ];
-const DASH_DEFAULT_RANGE = ['ga' => 28, 'gsc' => 28, 'clarity' => 3];
+const DASH_DEFAULT_RANGE = ['site' => 7, 'ga' => 28, 'gsc' => 28, 'clarity' => 3];
 // seconds a saved answer is used before asking the API again
 const DASH_TTL = ['ga' => 300, 'gsc' => 3600, 'clarity' => 8 * 3600];
 const DASH_CLARITY_DAILY_LIMIT = 10;
@@ -294,6 +300,9 @@ function dash_report(PDO $pdo, string $source, int $days, bool $refresh): array
     }
     if (!isset(DASH_RANGES[$source][$days])) {
         $days = DASH_DEFAULT_RANGE[$source];
+    }
+    if ($source === 'site') {
+        return dash_with_meta(dash_site($pdo, $days), $source, $days, time(), '');
     }
     $key = $source . '_' . $days;
     $cached = dash_cache_get($pdo, $key);

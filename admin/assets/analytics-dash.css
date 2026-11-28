@@ -6,6 +6,10 @@
 .ad-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem 1.5rem}
 .ad-card-head .card-desc{max-width:780px}
 .ad-open{flex-shrink:0}
+.ad-site{border-color:#b9e3cb}
+.ad-today{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 22px;font-size:13px;color:var(--g600);font-weight:500}
+.ad-today b{font-size:20px;font-weight:800;color:var(--black);margin-right:2px}
+.ad-optional{display:inline-block;vertical-align:2px;margin-left:6px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:20px;background:var(--g200);color:var(--g600)}
 .ad-open svg{display:block}
 .ad-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 1.25rem}
 .field .ad-check{display:flex;align-items:center;gap:7px;margin:.5rem 0 0;font-size:11.5px;font-weight:600;color:var(--g500);text-transform:none;letter-spacing:0;cursor:pointer}
@@ -56,6 +60,7 @@ html.ad-lock{overflow:hidden}
 .ad-state a{color:#14855a;font-weight:700}
 .ad-note{font-size:12.5px;font-weight:600;line-height:1.5;color:#8a5a14;background:#fdf6e8;border:1px solid #f1dcb2;border-radius:9px;padding:9px 12px;margin-bottom:12px}
 
+.ad-info{font-size:12.5px;font-weight:600;line-height:1.5;color:#0f5f3d;background:#eef8f2;border:1px solid #cdebd9;border-radius:9px;padding:9px 12px;margin-bottom:12px}
 .ad-card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:16px 18px}
 .ad-card h3{font-size:13.5px;font-weight:800}
 

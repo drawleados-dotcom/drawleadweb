@@ -582,6 +582,37 @@ SELECT 1, 'Hi! Welcome to Drawlead — your digital solutions partner. What prob
        '["Custom ERP Solution / Software","Ecommerce Solutions","Marketing Solutions"]'
 WHERE NOT EXISTS (SELECT 1 FROM whatsapp_flow_steps);
 
+-- ── Built-in website analytics (includes/site-stats.php) ──
+-- One row per page view, sent by assets/pulse.js. The app also creates this
+-- table by itself on the first visit. No IP addresses are stored.
+
+CREATE TABLE IF NOT EXISTS site_hits (
+  id             BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  pv_id          CHAR(16)     NOT NULL,
+  visitor_id     CHAR(16)     NOT NULL,
+  session_id     CHAR(16)     NOT NULL,
+  is_new_visitor TINYINT(1)   NOT NULL DEFAULT 0,
+  is_entry       TINYINT(1)   NOT NULL DEFAULT 0,
+  created_at     DATETIME     NOT NULL,
+  day            DATE         NOT NULL,
+  path           VARCHAR(300) NOT NULL DEFAULT '',
+  title          VARCHAR(200) NOT NULL DEFAULT '',
+  referrer_host  VARCHAR(190) NOT NULL DEFAULT '',
+  channel        VARCHAR(60)  NOT NULL DEFAULT '',
+  utm_source     VARCHAR(100) NOT NULL DEFAULT '',
+  utm_medium     VARCHAR(100) NOT NULL DEFAULT '',
+  utm_campaign   VARCHAR(100) NOT NULL DEFAULT '',
+  device         VARCHAR(10)  NOT NULL DEFAULT '',
+  browser        VARCHAR(30)  NOT NULL DEFAULT '',
+  os             VARCHAR(30)  NOT NULL DEFAULT '',
+  country        CHAR(2)      NOT NULL DEFAULT '',
+  seconds        INT UNSIGNED NOT NULL DEFAULT 0,
+  UNIQUE KEY uniq_pv (pv_id),
+  KEY idx_day (day),
+  KEY idx_created (created_at),
+  KEY idx_session (session_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- No default user is created here on purpose — the first time you open
 -- /admin/login.php with an empty `users` table, it redirects to
 -- /admin/signup.php so you can create the first admin account yourself.
