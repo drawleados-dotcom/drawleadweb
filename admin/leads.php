@@ -6,6 +6,8 @@
 require_once __DIR__ . '/../includes/bootstrap.php';
 require_once __DIR__ . '/../includes/os-leads.php';
 require_admin();
+// Once this page is out: send the OS any leads it's missing (automatic catch-up).
+register_shutdown_function('os_leads_catch_up_after_response', $pdo);
 
 $hasSources = migration_table_exists($pdo, 'lead_sources');
 $hasBookings = migration_table_exists($pdo, 'bookings');
@@ -36,10 +38,11 @@ if (in_array($osAction, ['os_save', 'os_test', 'os_send_all', 'os_disconnect'], 
         } else {
             set_setting($pdo, OS_LEADS_URL_SETTING, mb_substr($url, 0, 500));
             set_setting($pdo, OS_LEADS_KEY_SETTING, mb_substr($key, 0, 200));
+            os_leads_sync_reset($pdo); // a new connection gets every lead already here
             [$ok, $msg] = os_leads_test($url, $key);
             os_leads_record($pdo, $ok, $ok ? '' : $msg);
             $flash($ok, $ok
-                ? "Saved. $msg New bookings and WhatsApp chats now go to the OS. Click “Send all leads to OS” once to bring in the leads already here."
+                ? "Saved. $msg New bookings and WhatsApp chats now go to the OS, and the leads already here are being sent in the background."
                 : "Saved, but the connection test failed: $msg");
         }
     } elseif ($osAction === 'os_test') {
@@ -51,8 +54,9 @@ if (in_array($osAction, ['os_save', 'os_test', 'os_send_all', 'os_disconnect'], 
     } elseif ($osAction === 'os_send_all') {
         if ($osCfg['url'] === '' || $osCfg['key'] === '') {
             $flash(false, 'Save the Endpoint URL and API key first.');
+        } elseif (($r = os_leads_sync_all($pdo)) === null) {
+            $flash(true, 'The leads are already being sent to the OS in the background. Check back in a minute.');
         } else {
-            $r = os_leads_push_all($pdo);
             $parts = [];
             if ($r['added']) {
                 $parts[] = $r['added'] . ' added to the OS';
@@ -378,6 +382,7 @@ include __DIR__ . '/includes/header.php';
 $osCfg = os_leads_config($pdo);
 $osOn = $osCfg['url'] !== '' && $osCfg['key'] !== '';
 $osStatus = os_leads_status($pdo);
+$osSync = os_leads_sync_state($pdo);
 $osFlash = $_SESSION['os_flash'] ?? null;
 unset($_SESSION['os_flash']);
 $osKeyHint = $osCfg['key'] !== '' ? mb_substr($osCfg['key'], 0, 8) . '…' . mb_substr($osCfg['key'], -4) : '';
@@ -390,7 +395,7 @@ $osWhen = fn (string $dt): string => $dt !== '' ? date('M j, Y g:i A', strtotime
   <div class="toolbar" style="margin-bottom:.6rem">
     <div>
       <div class="card-title">Drawlead OS connection</div>
-      <div class="card-desc" style="margin-bottom:0">Sends every calendar booking and WhatsApp chat to Drawlead OS → Sales Department → Pre-sales → Lead, with source “Website”.</div>
+      <div class="card-desc" style="margin-bottom:0">Sends every calendar booking and WhatsApp chat to Drawlead OS → Sales Department → Pre-sales → Lead, with source “Website/Popup”, “Website/Calendar” or “Website/WhatsApp” for the form it came through.</div>
     </div>
     <span class="os-pill os-pill-<?= $osPillClass ?>"><span class="ls-dot"></span><?= h($osPillText) ?></span>
   </div>
@@ -398,6 +403,11 @@ $osWhen = fn (string $dt): string => $dt !== '' ? date('M j, Y g:i A', strtotime
   <?php if ($osOn): ?>
   <div class="os-status t-sub">
     <?php if ($osStatus['last_ok_at']): ?>Last successful contact: <?= h($osWhen($osStatus['last_ok_at'])) ?>.<?php else: ?>No lead sent yet.<?php endif; ?>
+    <?php if ($osSync['behind']): ?>
+    The leads already here are being sent to the OS automatically in the background (tried again every <?= OS_LEADS_RETRY_MINUTES ?> minutes if the OS can't take them).
+    <?php elseif ($osSync['synced_at'] !== ''): ?>
+    Every lead here has been sent to the OS. New ones go automatically.
+    <?php endif; ?>
     <?php if ($osStatus['last_error'] !== ''): ?><div class="os-error">Last problem (<?= h($osWhen($osStatus['last_error_at'])) ?>): <?= h($osStatus['last_error']) ?></div><?php endif; ?>
   </div>
   <div class="os-actions">
@@ -405,9 +415,9 @@ $osWhen = fn (string $dt): string => $dt !== '' ? date('M j, Y g:i A', strtotime
       <?= csrf_field() ?><input type="hidden" name="action" value="os_test">
       <button type="submit" class="btn btn-ghost btn-sm">Test connection</button>
     </form>
-    <form method="post" action="<?= h(leads_url()) ?>" onsubmit="return confirm(<?= h(json_encode('Send all ' . ($allCount ?? 0) . ' website leads to the OS? Leads the OS already has are not added again. This can take a minute.', JSON_UNESCAPED_UNICODE)) ?>);">
+    <form method="post" action="<?= h(leads_url()) ?>" onsubmit="return confirm(<?= h(json_encode('Send all ' . ($allCount ?? 0) . ' website leads to the OS now? This happens automatically anyway; leads the OS already has are not added again. This can take a minute.', JSON_UNESCAPED_UNICODE)) ?>);">
       <?= csrf_field() ?><input type="hidden" name="action" value="os_send_all">
-      <button type="submit" class="btn btn-primary btn-sm">Send all leads to OS</button>
+      <button type="submit" class="btn btn-ghost btn-sm">Send all leads now</button>
     </form>
     <form method="post" action="<?= h(leads_url()) ?>" onsubmit="return confirm('Disconnect from the OS? New leads will stay on the website only.');">
       <?= csrf_field() ?><input type="hidden" name="action" value="os_disconnect">

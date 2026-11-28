@@ -8,6 +8,7 @@
  * live site immediately, the way WordPress permalinks work.
  */
 require_once __DIR__ . '/includes/bootstrap.php';
+require_once __DIR__ . '/includes/os-leads.php';
 
 // No cron on shared hosting — flip any due scheduled posts to published
 // on every request, so they go live the moment their time arrives.
@@ -39,6 +40,10 @@ register_shutdown_function(function () use ($pdo, $uri) {
         seo_log_404($pdo, $uri);
     }
 });
+
+// ── Drawlead OS: once the page is out, send the OS any leads it's missing.
+// Registered after the 404 log so that still runs first. See includes/os-leads.php. ──
+register_shutdown_function('os_leads_catch_up_after_response', $pdo);
 
 // ── robots.txt — edited in Admin → SEO → Robots (.htaccess routes it here). ──
 if ($uri === '/robots.txt') {

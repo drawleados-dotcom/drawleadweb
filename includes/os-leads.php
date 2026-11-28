@@ -1,14 +1,17 @@
 <?php
 /**
  * Drawlead OS connection — sends every website lead to the OS, where it lands
- * in Sales Department → Pre-sales → Lead with source "Website".
+ * in Sales Department → Pre-sales → Lead with source "Website/Popup",
+ * "Website/Calendar" or "Website/WhatsApp" (see os_leads_sub_source()).
  *
  * Admin → Lead Source → "Drawlead OS connection" saves the OS endpoint URL and
  * the API key generated in OS → Sales Department → Website. From then on each
  * calendar booking and WhatsApp chat is sent right after the visitor gets
- * their confirmation (os_leads_push_after_response), and "Send all leads to
- * OS" sends every lead already on the site. The OS adds a lead only once per
- * external_id ("booking-12", "whatsapp-5"), so sending one again is harmless.
+ * their confirmation (os_leads_push_after_response). The leads already on the
+ * site, and any lead that couldn't be sent because the OS was down, are sent
+ * automatically in the background (see AUTOMATIC CATCH-UP) — nobody has to
+ * click "Send all leads to OS". The OS adds a lead only once per external_id
+ * ("booking-12", "whatsapp-5"), so sending one again is harmless.
  *
  * Nothing here may break or slow a visitor's form: every failure is caught,
  * logged, and shown on the Lead Source page instead.
@@ -17,6 +20,22 @@
 const OS_LEADS_URL_SETTING = 'os_leads_endpoint';
 const OS_LEADS_KEY_SETTING = 'os_leads_api_key';
 const OS_LEADS_STATUS_SETTING = 'os_leads_status'; // JSON: last_ok_at, last_error, last_error_at
+
+// ── AUTOMATIC CATCH-UP ──
+// Every lead on the site is sent again (os_leads_push_all) when the OS is
+// behind: right after connecting, after OS_LEADS_SYNC_VERSION is bumped, or
+// after a lead couldn't be sent because the OS was unreachable or erroring.
+// It runs after a page has gone out to its visitor (shared hosting has no
+// cron), one run at a time, and at most every OS_LEADS_RETRY_MINUTES.
+
+/** Bump to have every lead already in the OS sent again, e.g. 2 = sub_source ("Website/Popup"…). */
+const OS_LEADS_SYNC_VERSION = 2;
+const OS_LEADS_RETRY_MINUTES = 10;
+const OS_LEADS_SYNC_LOCK = 'drawlead_os_leads_sync'; // MySQL GET_LOCK name
+const OS_LEADS_SYNCED_VERSION_SETTING = 'os_leads_synced_version'; // version of the last complete run
+const OS_LEADS_SYNCED_AT_SETTING = 'os_leads_synced_at';           // when that run started
+const OS_LEADS_UNSENT_AT_SETTING = 'os_leads_unsent_at';           // last time a lead couldn't be sent
+const OS_LEADS_SYNC_TRIED_AT_SETTING = 'os_leads_sync_tried_at';   // last run started (complete or not)
 
 /** ['url' => ..., 'key' => ...] as saved on the Lead Source page ('' when not set). */
 function os_leads_config(PDO $pdo): array
@@ -152,6 +171,21 @@ function os_leads_booking_fields(PDO $pdo): array
 }
 
 /**
+ * Which website form a lead came through, sent to the OS as `sub_source`: the
+ * OS shows it after the key's source, e.g. "Website/Popup". A booking counts
+ * as "Popup" when the site popup opened the calendar (booking.js labels that
+ * trigger "Popup: <name>"), and as "Calendar" from anywhere else — menu,
+ * buttons, footer, the /book link, or before the trigger was recorded.
+ */
+function os_leads_sub_source(string $type, string $trigger): string
+{
+    if ($type === 'whatsapp') {
+        return 'WhatsApp';
+    }
+    return str_starts_with($trigger, 'Popup:') ? 'Popup' : 'Calendar';
+}
+
+/**
  * The OS payload for one lead, or null if it no longer exists. Contact details
  * go into the OS lead's own fields; the form, source, call time and answers
  * are written into its Notes so the sales team sees them on the lead.
@@ -173,7 +207,7 @@ function os_leads_payload(PDO $pdo, string $type, int $id): ?array
 
     $src = null;
     if (migration_table_exists($pdo, 'lead_sources')) {
-        $s = $pdo->prepare('SELECT channel, source_detail, page_url, page_title, utm_campaign FROM lead_sources WHERE lead_type = ? AND lead_id = ?');
+        $s = $pdo->prepare('SELECT channel, source_detail, page_url, page_title, utm_campaign, trigger_label FROM lead_sources WHERE lead_type = ? AND lead_id = ?');
         $s->execute([$type, $id]);
         $src = $s->fetch() ?: null;
     }
@@ -221,6 +255,9 @@ function os_leads_payload(PDO $pdo, string $type, int $id): ?array
         if ($src['page_url'] !== '') {
             $notes[] = 'Sent from page: ' . ($src['page_title'] !== '' ? $src['page_title'] . ' (' . $src['page_url'] . ')' : $src['page_url']);
         }
+        if ($type === 'booking' && $src['trigger_label'] !== '') {
+            $notes[] = 'Opened from: ' . $src['trigger_label'];
+        }
     }
     if ($answers) {
         $notes[] = '';
@@ -236,6 +273,7 @@ function os_leads_payload(PDO $pdo, string $type, int $id): ?array
         'phone'            => $phone,
         'notes'            => implode("\n", $notes),
         'date_of_lead'     => date('Y-m-d', strtotime((string) $row['created_at'])),
+        'sub_source'       => os_leads_sub_source($type, (string) ($src['trigger_label'] ?? '')),
         'website_form'     => $form,
         'website_channel'  => $src['channel'] ?? '',
         'website_campaign' => $src['utm_campaign'] ?? '',
@@ -267,7 +305,42 @@ function os_leads_push(PDO $pdo, string $type, int $id): array
         $err = 'The OS did not confirm the lead.';
     }
     os_leads_record($pdo, $ok, $ok ? '' : ($type === 'booking' ? 'Booking' : 'WhatsApp lead') . " #$id: $err");
+    if (!$ok && os_leads_worth_retrying($status)) {
+        set_setting($pdo, OS_LEADS_UNSENT_AT_SETTING, date('Y-m-d H:i:s')); // the catch-up sends it later
+    }
     return ['ok' => $ok, 'duplicate' => !empty($data['duplicate']), 'status' => $status, 'error' => $err];
+}
+
+/**
+ * A failure that may pass on its own (OS unreachable, down or overloaded), so
+ * the catch-up tries again. A rejected key or a wrong URL needs the admin to
+ * fix the connection, and saving it sends everything again anyway.
+ */
+function os_leads_worth_retrying(?int $status): bool
+{
+    return $status === 0 || $status === -1 || $status === 429 || $status >= 500;
+}
+
+/**
+ * Send what's been echoed so far to the visitor now and keep running in the
+ * background. False when the server can't do that, as the work would then
+ * hold the visitor's page or confirmation up.
+ */
+function os_leads_finish_response(): bool
+{
+    ignore_user_abort(true);
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        session_write_close(); // don't hold the visitor's session lock while we wait on the OS
+    }
+    if (function_exists('fastcgi_finish_request')) {
+        fastcgi_finish_request();
+        return true;
+    }
+    if (function_exists('litespeed_finish_request')) {
+        litespeed_finish_request();
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -281,18 +354,13 @@ function os_leads_push_after_response(PDO $pdo, string $type, int $id): void
         if (!os_leads_connected($pdo)) {
             return;
         }
-        ignore_user_abort(true);
-        if (session_status() === PHP_SESSION_ACTIVE) {
-            session_write_close(); // don't hold the visitor's session lock while we wait on the OS
-        }
-        if (function_exists('fastcgi_finish_request')) {
-            fastcgi_finish_request();
-        } elseif (function_exists('litespeed_finish_request')) {
-            litespeed_finish_request();
-        }
+        $finished = os_leads_finish_response();
         $r = os_leads_push($pdo, $type, $id);
         if (!$r['ok']) {
             error_log("os_leads_push $type #$id: " . $r['error']);
+        }
+        if ($finished && os_leads_sync_state($pdo)['due']) {
+            os_leads_sync_all($pdo, true);
         }
     } catch (Throwable $e) {
         error_log('os_leads_push_after_response: ' . $e->getMessage());
@@ -300,14 +368,99 @@ function os_leads_push_after_response(PDO $pdo, string $type, int $id): void
 }
 
 /**
+ * Settings read straight from the table, not get_setting(): that caches per
+ * request, and these change while a request runs.
+ */
+function os_leads_settings(PDO $pdo, array $keys): array
+{
+    $stmt = $pdo->prepare('SELECT `key`, `value` FROM settings WHERE `key` IN (' . implode(',', array_fill(0, count($keys), '?')) . ')');
+    $stmt->execute($keys);
+    return array_merge(array_fill_keys($keys, ''), array_map('strval', $stmt->fetchAll(PDO::FETCH_KEY_PAIR)));
+}
+
+/**
+ * Where the automatic catch-up stands: 'behind' = the OS may be missing leads
+ * or have them in an older form; 'due' = behind and time for another try;
+ * 'synced_at' = start of the last complete run ('' if none yet).
+ */
+function os_leads_sync_state(PDO $pdo): array
+{
+    $s = os_leads_settings($pdo, [
+        OS_LEADS_URL_SETTING, OS_LEADS_KEY_SETTING, OS_LEADS_SYNCED_VERSION_SETTING,
+        OS_LEADS_SYNCED_AT_SETTING, OS_LEADS_UNSENT_AT_SETTING, OS_LEADS_SYNC_TRIED_AT_SETTING,
+    ]);
+    $connected = $s[OS_LEADS_URL_SETTING] !== '' && $s[OS_LEADS_KEY_SETTING] !== '';
+    $syncedAt = $s[OS_LEADS_SYNCED_AT_SETTING];
+    $behind = $connected && (
+        (int) $s[OS_LEADS_SYNCED_VERSION_SETTING] < OS_LEADS_SYNC_VERSION
+        || ($s[OS_LEADS_UNSENT_AT_SETTING] !== '' && $s[OS_LEADS_UNSENT_AT_SETTING] >= $syncedAt)
+    );
+    $triedAt = $s[OS_LEADS_SYNC_TRIED_AT_SETTING];
+    $due = $behind && ($triedAt === '' || strtotime($triedAt) <= time() - OS_LEADS_RETRY_MINUTES * 60);
+    return ['behind' => $behind, 'due' => $due, 'synced_at' => $syncedAt];
+}
+
+/** Have the catch-up send every lead again soon — e.g. after the connection is saved. */
+function os_leads_sync_reset(PDO $pdo): void
+{
+    set_setting($pdo, OS_LEADS_SYNCED_VERSION_SETTING, '0');
+    set_setting($pdo, OS_LEADS_SYNC_TRIED_AT_SETTING, '');
+}
+
+/**
+ * os_leads_push_all(), remembering a complete run so the catch-up doesn't
+ * repeat it. One run at a time across requests: returns null when another is
+ * going, or (with $onlyIfDue) when it's no longer due — another request just did it.
+ */
+function os_leads_sync_all(PDO $pdo, bool $onlyIfDue = false): ?array
+{
+    // Named lock: released below, or by MySQL if this request dies.
+    if ((int) $pdo->query("SELECT GET_LOCK('" . OS_LEADS_SYNC_LOCK . "', 0)")->fetchColumn() !== 1) {
+        return null;
+    }
+    try {
+        if ($onlyIfDue && !os_leads_sync_state($pdo)['due']) {
+            return null;
+        }
+        $start = date('Y-m-d H:i:s');
+        set_setting($pdo, OS_LEADS_SYNC_TRIED_AT_SETTING, $start);
+        $r = os_leads_push_all($pdo);
+        if (!$r['stopped'] && $r['retry'] === 0) {
+            set_setting($pdo, OS_LEADS_SYNCED_VERSION_SETTING, (string) OS_LEADS_SYNC_VERSION);
+            set_setting($pdo, OS_LEADS_SYNCED_AT_SETTING, $start);
+        }
+        return $r;
+    } finally {
+        $pdo->query("SELECT RELEASE_LOCK('" . OS_LEADS_SYNC_LOCK . "')");
+    }
+}
+
+/**
+ * The catch-up hook for page loads: register_shutdown_function() it. Costs
+ * one settings query when the OS is up to date; otherwise sends the page to
+ * the visitor first, then every lead to the OS.
+ */
+function os_leads_catch_up_after_response(PDO $pdo): void
+{
+    try {
+        if (os_leads_sync_state($pdo)['due'] && os_leads_finish_response()) {
+            os_leads_sync_all($pdo, true);
+        }
+    } catch (Throwable $e) {
+        error_log('os_leads_catch_up_after_response: ' . $e->getMessage());
+    }
+}
+
+/**
  * Send every booking and WhatsApp lead on the site (oldest first). Stops at
  * the first error that would fail every remaining lead the same way (OS
- * unreachable, key rejected, wrong URL). Returns counts for the page message.
+ * unreachable, key rejected, wrong URL). Returns counts for the page message;
+ * 'retry' counts the failures worth trying again later.
  */
 function os_leads_push_all(PDO $pdo): array
 {
     @set_time_limit(600);
-    $result = ['added' => 0, 'already' => 0, 'skipped' => 0, 'failed' => 0, 'error' => '', 'stopped' => false];
+    $result = ['added' => 0, 'already' => 0, 'skipped' => 0, 'failed' => 0, 'retry' => 0, 'error' => '', 'stopped' => false];
     $todo = [];
     if (migration_table_exists($pdo, 'bookings')) {
         foreach ($pdo->query('SELECT id, created_at FROM bookings') as $r) {
@@ -329,6 +482,7 @@ function os_leads_push_all(PDO $pdo): array
             $result[$r['duplicate'] ? 'already' : 'added']++;
         } else {
             $result['failed']++;
+            $result['retry'] += os_leads_worth_retrying($r['status']) ? 1 : 0;
             $result['error'] = $result['error'] ?: $r['error'];
             if (in_array($r['status'], [-1, 0, 401, 404, 405], true)) {
                 $result['stopped'] = true;
