@@ -249,8 +249,8 @@ $dcRing = fn (string $fill = '#F8E6D6'): string => '<svg viewBox="0 0 120 120" a
      (dcom.js adds .is-hs); elsewhere they sit in a grid. -->
 <section class="dc-tix" id="capabilities" data-dc-hs>
   <div class="dc-hs__pin">
-  <div class="wrap dc-hs__track" data-dc-track>
-    <div class="dc-head dc-hs__intro">
+  <div class="wrap">
+    <div class="dc-head dc-hs__head">
       <div>
         <span class="pill dc-pill t-sky reveal"><span class="pill__dot" aria-hidden="true"></span>End-to-End Ecommerce Engineering</span>
         <h2 class="h2">Everything Your Brand Needs to Sell Online. Built Around Your Business.</h2>
@@ -260,6 +260,8 @@ $dcRing = fn (string $fill = '#F8E6D6'): string => '<svg viewBox="0 0 120 120" a
         <a class="h10-btn h10-btn--dark" href="/book" data-book><span>Build Your Custom Ecommerce Experience</span><?= $dcArrow ?></a>
       </div>
     </div>
+  </div>
+  <div class="wrap dc-hs__track" data-dc-track>
     <ol class="dc-tks" role="list">
 <?php foreach ($dcBuild as $i => [$icon, $tint, $title, $text, $items, $cls]): ?>
       <li class="step reveal" style="--tk:<?= $dcTk[$tint] ?>;--d:<?= ($i % 3) * .1 ?>s">

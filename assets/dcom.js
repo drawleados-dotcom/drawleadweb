@@ -49,7 +49,7 @@
   var hs = $('[data-dc-hs]');
   var track = hs && $('[data-dc-track]', hs);
   if (hs && track) {
-    var fit = matchMedia('(min-width: 981px) and (min-height: 700px)');
+    var fit = matchMedia('(min-width: 981px) and (min-height: 740px)');
     var count = $('[data-dc-count]', hs);
     var prog = $('[data-dc-prog]', hs);
     var cards = $$('.dc-tks .step', hs);
@@ -63,13 +63,8 @@
       track.style.transform = 'translate3d(' + (-p * dist).toFixed(1) + 'px,0,0)';
       if (prog) prog.style.transform = 'scaleX(' + p.toFixed(4) + ')';
       if (count && cards.length) {
-        // the ticket nearest the middle of the screen
-        var mid = window.innerWidth / 2, best = 0, bestD = Infinity;
-        cards.forEach(function (c, i) {
-          var r = c.getBoundingClientRect();
-          var d = Math.abs(r.left + r.width / 2 - mid);
-          if (d < bestD) { bestD = d; best = i; }
-        });
+        // 01 at the start, the last one at the end, in step with the scroll
+        var best = Math.round(p * (cards.length - 1));
         count.textContent = (best < 9 ? '0' : '') + (best + 1);
       }
     };
