@@ -245,10 +245,9 @@ $dcRing = fn (string $fill = '#F8E6D6'): string => '<svg viewBox="0 0 120 120" a
 </section>
 
 <!-- 03 · What we engineer: six paper tickets, the same ones as the home page's approach.
-     On desktop the section pins and the tickets slide past sideways as you scroll
-     (dcom.js adds .is-hs); elsewhere they sit in a grid. -->
-<section class="dc-tix" id="capabilities" data-dc-hs>
-  <div class="dc-hs__pin">
+     On desktop the heading scrolls by, then the row of tickets pins and slides
+     sideways as you scroll (dcom.js adds .is-hs); elsewhere they sit in a grid. -->
+<section class="dc-tix" id="capabilities">
   <div class="wrap">
     <div class="dc-head dc-hs__head">
       <div>
@@ -261,6 +260,8 @@ $dcRing = fn (string $fill = '#F8E6D6'): string => '<svg viewBox="0 0 120 120" a
       </div>
     </div>
   </div>
+  <div class="dc-hs" data-dc-hs>
+  <div class="dc-hs__pin">
   <div class="wrap dc-hs__track" data-dc-track>
     <ol class="dc-tks" role="list">
 <?php foreach ($dcBuild as $i => [$icon, $tint, $title, $text, $items, $cls]): ?>
@@ -281,6 +282,7 @@ $dcRing = fn (string $fill = '#F8E6D6'): string => '<svg viewBox="0 0 120 120" a
     </ol>
   </div>
   <div class="wrap dc-hs__ui" aria-hidden="true"><span class="dc-hs__count"><b data-dc-count>01</b> / <?= $dcN(count($dcBuild) - 1) ?></span><span class="dc-hs__bar"><i data-dc-prog></i></span><span class="dc-hs__hint">Scroll to explore</span></div>
+  </div>
   </div>
 </section>
 

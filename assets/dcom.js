@@ -49,7 +49,7 @@
   var hs = $('[data-dc-hs]');
   var track = hs && $('[data-dc-track]', hs);
   if (hs && track) {
-    var fit = matchMedia('(min-width: 981px) and (min-height: 740px)');
+    var fit = matchMedia('(min-width: 981px) and (min-height: 600px)');
     var count = $('[data-dc-count]', hs);
     var prog = $('[data-dc-prog]', hs);
     var cards = $$('.dc-tks .step', hs);

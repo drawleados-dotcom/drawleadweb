@@ -164,19 +164,16 @@ html.js .dc .dc-funnel:not(.is-in) .dc-funnel__row i{transform:scaleX(.05)}
 }
 
 /* horizontal sticky scroll (desktop; dcom.js adds .is-hs and sets the section's height):
-   the section pins, the heading stays on top and the six tickets slide past underneath */
+   the heading scrolls by, then the row of six tickets pins and slides past sideways */
 .dc .dc-hs__head .dc-head__txt{gap:20px}
 .dc .dc-hs__ui{display:none}
-.dc .dc-tix.is-hs{padding:0}
-.dc .dc-tix.is-hs .dc-hs__pin{position:sticky;top:0;display:flex;flex-direction:column;justify-content:center;gap:clamp(18px,3vh,32px);height:100vh;height:100svh;padding-top:72px;overflow:hidden}
-.dc .dc-tix.is-hs .dc-hs__track{--side:calc((100vw - min(var(--wrap),100vw - 2*var(--gutter))) / 2);display:flex;align-items:stretch;width:max-content;max-width:none;margin:0;padding-inline:var(--side);will-change:transform}
-.dc .dc-tix.is-hs .dc-hs__head{align-items:end;margin-bottom:0}
-.dc .dc-tix.is-hs .dc-hs__head .h2{font-size:clamp(1.9rem,2.7vw,2.6rem)}
-.dc .dc-tix.is-hs .dc-hs__head .pill{margin-bottom:14px}
-.dc .dc-tix.is-hs .dc-tks{display:flex;align-items:stretch;gap:clamp(18px,1.8vw,26px);max-width:none;margin:0}
-.dc .dc-tix.is-hs .dc-tks .step{flex:none;width:clamp(290px,23vw,340px)}
-.dc .dc-tix.is-hs .dc-tks .step__art{aspect-ratio:200/112}
-.dc .dc-tix.is-hs .dc-hs__ui{display:flex;align-items:center;gap:18px;font-size:.8rem;font-weight:600;color:var(--mut)}
+.dc .dc-tix:has(.dc-hs.is-hs){padding-bottom:clamp(16px,2vw,32px)}
+.dc .dc-hs.is-hs .dc-hs__pin{position:sticky;top:0;display:flex;flex-direction:column;justify-content:center;gap:clamp(18px,3vh,32px);height:100vh;height:100svh;padding-top:64px;overflow:hidden}
+.dc .dc-hs.is-hs .dc-hs__track{--side:calc((100vw - min(var(--wrap),100vw - 2*var(--gutter))) / 2);display:flex;align-items:stretch;width:max-content;max-width:none;margin:0;padding-inline:var(--side);will-change:transform}
+.dc .dc-hs.is-hs .dc-tks{display:flex;align-items:stretch;gap:clamp(18px,1.8vw,26px);max-width:none;margin:0}
+.dc .dc-hs.is-hs .dc-tks .step{flex:none;width:clamp(300px,24vw,350px)}
+.dc .dc-hs.is-hs .dc-tks .step__art{aspect-ratio:200/120}
+.dc .dc-hs.is-hs .dc-hs__ui{display:flex;align-items:center;gap:18px;font-size:.8rem;font-weight:600;color:var(--mut)}
 .dc .dc-hs__count{font-variant-numeric:tabular-nums;letter-spacing:.06em}
 .dc .dc-hs__count b{font-family:var(--f-head);font-size:1rem;color:var(--ink)}
 .dc .dc-hs__bar{flex:1;max-width:420px;height:3px;border-radius:2px;background:rgba(15,58,36,.12);overflow:hidden}
