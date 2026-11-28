@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../includes/bootstrap.php';
 require_once __DIR__ . '/../includes/mailer.php';
+require_once __DIR__ . '/../includes/os-leads.php';
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -119,7 +120,8 @@ try {
         'INSERT INTO bookings (booking_date, booking_time, form_data, name, email) VALUES (?, ?, ?, ?, ?)'
     );
     $stmt->execute([$date, $time . ':00', json_encode($cleanData), $name, $email]);
-    lead_source_save($pdo, 'booking', (int) $pdo->lastInsertId(), $input['source'] ?? null);
+    $bookingId = (int) $pdo->lastInsertId();
+    lead_source_save($pdo, 'booking', $bookingId, $input['source'] ?? null);
 } catch (PDOException $e) {
     if ($e->getCode() === '23000') {
         echo json_encode(['success' => false, 'error' => 'That time slot was just booked by someone else. Please pick another.']);
@@ -175,3 +177,7 @@ echo json_encode([
     'success' => true,
     'meeting' => ['date' => $prettyDate, 'time' => $prettyTime, 'name' => $name],
 ]);
+
+// Drawlead OS (Admin → Lead Source → Drawlead OS connection): sent after the
+// visitor already has their confirmation, so it never slows the booking down.
+os_leads_push_after_response($pdo, 'booking', $bookingId);

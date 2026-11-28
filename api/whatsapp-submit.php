@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/bootstrap.php';
+require_once __DIR__ . '/../includes/os-leads.php';
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -55,6 +56,11 @@ foreach ($rawAnswers as $a) {
 
 $stmt = $pdo->prepare('INSERT INTO whatsapp_leads (answers, phone) VALUES (?, ?)');
 $stmt->execute([json_encode($answers), $phone]);
-lead_source_save($pdo, 'whatsapp', (int) $pdo->lastInsertId(), $input['source'] ?? null);
+$leadId = (int) $pdo->lastInsertId();
+lead_source_save($pdo, 'whatsapp', $leadId, $input['source'] ?? null);
 
 echo json_encode(['success' => true]);
+
+// Drawlead OS (Admin → Lead Source → Drawlead OS connection): sent after the
+// visitor already has their reply, so it never slows the chat down.
+os_leads_push_after_response($pdo, 'whatsapp', $leadId);

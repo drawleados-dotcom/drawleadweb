@@ -4,11 +4,81 @@
  * chat in one list, with where each one came from (see includes/lead-source.php).
  */
 require_once __DIR__ . '/../includes/bootstrap.php';
+require_once __DIR__ . '/../includes/os-leads.php';
 require_admin();
 
 $hasSources = migration_table_exists($pdo, 'lead_sources');
 $hasBookings = migration_table_exists($pdo, 'bookings');
 $hasWhatsapp = migration_table_exists($pdo, 'whatsapp_leads');
+
+// ── Drawlead OS connection (POST): save + test, test, send all, disconnect ──
+// See includes/os-leads.php. Each action leaves a one-time message in the
+// session and comes back to this page with the same filters.
+$osAction = $_SERVER['REQUEST_METHOD'] === 'POST' ? (string) ($_POST['action'] ?? '') : '';
+if (in_array($osAction, ['os_save', 'os_test', 'os_send_all', 'os_disconnect'], true)) {
+    csrf_verify();
+    $osCfg = os_leads_config($pdo);
+    $flash = function (bool $ok, string $msg): void {
+        $_SESSION['os_flash'] = ['ok' => $ok, 'msg' => $msg];
+    };
+
+    if ($osAction === 'os_save') {
+        // No trailing slash: the OS would answer ".../leads/" with a redirect, which isn't followed.
+        $url = rtrim(trim((string) ($_POST['os_url'] ?? '')), '/');
+        $key = trim((string) ($_POST['os_key'] ?? ''));
+        if ($key === '') {
+            $key = $osCfg['key']; // left blank: keep the key already saved
+        }
+        if (!filter_var($url, FILTER_VALIDATE_URL) || !preg_match('#^https?://#i', $url)) {
+            $flash(false, 'Paste the Endpoint URL from OS → Sales Department → Website (it starts with https://).');
+        } elseif ($key === '') {
+            $flash(false, 'Paste the API key from OS → Sales Department → Website → Generate API key.');
+        } else {
+            set_setting($pdo, OS_LEADS_URL_SETTING, mb_substr($url, 0, 500));
+            set_setting($pdo, OS_LEADS_KEY_SETTING, mb_substr($key, 0, 200));
+            [$ok, $msg] = os_leads_test($url, $key);
+            os_leads_record($pdo, $ok, $ok ? '' : $msg);
+            $flash($ok, $ok
+                ? "Saved. $msg New bookings and WhatsApp chats now go to the OS. Click “Send all leads to OS” once to bring in the leads already here."
+                : "Saved, but the connection test failed: $msg");
+        }
+    } elseif ($osAction === 'os_test') {
+        [$ok, $msg] = $osCfg['url'] !== '' && $osCfg['key'] !== ''
+            ? os_leads_test($osCfg['url'], $osCfg['key'])
+            : [false, 'Save the Endpoint URL and API key first.'];
+        os_leads_record($pdo, $ok, $ok ? '' : $msg);
+        $flash($ok, $ok ? $msg : "Connection test failed: $msg");
+    } elseif ($osAction === 'os_send_all') {
+        if ($osCfg['url'] === '' || $osCfg['key'] === '') {
+            $flash(false, 'Save the Endpoint URL and API key first.');
+        } else {
+            $r = os_leads_push_all($pdo);
+            $parts = [];
+            if ($r['added']) {
+                $parts[] = $r['added'] . ' added to the OS';
+            }
+            if ($r['already']) {
+                $parts[] = $r['already'] . ' already there';
+            }
+            if ($r['skipped']) {
+                $parts[] = $r['skipped'] . ' skipped (no name, phone or email)';
+            }
+            if ($r['failed']) {
+                $parts[] = $r['failed'] . ' failed';
+            }
+            $summary = $parts ? implode(', ', $parts) . '.' : 'There are no leads to send yet.';
+            $flash($r['failed'] === 0, $r['failed'] === 0
+                ? "Done: $summary"
+                : "$summary " . ($r['stopped'] ? 'Stopped early: ' : 'First problem: ') . $r['error']);
+        }
+    } else { // os_disconnect
+        set_setting($pdo, OS_LEADS_URL_SETTING, '');
+        set_setting($pdo, OS_LEADS_KEY_SETTING, '');
+        $flash(true, 'Disconnected from the OS. New leads stay on the website only until you connect again.');
+    }
+    header('Location: ' . leads_url());
+    exit;
+}
 
 // ── Delete one lead (POST): the booking or chat row, and its lead_sources row ──
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'delete_lead') {
@@ -303,6 +373,71 @@ include __DIR__ . '/includes/header.php';
 </div>
 <?php endif; ?>
 
+<?php
+// ── Drawlead OS connection card ──
+$osCfg = os_leads_config($pdo);
+$osOn = $osCfg['url'] !== '' && $osCfg['key'] !== '';
+$osStatus = os_leads_status($pdo);
+$osFlash = $_SESSION['os_flash'] ?? null;
+unset($_SESSION['os_flash']);
+$osKeyHint = $osCfg['key'] !== '' ? mb_substr($osCfg['key'], 0, 8) . '…' . mb_substr($osCfg['key'], -4) : '';
+[$osPillClass, $osPillText] = !$osOn ? ['off', 'Not connected'] : ($osStatus['last_error'] !== '' ? ['err', 'Connection problem'] : ['on', 'Connected']);
+$osWhen = fn (string $dt): string => $dt !== '' ? date('M j, Y g:i A', strtotime($dt)) : '';
+?>
+<?php if ($osFlash): ?><div class="alert alert-<?= $osFlash['ok'] ? 'success' : 'error' ?>"><?= h($osFlash['msg']) ?></div><?php endif; ?>
+
+<div class="card os-card" id="os-connection">
+  <div class="toolbar" style="margin-bottom:.6rem">
+    <div>
+      <div class="card-title">Drawlead OS connection</div>
+      <div class="card-desc" style="margin-bottom:0">Sends every calendar booking and WhatsApp chat to Drawlead OS → Sales Department → Pre-sales → Lead, with source “Website”.</div>
+    </div>
+    <span class="os-pill os-pill-<?= $osPillClass ?>"><span class="ls-dot"></span><?= h($osPillText) ?></span>
+  </div>
+
+  <?php if ($osOn): ?>
+  <div class="os-status t-sub">
+    <?php if ($osStatus['last_ok_at']): ?>Last successful contact: <?= h($osWhen($osStatus['last_ok_at'])) ?>.<?php else: ?>No lead sent yet.<?php endif; ?>
+    <?php if ($osStatus['last_error'] !== ''): ?><div class="os-error">Last problem (<?= h($osWhen($osStatus['last_error_at'])) ?>): <?= h($osStatus['last_error']) ?></div><?php endif; ?>
+  </div>
+  <div class="os-actions">
+    <form method="post" action="<?= h(leads_url()) ?>">
+      <?= csrf_field() ?><input type="hidden" name="action" value="os_test">
+      <button type="submit" class="btn btn-ghost btn-sm">Test connection</button>
+    </form>
+    <form method="post" action="<?= h(leads_url()) ?>" onsubmit="return confirm(<?= h(json_encode('Send all ' . ($allCount ?? 0) . ' website leads to the OS? Leads the OS already has are not added again. This can take a minute.', JSON_UNESCAPED_UNICODE)) ?>);">
+      <?= csrf_field() ?><input type="hidden" name="action" value="os_send_all">
+      <button type="submit" class="btn btn-primary btn-sm">Send all leads to OS</button>
+    </form>
+    <form method="post" action="<?= h(leads_url()) ?>" onsubmit="return confirm('Disconnect from the OS? New leads will stay on the website only.');">
+      <?= csrf_field() ?><input type="hidden" name="action" value="os_disconnect">
+      <button type="submit" class="btn btn-danger btn-sm">Disconnect</button>
+    </form>
+  </div>
+  <?php endif; ?>
+
+  <details class="os-settings"<?= $osOn ? '' : ' open' ?>>
+    <summary><?= $osOn ? 'Change connection settings' : 'Connect to Drawlead OS' ?></summary>
+    <form method="post" action="<?= h(leads_url()) ?>" class="os-form" autocomplete="off">
+      <?= csrf_field() ?>
+      <input type="hidden" name="action" value="os_save">
+      <div class="field">
+        <label for="os-url">Endpoint URL</label>
+        <input type="url" id="os-url" name="os_url" value="<?= h($osCfg['url']) ?>" placeholder="https://your-os-domain/api/leads-v2/public/leads" required>
+      </div>
+      <div class="field">
+        <label for="os-key">API key</label>
+        <input type="password" id="os-key" name="os_key" autocomplete="off" spellcheck="false"
+          placeholder="<?= h($osOn ? 'Saved (' . $osKeyHint . ') — leave blank to keep it' : 'dlk_…') ?>"<?= $osOn ? '' : ' required' ?>>
+      </div>
+      <div class="os-form-foot">
+        <button type="submit" class="btn btn-primary btn-sm">Save &amp; test</button>
+        <span class="t-sub">Get both from Drawlead OS → Sales Department → <b>Website</b> tab → Generate API key.</span>
+      </div>
+    </form>
+  </details>
+</div>
+
 <div class="stat-grid">
   <div class="stat-card">
     <div class="stat-v"><?= $byForm['booking'] + $byForm['whatsapp'] ?></div>
@@ -512,6 +647,20 @@ include __DIR__ . '/includes/header.php';
 <?php endif; ?>
 
 <style>
+.os-card{margin-bottom:1.25rem}
+.os-pill{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;white-space:nowrap}
+.os-pill-on{background:#e9f9f0;color:#0f7a4c}.os-pill-on .ls-dot{background:#16a34a}
+.os-pill-off{background:var(--bg);color:var(--g500)}.os-pill-off .ls-dot{background:var(--g300)}
+.os-pill-err{background:#fdecef;color:#b3123a}.os-pill-err .ls-dot{background:var(--danger)}
+.os-status{margin-bottom:.9rem}
+.os-error{color:#b3123a;margin-top:3px}
+.os-actions{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem}
+.os-actions form{margin:0}
+.os-settings summary{cursor:pointer;font-size:12.5px;font-weight:700;color:var(--g600);user-select:none}
+.os-form{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-top:1rem;align-items:end}
+.os-form .field{margin-bottom:0}
+.os-form-foot{grid-column:1/-1;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+@media(max-width:700px){.os-form{grid-template-columns:1fr}}
 .ls-top{font-size:20px;line-height:1.25;padding-top:4px}
 .ls-filters{display:grid;grid-template-columns:2fr 1.3fr 1.1fr 1fr 1fr auto;gap:12px;align-items:end}
 .ls-filters .field{margin-bottom:0}
