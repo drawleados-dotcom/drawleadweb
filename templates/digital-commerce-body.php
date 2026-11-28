@@ -13,7 +13,8 @@
  *                    differentiators as a ticker underneath
  *   02 challenge     a shrinking funnel beside a store-audit receipt that lists
  *                    the six challenges as line items
- *   03 engineer      six paper tickets, the same ones as the home page's approach
+ *   03 engineer      six paper tickets (the home page's), sliding sideways in a
+ *                    pinned section on desktop, a grid elsewhere
  *   04 ecosystem     four lanes on one rail, an order travelling through them,
  *                    then the platforms we connect
  *   05 approach      a checkout stepper: four steps on a line that fills in
@@ -243,15 +244,21 @@ $dcRing = fn (string $fill = '#F8E6D6'): string => '<svg viewBox="0 0 120 120" a
   </div>
 </section>
 
-<!-- 03 · What we engineer: six paper tickets, the same ones as the home page's approach -->
-<section class="dc-tix" id="capabilities">
-  <div class="wrap">
-    <div class="dc-head">
+<!-- 03 · What we engineer: six paper tickets, the same ones as the home page's approach.
+     On desktop the section pins and the tickets slide past sideways as you scroll
+     (dcom.js adds .is-hs); elsewhere they sit in a grid. -->
+<section class="dc-tix" id="capabilities" data-dc-hs>
+  <div class="dc-hs__pin">
+  <div class="wrap dc-hs__track" data-dc-track>
+    <div class="dc-head dc-hs__intro">
       <div>
         <span class="pill dc-pill t-sky reveal"><span class="pill__dot" aria-hidden="true"></span>End-to-End Ecommerce Engineering</span>
         <h2 class="h2">Everything Your Brand Needs to Sell Online. Built Around Your Business.</h2>
       </div>
-      <p class="lede dc-head__txt reveal" style="--d:.1s">From the first customer interaction to completed orders, we engineer ecommerce experiences that connect your storefront, products, customers and business operations.</p>
+      <div class="dc-head__txt reveal" style="--d:.1s">
+        <p class="lede">From the first customer interaction to completed orders, we engineer ecommerce experiences that connect your storefront, products, customers and business operations.</p>
+        <a class="h10-btn h10-btn--dark" href="/book" data-book><span>Build Your Custom Ecommerce Experience</span><?= $dcArrow ?></a>
+      </div>
     </div>
     <ol class="dc-tks" role="list">
 <?php foreach ($dcBuild as $i => [$icon, $tint, $title, $text, $items, $cls]): ?>
@@ -270,7 +277,8 @@ $dcRing = fn (string $fill = '#F8E6D6'): string => '<svg viewBox="0 0 120 120" a
       </li>
 <?php endforeach; ?>
     </ol>
-    <div class="dc-center reveal"><a class="h10-btn h10-btn--dark" href="/book" data-book><span>Build Your Custom Ecommerce Experience</span><?= $dcArrow ?></a></div>
+  </div>
+  <div class="wrap dc-hs__ui" aria-hidden="true"><span class="dc-hs__count"><b data-dc-count>01</b> / <?= $dcN(count($dcBuild) - 1) ?></span><span class="dc-hs__bar"><i data-dc-prog></i></span><span class="dc-hs__hint">Scroll to explore</span></div>
   </div>
 </section>
 

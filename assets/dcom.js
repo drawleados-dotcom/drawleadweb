@@ -42,6 +42,60 @@
     });
   };
 
+  /* ---------- 03 horizontal sticky scroll: the section pins, the tickets slide past ----------
+     Only on wide, tall enough screens and without reduced motion; everywhere else
+     the tickets stay in their grid. The section is made as tall as the sideways
+     distance plus one screen, so scrolling it down moves the track across. */
+  var hs = $('[data-dc-hs]');
+  var track = hs && $('[data-dc-track]', hs);
+  if (hs && track) {
+    var fit = matchMedia('(min-width: 981px) and (min-height: 700px)');
+    var count = $('[data-dc-count]', hs);
+    var prog = $('[data-dc-prog]', hs);
+    var cards = $$('.dc-tks .step', hs);
+    var dist = 0;
+    var ticking = false;
+    var move = function () {
+      ticking = false;
+      if (!hs.classList.contains('is-hs')) return;
+      var span = hs.offsetHeight - window.innerHeight;
+      var p = span > 0 ? Math.min(1, Math.max(0, -hs.getBoundingClientRect().top / span)) : 0;
+      track.style.transform = 'translate3d(' + (-p * dist).toFixed(1) + 'px,0,0)';
+      if (prog) prog.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+      if (count && cards.length) {
+        // the ticket nearest the middle of the screen
+        var mid = window.innerWidth / 2, best = 0, bestD = Infinity;
+        cards.forEach(function (c, i) {
+          var r = c.getBoundingClientRect();
+          var d = Math.abs(r.left + r.width / 2 - mid);
+          if (d < bestD) { bestD = d; best = i; }
+        });
+        count.textContent = (best < 9 ? '0' : '') + (best + 1);
+      }
+    };
+    var onScroll = function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(move); }
+    };
+    var setup = function () {
+      var on = fit.matches && !reduce;
+      hs.classList.toggle('is-hs', on);
+      if (!on) {
+        hs.style.height = '';
+        track.style.transform = '';
+        return;
+      }
+      track.style.transform = '';
+      dist = Math.max(0, track.scrollWidth - window.innerWidth);
+      hs.style.height = (dist + window.innerHeight) + 'px';
+      move();
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', setup);
+    if (fit.addEventListener) fit.addEventListener('change', setup);
+    window.addEventListener('load', setup);
+    setup();
+  }
+
   /* ---------- 06 the category menu: pointing at a category previews it ---------- */
   var cat = $('[data-dc-cat]');
   if (cat) tabs(cat, { hover: true });

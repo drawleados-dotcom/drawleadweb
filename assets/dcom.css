@@ -11,7 +11,7 @@
 
      01 hero · product page + ticker   05 approach · checkout stepper
      02 challenge · funnel + receipt   06 industries · category menu
-     03 engineer · paper tickets       07 projects · browser tabs
+     03 engineer · tickets, sideways   07 projects · browser tabs
      04 ecosystem · lanes on a rail    08 close · light band (home10.css)
    ========================================================================== */
 .dc{--pad:clamp(88px,9.6vw,140px);--dots:radial-gradient(rgba(15,58,36,.07) 1px,transparent 1.4px) 0 0/18px 18px;--deep:#1d7a49}
@@ -162,6 +162,25 @@ html.js .dc .dc-funnel:not(.is-in) .dc-funnel__row i{transform:scaleX(.05)}
 @media (prefers-reduced-motion:reduce){
   .dc .dc-tks .step:hover .step__card.tk{transform:none}
 }
+
+/* horizontal sticky scroll (desktop; dcom.js adds .is-hs and sets the section's height):
+   the section pins to the screen and the intro plus the six tickets slide past sideways */
+.dc .dc-hs__intro .dc-head__txt{gap:24px}
+.dc .dc-hs__ui{display:none}
+.dc .dc-tix.is-hs{padding:0}
+.dc .dc-tix.is-hs .dc-hs__pin{position:sticky;top:0;display:flex;flex-direction:column;justify-content:center;gap:clamp(20px,3vh,36px);height:100vh;height:100svh;padding-top:72px;overflow:hidden}
+.dc .dc-tix.is-hs .dc-hs__track{--side:calc((100vw - min(var(--wrap),100vw - 2*var(--gutter))) / 2);display:flex;align-items:center;gap:clamp(40px,5vw,88px);width:max-content;max-width:none;margin:0;padding-inline:var(--side);will-change:transform}
+.dc .dc-tix.is-hs .dc-hs__intro{display:flex;flex-direction:column;align-items:flex-start;gap:22px;flex:none;width:clamp(360px,33vw,470px);margin:0}
+.dc .dc-tix.is-hs .dc-hs__intro .h2{font-size:clamp(2rem,3vw,2.85rem)}
+.dc .dc-tix.is-hs .dc-tks{display:flex;align-items:stretch;gap:clamp(18px,1.8vw,26px);max-width:none;margin:0}
+.dc .dc-tix.is-hs .dc-tks .step{flex:none;width:clamp(300px,24vw,350px)}
+.dc .dc-tix.is-hs .dc-tks .step__art{aspect-ratio:200/122}
+.dc .dc-tix.is-hs .dc-hs__ui{display:flex;align-items:center;gap:18px;font-size:.8rem;font-weight:600;color:var(--mut)}
+.dc .dc-hs__count{font-variant-numeric:tabular-nums;letter-spacing:.06em}
+.dc .dc-hs__count b{font-family:var(--f-head);font-size:1rem;color:var(--ink)}
+.dc .dc-hs__bar{flex:1;max-width:420px;height:3px;border-radius:2px;background:rgba(15,58,36,.12);overflow:hidden}
+.dc .dc-hs__bar i{display:block;width:100%;height:100%;border-radius:2px;background:var(--deep);transform:scaleX(0);transform-origin:left}
+.dc .dc-hs__hint{margin-left:auto;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mut-2)}
 
 /* ---------- 04 ecosystem: four lanes on one rail ---------- */
 .dc .dc-eco{padding:0 clamp(10px,1.4vw,20px)}
