@@ -126,7 +126,7 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
    Every heading on this page reads as a single block: no gradient, no faded second
    half, no coloured word, and no weight or spacing change between spans. The span
    rules are listed with their real classes rather than relying on !important, because
-   partials/style.php declares .sec-h .fade and friends at two-class specificity; this
+   assets/site.css declares .sec-h .fade and friends at two-class specificity; this
    file is page-scoped and loads after it, so equal specificity wins here and nowhere
    else on the site. Listing the bare `span` alongside them keeps it true for any
    heading added later.
@@ -321,7 +321,7 @@ section{padding:var(--sp-section) var(--sp-gutter);border-bottom:1px solid var(-
    centre while the row itself was full width. Sizing each to its content and centring
    the group fixes it, and a single gap replaces the padding-right/last-child pair so
    the spacing between metrics is equal by construction. */
-/* max-width and margin-top are reset explicitly: partials/style.php caps this row at
+/* max-width and margin-top are reset explicitly: assets/site.css caps this row at
    700px and adds margin-top:4rem, and since that margin collapses with the buttons'
    margin-bottom the gap above was 64px rather than the 44px intended. */
 .hero-stats{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:2.5rem;width:100%;max-width:none;margin-top:0;padding-top:0;animation:fu .7s ease .4s both}

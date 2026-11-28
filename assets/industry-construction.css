@@ -4,7 +4,7 @@
    Loaded only by templates/industry-construction-body.php, so every selector
    here is safe from the other 19 industry pages and the rest of the site. The
    design system (tokens, .eyebrow, .sec-h, .sec-sub, .btn, .grid-bg, the .rv
-   scroll reveal, nav and footer) comes from partials/style.php unchanged.
+   scroll reveal, nav and footer) comes from assets/site.css unchanged.
 
    Green is an accent only: #32b46f for fills and hairlines, #14855a where it
    carries small text (4.6:1 on white), #1c9558 for large text (3.8:1).

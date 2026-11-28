@@ -1,6 +1,6 @@
 /* ==========================================================================
    final-home.css — stylesheet for the /final-home page only.
-   Linked from templates/final_home-body.php AFTER the shared partials/style.php,
+   Linked from templates/final_home-body.php AFTER the shared assets/site.css,
    so its rules win for this page. The live "/" homepage is not affected.
    ========================================================================== */
 

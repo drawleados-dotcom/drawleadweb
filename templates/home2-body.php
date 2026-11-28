@@ -62,7 +62,7 @@ $h2Cases = $pdo->query(
 @media(max-width:560px){.h2-bento{grid-template-columns:1fr;grid-auto-rows:auto}.h2-bento-card{min-height:130px}.h2-bento-hero{grid-column:span 1;grid-row:span 1}}
 
 /* How it works (step timeline) — shared .h2-steps component now lives in
-   templates/partials/style.php since Analyze reuses it too. */
+   assets/site.css since Analyze reuses it too. */
 
 /* ── Solutions (3-card) ── */
 .h2-sol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;max-width:1320px;margin:0 auto}

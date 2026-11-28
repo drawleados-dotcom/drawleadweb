@@ -8,6 +8,16 @@
   const lerp = (a, b, t) => a + (b - a) * t;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const hasIO = 'IntersectionObserver' in window;
+  // { on } stays true while el is within `margin` of the screen; cb (if set) runs
+  // each time it comes near. Scroll-linked updaters check it before reading
+  // positions: sections below the first screen are skipped by the browser
+  // (content-visibility, home10.css), and measuring inside one makes it lay the
+  // section out early, the very start-up work the skip saves.
+  const near = (el, margin = '200px') => {
+    const s = { on: !hasIO, cb: null };
+    if (hasIO) new IntersectionObserver(([e]) => { s.on = e.isIntersecting; if (s.on && s.cb) s.cb(); }, { rootMargin: margin + ' 0px' }).observe(el);
+    return s;
+  };
   // Admin → Pages → Page Content preview: leave text nodes as rendered, the
   // editor's markers are in them.
   const preview = new URLSearchParams(location.search).has('pc_preview');
@@ -80,6 +90,23 @@
     ils.forEach((el) => lio.observe(el));
   } else ils.forEach((el) => el.classList.add('is-live'));
 
+  /* ---------- every looping animation pauses while its section is off screen ----------
+     .is-off sets animation-play-state:paused (home10.css). Running off screen
+     they still cost style, layout and paint work on every frame, which
+     makes taps wait (INP). */
+  if (hasIO) {
+    const zio = new IntersectionObserver((es) => es.forEach((e) => {
+      e.target.classList.toggle('is-off', !e.isIntersecting);
+      // SVG <animateMotion> dots ignore CSS: pause their <svg> directly.
+      $$('svg', e.target).forEach((svg) => {
+        if (svg.pauseAnimations && svg.querySelector('animate, animateMotion, animateTransform')) {
+          if (e.isIntersecting) svg.unpauseAnimations(); else svg.pauseAnimations();
+        }
+      });
+    }), { rootMargin: '150px 0px' });
+    $$('main > section, main > div > section, footer').forEach((el) => zio.observe(el));
+  }
+
   /* ---------- count-up ---------- */
   $$('[data-count]').forEach((el) => {
     // the rendered number, not data-count: it may have been edited in admin
@@ -133,10 +160,15 @@
       show(i + 1, false);
       if (i === words.length - 1) setTimeout(() => { show(0, true); void col.offsetWidth; }, 750);
     };
+    // measured and flipped only while the heading is near the screen
+    const flipNear = near(flipBox);
+    let measured = false;
+    const ensure = () => { if (!measured) { measured = true; measure(); } };
     (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
-      measure();
-      setInterval(() => { if (!document.hidden) step(); }, 2800);
-      addEventListener('resize', measure);
+      flipNear.cb = ensure;
+      if (flipNear.on) ensure();
+      setInterval(() => { if (!document.hidden && flipNear.on) { ensure(); step(); } }, 2800);
+      addEventListener('resize', () => { measured = false; if (flipNear.on) ensure(); });
     });
   }
 
@@ -165,10 +197,11 @@
       cxPanels.forEach((p, i) => { if (p.getBoundingClientRect().top <= line) act = i; });
       cxTabs.forEach((t, i) => t.setAttribute('aria-current', i === act ? 'true' : 'false'));
     };
-    const cxQueue = () => { if (!cxRaf) cxRaf = requestAnimationFrame(cxUpdate); };
+    const cxNear = near(cxWrap);
+    const cxQueue = () => { if (cxNear.on && !cxRaf) cxRaf = requestAnimationFrame(cxUpdate); };
+    cxNear.cb = cxQueue; // first run: when the panels come near, not at start-up
     addEventListener('scroll', cxQueue, { passive: true });
     addEventListener('resize', cxQueue);
-    cxUpdate();
 
     if (!reduce && matchMedia('(hover:hover) and (pointer:fine)').matches) {
       const tilt = (p, x, y) => {
@@ -200,13 +233,14 @@
 
   /* ---------- scroll-linked state (one rAF-throttled handler) ---------- */
   const bar = $('.progress');
+  const flowNear = flow ? near(flow) : null;
   let ticking = false;
   const onScroll = () => {
     ticking = false;
     const y = scrollY, vh = innerHeight;
     const max = document.documentElement.scrollHeight - vh;
     bar.style.setProperty('--sp', max > 0 ? (y / max).toFixed(4) : 0);
-    if (flow) {
+    if (flow && flowNear.on) {
       const r = flow.getBoundingClientRect();
       const p = clamp((vh * 0.72 - r.top) / (r.height * 0.75));
       flow.style.setProperty('--fp', p.toFixed(3));
@@ -215,6 +249,7 @@
     }
   };
   const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } };
+  if (flowNear) flowNear.cb = req;
   addEventListener('scroll', req, { passive: true });
   addEventListener('resize', req);
   onScroll();
@@ -362,11 +397,12 @@
       weeks.forEach((w, i) => { if (w.getBoundingClientRect().top <= line) act = i; });
       if (act !== target) { target = act; if (!busy) step(); }
     };
-    const pgQueue = () => { if (!pgRaf) pgRaf = requestAnimationFrame(pgUpdate); };
+    const pgNear = near(pg);
+    const pgQueue = () => { if (pgNear.on && !pgRaf) pgRaf = requestAnimationFrame(pgUpdate); };
+    let pgReady = false;
+    pgNear.cb = () => { if (!pgReady) { pgReady = true; paint(0); } pgQueue(); }; // set up when it comes near
     addEventListener('scroll', pgQueue, { passive: true });
     addEventListener('resize', pgQueue);
-    paint(0);
-    pgUpdate();
   }
 
   /* ---------- data sources ↔ visualisation ---------- */

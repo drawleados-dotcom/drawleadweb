@@ -3,7 +3,7 @@
    templates/partials/nav.php. Linked from templates/layout-start.php.
 
    It is layered over the base nav rules (fixed position, flex row, mega menu)
-   in templates/partials/style.php. home7.css, home8.css and final-home.css
+   in assets/site.css. home7.css, home8.css and final-home.css
    carry their own copies of those rules and load later, so every selector
    here starts at body>nav to outrank them and the header looks the same
    everywhere.

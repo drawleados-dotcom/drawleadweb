@@ -1,7 +1,7 @@
 /* ==========================================================================
    Home 10 — the homepage (templates/home10-body.php)
    Ported from _dev/design/drawlead-website/css/styles.css with every rule scoped under
-   .h10, because the site-wide stylesheet (templates/partials/style.php) is on
+   .h10, because the site-wide stylesheet (assets/site.css) is on
    the page too. Layout idea: light mint hero → dark capability block → light
    story sections → dark program/industry blocks → deep-green closing CTA.
    ========================================================================== */
@@ -25,7 +25,7 @@ body{
 .h10{color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
 }
 /* ---------- undo the site-wide element rules inside this design ----------
-   partials/style.php styles bare section, nav and footer, and #industries. */
+   assets/site.css styles bare section, nav and footer, and #industries. */
 .h10 section{padding:0;border-bottom:0;position:static}
 .h10 nav{position:static;z-index:auto;display:block;padding:0;background:none;border-bottom:0;-webkit-backdrop-filter:none;backdrop-filter:none}
 .h10 footer{display:block;padding:0;background:none;border-top:0}
@@ -91,6 +91,28 @@ html:not(.js) .h10 .hl{background-size:100% 100%}
 /* ---------- reveal ---------- */
 html.js .h10 .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s)}
 html.js .h10 .reveal.is-in{opacity:1;transform:none}
+/* Hero entrances (home .hero, About .ahero, Business Systems .bz-hero) play from
+   the first paint instead of waiting for home10.js, which runs only once the
+   whole page has loaded. Each page's largest hero element is its Largest
+   Contentful Paint, which Chrome only counts once a fade-in has finished, so
+   those show at once: the home headline and intro (their strike line and
+   highlight still draw in), the About photo, the Business Systems intro. The
+   smaller items rise in as before. The About headline keeps its word-by-word
+   rise from home10.js. */
+html.js .h10 :is(.hero .reveal,.ahero__head>.reveal,.ahero__stage.reveal,.bz-hero .reveal){opacity:1;transform:none;filter:none;transition:none;animation:h10-rise .9s var(--ease) var(--d,0s) backwards}
+html.js .h10 :is(.hero,.ahero__head,.bz-hero) :is(p,span,ul,blockquote).reveal{animation-name:h10-rise-blur}
+html.js .h10 .hero__title :is(p,span).reveal,html.js .h10 p.hero__lede.reveal,html.js .h10 figure.ahero__stage.reveal,html.js .h10 p.bz-hero__lede.reveal{animation:none}
+@keyframes h10-rise{from{opacity:0;transform:translateY(26px)}}
+@keyframes h10-rise-blur{from{opacity:0;transform:translateY(26px);filter:blur(4px)}}
+@media (prefers-reduced-motion:reduce){html.js .h10 :is(.hero .reveal,.ahero__head>.reveal,.ahero__stage.reveal,.bz-hero .reveal){animation:none}}
+/* Sections after the first are laid out and painted only when they come near
+   the screen. The page is long (about 2,900 elements); laying all of it out at
+   load, again when each web font arrives, held back the hero (the page's LCP)
+   and made taps wait. auto remembers each section's real height once seen. */
+.h10 main>section~section{content-visibility:auto;contain-intrinsic-size:auto 1000px}
+/* Looping animations stop while their section is off screen (home10.js sets
+   .is-off): otherwise they keep the main thread busy every frame and taps wait. */
+.h10 .is-off,.h10 .is-off *,.h10 .is-off::before,.h10 .is-off::after,.h10 .is-off *::before,.h10 .is-off *::after{animation-play-state:paused!important}
 
 /* ---------- hero ---------- */
 .h10 .hero{position:relative;padding:clamp(120px,13vw,160px) 0 0;background:linear-gradient(180deg,#e6f6ed 0%,#f0f9f4 58%,#fff 100%);overflow:hidden}
@@ -112,11 +134,12 @@ body>.h10:not(.ab) section.hero{background:#fcfcfd}
 .h10 .hero-eb__ic .ic{width:46%;height:46%}
 .h10 .hero-eb__t{font-family:var(--f-head);font-size:clamp(.95rem,1.45vw,1.2rem);font-weight:600;letter-spacing:-.01em;line-height:1.3;background:linear-gradient(90deg,#14532d 0%,#1d7a49 55%,#4fbf85 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 .h10 .hero-eb{position:relative;overflow:hidden;transform-origin:0 50%;animation:eb-pulse 2.8s ease-in-out infinite}
-.h10 .hero-eb::after{content:"";position:absolute;top:-30%;bottom:-30%;left:-40%;width:24%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-20deg);animation:eb-shine 3.6s ease-in-out infinite;pointer-events:none}
+.h10 .hero-eb::after{content:"";position:absolute;top:-30%;bottom:-30%;left:-40%;width:24%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-20deg);animation:eb-shine 3.6s ease-in-out infinite;pointer-events:none;will-change:transform}
 .h10 .hero-eb>*{position:relative;z-index:1}
 .h10 .hero-eb:hover{animation-play-state:paused}
 @keyframes eb-pulse{0%,100%{scale:1}50%{scale:1.035}}
-@keyframes eb-shine{0%,50%{left:-40%}100%{left:120%}}
+/* moved with transform, not left, so the sweep runs on the compositor: 160% of the badge = 666.7% of the 24%-wide shine */
+@keyframes eb-shine{0%,50%{transform:translateX(0) skewX(-20deg)}100%{transform:translateX(666.7%) skewX(-20deg)}}
 @media (prefers-reduced-motion:reduce){.h10 .hero-eb,.h10 .hero-eb::after{animation:none}}
 .h10 .hero__title{display:flex;flex-direction:column;gap:clamp(4px,.6vw,10px);margin-top:clamp(10px,1.2vw,16px)}
 .h10 .strike{display:block;font-family:var(--f-head);font-size:clamp(1.13rem,2.54vw,2.44rem);font-weight:500;letter-spacing:-.01em;color:#1f2937}
@@ -934,7 +957,8 @@ html.js .h10 .sw-media.is-in :is(.sw-fun,.sw-mix,.sw-cols) i{transform:none}
 .h10 .cta-stub .h10-btn::after{content:"";position:absolute;top:-20%;bottom:-20%;left:-60%;right:auto;width:42%;opacity:1;transition:none;z-index:1;background:linear-gradient(100deg,transparent,rgba(255,255,255,.42),transparent);transform:skewX(-20deg);animation:cta-shine 3.2s ease-in-out infinite;pointer-events:none}
 .h10 .cta-stub .h10-btn:hover{animation-play-state:paused}
 @keyframes cta-pulse{0%,100%{scale:1}50%{scale:1.05}}
-@keyframes cta-shine{0%,55%{left:-60%}100%{left:130%}}
+/* transform, not left (compositor only): 190% of the button = 452.4% of the 42%-wide shine */
+@keyframes cta-shine{0%,55%{transform:translateX(0) skewX(-20deg)}100%{transform:translateX(452.4%) skewX(-20deg)}}
 @media (prefers-reduced-motion:reduce){.h10 .cta-stub .h10-btn,.h10 .cta-stub .h10-btn::after{animation:none}}
 @media (max-width:760px){
   .h10 .more,.h10 .databanner{grid-template-columns:1fr;-webkit-mask:none;mask:none}

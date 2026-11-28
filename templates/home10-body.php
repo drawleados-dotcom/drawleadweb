@@ -7,7 +7,7 @@
  * the live page: edit it here, or in Admin -> Pages -> Edit -> Page Content.
  *
  * Styling is /assets/home10.css, with every rule scoped under .h10 so neither
- * this design nor the site-wide stylesheet (partials/style.php) leaks into the
+ * this design nor the site-wide stylesheet (assets/site.css) leaks into the
  * other. The design's .btn and .logo are .h10-btn and .h10-logo here for the
  * same reason. Behaviour is /assets/home10.js, images are in /assets/home10/.
  *

@@ -875,7 +875,7 @@ section#dashboards::before{
    Functions of Business" section (templates/home-body.php) as it stands: a
    four-column grid of the seven function cards and a "Ready to unify all 7?"
    card, then two buttons. Its cards are the shared .fn-* rules (home7.css
-   and partials/style.php), which the dark sheet recolours through the page
+   and assets/site.css), which the dark sheet recolours through the page
    tokens. What is here:
    - the eyebrow centred over the centred heading (Home 7's sits left);
    - "— Unified" in grey, as on Home (Home 7 sets every heading in one tone);

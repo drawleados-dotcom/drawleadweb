@@ -215,7 +215,7 @@ body>nav{background:rgba(255,255,255,.96)}
 /* #6E7B74 left the footer line at 4.3:1 on the card ground */
 
 /* ── 17 · NAV MENU AND MODAL ──────────────────────────────────────────────
-   The mega menu, the footer and the booking modal come from partials/style.php
+   The mega menu, the footer and the booking modal come from assets/site.css
    and are shared with every other page, so they cannot be edited there. They
    take their surfaces from the tokens, which means they follow this file down
    to dark on their own — except for the buttons that pair a literal white
@@ -232,7 +232,7 @@ body>nav{background:rgba(255,255,255,.96)}
    19 · HERO CURSOR GLOW
    The About Us hero's effect, brought onto this hero.
 
-   The .ah-fx / .ah-blob / .ah-lines rules live in partials/style.php, which is
+   The .ah-fx / .ah-blob / .ah-lines rules live in assets/site.css, which is
    inlined on every page, so they already apply here. The stacking holds in both
    themes, so it is in home8-base.css; only the dark-ground tuning is here. */
 
