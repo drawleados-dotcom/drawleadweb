@@ -479,24 +479,19 @@ foreach ($bsLinks as $key => [$rel]) {
   </div>
 </section>
 
-<!-- 08 · Final CTA: deep green, the fingerprint again, the prompts -->
-<section class="bz-final" id="contact">
-  <svg class="bz-final__print" viewBox="0 0 400 480" aria-hidden="true" focusable="false"><g><?= $bzRidges(false) ?></g><path d="<?= $bzPrint['hi'] ?>"/></svg>
-  <div class="wrap bz-final__in">
-    <span class="pill pill--mint reveal"><span class="pill__dot" aria-hidden="true"></span>Let's Build Your Business System</span>
-    <h2 class="h2 h2--light bz-final__h2">Your Business Deserves More Than <span class="bz-final__em">Off-the-Shelf Software.</span></h2>
-    <p class="lede lede--light reveal" style="--d:.1s">Tell us how your business operates, what challenges your teams face and what you want to improve.</p>
-    <p class="bz-final__line reveal" style="--d:.14s">Our engineers will work with you to understand your requirements and explore the right technology solution for your business.</p>
-    <div class="bz-compose reveal" style="--d:.18s">
-      <p class="bz-compose__msg" data-bz-msg>Hi Drawlead, we'd like to talk about our business…</p>
-      <div class="bz-compose__chips">
-<?php foreach ($bsPrompts as $prompt): ?>
-        <button type="button" class="bz-compose__chip" data-book data-prompt="<?= h($prompt) ?>"><?= h($prompt) ?></button>
-<?php endforeach; ?>
+<!-- 08 · Final CTA: the same light full-width close as the home page -->
+<section class="final final--card" id="contact">
+  <div class="wrap">
+    <div class="final__card">
+      <div class="final__in">
+        <span class="pill pill--mint reveal"><span class="pill__dot" aria-hidden="true"></span>Let's Build Your Business System</span>
+        <h2 class="h1x reveal" style="--d:.06s">Your Business Deserves More Than <span class="grn">Off-the-Shelf Software.</span></h2>
+        <p class="lede lede--light reveal" style="--d:.1s">Tell us how your business operates, what challenges your teams face and what you want to improve.</p>
+        <p class="final__line reveal" style="--d:.14s">Our engineers will work with you to understand your requirements and explore the right technology solution for your business.</p>
+        <div class="final__ctas reveal" style="--d:.18s"><a class="h10-btn h10-btn--green" href="/book" data-book><span>Build Your Business System</span><?= $bsArrow ?></a><a class="h10-btn h10-btn--ghost" href="/book" data-book><span>Book a Strategy Call</span><?= $bsArrow ?></a></div>
+        <p class="bz-sign">Drawlead — Business Systems &amp; Technology Company</p>
       </div>
     </div>
-    <div class="bz-final__ctas reveal" style="--d:.22s"><a class="h10-btn h10-btn--green" href="/book" data-book><span>Build Your Business System</span><?= $bsArrow ?></a><a class="h10-btn h10-btn--ghost" href="/book" data-book><span>Book a Strategy Call</span><?= $bsArrow ?></a></div>
-    <p class="bz-final__sign">Drawlead — Business Systems &amp; Technology Company</p>
   </div>
 </section>
 </main><footer class="foot">
