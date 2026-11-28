@@ -10,17 +10,17 @@
  *
  *   01 hero          the statement, beside a "business fingerprint": ridges no two
  *                    businesses share, with the six modules on one green workflow
- *   02 problems      sticky split: heading and the disconnected scene stay put
- *                    while the six problems pass as a numbered index
- *   03 capabilities  dark block holding one app window: the six capabilities as
+ *   02 problems      bento: the disconnected scene beside six tinted symptom
+ *                    cards, each with the sign you would notice day to day
+ *   03 capabilities  light mint stage holding one app window: the six capabilities as
  *                    its sidebar, each with its own small product screen
  *   04 ecosystem     twelve departments round a ring with the connected hub in
  *                    the middle; picking one lights what it shares. Then Leads →
  *                    Profit as a line of type
  *   05 approach      four tinted cards that stack up as the page scrolls
- *   06 industries    sticky intro beside a question accordion, one open at a time
+ *   06 industries    two businesses in one industry side by side (≠), then six cards
  *   07 projects      zig-zag rows: work photo with a From → To card, story beside
- *   08 final CTA     deep-green close, the fingerprint again, the prompts
+ *   08 final CTA     the home page's light full-width close
  *
  * All copy is server-rendered inside <section>s, so Admin → Pages → Page
  * Content can edit it. Everything reads in full without JavaScript, and
@@ -53,14 +53,14 @@ $bsMods = [
 ];
 $bsPrinciples = [['puzzle', 'mint', 'No Generic Software'], ['target', 'sky', 'Business-Specific Engineering'], ['workflow', 'lilac', 'Connected Workflows'], ['shield', 'peach', 'Security-First Development']];
 
-// 02 · problems [icon, title, text]
+// 02 · problems [icon, title, text, tint, symptom]
 $bsProblems = [
-    ['plug', 'Disconnected Software', 'Different departments use different applications that don\'t communicate with each other.'],
-    ['db', 'Scattered Business Data', 'Customer records, project information and important business data remain spread across multiple platforms.'],
-    ['gear', 'Manual Workflows', 'Employees spend valuable time on repetitive tasks, manual updates and follow-ups.'],
-    ['search', 'Limited Business Visibility', 'Management struggles to understand what\'s happening across departments and operations.'],
-    ['puzzle', 'Software That Doesn\'t Fit', 'Existing software cannot accommodate your specific workflows, hierarchy and business requirements.'],
-    ['trend', 'Difficult to Scale', 'As your teams and operations expand, managing existing systems becomes increasingly complicated.'],
+    ['plug', 'Disconnected Software', 'Different departments use different applications that don\'t communicate with each other.', 'rose', 'Not in sync'],
+    ['db', 'Scattered Business Data', 'Customer records, project information and important business data remain spread across multiple platforms.', 'peach', 'Five versions of the truth'],
+    ['gear', 'Manual Workflows', 'Employees spend valuable time on repetitive tasks, manual updates and follow-ups.', 'lilac', 'Done by hand'],
+    ['search', 'Limited Business Visibility', 'Management struggles to understand what\'s happening across departments and operations.', 'sky', 'No live view'],
+    ['puzzle', 'Software That Doesn\'t Fit', 'Existing software cannot accommodate your specific workflows, hierarchy and business requirements.', 'aqua', 'Workarounds everywhere'],
+    ['trend', 'Difficult to Scale', 'As your teams and operations expand, managing existing systems becomes increasingly complicated.', 'lime', 'Breaks as you grow'],
 ];
 
 // 03 · capabilities [icon, tint, title, text, screen]
@@ -253,47 +253,51 @@ foreach ($bsLinks as $key => [$rel]) {
   </div>
 </section>
 
-<!-- 02 · The business problem: sticky split, the six problems as an index -->
+<!-- 02 · The business problem: a bento, the disconnected scene beside six symptom cards -->
 <section class="bz-prob" id="challenges">
-  <div class="wrap bz-split">
-    <div class="bz-split__side">
-      <div class="bz-split__stick">
+  <div class="wrap">
+    <div class="bz-head">
+      <div>
         <span class="pill bz-pill t-rose reveal"><span class="pill__dot" aria-hidden="true"></span>The Challenges of Running a Growing Business</span>
         <h2 class="h2">Growing Your Business Shouldn't Mean Managing More Complexity.</h2>
-        <p class="lede reveal" style="--d:.1s">As your business grows, managing operations through disconnected software, spreadsheets and manual processes becomes increasingly difficult.</p>
-        <figure class="bz-prob__art reveal" style="--d:.16s"><img src="/assets/about/ai-before.webp" alt="Five people on separate islands, each with their own tool, and cables that connect to nothing" width="1500" height="1200" loading="lazy" decoding="async"></figure>
-        <a class="h10-btn h10-btn--dark reveal" href="/book" data-book><span>Let's Fix Your Business Workflows</span><?= $bsArrow ?></a>
+      </div>
+      <div class="bz-head__txt reveal" style="--d:.1s">
+        <p class="lede">As your business grows, managing operations through disconnected software, spreadsheets and manual processes becomes increasingly difficult.</p>
+        <a class="h10-btn h10-btn--dark" href="/book" data-book><span>Let's Fix Your Business Workflows</span><?= $bsArrow ?></a>
       </div>
     </div>
-    <ol class="bz-index" role="list">
-<?php foreach ($bsProblems as $i => [$icon, $title, $text]): ?>
-      <li class="bz-index__row reveal">
-        <span class="bz-index__n" aria-hidden="true"><?= $bsN($i) ?></span>
-        <div class="bz-index__txt"><h3><?= h($title) ?></h3><p><?= h($text) ?></p></div>
-        <span class="bz-index__ic"><?= $bsIc($icon) ?></span>
-      </li>
+    <div class="bz-pains">
+      <figure class="bz-pains__art reveal">
+        <figcaption><span class="bz-pains__tag"><i aria-hidden="true"></i>How most growing businesses run today</span><b>Every team on its own island. Nothing connected.</b></figcaption>
+        <img src="/assets/about/ai-before.webp" alt="Five people on separate islands, each with their own tool, and cables that connect to nothing" width="1500" height="1200" loading="lazy" decoding="async">
+      </figure>
+<?php foreach ($bsProblems as $i => [$icon, $title, $text, $tint, $sym]): ?>
+      <article class="bz-pain t-<?= $tint ?> reveal" style="--d:<?= ($i % 2) * .08 ?>s">
+        <div class="bz-pain__top"><span class="bz-pain__ic"><?= $bsIc($icon) ?></span><span class="bz-pain__n" aria-hidden="true"><?= $bsN($i) ?></span></div>
+        <h3><?= h($title) ?></h3>
+        <p><?= h($text) ?></p>
+        <span class="bz-pain__sym"><i aria-hidden="true"></i><?= h($sym) ?></span>
+      </article>
 <?php endforeach; ?>
-    </ol>
+    </div>
   </div>
 </section>
 
 <!-- 03 · What we engineer: one app window, the capabilities as its sidebar -->
 <section class="bz-caps" id="capabilities">
-  <div class="bz-dark">
+  <div class="bz-stage">
     <div class="wrap">
-      <div class="bz-head bz-head--dark">
-        <div>
-          <span class="pill bz-pill--dark reveal"><span class="pill__dot" aria-hidden="true"></span>Custom Business Systems &amp; Software Development</span>
-          <h2 class="h2 h2--light">Everything Your Business Needs. Engineered Around You.</h2>
-        </div>
-        <p class="lede lede--light reveal" style="--d:.1s">We design and develop technology solutions that connect your departments, automate workflows and simplify business operations.</p>
+      <div class="bz-head bz-head--center">
+        <span class="pill bz-pill t-mint reveal"><span class="pill__dot" aria-hidden="true"></span>Custom Business Systems &amp; Software Development</span>
+        <h2 class="h2">Everything Your Business Needs. <span class="grn">Engineered Around You.</span></h2>
+        <p class="lede reveal" style="--d:.1s">We design and develop technology solutions that connect your departments, automate workflows and simplify business operations.</p>
       </div>
       <div class="bz-win reveal" data-bz-tour>
         <div class="bz-win__bar" aria-hidden="true"><span class="bz-win__dots"><i></i><i></i><i></i></span><b>Business OS</b><span class="bz-win__live"><i></i>Live</span></div>
         <div class="bz-win__body">
           <div class="bz-win__nav" role="tablist" aria-label="What we engineer" aria-orientation="vertical">
 <?php foreach ($bsBuild as $i => [$icon, $tint, $title]): ?>
-            <button type="button" role="tab" class="bz-win__tab t-<?= $tint ?>" id="bzc-t<?= $i ?>" aria-controls="bzc-p<?= $i ?>" aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"<?= $i ? ' tabindex="-1"' : '' ?>><i><?= $bsIc($icon) ?></i><span><?= h($title) ?></span></button>
+            <button type="button" role="tab" class="bz-win__tab t-<?= $tint ?>" id="bzc-t<?= $i ?>" aria-controls="bzc-p<?= $i ?>" aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"<?= $i ? ' tabindex="-1"' : '' ?>><i><?= $bsIc($icon) ?></i><span><?= h($title) ?></span><em aria-hidden="true"><?= $bsN($i) ?></em></button>
 <?php endforeach; ?>
           </div>
 <?php foreach ($bsBuild as $i => [$icon, $tint, $title, $text, $scr]): ?>
@@ -416,28 +420,41 @@ foreach ($bsLinks as $key => [$rel]) {
   </div>
 </section>
 
-<!-- 06 · Industries: sticky intro beside a question accordion -->
+<!-- 06 · Industries: two businesses in one industry side by side (≠), then the six industry cards -->
 <section class="bz-ind" id="industries">
-  <div class="wrap bz-split bz-split--ind">
-    <div class="bz-split__side">
-      <div class="bz-split__stick">
+  <div class="wrap">
+    <div class="bz-head">
+      <div>
         <span class="pill bz-pill t-peach reveal"><span class="pill__dot" aria-hidden="true"></span>Same Industry ≠ Same Business Challenges</span>
         <h2 class="h2">We Don't Build for Industries. We Build for Businesses.</h2>
-        <p class="lede reveal" style="--d:.1s">Even two businesses within the same industry can have completely different workflows, organizational structures and operational challenges.</p>
-        <p class="lede lede--strong reveal" style="--d:.14s">We understand your business, study your processes and engineer technology around your specific requirements.</p>
+      </div>
+      <div class="bz-head__txt reveal" style="--d:.1s">
+        <p class="lede">Even two businesses within the same industry can have completely different workflows, organizational structures and operational challenges.</p>
+        <p class="lede lede--strong">We understand your business, study your processes and engineer technology around your specific requirements.</p>
       </div>
     </div>
-    <div class="bz-qa">
-<?php foreach ($bsInd as $i => [$icon, $tint, $ind, $q, $text, $cta]): ?>
-      <details class="bz-qa__item t-<?= $tint ?> reveal" name="bz-industries"<?= $i === 0 ? ' open' : '' ?>>
-        <summary><i class="bz-qa__ic"><?= $bsIc($icon) ?></i><span class="bz-qa__q"><small><?= h($ind) ?></small><b><?= h($q) ?></b></span><i class="bz-qa__x" aria-hidden="true"><?= $bsIc('plus') ?></i></summary>
-        <div class="bz-qa__a">
-          <p><?= h($text) ?></p>
-          <a class="bz-qa__cta" href="/book" data-book><span><?= h($cta) ?></span><?= $bsIc('arrow') ?></a>
-        </div>
-      </details>
+    <div class="bz-neq reveal" role="img" aria-label="Example: two construction companies. One runs three live sites with sub-contractors and weekly billing; the other runs from one head office with an in-house crew and milestone billing. Same industry, different workflows.">
+<?php foreach ([['sky', 'Business A', '3 live sites, 40 people', ['Site-wise budgets', 'Sub-contractors', 'Weekly billing', 'Tally + Excel']], ['lilac', 'Business B', '1 head office, 120 people', ['Fixed-price bids', 'In-house crew', 'Milestone billing', 'Zoho + WhatsApp']]] as $n => [$tint, $name, $meta, $chips]): ?>
+<?php if ($n): ?>
+      <span class="bz-neq__sign" aria-hidden="true">≠</span>
+<?php endif; ?>
+      <div class="bz-neq__biz t-<?= $tint ?>" aria-hidden="true">
+        <div class="bz-neq__hd"><i><?= $bsIc('hardhat') ?></i><span><b><?= $name ?></b><small>Construction · <?= $meta ?></small></span></div>
+        <ul role="list"><?php foreach ($chips as $c): ?><li><?= $c ?></li><?php endforeach; ?></ul>
+      </div>
 <?php endforeach; ?>
+      <p class="bz-neq__cap" aria-hidden="true"><span>Example</span>Same industry. Different workflows. Different system.</p>
     </div>
+    <ul class="bz-inds" role="list">
+<?php foreach ($bsInd as $i => [$icon, $tint, $ind, $q, $text, $cta]): ?>
+      <li class="bz-indc t-<?= $tint ?> reveal" style="--d:<?= ($i % 3) * .07 ?>s">
+        <div class="bz-indc__top"><i class="bz-indc__ic"><?= $bsIc($icon) ?></i><small><?= h($ind) ?></small><span class="bz-indc__n" aria-hidden="true"><?= $bsN($i) ?></span></div>
+        <h3><?= h($q) ?></h3>
+        <p><?= h($text) ?></p>
+        <a class="bz-indc__cta" href="/book" data-book><span><?= h($cta) ?></span><i><?= $bsIc('arrow') ?></i></a>
+      </li>
+<?php endforeach; ?>
+    </ul>
   </div>
 </section>
 
