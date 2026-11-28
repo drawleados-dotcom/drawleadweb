@@ -11,7 +11,7 @@
 
      01 hero · product page + ticker   05 approach · checkout stepper
      02 challenge · funnel + receipt   06 industries · category menu
-     03 engineer · product shelf       07 projects · browser tabs
+     03 engineer · paper tickets       07 projects · browser tabs
      04 ecosystem · lanes on a rail    08 close · light band (home10.css)
    ========================================================================== */
 .dc{--pad:clamp(88px,9.6vw,140px);--dots:radial-gradient(rgba(15,58,36,.07) 1px,transparent 1.4px) 0 0/18px 18px;--deep:#1d7a49}
@@ -139,35 +139,28 @@ html.js .dc .dc-funnel:not(.is-in) .dc-funnel__row i{transform:scaleX(.05)}
 .dc .dc-rcpt__total b{color:var(--ik-rose)}
 .dc .dc-rcpt__code{height:44px;margin:22px auto 0;width:72%;background:repeating-linear-gradient(90deg,#1f2321 0 2px,transparent 2px 5px,#1f2321 5px 6px,transparent 6px 9px,#1f2321 9px 12px,transparent 12px 14px);opacity:.75}
 
-/* ---------- 03 engineer: a product shelf on one rail ---------- */
-.dc .dc-shelf{padding:var(--pad) 0;background:#f6f8f7;overflow:clip}
-.dc .dc-shelf__ctl{display:flex;align-items:center;gap:14px;width:100%;max-width:360px}
-.dc .dc-shelf__ctl[hidden]{display:none}
-.dc .dc-shelf__btn{display:grid;place-items:center;flex:none;width:48px;height:48px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px rgba(15,58,36,.14);transition:background .25s ease,color .25s ease,opacity .25s ease}
-.dc .dc-shelf__btn:hover{background:var(--ink);color:#fff}
-.dc .dc-shelf__btn:disabled{opacity:.35;pointer-events:none}
-.dc .dc-shelf__bar{flex:1;height:3px;border-radius:2px;background:rgba(15,58,36,.12);overflow:hidden}
-.dc .dc-shelf__bar i{display:block;height:100%;width:30%;border-radius:2px;background:var(--deep);transition:width .3s var(--ease),transform .3s var(--ease)}
-.dc .dc-shelf__rail{--side:max(clamp(20px,4vw,48px),calc((100vw - 1240px) / 2));display:flex;gap:clamp(14px,1.4vw,20px);overflow-x:auto;padding:6px var(--side) 18px;scroll-padding-inline:var(--side);scroll-snap-type:x mandatory;scrollbar-width:none;outline:none}
-.dc .dc-shelf__rail::-webkit-scrollbar{display:none}
-.dc .dc-shelf__rail:focus-visible{box-shadow:inset 0 0 0 2px var(--deep)}
-.dc .dc-prod{flex:none;display:flex;flex-direction:column;width:clamp(290px,30vw,390px);scroll-snap-align:start;border-radius:28px;background:#fff;box-shadow:0 0 0 1px rgba(15,58,36,.06);overflow:hidden;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
-.dc .dc-prod__img{position:relative;display:grid;place-items:center;aspect-ratio:16/10;margin:10px 10px 0;border-radius:20px;background:var(--dots),var(--tint)}
-.dc .dc-prod__sku{position:absolute;top:14px;left:14px;padding:4px 10px;border-radius:999px;background:#fff;font-size:.7rem;font-weight:700;letter-spacing:.08em;color:var(--tink)}
-.dc .dc-prod__ic{display:grid;place-items:center;width:88px;height:88px;border-radius:28px;background:#fff;color:var(--tink);box-shadow:0 22px 40px -24px rgba(15,58,36,.45);transition:transform .6s var(--ease)}
-.dc .dc-prod__ic .ic{width:38px;height:38px}
-.dc .dc-prod__tags{position:absolute;right:14px;bottom:14px;display:flex;gap:6px}
-.dc .dc-prod__tags i{padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.75);font-style:normal;font-size:.7rem;font-weight:600;color:var(--tink)}
-.dc .dc-prod__body{display:flex;flex-direction:column;flex:1;padding:22px 24px 26px}
-.dc .dc-prod h3{font-size:clamp(1.18rem,1.55vw,1.4rem);font-weight:700;line-height:1.22;letter-spacing:-.02em}
-.dc .dc-prod__body>p{margin-top:8px;font-size:.93rem;line-height:1.55;color:var(--mut)}
-.dc .dc-prod__list{display:grid;gap:8px;margin-top:auto;padding-top:20px;border-top:0}
-.dc .dc-prod__list li{display:flex;align-items:flex-start;gap:10px;font-size:.88rem;font-weight:500;line-height:1.4}
-.dc .dc-prod__list .ic{flex:none;width:20px;height:20px;padding:3px;border-radius:50%;background:var(--tint);color:var(--tink)}
-.dc .dc-prod__body>p{margin-bottom:20px}
+/* ---------- 03 engineer: six paper tickets (the home page's .tk from home10.css) ---------- */
+.dc .dc-tix{padding:var(--pad) 0;background:var(--dots),#f8faf9}
+.dc .dc-tks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,2vw,28px)}
+.dc .dc-tks .step{--ink-t:color-mix(in oklch,var(--tk),#000 62%);--ln:color-mix(in oklch,var(--tk),#000 30%);filter:drop-shadow(0 1px 1px rgba(15,23,42,.12)) drop-shadow(0 6px 10px rgba(15,23,42,.08))}
+.dc .dc-tks .step__art{aspect-ratio:200/140}
+.dc .dc-tks .step .step__card.tk{transition:transform .45s var(--ease)}
+.dc .dc-tks .tk-h{font-size:1.14rem}
+.dc .dc-tk__list{display:grid;gap:7px;margin-top:auto;padding-top:14px;border-top:1.5px dashed var(--ln)}
+.dc .dc-tks .tk-b p{margin-bottom:8px}
+.dc .dc-tk__list li{display:flex;align-items:flex-start;gap:9px;font-size:.84rem;font-weight:600;line-height:1.4;color:#1f2937}
+.dc .dc-tk__list .ic{flex:none;width:18px;height:18px;margin-top:1px;padding:3px;border-radius:50%;background:#fff;color:var(--ink-t)}
 @media (hover:hover){
-  .dc .dc-prod:hover{transform:translateY(-6px);box-shadow:0 0 0 1px rgba(15,58,36,.06),0 36px 60px -36px rgba(15,58,36,.4)}
-  .dc .dc-prod:hover .dc-prod__ic{transform:rotate(-6deg) scale(1.05)}
+  .dc .dc-tks .step:hover .step__card.tk{transform:translateY(-6px)}
+}
+@media (max-width:1100px){
+  .dc .dc-tks{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .dc .dc-tks{grid-template-columns:minmax(0,1fr);max-width:460px;margin-inline:auto}
+}
+@media (prefers-reduced-motion:reduce){
+  .dc .dc-tks .step:hover .step__card.tk{transform:none}
 }
 
 /* ---------- 04 ecosystem: four lanes on one rail ---------- */
@@ -381,8 +374,6 @@ html:not(.js) .dc .dc-br__panel+.dc-br__panel{border-top:1px solid var(--line)}
   .dc .dc-funnel__row{grid-template-columns:96px minmax(0,1fr)}
   .dc .dc-rcpt__list li{grid-template-columns:28px minmax(0,1fr)}
   .dc .dc-rcpt__x{display:none}
-  .dc .dc-shelf__ctl{max-width:none}
-  .dc .dc-prod{width:min(84vw,340px)}
   .dc .dc-lanes,.dc .dc-steps{grid-template-columns:minmax(0,1fr)}
   .dc .dc-ft{grid-template-columns:minmax(0,1fr)}
   .dc .dc-ft>i{justify-self:center;transform:rotate(90deg)}

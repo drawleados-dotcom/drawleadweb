@@ -13,7 +13,7 @@
  *                    differentiators as a ticker underneath
  *   02 challenge     a shrinking funnel beside a store-audit receipt that lists
  *                    the six challenges as line items
- *   03 engineer      a product shelf: six capability cards on a swipeable rail
+ *   03 engineer      six paper tickets, the same ones as the home page's approach
  *   04 ecosystem     four lanes on one rail, an order travelling through them,
  *                    then the platforms we connect
  *   05 approach      a checkout stepper: four steps on a line that fills in
@@ -58,14 +58,32 @@ $dcProblems = [
 // the funnel: [stage, bar width %] (illustrative)
 $dcFunnel = [['Visitors', 100], ['Product views', 64], ['Added to cart', 30], ['Checkout', 16], ['Orders', 8]];
 
-// 03 · capabilities [icon, tint, title, text, items, the two tags on the card picture]
+// 03 · capabilities [icon, tint, title, text, items, ticket label]
 $dcBuild = [
-    ['code', 'mint', 'Custom Ecommerce Development', 'Build an online store that reflects your brand instead of relying on a generic template.', ['Custom Shopify Store Development', 'Headless & Custom Ecommerce Experiences', 'Custom UI/UX Design', 'Responsive Storefront Development'], ['Shopify', 'Headless']],
-    ['target', 'sky', 'Conversion-Focused Storefronts', 'Make it easier for customers to discover products, understand their value and complete purchases.', ['Conversion-Focused Product Pages', 'Intuitive Navigation & Search', 'Optimized Cart & Checkout Experience', 'Customer Journey Optimization'], ['Product pages', 'Checkout']],
-    ['grid', 'lilac', 'Product & Catalog Management', 'Organize and present your products through structured, scalable ecommerce experiences.', ['Product & Collection Management', 'Custom Product Page Experiences', 'Product Variants & Configurations', 'Catalog & Inventory Integration'], ['Variants', 'Collections']],
-    ['plug', 'peach', 'Ecommerce Integrations', 'Connect the platforms and services that keep your ecommerce business running.', ['Payment Gateway Integration', 'Shipping & Logistics Integration', 'CRM & Marketing Integrations', 'Inventory & Order Management'], ['Payments', 'Shipping']],
-    ['workflow', 'aqua', 'Ecommerce Automation', 'Reduce repetitive work and improve the efficiency of everyday ecommerce operations.', ['Order & Fulfilment Automation', 'WhatsApp Notifications', 'Customer Communication Workflows', 'Marketing & Retention Automation'], ['WhatsApp', 'Fulfilment']],
-    ['chart', 'rose', 'Analytics & Growth Optimization', 'Understand customer behaviour and identify opportunities to improve store performance.', ['Google Analytics & GTM', 'Ecommerce Conversion Tracking', 'Customer Behaviour Analysis', 'Conversion Rate Optimization'], ['GA4', 'CRO']],
+    ['code', 'peach', 'Custom Ecommerce Development', 'Build an online store that reflects your brand instead of relying on a generic template.', ['Custom Shopify Store Development', 'Headless & Custom Ecommerce Experiences', 'Custom UI/UX Design', 'Responsive Storefront Development'], 'Develop'],
+    ['target', 'sky', 'Conversion-Focused Storefronts', 'Make it easier for customers to discover products, understand their value and complete purchases.', ['Conversion-Focused Product Pages', 'Intuitive Navigation & Search', 'Optimized Cart & Checkout Experience', 'Customer Journey Optimization'], 'Convert'],
+    ['grid', 'lilac', 'Product & Catalog Management', 'Organize and present your products through structured, scalable ecommerce experiences.', ['Product & Collection Management', 'Custom Product Page Experiences', 'Product Variants & Configurations', 'Catalog & Inventory Integration'], 'Catalog'],
+    ['plug', 'lime', 'Ecommerce Integrations', 'Connect the platforms and services that keep your ecommerce business running.', ['Payment Gateway Integration', 'Shipping & Logistics Integration', 'CRM & Marketing Integrations', 'Inventory & Order Management'], 'Integrate'],
+    ['workflow', 'aqua', 'Ecommerce Automation', 'Reduce repetitive work and improve the efficiency of everyday ecommerce operations.', ['Order & Fulfilment Automation', 'WhatsApp Notifications', 'Customer Communication Workflows', 'Marketing & Retention Automation'], 'Automate'],
+    ['chart', 'rose', 'Analytics & Growth Optimization', 'Understand customer behaviour and identify opportunities to improve store performance.', ['Google Analytics & GTM', 'Ecommerce Conversion Tracking', 'Customer Behaviour Analysis', 'Conversion Rate Optimization'], 'Grow'],
+];
+// the ticket paper for each tint (the home page's approach tickets use the same four first)
+$dcTk = ['peach' => '#F8E6D6', 'sky' => '#DFEAF9', 'lilac' => '#E8E2F5', 'lime' => '#EDF0D7', 'aqua' => '#DCEFF0', 'rose' => '#F5E1E9', 'mint' => '#DAF1E5'];
+// the ticket illustrations, drawn with the home page's .il classes in a 200 × 140 box
+$dcIl = fn (string $id, int $x, int $y, int $s = 18, string $c = 'var(--green)'): string => '<svg x="' . $x . '" y="' . $y . '" width="' . $s . '" height="' . $s . '" style="color:' . $c . '"><use href="#d-' . $id . '"/></svg>';
+$dcArt = [
+    // develop: a storefront in a browser, a code badge floating over it
+    '<rect class="c" x="22" y="14" width="150" height="110" rx="12"/><circle class="k2" cx="36" cy="27" r="3"/><circle class="k2" cx="46" cy="27" r="3"/><circle class="k2" cx="56" cy="27" r="3"/><path class="ln" d="M22 38H172"/><rect class="gs2" x="34" y="48" width="60" height="42" rx="7"/><rect class="g typeln" x="102" y="50" width="50" height="6" rx="3" style="--d:0s"/><rect class="k2 typeln" x="102" y="62" width="38" height="5" rx="2.5" style="--d:.3s"/><rect class="k typeln" x="102" y="73" width="44" height="5" rx="2.5" style="--d:.6s"/><rect class="g" x="102" y="84" width="34" height="10" rx="5"/><rect class="k" x="34" y="100" width="28" height="14" rx="4"/><rect class="k" x="68" y="100" width="28" height="14" rx="4"/><g class="float" style="--d:.3s"><rect class="c" x="136" y="92" width="50" height="34" rx="10"/>' . $dcIl('code', 149, 97, 24) . '</g>',
+    // convert: a product card, a pointer on "add to cart", sales rising beside it
+    '<rect class="c" x="22" y="14" width="88" height="112" rx="12"/><rect class="gs2" x="32" y="24" width="68" height="48" rx="8"/><rect class="k2" x="32" y="80" width="48" height="6" rx="3"/><rect class="k" x="32" y="91" width="30" height="5" rx="2.5"/><rect class="g pulse" x="32" y="103" width="68" height="13" rx="6.5"/><rect class="g" x="32" y="103" width="68" height="13" rx="6.5"/><path d="M88 104v17l4.6-4.4 3.6 7.4 3-1.4-3.6-7.2h6.4z" fill="#1f2937" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/><g class="float" style="--d:.4s"><rect class="c" x="122" y="34" width="60" height="76" rx="12"/><rect class="g rise" x="133" y="80" width="9" height="20" rx="2" style="--d:0s"/><rect class="g rise" x="147" y="68" width="9" height="32" rx="2" style="--d:.15s"/><rect class="g rise" x="161" y="52" width="9" height="48" rx="2" style="--d:.3s"/>' . $dcIl('trend', 132, 42, 14) . '</g>',
+    // catalog: a grid of products, one picked out, its variants underneath
+    '<rect class="c" x="24" y="14" width="46" height="48" rx="9"/><rect class="k" x="32" y="22" width="30" height="22" rx="5"/><rect class="k2" x="32" y="50" width="22" height="5" rx="2.5"/><rect class="c g-outline tile" x="77" y="14" width="46" height="48" rx="9"/><rect class="gs2" x="85" y="22" width="30" height="22" rx="5"/><rect class="g" x="85" y="50" width="22" height="5" rx="2.5"/><rect class="c" x="130" y="14" width="46" height="48" rx="9"/><rect class="k" x="138" y="22" width="30" height="22" rx="5"/><rect class="k2" x="138" y="50" width="22" height="5" rx="2.5"/><rect class="c" x="24" y="70" width="46" height="48" rx="9"/><rect class="k" x="32" y="78" width="30" height="22" rx="5"/><rect class="k2" x="32" y="106" width="22" height="5" rx="2.5"/><rect class="c" x="130" y="70" width="46" height="48" rx="9"/><rect class="k" x="138" y="78" width="30" height="22" rx="5"/><rect class="k2" x="138" y="106" width="22" height="5" rx="2.5"/><g class="float" style="--d:.2s"><rect class="c" x="80" y="78" width="40" height="40" rx="10"/><circle class="g" cx="92" cy="92" r="5"/><circle class="k2" cx="108" cy="92" r="5"/><circle class="gs2" cx="92" cy="106" r="5"/><circle class="k" cx="108" cy="106" r="5"/></g>',
+    // integrate: the store in the middle, payments, shipping, CRM and ads wired in
+    '<circle cx="100" cy="70" r="36" class="ring spin" fill="none"/><path class="gl flow" d="M64 34L84 56M136 34L116 56M64 106L84 84M136 106L116 84" stroke-dasharray="4 5"/><rect class="c" x="20" y="16" width="46" height="30" rx="9"/>' . $dcIl('cart', 34, 22) . '<rect class="c" x="134" y="16" width="46" height="30" rx="9"/>' . $dcIl('truck', 148, 22) . '<rect class="c" x="20" y="94" width="46" height="30" rx="9"/>' . $dcIl('users', 34, 100) . '<rect class="c" x="134" y="94" width="46" height="30" rx="9"/>' . $dcIl('chart', 148, 100) . '<circle class="g" cx="100" cy="70" r="22"/>' . $dcIl('store', 88, 58, 24, '#fff'),
+    // automate: an order comes in, a rule fires, the customer gets a message
+    '<rect class="c" x="16" y="46" width="48" height="48" rx="11"/>' . $dcIl('box', 28, 55, 24) . '<rect class="k2" x="26" y="84" width="28" height="4" rx="2"/><path class="gl flow" d="M66 70H80M120 70H132" stroke-dasharray="4 5"/><circle class="g pulse" cx="100" cy="70" r="20"/><circle class="g" cx="100" cy="70" r="20"/>' . $dcIl('bolt', 89, 59, 22, '#fff') . '<g class="float" style="--d:.3s"><path class="c" d="M144 40h34a10 10 0 0 1 10 10v20a10 10 0 0 1-10 10h-22l-10 9v-9h-2a10 10 0 0 1-10-10V50a10 10 0 0 1 10-10z"/><rect class="g" x="144" y="50" width="30" height="5" rx="2.5"/><rect class="k2" x="144" y="61" width="20" height="5" rx="2.5"/></g><rect class="gs2" x="138" y="96" width="46" height="14" rx="7"/><circle class="g blink" cx="148" cy="103" r="3"/><rect class="g" x="155" y="101" width="22" height="4" rx="2"/>',
+    // grow: the conversion line climbing, a CRO tag on it
+    '<rect class="c" x="20" y="14" width="160" height="112" rx="12"/><path class="ln faint" d="M34 48H166M34 72H166M34 96H166"/><path class="gl draw" pathLength="1" d="M34 108L60 94 84 100 110 74 136 80 164 44"/><circle class="g pulse" cx="164" cy="44" r="5"/><circle class="g" cx="164" cy="44" r="5"/><g class="float" style="--d:.2s"><rect class="c" x="32" y="22" width="58" height="20" rx="10"/><circle class="g blink" cx="44" cy="32" r="3.5"/><text class="chip" x="68" y="35" text-anchor="middle">CRO</text></g><g class="float" style="--d:.6s"><rect class="c" x="126" y="92" width="46" height="24" rx="8"/><rect class="g rise" x="134" y="104" width="5" height="6" rx="1.5" style="--d:0s"/><rect class="g rise" x="143" y="100" width="5" height="10" rx="1.5" style="--d:.15s"/><rect class="g rise" x="152" y="96" width="5" height="14" rx="1.5" style="--d:.3s"/></g>',
 ];
 
 // 04 · ecosystem lanes [icon, tint, title, items]
@@ -225,41 +243,35 @@ $dcRing = fn (string $fill = '#F8E6D6'): string => '<svg viewBox="0 0 120 120" a
   </div>
 </section>
 
-<!-- 03 · What we engineer: a product shelf, six capability cards on one rail -->
-<section class="dc-shelf" id="capabilities">
+<!-- 03 · What we engineer: six paper tickets, the same ones as the home page's approach -->
+<section class="dc-tix" id="capabilities">
   <div class="wrap">
     <div class="dc-head">
       <div>
         <span class="pill dc-pill t-sky reveal"><span class="pill__dot" aria-hidden="true"></span>End-to-End Ecommerce Engineering</span>
         <h2 class="h2">Everything Your Brand Needs to Sell Online. Built Around Your Business.</h2>
       </div>
-      <div class="dc-head__txt reveal" style="--d:.1s">
-        <p class="lede">From the first customer interaction to completed orders, we engineer ecommerce experiences that connect your storefront, products, customers and business operations.</p>
-        <div class="dc-shelf__ctl" data-dc-ctl hidden>
-          <button type="button" class="dc-shelf__btn" data-dc-prev aria-label="Previous capability"><?= $dcIc('left') ?></button>
-          <span class="dc-shelf__bar"><i data-dc-bar></i></span>
-          <button type="button" class="dc-shelf__btn" data-dc-next aria-label="Next capability"><?= $dcIc('arrow') ?></button>
-        </div>
-      </div>
+      <p class="lede dc-head__txt reveal" style="--d:.1s">From the first customer interaction to completed orders, we engineer ecommerce experiences that connect your storefront, products, customers and business operations.</p>
     </div>
-  </div>
-  <ul class="dc-shelf__rail" role="list" data-dc-rail tabindex="0" aria-label="What we engineer">
-<?php foreach ($dcBuild as $i => [$icon, $tint, $title, $text, $items, $tags]): ?>
-    <li class="dc-prod t-<?= $tint ?>">
-      <div class="dc-prod__img" aria-hidden="true">
-        <span class="dc-prod__sku">No. <?= $dcN($i) ?></span>
-        <span class="dc-prod__ic"><?= $dcIc($icon) ?></span>
-        <span class="dc-prod__tags"><?php foreach ($tags as $t): ?><i><?= h($t) ?></i><?php endforeach; ?></span>
-      </div>
-      <div class="dc-prod__body">
-        <h3><?= h($title) ?></h3>
-        <p><?= h($text) ?></p>
-        <ul class="dc-prod__list" role="list"><?php foreach ($items as $t): ?><li><?= $dcIc('check') ?><?= h($t) ?></li><?php endforeach; ?></ul>
-      </div>
-    </li>
+    <ol class="dc-tks" role="list">
+<?php foreach ($dcBuild as $i => [$icon, $tint, $title, $text, $items, $cls]): ?>
+      <li class="step reveal" style="--tk:<?= $dcTk[$tint] ?>;--d:<?= ($i % 3) * .1 ?>s">
+        <div class="step__card tk">
+          <div class="tk-a">
+            <div class="tk-top"><span class="tk-cls"><?= h($cls) ?></span><span class="tk-adm">No. <?= $dcN($i) ?> · Your Brand</span></div>
+            <div class="step__art il"><svg class="il-svg" viewBox="0 0 200 140" aria-hidden="true" focusable="false"><rect class="pn" width="200" height="140"/><?= $dcArt[$i] ?></svg></div>
+          </div>
+          <div class="tk-b">
+            <h3 class="tk-h"><?= h($title) ?></h3>
+            <p><?= h($text) ?></p>
+            <ul class="dc-tk__list" role="list"><?php foreach ($items as $t): ?><li><?= $dcIc('check') ?><?= h($t) ?></li><?php endforeach; ?></ul>
+          </div>
+        </div>
+      </li>
 <?php endforeach; ?>
-  </ul>
-  <div class="wrap dc-center reveal"><a class="h10-btn h10-btn--dark" href="/book" data-book><span>Build Your Custom Ecommerce Experience</span><?= $dcArrow ?></a></div>
+    </ol>
+    <div class="dc-center reveal"><a class="h10-btn h10-btn--dark" href="/book" data-book><span>Build Your Custom Ecommerce Experience</span><?= $dcArrow ?></a></div>
+  </div>
 </section>
 
 <!-- 04 · Connected ecosystem: four lanes on one rail, an order travelling through -->

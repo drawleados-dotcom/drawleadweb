@@ -1,7 +1,7 @@
 /* Digital Commerce page (templates/digital-commerce-body.php), after home10.js.
    home10.js already runs the scroll reveals (adding .is-in, which starts the
    funnel bars, the order on the rail and the stepper line), the heading word
-   reveal and the progress bar. This adds the three interactive pieces; each
+   reveal and the progress bar. This adds the two interactive pieces; each
    is optional, and the page reads in full without it. */
 (function () {
   'use strict';
@@ -41,40 +41,6 @@
       });
     });
   };
-
-  /* ---------- 03 the product shelf: arrows and a progress bar for the rail ---------- */
-  var rail = $('[data-dc-rail]');
-  var ctl = $('[data-dc-ctl]');
-  if (rail && ctl) {
-    var prev = $('[data-dc-prev]', ctl);
-    var next = $('[data-dc-next]', ctl);
-    var bar = $('[data-dc-bar]', ctl);
-    var step = function () {
-      var card = rail.querySelector('.dc-prod');
-      return card ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(rail).columnGap || 16) : 320;
-    };
-    var sync = function () {
-      var max = rail.scrollWidth - rail.clientWidth;
-      var p = max > 0 ? rail.scrollLeft / max : 0;
-      var share = rail.scrollWidth ? Math.min(1, rail.clientWidth / rail.scrollWidth) : 1;
-      bar.style.width = (share * 100) + '%';
-      bar.style.transform = 'translateX(' + (p * (1 / share - 1) * 100) + '%)';
-      prev.disabled = rail.scrollLeft < 4;
-      next.disabled = rail.scrollLeft > max - 4;
-      ctl.hidden = max <= 4;
-    };
-    prev.addEventListener('click', function () { rail.scrollBy({ left: -step(), behavior: reduce ? 'auto' : 'smooth' }); });
-    next.addEventListener('click', function () { rail.scrollBy({ left: step(), behavior: reduce ? 'auto' : 'smooth' }); });
-    rail.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-        e.preventDefault();
-        rail.scrollBy({ left: (e.key === 'ArrowRight' ? 1 : -1) * step(), behavior: reduce ? 'auto' : 'smooth' });
-      }
-    });
-    rail.addEventListener('scroll', sync, { passive: true });
-    window.addEventListener('resize', sync);
-    sync();
-  }
 
   /* ---------- 06 the category menu: pointing at a category previews it ---------- */
   var cat = $('[data-dc-cat]');
