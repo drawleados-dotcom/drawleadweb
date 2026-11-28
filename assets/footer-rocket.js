@@ -3,7 +3,9 @@
 // some of them (back canvas, under the word) and in front of others (front
 // canvas), with a little physics: it speeds up diving, slows climbing, banks
 // smoothly into turns, porpoises gently (phugoid glide) and leaves a fading
-// dashed trail with sketchy speed lines.
+// dashed trail with sketchy speed lines. Each letter fills with green while
+// the plane flies through it and fades back once it has left (`.is-lit`,
+// styled in footer-signoff.css).
 // Paused when off screen or the tab is hidden; still for reduced motion.
 (function () {
   var word = document.querySelector('.dl-sign__w');
@@ -21,6 +23,8 @@
   var BEHIND = [[.13,.26],[.36,.47],[.6,.7]];
 
   var W = 0, H = 0, dpr = 1, pts = [], lens = [], total = 0;
+  var letters = [].slice.call(word.querySelectorAll('span')), boxes = [], lit = [];
+  var probe = document.createElement('canvas').getContext('2d');
   var s = 0, v = 240, ang = 0, size = 18, parts = [], last = 0, running = false, raf = 0, trailGap = 0;
 
   function cr(p0, p1, p2, p3, t) {
@@ -52,6 +56,35 @@
       }
     }
     total += Math.hypot(pts[0][0] - prev[0], pts[0][1] - prev[1]);
+    measureLetters(r);
+  }
+
+  // Each letter's ink box in canvas coordinates. The span's box is padded and
+  // overlaps its neighbours, so it is narrowed to the glyph's own extents
+  // (measureText); that way a lowercase letter only lights when the plane is
+  // over the letter itself, not over the empty space above it.
+  function measureLetters(cr) {
+    boxes = letters.map(function (el) {
+      var r = el.getBoundingClientRect(), cs = getComputedStyle(el);
+      var fs = parseFloat(cs.fontSize) || 16, padX = parseFloat(cs.paddingLeft) || 0, padY = parseFloat(cs.paddingTop) || 0;
+      var x0 = r.left + padX - cr.left, top = r.top + padY - cr.top, lh = r.height - 2 * padY;
+      var box = { l: x0, r: r.right - padX - cr.left, t: r.top - cr.top, b: r.bottom - cr.top };
+      probe.font = cs.fontWeight + ' ' + fs + 'px ' + cs.fontFamily;
+      var m = probe.measureText(el.textContent);
+      if (m.fontBoundingBoxAscent != null && m.actualBoundingBoxAscent != null) {
+        var base = top + (lh - (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent)) / 2 + m.fontBoundingBoxAscent;
+        box = { l: x0 - m.actualBoundingBoxLeft, r: x0 + m.actualBoundingBoxRight, t: base - m.actualBoundingBoxAscent, b: base + m.actualBoundingBoxDescent };
+      }
+      return box;
+    });
+  }
+
+  // light the letter (or two, where they touch) the plane is flying through
+  function lightLetters(x, y) {
+    for (var i = 0; i < boxes.length; i++) {
+      var b = boxes[i], on = x > b.l && x < b.r && y > b.t && y < b.b;
+      if (on !== !!lit[i]) { lit[i] = on; letters[i].classList.toggle('is-lit', on); }
+    }
   }
 
   function at(dist) {
@@ -178,6 +211,7 @@
     var nx = -Math.sin(q[2]), ny = Math.cos(q[2]);
     var px = q[0] + nx * off, py = q[1] + ny * off;
     var behind = isBehind(frac);
+    lightLetters(px, py);
     // dashed flight trail behind the tail
     var tx = px - Math.cos(ang) * size * .7, ty = py - Math.sin(ang) * size * .7;
     trailGap += v * dt;
