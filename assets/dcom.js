@@ -91,6 +91,34 @@
     setup();
   }
 
+  /* ---------- 05 the timeline: the line fills as you scroll, each step lights as it's reached ---------- */
+  var tl = $('[data-dc-tl]');
+  if (tl) {
+    var steps = $$('.dc-tl__step', tl);
+    var tlTick = false;
+    var tlMove = function () {
+      tlTick = false;
+      var mark = window.innerHeight * 0.55;
+      var r = tl.getBoundingClientRect();
+      var p = r.height ? Math.min(1, Math.max(0, (mark - r.top) / r.height)) : 0;
+      tl.style.setProperty('--p', p.toFixed(4));
+      steps.forEach(function (s) {
+        var n = $('.dc-tl__node', s).getBoundingClientRect();
+        s.classList.toggle('is-on', n.top + n.height / 2 < mark);
+      });
+    };
+    if (reduce) {
+      tl.style.setProperty('--p', '1');
+      steps.forEach(function (s) { s.classList.add('is-on'); });
+    } else {
+      window.addEventListener('scroll', function () {
+        if (!tlTick) { tlTick = true; requestAnimationFrame(tlMove); }
+      }, { passive: true });
+      window.addEventListener('resize', tlMove);
+      tlMove();
+    }
+  }
+
   /* ---------- 06 the category menu: pointing at a category previews it ---------- */
   var cat = $('[data-dc-cat]');
   if (cat) tabs(cat, { hover: true });

@@ -15,9 +15,10 @@
  *                    the six challenges as line items
  *   03 engineer      six paper tickets (the home page's), sliding sideways in a
  *                    pinned section on desktop, a grid elsewhere
- *   04 ecosystem     four lanes on one rail, an order travelling through them,
- *                    then the platforms we connect
- *   05 approach      a checkout stepper: four steps on a line that fills in
+ *   04 ecosystem     the store as a hub in the middle, the four parts of the
+ *                    business wired to it, then the platforms we connect
+ *   05 approach      a timeline down the middle that fills as you scroll, the
+ *                    steps zig-zagging either side with a big number opposite
  *   06 industries    a category menu with a preview: each category shows the
  *                    piece of shop that matters most for it
  *   07 projects      one browser window, the three projects as its tabs
@@ -107,6 +108,27 @@ $dcSteps = [
 ];
 $dcStepIc = ['search', 'pen', 'code', 'rocket'];
 $dcStepTint = ['peach', 'sky', 'lilac', 'mint'];
+$dcStepShort = ['Discover', 'Design', 'Engineer', 'Launch'];
+
+// 04 · the hub in the middle of the ecosystem (280 × 280, home .il classes):
+// the store at the centre, cart, packing, customers and reports riding its rings
+$dcHub = '<circle cx="140" cy="140" r="122" class="ring" fill="none"/><circle cx="140" cy="140" r="88" class="ring spin" fill="none"/><circle class="g pulse" cx="140" cy="140" r="48"/><circle class="g" cx="140" cy="140" r="48"/>' . $dcIl('store', 114, 114, 52, '#fff')
+    . '<g class="float" style="--d:0s"><rect class="c" x="116" y="4" width="48" height="34" rx="11"/>' . $dcIl('cart', 129, 10, 22) . '</g>'
+    . '<g class="float" style="--d:.5s"><rect class="c" x="242" y="123" width="34" height="34" rx="11"/>' . $dcIl('box', 248, 129, 22) . '</g>'
+    . '<g class="float" style="--d:1s"><rect class="c" x="116" y="242" width="48" height="34" rx="11"/>' . $dcIl('users', 129, 248, 22) . '</g>'
+    . '<g class="float" style="--d:1.5s"><rect class="c" x="4" y="123" width="34" height="34" rx="11"/>' . $dcIl('chart', 10, 129, 22) . '</g>';
+
+// 05 · one illustration per step (200 × 140, home .il classes)
+$dcStepArt = [
+    // discover: the brand's type and colours, a customer profile, a lens over it
+    '<rect class="c" x="16" y="16" width="80" height="108" rx="12"/><text class="big" x="28" y="46">Aa</text><rect class="k2" x="28" y="56" width="52" height="5" rx="2.5"/><rect class="k" x="28" y="66" width="38" height="5" rx="2.5"/><circle class="g" cx="34" cy="98" r="9"/><circle class="gs2" cx="56" cy="98" r="9"/><circle class="k2" cx="78" cy="98" r="9"/><g class="float" style="--d:.2s"><rect class="c" x="106" y="22" width="80" height="58" rx="12"/><circle class="gs2" cx="126" cy="45" r="10"/><rect class="k2" x="142" y="39" width="34" height="5" rx="2.5"/><rect class="k" x="142" y="49" width="24" height="5" rx="2.5"/><rect class="g" x="118" y="64" width="56" height="6" rx="3"/></g><g class="scan"><circle cx="150" cy="104" r="14" class="lens"/><path class="gl" d="M160 114L172 126" stroke-width="5"/></g>',
+    // design: the store wireframed on desktop and phone, the journey drawn between them
+    '<rect class="c" x="14" y="16" width="114" height="82" rx="10"/><path class="ln" d="M14 30H128"/><rect class="gs2" x="24" y="40" width="46" height="32" rx="5"/><rect class="k2" x="78" y="42" width="38" height="5" rx="2.5"/><rect class="k" x="78" y="52" width="30" height="5" rx="2.5"/><rect class="g" x="78" y="63" width="26" height="9" rx="4.5"/><rect class="k" x="24" y="80" width="92" height="8" rx="4"/><g class="float" style="--d:.3s"><rect class="c" x="140" y="26" width="46" height="92" rx="10"/><rect class="gs2" x="148" y="38" width="30" height="26" rx="4"/><rect class="k2" x="148" y="70" width="30" height="4" rx="2"/><rect class="k" x="148" y="79" width="20" height="4" rx="2"/><rect class="g" x="148" y="100" width="30" height="9" rx="4.5"/></g><path class="gl flow" d="M36 116C70 132 108 132 138 112" stroke-dasharray="4 5"/><circle class="g" cx="36" cy="116" r="4"/>',
+    // engineer: the code being written, payments and shipping plugged in
+    '<rect class="c" x="14" y="16" width="106" height="108" rx="12"/><circle class="k2" cx="28" cy="29" r="3"/><circle class="k2" cx="38" cy="29" r="3"/><circle class="k2" cx="48" cy="29" r="3"/><rect class="g typeln" x="26" y="44" width="46" height="5" rx="2.5" style="--d:0s"/><rect class="k2 typeln" x="34" y="56" width="58" height="5" rx="2.5" style="--d:.25s"/><rect class="k2 typeln" x="34" y="68" width="38" height="5" rx="2.5" style="--d:.5s"/><rect class="g typeln" x="26" y="80" width="52" height="5" rx="2.5" style="--d:.75s"/><rect class="k2 typeln" x="34" y="92" width="64" height="5" rx="2.5" style="--d:1s"/><rect class="k typeln" x="26" y="104" width="40" height="5" rx="2.5" style="--d:1.25s"/><path class="gl flow" d="M120 46H140M120 94H140" stroke-dasharray="4 5"/><g class="float" style="--d:.2s"><rect class="c" x="140" y="28" width="46" height="36" rx="10"/>' . $dcIl('cart', 152, 35, 22) . '</g><g class="float" style="--d:.7s"><rect class="c" x="140" y="76" width="46" height="36" rx="10"/>' . $dcIl('truck', 152, 83, 22) . '</g>',
+    // launch: the store lifts off, sales climb, tests keep running
+    '<circle cx="66" cy="70" r="46" class="ring spin" fill="none"/><circle class="g pulse" cx="66" cy="70" r="28"/><circle class="g" cx="66" cy="70" r="28"/>' . $dcIl('rocket', 50, 54, 32, '#fff') . '<g class="float" style="--d:.2s"><rect class="c" x="126" y="18" width="60" height="62" rx="11"/><rect class="g rise" x="137" y="52" width="8" height="18" rx="2" style="--d:0s"/><rect class="g rise" x="151" y="42" width="8" height="28" rx="2" style="--d:.15s"/><rect class="g rise" x="165" y="30" width="8" height="40" rx="2" style="--d:.3s"/></g><g class="float" style="--d:.6s"><rect class="c" x="122" y="92" width="66" height="28" rx="14"/><circle class="g blink" cx="137" cy="106" r="4"/><text class="chip" x="162" y="109" text-anchor="middle">A / B</text></g>',
+];
 
 // 06 · categories [icon, tint, name, question, text, cta, preview]
 $dcInd = [
@@ -286,7 +308,7 @@ $dcRing = fn (string $fill = '#F8E6D6'): string => '<svg viewBox="0 0 120 120" a
   </div>
 </section>
 
-<!-- 04 · Connected ecosystem: four lanes on one rail, an order travelling through -->
+<!-- 04 · Connected ecosystem: the store as a hub, the four parts of the business wired to it -->
 <section class="dc-eco" id="ecosystem">
   <div class="dc-eco__stage">
     <div class="wrap">
@@ -296,26 +318,31 @@ $dcRing = fn (string $fill = '#F8E6D6'): string => '<svg viewBox="0 0 120 120" a
         <p class="lede reveal" style="--d:.1s">Your ecommerce business involves much more than a website. Products, customers, orders, payments, inventory, shipping and marketing all need to work together.</p>
         <p class="lede lede--strong reveal" style="--d:.14s">We connect the essential parts of your ecommerce operations to create a smoother experience for both your customers and your team.</p>
       </div>
-      <div class="dc-lanes reveal">
-        <div class="dc-lanes__rail" aria-hidden="true"><i class="dc-lanes__order"><?= $dcIc('box') ?></i></div>
-<?php foreach ($dcEco as $i => [$icon, $tint, $title, $items]): ?>
-        <div class="dc-lane t-<?= $tint ?>" style="--i:<?= $i ?>">
-          <span class="dc-lane__stop" aria-hidden="true"><i></i><?= h($dcOrder[$i]) ?></span>
-          <div class="dc-lane__hd"><i><?= $dcIc($icon) ?></i><h3><?= h($title) ?></h3></div>
-          <ul role="list"><?php foreach ($items as $t): ?><li><?= h($t) ?></li><?php endforeach; ?></ul>
+      <div class="dc-hub">
+        <svg class="dc-hub__wires" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M600 300C520 300 520 150 410 150"/><path d="M600 300C680 300 680 150 790 150"/><path d="M600 300C520 300 520 450 410 450"/><path d="M600 300C680 300 680 450 790 450"/></svg>
+        <div class="dc-hub__core reveal">
+          <div class="dc-hub__art il" aria-hidden="true"><svg class="il-svg" viewBox="0 0 280 280" focusable="false"><?= $dcHub ?></svg></div>
+          <b>Your Store</b>
+          <small>One connected commerce system</small>
         </div>
+<?php foreach ($dcEco as $i => [$icon, $tint, $title, $items]): ?>
+        <article class="dc-node dc-node--<?= $i + 1 ?> t-<?= $tint ?> reveal" style="--d:<?= $i * .08 ?>s">
+          <div class="dc-node__hd"><i><?= $dcIc($icon) ?></i><span><small><?= $dcN($i) ?></small><h3><?= h($title) ?></h3></span></div>
+          <ul role="list"><?php foreach ($items as $t): ?><li><?= h($t) ?></li><?php endforeach; ?></ul>
+          <span class="dc-node__live" aria-hidden="true"><i></i><?= h($dcOrder[$i]) ?> · in sync</span>
+        </article>
 <?php endforeach; ?>
       </div>
       <div class="dc-logos reveal">
         <span class="dc-kick">Platforms we connect</span>
-        <ul role="list"><?php foreach ($dcTech as [$file, $name]): ?><li><img src="/assets/home10/tech/<?= $file ?>.webp" alt="<?= h($name) ?>" width="28" height="28" loading="lazy" decoding="async"><span><?= h($name) ?></span></li><?php endforeach; ?></ul>
+        <div class="marquee marquee--tech dc-logos__row"><ul class="marquee__track" role="list"><?php for ($r = 0; $r < 2; $r++): foreach ($dcTech as [$file, $name]): ?><li class="cx-logo"<?= $r ? ' aria-hidden="true"' : '' ?>><img src="/assets/home10/tech/<?= $file ?>.webp" alt="<?= $r ? '' : h($name) ?>" loading="lazy" decoding="async"></li><?php endforeach; endfor; ?></ul></div>
       </div>
       <div class="dc-center reveal"><a class="h10-btn h10-btn--dark" href="/book" data-book><span>Connect Your Ecommerce Business</span><?= $dcArrow ?></a></div>
     </div>
   </div>
 </section>
 
-<!-- 05 · Engineering approach: a checkout stepper, the line fills as it comes in -->
+<!-- 05 · Engineering approach: a timeline that fills as you scroll, steps either side -->
 <section class="dc-appr" id="approach">
   <div class="wrap">
     <div class="dc-head">
@@ -325,16 +352,21 @@ $dcRing = fn (string $fill = '#F8E6D6'): string => '<svg viewBox="0 0 120 120" a
       </div>
       <p class="lede dc-head__txt reveal" style="--d:.1s">Every brand has its own identity, products, customers and selling process. We work closely with your team to understand these requirements before designing and engineering your ecommerce experience.</p>
     </div>
-    <ol class="dc-steps reveal" role="list">
+    <ol class="dc-tl" role="list" data-dc-tl>
+      <li class="dc-tl__line" aria-hidden="true"><i data-dc-tl-fill></i></li>
 <?php foreach ($dcSteps as $i => [$label, $text, $tags]): ?>
-      <li class="dc-step t-<?= $dcStepTint[$i] ?>" style="--i:<?= $i ?>">
-        <span class="dc-step__dot" aria-hidden="true"><b><?= $i + 1 ?></b><?= $dcIc('check') ?></span>
-        <div class="dc-step__card">
-          <span class="dc-step__k"><i><?= $dcIc($dcStepIc[$i]) ?></i>Step <?= $dcN($i) ?></span>
-          <h3><?= h($label) ?></h3>
-          <p><?= h($text) ?></p>
-          <ul class="dc-step__tags" role="list"><?php foreach (explode(' · ', $tags) as $tag): ?><li><?= h($tag) ?></li><?php endforeach; ?></ul>
-        </div>
+      <li class="dc-tl__step t-<?= $dcStepTint[$i] ?>">
+        <span class="dc-tl__node" aria-hidden="true"><b><?= $dcN($i) ?></b><?= $dcIc('check') ?></span>
+        <div class="dc-tl__side" aria-hidden="true"><b><?= $dcN($i) ?></b><span><?= h($dcStepShort[$i]) ?></span></div>
+        <article class="dc-tl__card reveal">
+          <div class="dc-tl__art il" aria-hidden="true"><svg class="il-svg" viewBox="0 0 200 140" focusable="false"><rect class="pn" width="200" height="140"/><?= $dcStepArt[$i] ?></svg></div>
+          <div class="dc-tl__txt">
+            <span class="dc-tl__k"><i><?= $dcIc($dcStepIc[$i]) ?></i>Step <?= $dcN($i) ?></span>
+            <h3><?= h($label) ?></h3>
+            <p><?= h($text) ?></p>
+            <ul class="dc-tl__tags" role="list"><?php foreach (explode(' · ', $tags) as $tag): ?><li><?= h($tag) ?></li><?php endforeach; ?></ul>
+          </div>
+        </article>
       </li>
 <?php endforeach; ?>
     </ol>
